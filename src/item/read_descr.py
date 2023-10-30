@@ -9,6 +9,7 @@ from item.models import Item
 from template_finder import search
 from utils.ocr.read import image_to_text
 from utils.image_operations import crop
+from utils.window import screenshot
 import re
 import json
 from rapidfuzz import process
@@ -75,8 +76,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 
     # Detect textures (1)
     # =====================================
-    if not (seperator_short := search("item_seperator_short", img_item_descr, threshold=0.9, use_grayscale=True, mode="first")).success:
+    if not (seperator_short := search("item_seperator_short", img_item_descr, threshold=0.87, use_grayscale=True, mode="first")).success:
         Logger.error("Could not detect item_seperator_short. Ignore item.")
+        screenshot("failed_seperator_short", img=img_item_descr)
         return None
 
     # Item Type and Item Power
@@ -105,12 +107,14 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 
     if item.power is None or item.type is None:
         Logger().error("Could not detect ItemPower and ItemType. Ignore this item.")
+        screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
     # Detect textures (2)
     # =====================================
-    if not (seperator_long := search("item_seperator_long", img_item_descr, threshold=0.9, use_grayscale=True, mode="all")).success:
+    if not (seperator_long := search("item_seperator_long", img_item_descr, threshold=0.87, use_grayscale=True, mode="all")).success:
         Logger.error("Could not detect item_seperator_long. Ignore item.")
+        screenshot("failed_seperator_long", img=img_item_descr)
         return None
     seperator_long.matches = sorted(seperator_long.matches, key=lambda match: match.center[1])
     if item.type in [ItemType.Helm, ItemType.Armor, ItemType.Gloves]:
@@ -118,16 +122,18 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     else:
         roi_bullets = [0, seperator_long.matches[0].center[1], 100, 1080]
     if not (
-        affix_bullets := search("affix_bullet_point", img_item_descr, threshold=0.9, roi=roi_bullets, use_grayscale=True, mode="all")
+        affix_bullets := search("affix_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="all")
     ).success:
         Logger.error("Could not detect affix_bullet_points. Ignore item.")
+        screenshot("failed_affix_bullet_points", img=img_item_descr)
         return None
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
-    empty_sockets = search("empty_socket", img_item_descr, threshold=0.9, roi=roi_bullets, use_grayscale=True, mode="all")
+    empty_sockets = search("empty_socket", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
-    aspect_bullets = search("aspect_bullet_point", img_item_descr, threshold=0.9, roi=roi_bullets, use_grayscale=True, mode="first")
+    aspect_bullets = search("aspect_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="first")
     if rarity == ItemRarity.Legendary and not aspect_bullets.success:
         Logger.error("Could not detect aspect_bullet for a legendary item. Ignore item.")
+        screenshot("failed_aspect_bullet", img=img_item_descr)
         return None
 
     # Affixes
@@ -163,6 +169,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             item.affixes.append(Affix(found_key, concatenated_str, found_value))
         else:
             Logger.error(f"Could not find affix: {cleaned_str}")
+            screenshot("failed_affixes", img=img_item_descr)
             return None
 
     # Aspect
@@ -191,6 +198,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             item.aspect = Aspect(found_key, concatenated_str, found_value)
         else:
             Logger.error(f"Could not find aspect: {cleaned_str}")
+            screenshot("failed_aspect", img=img_item_descr)
             return None
 
     return item

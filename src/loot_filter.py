@@ -56,11 +56,9 @@ def run_loot_filter():
                 continue
 
             # Check if we want to keep the item
-            start = time.time()
             if not should_keep(item):
                 keyboard.send("space")
                 wait(0.15, 0.18)
-            print(time.time() - start)
 
         break
     Logger().info("Loot Filter done")

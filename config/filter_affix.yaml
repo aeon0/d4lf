@@ -3,23 +3,34 @@ Filters:
       itemType: helm
       minPower: 725
       affixPool:
-        - [all_stats, 10]
-        - fire_resistance
-        - [lucky_hit_chance_while_you_have_a_barrier]
-        - [healing_received, 13.0]
+        - [basic_skill_attack_speed, 6]
+        - [cooldown_reduction, 5]
+        - [dexterity, 36]
+        - [maximum_life, 580]
+        - [total_armor, 9]
+        - [ranks_of_poison_imbuement, 3]
+        - [ranks_of_shadow_imbuement, 3]
       minAffixCount: 3
-
-  - Weapon:
-      itemType: [sword, two-handed sword, helm]
-      minPower: 725
-      affixPool:
-        - all_stats
-        - basic_skill_damage
-        - critical_strike_damage
-      minAffixCount: 1
 
   - Armor:
       itemType: armor
-      minPower: 0
+      minPower: 725
       affixPool:
-      minAffixCount: 0
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction, 5]
+        - [total_armor, 9]
+        - [maximum_life, 700]
+      minAffixCount: 3
+
+  - Gloves:
+      itemType: gloves
+      minPower: 725
+      affixPool:
+        - [dexterity, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction, 5]
+        - [total_armor, 9]
+        - [maximum_life, 700]
+      minAffixCount: 3
+

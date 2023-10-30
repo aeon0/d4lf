@@ -1,0 +1,249 @@
+from typing import Optional
+from enum import Enum
+
+import numpy as np
+
+from config import Config
+from logger import Logger
+
+
+def compare_tuples(t1, t2, uncertainty):
+    return abs(t1[0] - t2[0]) <= uncertainty and abs(t1[1] - t2[1]) <= uncertainty
+
+
+def create_roi_from_rel(point, rel_roi):
+    if isinstance(rel_roi, str):
+        rel_roi = Config().ui_roi[rel_roi]
+    x, y = point
+    rel_x, rel_y, w, h = rel_roi
+    abs_x = x + rel_x
+    abs_y = y + rel_y
+    return (abs_x, abs_y, w, h)
+
+
+def fit_roi_to_window_size(roi, size):
+    ww, wh = size
+    x, y, w, h = roi
+
+    success = True
+
+    # Check if the ROI is entirely out of bounds
+    if x >= ww or y >= wh:
+        return False, None
+
+    # Adjust the width and height to fit within the window
+    if x + w > ww:
+        w = ww - x
+    if y + h > wh:
+        h = wh - y
+
+    # Check if ROI is valid after adjustments
+    if w <= 0 or h <= 0:
+        return False, None
+
+    updated_roi = (x, y, w, h)
+    return success, updated_roi
+
+
+def translate(
+    x: int,
+    y: int,
+    roi: tuple[int, int, int, int],
+    x_bound: int = Config().ui_pos["window_dimensions"][0],
+    y_bound: int = Config().ui_pos["window_dimensions"][1],
+    resize: bool = True,
+) -> tuple[int, int, int, int]:
+    x_min, y_min, width, height = roi
+    new_x_min = max(0, x_min + x)
+    new_y_min = max(0, y_min + y)
+
+    new_width = width
+    new_height = height
+    exceeded_bounds = False
+
+    if new_x_min + new_width > x_bound:
+        exceeded_bounds = True
+        if resize:
+            new_width = max(1, x_bound - new_x_min)
+            new_x_min = x_bound - new_width
+        else:
+            new_x_min = x_bound - width
+
+    if new_y_min + new_height > y_bound:
+        exceeded_bounds = True
+        if resize:
+            new_height = max(1, y_bound - new_y_min)
+            new_y_min = y_bound - new_height
+        else:
+            new_y_min = y_bound - height
+
+    new_roi = (new_x_min, new_y_min, new_width, new_height)
+
+    if exceeded_bounds:
+        Logger.warning(f"Warning, translation ({x},{y}) exceeds bounds for input roi {roi}. Output roi is {new_roi}")
+
+    return new_roi
+
+
+def get_center(roi: tuple[int, int, int, int]) -> tuple[int, int]:
+    """
+    Finds the center of a region of interest.
+    :param roi: Region of interest in the format (x, y, w, h).
+    :return: Coordinates of the center.
+    """
+    x, y, w, h = roi
+    return int(round(x + w / 2)), int(round(y + h / 2))
+
+
+def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int]) -> Optional[tuple[int, int, int, int]]:
+    """
+    Finds the intersection of multiple rectangles.
+    :param rects: The rectangles to intersect. Each rectangle is represented as a tuple of four integers (x_min, y_min, width, height).
+    :return: The intersection of all rectangles, represented as (x_min, y_min, width, height), or None if there is no intersection.
+    """
+    if len(rects) == 1 and isinstance(rects[0], list):
+        rects = rects[0]
+
+    max_x_min = max(rect[0] for rect in rects)
+    max_y_min = max(rect[1] for rect in rects)
+    min_x_max = min(rect[0] + rect[2] for rect in rects)
+    min_y_max = min(rect[1] + rect[3] for rect in rects)
+
+    if max_x_min < min_x_max and max_y_min < min_y_max:
+        return (max_x_min, max_y_min, min_x_max - max_x_min, min_y_max - max_y_min)
+    else:
+        # Logger.debug(f"No intersection between {rects}.")
+        return None
+
+
+def pad(
+    rectangle: tuple[int, int, int, int], pixels: int = 2, direction: str = "all", max_x: int = 1279, max_y: int = 719
+) -> tuple[int, int, int, int]:
+    """
+    Adjusts the shape of a rectangle by adding padding.
+    :param rectangle: Rectangle in the format (x, y, w, h).
+    :param pixels: Number of pixels to add in each direction.
+    :param direction: Direction to add padding to. Options are "left", "right", "up", "down", "width", "height", "all".
+    :param max_x: Maximum x value (typically screen resolution - 1).
+    :param max_y: Maximum y value (typically screen resolution - 1).
+    :return: Padded rectangle.
+    """
+    x, y, w, h = rectangle
+
+    if direction not in {"left", "right", "up", "down", "width", "height", "all"}:
+        print(f"Invalid direction: {direction}")
+        return rectangle
+
+    if direction in {"left", "width", "all"}:
+        x = max(0, x - pixels)
+    if direction in {"left", "right"}:
+        w = min(max_x - x, w + pixels)
+    if direction in {"up", "height", "all"}:
+        y = max(0, y - pixels)
+    if direction in {"up", "down"}:
+        h = min(max_y - y, h + pixels)
+    if direction in {"width", "all"}:
+        w = min(max_x - x, w + 2 * pixels)
+    if direction in {"height", "all"}:
+        h = min(max_y - y, h + 2 * pixels)
+    # enforce minimum w and h in case negative padding is used
+    w = max(w, 1)
+    h = max(h, 1)
+
+    return x, y, w, h
+
+
+def bounding_box(
+    *args: list[tuple[int, int, int, int]] | tuple[int, int, int, int] | list[tuple[int, int]] | tuple[int, int]
+) -> Optional[tuple[int, int, int, int]]:
+    """
+    Finds the bounding rectangle of a set of rectangles or coordinates.
+    :param args: The rectangles or coordinates to bound.
+        Each rectangle is represented as a tuple of four integers (x_min, y_min, width, height).
+        Each coordinate is represented as a tuple of two integers (x, y).
+    :return: The smallest rectangle that contains all the input rectangles or coordinates, represented as (x_min, y_min, width, height).
+    """
+    if len(args) == 1 and isinstance(args[0], list):
+        args = args[0]
+
+    min_x, min_y, max_x, max_y = float("inf"), float("inf"), float("-inf"), float("-inf")
+
+    for arg in args:
+        if len(arg) == 2:  # if it's a coordinate
+            x, y = arg
+            min_x, max_x = min(min_x, x), max(max_x, x)
+            min_y, max_y = min(min_y, y), max(max_y, y)
+        elif len(arg) == 4:  # if it's a rectangle
+            x, y, w, h = arg
+            min_x, max_x = min(min_x, x), max(max_x, x + w)
+            min_y, max_y = min(min_y, y), max(max_y, y + h)
+        else:
+            Logger.error(f"Invalid argument: {arg}. Each argument should be either a coordinate (2 integers) or a rectangle (4 integers).")
+            return None
+
+    return (min_x, min_y, max_x - min_x, max_y - min_y)
+
+
+def to_grid(roi: tuple[int, int, int, int], rows: int, columns: int) -> set[tuple[int, int, int, int]]:
+    """
+    Splits a rectangle of interest (ROI) into a grid of smaller rectangles.
+    :param roi: The rectangle to split, represented as (x_min, y_min, width, height).
+    :param rows: The number of rows in the grid.
+    :param columns: The number of columns in the grid.
+    :return: A set of rectangles representing the grid. Each rectangle is represented as (x_min, y_min, width, height).
+    """
+    x_min, y_min, width, height = roi
+    base_cell_width = width // columns
+    base_cell_height = height // rows
+
+    extra_width = width % columns
+    extra_height = height % rows
+
+    rectangles = []
+    for i in range(rows):
+        for j in range(columns):
+            cell_width = base_cell_width + (1 if j < extra_width else 0)
+            cell_height = base_cell_height + (1 if i < extra_height else 0)
+            cell_x_min = x_min + sum(base_cell_width + (1 if k < extra_width else 0) for k in range(j))
+            cell_y_min = y_min + sum(base_cell_height + (1 if k < extra_height else 0) for k in range(i))
+            rectangles.append((cell_x_min, cell_y_min, cell_width, cell_height))
+
+    rectangles.sort(key=lambda x: (x[1], x[0]))  # sort row major
+    return rectangles
+
+
+class Condition(Enum):
+    WITHIN = "within"
+    ALIGN_Y = "align_y"
+    ALIGN_X = "align_x"
+
+
+def is_in_roi(coor: tuple[int, int], roi: tuple[int, int, int, int], condition: Condition | str = Condition.WITHIN) -> bool:
+    """
+    Checks the position of a given coordinate relative to a given rectangle of interest (ROI).
+
+    :param coor: The coordinate to check, represented as (x, y).
+    :param roi: The rectangle to check against, represented as (x_min, y_min, width, height).
+    :param condition: The condition to check for:
+                      - Condition.WITHIN: Check if coordinate is inside the ROI.
+                      - Condition.ALIGN_Y: Check if coordinate aligns with ROI in y-direction.
+                      - Condition.ALIGN_X: Check if coordinate aligns with ROI in x-direction.
+    :return: True if the coordinate meets the specified condition relative to the ROI, False otherwise.
+    """
+    x, y = coor
+    x_min, y_min, width, height = roi
+    x_max = x_min + width
+    y_max = y_min + height
+
+    # Convert string condition to Enum value if necessary
+    if isinstance(condition, str):
+        condition = Condition(condition)
+
+    if condition == Condition.WITHIN:
+        return x_min <= x <= x_max and y_min <= y <= y_max
+    elif condition == Condition.ALIGN_Y:
+        return x_min <= x <= x_max and not (y_min <= y <= y_max)
+    elif condition == Condition.ALIGN_X:
+        return not (x_min <= x <= x_max) and y_min <= y <= y_max
+    else:
+        raise ValueError("Invalid condition specified")

@@ -1,0 +1,37 @@
+name: d4lf
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pywin32
+  - pip
+  - pkg-config
+  - tesseract=5.2.0
+  - rapidfuzz
+  - pip:
+    - pyinstaller
+    - opencv-contrib-python==4.8.0.74
+    - mss
+    - numpy
+    - mouse
+    - coverage
+    - keyboard
+    - beautifultable
+    - pytweening
+    - pytest
+    - pytest-env
+    - pytest-pythonpath
+    - pytest-mock
+    - psutil
+    - cryptography
+    - parse
+    - Pillow
+    - typing_extensions
+    - colorama
+    - dataclasses-json
+    - numba
+    - black
+    - pre-commit
+    - nltk
+    - dependencies/tesserocr-2.5.2-cp311-cp311-win_amd64.whl

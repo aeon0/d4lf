@@ -1,0 +1,621 @@
+[10 - 18] All Stats
+[7.0 - 14.0]% Barrier Generation
+[4.4 - 10.0]% Basic Skill Attack Speed
+[35 - 65]% Cold Resistance
+[4.2 - 7.0]% Cooldown Reduction
+[5.0 - 12.0]% Crowd Control Duration
+[28 - 42] Dexterity
+[35 - 65]% Fire Resistance
+[7.0 - 14.0]% Healing Received
+[28 - 42] Intelligence
+[60 - 143] Life On Kill
+[60 - 143] Life Regeneration while Not Damaged Recently
+[35 - 65]% Lightning Resistance
+[4.4 - 10.0]% Lucky Hit Chance while You Have a Barrier
+[358 - 776] Maximum Life
+[35 - 65]% Poison Resistance
+[35 - 65]% Shadow Resistance
+[28 - 42] Strength
+[5.2 - 12.5]% Total Armor
+[28 - 42] Willpower
+[7.0 - 14.0]% Damage while Berserking
+[5 - 13] Maximum Fury
+[2 - 3] Ranks of Death Blow
+[2 - 3] Ranks of Rupture
+[2 - 3] Ranks of Steel Grasp
+[10 - 18] Maximum Spirit
+[2 - 3] Ranks of Poison Creeper
+[2 - 3] Ranks of Ravens
+[2 - 3] Ranks of Wolves
+[7.0 - 14.0]% Damage for 4 Seconds After Picking Up a Blood Orb
+[10 - 18] Maximum Essence
+Minions Inherit [4.2 - 7.0]% of Your Thorns
+[2 - 3] Ranks of Decrepify
+[2 - 3] Ranks of Iron Maiden
+[10 - 18] Maximum Energy
+[2 - 3] Ranks of Cold Imbuement
+[2 - 3] Ranks of Poison Imbuement
+[2 - 3] Ranks of Shadow Imbuement
+[10 - 18] Maximum Mana
+[2 - 3] Ranks of Hydra
+[2 - 3] Ranks of Ice Blades
+[2 - 3] Ranks of Lightning Spear
+[10 - 18] All Stats
+[7.0 - 14.0]% Barrier Generation
+[35 - 65]% Cold Resistance
+[5.0 - 12.0]% Control Impaired Duration Reduction
+[4.4 - 10.0]% Damage
+[3.1 - 7.3]% Damage Reduction
+[7.0 - 14.0]% Damage Reduction from Close Enemies
+[9.5 - 16.5]% Damage Reduction from Distant Enemies
+[28 - 42] Dexterity
+[35 - 65]% Fire Resistance
+[28 - 42] Intelligence
+[60 - 143] Life On Kill
+[35 - 65]% Lightning Resistance
+[358 - 776] Maximum Life
+[35 - 65]% Poison Resistance
+[35 - 65]% Shadow Resistance
+[28 - 42] Strength
+[418 - 836] Thorns
+[5.2 - 12.5]% Total Armor
+[14.0 - 21.0]% Ultimate Skill Damage
+[28 - 42] Willpower
+[14.0 - 28.0]% Brawling Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Bleeding
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Damage with Dual-Wielded Weapons
+[21.0 - 35.0]% Damage with Skills that Swap to New Weapons
+[10.5 - 17.5]% Damage with Two-Handed Bludgeoning Weapons
+[10.5 - 17.5]% Damage with Two-Handed Slashing Weapons
+[15.0 - 22.0]% Fortify Generation
+[10.5 - 21.0]% Overpower Damage with Two-Handed Bludgeoning Weapons
+[10.5 - 17.5]% Physical Damage
+[2 - 3] Ranks of Challenging Shout
+[2 - 3] Ranks of Ground Stomp
+[2 - 3] Ranks of Iron Skin
+[2 - 3] Ranks of Rallying Cry
+[14.0 - 28.0]% Weapon Mastery Skill Damage
+[14.0 - 28.0]% Companion Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Poisoned
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Damage whiile in Human Form
+[10.5 - 17.5]% Damage while Shapeshifted
+[10.5 - 17.5]% Earth Skill Damage
+[15.0 - 22.0]% Fortify Generation
+[10.5 - 17.5]% Lightning Damage
+[31.5 - 63.0]% Overpower Damage with Werebear Skills
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Poison Damage
+[2 - 3] Ranks of Blood Howl
+[2 - 3] Ranks of Cyclone Armor
+[2 - 3] Ranks of Debilitating Roar
+[2 - 3] Ranks of Earthen Bulwark
+[10.5 - 17.5]% Storm Skill Damage
+[10.5 - 17.5]% Werebear Skill Damage
+[10.5 - 17.5]% Werewolf Skill Damage
+[10.5 - 17.5]% Blood Skill Damage
+[10.5 - 17.5]% Bone Skill Damage
+[7.0 - 14.0]% Damage for 4 Seconds After Picking Up a Blood Orb
+[7.0 - 14.0]% Damage Reduction from Affected By Shadow Damage Over Time Enemies
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Darkness Skill Damage
+[15.0 - 22.0]% Fortify Generation
+[17.5 - 31.5]% Maximum Minion Life
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Shadow Damage
+[10.5 - 17.5]% Summoning Skill Damage
+[10.5 - 17.5]% Cutthroat Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Poisoned
+[10.5 - 17.5]% Damage with Dual-Wielded Weapons
+[10.5 - 17.5]% Damage with Ranged Weapons
+[21.0 - 35.0]% Damage with Skills that Swap to New Weapons
+[10.5 - 17.5]% Imbued Skill Damage
+[14 - 28]% Imbuement Skill Damage
+[10.5 - 17.5]% Marksman Skill Damage
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Poison Damage
+[10.5 - 17.5]% Shadow Damage
+[10.5 - 17.5]% Trap Skill Damage
+[10.5 - 17.5]% Cold Damage
+[14.0 - 28.0]% Conjuration Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Burning
+[10.5 - 17.5]% Fire Damage
+[10.5 - 17.5]% Frost Skill Damage
+[10.5 - 17.5]% Lightning Damage
+[10.5 - 17.5]% Pyromancy Skill Damage
+[10.5 - 17.5]% Shock Skill Damage
+[10 - 18] All Stats
+[4.4 - 10.0]% Attack Speed
+Lucky Hit: Up to a [13.0 - 20.0]% Chance to Slow
+[1.8 - 5.0]% Critical Strike Chance
+[3.0 - 8.0]% Critical Strike Chance Against Injured Enemies
+[21.0 - 35.0]% Damage to Injured Enemies
+[28 - 42] Dexterity
+[28 - 42] Intelligence
+Lucky Hit: Up to a 5% Chance to Heal [523 - 941] Life
+[3.2 - 6.0]% Lucky Hit Chance
+[21.0 - 42.0]% Overpower Damage
+Lucky Hit: Up to a 5% Chance to Restore [7.0 - 14.0]% Primary Resource
+[28 - 42] Strength
+[28 - 42] Willpower
+[12.5 - 19.5]% Physical Damage Over Time
+[2 - 3] Ranks of Double Swing
+[2 - 3] Ranks of Hammer of the Ancients
+[2 - 3] Ranks of Rend
+[2 - 3] Ranks of Upheaval
+[2 - 3] Ranks of Whirlwind
+[12.6 - 21]% Critical Strike Damage with Earth Skills
+[12.6 - 21]% Critical Strike Damage with Werewolf Skills
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[2 - 3] Ranks of Landslide
+[2 - 3] Ranks of Lightning Storm
+[2 - 3] Ranks of Pulverize
+[2 - 3] Ranks of Shred
+[2 - 3] Ranks of Tornado
+[4.2 - 7.0]% Storm Skill Cooldown Reduction
+[12.6 - 21]% Critical Strike Damage with Bone Skills
+Minions Inherit [4.2 - 7.0]% of Your Thorns
+[2 - 3] Ranks of Blight
+[2 - 3] Ranks of Blood Lance
+[2 - 3] Ranks of Blood Surge
+[2 - 3] Ranks of Bone Spear
+[2 - 3] Ranks of Sever
+[12.5 - 19.5]% Shadow Damage Over Time
+[10.5 - 17.5]% Attack Speed for 4 seconds after Dodging an Attack
+[12.6 - 21]% Critical Strike Damage with Imbued Skills
+[2 - 3] Ranks of Barrage
+[2 - 3] Ranks of Flurry
+[2 - 3] Ranks of Penetrating Shot
+[2 - 3] Ranks of Rapid Fire
+[2 - 3] Ranks of Twisting Blades
+Reduces the Arm Time of your Trap Skills by [0.1 - 0.2] Seconds
+[4.2 - 7.0]% Trap Skill Cooldown Reduction
+[12.5 - 19.5]% Fire Damage Over Time
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[2 - 3] Ranks of Chain Lightning
+[2 - 3] Ranks of Charged Bolts
+[2 - 3] Ranks of Fireball
+[2 - 3] Ranks of Frozen Orb
+[2 - 3] Ranks of Ice Shards
+[2 - 3] Ranks of Incinerate
+[10 - 18] All Stats
+[35 - 65]% Cold Resistance
+[5.0 - 12.0]% Control Impaired Duration Reduction
+[14.0 - 28.0]% Damage for 4 seconds After Killing an Elite
+[3.1 - 7.3]% Damage Reduction
+[7.0 - 14.0]% Damage Reduction from Close Enemies
+[9.5 - 16.5]% Damage Reduction from Distant Enemies
+[17.5 - 31.5]% Damage Reduction while Injured
+[28 - 42] Dexterity
+[3.0 - 5.8]% Dodge Chance
+[4.4 - 8.6]% Dodge Chance Against Close Enemies
+[35 - 65]% Fire Resistance
+[7.0 - 14.0]% Healing Received
+[28 - 42] Intelligence
+[60 - 143] Life Regeneration while Not Damaged Recently
+[35 - 65]% Lightning Resistance
+[358 - 776] Maximum Life
+[35 - 65]% Poison Resistance
+[2 - 3] Potion Capacity
+[12.0 - 26.0]% Potion Drop Rate
+[35 - 65]% Shadow Resistance
+[28 - 42] Strength
+[418 - 836] Thorns
+[5.2 - 12.5]% Total Armor
+[28 - 42] Willpower
+[14.0 - 21.0]% Berserking Duration
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Bleeding
+[4.9 - 10.5]% Damage Reduction while Fortified
+[2 - 3] Ranks of Charge
+[2 - 3] Ranks of Kick
+[2 - 3] Ranks of Leap
+[2 - 3] Ranks of War Cry
+[5.0 - 12.0]% Damage Reduction from Enemies that are Poisoned
+[4.9 - 10.5]% Damage Reduction while Fortified
+[2 - 3] Ranks of Boulder
+[2 - 3] Ranks of Hurricane
+[2 - 3] Ranks of Rabies
+[2 - 3] Ranks of Trample
+[11.3 - 24.1]% Total Armor while in Werebear Form
+[7.0 - 14.0]% Damage Reduction from Affected By Shadow Damage Over Time Enemies
+[4.9 - 10.5]% Damage Reduction while Fortified
+[17.5 - 31.5]% Maximum Minion Life
+[2 - 3] Ranks of Blood Mist
+[2 - 3] Ranks of Bone Prison
+[2 - 3] Ranks of Corpse Explosion
+[5.0 - 12.0]% Damage Reduction from Enemies that are Poisoned
+[4.2 - 7.0]% Imbuement Skill Cooldown Reduction
+[2 - 3] Ranks of Concealment
+[2 - 3] Ranks of Dark Shroud
+[2 - 3] Ranks of Poison Trap
+[2 - 3] Ranks of Smoke Grenade
+[14.0 - 28.0]% Crackling Energy Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Burning
+[2 - 3] Ranks of Ball Lightning
+[2 - 3] Ranks of Blizzard
+[2 - 3] Ranks of Firewall
+[2 - 3] Ranks of Meteor
+[10 - 18] All Stats
+[35 - 65]% Cold Resistance
+[17.5 - 31.5]% Damage Reduction while Injured
+[28 - 42] Dexterity
+[3.0 - 5.8]% Dodge Chance
+[4.9 - 10.5]% Dodge Chance Against Distant Enemies
+[35 - 65]% Fire Resistance
+[28 - 42] Intelligence
+[35 - 65]% Lightning Resistance
+[10.5 - 17.5]% Movement Speed
+[14.0 - 28.0]% Movement Speed for 4 Seconds After Killing an Elite
+[35 - 65]% Poison Resistance
+[35 - 65]% Shadow Resistance
+[5.0 - 12.0]% Shrine Buff Duration
+[13.0 - 20.0]% Slow Duration Reduction
+[28 - 42] Strength
+[28 - 42] Willpower
+[14.0 - 21.0]% Berserking Duration
+[15.0 - 22.0]% Fortify Generation
+[4.2 - 7.0]% Fury Cost Reduction
+[15.0 - 22.0]% Fortify Generation
+[4.2 - 7.0]% Spirit Cost Reduction
+[11.3 - 24.1]% Total Armor while in Werewolf Form
+[10.5 - 17.5]% Blood Orb Healing
+[4.2 - 7.0]% Essence Cost Reduction
+[15.0 - 22.0]% Fortify Generation
+[2 - 3] Ranks of Bone Spirit
+[2 - 3] Ranks of Corpse Tendrils
+[4.2 - 7.0]% Energy Cost Reduction
+[2 - 3] Ranks of Caltrops
+[2 - 3] Ranks of Dash
+[2 - 3] Ranks of Shadow Step
+[14.0 - 28.0]% Crackling Energy Damage
+[4.2 - 7.0]% Mana Cost Reduction
+[2 - 3] Ranks of Flame Shield
+[2 - 3] Ranks of Frost Nova
+[2 - 3] Ranks of Ice Armor
+[2 - 3] Ranks of Teleport
+[5.0 - 12.0]% Control Impaired Duration Reduction
+[4.2 - 7.0]% Cooldown Reduction
+[3.0 - 8.0]% Critical Strike Chance Against Injured Enemies
+[5.0 - 12.0]% Crowd Control Duration
+[4.4 - 10.0]% Damage
+[14.0 - 28.0]% Damage for 4 seconds After Killing an Elite
+[3.1 - 7.3]% Damage Reduction
+[7.0 - 14.0]% Damage Reduction from Close Enemies
+[9.5 - 16.5]% Damage Reduction from Distant Enemies
+[17.5 - 31.5]% Damage Reduction while Injured
+[3.1 - 7.3]% Dexterity
+[3.0 - 5.8]% Dodge Chance
+[3.1 - 7.3]% Intelligence
+[3.2 - 6.0]% Lucky Hit Chance while You Have a Barrier
+[10.5 - 17.5]% Movement Speed
+[14.0 - 28.0]% Movement Speed for 4 Seconds After Killing an Elite
+[5.0 - 12.0]% Shrine Buff Duration
+[13.0 - 20.0]% Slow Duration Reduction
+[3.1 - 7.3]% Strength
+[418 - 836] Thorns
+[5.2 - 12.5]% Total Armor
+[14.0 - 21.0]% Ultimate Skill Damage
+[3.1 - 7.3]% Willpower
+[14.0 - 21.0]% Berserking Duration
+[14.0 - 28.0]% Brawling Skill Damage
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Damage with Dual-Wielded Weapons
+[21.0 - 35.0]% Damage with Skills that Swap to New Weapons
+[10.5 - 17.5]% Damage with Two-Handed Bludgeoning Weapons
+[10.5 - 17.5]% Damage with Two-Handed Slashing Weapons
+[4.2 - 7.0]% Fury Cost Reduction
+[10.5 - 21.0]% Overpower Damage with Two-Handed Bludgeoning Weapons
+[12.5 - 19.5]% Physical Damage Over Time
+[1 - 2] Ranks of All Brawling Skills
+[1 - 2] Ranks of All Defensive Skills
+[1 - 2] Ranks of All Weapon Mastery Skills
+[1 - 2] Ranks of the Brute Force Passive
+[1 - 2] Ranks of the Counteroffensive Passive
+[1 - 2] Ranks of the Cut to the Bone Passive
+[1 - 2] Ranks of the Heavy Handed Passive
+[1 - 2] Ranks of the No Mercy Passive
+[1 - 2] Ranks of the Outburst Passive
+[1 - 2] Ranks of the Slaying Strike Passive
+[1 - 2] Ranks of the Tough as Nails Passive
+[1 - 2] Ranks of the Wallop Passive
+[14.0 - 28.0]% Weapon Mastery Skill Damage
+[14.0 - 28.0]% Companion Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Poisoned
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Damage whiile in Human Form
+[10.5 - 17.5]% Damage while Shapeshifted
+[10.5 - 17.5]% Earth Skill Damage
+[31.5 - 63.0]% Overpower Damage with Werebear Skills
+[1 - 2] Ranks of All Companion Skills
+[1 - 2] Ranks of All Defensive Skills
+[1 - 2] Ranks of All Wrath Skills
+[1 - 2] Ranks of the Call of the Wild Passive
+[1 - 2] Ranks of the Crushing Earth Passive
+[1 - 2] Ranks of the Defiance Passive
+[1 - 2] Ranks of the Envenom Passive
+[1 - 2] Ranks of the Natural Disaster Passive
+[1 - 2] Ranks of the Nature's Reach Passive
+[1 - 2] Ranks of the Quickshift Passive
+[1 - 2] Ranks of the Resonance Passive
+[1 - 2] Ranks of the Stone Guard Passive
+[1 - 2] Ranks of the Toxic Claws Passive
+[1 - 2] Ranks of the Wild Impulses Passive
+[4.2 - 7.0]% Spirit Cost Reduction
+[4.2 - 7.0]% Storm Skill Cooldown Reduction
+[10.5 - 17.5]% Storm Skill Damage
+[11.3 - 24.1]% Total Armor while in Werebear Form
+[11.3 - 24.1]% Total Armor while in Werewolf Form
+[10.5 - 17.5]% Werebear Skill Damage
+[10.5 - 17.5]% Werewolf Skill Damage
+[10.5 - 17.5]% Blood Skill Damage
+[10.5 - 17.5]% Bone Skill Damage
+[7.0 - 14.0]% Damage Reduction from Affected By Shadow Damage Over Time Enemies
+[4.9 - 10.5]% Damage Reduction while Fortified
+[10.5 - 17.5]% Darkness Skill Damage
+[4.2 - 7.0]% Essence Cost Reduction
+[7.0 - 14.0]% Minion Attack Speed
+[1 - 2] Ranks of All Corpse Skills
+[1 - 2] Ranks of All Curse Skills
+[1 - 2] Ranks of All Macabre Skills
+[1 - 2] Ranks of the Amplify Damage Passive
+[1 - 2] Ranks of the Coalesced Blood Passive
+[1 - 2] Ranks of the Compound Fracture Passive
+[1 - 2] Ranks of the Death's Reach Passive
+[1 - 2] Ranks of the Evulsion Passive
+[1 - 2] Ranks of the Fueled by Death Passive
+[1 - 2] Ranks of the Gloom Passive
+[1 - 2] Ranks of the Hellbent Commander Passive
+[1 - 2] Ranks of the Imperfectly Balanced Passive
+[1 - 2] Ranks of the Terror Passive
+[1 - 2] Ranks of the Tides of Blood Passive
+[12.5 - 19.5]% Shadow Damage Over Time
+[10.5 - 17.5]% Summoning Skill Damage
+[10.5 - 17.5]% Attack Speed for 4 seconds after Dodging an Attack
+[10.5 - 17.5]% Cutthroat Skill Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Poisoned
+[10.5 - 17.5]% Damage with Dual-Wielded Weapons
+[10.5 - 17.5]% Damage with Ranged Weapons
+[21.0 - 35.0]% Damage with Skills that Swap to New Weapons
+[4.2 - 7.0]% Energy Cost Reduction
+[4.2 - 7.0]% Imbuement Skill Cooldown Reduction
+[14 - 28]% Imbuement Skill Damage
+[10.5 - 17.5]% Marksman Skill Damage
+[1 - 2] Rank of All Agility Skills
+[1 - 2] Rank of All Imbuement Skills
+[1 - 2] Ranks of All Subterfuge Skills
+[1 - 2] Ranks of the Deadly Venom Passive
+[1 - 2] Ranks of the Exploit Passive
+[1 - 2] Ranks of the Frigid Finesse Passive
+[1 - 2] Ranks of the Impetus Passive
+[1 - 2] Ranks of the Malice Passive
+[1 - 2] Ranks of the Weapon Mastery Passive
+Reduces the Arm Time of your Trap Skills by [0.1 - 0.2] Seconds
+[4.2 - 7.0]% Trap Skill Cooldown Reduction
+[10.5 - 17.5]% Trap Skill Damage
+[14.0 - 28.0]% Conjuration Skill Damage
+[12.5 - 19.5]% Fire Damage Over Time
+[10.5 - 17.5]% Frost Skill Damage
+[4.2 - 7.0]% Mana Cost Reduction
+[10.5 - 17.5]% Pyromancy Skill Damage
+[1 - 2] Ranks of All Conjuration Skills
+[1 - 2] Ranks of All Defensive Skills
+[1 - 2] Ranks of All Mastery Skills
+[1 - 2] Ranks of the Conjuration Mastery Passive
+[1 - 2] Ranks of the Devouring Blaze Passive
+[1 - 2] Ranks of the Elemental Dominance Passive
+[1 - 2] Ranks of the Endless Pyre Passive
+[1 - 2] Ranks of the Glass Cannon Passive
+[1 - 2] Ranks of the Hoarfrost Passive
+[1 - 2] Ranks of the Icy Touch Passive
+[1 - 2] Ranks of the Inner Flames Passive
+[1 - 2] Ranks of the Permafrost Passive
+[1 - 2] Ranks of the Shocking Impact Passive
+[10.5 - 17.5]% Shock Skill Damage
+[7.0 - 14.0]% Barrier Generation
+[1.8 - 5.0]% Critical Strike Chance
+[10.5 - 17.5]% Critical Strike Damage
+[7.0 - 14.0]% Damage Over Time
+[16.5 - 23.5]% Damage to Close Enemies
+[5.0 - 12.0]% Damage to Crowd Controlled Enemies
+[16.5 - 23.5]% Damage to Distant Enemies
+[21.0 - 35.0]% Damage to Injured Enemies
+[16.5 - 23.5]% Damage to Slowed Enemies
+[16.5 - 23.5]% Damage to Stunned Enemies
+[60 - 143] Life Regeneration while Not Damaged Recently
+[3.2 - 6.0]% Lucky Hit Chance
+[358 - 776] Maximum Life
+[21.0 - 42.0]% Overpower Damage
+[5.0 - 12.0]% Resource Generation
+[9.8 - 19.6]% Vulnerable Damage
+[7.0 - 14.0]% Damage to Bleeding Enemies
+[7.0 - 14.0]% Damage while Berserking
+[15.0 - 22.0]% Fortify Generation
+[3 - 9] Maximum Fury
+[10.5 - 17.5]% Physical Damage
+[12.6 - 21]% Critical Strike Damage with Earth Skills
+[12.6 - 21]% Critical Strike Damage with Werewolf Skills
+[7.0 - 14.0]% Damage to Poisoned Enemies
+[15.0 - 22.0]% Fortify Generation
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[10.5 - 17.5]% Lightning Damage
+[10 - 18] Maximum Spirit
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Poison Damage
+[10.5 - 17.5]% Blood Orb Healing
+[12.6 - 21]% Critical Strike Damage with Bone Skills
+[7.0 - 14.0]% Damage for 4 Seconds After Picking Up a Blood Orb
+[7.0 - 14.0]% Damage to Affected by Shadow Damage Over Time Enemies
+[15.0 - 22.0]% Fortify Generation
+[10 - 18] Maximum Essence
+[17.5 - 31.5]% Maximum Minion Life
+Minions Inherit [4.2 - 7.0]% of Your Thorns
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Shadow Damage
+[10.5 - 17.5]% Cold Damage
+[12.6 - 21]% Critical Strike Damage with Imbued Skills
+[7.0 - 14.0]% Damage to Chilled Enemies
+[16.5 - 23.5]% Damage to Dazed Enemies
+[7.0 - 14.0]% Damage to Enemies Affected by Trap Skills
+[9.5 - 16.5]% Damage to Frozen Enemies
+[7.0 - 14.0]% Damage to Poisoned Enemies
+[7.0 - 14.0]% Imbued Skill Damage
+[10 - 18] Maximum Energy
+[10.5 - 17.5]% Physical Damage
+[10.5 - 17.5]% Poison Damage
+[10.5 - 17.5]% Shadow Damage
+[10.5 - 17.5]% Cold Damage
+[14.0 - 28.0]% Crackling Energy Damage
+[7.0 - 14.0]% Damage to Burning Enemies
+[7.0 - 14.0]% Damage to Chilled Enemies
+[9.5 - 16.5]% Damage to Frozen Enemies
+[10.5 - 17.5]% Fire Damage
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[10.5 - 17.5]% Lightning Damage
+[10 - 18] Maximum Mana
+[20 - 28] All Stats
+[18.5 - 39.5]% Basic Skill Damage
+Lucky Hit: Up to [4.4 - 10.0]% Chance to Execute Injured Non-Elites
+[12.5 - 19.5]% Core Skill Damage
+[10.5 - 17.5]% Critical Strike Damage
+[7.0 - 14.0]% Damage Over Time
+[16.5 - 23.5]% Damage to Close Enemies
+[5.0 - 12.0]% Damage to Crowd Controlled Enemies
+[16.5 - 23.5]% Damage to Distant Enemies
+[21.0 - 35.0]% Damage to Injured Enemies
+[16.5 - 23.5]% Damage to Slowed Enemies
+[16.5 - 23.5]% Damage to Stunned Enemies
+[21.0 - 42.0]% Overpower Damage
+[14.0 - 21.0]% Ultimate Skill Damage
+[9.8 - 19.6]% Vulnerable Damage
+[7.0 - 14.0]% Damage to Bleeding Enemies
+[7.0 - 14.0]% Damage while Berserking
+[38 - 52] Strength
+[12.6 - 21]% Critical Strike Damage with Earth Skills
+[12.6 - 21]% Critical Strike Damage with Werewolf Skills
+[7.0 - 14.0]% Damage to Poisoned Enemies
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[31.5 - 63.0]% Overpower Damage with Werebear Skills
+[38 - 52] Willpower
+[12.6 - 21]% Critical Strike Damage with Bone Skills
+[7.0 - 14.0]% Damage to Affected by Shadow Damage Over Time Enemies
+[38 - 52] Intelligence
+[12.6 - 21]% Critical Strike Damage with Imbued Skills
+[7.0 - 14.0]% Damage to Chilled Enemies
+[16.5 - 23.5]% Damage to Dazed Enemies
+[7.0 - 14.0]% Damage to Enemies Affected by Trap Skills
+[9.5 - 16.5]% Damage to Frozen Enemies
+[7.0 - 14.0]% Damage to Poisoned Enemies
+[38 - 52] Dexterity
+[12.5 - 19.5]% Core Skill Damage
+[7.0 - 14.0]% Damage to Burning Enemies
+[7.0 - 14.0]% Damage to Chilled Enemies
+[9.5 - 16.5]% Damage to Frozen Enemies
+[38 - 52] Intelligence
+[10.5 - 17.5]% Lightning Critical Strike Damage
+[40 - 56] All Stats
+[37.0 - 79.0]% Basic Skill Damage
+Lucky Hit: Up to [8.8 - 20.0]% Chance to Execute Injured Non-Elites
+[25.0 - 39.0]% Core Skill Damage
+[28.0 - 42.0]% Critical Strike Damage
+[14.0 - 28.0]% Damage Over Time
+[33.0 - 47.0]% Damage to Close Enemies
+[10.0 - 24.0]% Damage to Crowd Controlled Enemies
+[33.0 - 47.0]% Damage to Distant Enemies
+[42.0 - 70.0]% Damage to Injured Enemies
+[33.0 - 47.0]% Damage to Slowed Enemies
+[33.0 - 47.0]% Damage to Stunned Enemies
+[63.0 - 126.0]% Overpower Damage
+[28.0 - 42.0]% Ultimate Skill Damage
+[19.6 - 39.2]% Vulnerable Damage
+[14.0 - 28.0]% Damage to Bleeding Enemies
+[14.0 - 28.0]% Damage while Berserking
+[98 - 126] Strength
+[33.6 - 50.4]% Critical Strike Damage with Earth Skills
+[33.6 - 50.4]% Critical Strike Damage with Werewolf Skills
+[14.0 - 28.0]% Damage to Poisoned Enemies
+[28.0 - 42.0]% Lightning Critical Strike Damage
+[63.0 - 126.0]% Overpower Damage with Werebear Skills
+[98 - 126] Willpower
+[33.6 - 50.4]% Critical Strike Damage with Bone Skills
+[14.0 - 28.0]% Damage to Affected by Shadow Damage Over Time Enemies
+[98 - 126] Intelligence
+[33.6 - 50.4]% Critical Strike Damage with Imbued Skills
+[14.0 - 28.0]% Damage to Chilled Enemies
+[33.0 - 47.0]% Damage to Dazed Enemies
+[14.0 - 28.0]% Damage to Enemies Affected by Trap Skills
+[19.0 - 33.0]% Damage to Frozen Enemies
+[14.0 - 28.0]% Damage to Poisoned Enemies
+[98 - 126] Dexterity
+[25.0 - 39.0]% Core Skill Damage
+[14.0 - 28.0]% Damage to Burning Enemies
+[14.0 - 28.0]% Damage to Chilled Enemies
+[19.0 - 33.0]% Damage to Frozen Enemies
+[98 - 126] Intelligence
+[28.0 - 42.0]% Lightning Critical Strike Damage
+[10 - 18] All Stats
+[7.0 - 14.0]% Barrier Generation
+[4.4 - 10.0]% Basic Skill Attack Speed
+[18.5 - 39.5]% Basic Skill Damage
+Lucky Hit: Up to a [13.0 - 20.0]% Chance to Slow
+[4.2 - 7.0]% Cooldown Reduction
+[1.8 - 5.0]% Critical Strike Chance
+[3.0 - 8.0]% Critical Strike Chance Against Injured Enemies
+[5.0 - 12.0]% Crowd Control Duration Lucky Hit: Up to a 5% Chance to Heal [523 - 941] Life
+[28 - 42] Dexterity
+[7.0 - 14.0]% Healing Received
+[28 - 42] Intelligence
+[60 - 143] Life On Kill
+[3.2 - 6.0]% Lucky Hit Chance
+[3.2 - 6.0]% Lucky Hit Chance while You Have a Barrier
+Lucky Hit: Up to a 5% Chance to Restore [7.0 - 14.0]% Primary Resource
+[5.0 - 12.0]% Resource Generation
+[28 - 42] Strength
+[28 - 42] Willpower
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Poisoned
+[4.9 - 10.5]% Damage Reduction while Fortified
+[15.0 - 22.0]% Fortify Generation
+[4.2 - 7.0]% Spirit Cost Reduction
+[10.5 - 17.5]% Blood Orb Healing
+[7.0 - 14.0]% Damage for 4 Seconds After Picking Up a Blood Orb
+[7.0 - 14.0]% Damage Reduction from Affected By Shadow Damage Over Time Enemies
+[4.9 - 10.5]% Damage Reduction while Fortified
+[4.2 - 7.0]% Essence Cost Reduction
+[15.0 - 22.0]% Fortify Generation
+[17.5 - 31.5]% Maximum Minion Life
+[14.0 - 28.0]% Crackling Energy Damage
+[5.0 - 12.0]% Damage Reduction from Enemies That Are Burning
+[4.2 - 7.0]% Mana Cost Reduction
+[10 - 18] All Stats
+[7.0 - 14.0]% Barrier Generation
+[4.4 - 10.0]% Basic Skill Attack Speed
+[18.5 - 39.5]% Basic Skill Damage
+Lucky Hit: Up to a [13.0 - 20.0]% Chance to Slow
+[4.2 - 7.0]% Cooldown Reduction
+[1.8 - 5.0]% Critical Strike Chance
+[3.0 - 8.0]% Critical Strike Chance Against Injured Enemies
+[5.0 - 12.0]% Crowd Control Duration Lucky Hit: Up to a 5% Chance to Heal [523 - 941] Life
+[3.1 - 7.3]% Damage Reduction
+[7.0 - 14.0]% Damage Reduction from Close Enemies
+[9.5 - 16.5]% Damage Reduction from Distant Enemies
+[28 - 42] Dexterity
+[7.0 - 14.0]% Healing Received
+[28 - 42] Intelligence
+[60 - 143] Life On Kill
+[3.2 - 6.0]% Lucky Hit Chance
+[3.2 - 6.0]% Lucky Hit Chance while You Have a Barrier
+[358 - 776] Maximum Life
+Lucky Hit: Up to a 5% Chance to Restore [7.0 - 14.0]% Primary Resource
+[9.5 - 16.5]% Resistance to All Elements
+[5.0 - 12.0]% Resource Generation
+[28 - 42] Strength
+[418 - 836] Thorns
+[28 - 42] Willpower
+[10.5 - 17.5]% Blood Orb Healing
+[7.0 - 14.0]% Damage for 4 Seconds After Picking Up a Blood Orb
+[7.0 - 14.0]% Damage Reduction from Affected By Shadow Damage Over Time Enemies
+[4.9 - 10.5]% Damage Reduction while Fortified
+[4.2 - 7.0]% Essence Cost Reduction
+[15.0 - 22.0]% Fortify Generation
+[17.5 - 31.5]% Maximum Minion Life
+[7.0 - 14.0]% Minion Attack Speed

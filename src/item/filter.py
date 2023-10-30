@@ -48,17 +48,14 @@ with open("config/filter_aspect.yaml") as f:
     filter_aspects = config["Aspects"]
     # Sanity check on the aspects
     if filter_aspects is not None:
-        for filter_data in filter_aspects:
-            user_aspect_pool = [filter_data] if isinstance(filter_data, str) else filter_data
-            invalid_aspects = []
-            if user_aspect_pool is None:
-                continue
-            for aspect in user_aspect_pool:
-                aspect_name = aspect if isinstance(aspect, str) else aspect[0]
-                if aspect_name not in aspect_dict:
-                    invalid_aspects.append(aspect_name)
-            if invalid_aspects:
-                Logger.warning(f"Warning: Invalid Aspect: {', '.join(invalid_aspects)}")
+        invalid_aspects = []
+        user_aspect_pool = [filter_aspects] if isinstance(filter_aspects, str) else filter_aspects
+        for aspect in user_aspect_pool:
+            aspect_name = aspect if isinstance(aspect, str) else aspect[0]
+            if aspect_name not in aspect_dict:
+                invalid_aspects.append(aspect_name)
+        if invalid_aspects:
+            Logger.warning(f"Warning: Invalid Aspect: {', '.join(invalid_aspects)}")
 
 
 def should_keep(item: Item):
@@ -115,8 +112,8 @@ def should_keep(item: Item):
                             if (
                                 threshold is None
                                 or item.aspect.value is None
-                                or (condition == "larger" and item.aspect.value > threshold)
-                                or (condition == "smaller" and item.aspect.value < threshold)
+                                or (condition == "larger" and item.aspect.value >= threshold)
+                                or (condition == "smaller" and item.aspect.value <= threshold)
                             ):
                                 Logger.info(f"Matched with aspect filter: {filter_name}")
                                 return True

@@ -1,1 +1,22 @@
 Aspects:
+  - [accelerating_aspect, 25]
+  - [aspect_of_disobedience, 0.5]
+  - [aspect_of_might, 20]
+  - aspect_of_artful_initiative
+  - [aspect_of_the_expectant, 9]
+  - [aspect_of_the_umbral, 4]
+  - [edgemasters_aspect, 20]
+  - [rapid_aspect, 29]
+  - [aspect_of_corruption, 40]
+  - [aspect_of_elusive_menace, 7]
+  - [aspect_of_noxious_ice, 20]
+  - aspect_of_quickening_fog
+  - aspect_of_surprise
+  - [bladedancers_aspect, 14]
+  - [cheats_aspect, 24]
+  - [energizing_aspect, 7]
+  - frostbitten_aspect
+  - ravagers_aspect
+  - shadowslicer_aspect
+  - snap_frozen_aspect
+  - umbrous_aspect

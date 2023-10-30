@@ -8,6 +8,8 @@ from item.find_descr import find_descr
 from utils.roi_operations import compare_tuples
 from item.read_descr import read_descr
 from item.data.rarity import ItemRarity
+from item.filter import should_keep
+import keyboard
 
 
 def run_loot_filter():
@@ -18,7 +20,7 @@ def run_loot_filter():
             inv.open()
         occupied, _ = inv.get_item_slots()
         last_item_center = None
-        i = 0
+
         for item in occupied:
             # Find item descr
             start_time = time.time()
@@ -43,9 +45,8 @@ def run_loot_filter():
 
             # Detect contents of item descr
             if rarity == ItemRarity.Unique:
-                Logger.info("Unique item. Keeping.")
+                Logger.info("Matched unique.")
                 continue
-            start = time.time()
             item = read_descr(rarity, croped_descr)
             if item is None:
                 Logger.warning("Could not read item properly. Keeping it.")
@@ -53,16 +54,13 @@ def run_loot_filter():
                 cv2.waitKey(1)
                 wait(10)
                 continue
-            print(item.rarity)
-            print(item.type)
-            print(item.power)
-            for affix in item.affixes:
-                print("Affix", affix.type, affix.value)
-            if item.aspect is not None:
-                print("Aspect", item.aspect.type, item.aspect.value)
-            print("runtime:", time.time() - start)
-            print("--------------------------------------------")
-            print("")
+
+            # Check if we want to keep the item
+            start = time.time()
+            if not should_keep(item):
+                keyboard.send("space")
+                wait(0.15, 0.18)
+            print(time.time() - start)
 
         break
     Logger().info("Loot Filter done")

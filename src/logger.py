@@ -94,7 +94,6 @@ class Logger:
         Logger._logger_level = lvl
 
         if Logger.logger is not None:
-            Logger.logger.warning("WARNING: logger was setup already, deleting all previously existing handlers")
             for hdlr in Logger.logger.handlers[:]:  # remove all old handlers
                 Logger.logger.removeHandler(hdlr)
 

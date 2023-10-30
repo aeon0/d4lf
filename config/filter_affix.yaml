@@ -1,0 +1,25 @@
+Filters:
+  - Helm:
+      itemType: helm
+      minPower: 725
+      affixPool:
+        - [all_stats, 10]
+        - fire_resistance
+        - [lucky_hit_chance_while_you_have_a_barrier]
+        - [healing_received, 13.0]
+      minAffixCount: 3
+
+  - Weapon:
+      itemType: [sword, two-handed sword, helm]
+      minPower: 725
+      affixPool:
+        - all_stats
+        - basic_skill_damage
+        - critical_strike_damage
+      minAffixCount: 1
+
+  - Armor:
+      itemType: armor
+      minPower: 0
+      affixPool:
+      minAffixCount: 0

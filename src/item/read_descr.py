@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-import time
 from logger import Logger
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
@@ -10,7 +9,6 @@ from item.models import Item
 from template_finder import search
 from utils.ocr.read import image_to_text
 from utils.image_operations import crop
-from utils.roi_operations import fit_roi_to_window_size
 import re
 import json
 from rapidfuzz import process
@@ -175,10 +173,6 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         dy = bottom_limit - ab[1]
         roi_full_aspect = [ab[0] + 7, max(0, ab[1] - 16), w - 30 - ab[0], dy]
         img_full_aspect = crop(img_item_descr, roi_full_aspect)
-
-        x, y, wh, hh = roi_full_aspect
-        # cv2.rectangle(img_item_descr, (x, y), (x + wh, y + hh), (255, 0, 0))
-
         text_aspect = _find_text_lines(img_full_aspect)
         text_aspect = sorted(text_aspect, key=lambda roi: roi[1])  # sort by y coordinate
         text_aspect = [roi for roi in text_aspect if roi[0] <= 20]  # filters out stuff like required level text on the right
@@ -194,7 +188,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         found_value = _find_number(concatenated_str)
 
         if found_key is not None:
-            item.affixes.append(Aspect(found_key, concatenated_str, found_value))
+            item.aspect = Aspect(found_key, concatenated_str, found_value)
         else:
             Logger.error(f"Could not find aspect: {cleaned_str}")
             return None

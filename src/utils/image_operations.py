@@ -4,12 +4,8 @@ from typing import Optional
 
 import cv2
 import numpy as np
-from cv2 import dnn_superres
 
 from logger import Logger
-
-SUPERSCALE_MODEL = f"assets/EDSR_x2.pb"
-SUPPORTED_SCALES = {2}
 
 
 class ThresholdTypes(Enum):
@@ -199,26 +195,6 @@ def overlay_image(image1: np.ndarray, image2: np.ndarray, x_offset: int, y_offse
                 combined_image[y, x] = image2[i, j]
 
     return combined_image
-
-
-def upscale(img: np.ndarray, scale: float = 1, superscale: bool = False) -> np.ndarray:
-    """
-    Upscale the given image using either OpenCV's resize or a DNN super-resolution model.
-    :param img: The input image to upscale.
-    :param scale: The scaling factor.
-    :param superscale: Whether to use the DNN super-resolution model.
-    :return: The upscaled image.
-    """
-    if scale == 1:
-        return img
-    if superscale and scale in SUPPORTED_SCALES:
-        sr = dnn_superres.DnnSuperResImpl_create()
-        sr.readModel(SUPERSCALE_MODEL)
-        sr.setModel("edsr", scale)
-        return sr.upsample(img)
-    elif superscale:
-        Logger.warning(f"Superscale with scale={scale} is not supported by model. Using OpenCV resize instead.")
-    return cv2.resize(img, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
 
 
 def get_typographic_lines(img: np.ndarray, should_invert: bool = False) -> tuple[int, int, int, int]:

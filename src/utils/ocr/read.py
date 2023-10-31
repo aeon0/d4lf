@@ -2,9 +2,7 @@ import cv2
 import numpy as np
 from tesserocr import OEM, PyTessBaseAPI
 
-from utils.image_operations import upscale
 from utils.ocr.models import OcrResult
-from utils.ocr.text_correction import OcrCorrector
 
 TESSDATA_PATH = "assets/tessdata"
 
@@ -44,27 +42,6 @@ def _strip_new_lines(original_text: str, psm: int) -> str:
     return new_text
 
 
-def _get_text_from_img(img: np.ndarray, psm: int, correct_text: bool = True) -> OcrResult:
-    """
-    Extract text from the given image using Tesseract.
-    :param img: The input image.
-    :param psm: The PSM mode to use.
-    :return: The OCR result.
-    """
-    API.SetImageBytes(*_img_to_bytes(img))
-    original_text = API.GetUTF8Text().strip()
-    text = _strip_new_lines(original_text, psm)
-    res = OcrResult(
-        original_text=original_text,
-        text=text,
-        word_confidences=API.AllWordConfidences(),
-        mean_confidence=API.MeanTextConf(),
-    )
-    if correct_text:
-        res = OcrCorrector(res, should_check_word_list=False).process_result()
-    return res
-
-
 def image_to_text(img: np.ndarray) -> OcrResult:
     """
     Extract text from the entire image.
@@ -74,6 +51,14 @@ def image_to_text(img: np.ndarray) -> OcrResult:
     :param scale: The scaling factor for the image.
     :return: The OCR result.
     """
-    img = upscale(img, scale=1)
-    res = _get_text_from_img(img, 3)
+    psm = 3
+    API.SetImageBytes(*_img_to_bytes(img))
+    original_text = API.GetUTF8Text().strip()
+    text = _strip_new_lines(original_text, psm)
+    res = OcrResult(
+        original_text=original_text,
+        text=text,
+        word_confidences=API.AllWordConfidences(),
+        mean_confidence=API.MeanTextConf(),
+    )
     return res

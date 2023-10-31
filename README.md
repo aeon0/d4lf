@@ -87,3 +87,8 @@ To ignore certain code parts from formatting
 # ...
 ```
 Setup VS Code by using the black formater extension. Also turn on "trim trailing whitespaces" is VS Code settings.
+
+## Credits
+- Icon based of: [CarbotAnimations](https://www.youtube.com/carbotanimations/about)
+- Some of the OCR code is originally from [@gleed](https://github.com/aliig). Good guy.
+- Names and textures for matching from [Blizzard](https://www.blizzard.com)

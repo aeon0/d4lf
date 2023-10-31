@@ -1,6 +1,6 @@
 # ![logo](assets/logo.png)
 
-Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions join the [discord](https://discord.gg/4rG6yD3dnD) or use github issues.
+Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/4rG6yD3dnD) or use github issues.
 
 @Blizzard, please dont take this away from us. I can not bear to look at another affix...
 
@@ -26,7 +26,7 @@ The config folder contains:
 
 ## How to filter
 ### Aspects
-In [config/filter_aspect.yaml](config/filter_aspect.yaml) any aspects can be added in the format of `[ASPECT_KEY, THERSHOLD, CONDITON]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
+In [config/filter_aspect.yaml](config/filter_aspect.yaml) any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
 
 For example:
 ```yaml
@@ -39,7 +39,7 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THERSHOLD, CONDITON]` as described above. Aditionally it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json)
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json)
 
 ```yaml
 Filters:
@@ -85,4 +85,4 @@ To ignore certain code parts from formatting
 # fmt: skip
 # ...
 ```
-Setup vs-code by using the black formater extension. Also turn on "trim trailing whitespaces" is vs-code settings.
+Setup VS Code by using the black formater extension. Also turn on "trim trailing whitespaces" is VS Code settings.

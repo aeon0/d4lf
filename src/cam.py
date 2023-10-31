@@ -1,8 +1,10 @@
 import numpy as np
+import os
 import threading
 from mss import mss
 import time
 from utils.misc import wait, convert_args_to_numpy
+from logger import Logger
 
 cached_img_lock = threading.Lock()
 
@@ -14,6 +16,7 @@ class Cam:
     window_roi: dict = {"top": 0, "left": 0, "width": 0, "height": 0}
     monitor_x_range: tuple[int] = None
     monitor_y_range: tuple[int] = None
+    res_key = ""
 
     _initialized: bool = False
     _instance = None
@@ -33,6 +36,11 @@ class Cam:
         ):
             return
         print(f"Set offsets: left {offset_x}px, top {offset_y}px, width {width}px, height {height}px")
+        self.res_key = f"{width}_{height}"
+        if self.res_key not in ["1920_1080"]:
+            Logger.error(f"The resoltuion: {self.res_key} is not supported.")
+            os._exit(0)
+
         self.window_roi["top"] = offset_y
         self.window_roi["left"] = offset_x
         self.window_roi["width"] = width

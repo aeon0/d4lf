@@ -1,6 +1,7 @@
 import keyboard
 import os
 import threading
+from utils.window import find_and_set_window_position
 from beautifultable import BeautifulTable
 import logging
 import traceback
@@ -8,11 +9,12 @@ from utils.process_handler import safe_exit
 from version import __version__
 from config import Config
 from logger import Logger
-from utils.window import find_and_set_window_position
 from loot_filter import run_loot_filter
 
 
 def main():
+    find_and_set_window_position()
+
     # Create folders for logging stuff
     for dir_name in ["log/screenshots", "log/error"]:
         os.makedirs(dir_name, exist_ok=True)
@@ -23,8 +25,6 @@ def main():
         Logger.init(logging.DEBUG)
     else:
         print(f"ERROR: Unkown log_lvl {Config().advanced_options['log_lvl']}. Must be one of [info, debug]")
-
-    find_and_set_window_position()
 
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()

@@ -7,7 +7,7 @@ dependencies:
   - pywin32
   - pip
   - pkg-config
-  - tesseract=5.2.0
+  - tesseract=5.3.2
   - rapidfuzz
   - pip:
     - pyinstaller
@@ -34,4 +34,4 @@ dependencies:
     - black
     - pre-commit
     - nltk
-    - dependencies/tesserocr-2.5.2-cp311-cp311-win_amd64.whl
+    - dependencies/tesserocr-2.6.0-cp311-cp311-win_amd64.whl

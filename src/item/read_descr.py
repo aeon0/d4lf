@@ -107,7 +107,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             if len(item_type.value) > max_length:
                 item.type = item_type
                 max_length = len(item_type.value)
-    # common mistake is that "Armor" is on a seperate line and can not be detected
+    # common mistake is that "Armor" is on a seperate line and can not be detected properly
     if item.type is None:
         if "chest" in concatenated_str:
             item.type = ItemType.Armor

@@ -34,7 +34,7 @@ def run_loot_filter():
                         screenshot("failed_descr_detection", img=img)
                     break
                 inv.hover_item(item)
-                wait(0.4)
+                wait(0.35)
                 img = Cam().grab()
                 found, top_left_center, rarity, croped_descr = find_descr(img, item.center)
                 if found:
@@ -58,15 +58,15 @@ def run_loot_filter():
                 continue
 
             # Detect contents of item descr
-            item = read_descr(rarity, croped_descr)
-            if item is None:
+            item_descr = read_descr(rarity, croped_descr)
+            if item_descr is None:
                 Logger.warning("Failed to read properties. Keeping it.")
                 continue
 
             # Check if we want to keep the item
-            if not should_keep(item):
+            if not should_keep(item_descr):
                 keyboard.send("space")
-                wait(0.15, 0.18)
+                wait(0.13, 0.14)
 
         break
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))

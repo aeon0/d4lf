@@ -9,6 +9,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 ### Game Settings
 - Supported resolutions: 1920x1080
 - Font size must be set to small in the Gameplay Settings
+- Game Language must be English
 
 ### Run
 - Execute d4lf.exe

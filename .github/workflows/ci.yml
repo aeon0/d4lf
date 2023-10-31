@@ -1,5 +1,5 @@
 name: D4H - CI
-on: workflow_dispatch
+on: [pull_request]
 env:
   # To force cache update
   CACHE_NUMBER: 1

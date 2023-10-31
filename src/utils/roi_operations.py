@@ -76,43 +76,6 @@ def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int
         return None
 
 
-def pad(
-    rectangle: tuple[int, int, int, int], pixels: int = 2, direction: str = "all", max_x: int = 1279, max_y: int = 719
-) -> tuple[int, int, int, int]:
-    """
-    Adjusts the shape of a rectangle by adding padding.
-    :param rectangle: Rectangle in the format (x, y, w, h).
-    :param pixels: Number of pixels to add in each direction.
-    :param direction: Direction to add padding to. Options are "left", "right", "up", "down", "width", "height", "all".
-    :param max_x: Maximum x value (typically screen resolution - 1).
-    :param max_y: Maximum y value (typically screen resolution - 1).
-    :return: Padded rectangle.
-    """
-    x, y, w, h = rectangle
-
-    if direction not in {"left", "right", "up", "down", "width", "height", "all"}:
-        print(f"Invalid direction: {direction}")
-        return rectangle
-
-    if direction in {"left", "width", "all"}:
-        x = max(0, x - pixels)
-    if direction in {"left", "right"}:
-        w = min(max_x - x, w + pixels)
-    if direction in {"up", "height", "all"}:
-        y = max(0, y - pixels)
-    if direction in {"up", "down"}:
-        h = min(max_y - y, h + pixels)
-    if direction in {"width", "all"}:
-        w = min(max_x - x, w + 2 * pixels)
-    if direction in {"height", "all"}:
-        h = min(max_y - y, h + 2 * pixels)
-    # enforce minimum w and h in case negative padding is used
-    w = max(w, 1)
-    h = max(h, 1)
-
-    return x, y, w, h
-
-
 def bounding_box(
     *args: list[tuple[int, int, int, int]] | tuple[int, int, int, int] | list[tuple[int, int]] | tuple[int, int]
 ) -> Optional[tuple[int, int, int, int]]:

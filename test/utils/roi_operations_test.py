@@ -1,4 +1,4 @@
-from utils.roi_operations import get_center, intersect, pad, bounding_box, is_in_roi
+from utils.roi_operations import get_center, intersect, bounding_box, is_in_roi
 
 
 def test_get_center():
@@ -18,30 +18,6 @@ def test_intersect():
     rects = [(2, 2, 2, 2), (5, 5, 2, 2)]
     intersection = intersect(rects)
     assert intersection is None
-
-
-def test_pad():
-    rectangle = (5, 5, 10, 10)
-    max_x, max_y = 20, 20
-
-    # Test with each valid direction
-    directions = {
-        "left": (3, 5, 12, 10),
-        "right": (5, 5, 12, 10),
-        "up": (5, 3, 10, 12),
-        "down": (5, 5, 10, 12),
-        "width": (3, 5, 14, 10),
-        "height": (5, 3, 10, 14),
-        "all": (3, 3, 14, 14),
-    }
-
-    for direction, expected in directions.items():
-        padded = pad(rectangle, 2, direction, max_x, max_y)
-        assert padded == expected, f"Failed for direction '{direction}'"
-
-    # Test with an invalid direction
-    padded = pad(rectangle, 2, "invalid_direction", max_x, max_y)
-    assert padded == rectangle
 
 
 def test_bounding_box():

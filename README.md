@@ -10,6 +10,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Supported resolutions: 1920x1080
 - Font size must be set to small in the Gameplay Settings
 - Game Language must be English
+- You can keep the Advanced Tooltips turned on. But the "Compare" should not be active so your current items do not show up.
 
 ### Run
 - Execute d4lf.exe

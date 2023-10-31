@@ -1,6 +1,6 @@
 # ![logo](assets/logo.png)
 
-Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions join the [discord]() or use github issues.
+Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions join the [discord](https://discord.gg/4rG6yD3dnD) or use github issues.
 
 @Blizzard, please dont take this away from us. I can not bear to look at another affix...
 

@@ -89,8 +89,12 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     roi_top = [15, 15, w - 30, seperator_short.matches[0].center[1] - 20]
     crop_top = crop(img_item_descr, roi_top)
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+    idx = None
     if "item power" in concatenated_str:
         idx = concatenated_str.index("item power")
+    elif "item" in concatenated_str:
+        idx = concatenated_str.index("item")
+    if idx is not None:
         preceding_word = concatenated_str[:idx].split()[-1]
         if preceding_word.isdigit():
             item.power = int(preceding_word)

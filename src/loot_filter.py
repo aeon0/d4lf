@@ -11,6 +11,7 @@ from item.data.rarity import ItemRarity
 from item.filter import should_keep
 import keyboard
 from utils.custom_mouse import mouse
+from utils.window import screenshot
 
 
 def run_loot_filter():
@@ -29,6 +30,8 @@ def run_loot_filter():
             while not found:
                 if time.time() - start_time > 6:
                     Logger.error("Could not detect item descr. Timeout reached. Continue")
+                    if img is not None:
+                        screenshot("failed_descr_detection", img=img)
                     break
                 inv.hover_item(item)
                 wait(0.4)

@@ -40,10 +40,13 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
         rarity = map_template_rarity[match.name.lower()]
         # find equipe template
         equip_roi = [match.region[0] - 30, match.region[1], item_descr_width, window_height]
-        equip = SearchArgs(ref=["item_descr_equip", "item_descr_equip_inactive"], roi=equip_roi, threshold=0.78)
-        if (res_equip := equip.detect()).success:
+        res_bottom = SearchArgs(ref=["item_descr_equip", "item_descr_equip_inactive"], roi=equip_roi, threshold=0.78).detect()
+        if not res_bottom.success:
+            res_bottom = SearchArgs(ref=["item_shift_link"], roi=equip_roi, threshold=0.78).detect()
+
+        if res_bottom.success:
             _, off_bottom_of_descr = Config().ui_offsets["equip_to_bottom"]
-            equip_match = res_equip.matches[0]
+            equip_match = res_bottom.matches[0]
             crop_roi = [
                 match.region[0],
                 match.region[1],

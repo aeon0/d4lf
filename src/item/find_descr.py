@@ -6,12 +6,13 @@ from template_finder import SearchArgs
 from utils.image_operations import crop
 from utils.roi_operations import fit_roi_to_window_size
 
-# TODO: Add common itemrarity
+
 map_template_rarity = {
     "item_unique_top_left": ItemRarity.Unique,
     "item_rare_top_left": ItemRarity.Rare,
     "item_leg_top_left": ItemRarity.Legendary,
     "item_magic_top_left": ItemRarity.Magic,
+    "item_common_top_left": ItemRarity.Common,
 }
 
 
@@ -19,7 +20,7 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
     item_descr_width, _ = Config().ui_offsets["item_descr"]
     _, window_height = Config().ui_pos["window_dimensions"]
 
-    refs = ["item_unique_top_left", "item_rare_top_left", "item_leg_top_left", "item_magic_top_left"]
+    refs = list(map_template_rarity.keys())
     res = None
 
     roi_left = copy(Config().ui_roi["rel_descr_search_left"])

@@ -1,47 +1,6 @@
 from utils.roi_operations import get_center, intersect, pad, bounding_box, to_grid, is_in_roi, translate
 
 
-def test_translate():
-    # Define the bounds
-    bounds = (1280, 720)
-
-    # Define test cases
-    test_cases = [
-        # Test moving within bounds
-        {
-            "roi": (100, 100, 200, 200),
-            "translation_vector": (100, 200),
-            "resize": False,
-            "expected": (200, 300, 200, 200),
-        },
-        # Test moving outside bounds without resizing
-        {
-            "roi": (100, 100, 100, 100),
-            "translation_vector": (2000, 2000),
-            "resize": False,
-            "expected": (1180, 620, 100, 100),  # Rectangle is moved back to fit within bounds
-        },
-        # Test moving outside bounds with resizing
-        {
-            "roi": (100, 100, 100, 100),
-            "translation_vector": (1100, 600),
-            "resize": True,
-            "expected": (1200, 700, 80, 20),  # Rectangle is resized to fit within bounds
-        },
-        # Test moving outside bounds with resizing 2
-        {
-            "roi": (100, 100, 100, 100),
-            "translation_vector": (1300, 800),
-            "resize": True,
-            "expected": (1279, 719, 1, 1),  # Rectangle is resized to fit within bounds
-        },
-    ]
-
-    # Run test cases
-    for test_case in test_cases:
-        assert translate(*test_case["translation_vector"], test_case["roi"], *bounds, resize=test_case["resize"]) == test_case["expected"]
-
-
 def test_get_center():
     # Test with a rectangle
     roi = (2, 2, 6, 6)

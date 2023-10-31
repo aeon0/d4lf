@@ -4,12 +4,9 @@ import threading
 import numpy as np
 import os
 from logger import Logger
+from cam import Cam
 
 config_lock = threading.Lock()
-
-
-def _default_iff(value, iff, default=None):
-    return default if value == iff else value
 
 
 class Config:
@@ -63,7 +60,7 @@ class Config:
             "custom": {"parser": configparser.ConfigParser(), "vars": {}},
         }
         self.configs["params"]["parser"].read("config/params.ini")
-        self.configs["game"]["parser"].read("config/game.ini")
+        self.configs["game"]["parser"].read(f"config/game_{Cam().res_key}.ini")
 
         if os.environ.get("RUN_ENV") != "test" and os.path.exists("config/custom.ini"):
             try:

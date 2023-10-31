@@ -45,46 +45,6 @@ def fit_roi_to_window_size(roi, size):
     return success, updated_roi
 
 
-def translate(
-    x: int,
-    y: int,
-    roi: tuple[int, int, int, int],
-    x_bound: int = Config().ui_pos["window_dimensions"][0],
-    y_bound: int = Config().ui_pos["window_dimensions"][1],
-    resize: bool = True,
-) -> tuple[int, int, int, int]:
-    x_min, y_min, width, height = roi
-    new_x_min = max(0, x_min + x)
-    new_y_min = max(0, y_min + y)
-
-    new_width = width
-    new_height = height
-    exceeded_bounds = False
-
-    if new_x_min + new_width > x_bound:
-        exceeded_bounds = True
-        if resize:
-            new_width = max(1, x_bound - new_x_min)
-            new_x_min = x_bound - new_width
-        else:
-            new_x_min = x_bound - width
-
-    if new_y_min + new_height > y_bound:
-        exceeded_bounds = True
-        if resize:
-            new_height = max(1, y_bound - new_y_min)
-            new_y_min = y_bound - new_height
-        else:
-            new_y_min = y_bound - height
-
-    new_roi = (new_x_min, new_y_min, new_width, new_height)
-
-    if exceeded_bounds:
-        Logger.debug(f"Translation ({x},{y}) exceeds bounds for input roi {roi}. Output roi is {new_roi}")
-
-    return new_roi
-
-
 def get_center(roi: tuple[int, int, int, int]) -> tuple[int, int]:
     """
     Finds the center of a region of interest.

@@ -1,5 +1,4 @@
 import time
-import cv2
 from utils.misc import wait
 from logger import Logger
 from cam import Cam

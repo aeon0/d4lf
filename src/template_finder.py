@@ -102,16 +102,11 @@ class SearchArgs:
         return change
 
 
-TEMPLATE_PATHS = [
-    "assets\\templates",
-]
-
-
 @cache
 def stored_templates() -> dict[Template]:
     paths = []
     templates = {}
-    for path in TEMPLATE_PATHS:
+    for path in [f"assets\\templates_{Cam().res_key}"]:
         paths += list_files_in_folder(path)
     for file_path in paths:
         file_name: str = os.path.basename(file_path)

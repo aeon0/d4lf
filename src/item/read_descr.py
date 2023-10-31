@@ -189,6 +189,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     if rarity == ItemRarity.Legendary:
         ab = aspect_bullets.matches[0].center
         bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else seperator_long.matches[-1].center[1]
+        # in case of scroll down is visible the bottom seperator is not visible
+        if bottom_limit < ab[1]:
+            bottom_limit = img_item_descr.shape[0]
         dy = bottom_limit - ab[1]
         roi_full_aspect = [ab[0] + 7, max(0, ab[1] - 16), w - 30 - ab[0], dy]
         img_full_aspect = crop(img_item_descr, roi_full_aspect)
@@ -203,7 +206,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         concatenated_str = " ".join(all_text).lower()
         cleaned_str = _clean_str(concatenated_str)
 
-        found_key = _closest_match(cleaned_str, aspect_dict, min_score=70)
+        found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
         found_value = _find_number(concatenated_str)
 
         if found_key is not None:

@@ -10,6 +10,7 @@ from item.read_descr import read_descr
 from item.data.rarity import ItemRarity
 from item.filter import should_keep
 import keyboard
+from utils.custom_mouse import mouse
 
 
 def run_loot_filter():
@@ -65,4 +66,5 @@ def run_loot_filter():
                 wait(0.15, 0.18)
 
         break
+    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Loot Filter done")

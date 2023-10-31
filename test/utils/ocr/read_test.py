@@ -1,4 +1,4 @@
-from utils.ocr.read import image_to_text, segmented_image_to_text
+from utils.ocr.read import image_to_text
 import cv2
 
 

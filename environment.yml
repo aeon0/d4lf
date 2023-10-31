@@ -7,11 +7,11 @@ dependencies:
   - pywin32
   - pip
   - pkg-config
-  - tesseract=5.3.2
-  - rapidfuzz
   - pip:
     - pyinstaller
-    - opencv-contrib-python==4.8.0.74
+    - opencv-python==4.8.1.78
+    - pytesseract==0.3.10
+    - rapidfuzz
     - mss
     - numpy
     - mouse
@@ -29,9 +29,6 @@ dependencies:
     - Pillow
     - typing_extensions
     - colorama
-    - dataclasses-json
-    - numba
     - black
     - pre-commit
-    - nltk
     - dependencies/tesserocr-2.6.0-cp311-cp311-win_amd64.whl

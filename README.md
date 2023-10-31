@@ -10,6 +10,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Supported resolutions: 1920x1080
 - Font size must be set to small in the Gameplay Settings
 - Game Language must be English
+- You can keep the Advanced Tooltips turned on. But the "Compare" should not be active so your current items do not show up.
 
 ### Run
 - Execute d4lf.exe
@@ -87,3 +88,8 @@ To ignore certain code parts from formatting
 # ...
 ```
 Setup VS Code by using the black formater extension. Also turn on "trim trailing whitespaces" is VS Code settings.
+
+## Credits
+- Icon based of: [CarbotAnimations](https://www.youtube.com/carbotanimations/about)
+- Some of the OCR code is originally from [@gleed](https://github.com/aliig). Good guy.
+- Names and textures for matching from [Blizzard](https://www.blizzard.com)

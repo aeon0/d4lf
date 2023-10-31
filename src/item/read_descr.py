@@ -32,6 +32,10 @@ def _closest_match(target, candidates, min_score=89):
     return None
 
 
+def _closest_to(value, choices):
+    return min(choices, key=lambda x: abs(x - value))
+
+
 def _find_number(s):
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
     if "Up to a 5%" in s:
@@ -140,27 +144,51 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 
     # Affixes
     # =====================================
-    affix_spaces = affix_bullets.matches.copy()
+    # Affix starts at first bullet point
+    affix_start = [affix_bullets.matches[0].center[0] + 7, affix_bullets.matches[0].center[1] - 16]
+    # Affix ends at aspect bullet, empty sockets or seperator line
     if rarity == ItemRarity.Legendary:
-        affix_spaces.append(aspect_bullets.matches[0])
+        bottom_limit = aspect_bullets.matches[0].center[1]
     elif len(empty_sockets.matches) > 0:
-        affix_spaces.append(empty_sockets.matches[0])
+        bottom_limit = empty_sockets.matches[0].center[1]
     else:
-        affix_spaces.append(seperator_long.matches[-1])
-    for i in range(1, len(affix_spaces)):
-        next = affix_spaces[i].center
-        curr = affix_spaces[i - 1].center
-        dy = next[1] - curr[1] + 5
-        roi_full_affix = [curr[0] + 7, max(0, curr[1] - 16), w - 30 - curr[0], dy]
-        img_full_affix = crop(img_item_descr, roi_full_affix)
-        concatenated_str = image_to_text(img_full_affix).text.lower().replace("\n", " ")
-        cleaned_str = _clean_str(concatenated_str)
+        bottom_limit = seperator_long.matches[-1].center[1]
+    if bottom_limit < affix_start[1]:
+        bottom_limit = img_item_descr.shape[0]
+    # Calc full region of all affixes
+    affix_width = w - affix_start[0] - 30
+    affix_height = bottom_limit - affix_start[1] - 7
+    full_affix_region = [*affix_start, affix_width, affix_height]
+    cropp_full_affix = crop(img_item_descr, full_affix_region)
+    affix_lines = image_to_text(cropp_full_affix).text.lower().split("\n")
+    affix_lines = [line for line in affix_lines if line]  # remove empty lines
+    # split affix text based on distance of affix bullet points
+    delta_y_arr = [
+        affix_bullets.matches[i].center[1] - affix_bullets.matches[i - 1].center[1] for i in range(1, len(affix_bullets.matches))
+    ]
+    delta_y_arr.append(None)
+    line_idx = 0
+    for dy in delta_y_arr:
+        if dy is None:
+            combined_lines = "\n".join(affix_lines[line_idx:])
+        else:
+            closest_value = _closest_to(dy, [25, 50, 75])
+            if closest_value == 25:
+                lines_to_add = 1
+            elif closest_value == 50:
+                lines_to_add = 2
+            else:  # closest_value == 75
+                lines_to_add = 3
+            combined_lines = "\n".join(affix_lines[line_idx : line_idx + lines_to_add])
+        line_idx += lines_to_add
+        combined_lines = combined_lines.replace("\n", " ")
+        cleaned_str = _clean_str(combined_lines)
 
         found_key = _closest_match(cleaned_str, affix_dict)
-        found_value = _find_number(concatenated_str)
+        found_value = _find_number(combined_lines)
 
         if found_key is not None:
-            item.affixes.append(Affix(found_key, concatenated_str, found_value))
+            item.affixes.append(Affix(found_key, combined_lines, found_value))
         else:
             Logger.warning(f"Could not find affix: {cleaned_str}")
             screenshot("failed_affixes", img=img_item_descr)

@@ -5,9 +5,8 @@ from cam import Cam
 from config import Config
 from ui.menu import Menu
 from utils.image_operations import crop, threshold
-from utils.roi_operations import get_center, pad, to_grid
+from utils.roi_operations import get_center, to_grid
 from utils.custom_mouse import mouse
-from utils.misc import wait
 
 
 @dataclass
@@ -46,7 +45,14 @@ class InventoryBase(Menu):
         threshold_strength = 40
 
         for _, slot_roi in enumerate(grid):
-            sub_roi = pad(rectangle=slot_roi, pixels=-4, direction="all")
+            x, y, w, h = slot_roi
+            # Pad by -4 pixels
+            x_new = x + 4
+            y_new = y + 4
+            w_new = w - 8
+            h_new = h - 8
+            # New ROI
+            sub_roi = [x_new, y_new, w_new, h_new]
             slot_img = crop(img, sub_roi)
             thresholded_slot = threshold(slot_img, threshold=threshold_strength)
             # check if there are any white pixels in thresholded_slot

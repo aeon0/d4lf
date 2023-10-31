@@ -1,4 +1,4 @@
-name: D4H - CI
+name: D4LF - CI
 on: [pull_request]
 env:
   # To force cache update
@@ -15,7 +15,7 @@ jobs:
         with:
           miniforge-variant: Mambaforge
           miniforge-version: latest
-          activate-environment: d4h
+          activate-environment: d4lf
           python-version: '3.11'
           use-mamba: true
 
@@ -29,7 +29,7 @@ jobs:
 
       - name: Update environment
         run:
-          mamba env update -n d4h -f
+          mamba env update -n d4lf -f
           environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
@@ -42,14 +42,14 @@ jobs:
       - name: Pytest & Coverage
         shell: powershell
         run: |
-          C:\Miniconda\condabin\conda.bat activate d4h
+          C:\Miniconda\condabin\conda.bat activate d4lf
           python -c "import sys; print(sys.version)"
           coverage run --source=./src -m pytest -v -s
 
       - name: Coverage Report Generation
         shell: powershell
         run: |
-          C:\Miniconda\condabin\conda.bat activate d4h
+          C:\Miniconda\condabin\conda.bat activate d4lf
           coverage xml
 
       - name: Lint black formatting

@@ -43,16 +43,20 @@ def run_loot_filter():
             if not found:
                 continue
 
-            # Detect contents of item descr
+            # Hardcoded rarity filters
             if rarity == ItemRarity.Unique:
                 Logger.info("Matched unique.")
                 continue
+            if rarity in [ItemRarity.Common, ItemRarity.Magic]:
+                Logger.info(f"Discard item of rarity: {rarity}")
+                keyboard.send("space")
+                wait(0.15, 0.18)
+                continue
+
+            # Detect contents of item descr
             item = read_descr(rarity, croped_descr)
             if item is None:
                 Logger.warning("Could not read item properly. Keeping it.")
-                cv2.imwrite("issue.png", croped_descr)
-                cv2.waitKey(1)
-                wait(10)
                 continue
 
             # Check if we want to keep the item

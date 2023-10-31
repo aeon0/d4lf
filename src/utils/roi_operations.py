@@ -80,7 +80,7 @@ def translate(
     new_roi = (new_x_min, new_y_min, new_width, new_height)
 
     if exceeded_bounds:
-        Logger.warning(f"Warning, translation ({x},{y}) exceeds bounds for input roi {roi}. Output roi is {new_roi}")
+        Logger.debug(f"Translation ({x},{y}) exceeds bounds for input roi {roi}. Output roi is {new_roi}")
 
     return new_roi
 

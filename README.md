@@ -12,7 +12,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 
 ### Run
 - Execute d4lf.exe
-- When ingame and you want to filter items in your inventory. Press F11
+- When ingame and you want to filter items in your inventory. Press F11 to start the filter process. To stop immediately, press F12.
 - All items that do not match any of your filter configs will be marked as junk
 
 Note: If the item description doesnt show while hovering and is very laggy, try to move to another area without any events and less people around.
@@ -39,7 +39,7 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above and are added to [config/filter_affixes.yaml](config/filter_affixes.yaml). Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json)
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above and are added to [config/filter_affixes.yaml](config/filter_affixes.yaml). Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are discarded as junk by default.
 
 ```yaml
 Filters:

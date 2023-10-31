@@ -15,7 +15,9 @@ aspect_dict = dict()
 with open("assets/aspects.json", "r") as f:
     aspect_dict = json.load(f)
 
-affix_filename = "config/custom_filter_affixes.yaml" if os.path.exists("custom_filter_affixes.yaml") else "config/filter_affixes.yaml"
+affix_filename = (
+    "config/custom_filter_affixes.yaml" if os.path.exists("config/custom_filter_affixes.yaml") else "config/filter_affixes.yaml"
+)
 with open(affix_filename) as f:
     config = yaml.safe_load(f)
     filters = config["Filters"]
@@ -45,7 +47,9 @@ with open(affix_filename) as f:
             if invalid_affixes:
                 Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
 
-aspect_filename = "config/custom_filter_aspects.yaml" if os.path.exists("custom_filter_aspects.yaml") else "config/filter_aspects.yaml"
+aspect_filename = (
+    "config/custom_filter_aspects.yaml" if os.path.exists("config/custom_filter_aspects.yaml") else "config/filter_aspects.yaml"
+)
 with open(aspect_filename) as f:
     config = yaml.safe_load(f)
     filter_aspects = config["Aspects"]
@@ -100,7 +104,8 @@ def should_keep(item: Item):
                         matching_affix_count += 1
 
             if matching_affix_count >= filter_min_affix_count:
-                Logger.info(f"Matched with affix filter: {filter_name}")
+                affix_debug_msg = [affix.type for affix in item.affixes]
+                Logger.info(f"Matched with affix filter: {filter_name}: {affix_debug_msg}")
                 return True
 
             if item.aspect:
@@ -118,7 +123,7 @@ def should_keep(item: Item):
                                 or (condition == "larger" and item.aspect.value >= threshold)
                                 or (condition == "smaller" and item.aspect.value <= threshold)
                             ):
-                                Logger.info(f"Matched with aspect filter: {filter_name}")
+                                Logger.info(f"Matched with aspect filter: {filter_name}: {item.aspect.type}")
                                 return True
 
     return False

@@ -74,7 +74,7 @@ def crop(img: np.ndarray, roi: tuple[int, int, int, int]) -> np.ndarray:
 
     # Ensure the ROI is within the dimensions of the image
     if x < 0 or y < 0 or x + w > width or y + h > height:
-        Logger.warning(f"The region of interest {roi} is not within the dimensions of the image {img.shape[:2]}.")
+        Logger.debug(f"The region of interest {roi} is not within the dimensions of the image {img.shape[:2]}.")
         return img
     return img[y : y + h, x : x + w]
 

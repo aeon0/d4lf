@@ -1,6 +1,7 @@
 from item.models import Item
 import yaml
 import json
+import os
 from logger import Logger
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
@@ -14,7 +15,8 @@ aspect_dict = dict()
 with open("assets/aspects.json", "r") as f:
     aspect_dict = json.load(f)
 
-with open("config/filter_affix.yaml") as f:
+affix_filename = "config/custom_filter_affixes.yaml" if os.path.exists("custom_filter_affixes.yaml") else "config/filter_affixes.yaml"
+with open(affix_filename) as f:
     config = yaml.safe_load(f)
     filters = config["Filters"]
     # Sanity check on the item types
@@ -43,7 +45,8 @@ with open("config/filter_affix.yaml") as f:
             if invalid_affixes:
                 Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
 
-with open("config/filter_aspect.yaml") as f:
+aspect_filename = "config/custom_filter_aspects.yaml" if os.path.exists("custom_filter_aspects.yaml") else "config/filter_aspects.yaml"
+with open(aspect_filename) as f:
     config = yaml.safe_load(f)
     filter_aspects = config["Aspects"]
     # Sanity check on the aspects

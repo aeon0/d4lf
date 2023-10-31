@@ -34,3 +34,5 @@ pickit_screenshots/
 *.log
 log/
 d4h_*
+custom_filter_aspects.yaml
+custom_filter_affixes.yaml

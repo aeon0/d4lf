@@ -1,3 +1,7 @@
+# find all aspect keys in "assets/aspects.json"
+# Format is: [KEY, THRESHOLD, CONDITON]
+# CONDITON can be "larger" or "smaller" and defaults to "larger"
+
 Aspects:
   - [accelerating_aspect, 25]
   - [aspect_of_disobedience, 0.5]

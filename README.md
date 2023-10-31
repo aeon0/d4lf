@@ -19,14 +19,14 @@ Note: If the item description doesnt show while hovering and is very laggy, try 
 
 ### Configs
 The config folder contains:
-- __filter_aspect.yaml__: Filter settings for aspects.
-- __filter_affix.yaml__: Filter settings for affixes.
+- __filter_aspects.yaml__: Filter settings for aspects.
+- __filter_affixes.yaml__: Filter settings for affixes.
 - __params.ini__: Different hotkey settings. Mainly you want to adjust your hotkey to open the inventory.
 - __game.ini__: Settings regarding color thresholds and image positions. You dont need to touch this.
 
 ## How to filter
 ### Aspects
-In [config/filter_aspect.yaml](config/filter_aspect.yaml) any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
+In [config/filter_aspects.yaml](config/filter_aspects.yaml) any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
 
 For example:
 ```yaml
@@ -39,7 +39,7 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json)
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above and are added to [config/filter_affixes.yaml](config/filter_affixes.yaml). Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json)
 
 ```yaml
 Filters:
@@ -56,7 +56,7 @@ Filters:
       minAffixCount: 3
 ```
 
-Note: If an itemType is not included in your filters, it will keep all of the items of that type. Thus, if you do not specify anything for itemType=gloves, all gloves will be kept.
+Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! There is an example of a "TakeAll" filter in the filter_affixes.yaml. To keep an item type regardless of affixes and itemPower, add it there.
 
 ## Develop
 

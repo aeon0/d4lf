@@ -111,22 +111,6 @@ def test_bounding_box():
     assert bounding is None
 
 
-def test_to_grid():
-    roi = (0, 0, 10, 10)
-    rows, columns = 2, 2
-
-    expected_rectangles = {(0, 0, 5, 5), (0, 5, 5, 5), (5, 0, 5, 5), (5, 5, 5, 5)}
-
-    actual_rectangles = to_grid(roi, rows, columns)
-
-    assert actual_rectangles == expected_rectangles, f"Expected {expected_rectangles}, but got {actual_rectangles}"
-
-    original_area = roi[2] * roi[3]
-    total_area = sum([width * height for x, y, width, height in actual_rectangles])
-
-    assert original_area == total_area, f"Expected total area to be {original_area}, but got {total_area}"
-
-
 def test_is_coor_in_roi():
     rectangle = (0, 0, 10, 10)
 

@@ -23,7 +23,7 @@ with open("assets/aspects.json", "r") as f:
     aspect_dict = json.load(f)
 
 
-def _closest_match(target, candidates, min_score=90):
+def _closest_match(target, candidates, min_score=89):
     keys, values = zip(*candidates.items())
     result = process.extractOne(target, values)
     if result and result[1] >= min_score:
@@ -42,7 +42,7 @@ def _find_text_lines(img: np.ndarray):
     cont2, _ = cv2.findContours(pimg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for c in cont2:
         x2, y2, w2, h2 = cv2.boundingRect(c)
-        if 16 < w2 < 350 and 9 < h2 < 25:
+        if 16 < w2 < 350 and 9 < h2 < 28:
             roi = [
                 max(0, int(x2) - 7),
                 max(0, int(y2) - 6),
@@ -79,7 +79,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 
     # Detect textures (1)
     # =====================================
-    if not (seperator_long := search("item_seperator_long", img_item_descr, threshold=0.87, use_grayscale=True, mode="all")).success:
+    refs = ["item_seperator_long", "item_seperator_long_2"]
+    if not (seperator_long := search(refs, img_item_descr, threshold=0.85, use_grayscale=True, mode="all")).success:
         Logger.warning("Could not detect item_seperator_long.")
         screenshot("failed_seperator_long", img=img_item_descr)
         return None
@@ -89,7 +90,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     for match in seperator_long.matches:
         x, y, w, h = match.region
         cv2.rectangle(masked_search_img, (x, y), (x + w, y + h), (0, 0, 0), -1)
-    if not (seperator_short := search("item_seperator_short", masked_search_img, threshold=0.67, use_grayscale=True, mode="best")).success:
+    refs = ["item_seperator_short", "item_seperator_short_2"]
+    if not (seperator_short := search(refs, masked_search_img, threshold=0.75, use_grayscale=True, mode="best")).success:
         Logger.warning("Could not detect item_seperator_short.")
         screenshot("failed_seperator_short", img=masked_search_img)
         return None

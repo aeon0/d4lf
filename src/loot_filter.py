@@ -27,7 +27,7 @@ def run_loot_filter():
             start_time = time.time()
             found = False
             while not found:
-                if time.time() - start_time > 10:
+                if time.time() - start_time > 6:
                     Logger.error("Could not detect item descr. Timeout reached. Continue")
                     break
                 inv.hover_item(item)
@@ -57,7 +57,7 @@ def run_loot_filter():
             # Detect contents of item descr
             item = read_descr(rarity, croped_descr)
             if item is None:
-                Logger.warning("Could not read item properly. Keeping it.")
+                Logger.warning("Failed to read properties. Keeping it.")
                 continue
 
             # Check if we want to keep the item

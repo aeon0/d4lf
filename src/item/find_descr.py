@@ -19,7 +19,7 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
     item_descr_width, _ = Config().ui_offsets["item_descr"]
     _, window_height = Config().ui_pos["window_dimensions"]
 
-    refs = ["item_unique_top_left", "item_rare_top_left", "item_leg_top_left"]
+    refs = ["item_unique_top_left", "item_rare_top_left", "item_leg_top_left", "item_magic_top_left"]
     res = None
 
     roi_left = copy(Config().ui_roi["rel_descr_search_left"])

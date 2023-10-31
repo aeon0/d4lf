@@ -13,10 +13,11 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - You can keep the Advanced Tooltips turned on. But the "Compare" should not be active so your current items do not show up.
 
 ### Run
-- Execute d4lf.exe
+- Execute d4lf.exe. Diablo 4 must be running when starting to get the window resolution.
 - When ingame and you want to filter items in your inventory. Press F11 to start the filter process. To stop immediately, press F12.
 - All items that do not match any of your filter configs will be marked as junk
-
+- Note: If you get an error and it disappears very quickly, run the .exe in the command line.
+ 
 Note: If the item description doesnt show while hovering and is very laggy, try to move to another area without any events and less people around.
 
 ### Configs

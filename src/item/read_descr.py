@@ -50,6 +50,7 @@ def _find_text_lines(img: np.ndarray):
                 int(h2) + 12,
             ]
             res.append(roi)
+    res = sorted(res, key=lambda roi: roi[1])
     return res
 
 
@@ -78,9 +79,19 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 
     # Detect textures (1)
     # =====================================
-    if not (seperator_short := search("item_seperator_short", img_item_descr, threshold=0.87, use_grayscale=True, mode="first")).success:
-        Logger.warning("Could not detect item_seperator_short. Ignore item.")
-        screenshot("failed_seperator_short", img=img_item_descr)
+    if not (seperator_long := search("item_seperator_long", img_item_descr, threshold=0.87, use_grayscale=True, mode="all")).success:
+        Logger.warning("Could not detect item_seperator_long.")
+        screenshot("failed_seperator_long", img=img_item_descr)
+        return None
+    seperator_long.matches = sorted(seperator_long.matches, key=lambda match: match.center[1])
+    # Mask img where seperator_long was found
+    masked_search_img = img_item_descr.copy()
+    for match in seperator_long.matches:
+        x, y, w, h = match.region
+        cv2.rectangle(masked_search_img, (x, y), (x + w, y + h), (0, 0, 0), -1)
+    if not (seperator_short := search("item_seperator_short", masked_search_img, threshold=0.67, use_grayscale=True, mode="best")).success:
+        Logger.warning("Could not detect item_seperator_short.")
+        screenshot("failed_seperator_short", img=masked_search_img)
         return None
 
     # Item Type and Item Power
@@ -106,19 +117,18 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             if len(item_type.value) > max_length:
                 item.type = item_type
                 max_length = len(item_type.value)
+    # common mistake is that "Armor" is on a seperate line and can not be detected
+    if item.type is None:
+        if "chest" in concatenated_str:
+            item.type = ItemType.Armor
 
     if item.power is None or item.type is None:
-        Logger().error("Could not detect ItemPower and ItemType. Ignore this item.")
+        Logger().warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
         screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
     # Detect textures (2)
     # =====================================
-    if not (seperator_long := search("item_seperator_long", img_item_descr, threshold=0.87, use_grayscale=True, mode="all")).success:
-        Logger.warning("Could not detect item_seperator_long. Ignore item.")
-        screenshot("failed_seperator_long", img=img_item_descr)
-        return None
-    seperator_long.matches = sorted(seperator_long.matches, key=lambda match: match.center[1])
     if item.type in [ItemType.Helm, ItemType.Armor, ItemType.Gloves]:
         roi_bullets = [0, seperator_short.matches[0].center[1], 100, 1080]
     else:
@@ -126,7 +136,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     if not (
         affix_bullets := search("affix_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="all")
     ).success:
-        Logger.warning("Could not detect affix_bullet_points. Ignore item.")
+        Logger.warning("Could not detect affix_bullet_points.")
         screenshot("failed_affix_bullet_points", img=img_item_descr)
         return None
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
@@ -134,7 +144,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
     aspect_bullets = search("aspect_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="first")
     if rarity == ItemRarity.Legendary and not aspect_bullets.success:
-        Logger.warning("Could not detect aspect_bullet for a legendary item. Ignore item.")
+        Logger.warning("Could not detect aspect_bullet for a legendary item.")
         screenshot("failed_aspect_bullet", img=img_item_descr)
         return None
 

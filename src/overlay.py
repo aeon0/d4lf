@@ -39,7 +39,9 @@ class Overlay:
         self.maximized_width = int(self.initial_width * 6)
 
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
-        self.root.geometry(f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+0")
+        self.root.geometry(
+            f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+        )
         self.canvas.pack()
 
         self.toggle_button = tk.Button(
@@ -89,10 +91,14 @@ class Overlay:
     def toggle_size(self):
         if not self.is_minimized:
             self.canvas.config(height=self.initial_height, width=self.initial_width)
-            self.root.geometry(f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+0")
+            self.root.geometry(
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+            )
         else:
             self.canvas.config(height=self.maximized_height, width=self.maximized_width)
-            self.root.geometry(f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2}+0")
+            self.root.geometry(
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2}+{self.screen_height - self.maximized_height}"
+            )
         self.is_minimized = not self.is_minimized
         move_window_to_foreground()
 

@@ -253,18 +253,6 @@ class mouse:
 
     @staticmethod
     def _is_clicking_safe():
-        # TODO: Implement
-        # # Because of reports that botty lost equiped items, let's check if the inventory is open, and if it is, restrict the mouse move
-        # mouse_pos = Cam().monitor_to_window(_mouse.get_position())
-        # is_inventory_open = template_finder.search(
-        #     "INVENTORY_GOLD_BTN", Cam().grab(), threshold=0.8, roi=Config().ui_roi["gold_btn"], use_grayscale=True
-        # ).valid
-        # if is_inventory_open:
-        #     is_in_equipped_area = is_in_roi(Config().ui_roi["equipped_inventory_area"], mouse_pos)
-        #     is_in_restricted_inventory_area = is_in_roi(Config().ui_roi["restricted_inventory_area"], mouse_pos)
-        #     if is_in_restricted_inventory_area or is_in_equipped_area:
-        #         Logger.error("Mouse wants to click in equipped area. Cancel action.")
-        #         return False
         return True
 
     @staticmethod

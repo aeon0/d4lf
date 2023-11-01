@@ -11,7 +11,6 @@ main.build/
 main.dist/
 main.onefile-build/
 generated/
-botty_v*/
 custom.ini
 config/custom.ini
 config/custom.*.ini

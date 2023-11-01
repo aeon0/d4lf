@@ -48,7 +48,7 @@ Filters:
 
   # Example take all boots and rings
   - TakeAll:
-      itemType: [boots, ring]
+      itemType: [boots]
       minPower: 0
       affixPool:
       minAffixCount: 0

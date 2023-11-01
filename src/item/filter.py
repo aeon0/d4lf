@@ -108,22 +108,22 @@ def should_keep(item: Item):
                 Logger.info(f"Matched with affix filter: {filter_name}: {affix_debug_msg}")
                 return True
 
-            if item.aspect:
-                for filter_data in filter_aspects:
-                    filter_aspect_pool = [filter_data] if isinstance(filter_data, str) else filter_data
-                    for aspect in filter_aspect_pool:
-                        aspect_name, *rest = aspect if isinstance(aspect, list) else [aspect]
-                        threshold = rest[0] if rest else None
-                        condition = rest[1] if len(rest) > 1 else "larger"
+    if item.aspect:
+        for filter_data in filter_aspects:
+            filter_aspect_pool = [filter_data] if isinstance(filter_data, str) else filter_data
+            for aspect in filter_aspect_pool:
+                aspect_name, *rest = aspect if isinstance(aspect, list) else [aspect]
+                threshold = rest[0] if rest else None
+                condition = rest[1] if len(rest) > 1 else "larger"
 
-                        if item.aspect.type == aspect_name:
-                            if (
-                                threshold is None
-                                or item.aspect.value is None
-                                or (condition == "larger" and item.aspect.value >= threshold)
-                                or (condition == "smaller" and item.aspect.value <= threshold)
-                            ):
-                                Logger.info(f"Matched with aspect filter: {filter_name}: {item.aspect.type}")
-                                return True
+                if item.aspect.type == aspect_name:
+                    if (
+                        threshold is None
+                        or item.aspect.value is None
+                        or (condition == "larger" and item.aspect.value >= threshold)
+                        or (condition == "smaller" and item.aspect.value <= threshold)
+                    ):
+                        Logger.info(f"Matched with aspect filter: {filter_name}: {item.aspect.type}")
+                        return True
 
     return False

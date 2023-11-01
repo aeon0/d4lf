@@ -4,6 +4,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 
 @Blizzard, please dont take this away from us. I can not bear to look at another affix...
 
+[![Alt text for thumbnail](assets/thumbnail.jpg)](https://streamable.com/2camxs)
 ## Getting Started
 
 ### Game Settings

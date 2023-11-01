@@ -58,4 +58,5 @@ if __name__ == "__main__":
     shutil.copy("config/filter_aspects.yaml", f"{release_dir}/config/")
     shutil.copy("README.md", f"{release_dir}/")
     shutil.copytree("assets", f"{release_dir}/assets")
+    os.rename(f"{release_dir}/main.exe", f"{release_dir}/d4lf.exe")
     clean_up()

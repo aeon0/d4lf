@@ -105,7 +105,7 @@ def should_keep(item: Item):
 
             if matching_affix_count >= filter_min_affix_count:
                 affix_debug_msg = [affix.type for affix in item.affixes]
-                Logger.info(f"Matched with affix filter {filter_name}: {affix_debug_msg}")
+                Logger.info(f"Matched {filter_name}: {affix_debug_msg}")
                 return True
 
     if item.aspect:
@@ -123,7 +123,7 @@ def should_keep(item: Item):
                         or (condition == "larger" and item.aspect.value >= threshold)
                         or (condition == "smaller" and item.aspect.value <= threshold)
                     ):
-                        Logger.info(f"Matched with aspect filter: [{item.aspect.type}, {item.aspect.value}]")
+                        Logger.info(f"Matched: [{item.aspect.type}, {item.aspect.value}]")
                         return True
 
     return False

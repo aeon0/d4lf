@@ -26,7 +26,7 @@ class Overlay:
         self.is_minimized = True
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
-        self.root.attributes("-alpha", 0.8)
+        self.root.attributes("-alpha", 0.89)
         self.root.overrideredirect(True)
         # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)

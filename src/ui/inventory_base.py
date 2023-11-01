@@ -48,7 +48,7 @@ class InventoryBase(Menu):
             slot_img = crop(img, slot_roi)
             hsv_image = cv2.cvtColor(slot_img, cv2.COLOR_BGR2HSV)
             mean_value_of_high = np.mean(hsv_image[:, :, 2])
-            if mean_value_of_high > 40:
+            if mean_value_of_high > 53:
                 occupied_slots.append(ItemSlot(bounding_box=slot_roi, center=get_center(slot_roi)))
             else:
                 empty_slots.append(ItemSlot(bounding_box=slot_roi, center=get_center(slot_roi)))

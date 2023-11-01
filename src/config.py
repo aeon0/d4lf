@@ -15,6 +15,7 @@ class Config:
     configs = {}
 
     # config data
+    general = {}
     char = {}
     advanced_options = {}
     ui_pos = {}
@@ -68,6 +69,10 @@ class Config:
             except configparser.MissingSectionHeaderError:
                 Logger.error("custom.ini missing section header, defaulting to params.ini")
 
+        self.general = {
+            "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
+        }
+
         for key in self.configs["params"]["parser"]["char"]:
             self.char[key] = self._select_val("char", key)
 
@@ -85,9 +90,6 @@ class Config:
 
         for key in self.configs["game"]["parser"]["ui_roi"]:
             self.ui_roi[key] = np.array([int(x) for x in self._select_val("ui_roi", key).split(",")])
-
-        for key in self.configs["game"]["parser"]["colors"]:
-            self.colors[key] = np.split(np.array([int(x) for x in self._select_val("colors", key).split(",")]), 2)
 
 
 if __name__ == "__main__":

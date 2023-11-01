@@ -53,7 +53,7 @@ def _clean_str(s):
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
     cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|sell value|durability|barbarian|rogue|sorceress|druid|necromancer)",
+        r"(scroll up|account bound|requires level|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
         "",
         cleaned_str,
     )  # Remove new terms

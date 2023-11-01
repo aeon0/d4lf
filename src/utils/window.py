@@ -94,6 +94,7 @@ def stop_detecting_window():
 def move_window_to_foreground(window_spec: WindowSpec = D4_WINDOW):
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
+        ctypes.windll.user32.ShowWindow(hwnd, 5)
         ctypes.windll.user32.SetForegroundWindow(hwnd)
 
 

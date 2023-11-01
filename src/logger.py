@@ -98,7 +98,7 @@ class Logger:
                 Logger.logger.removeHandler(hdlr)
 
         # Create the logger
-        Logger.logger = logging.getLogger("botty")
+        Logger.logger = logging.getLogger("d4lf")
         for hdlr in Logger.logger.handlers:
             Logger.logger.removeHandler(hdlr)
         Logger.logger.setLevel(Logger._logger_level)

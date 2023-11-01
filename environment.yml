@@ -13,6 +13,7 @@ dependencies:
     - pytesseract==0.3.10
     - rapidfuzz
     - mss
+    - tk
     - numpy
     - mouse
     - coverage

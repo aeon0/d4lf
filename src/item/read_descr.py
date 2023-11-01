@@ -46,12 +46,21 @@ def _find_number(s):
     return None
 
 
+def _remove_text_after_first_keyword(text, keywords):
+    for keyword in keywords:
+        match = re.search(re.escape(keyword), text)
+        if match:
+            return text[: match.start()]
+    return text
+
+
 def _clean_str(s):
     cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", s)  # Remove numbers and trailing % or preceding +
     cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
+    cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "account", "sell value"])
     cleaned_str = re.sub(
         r"(scroll up|account bound|requires level|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
         "",

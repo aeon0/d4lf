@@ -29,3 +29,4 @@ class ItemType(Enum):
     Staff = "staff"
     Wand = "wand"
     Offhand = "offhand"
+    Totem = "totem"

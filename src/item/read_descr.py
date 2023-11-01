@@ -36,11 +36,12 @@ def _closest_to(value, choices):
     return min(choices, key=lambda x: abs(x - value))
 
 
-def _find_number(s):
+def _find_number(s, idx: int = 0):
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
     if "Up to a 5%" in s:
         number = matches[1] if len(matches) > 1 else None
-    number = matches[0] if matches else None
+    else:
+        number = matches[idx] if matches and len(matches) > idx else None
     if number is not None:
         return float(number.replace("+", "").replace("%", ""))
     return None
@@ -103,8 +104,11 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     crop_top = crop(img_item_descr, roi_top)
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
     idx = None
+    # TODO: Handle common mistakes nicer
     if "item power" in concatenated_str:
         idx = concatenated_str.index("item power")
+    elif "ttem power" in concatenated_str:
+        idx = concatenated_str.index("ttem power")
     elif "item" in concatenated_str:
         idx = concatenated_str.index("item")
     if idx is not None:
@@ -218,7 +222,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         cleaned_str = _clean_str(concatenated_str)
 
         found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
-        found_value = _find_number(concatenated_str)
+        idx = 1 if found_key in ["frostbitten_aspect"] else 0
+        found_value = _find_number(concatenated_str, idx)
 
         if found_key is not None:
             item.aspect = Aspect(found_key, concatenated_str, found_value)

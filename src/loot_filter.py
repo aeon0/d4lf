@@ -50,7 +50,7 @@ def check_items(inv: InventoryBase):
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")
         # Hardcoded rarity filters
         if rarity == ItemRarity.Unique:
-            Logger.info("Matched unique.")
+            Logger.info("Matched: unique")
             continue
         if rarity in [ItemRarity.Common, ItemRarity.Magic]:
             Logger.info(f"Discard item of rarity: {rarity}")
@@ -61,7 +61,7 @@ def check_items(inv: InventoryBase):
         # Detect contents of item descr
         item_descr = read_descr(rarity, croped_descr)
         if item_descr is None:
-            Logger.warning("Failed to read properties. Keeping it.")
+            Logger.warning("Failed to read properties. Keeping it")
             continue
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 

@@ -26,26 +26,43 @@ class Overlay:
         self.is_minimized = True
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
-        self.root.attributes("-alpha", 0.8)
+        self.root.attributes("-alpha", 0.89)
         self.root.overrideredirect(True)
         # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)
 
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
-        self.initial_height = int(30)
-        self.initial_width = int(self.screen_width * 0.18)
-        self.maximized_height = int(160)
+        self.initial_height = int(self.root.winfo_screenheight() * 0.027)
+        self.initial_width = int(self.screen_width * 0.05)
+        self.maximized_height = int(self.initial_height * 3.85)
+        self.maximized_width = int(self.initial_width * 6)
 
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
-        self.root.geometry(f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+0")
+        self.root.geometry(
+            f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+        )
         self.canvas.pack()
 
-        self.toggle_button = tk.Button(self.root, text="toggle", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
-        self.canvas.create_window(28, 15, window=self.toggle_button)
+        self.toggle_button = tk.Button(
+            self.root,
+            text="toggle",
+            bg="#222222",
+            fg="#555555",
+            borderwidth=0,
+            command=self.toggle_size,
+        )
+        self.canvas.create_window(int(self.initial_width * 0.3), self.initial_height // 2, window=self.toggle_button)
 
-        self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
-        self.canvas.create_window(70, 15, window=self.filter_button)
+        self.filter_button = tk.Button(
+            self.root,
+            text="filter",
+            bg="#222222",
+            fg="#555555",
+            borderwidth=0,
+            command=self.filter_items,
+        )
+        self.canvas.create_window(int(self.initial_width * 0.73), self.initial_height // 2, window=self.filter_button)
 
         self.terminal_listbox = tk.Listbox(
             self.canvas,
@@ -58,7 +75,13 @@ class Overlay:
             borderwidth=0,
             font=("Courier New", 9),
         )
-        self.terminal_listbox.place(relx=0, rely=0, relwidth=1, relheight=1, y=30)
+        self.terminal_listbox.place(
+            relx=0,
+            rely=0,
+            relwidth=1,
+            relheight=1 - (self.initial_height / self.maximized_height),
+            y=self.initial_height,
+        )
 
         # Setup the listbox logger handler
         listbox_handler = ListboxHandler(self.terminal_listbox)
@@ -68,10 +91,14 @@ class Overlay:
     def toggle_size(self):
         if not self.is_minimized:
             self.canvas.config(height=self.initial_height, width=self.initial_width)
-            self.root.geometry(f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+0")
+            self.root.geometry(
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+            )
         else:
-            self.canvas.config(height=self.maximized_height, width=self.initial_width)
-            self.root.geometry(f"{self.initial_width}x{self.maximized_height}+{self.screen_width//2 - self.initial_width//2}+0")
+            self.canvas.config(height=self.maximized_height, width=self.maximized_width)
+            self.root.geometry(
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2}+{self.screen_height - self.maximized_height}"
+            )
         self.is_minimized = not self.is_minimized
         move_window_to_foreground()
 

@@ -1,9 +1,7 @@
 from config import Config
-from logger import Logger
 from template_finder import SearchArgs
 from ui.menu import ToggleMethod
 from ui.inventory_base import InventoryBase
-from utils.misc import wait
 
 
 class CharInventory(InventoryBase):
@@ -21,15 +19,3 @@ class CharInventory(InventoryBase):
         self.open_method = ToggleMethod.HOTKEY
         self.close_hotkey = "esc"
         self.close_method = ToggleMethod.HOTKEY
-
-    def should_maintaine(self, max_items: int = 10) -> tuple[bool, int | None]:
-        if not self.open():
-            Logger.error("Could not open char inventory")
-            return False, None
-        wait(0.4)
-        occupied_slots, _ = self.get_item_slots()
-        if not self.close():
-            Logger.error("Could not close char inventory")
-            return False, len(occupied_slots)
-        wait(0.4)
-        return len(occupied_slots) > max_items, len(occupied_slots)

@@ -1,5 +1,6 @@
 from typing import Optional
 import numpy as np
+import cv2
 from dataclasses import dataclass
 from cam import Cam
 from config import Config
@@ -21,10 +22,10 @@ class InventoryBase(Menu):
     Provides methods for identifying occupied and empty slots, item operations, etc.
     """
 
-    def __init__(self):
+    def __init__(self, rows: int = 3, columns: int = 11):
         super().__init__()
-        self.rows = 3
-        self.columns = 11
+        self.rows = rows
+        self.columns = columns
         self.slots_roi = Config().ui_roi[f"{self.rows}x{self.columns}_slots"]
 
     def get_item_slots(self, img: Optional[np.ndarray] = None) -> tuple[list[ItemSlot], list[ItemSlot]]:
@@ -42,21 +43,12 @@ class InventoryBase(Menu):
         grid = to_grid(self.slots_roi, self.rows, self.columns)
         occupied_slots = []
         empty_slots = []
-        threshold_strength = 40
 
         for _, slot_roi in enumerate(grid):
-            x, y, w, h = slot_roi
-            # Pad by -4 pixels
-            x_new = x + 4
-            y_new = y + 4
-            w_new = w - 8
-            h_new = h - 8
-            # New ROI
-            sub_roi = [x_new, y_new, w_new, h_new]
-            slot_img = crop(img, sub_roi)
-            thresholded_slot = threshold(slot_img, threshold=threshold_strength)
-            # check if there are any white pixels in thresholded_slot
-            if np.any(thresholded_slot):
+            slot_img = crop(img, slot_roi)
+            hsv_image = cv2.cvtColor(slot_img, cv2.COLOR_BGR2HSV)
+            mean_value_of_high = np.mean(hsv_image[:, :, 2])
+            if mean_value_of_high > 40:
                 occupied_slots.append(ItemSlot(bounding_box=slot_roi, center=get_center(slot_roi)))
             else:
                 empty_slots.append(ItemSlot(bounding_box=slot_roi, center=get_center(slot_roi)))

@@ -35,7 +35,7 @@ class Cam:
             and self.window_roi["height"] == height
         ):
             return
-        print(f"Set offsets: left {offset_x}px, top {offset_y}px, width {width}px, height {height}px")
+        Logger.info(f"Found Window. offsets: left {offset_x}px, top {offset_y}px, width {width}px, height {height}px")
         self.res_key = f"{width}_{height}"
         if self.res_key not in ["1920_1080"]:
             Logger.error(f"The resoltuion: {self.res_key} is not supported.")

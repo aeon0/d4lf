@@ -1,7 +1,7 @@
 import keyboard
 import os
 import threading
-from utils.window import find_and_set_window_position
+from utils.window import start_detecting_window
 from beautifultable import BeautifulTable
 import logging
 import traceback
@@ -10,10 +10,14 @@ from version import __version__
 from config import Config
 from logger import Logger
 from loot_filter import run_loot_filter
+from utils.misc import wait
+from cam import Cam
 
 
 def main():
-    find_and_set_window_position()
+    start_detecting_window()
+    while not Cam().is_offset_set():
+        wait(0.2)
 
     # Create folders for logging stuff
     for dir_name in ["log/screenshots", "log/error"]:

@@ -62,7 +62,7 @@ def _get_process_from_window_name(hwnd: int) -> str:
 def start_detecting_window(window_spec: WindowSpec = D4_WINDOW):
     global detecting_window_flag, detect_window_thread
     if detect_window_thread is None:
-        Logger.debug(f"Using WinAPI to search for window: {window_spec.process_name}")
+        Logger.info(f"Using WinAPI to search for window: {window_spec.process_name}")
         detecting_window_flag = True
         detect_window_thread = threading.Thread(target=detect_window)
         detect_window_thread.start()
@@ -80,7 +80,7 @@ def find_and_set_window_position(window_spec: WindowSpec = D4_WINDOW):
     if hwnd is not None:
         position = GetWindowRect(hwnd)
         Cam().update_window_pos(*position)
-    wait(1)
+    wait(0.5)
 
 
 def stop_detecting_window():
@@ -102,30 +102,6 @@ def is_window_foreground(window_spec: WindowSpec = D4_WINDOW) -> bool:
     if hwnd is not None:
         active_window_handle = ctypes.windll.user32.GetForegroundWindow()
         return active_window_handle == hwnd
-    return False
-
-
-def wait_for_window(window_spec: WindowSpec, timeout: int = 30) -> bool:
-    # Logger.debug(f"Waiting for {window_spec} to start")
-    start = time.time()
-    while time.time() - start < timeout:
-        if get_window_spec_id(window_spec) is not None:
-            return True
-        wait(1.0, 1.5)
-    Logger.error(f"_wait_for_window: Failed to detect window: {window_spec}")
-    return False
-
-
-def wait_for_window_foreground(window_spec: WindowSpec, timeout: int = 30) -> bool:
-    # Logger.debug(f"Waiting for {window_spec} to start")
-    start = time.time()
-    while time.time() - start < timeout:
-        if is_window_foreground(window_spec):
-            return True
-        else:
-            move_window_to_foreground(window_spec)
-        wait(1.0, 1.5)
-    Logger.error(f"_wait_for_window_foreground: {window_spec.process_name} never became active window")
     return False
 
 

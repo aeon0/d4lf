@@ -73,7 +73,13 @@ class Overlay:
             borderwidth=0,
             font=("Courier New", 9),
         )
-        self.terminal_listbox.place(relx=0, rely=0, relwidth=1, relheight=1, y=self.initial_height)
+        self.terminal_listbox.place(
+            relx=0,
+            rely=0,
+            relwidth=1,
+            relheight=1 - (self.initial_height / self.maximized_height),
+            y=self.initial_height,
+        )
 
         # Setup the listbox logger handler
         listbox_handler = ListboxHandler(self.terminal_listbox)

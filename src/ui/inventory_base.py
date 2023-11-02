@@ -8,6 +8,7 @@ from ui.menu import Menu
 from utils.image_operations import crop, threshold
 from utils.roi_operations import get_center, to_grid
 from utils.custom_mouse import mouse
+from utils.misc import wait
 
 
 @dataclass
@@ -38,7 +39,8 @@ class InventoryBase(Menu):
         :return: Two sets of coordinates. The first set represents the centers of the occupied slots, and the second set represents the centers of the empty slots.
         """
         if img is None:
-            mouse.move(*Cam().abs_window_to_monitor((0, 0)), randomize=5)
+            mouse.move(*Cam().abs_window_to_monitor((0, -int(Cam().window_roi["height"] * 0.4))), randomize=5)
+            wait(0.5)
             img = Cam().grab()
         grid = to_grid(self.slots_roi, self.rows, self.columns)
         occupied_slots = []

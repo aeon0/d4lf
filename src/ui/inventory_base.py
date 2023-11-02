@@ -26,7 +26,7 @@ class InventoryBase(Menu):
         super().__init__()
         self.rows = rows
         self.columns = columns
-        self.slots_roi = Config().ui_roi[f"{self.rows}x{self.columns}_slots"]
+        self.slots_roi = Config().ui_roi[f"slots_{self.rows}x{self.columns}"]
 
     def get_item_slots(self, img: Optional[np.ndarray] = None) -> tuple[list[ItemSlot], list[ItemSlot]]:
         """

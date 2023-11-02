@@ -69,8 +69,10 @@ class Config:
             except configparser.MissingSectionHeaderError:
                 Logger.error("custom.ini missing section header, defaulting to params.ini")
 
+        run_scripts_str = str(self._select_val("general", "run_scripts"))
         self.general = {
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
+            "run_scripts": run_scripts_str.split(",") if run_scripts_str else [],
         }
 
         for key in self.configs["params"]["parser"]["char"]:

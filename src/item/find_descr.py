@@ -2,7 +2,7 @@ import numpy as np
 from copy import copy
 from item.data.rarity import ItemRarity
 from config import Config
-from template_finder import SearchArgs
+from template_finder import search
 from utils.image_operations import crop
 from utils.roi_operations import fit_roi_to_window_size
 
@@ -17,7 +17,8 @@ map_template_rarity = {
 
 
 def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[int, int], ItemRarity, np.ndarray]:
-    item_descr_width, _ = Config().ui_offsets["item_descr"]
+    item_descr_width = Config().ui_offsets["item_descr_width"]
+    item_descr_pad = Config().ui_offsets["item_descr_pad"]
     _, window_height = Config().ui_pos["window_dimensions"]
 
     refs = list(map_template_rarity.keys())
@@ -27,30 +28,30 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
     roi_left[0] += anchor[0]
     ok, roi_left = fit_roi_to_window_size(roi_left, Config().ui_pos["window_dimensions"])
     if ok:
-        res = SearchArgs(ref=refs, roi=roi_left, threshold=0.93, mode="best").detect()
+        res = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.93, mode="best")
     if res is not None and not res.success:
         roi_right = copy(Config().ui_roi["rel_descr_search_right"])
         roi_right[0] += anchor[0]
         ok, roi_right = fit_roi_to_window_size(roi_right, Config().ui_pos["window_dimensions"])
         if ok:
-            res = SearchArgs(ref=refs, roi=roi_right, threshold=0.93, mode="best").detect()
+            res = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.93, mode="best")
 
     if res is not None and res.success:
         match = res.matches[0]
         rarity = map_template_rarity[match.name.lower()]
         # find equipe template
-        equip_roi = [match.region[0] - 30, match.region[1], item_descr_width, window_height]
-        res_bottom = SearchArgs(ref=["item_descr_equip", "item_descr_equip_inactive"], roi=equip_roi, threshold=0.78).detect()
-        if not res_bottom.success:
-            res_bottom = SearchArgs(ref=["item_shift_link"], roi=equip_roi, threshold=0.78).detect()
-
+        offset_top = int(window_height * 0.1)
+        roi_y = match.region[1] - offset_top
+        search_height = window_height - roi_y - offset_top
+        roi = [match.region[0], roi_y, item_descr_width, search_height]
+        res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.73, mode="best")
         if res_bottom.success:
-            _, off_bottom_of_descr = Config().ui_offsets["equip_to_bottom"]
+            off_bottom_of_descr = Config().ui_offsets["item_descr_off_bottom_edge"]
             equip_match = res_bottom.matches[0]
             crop_roi = [
-                match.region[0],
-                match.region[1],
-                item_descr_width,
+                match.region[0] + item_descr_pad,
+                match.region[1] + item_descr_pad,
+                item_descr_width - 2 * item_descr_pad,
                 equip_match.center[1] - off_bottom_of_descr - match.region[1],
             ]
             croped_descr = crop(img, crop_roi)

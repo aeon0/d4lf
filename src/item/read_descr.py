@@ -1,4 +1,5 @@
 import numpy as np
+import time
 import cv2
 from logger import Logger
 from item.data.rarity import ItemRarity
@@ -13,6 +14,7 @@ from utils.window import screenshot
 import re
 import json
 from rapidfuzz import process
+from config import Config
 
 affix_dict = dict()
 with open("assets/affixes.json", "r") as f:
@@ -61,7 +63,7 @@ def _clean_str(s):
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
-    cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "account", "sell value"])
+    cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "requires lev", "account", "sell value"])
     cleaned_str = re.sub(
         r"(scroll up|account bound|requires level|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
         "",
@@ -73,34 +75,27 @@ def _clean_str(s):
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     item = Item(rarity)
+    img_height, img_width, _ = img_item_descr.shape
+    line_height = Config().ui_offsets["item_descr_line_height"]
 
     # Detect textures (1)
     # =====================================
-    refs = ["item_seperator_long", "item_seperator_long_2"]
-    if not (
-        seperator_long := search(refs, img_item_descr, threshold=0.85, use_grayscale=True, mode="all", color_match="gray_seperator")
-    ).success:
-        Logger.warning("Could not detect item_seperator_long.")
-        screenshot("failed_seperator_long", img=img_item_descr)
-        return None
-    seperator_long.matches = sorted(seperator_long.matches, key=lambda match: match.center[1])
-    # Mask img where seperator_long was found
-    masked_search_img = img_item_descr.copy()
-    for match in seperator_long.matches:
-        x, y, w, h = match.region
-        cv2.rectangle(masked_search_img, (x, y), (x + w, y + h), (0, 0, 0), -1)
-    refs = ["item_seperator_short", "item_seperator_short_2"]
-    if not (
-        seperator_short := search(refs, masked_search_img, threshold=0.68, use_grayscale=True, mode="best", color_match="gray_seperator")
-    ).success:
+    start_tex_1 = time.time()
+    refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
+    roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
+    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, "gray_seperator", "all")).success:
         Logger.warning("Could not detect item_seperator_short.")
-        screenshot("failed_seperator_short", img=masked_search_img)
+        screenshot("failed_seperator_short", img=img_item_descr)
         return None
+    sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
+    sep_short_match = sorted_matches[0]
+    # print("-----")
+    # print("Runtime (start_tex_1): ", time.time() - start_tex_1)
 
     # Item Type and Item Power
     # =====================================
-    _, w, _ = img_item_descr.shape
-    roi_top = [15, 15, w - 30, seperator_short.matches[0].center[1] - 20]
+    start_power = time.time()
+    roi_top = [0, 0, img_width, sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
     idx = None
@@ -133,47 +128,58 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         Logger().warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
         screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
+    # print("Runtime (start_power): ", time.time() - start_power)
 
     # Detect textures (2)
     # =====================================
-    if item.type in [ItemType.Helm, ItemType.Armor, ItemType.Gloves]:
-        roi_bullets = [0, seperator_short.matches[0].center[1], 100, 1080]
-    else:
-        roi_bullets = [0, seperator_long.matches[0].center[1], 100, 1080]
-    if not (
-        affix_bullets := search("affix_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="all")
-    ).success:
+    start_tex_2 = time.time()
+    roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"], img_height]
+    if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
         Logger.warning("Could not detect affix_bullet_points.")
         screenshot("failed_affix_bullet_points", img=img_item_descr)
         return None
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
-    empty_sockets = search("empty_socket", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="all")
+    # Depending on the item type we have to remove some of the topmost affixes as they are fixed
+    remove_top_most = 1
+    if item.type in [ItemType.Armor, ItemType.Helm, ItemType.Gloves]:
+        remove_top_most = 0
+    elif item.type in [ItemType.Ring]:
+        remove_top_most = 2
+    elif item.type in [ItemType.Shield]:
+        remove_top_most = 4
+    else:
+        # default for: Pants, Amulets, Boots, All Weapons
+        remove_top_most = 1
+    affix_bullets.matches = affix_bullets.matches[remove_top_most:]
+    empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
-    aspect_bullets = search("aspect_bullet_point", img_item_descr, threshold=0.87, roi=roi_bullets, use_grayscale=True, mode="first")
+    aspect_bullets = search("aspect_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="first")
     if rarity == ItemRarity.Legendary and not aspect_bullets.success:
         Logger.warning("Could not detect aspect_bullet for a legendary item.")
         screenshot("failed_aspect_bullet", img=img_item_descr)
         return None
+    # print("Runtime (start_tex_2): ", time.time() - start_tex_2)
 
     # Affixes
     # =====================================
+    start_affix = time.time()
     # Affix starts at first bullet point
-    affix_start = [affix_bullets.matches[0].center[0] + 7, affix_bullets.matches[0].center[1] - 16]
-    # Affix ends at aspect bullet, empty sockets or seperator line
+    affix_start = [affix_bullets.matches[0].center[0] + line_height // 4, affix_bullets.matches[0].center[1] - int(line_height * 0.7)]
+    # Affix ends at aspect bullet or empty sockets
+    bottom_limit = 0
     if rarity == ItemRarity.Legendary:
         bottom_limit = aspect_bullets.matches[0].center[1]
     elif len(empty_sockets.matches) > 0:
         bottom_limit = empty_sockets.matches[0].center[1]
-    else:
-        bottom_limit = seperator_long.matches[-1].center[1]
     if bottom_limit < affix_start[1]:
-        bottom_limit = img_item_descr.shape[0]
+        bottom_limit = img_height
     # Calc full region of all affixes
-    affix_width = w - affix_start[0] - 30
-    affix_height = bottom_limit - affix_start[1] - 7
+    affix_width = img_width - affix_start[0]
+    affix_height = bottom_limit - affix_start[1] - int(line_height * 0.4)
     full_affix_region = [*affix_start, affix_width, affix_height]
-    cropp_full_affix = crop(img_item_descr, full_affix_region)
-    affix_lines = image_to_text(cropp_full_affix).text.lower().split("\n")
+    crop_full_affix = crop(img_item_descr, full_affix_region)
+    # cv2.imwrite("crop_full_affix.png", crop_full_affix)
+    affix_lines = image_to_text(crop_full_affix).text.lower().split("\n")
     affix_lines = [line for line in affix_lines if line]  # remove empty lines
     # split affix text based on distance of affix bullet points
     delta_y_arr = [
@@ -185,10 +191,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         if dy is None:
             combined_lines = "\n".join(affix_lines[line_idx:])
         else:
-            closest_value = _closest_to(dy, [25, 50, 75])
-            if closest_value == 25:
+            closest_value = _closest_to(dy, [line_height, line_height * 2, line_height * 3])
+            if closest_value == line_height:
                 lines_to_add = 1
-            elif closest_value == 50:
+            elif closest_value == line_height * 2:
                 lines_to_add = 2
             else:  # closest_value == 75
                 lines_to_add = 3
@@ -201,35 +207,38 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         found_value = _find_number(combined_lines)
 
         if found_key is not None:
-            item.affixes.append(Affix(found_key, combined_lines, found_value))
+            item.affixes.append(Affix(found_key, found_value, combined_lines))
         else:
             Logger.warning(f"Could not find affix: {cleaned_str}")
             screenshot("failed_affixes", img=img_item_descr)
             return None
+    # print("Runtime (start_affix): ", time.time() - start_affix)
 
     # Aspect
     # =====================================
+    start_aspect = time.time()
     if rarity == ItemRarity.Legendary:
         ab = aspect_bullets.matches[0].center
-        bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else seperator_long.matches[-1].center[1]
-        # in case of scroll down is visible the bottom seperator is not visible
-        if bottom_limit < ab[1]:
-            bottom_limit = img_item_descr.shape[0]
+        bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else img_height
+        dx_offset = line_height // 4
+        dy_offset = int(line_height * 0.7)
         dy = bottom_limit - ab[1]
-        roi_full_aspect = [ab[0] + 7, max(0, ab[1] - 16), w - 30 - ab[0], dy]
+        roi_full_aspect = [ab[0] + dx_offset, ab[1] - dy_offset, img_width - ab[0] - dx_offset - 1, dy]
         img_full_aspect = crop(img_item_descr, roi_full_aspect)
+        # cv2.imwrite("img_full_aspect.png", img_full_aspect)
         concatenated_str = image_to_text(img_full_aspect).text.lower().replace("\n", " ")
         cleaned_str = _clean_str(concatenated_str)
 
         found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
-        idx = 1 if found_key in ["frostbitten_aspect"] else 0
+        idx = 1 if found_key in ["frostbitten_aspect", "aspect_of_artful_initiative"] else 0
         found_value = _find_number(concatenated_str, idx)
 
         if found_key is not None:
-            item.aspect = Aspect(found_key, concatenated_str, found_value)
+            item.aspect = Aspect(found_key, found_value, concatenated_str)
         else:
             Logger.warning(f"Could not find aspect: {cleaned_str}")
             screenshot("failed_aspect", img=img_item_descr)
             return None
+    # print("Runtime (start_aspect): ", time.time() - start_aspect)
 
     return item

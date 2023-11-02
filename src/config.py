@@ -86,7 +86,7 @@ class Config:
             self.ui_pos[key] = tuple(int(val) for val in self._select_val("ui_pos", key).split(","))
 
         for key in self.configs["game"]["parser"]["ui_offsets"]:
-            self.ui_offsets[key] = np.array([int(x) for x in self._select_val("ui_offsets", key).split(",")])
+            self.ui_offsets[key] = int(self._select_val("ui_offsets", key))
 
         for key in self.configs["game"]["parser"]["ui_roi"]:
             self.ui_roi[key] = np.array([int(x) for x in self._select_val("ui_roi", key).split(",")])

@@ -7,6 +7,8 @@ from utils.ocr.models import OcrResult
 TESSDATA_PATH = "assets/tessdata"
 
 API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
+# supposed to give fruther runtime improvements, but reading performance really goes down...
+# API.SetVariable("tessedit_do_invert", "0")
 
 
 def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):

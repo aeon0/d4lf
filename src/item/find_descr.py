@@ -41,7 +41,7 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
         rarity = map_template_rarity[match.name.lower()]
         # find equipe template
         offset_top = int(window_height * 0.1)
-        roi_y = match.region[1] - offset_top
+        roi_y = match.region[1] + offset_top
         search_height = window_height - roi_y - offset_top
         roi = [match.region[0], roi_y, item_descr_width, search_height]
         res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.73, mode="best")

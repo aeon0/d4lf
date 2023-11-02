@@ -8,6 +8,8 @@ from item.data.affix import Affix
 from item.data.aspect import Aspect
 from item.models import Item
 from cam import Cam
+from config import Config
+from template_finder import stored_templates
 
 # def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 BASE_PATH = "test/assets/item"
@@ -48,10 +50,28 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_legendary_2560x1440_1.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Wand,
+                864,
+                Aspect("conceited_aspect", 18),
+                [
+                    Affix("core_skill_damage", 18),
+                    Affix("ultimate_skill_damage", 18.5),
+                    Affix("damage_to_stunned_enemies", 18),
+                    Affix("damage_to_burning_enemies", 12.5),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
+    Config().load_data()
+    stored_templates.cache_clear()
     img = cv2.imread(input_img)
     start = time.time()
     item = read_descr(expected_item.rarity, img)

@@ -37,7 +37,7 @@ class Cam:
             return
         Logger.info(f"Found Window. offsets: left {offset_x}px, top {offset_y}px, width {width}px, height {height}px")
         self.res_key = f"{width}x{height}"
-        if self.res_key not in ["1920x1080"]:
+        if self.res_key not in ["1920x1080", "2560x1440"]:
             Logger.error(f"The resoltuion: {self.res_key} is not supported.")
             os._exit(0)
 

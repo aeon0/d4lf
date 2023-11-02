@@ -1,7 +1,7 @@
 import os
 import threading
 import time
-from functools import cache
+from functools import lru_cache
 
 import cv2
 import numpy as np
@@ -102,7 +102,7 @@ class SearchArgs:
         return change
 
 
-@cache
+@lru_cache(maxsize=None)
 def stored_templates() -> dict[Template]:
     paths = []
     templates = {}
@@ -231,6 +231,8 @@ def search(
     def _process_cv_result(template: Template, img: np.ndarray) -> bool:
         new_match = False
         res, template_img, new_roi = _get_cv_result(template, img, roi, color_match, use_grayscale)
+
+        # i = 0
         while True and not (matches and mode == "first"):
             _, max_val, _, max_pos = cv2.minMaxLoc(res)
 
@@ -258,7 +260,16 @@ def search(
                 if mode == "first":
                     break
                 # Remove the matched region from the result
-                cv2.rectangle(res, max_pos, (max_pos[0] + template_img.shape[1], max_pos[1] + template_img.shape[0]), (0, 0, 0), -1)
+                cv2.rectangle(
+                    res,
+                    (max_pos[0] - template_img.shape[1] // 2, max_pos[1] - template_img.shape[0] // 2),
+                    (max_pos[0] + template_img.shape[1], max_pos[1] + template_img.shape[0]),
+                    (0, 0, 0),
+                    -1,
+                )
+                # result_norm = cv2.normalize(res, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+                # cv2.imwrite(f"res{i}.png", result_norm)
+                # i += 1
             else:
                 break
         return new_match

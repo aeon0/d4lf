@@ -4,6 +4,8 @@ import cv2
 from item.find_descr import find_descr
 from item.data.rarity import ItemRarity
 from cam import Cam
+from config import Config
+from template_finder import stored_templates
 
 
 BASE_PATH = "test/assets/item"
@@ -14,10 +16,13 @@ BASE_PATH = "test/assets/item"
     [
         ((1920, 1080), f"{BASE_PATH}/find_descr_rare_1920x1080.png", (1630, 763), True, (1196, 377), ItemRarity.Rare),
         ((1920, 1080), f"{BASE_PATH}/find_descr_legendary_1920x1080.png", (1515, 761), True, (1088, 78), ItemRarity.Legendary),
+        ((2560, 1440), f"{BASE_PATH}/find_descr_legendary_2560x1440.png", (676, 546), True, (743, 105), ItemRarity.Legendary),
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
+    Config().load_data()
+    stored_templates.cache_clear()
     img = cv2.imread(input_img)
     start = time.time()
     success, top_left_corner, item_rarity, cropped_img = find_descr(img, anchor)

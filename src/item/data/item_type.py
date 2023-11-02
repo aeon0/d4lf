@@ -4,8 +4,8 @@ from enum import Enum
 class ItemType(Enum):
     # Armor
     Helm = "helm"
-    Armor = "armor"
-    Legs = "pants"
+    Armor = "chest armor"
+    Pants = "pants"
     Gloves = "gloves"
     Boots = "boots"
     # Jewelry

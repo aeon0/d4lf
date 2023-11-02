@@ -37,7 +37,7 @@ def check_items(inv: InventoryBase):
             inv.hover_item(item)
             wait(0.35)
             img = Cam().grab()
-            found, top_left_center, rarity, croped_descr = find_descr(img, item.center)
+            found, top_left_center, rarity, cropped_descr = find_descr(img, item.center)
             if found:
                 # Sometimes we go to the next item, but the previous one still shows
                 if last_item_center is not None and compare_tuples(top_left_center, last_item_center, 5):
@@ -59,7 +59,7 @@ def check_items(inv: InventoryBase):
             continue
         start_time_read = time.time()
         # Detect contents of item descr
-        item_descr = read_descr(rarity, croped_descr)
+        item_descr = read_descr(rarity, cropped_descr)
         if item_descr is None:
             Logger.warning("Failed to read properties. Keeping it")
             continue

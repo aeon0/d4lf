@@ -4,12 +4,14 @@
 # CONDITON can be "larger" or "smaller" and defaults to "larger"
 
 # itemType must be any of:
-#   helm, armor, pants, gloves, boots, ring, amulet, axe, tow-handed axe,
+#   helm, chest armor, pants, gloves, boots, ring, amulet, axe, tow-handed axe,
 #   sword, two-handed sword, mace, two-handed mace, scythe, two-handed scythe,
 #   bow, bracers, crossbow, dagger, polarm, shield, stff, wand, offhand, totem
 
 
 Filters:
+  # Rogue
+  # =====================================
   - Helm:
       itemType: helm
       minPower: 725
@@ -24,7 +26,7 @@ Filters:
       minAffixCount: 3
 
   - Armor:
-      itemType: [armor, pants]
+      itemType: [chest armor, pants]
       minPower: 725
       affixPool:
         - [damage_reduction_from_close_enemies, 10]
@@ -39,16 +41,85 @@ Filters:
       itemType: gloves
       minPower: 725
       affixPool:
-        - [dexterity, 10]
-        - [damage_reduction_from_distant_enemies, 12]
-        - [damage_reduction, 5]
-        - [total_armor, 9]
-        - [maximum_life, 700]
+        - [attack_speed, 7]
+        - [dexterity, 38]
+        - [lucky_hit_chance, 7.8]
+        - [critical_strike_chance, 5.5]
+        - lucky_hit_up_to_a_chance_to_slow
+        - [ranks_of_twisting_blades, 3]
+        - [ranks_of_rapid_fire, 3]
       minAffixCount: 3
 
-  # Example take all boots and rings
-  - TakeAll:
-      itemType: [boots]
-      minPower: 0
+  - Boots:
+      itemType: boots
+      minPower: 725
       affixPool:
-      minAffixCount: 0
+        - [movement_speed, 16]
+        - [dexterity, 40]
+        - [dodge_chance, 5]
+        - [energy_cost_reduction, 6]
+      minAffixCount: 3
+
+  - Amulet:
+      itemType: amulet
+      minPower: 725
+      affixPool:
+        - [cooldown_reduction, 6]
+        - [damage_reduction, 6.7]
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [total_armor, 9]
+        - [energy_cost_reduction, 6]
+        - [movement_speed, 14]
+        - [ranks_of_all_imbuement_skills, 2]
+        - [ranks_of_the_exploit_passive, 2]
+        - [ranks_of_the_weapon_mastery_passive, 2]
+        - [ranks_of_the_malice_passive, 2]
+        - [ranks_of_the_frigid_finesse_passive, 2]
+        - [ranks_of_the_deadly_venom_passive, 2]
+      minAffixCount: 3
+
+  - Ring:
+      itemType: ring
+      minPower: 725
+      affixPool:
+        - [critical_strike_chance, 4]
+        - [lucky_hit_chance, 5]
+        - [resource_generation, 8]
+        - [maximum_life, 680]
+        - [damage_to_crowd_controlled_enemies, 9]
+      minAffixCount: 3
+
+  - WeaponClose:
+      itemType: [dagger, sword]
+      minPower: 915
+      affixPool:
+        - [all_stats, 22]
+        - [dexterity, 44]
+        - [core_skill_damage, 17]
+        - [damage_to_close_enemies, 19]
+        - [vulnerable_damage, 16]
+      minAffixCount: 3
+
+  - WeaponFar:
+      itemType: [crossbow]
+      minPower: 725
+      affixPool:
+        - [all_stats, 44]
+        - [dexterity, 90]
+        - [core_skill_damage, 25]
+        - [damage_to_close_enemies, 37]
+        - [vulnerable_damage, 34]
+      minAffixCount: 3
+
+  # Sorc
+  - Focus:
+      itemType: [focus]
+      minPower: 725
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [resource_generation, 8]
+        - [critical_strike_chance, 3]
+        - [lucky_hit_chance, 5]
+        - [mana_cost_reduction, 5]
+      minAffixCount: 3

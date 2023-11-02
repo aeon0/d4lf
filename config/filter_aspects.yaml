@@ -3,24 +3,45 @@
 # CONDITON can be "larger" or "smaller" and defaults to "larger"
 
 Aspects:
-  - [accelerating_aspect, 25]
-  - [aspect_of_disobedience, 0.5]
-  - [aspect_of_might, 20]
-  - aspect_of_artful_initiative
-  - [aspect_of_the_expectant, 9]
-  - [aspect_of_the_umbral, 4]
+  # General
+  - [accelerating_aspect, 24]
+  - [aspect_of_might, 5.5]
+  - [aspect_of_disobedience, 1.1]
+  - [aspect_of_inner_calm, 10]
+  - [aspect_of_retribution, 20]
+  - [aspect_of_the_expectant, 10]
   - [edgemasters_aspect, 20]
   - [rapid_aspect, 29]
-  - [aspect_of_corruption, 40]
+  - [aspect_of_shared_misery, 48]
+  - [ghostwalker_aspect, 25]
+  - [aspect_of_the_umbral, 4]
+  - [conceited_aspect, 25]
+  - [starlight_aspect, 35]
+
+  # Rogue
+  - [aspect_of_artful_initiative]
+  - [aspect_of_bursting_venoms]
+  - [aspect_of_corruption, 39]
   - [aspect_of_elusive_menace, 7]
-  - [aspect_of_noxious_ice, 20]
-  - aspect_of_quickening_fog
-  - aspect_of_surprise
+  - [aspect_of_pestilent_points, 140]
+  - [aspect_of_noxious_ice, 29]
+  - [aspect_of_quickening_fog, 0.6]
+  - [aspect_of_repeating, 45]
   - [bladedancers_aspect, 14]
+  - [aspect_of_surprise]
+  - [assimilation_aspect, 8]
   - [cheats_aspect, 24]
-  - [energizing_aspect, 7]
-  - frostbitten_aspect
-  - ravagers_aspect
-  - shadowslicer_aspect
-  - snap_frozen_aspect
-  - umbrous_aspect
+  - [energizing_aspect, 9]
+  - [enshrouding_aspect, 4]
+  - [frostbitten_aspect, 20]
+  - [manglers_aspect, 45]
+  - [ravenous_aspect, 65]
+  - [umbrous_aspect, 55]
+
+  # Sorceress
+
+  # Barbarian
+
+  # Druid
+
+  # Necromancer

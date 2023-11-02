@@ -121,7 +121,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
     if item.type is None:
-        if "chest" in concatenated_str:
+        if "chest" in concatenated_str or "armor" in concatenated_str:
             item.type = ItemType.Armor
 
     if item.power is None or item.type is None:
@@ -151,6 +151,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         # default for: Pants, Amulets, Boots, All Weapons
         remove_top_most = 1
     affix_bullets.matches = affix_bullets.matches[remove_top_most:]
+    if len(affix_bullets.matches) > 4:
+        Logger.debug("Still too many bullet points, removing so we have only 4 left")
+        affix_bullets.matches = affix_bullets.matches[-4:]
     empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
     aspect_bullets = search("aspect_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="first")
@@ -228,9 +231,23 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         # cv2.imwrite("img_full_aspect.png", img_full_aspect)
         concatenated_str = image_to_text(img_full_aspect).text.lower().replace("\n", " ")
         cleaned_str = _clean_str(concatenated_str)
-
         found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
-        idx = 1 if found_key in ["frostbitten_aspect", "aspect_of_artful_initiative"] else 0
+
+        # some aspects have their variable number as second:
+        number_idx_1 = [
+            "frostbitten_aspect",
+            "aspect_of_artful_initiative",
+            "aspect_of_noxious_ice",
+        ]
+        number_idx_2 = [
+            "aspect_of_retribution",
+        ]
+        if found_key in number_idx_1:
+            idx = 1
+        elif found_key in number_idx_2:
+            idx = 2
+        else:
+            idx = 0
         found_value = _find_number(concatenated_str, idx)
 
         if found_key is not None:

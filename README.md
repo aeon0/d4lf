@@ -5,28 +5,37 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 @Blizzard, please dont take this away from us. I can not bear to look at another affix...
 
 [![Alt text for thumbnail](assets/thumbnail.jpg)](https://streamable.com/m84fnq)
+
+## Features
+- Filter items in inventory and if chest is open also in chest tabs (can be configured which ones)
+- Filter by item type and item power
+- Filter by affix and thresholds of their values
+- Filter by aspects and threshold of their values
+- Automatically mark everything that does not pass the filter as junk
+
 ## Getting Started
 
 ### Game Settings
-- Supported resolutions: 1920x1080
+- Supported resolutions: 1920x1080, 2560x1440 (not well tested yet)
 - Font size must be set to small in the Gameplay Settings
 - Game Language must be English
-- You can keep the Advanced Tooltips turned on. But the "Compare" should not be active so your current items do not show up.
 
 ### Run
-- Execute d4lf.exe. Diablo 4 must be running when starting to get the window resolution.
-- When ingame and you want to filter items in your inventory. Press F11 to start the filter process. To stop immediately, press F12.
+- Execute d4lf.exe and go to your D4 screen.
+- There is a small overlay on the center bottom with buttons:
+  - toggle: Make the console visiable or hide it
+  - filter: Start filtering items
+  - scripts: In case there are any scripts attached, run them
+- Alternative use the hotkeys. e.g. f11 for filtering
 - All items that do not match any of your filter configs will be marked as junk
 
-Note: If you get an error and it disappears very quickly, run the .exe in the command line.
-
-Note2: If the item description doesnt show while hovering and is very laggy, try to move to another area without any events and less people around.
+Note: If the item description does not show while hovering and is very laggy, try to move to another area without any events and less people around.
 
 ### Configs
 The config folder contains:
 - __filter_aspects.yaml__: Filter settings for aspects.
 - __filter_affixes.yaml__: Filter settings for affixes.
-- __params.ini__: Different hotkey settings. Mainly you want to adjust your hotkey to open the inventory.
+- __params.ini__: Different hotkey settings and number of chest stashes that should be looked at.
 - __game.ini__: Settings regarding color thresholds and image positions. You dont need to touch this.
 
 ## How to filter

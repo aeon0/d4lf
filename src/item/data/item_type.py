@@ -30,3 +30,4 @@ class ItemType(Enum):
     Wand = "wand"
     Offhand = "offhand"
     Totem = "totem"
+    Focus = "focus"

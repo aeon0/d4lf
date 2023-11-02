@@ -6,6 +6,8 @@ from version import __version__
 from utils.process_handler import kill_thread
 from logger import Logger
 import logging
+from scripts.rogue_tb import run_rogue_tb
+from config import Config
 
 
 class ListboxHandler(logging.Handler):
@@ -23,6 +25,7 @@ class ListboxHandler(logging.Handler):
 class Overlay:
     def __init__(self):
         self.loot_filter_thread = None
+        self.script_threads = []
         self.is_minimized = True
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
@@ -33,8 +36,8 @@ class Overlay:
 
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
-        self.initial_height = int(self.root.winfo_screenheight() * 0.027)
-        self.initial_width = int(self.screen_width * 0.05)
+        self.initial_height = int(self.root.winfo_screenheight() * 0.03)
+        self.initial_width = int(self.screen_width * 0.072)
         self.maximized_height = int(self.initial_height * 3.85)
         self.maximized_width = int(self.initial_width * 6)
 
@@ -52,7 +55,7 @@ class Overlay:
             borderwidth=0,
             command=self.toggle_size,
         )
-        self.canvas.create_window(int(self.initial_width * 0.3), self.initial_height // 2, window=self.toggle_button)
+        self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
 
         self.filter_button = tk.Button(
             self.root,
@@ -62,7 +65,17 @@ class Overlay:
             borderwidth=0,
             command=self.filter_items,
         )
-        self.canvas.create_window(int(self.initial_width * 0.73), self.initial_height // 2, window=self.filter_button)
+        self.canvas.create_window(int(self.initial_width * 0.5), self.initial_height // 2, window=self.filter_button)
+
+        self.start_scripts_button = tk.Button(
+            self.root,
+            text="scripts",
+            bg="#222222",
+            fg="#555555",
+            borderwidth=0,
+            command=self.run_scripts,
+        )
+        self.canvas.create_window(int(self.initial_width * 0.8), self.initial_height // 2, window=self.start_scripts_button)
 
         self.terminal_listbox = tk.Listbox(
             self.canvas,
@@ -118,6 +131,24 @@ class Overlay:
             run_loot_filter()
         finally:
             self.loot_filter_thread = None
+
+    def run_scripts(self):
+        if len(self.script_threads) > 0:
+            Logger.info("Stoping Scripts")
+            for script_thread in self.script_threads:
+                kill_thread(script_thread)
+            self.script_threads = []
+            return
+        if self.is_minimized:
+            self.toggle_size()
+        if len(Config().general["run_scripts"]) == 0:
+            Logger.info("No scripts configured")
+            return
+        for name in Config().general["run_scripts"]:
+            if name == "rogue_tb":
+                rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
+                rogue_tb_thread.start()
+                self.script_threads.append(rogue_tb_thread)
 
     def run(self):
         self.root.mainloop()

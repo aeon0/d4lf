@@ -34,12 +34,14 @@ def main():
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
+    table.rows.append([Config().advanced_options["run_scripts"], "Run/Stop Scripts"])
     table.rows.append([Config().advanced_options["run_key"], "Run/Stop Loot Filter"])
     table.rows.append([Config().advanced_options["exit_key"], "Stop"])
     table.columns.header = ["hotkey", "action"]
     print(table)
     print("\n")
 
+    keyboard.add_hotkey(Config().advanced_options["run_scripts"], lambda: overlay.run_scripts())
     keyboard.add_hotkey(Config().advanced_options["run_key"], lambda: overlay.filter_items())
     keyboard.add_hotkey(Config().advanced_options["exit_key"], lambda: safe_exit())
 

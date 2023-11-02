@@ -55,7 +55,7 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_rare_1920x1080_2.png",
             Item(
                 ItemRarity.Rare,
-                ItemType.Legs,
+                ItemType.Pants,
                 844,
                 None,
                 [

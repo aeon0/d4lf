@@ -5,7 +5,7 @@ class ItemType(Enum):
     # Armor
     Helm = "helm"
     Armor = "chest armor"
-    Legs = "pants"
+    Pants = "pants"
     Gloves = "gloves"
     Boots = "boots"
     # Jewelry

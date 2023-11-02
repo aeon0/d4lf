@@ -4,7 +4,7 @@
 # CONDITON can be "larger" or "smaller" and defaults to "larger"
 
 # itemType must be any of:
-#   helm, armor, pants, gloves, boots, ring, amulet, axe, tow-handed axe,
+#   helm, chest armor, pants, gloves, boots, ring, amulet, axe, tow-handed axe,
 #   sword, two-handed sword, mace, two-handed mace, scythe, two-handed scythe,
 #   bow, bracers, crossbow, dagger, polarm, shield, stff, wand, offhand, totem
 
@@ -26,7 +26,7 @@ Filters:
       minAffixCount: 3
 
   - Armor:
-      itemType: [armor, pants]
+      itemType: [chest armor, pants]
       minPower: 725
       affixPool:
         - [damage_reduction_from_close_enemies, 10]

@@ -17,6 +17,7 @@ BASE_PATH = "test/assets/item"
         ((1920, 1080), f"{BASE_PATH}/find_descr_rare_1920x1080.png", (1630, 763), True, (1196, 377), ItemRarity.Rare),
         ((1920, 1080), f"{BASE_PATH}/find_descr_legendary_1920x1080.png", (1515, 761), True, (1088, 78), ItemRarity.Legendary),
         ((2560, 1440), f"{BASE_PATH}/find_descr_legendary_2560x1440.png", (676, 546), True, (743, 105), ItemRarity.Legendary),
+        ((2560, 1440), f"{BASE_PATH}/find_descr_legendary_2560x1440_2_inv.png", (1723, 1012), True, (1156, 296), ItemRarity.Legendary),
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):

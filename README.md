@@ -11,12 +11,12 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Filter by item type and item power
 - Filter by affix and thresholds of their values
 - Filter by aspects and threshold of their values
-- Automatically mark everything that does not pass the filter as junk
+- Mark everything that does not pass the filter as junk
 
 ## Getting Started
 
 ### Game Settings
-- Supported resolutions: 1920x1080, 2560x1440 (not well tested yet)
+- Supported resolutions: 1920x1080, 2560x1440, 3840x2160
 - Font size must be set to small in the Gameplay Settings
 - Game Language must be English
 
@@ -27,9 +27,9 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
   - filter: Start filtering items
   - scripts: In case there are any scripts attached, run them
 - Alternative use the hotkeys. e.g. f11 for filtering
-- All items that do not match any of your filter configs will be marked as junk
+- All items that do not match any of your filter configs will be marked as junk.
 
-Note: If the item description does not show while hovering and is very laggy, try to move to another area without any events and less people around.
+Note: Make sure to only have items in your inventory. For example elixirs (seen as magic) or material (seen as common) will be marked as junk!
 
 ### Configs
 The config folder contains:

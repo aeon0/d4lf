@@ -1,4 +1,4 @@
-from item.filter import should_keep
+from item.filter import Filter
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
 from item.data.affix import Affix
@@ -19,5 +19,6 @@ def test_should_keep():
             # Affix("ranks_of_flurry", 3),
         ],
     )
-    keep = should_keep(item)
+    filter = Filter()
+    keep = filter.should_keep(item)
     print(keep)

@@ -2,7 +2,7 @@ import cv2
 import time
 from item.find_descr import find_descr
 from item.read_descr import read_descr
-from item.filter import should_keep
+from item.filter import Filter
 from item.data.rarity import ItemRarity
 from cam import Cam
 from config import Config
@@ -26,5 +26,6 @@ def test_smoke():
         return
     item_descr = read_descr(rarity, cropped_descr)
     assert item_descr is not None
-    keep = should_keep(item_descr)
+    filter = Filter()
+    keep = filter.should_keep(item_descr)
     print("Runtime (full): ", time.time() - start, keep)

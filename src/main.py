@@ -19,7 +19,7 @@ def main():
         wait(0.2)
 
     # Create folders for logging stuff
-    for dir_name in ["log/screenshots", "log/error"]:
+    for dir_name in ["log/screenshots"]:
         os.makedirs(dir_name, exist_ok=True)
 
     if Config().advanced_options["log_lvl"] == "info":

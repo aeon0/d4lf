@@ -45,13 +45,16 @@ def check_items(inv: InventoryBase):
                 # Sometimes we go to the next item, but the previous one still shows
                 if last_item_center is not None and compare_tuples(top_left_center, last_item_center, 5):
                     found = False
-                    Logger.warning("Detected no updated item, move cursor keep searching.")
+                    Logger.debug("Detected no updated item, move cursor keep searching.")
                     continue
                 last_item_center = top_left_center
         if not found:
             continue
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")
         # Hardcoded rarity filter
+        if rarity in [ItemRarity.Unique]:
+            Logger.info("Matched: Unique")
+            continue
         if rarity in [ItemRarity.Common, ItemRarity.Magic]:
             Logger.info(f"Discard item of rarity: {rarity}")
             keyboard.send("space")

@@ -38,8 +38,8 @@ class Overlay:
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
         self.initial_width = int(self.screen_width * 0.072)
-        self.maximized_height = int(self.initial_height * 3.85)
-        self.maximized_width = int(self.initial_width * 6)
+        self.maximized_height = int(self.initial_height * 3.4)
+        self.maximized_width = int(self.initial_width * 5)
 
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
         self.root.geometry(
@@ -77,6 +77,11 @@ class Overlay:
         )
         self.canvas.create_window(int(self.initial_width * 0.8), self.initial_height // 2, window=self.start_scripts_button)
 
+        font_size = 8
+        if Config().ui_pos["window_dimensions"] == (2560, 1440):
+            font_size = 9
+        elif Config().ui_pos["window_dimensions"] == (3840, 2160):
+            font_size = 10
         self.terminal_listbox = tk.Listbox(
             self.canvas,
             bg="black",
@@ -86,7 +91,7 @@ class Overlay:
             selectbackground="#222222",
             activestyle=tk.NONE,
             borderwidth=0,
-            font=("Courier New", 9),
+            font=("Courier New", font_size),
         )
         self.terminal_listbox.place(
             relx=0,

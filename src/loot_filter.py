@@ -83,6 +83,10 @@ def run_loot_filter():
             check_items(chest)
     elif not inv.is_open():
         inv.open()
+    if not inv.is_open():
+        screenshot("inventory_not_open", img=Cam().grab())
+        Logger.error("Inventory did not open up")
+        return
     check_items(inv)
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Loot Filter done")

@@ -41,7 +41,7 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Legendary,
                 ItemType.Amulet,
                 894,
-                Aspect("frostbitten_aspect", 33),
+                Aspect("frostbitten_aspect", 22),
                 [
                     Affix("strength", 5.5),
                     Affix("imbuement_skill_damage", 28),

@@ -110,8 +110,7 @@ def should_keep(item: Item):
 
     if item.aspect and filter_aspects is not None:
         for filter_data in filter_aspects:
-            filter_aspect = [filter_data] if isinstance(filter_data, str) else filter_data
-            aspect_name, *rest = aspect if isinstance(filter_aspect, list) else [filter_aspect]
+            aspect_name, *rest = filter_data if isinstance(filter_data, list) else [filter_data]
             threshold = rest[0] if rest else None
             condition = rest[1] if len(rest) > 1 else "larger"
 

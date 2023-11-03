@@ -234,11 +234,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
 
         # some aspects have their variable number as second:
-        number_idx_1 = [
-            "frostbitten_aspect",
-            "aspect_of_artful_initiative",
-            "aspect_of_noxious_ice",
-        ]
+        number_idx_1 = ["frostbitten_aspect", "aspect_of_artful_initiative", "aspect_of_noxious_ice", "elementalists_aspect"]
         number_idx_2 = [
             "aspect_of_retribution",
         ]

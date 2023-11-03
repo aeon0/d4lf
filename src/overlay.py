@@ -37,9 +37,14 @@ class Overlay:
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
-        self.initial_width = int(self.screen_width * 0.072)
-        self.maximized_height = int(self.initial_height * 3.85)
-        self.maximized_width = int(self.initial_width * 6)
+        if Config().ui_pos["window_dimensions"] == (2560, 1440):
+            self.initial_width = int(self.screen_width * 0.072)
+            self.maximized_height = int(self.initial_height * 3.4)
+            self.maximized_width = int(self.initial_width * 6)
+        else:
+            self.initial_width = int(self.screen_width * 0.072)
+            self.maximized_height = int(self.initial_height * 3.85)
+            self.maximized_width = int(self.initial_width * 4.8)
 
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
         self.root.geometry(

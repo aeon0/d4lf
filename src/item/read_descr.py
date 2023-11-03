@@ -254,7 +254,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         if item.type is ItemType.Amulet:
             found_value /= 1.5
         # Possibly add Bow and Crossbow if those scale it up as well
-        if item.type in [ItemType.Axe2H, ItemType.Sword2H, ItemType.Mace2H, ItemType.Scythe, ItemType.Polearm, ItemType.Staff]:
+        if item.type in [ItemType.Bow, ItemType.Crossbow, ItemType.Axe2H, ItemType.Sword2H, ItemType.Mace2H, ItemType.Scythe, ItemType.Polearm, ItemType.Staff]:
             found_value /= 2
 
         if found_key is not None:

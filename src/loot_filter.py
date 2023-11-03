@@ -9,11 +9,14 @@ from item.find_descr import find_descr
 from utils.roi_operations import compare_tuples
 from item.read_descr import read_descr
 from item.data.rarity import ItemRarity
-from item.filter import should_keep
+from item.filter import Filter
 import keyboard
 from utils.custom_mouse import mouse
 from utils.window import screenshot
 from config import Config
+
+
+filter = Filter()
 
 
 def check_items(inv: InventoryBase):
@@ -48,10 +51,7 @@ def check_items(inv: InventoryBase):
         if not found:
             continue
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")
-        # Hardcoded rarity filters
-        if rarity == ItemRarity.Unique:
-            Logger.info("Matched: unique")
-            continue
+        # Hardcoded rarity filter
         if rarity in [ItemRarity.Common, ItemRarity.Magic]:
             Logger.info(f"Discard item of rarity: {rarity}")
             keyboard.send("space")
@@ -66,7 +66,7 @@ def check_items(inv: InventoryBase):
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 
         # Check if we want to keep the item
-        if not should_keep(item_descr):
+        if not filter.should_keep(item_descr):
             keyboard.send("space")
             wait(0.13, 0.14)
 

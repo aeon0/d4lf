@@ -97,4 +97,5 @@ class Cam:
 
     @convert_args_to_numpy
     def abs_window_to_monitor(self, abs_window_coord: np.ndarray) -> np.ndarray:
-        return self.window_to_monitor(self.abs_window_to_window(abs_window_coord))
+        window_coord = self.abs_window_to_window(abs_window_coord)
+        return self.window_to_monitor(window_coord)

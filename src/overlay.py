@@ -8,6 +8,7 @@ from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
 from config import Config
+from cam import Cam
 
 
 class ListboxHandler(logging.Handler):
@@ -41,9 +42,11 @@ class Overlay:
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)
 
+        self.screen_off_x = Cam().window_roi["left"]
+        self.screen_off_y = Cam().window_roi["top"]
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
         self.root.geometry(
-            f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+            f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
         )
         self.canvas.pack()
 
@@ -110,12 +113,12 @@ class Overlay:
         if not self.is_minimized:
             self.canvas.config(height=self.initial_height, width=self.initial_width)
             self.root.geometry(
-                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2}+{self.screen_height - self.initial_height}"
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
             )
         else:
             self.canvas.config(height=self.maximized_height, width=self.maximized_width)
             self.root.geometry(
-                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2}+{self.screen_height - self.maximized_height}"
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
             )
         self.is_minimized = not self.is_minimized
         move_window_to_foreground()

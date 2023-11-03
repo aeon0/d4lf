@@ -81,12 +81,12 @@ def run_loot_filter():
         for i in range(check_tabs):
             chest.switch_to_tab(i)
             check_items(chest)
-    elif not inv.is_open():
-        inv.open()
-    if not inv.is_open():
-        screenshot("inventory_not_open", img=Cam().grab())
-        Logger.error("Inventory did not open up")
-        return
-    check_items(inv)
+        check_items(inv)
+    else:
+        if not inv.open():
+            screenshot("inventory_not_open", img=Cam().grab())
+            Logger.error("Inventory did not open up")
+            return
+        check_items(inv)
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Loot Filter done")

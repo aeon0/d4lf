@@ -134,14 +134,15 @@ class Overlay:
                 f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
             )
         else:
-            if self.hide_id:
-                self.root.after_cancel(self.hide_id)
-                self.hide_id = None
             self.canvas.config(height=self.maximized_height, width=self.maximized_width)
             self.root.geometry(
                 f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
             )
         self.is_minimized = not self.is_minimized
+        if self.is_minimized:
+            self.hide_canvas(None)
+        else:
+            self.show_canvas(None)
         move_window_to_foreground()
 
     def filter_items(self):

@@ -30,7 +30,8 @@ class Overlay:
         self.is_minimized = True
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
-        self.root.attributes("-alpha", 0.89)
+        self.root.attributes("-alpha", 0.87)
+        self.hide_id = self.root.after(15000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
         self.root.overrideredirect(True)
         # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)
@@ -49,6 +50,8 @@ class Overlay:
             f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
         )
         self.canvas.pack()
+        self.root.bind("<Enter>", self.show_canvas)
+        self.root.bind("<Leave>", self.hide_canvas)
 
         self.toggle_button = tk.Button(
             self.root,
@@ -108,6 +111,21 @@ class Overlay:
         listbox_handler = ListboxHandler(self.terminal_listbox)
         listbox_handler.setLevel(Logger._logger_level)
         Logger.logger.addHandler(listbox_handler)
+
+    def show_canvas(self, event):
+        # Cancel the pending hide if it exists
+        if self.hide_id:
+            self.root.after_cancel(self.hide_id)
+            self.hide_id = None
+        # Make the window visible
+        self.root.attributes("-alpha", 0.89)
+
+    def hide_canvas(self, event):
+        # Reset the hide timer
+        if self.is_minimized:
+            if self.hide_id is not None:
+                self.root.after_cancel(self.hide_id)
+            self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
 
     def toggle_size(self):
         if not self.is_minimized:

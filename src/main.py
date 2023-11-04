@@ -11,9 +11,14 @@ from utils.misc import wait
 from cam import Cam
 from overlay import Overlay
 import keyboard
+from utils.game_settings import is_fontsize_ok
 
 
 def main():
+    if not is_fontsize_ok():
+        Logger.error("ERROR: Please set font size to small and restart d4lf")
+        safe_exit()
+
     start_detecting_window()
     while not Cam().is_offset_set():
         wait(0.2)

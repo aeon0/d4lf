@@ -16,6 +16,20 @@ import json
 from rapidfuzz import process
 from config import Config
 
+
+# Some aspects have their variable number as second (number_idx_1) or third (number_idx_2)
+ASPECT_NUMBER_AT_IDX1 = [
+    "frostbitten_aspect",
+    "aspect_of_artful_initiative",
+    "aspect_of_noxious_ice",
+    "elementalists_aspect",
+    "snowveiled_aspect",
+    "aspect_of_might",
+]
+ASPECT_NUMBER_AT_IDX2 = [
+    "aspect_of_retribution",
+]
+
 affix_dict = dict()
 with open("assets/affixes.json", "r") as f:
     affix_dict = json.load(f)
@@ -114,10 +128,13 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             item_power_numbers = preceding_word.split("+")
             item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
     max_length = 0
+    last_char_idx = 0
     for item_type in ItemType:
-        if item_type.value in concatenated_str:
-            if len(item_type.value) > max_length:
+        if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
+            tmp_idx = found_idx + len(item_type.value)
+            if tmp_idx >= last_char_idx and len(item_type.value) > max_length:
                 item.type = item_type
+                last_char_idx = tmp_idx
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
     if item.type is None:
@@ -133,7 +150,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     # Detect textures (2)
     # =====================================
     start_tex_2 = time.time()
-    roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"], img_height]
+    roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"] + 20, img_height]
     if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
         Logger.warning("Could not detect affix_bullet_points.")
         screenshot("failed_affix_bullet_points", img=img_item_descr)
@@ -233,20 +250,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         cleaned_str = _clean_str(concatenated_str)
         found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
 
-        # some aspects have their variable number as second:
-        number_idx_1 = [
-            "frostbitten_aspect",
-            "aspect_of_artful_initiative",
-            "aspect_of_noxious_ice",
-            "elementalists_aspect",
-            "snowveiled_aspect",
-        ]
-        number_idx_2 = [
-            "aspect_of_retribution",
-        ]
-        if found_key in number_idx_1:
+        if found_key in ASPECT_NUMBER_AT_IDX1:
             idx = 1
-        elif found_key in number_idx_2:
+        elif found_key in ASPECT_NUMBER_AT_IDX2:
             idx = 2
         else:
             idx = 0

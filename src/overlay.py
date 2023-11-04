@@ -138,6 +138,8 @@ class Overlay:
         try:
             run_loot_filter()
         finally:
+            if not self.is_minimized:
+                self.toggle_size()
             self.loot_filter_thread = None
 
     def run_scripts(self):
@@ -147,8 +149,6 @@ class Overlay:
                 kill_thread(script_thread)
             self.script_threads = []
             return
-        if self.is_minimized:
-            self.toggle_size()
         if len(Config().general["run_scripts"]) == 0:
             Logger.info("No scripts configured")
             return

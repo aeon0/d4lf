@@ -62,7 +62,7 @@ ASPECT_NUMBER_AT_IDX1 = [
     "trickshot_aspect",
     "snowguards_aspect",
     "aspect_of_frozen_orbit",
-    "serpentine_aspect",    
+    "serpentine_aspect",
 ]
 ASPECT_NUMBER_AT_IDX2 = [
     "aspect_of_retribution",

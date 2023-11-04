@@ -78,8 +78,8 @@ def detect_window(window_spec: WindowSpec = D4_WINDOW):
 def find_and_set_window_position(window_spec: WindowSpec = D4_WINDOW):
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
-        position = GetWindowRect(hwnd)
-        Cam().update_window_pos(*position)
+        pos = GetWindowRect(hwnd)
+        Cam().update_window_pos(pos[0], pos[1], pos[2] - pos[0], pos[3] - pos[1])
     wait(0.5)
 
 

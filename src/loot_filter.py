@@ -9,11 +9,14 @@ from item.find_descr import find_descr
 from utils.roi_operations import compare_tuples
 from item.read_descr import read_descr
 from item.data.rarity import ItemRarity
-from item.filter import should_keep
+from item.filter import Filter
 import keyboard
 from utils.custom_mouse import mouse
 from utils.window import screenshot
 from config import Config
+
+
+filter = Filter()
 
 
 def check_items(inv: InventoryBase):
@@ -42,15 +45,15 @@ def check_items(inv: InventoryBase):
                 # Sometimes we go to the next item, but the previous one still shows
                 if last_item_center is not None and compare_tuples(top_left_center, last_item_center, 5):
                     found = False
-                    Logger.warning("Detected no updated item, move cursor keep searching.")
+                    Logger.debug("Detected no updated item, move cursor keep searching.")
                     continue
                 last_item_center = top_left_center
         if not found:
             continue
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")
-        # Hardcoded rarity filters
-        if rarity == ItemRarity.Unique:
-            Logger.info("Matched: unique")
+        # Hardcoded rarity filter
+        if rarity in [ItemRarity.Unique]:
+            Logger.info("Matched: Unique")
             continue
         if rarity in [ItemRarity.Common, ItemRarity.Magic]:
             Logger.info(f"Discard item of rarity: {rarity}")
@@ -66,7 +69,7 @@ def check_items(inv: InventoryBase):
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 
         # Check if we want to keep the item
-        if not should_keep(item_descr):
+        if not filter.should_keep(item_descr):
             keyboard.send("space")
             wait(0.13, 0.14)
 
@@ -81,12 +84,12 @@ def run_loot_filter():
         for i in range(check_tabs):
             chest.switch_to_tab(i)
             check_items(chest)
-    elif not inv.is_open():
-        inv.open()
-    if not inv.is_open():
-        screenshot("inventory_not_open", img=Cam().grab())
-        Logger.error("Inventory did not open up")
-        return
-    check_items(inv)
+        check_items(inv)
+    else:
+        if not inv.open():
+            screenshot("inventory_not_open", img=Cam().grab())
+            Logger.error("Inventory did not open up")
+            return
+        check_items(inv)
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Loot Filter done")

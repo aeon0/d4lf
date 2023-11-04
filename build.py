@@ -54,6 +54,7 @@ if __name__ == "__main__":
 
     shutil.copy("config/game_1920x1080.ini", f"{release_dir}/config/")
     shutil.copy("config/game_2560x1440.ini", f"{release_dir}/config/")
+    shutil.copy("config/game_3840x2160.ini", f"{release_dir}/config/")
     shutil.copy("config/params.ini", f"{release_dir}/config/")
     shutil.copy("config/filter_affixes.yaml", f"{release_dir}/config/")
     shutil.copy("config/filter_aspects.yaml", f"{release_dir}/config/")

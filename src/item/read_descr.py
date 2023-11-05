@@ -70,6 +70,10 @@ ASPECT_NUMBER_AT_IDX2 = [
     "aspect_of_untimely_death",
 ]
 
+ERROR_MAP = {
+    "thoms": "thorns",
+}
+
 affix_dict = dict()
 with open("assets/affixes.json", "r") as f:
     affix_dict = json.load(f)
@@ -262,6 +266,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         line_idx += lines_to_add
         combined_lines = combined_lines.replace("\n", " ")
         cleaned_str = _clean_str(combined_lines)
+        for error, correction in ERROR_MAP.items():
+            cleaned_str = cleaned_str.replace(error, correction)
 
         found_key = _closest_match(cleaned_str, affix_dict)
         found_value = _find_number(combined_lines)
@@ -315,6 +321,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             found_value /= 2
 
         if found_key is not None:
+            # Rapid detects 19 as 199
+            if found_key == "rapid_aspect" and found_value == 199:
+                found_value = 19
             item.aspect = Aspect(found_key, found_value, concatenated_str)
         else:
             Logger.warning(f"Could not find aspect: {cleaned_str}")

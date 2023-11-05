@@ -12,17 +12,18 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Filter by affix and thresholds of their values
 - Filter by aspects and threshold of their values
 - Mark everything that does not pass the filter as junk
+- Supported resolutions: 1080p, 1440p, 2160p
 
-## Getting Started
+## How to Setup
 
 ### Game Settings
-- Supported resolutions: 1920x1080, 2560x1440, 3840x2160
 - Font size must be set to small in the Gameplay Settings
 - Game Language must be English
 - Advanced Tooltip Information (showing min and max values) is fine. But the Compare has to be truned off
 
 ### Run
-- Execute d4lf.exe and go to your D4 screen.
+- Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
+- Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
   - toggle: Make the console visiable or hide it
   - filter: Start filtering items
@@ -30,7 +31,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Alternative use the hotkeys. e.g. f11 for filtering
 - All items that do not match any of your filter configs will be marked as junk.
 
-Note: Make sure to only have items in your inventory. For example elixirs (seen as magic) or material (seen as common) will be marked as junk!
+Note: Make sure to only have items in your inventory. For example elixirs (seen as magic) or material (seen as common) will be marked as junk! Also currently it will not detect any favorits or already marked junk items (upcoming feature).
 
 ### Configs
 The config folder contains:
@@ -38,6 +39,26 @@ The config folder contains:
 - __filter_affixes.yaml__: Filter settings for affixes.
 - __params.ini__: Different hotkey settings and number of chest stashes that should be looked at.
 - __game.ini__: Settings regarding color thresholds and image positions. You dont need to touch this.
+
+### params.ini
+| [general] | Description |
+| ----------------------- | --------------------------------------|
+| check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
+| hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |
+| local_prefs_path | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file |
+| run_scripts | Running different scripts that can further help your gameplay |
+
+| [char] | Description |
+| ----------------------- | --------------------------------------|
+| inventory | Hotkey for opening inventory |
+| skill4 | Hotkey for casting the 4th skill in your skill bar. (Not needed for lootfilter!) |
+
+| [advanced_options] | Description |
+| ----------------------- | --------------------------------------|
+| run_scripts | Hotkey to run scripts |
+| run_filter | Hotkey to start/stop filtering items |
+| exit_key | Hotkey to exit d4lf.exe |
+| log_level | Logging level. Can be any of [debug, info, warning, error] |
 
 ## How to filter
 ### Aspects

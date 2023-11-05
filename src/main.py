@@ -46,8 +46,8 @@ def main():
     print(table)
     print("\n")
 
-    keyboard.add_hotkey(Config().advanced_options["run_scripts"], lambda: overlay.run_scripts())
-    keyboard.add_hotkey(Config().advanced_options["run_key"], lambda: overlay.filter_items())
+    keyboard.add_hotkey(Config().advanced_options["run_scripts"], lambda: overlay.run_scripts() if overlay is not None else None)
+    keyboard.add_hotkey(Config().advanced_options["run_key"], lambda: overlay.filter_items() if overlay is not None else None)
     keyboard.add_hotkey(Config().advanced_options["exit_key"], lambda: safe_exit())
 
     overlay = Overlay()

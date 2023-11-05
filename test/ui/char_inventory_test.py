@@ -13,6 +13,7 @@ BASE_PATH = "test/assets/ui"
 @pytest.mark.parametrize(
     "img_res, input_img",
     [
+        ((1920, 1080), f"{BASE_PATH}/char_open_1080p.png"),
         ((2560, 1440), f"{BASE_PATH}/char_open_1440p.png"),
         ((3840, 2160), f"{BASE_PATH}/char_open_2160p.png"),
     ],

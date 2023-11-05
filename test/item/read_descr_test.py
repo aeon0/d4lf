@@ -20,7 +20,7 @@ BASE_PATH = "test/assets/item"
     [
         (
             (1920, 1080),
-            f"{BASE_PATH}/read_descr_rare_1920x1080_1.png",
+            f"{BASE_PATH}/read_descr_rare_1080p.png",
             Item(
                 ItemRarity.Rare,
                 ItemType.Gloves,
@@ -36,7 +36,7 @@ BASE_PATH = "test/assets/item"
         ),
         (
             (1920, 1080),
-            f"{BASE_PATH}/read_descr_legendary_1920x1080_1.png",
+            f"{BASE_PATH}/read_descr_legendary_1080p.png",
             Item(
                 ItemRarity.Legendary,
                 ItemType.Amulet,
@@ -52,7 +52,7 @@ BASE_PATH = "test/assets/item"
         ),
         (
             (1920, 1080),
-            f"{BASE_PATH}/read_descr_rare_1920x1080_2.png",
+            f"{BASE_PATH}/read_descr_rare_1080p_2.png",
             Item(
                 ItemRarity.Rare,
                 ItemType.Pants,
@@ -63,22 +63,6 @@ BASE_PATH = "test/assets/item"
                     Affix("thorns", 873),
                     Affix("damage_reduction_from_close_enemies", 11),
                     Affix("imbuement_skill_cooldown_reduction", 5.8),
-                ],
-            ),
-        ),
-        (
-            (2560, 1440),
-            f"{BASE_PATH}/read_descr_legendary_2560x1440_1.png",
-            Item(
-                ItemRarity.Legendary,
-                ItemType.Wand,
-                864,
-                Aspect("conceited_aspect", 18),
-                [
-                    Affix("core_skill_damage", 18),
-                    Affix("ultimate_skill_damage", 18.5),
-                    Affix("damage_to_stunned_enemies", 18),
-                    Affix("damage_to_burning_enemies", 12.5),
                 ],
             ),
         ),

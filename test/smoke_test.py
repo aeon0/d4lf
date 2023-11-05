@@ -15,7 +15,7 @@ def test_smoke():
     Cam().update_window_pos(0, 0, *res)
     Config().load_data()
     stored_templates.cache_clear()
-    img = cv2.imread("test/assets/item/find_descr_legendary_2560x1440_2_inv.png")
+    img = cv2.imread("test/assets/item/find_descr_legendary_1440p.png")
     start = time.time()
     found, _, rarity, cropped_descr = find_descr(img, anchor)
     print("Runtime (detect): ", time.time() - start)

@@ -7,13 +7,14 @@ from config import Config
 from template_finder import stored_templates
 
 
-BASE_PATH = "test/assets/item"
+BASE_PATH = "test/assets/ui"
 
 
 @pytest.mark.parametrize(
     "img_res, input_img",
     [
-        ((2560, 1440), f"{BASE_PATH}/find_descr_legendary_2560x1440_2_inv.png"),
+        ((2560, 1440), f"{BASE_PATH}/char_open_1440p.png"),
+        ((3840, 2160), f"{BASE_PATH}/char_open_2160p.png"),
     ],
 )
 def test_char_inventory(img_res, input_img):

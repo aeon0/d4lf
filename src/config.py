@@ -74,6 +74,7 @@ class Config:
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
             "run_scripts": run_scripts_str.split(",") if run_scripts_str else [],
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
+            "local_prefs_path": self._select_val("general", "local_prefs_path"),
         }
 
         for key in self.configs["params"]["parser"]["char"]:

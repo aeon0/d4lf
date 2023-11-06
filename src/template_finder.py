@@ -106,7 +106,7 @@ class SearchArgs:
 def stored_templates() -> dict[Template]:
     paths = []
     templates = {}
-    for path in [f"assets\\templates_{Cam().res_key}"]:
+    for path in [f"assets\\templates_{Cam().res_p}"]:
         paths += list_files_in_folder(path)
     for file_path in paths:
         file_name: str = os.path.basename(file_path)

@@ -72,6 +72,7 @@ ASPECT_NUMBER_AT_IDX2 = [
 
 ERROR_MAP = {
     "thoms": "thorns",
+    "seythe": "scythe",
 }
 
 affix_dict = dict()
@@ -307,20 +308,21 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         found_value = _find_number(concatenated_str, idx)
 
         # Scale the aspect down to the canonical range if found on an item that scales it up
-        if item.type is ItemType.Amulet:
-            found_value /= 1.5
-        # Possibly add Bow and Crossbow if those scale it up as well
-        if item.type in [
-            ItemType.Bow,
-            ItemType.Crossbow,
-            ItemType.Axe2H,
-            ItemType.Sword2H,
-            ItemType.Mace2H,
-            ItemType.Scythe,
-            ItemType.Polearm,
-            ItemType.Staff,
-        ]:
-            found_value /= 2
+        if found_value is not None:
+            if item.type is ItemType.Amulet:
+                found_value /= 1.5
+            # Possibly add Bow and Crossbow if those scale it up as well
+            if item.type in [
+                ItemType.Bow,
+                ItemType.Crossbow,
+                ItemType.Axe2H,
+                ItemType.Sword2H,
+                ItemType.Mace2H,
+                ItemType.Scythe,
+                ItemType.Polearm,
+                ItemType.Staff,
+            ]:
+                found_value /= 2
 
         if found_key is not None:
             # Rapid detects 19 as 199

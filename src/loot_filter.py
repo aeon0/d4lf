@@ -21,10 +21,12 @@ filter = Filter()
 
 def check_items(inv: InventoryBase):
     occupied, _ = inv.get_item_slots()
-    Logger.info(f"Found {len(occupied)} items in {inv.menu_name}. Checking them.")
-    last_item_center = None
+
+    Logger.info(f"Items: {len(occupied)} in {inv.menu_name}")
     start_time = None
     for item in occupied:
+        if item.is_junk or item.is_fav:
+            continue
         if start_time is not None:
             Logger.debug(f"Runtime (FullItemCheck): {time.time() - start_time:.2f}s")
             Logger.debug("----")
@@ -40,14 +42,7 @@ def check_items(inv: InventoryBase):
             inv.hover_item(item)
             wait(0.35)
             img = Cam().grab()
-            found, top_left_center, rarity, cropped_descr = find_descr(img, item.center)
-            if found:
-                # Sometimes we go to the next item, but the previous one still shows
-                if last_item_center is not None and compare_tuples(top_left_center, last_item_center, 5):
-                    found = False
-                    Logger.debug("Detected no updated item, move cursor keep searching.")
-                    continue
-                last_item_center = top_left_center
+            found, _, rarity, cropped_descr = find_descr(img, item.center)
         if not found:
             continue
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")

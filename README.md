@@ -17,7 +17,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 ## How to Setup
 
 ### Game Settings
-- Font size must be set to small in the Gameplay Settings
+- Font size can be small or medium (better tested on small) in the Gameplay Settings
 - Game Language must be English
 - Advanced Tooltip Information (showing min and max values) is fine. But the Compare has to be truned off
 
@@ -31,7 +31,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Alternative use the hotkeys. e.g. f11 for filtering
 - All items that do not match any of your filter configs will be marked as junk.
 
-Note: Make sure to only have items in your inventory. For example elixirs (seen as magic) or material (seen as common) will be marked as junk! Also currently it will not detect any favorits or already marked junk items (upcoming feature).
+Note: Make sure to only have items in your inventory (will ignore junk and fav marked items). But elixirs (seen as magic) or material (seen as common) will be marked as junk!
 
 ### Configs
 The config folder contains:

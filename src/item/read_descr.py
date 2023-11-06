@@ -195,10 +195,11 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     # =====================================
     start_tex_2 = time.time()
     roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"] + 20, img_height]
-    if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
-        Logger.warning("Could not detect affix_bullet_points.")
-        screenshot("failed_affix_bullet_points", img=img_item_descr)
-        return None
+    if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.91, roi_bullets, True, mode="all")).success:
+        if not (affix_bullets := search("affix_bullet_point_medium", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
+            Logger.warning("Could not detect affix_bullet_points.")
+            screenshot("failed_affix_bullet_points", img=img_item_descr)
+            return None
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     # Depending on the item type we have to remove some of the topmost affixes as they are fixed
     remove_top_most = 1
@@ -217,7 +218,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         affix_bullets.matches = affix_bullets.matches[-4:]
     empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
-    aspect_bullets = search("aspect_bullet_point", img_item_descr, 0.87, roi_bullets, True, mode="first")
+    refs = ["aspect_bullet_point", "aspect_bullet_point_medium"]
+    aspect_bullets = search(refs, img_item_descr, 0.87, roi_bullets, True, mode="first")
     if rarity == ItemRarity.Legendary and not aspect_bullets.success:
         Logger.warning("Could not detect aspect_bullet for a legendary item.")
         screenshot("failed_aspect_bullet", img=img_item_descr)

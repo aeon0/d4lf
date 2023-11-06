@@ -12,7 +12,12 @@ class Chest(InventoryBase):
     def __init__(self):
         super().__init__(5, 10)
         self.menu_name = "Chest"
-        self.is_open_search_args = SearchArgs(ref="stash_menu_icon", threshold=0.8, roi="stash_menu_icon", use_grayscale=True)
+        self.is_open_search_args = SearchArgs(
+            ref=["stash_menu_icon", "stash_menu_icon_medium"],
+            threshold=0.8,
+            roi="stash_menu_icon",
+            use_grayscale=True,
+        )
         self.close_hotkey = "esc"
         self.close_method = ToggleMethod.HOTKEY
         self.curr_tab = 0

@@ -9,7 +9,7 @@ from item.data.aspect import Aspect
 from item.models import Item
 from template_finder import search
 from utils.ocr.read import image_to_text
-from utils.image_operations import crop
+from utils.image_operations import crop, color_filter
 from utils.window import screenshot
 import re
 import json
@@ -156,6 +156,14 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     start_power = time.time()
     roi_top = [0, 0, img_width, sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
+    if rarity == ItemRarity.Common:
+        # We check if it is a material
+        mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
+        mean_val = np.mean(mask)
+        if mean_val > 2.0:
+            item.type = ItemType.Material
+            return item
+        return item
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
     idx = None
     # TODO: Handle common mistakes nicer
@@ -185,6 +193,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     if item.type is None:
         if "chest" in concatenated_str or "armor" in concatenated_str:
             item.type = ItemType.Armor
+
+    if rarity == ItemRarity.Magic:
+        return item
 
     if item.power is None or item.type is None:
         Logger().warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")

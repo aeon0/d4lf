@@ -28,13 +28,13 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
     roi_left[0] += anchor[0]
     ok, roi_left = fit_roi_to_window_size(roi_left, Config().ui_pos["window_dimensions"])
     if ok:
-        res = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.93, mode="best")
+        res = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.89, mode="best")
     if res is not None and not res.success:
         roi_right = copy(Config().ui_roi["rel_descr_search_right"])
         roi_right[0] += anchor[0]
         ok, roi_right = fit_roi_to_window_size(roi_right, Config().ui_pos["window_dimensions"])
         if ok:
-            res = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.93, mode="best")
+            res = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.89, mode="best")
 
     if res is not None and res.success:
         match = res.matches[0]

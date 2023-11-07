@@ -5,6 +5,7 @@ import numpy as np
 import os
 from logger import Logger
 from cam import Cam
+from pathlib import Path
 
 config_lock = threading.Lock()
 
@@ -63,18 +64,22 @@ class Config:
         self.configs["params"]["parser"].read("config/params.ini")
         self.configs["game"]["parser"].read(f"config/game_{Cam().res_key}.ini")
 
-        if os.environ.get("RUN_ENV") != "test" and os.path.exists("config/custom.ini"):
+        user = os.getlogin()
+        custom_params_path = Path(f"C:/Users/{user}/.d4lf/params.ini")
+        if os.environ.get("RUN_ENV") != "test" and os.path.exists(custom_params_path):
             try:
-                self.configs["custom"]["parser"].read("config/custom.ini")
+                self.configs["custom"]["parser"].read(custom_params_path)
             except configparser.MissingSectionHeaderError:
                 Logger.error("custom.ini missing section header, defaulting to params.ini")
 
         run_scripts_str = str(self._select_val("general", "run_scripts"))
+        profiles_str = str(self._select_val("general", "profiles"))
         self.general = {
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
             "run_scripts": run_scripts_str.split(",") if run_scripts_str else [],
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),
+            "profiles": profiles_str.split(",") if profiles_str else [],
         }
 
         for key in self.configs["params"]["parser"]["char"]:
@@ -97,4 +102,5 @@ class Config:
 
 
 if __name__ == "__main__":
+    Cam().res_key = "1920x1080"
     config = Config()

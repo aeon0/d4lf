@@ -2,6 +2,8 @@ import os
 from utils.window import start_detecting_window
 from beautifultable import BeautifulTable
 import logging
+import os
+from pathlib import Path
 import traceback
 from utils.process_handler import safe_exit
 from version import __version__
@@ -12,6 +14,7 @@ from cam import Cam
 from overlay import Overlay
 import keyboard
 from utils.game_settings import is_fontsize_ok
+from item.filter import Filter
 
 
 def main():
@@ -20,8 +23,14 @@ def main():
         wait(0.2)
 
     # Create folders for logging stuff
-    for dir_name in ["log/screenshots"]:
+    user = os.getlogin()
+    config_dir = Path(f"C:/Users/{user}/.d4lf")
+    for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
+
+    file_path = config_dir / "params.ini"
+    if not file_path.exists():
+        file_path.touch()
 
     if Config().advanced_options["log_lvl"] == "info":
         Logger.init(logging.INFO)
@@ -33,6 +42,9 @@ def main():
     if not is_fontsize_ok():
         Logger.warning("You do not have your font size set to small! The lootfilter might not work as intended.")
 
+    Logger.info(f"Adapt your custom configs in: {config_dir}")
+
+    Filter().load_files()
     overlay = None
 
     print(f"============ D4 Loot Filter {__version__} ============")

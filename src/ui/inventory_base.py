@@ -64,7 +64,8 @@ class InventoryBase(Menu):
 
             hsv_img = cv2.cvtColor(slot_img, cv2.COLOR_BGR2HSV)
             mean_value_overall = np.mean(hsv_img[:, :, 2])
-            mean_value_fav = np.mean(hsv_img[:14, :14, 2])  # TODO: put in config file
+            fav_flag_crop = crop(hsv_img, Config().ui_roi["rel_fav_flag"])
+            mean_value_fav = cv2.mean(fav_flag_crop)[2]
 
             # check junk
             hsv_junk = cv2.bitwise_and(hsv_img, hsv_img, mask=junk_mask)
@@ -74,7 +75,7 @@ class InventoryBase(Menu):
             mean_hsv_inv = cv2.mean(hsv_junk_inv, mask=junk_mask_inv)
             _, _, mean_value_inv = mean_hsv_inv[:3]
 
-            if mean_value_fav > 175:
+            if mean_value_fav > 195:
                 item_slot.is_fav = True
                 occupied_slots.append(item_slot)
             elif mean_value > 110 and mean_saturation < 50 and (mean_value - mean_value_inv) > 90:

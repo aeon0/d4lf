@@ -74,7 +74,7 @@ BASE_PATH = "test/assets/item"
         (
             (1920, 1080),
             f"{BASE_PATH}/read_descr_aspect_1080p.png",
-            Item(ItemRarity.Common, ItemType.Material),
+            Item(ItemRarity.Legendary, ItemType.Material),
         ),
         (
             (1920, 1080),

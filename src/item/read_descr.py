@@ -156,14 +156,15 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     start_power = time.time()
     roi_top = [0, 0, img_width, sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
-    if rarity == ItemRarity.Common:
+    if rarity in [ItemRarity.Common, ItemRarity.Legendary]:
         # We check if it is a material
         mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
         mean_val = np.mean(mask)
         if mean_val > 2.0:
             item.type = ItemType.Material
             return item
-        return item
+        elif rarity == ItemRarity.Common:
+            return item
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
     idx = None
     # TODO: Handle common mistakes nicer

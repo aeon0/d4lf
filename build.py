@@ -50,16 +50,10 @@ if __name__ == "__main__":
         installer_cmd = f"pyinstaller --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {args.conda_path}\\envs\\d4lf\\Lib\\site-packages src\\{exe}"
         os.system(installer_cmd)
 
-    os.system(f"cd {release_dir} && mkdir config && cd ..")
+    os.system(f"cd {release_dir} && cd ..")
 
-    shutil.copy("config/game_1920x1080.ini", f"{release_dir}/config/")
-    shutil.copy("config/game_2560x1440.ini", f"{release_dir}/config/")
-    shutil.copy("config/game_3440x1440.ini", f"{release_dir}/config/")
-    shutil.copy("config/game_3840x2160.ini", f"{release_dir}/config/")
-    shutil.copy("config/params.ini", f"{release_dir}/config/")
-    shutil.copy("config/filter_affixes.yaml", f"{release_dir}/config/")
-    shutil.copy("config/filter_aspects.yaml", f"{release_dir}/config/")
     shutil.copy("README.md", f"{release_dir}/")
     shutil.copytree("assets", f"{release_dir}/assets")
+    shutil.copytree("config", f"{release_dir}/config")
     os.rename(f"{release_dir}/main.exe", f"{release_dir}/d4lf.exe")
     clean_up()

@@ -6,9 +6,9 @@ from ui.char_inventory import CharInventory
 from ui.inventory_base import InventoryBase
 from ui.chest import Chest
 from item.find_descr import find_descr
-from utils.roi_operations import compare_tuples
 from item.read_descr import read_descr
 from item.data.rarity import ItemRarity
+from item.data.item_type import ItemType
 from item.filter import Filter
 import keyboard
 from utils.custom_mouse import mouse
@@ -50,11 +50,7 @@ def check_items(inv: InventoryBase):
         if rarity in [ItemRarity.Unique]:
             Logger.info("Matched: Unique")
             continue
-        if rarity in [ItemRarity.Common, ItemRarity.Magic]:
-            Logger.info(f"Discard item of rarity: {rarity}")
-            keyboard.send("space")
-            wait(0.15, 0.18)
-            continue
+
         start_time_read = time.time()
         # Detect contents of item descr
         item_descr = read_descr(rarity, cropped_descr)
@@ -62,6 +58,21 @@ def check_items(inv: InventoryBase):
             Logger.warning("Failed to read properties. Keeping it")
             continue
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
+
+        # Hardcoded filters
+        if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
+            Logger.info(f"Matched: Material / Sigil")
+            continue
+        if rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
+            Logger.info(f"Matched: Extracted Aspect")
+            continue
+        elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
+            Logger.info(f"Matched: Elixir")
+            continue
+        elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
+            keyboard.send("space")
+            wait(0.15, 0.18)
+            continue
 
         # Check if we want to keep the item
         if not filter.should_keep(item_descr):

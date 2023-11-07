@@ -75,7 +75,7 @@ class InventoryBase(Menu):
             mean_hsv_inv = cv2.mean(hsv_junk_inv, mask=junk_mask_inv)
             _, _, mean_value_inv = mean_hsv_inv[:3]
 
-            if mean_value_fav > 195:
+            if mean_value_fav > 205:
                 item_slot.is_fav = True
                 occupied_slots.append(item_slot)
             elif mean_value > 110 and mean_saturation < 50 and (mean_value - mean_value_inv) > 90:

@@ -142,7 +142,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     start_tex_1 = time.time()
     refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
     roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
-    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, "gray_seperator", "all", do_multi_process=False)).success:
+    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
         Logger.warning("Could not detect item_seperator_short.")
         screenshot("failed_seperator_short", img=img_item_descr)
         return None

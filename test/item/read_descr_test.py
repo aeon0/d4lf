@@ -86,6 +86,22 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_elixir_1080p.png",
             Item(ItemRarity.Magic, ItemType.Elixir),
         ),
+        (
+            (3840, 2160),
+            f"{BASE_PATH}/read_descr_rare_2160p.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Ring,
+                905,
+                None,
+                [
+                    Affix("critical_strike_damage_with_bone_skills", 14),
+                    Affix("blood_orb_healing", 15),
+                    Affix("lucky_hit_chance", 4.8),
+                    Affix("resource_generation", 9.5),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

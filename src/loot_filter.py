@@ -16,9 +16,6 @@ from utils.window import screenshot
 from config import Config
 
 
-filter = Filter()
-
-
 def check_items(inv: InventoryBase):
     occupied, _ = inv.get_item_slots()
 
@@ -75,7 +72,7 @@ def check_items(inv: InventoryBase):
             continue
 
         # Check if we want to keep the item
-        if not filter.should_keep(item_descr):
+        if not Filter().should_keep(item_descr):
             keyboard.send("space")
             wait(0.13, 0.14)
 

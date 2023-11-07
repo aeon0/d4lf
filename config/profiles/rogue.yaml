@@ -1,20 +1,25 @@
-# Find all affix keys in "config/affixes.json". Resource of possible affixes: https://d4builds.gg/database/gear-affixes/
+Aspects:
+  - [aspect_of_bursting_venoms]
+  - [aspect_of_corruption, 40]
+  - [aspect_of_elusive_menace, 7]
+  - [aspect_of_pestilent_points, 150]
+  - [aspect_of_noxious_ice, 29]
+  - [aspect_of_repeating, 45]
+  - [bladedancers_aspect, 15]
+  - [assimilation_aspect, 10]
+  - [cheats_aspect, 25]
+  - [energizing_aspect, 9]
+  - [enshrouding_aspect, 4]
+  - [frostbitten_aspect, 25]
+  - [manglers_aspect, 45]
+  - [ravenous_aspect, 65]
+  - [umbrous_aspect, 59]
 
-# Format is: [KEY, THRESHOLD, CONDITON]
-# CONDITON can be "larger" or "smaller" and defaults to "larger"
 
-# itemType must be any of:
-#   helm, chest armor, pants, gloves, boots, ring, amulet, axe, tow-handed axe,
-#   sword, two-handed sword, mace, two-handed mace, scythe, two-handed scythe,
-#   bow, bracers, crossbow, dagger, polarm, shield, stff, wand, offhand, totem
-
-
-Filters:
-  # Rogue
-  # =====================================
+Affixes:
   - Helm:
       itemType: helm
-      minPower: 725
+      minPower: 800
       affixPool:
         - [basic_skill_attack_speed, 6]
         - [cooldown_reduction, 5]
@@ -25,34 +30,21 @@ Filters:
         - [ranks_of_shadow_imbuement, 3]
       minAffixCount: 3
 
-  - Armor:
-      itemType: [chest armor, pants]
-      minPower: 725
-      affixPool:
-        - [damage_reduction_from_close_enemies, 10]
-        - [damage_reduction_from_distant_enemies, 12]
-        - [damage_reduction, 5]
-        - [total_armor, 9]
-        - [maximum_life, 700]
-        - [dodge_chance_against_close_enemies, 6.5]
-      minAffixCount: 3
-
   - Gloves:
       itemType: gloves
-      minPower: 725
+      minPower: 800
       affixPool:
         - [attack_speed, 7]
         - [dexterity, 38]
         - [lucky_hit_chance, 7.8]
         - [critical_strike_chance, 5.5]
-        - lucky_hit_up_to_a_chance_to_slow
         - [ranks_of_twisting_blades, 3]
         - [ranks_of_rapid_fire, 3]
       minAffixCount: 3
 
   - Boots:
       itemType: boots
-      minPower: 725
+      minPower: 800
       affixPool:
         - [movement_speed, 16]
         - [dexterity, 40]
@@ -65,12 +57,12 @@ Filters:
       minPower: 725
       affixPool:
         - [cooldown_reduction, 6]
-        - [damage_reduction, 6.7]
+        - [damage_reduction, 6]
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
         - [total_armor, 9]
         - [energy_cost_reduction, 6]
-        - [movement_speed, 14]
+        - [movement_speed]
         - [ranks_of_all_imbuement_skills, 2]
         - [ranks_of_the_exploit_passive, 2]
         - [ranks_of_the_weapon_mastery_passive, 2]
@@ -99,7 +91,7 @@ Filters:
         - [core_skill_damage, 17]
         - [damage_to_close_enemies, 19]
         - [vulnerable_damage, 16]
-      minAffixCount: 3
+      minAffixCount: 2
 
   - WeaponFar:
       itemType: [crossbow]
@@ -110,16 +102,4 @@ Filters:
         - [core_skill_damage, 25]
         - [damage_to_close_enemies, 37]
         - [vulnerable_damage, 34]
-      minAffixCount: 3
-
-  # Sorc
-  - Focus:
-      itemType: [focus]
-      minPower: 725
-      affixPool:
-        - [cooldown_reduction, 5]
-        - [resource_generation, 8]
-        - [critical_strike_chance, 3]
-        - [lucky_hit_chance, 5]
-        - [mana_cost_reduction, 5]
       minAffixCount: 3

@@ -12,37 +12,37 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Filter by affix and thresholds of their values
 - Filter by aspects and threshold of their values
 - Mark everything that does not pass the filter as junk
-- Supported resolutions: 1080p, 1440p, 2160p
+- Detect already marked as junk and marked as favorite and ignores them
+- Detect sigils, elixirs and matrial and ignores them
+- Supported resolutions: 1080p, 1440p, 1440p wide, 2160p
 
 ## How to Setup
 
 ### Game Settings
 - Font size can be small or medium (better tested on small) in the Gameplay Settings
 - Game Language must be English
-- Advanced Tooltip Information (showing min and max values) is fine. But the Compare has to be truned off
+- Advanced Tooltip Information (showing min and max values) is fine. But the _Advanced Tooltip Compare_ has to be truned off
 
 ### Run
 - Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
 - Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
-  - toggle: Make the console visiable or hide it
+  - toggle: Minimize/Maximize the console
   - filter: Start filtering items
   - scripts: In case there are any scripts attached, run them
 - Alternative use the hotkeys. e.g. f11 for filtering
 - All items that do not match any of your filter configs will be marked as junk.
 
-Note: Make sure to only have items in your inventory (will ignore junk and fav marked items). But elixirs (seen as magic) or material (seen as common) will be marked as junk!
-
 ### Configs
 The config folder contains:
-- __filter_aspects.yaml__: Filter settings for aspects.
-- __filter_affixes.yaml__: Filter settings for affixes.
+- __profiles/*.yaml__: These files determine what should be filtered.
 - __params.ini__: Different hotkey settings and number of chest stashes that should be looked at.
 - __game.ini__: Settings regarding color thresholds and image positions. You dont need to touch this.
 
 ### params.ini
 | [general] | Description |
 | ----------------------- | --------------------------------------|
+| profiles | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles. |
 | check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
 | hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |
 | local_prefs_path | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file |
@@ -62,7 +62,7 @@ The config folder contains:
 
 ## How to filter
 ### Aspects
-In [config/filter_aspects.yaml](config/filter_aspects.yaml) any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
+In your profile .yaml files any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
 
 For example:
 ```yaml
@@ -75,10 +75,10 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above and are added to [config/filter_affixes.yaml](config/filter_affixes.yaml). Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are discarded as junk by default.
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are discarded as junk by default.
 
 ```yaml
-Filters:
+Affixes:
   # Search for armor and pants that have at least 3 affixes of the affixPool
   - Armor:
       itemType: [armor, pants]
@@ -92,7 +92,12 @@ Filters:
       minAffixCount: 3
 ```
 
-Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! There is an example of a "TakeAll" filter in the filter_affixes.yaml. To keep an item type regardless of affixes and itemPower, add it there.
+Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! So if you want to take all items of a certain type, add it and leave minPower, affixPool and minAffixCount empty.
+
+## Custom configs
+D4LF will look for __params.ini__ and for __profiles/*.yaml__ also in C:/Users/WINDOWS_USER/.d4lf. All values in params.ini will overwrite the value from the param.ini in the D4LF folder. In the profiles folder additional custom profiles can be added and used.
+
+This is helpful to make it easier to update to a new version as you dont need to copy around your config and profiles. In case there are breaking changes to the configuration there will be a major release. E.g. update from 2.x.x -> 3.x.x.
 
 ## Develop
 

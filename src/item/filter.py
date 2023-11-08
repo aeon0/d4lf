@@ -1,5 +1,7 @@
 from item.models import Item
 import yaml
+from yaml.parser import ParserError
+from yaml.scanner import ScannerError
 import json
 import os
 import time
@@ -47,7 +49,19 @@ class Filter:
                 continue
 
             with open(profile_path) as f:
-                config = yaml.safe_load(f)
+                try:
+                    config = yaml.safe_load(f)
+                except yaml.YAMLError as e:
+                    if hasattr(e, "problem_mark"):
+                        mark = e.problem_mark
+                        Logger.error(f"Error in the YAML file {profile_path} at position: (line {mark.line + 1}, column {mark.column + 1})")
+                    else:
+                        Logger.error(f"Error in the YAML file {profile_path}: {e}")
+                    continue
+                except Exception as e:
+                    Logger.error(f"An unexpected error occurred loading YAML file {profile_path}: {e}")
+                    continue
+
                 info_str = f"Loading profile {profile_str}: "
 
                 if config is not None and "Affixes" in config:

@@ -73,6 +73,7 @@ ASPECT_NUMBER_AT_IDX2 = [
 ERROR_MAP = {
     "thoms": "thorns",
     "seythe": "scythe",
+    "two-handed!": "two-handed",
 }
 
 affix_dict = dict()
@@ -154,7 +155,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     # Item Type and Item Power
     # =====================================
     start_power = time.time()
-    roi_top = [0, 0, img_width, sep_short_match.center[1]]
+    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
     if rarity in [ItemRarity.Common, ItemRarity.Legendary]:
         # We check if it is a material
@@ -183,6 +184,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
     max_length = 0
     last_char_idx = 0
+    for error, correction in ERROR_MAP.items():
+        concatenated_str = concatenated_str.replace(error, correction)
     for item_type in ItemType:
         if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
             tmp_idx = found_idx + len(item_type.value)

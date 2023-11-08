@@ -1,0 +1,73 @@
+Aspects:
+  - [magelords_aspect, 8]
+  - [aspect_of_the_unwavering, 5]
+  - [gravitational_aspect, 25]
+  - [recharging_aspect, 2.5]
+  - [storm_swell_aspect, 25]
+
+Affixes:
+  - Helm:
+      itemType: helm
+      minPower: 725
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [maximum_life, 580]
+        - [total_armor, 9]
+        - [maximum_mana, 10]
+      minAffixCount: 3
+
+  - Armor:
+      itemType: [chest armor, pants]
+      minPower: 725
+      affixPool:
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction, 5]
+        - [total_armor, 9]
+        - [maximum_life, 580]
+        - [ranks_of_ball_lightning, 3]
+      minAffixCount: 3
+
+  - Amulet:
+      itemType: amulet
+      minPower: 725
+      affixPool:
+        - [cooldown_reduction, 6]
+        - [damage_reduction, 6.7]
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [total_armor, 9]
+        - [movement_speed, 14]
+        - [ranks_of_all_mastery_skills, 2]
+      minAffixCount: 3
+
+  - Ring:
+      itemType: ring
+      minPower: 725
+      affixPool:
+        - [critical_strike_chance, 3]
+        - [damage_to_close_enemies, 17]
+        - [resource_generation, 6]
+        - [maximum_life, 580]
+      minAffixCount: 3
+
+  - WeaponClose:
+      itemType: [dagger]
+      minPower: 915
+      affixPool:
+        - [all_stats, 20]
+        - [intelligence, 38]
+        - [damage_to_close_enemies, 16.5]
+        - [weapon_mastery_skill_damage, 12.5]
+      minAffixCount: 3
+
+  - Focus:
+      itemType: [focus]
+      minPower: 915
+      affixPool:
+        - [cooldown_reduction, 4]
+        - [resource_generation, 5]
+        - [critical_strike_chance, 2]
+        - [lucky_hit_chance, 4]
+        - [mana_cost_reduction, 4]
+      minAffixCount: 3

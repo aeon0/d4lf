@@ -43,7 +43,7 @@ class Filter:
             elif params_file_path.is_file():
                 profile_path = params_file_path
             else:
-                Logger.warning(f"Could not load profile {profile_str} as there was no associated .yaml file found")
+                Logger.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}, {params_file_path}")
                 continue
 
             with open(profile_path) as f:

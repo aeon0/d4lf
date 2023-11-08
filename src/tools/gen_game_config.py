@@ -3,6 +3,7 @@ import numpy as np
 
 # Define the scaling factors and file names for each resolution
 resolutions = {
+    "1080p_wide": {"factor": 1, "width_org": 1920, "width_new": 2560, "filename": "config/game_2560x1080.ini"},
     "1440p": {"factor": 4 / 3, "filename": "config/game_2560x1440.ini"},
     "1440p_wide": {"factor": 4 / 3, "width_org": 2560, "width_new": 3440, "filename": "config/game_3440x1440.ini"},
     "2160p": {"factor": 2.0, "filename": "config/game_3840x2160.ini"},

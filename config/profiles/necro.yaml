@@ -1,0 +1,194 @@
+Aspects:
+  - [aspect_of_the_void]
+  - [aspect_of_the_embalmer]
+  - [aspect_of_serration, 38]
+  - [aspect_of_grasping_veins, 18]
+  - [aspect_of_exposed_flesh, 48]
+  - [splintering_aspect, 58]
+  - [aspect_of_shielding_storm, 5]
+  - [blighted_aspect, 110]
+  - [bloodsoaked_aspect, 750]
+  - [aspect_of_ultimate_shadow, 1200]
+  - [aspect_of_explosive_mist, 0.4]
+  - [aspect_of_decay, 40]
+
+
+Affixes:
+  # Necro Bonespear
+  - GlovesBonespear:
+      itemType: gloves
+      minPower: 780
+      affixPool:
+        - [attack_speed, 5,5]
+        - [ranks_of_bone_spear, 3]
+        - [lucky_hit_chance]
+        - [critical_strike_chance, 5.5]
+        - [lucky_hit_up_to_a_chance_to_restore_primary_resource]
+        - [critical_strike_damage_with_bone_skills]
+      minAffixCount: 3
+
+  - BootsBonespear:
+      itemType: boots
+      minPower: 780
+      affixPool:
+        - [movement_speed, 12]
+        - [ranks_of_corpse_tendrils, 3]
+        - [essence_cost_reduction, 5]
+      minAffixCount: 3
+
+  - AmuletBonespear:
+      itemType: amulet
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [damage_reduction, 5]
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [total_armor, 9]
+        - [essence_cost_reduction, 12]
+        - [movement_speed]
+        - [ranks_of_the_evulsion_passive, 2]
+      minAffixCount: 3
+
+  - RingBonespear:
+      itemType: ring
+      minPower: 780
+      affixPool:
+        - [critical_strike_chance, 4]
+        - [lucky_hit_chance, 5]
+        - [critical_strike_damage, 16]
+        - [maximum_essence, 6]
+        - [critical_strike_damage_with_bone_skills, 17]
+        - [vulnerable_damage]
+      minAffixCount: 3
+
+  - WeaponBonespear:
+      itemType: [dagger, sword, wand]
+      minPower: 915
+      affixPool:
+        - [critical_strike_damage]
+        - [critical_strike_damage_with_bone_skills]
+        - [core_skill_damage]
+        - [vulnerable_damage]
+      minAffixCount: 3
+
+  # Necro infinimist
+  - HelmInfi:
+      itemType: helm
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [total_armor, 14]
+        - [maximum_life]
+        - [lucky_hit_chance_while_you_have_a_barrier]
+        - [all_stats]
+      minAffixCount: 3
+
+  - ArmorInfi:
+      itemType: [pants]
+      minPower: 780
+      affixPool:
+        - [damage_reduction_from_close_enemies]
+        - [damage_reduction_from_distant_enemies]
+        - [ranks_of_corpse_explosion, 3]
+        - [total_armor]
+        - [maximum_life]
+        - [damage_reduction_from_affected_by_shadow_damage_over_time_enemies]
+      minAffixCount: 3
+
+  - GlovesInfi:
+      itemType: gloves
+      minPower: 780
+      affixPool:
+        - [intelligence]
+        - [shadow_damage_over_time]
+        - [lucky_hit_chance]
+        - [critical_strike_chance, 5.5]
+      minAffixCount: 3
+
+  - BootsInfi:
+      itemType: boots
+      minPower: 780
+      affixPool:
+        - [movement_speed, 12]
+        - [ranks_of_corpse_tendrils, 3]
+        - [intelligence]
+        - [all_stats]
+      minAffixCount: 3
+
+  - AmuletInfi:
+      itemType: amulet
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [ranks_of_the_gloom_passive]
+        - [lucky_hit_chance_while_you_have_a_barrier]
+        - [ranks_of_all_corpse_skills]
+        - [movement_speed]
+      minAffixCount: 3
+
+  - RingInfi:
+      itemType: ring
+      minPower: 780
+      affixPool:
+        - [critical_strike_chance, 4]
+        - [lucky_hit_chance, 5]
+        - [critical_strike_damage, 16]
+        - [maximum_life]
+        - [vulnerable_damage]
+      minAffixCount: 3
+
+  - WeaponInfi:
+      itemType: [dagger, sword, wand]
+      minPower: 915
+      affixPool:
+        - [critical_strike_damage]
+        - [damage_to_affected_by_shadow_damage_over_time_enemies]
+        - [intelligence]
+        - [vulnerable_damage]
+      minAffixCount: 3
+
+  - TotemInfi:
+      itemType: [totem]
+      minPower: 915
+      affixPool:
+        - [lucky_hit_chance, 5]
+        - [damage_to_affected_by_shadow_damage_over_time_enemies]
+        - [lucky_hit_chance]
+        - [lucky_hit_chance_while_you_have_a_barrier]
+      minAffixCount: 3
+
+  # Necro Pentadot
+  - ArmorPentadot:
+      itemType: [chest armor, pants]
+      minPower: 780
+      affixPool:
+        - [damage_reduction_from_close_enemies]
+        - [shadow_damage]
+        - [damage_reduction]
+        - [total_armor]
+        - [maximum_life]
+        - [damage_reduction_from_affected_by_shadow_damage_over_time_enemies]
+      minAffixCount: 3
+
+  - RingPentadot:
+      itemType: ring
+      minPower: 780
+      affixPool:
+        - [critical_strike_chance, 4]
+        - [lucky_hit_chance, 5]
+        - [critical_strike_damage, 16]
+        - [shadow_damage]
+        - [vulnerable_damage]
+      minAffixCount: 3
+
+  - AmuletPentadot:
+      itemType: amulet
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction, 5]
+        - [ranks_of_the_gloom_passive]
+        - [shadow_damage_over_time]
+        - [shadow_damage_over_time]
+        - [total_armor]
+      minAffixCount: 3

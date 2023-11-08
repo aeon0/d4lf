@@ -48,8 +48,10 @@ class Filter:
 
             with open(profile_path) as f:
                 config = yaml.safe_load(f)
+                info_str = f"Loading profile {profile_str}: "
 
                 if config is not None and "Affixes" in config:
+                    info_str += "Affixes "
                     self.affix_filters[profile_str] = config["Affixes"]
                     if config["Affixes"] is None:
                         Logger.error(f"Empty Affixes section in {profile_str}. Remove it")
@@ -85,6 +87,7 @@ class Filter:
                                 Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
 
                 if config is not None and "Aspects" in config:
+                    info_str += "Aspects "
                     self.aspect_filters[profile_str] = config["Aspects"]
                     if config["Aspects"] is None:
                         Logger.error(f"Empty Aspects section in {profile_str}. Remove it")
@@ -96,6 +99,8 @@ class Filter:
                             invalid_aspects.append(aspect_name)
                     if invalid_aspects:
                         Logger.warning(f"Warning: Invalid Aspect: {', '.join(invalid_aspects)}")
+
+                Logger.info(info_str)
 
     def should_keep(self, item: Item):
         if not self.files_loaded:

@@ -1,0 +1,80 @@
+Aspects:
+  - [vigorous_aspect, 13]
+  - [overcharged_aspect, 15]
+  - [mighty_storms_aspect]
+
+
+Affixes:
+  - Helm:
+      itemType: helm
+      minPower: 800
+      affixPool:
+        - [basic_skill_attack_speed, 6]
+        - [cooldown_reduction, 5]
+        - [maximum_life, 580]
+        - [lightning_resistance, 50]
+        - [shadow_resistance, 50]
+        - [fire_resistance, 50]
+        - [poison_resistance, 50]
+      minAffixCount: 3
+
+  - Armor:
+      itemType: [chest armor, pants]
+      minPower: 800
+      affixPool:
+        - [damage_reduction_while_fortified, 6]
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_enemies_that_are_poisoned, 6]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction, 5]
+        - [willpower, 35]
+        - [maximum_life, 700]
+      minAffixCount: 3
+
+  - Gloves:
+      itemType: gloves
+      minPower: 800
+      affixPool:
+        - [attack_speed, 7]
+        - [willpower, 35]
+        - [lucky_hit_chance, 4]
+        - [critical_strike_chance, 3]
+        - [storm_skill_cooldown_reduction, 5]
+      minAffixCount: 3
+
+  - Boots:
+      itemType: boots
+      minPower: 800
+      affixPool:
+        - [movement_speed, 15]
+        - [willpower, 35]
+        - [total_armor_while_in_werewolf_form, 15]
+        - [damage_reduction_while_injured, 25]
+      minAffixCount: 2
+
+  - Amulet:
+      itemType: amulet
+      minPower: 800
+      affixPool:
+        - [cooldown_reduction, 5]
+        # - [damage_reduction, 6]
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction_from_enemies_that_are_poisoned, 6]
+        - [total_armor_while_in_werewolf_form, 15]
+        # - [total_armor, 9]
+        - [movement_speed, 12]
+        - [ranks_of_the_envenom_passive, 2]
+      minAffixCount: 2
+
+  - Ring:
+      itemType: ring
+      minPower: 800
+      affixPool:
+        - [critical_strike_chance, 4]
+        - [lucky_hit_chance, 5]
+        - [damage_to_close_enemies, 18]
+        - [maximum_life, 680]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [critical_strike_damage, 14]
+      minAffixCount: 3

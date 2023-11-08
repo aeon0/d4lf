@@ -1,3 +1,4 @@
+#Ball Lightning Sorcerer Endgame - Patch 1.2.2
 Aspects:
   - [magelords_aspect, 8]
   - [aspect_of_the_unwavering, 5]
@@ -33,12 +34,13 @@ Affixes:
       minPower: 725
       affixPool:
         - [cooldown_reduction, 6]
+        - [mana_cost_reduction, 10]
+        - [total_armor, 9]
+        - [ranks_of_all_mastery_skills, 1]
         - [damage_reduction, 6.7]
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
-        - [total_armor, 9]
         - [movement_speed, 14]
-        - [ranks_of_all_mastery_skills, 2]
       minAffixCount: 3
 
   - Ring:
@@ -53,7 +55,7 @@ Affixes:
 
   - WeaponClose:
       itemType: [dagger]
-      minPower: 915
+      minPower: 890
       affixPool:
         - [all_stats, 20]
         - [intelligence, 38]
@@ -63,11 +65,10 @@ Affixes:
 
   - Focus:
       itemType: [focus]
-      minPower: 915
+      minPower: 890
       affixPool:
         - [cooldown_reduction, 4]
         - [resource_generation, 5]
         - [critical_strike_chance, 2]
-        - [lucky_hit_chance, 4]
         - [mana_cost_reduction, 4]
       minAffixCount: 3

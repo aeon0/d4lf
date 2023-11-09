@@ -39,7 +39,7 @@ def check_items(inv: InventoryBase):
             inv.hover_item(item)
             wait(0.35)
             img = Cam().grab()
-            found, _, rarity, cropped_descr = find_descr(img, item.center)
+            found, rarity, cropped_descr, _, _ = find_descr(img, item.center)
         if not found:
             continue
         Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")

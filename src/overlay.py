@@ -7,6 +7,7 @@ from utils.process_handler import kill_thread
 from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
+from scripts.vision_only import vision_only
 from config import Config
 from cam import Cam
 
@@ -179,6 +180,10 @@ class Overlay:
                 rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
                 rogue_tb_thread.start()
                 self.script_threads.append(rogue_tb_thread)
+            if name == "vision_only":
+                vision_only_thread = threading.Thread(target=vision_only, daemon=True)
+                vision_only_thread.start()
+                self.script_threads.append(vision_only_thread)
 
     def run(self):
         self.root.mainloop()

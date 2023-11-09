@@ -73,6 +73,7 @@ ASPECT_NUMBER_AT_IDX2 = [
 ERROR_MAP = {
     "thoms": "thorns",
     "seythe": "scythe",
+    "@arbarian": "(barbarian",
     "two-handed!": "two-handed",
 }
 

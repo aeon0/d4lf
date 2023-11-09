@@ -37,12 +37,13 @@ def check_items(inv: InventoryBase):
                     screenshot("failed_descr_detection", img=img)
                 break
             inv.hover_item(item)
-            wait(0.35)
+            wait(0.15)
             img = Cam().grab()
+            start_detect = time.time()
             found, _, rarity, cropped_descr = find_descr(img, item.center)
+            Logger.debug(f"  Runtime (DetectItem): {time.time() - start_detect:.2f}s")
         if not found:
             continue
-        Logger.debug(f"  Runtime (DetectItem): {time.time() - start_time:.2f}s")
         # Hardcoded rarity filter
         if rarity in [ItemRarity.Unique]:
             Logger.info("Matched: Unique")
@@ -52,8 +53,13 @@ def check_items(inv: InventoryBase):
         # Detect contents of item descr
         item_descr = read_descr(rarity, cropped_descr)
         if item_descr is None:
-            Logger.warning("Failed to read properties. Keeping it")
-            continue
+            Logger.info("Retry item detection")
+            found, _, rarity, cropped_descr = find_descr(Cam().grab(), item.center)
+            if found:
+                item_descr = read_descr(rarity, cropped_descr)
+            if item_descr is None:
+                Logger.warning("Failed to read properties. Keeping it")
+                continue
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 
         # Hardcoded filters
@@ -68,11 +74,20 @@ def check_items(inv: InventoryBase):
             continue
         elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
             keyboard.send("space")
-            wait(0.15, 0.18)
+            wait(0.13, 0.14)
             continue
 
         # Check if we want to keep the item
-        if not Filter().should_keep(item_descr):
+        start_filter = time.time()
+        keeping, did_match_affixes = Filter().should_keep(item_descr)
+        Logger.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
+        if not keeping:
+            keyboard.send("space")
+            wait(0.13, 0.14)
+        elif did_match_affixes:
+            Logger.info("Mark as favorite")
+            keyboard.send("space")
+            wait(0.26, 0.3)
             keyboard.send("space")
             wait(0.13, 0.14)
 

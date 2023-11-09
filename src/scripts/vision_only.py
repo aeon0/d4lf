@@ -14,32 +14,20 @@ from item.filter import Filter
 import tkinter as tk
 
 
-def draw_rectangle(canvas, color):
-    item_roi = [50, 50, 100, 100]  # Example ROI values
-    x1, y1, width, height = item_roi
-    x2 = x1 + width
-    y2 = y1 + height
-    return canvas.create_rectangle(x1, y1, x2, y2, outline=color)
-
-
 def vision_only():
-    ww, wh = (1920, 1080)
     # Create the main window
     root = tk.Tk()
     root.overrideredirect(True)
     root.attributes("-topmost", True)  # Keep on top of other windows
-    root.attributes("-alpha", 0.7)
-    root.geometry(f"{ww}x{wh}+{0}+{0}")
+    root.attributes("-transparentcolor", "black")
+    root.attributes("-alpha", 1.0)
+    root.geometry(f"0x0+0+0")
 
-    canvas = tk.Canvas(root, bg="white", highlightthickness=0)
+    canvas = tk.Canvas(root, bg="black", highlightthickness=5, highlightbackground="red")
     canvas.pack(fill=tk.BOTH, expand=True)
 
-    rectangle_id = None  # To store the rectangle's canvas ID
-
-    canvas.create_rectangle(50, 50, 150, 150, outline="red", width=2)
-
     Logger.info("Starting Vision Only Script")
-    Filter().load_files()
+    # Filter().load_files()
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()
@@ -69,44 +57,56 @@ def vision_only():
                 or last_top_left_corner[0] != top_left_corner[0]
                 or last_top_left_corner[1] != top_left_corner[1]
             ):
-                last_top_left_corner = top_left_corner
-                item_descr = read_descr(rarity, cropped_descr)
-                if item_descr is None:
-                    Logger.warning("Failed to read properties")
-                    continue
-
-                # Hardcoded filters
                 match = True
-
-                if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
-                    Logger.info(f"Matched: Material / Sigil")
-                elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
-                    Logger.info(f"Matched: Extracted Aspect")
-                elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
-                    Logger.info(f"Matched: Elixir")
-                elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
-                    Logger.info(f"Junk")
-                    match = False
-                elif rarity in [ItemRarity.Unique]:
+                item_descr = None
+                last_top_left_corner = top_left_corner
+                if rarity in [ItemRarity.Unique]:
                     Logger.info("Matched: Unique")
-                elif not Filter().should_keep(item_descr):
-                    Logger.info(f"Junk")
-                    match = False
+                else:
+                    item_descr = read_descr(rarity, cropped_descr)
+                    if item_descr is None:
+                        Logger.warning("Failed to read properties")
+                        continue
 
-                item_roi
-                if match and not rectangle_id:
-                    rectangle_id = draw_rectangle(canvas, "green")
-                elif not match and not rectangle_id:
-                    rectangle_id = draw_rectangle(canvas, "red")
+                    if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
+                        Logger.info(f"Matched: Material / Sigil")
+                    elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
+                        Logger.info(f"Matched: Extracted Aspect")
+                    elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
+                        Logger.info(f"Matched: Elixir")
+                    elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
+                        Logger.info(f"Junk")
+                        match = False
 
+                if item_descr is not None:
+                    res = Filter().should_keep(item_descr)
+                    if not res:
+                        Logger.info(f"Junk")
+                        match = False
+
+                x, y, w, h = item_roi
+                off = int(w * 0.08)
+                x -= off
+                y -= off
+                w += off * 2
+                h += off * 2
+                if match:
+                    canvas.config(height=h, width=w)
+                    canvas.config(highlightbackground="#23fc5d")
+                    root.geometry(f"{w}x{h}+{x}+{y}")
+                elif not match:
+                    canvas.config(height=h, width=w)
+                    canvas.config(highlightbackground="#fc2323")
+                    root.geometry(f"{w}x{h}+{x}+{y}")
+                root.update_idletasks()
+                root.update()
         else:
-            if rectangle_id:  # If the rectangle is drawn
-                canvas.delete(rectangle_id)  # Remove the rectangle
-                rectangle_id = None  # Reset the ID
-            wait(0.1)
-
-        root.update_idletasks()
-        root.update()
+            canvas.config(height=0, width=0)
+            root.geometry(f"0x0+0+0")
+            last_top_left_corner = None
+            root.update_idletasks()
+            root.update()
+            wait(0.2)
 
 
 if __name__ == "__main__":

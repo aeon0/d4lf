@@ -168,6 +168,7 @@ class Overlay:
     def run_scripts(self):
         if len(self.script_threads) > 0:
             Logger.info("Stoping Scripts")
+            self.start_scripts_button.config(text="scripts")
             for script_thread in self.script_threads:
                 kill_thread(script_thread)
             self.script_threads = []
@@ -184,6 +185,7 @@ class Overlay:
                 vision_only_thread = threading.Thread(target=vision_only, daemon=True)
                 vision_only_thread.start()
                 self.script_threads.append(vision_only_thread)
+            self.start_scripts_button.config(text="stop")
 
     def run(self):
         self.root.mainloop()

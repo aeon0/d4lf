@@ -54,6 +54,7 @@ def check_items(inv: InventoryBase):
         item_descr = read_descr(rarity, cropped_descr)
         if item_descr is None:
             Logger.info("Retry item detection")
+            wait(0.3)
             found, _, rarity, cropped_descr = find_descr(Cam().grab(), item.center)
             if found:
                 item_descr = read_descr(rarity, cropped_descr)

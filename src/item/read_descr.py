@@ -293,7 +293,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             else:  # closest_value == 75
                 lines_to_add = 3
             combined_lines = "\n".join(affix_lines[line_idx : line_idx + lines_to_add])
-        line_idx += lines_to_add
+            line_idx += lines_to_add
         combined_lines = combined_lines.replace("\n", " ")
         for error, correction in ERROR_MAP.items():
             combined_lines = combined_lines.replace(error, correction)

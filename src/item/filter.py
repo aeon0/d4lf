@@ -122,6 +122,9 @@ class Filter:
             Logger.info(f"Matched: Unique")
             return True, False, []
 
+        if item.type is None or item.power is None:
+            return False, False, []
+
         for profile_str, affix_filter in self.affix_filters.items():
             for filter_dict in affix_filter:
                 for filter_name, filter_data in filter_dict.items():

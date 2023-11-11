@@ -14,6 +14,15 @@ from item.filter import Filter
 import tkinter as tk
 
 
+def draw_rect(canvas, bullet_width, obj, off, color):
+    offset_loc = np.array(obj.loc) + off
+    x1 = int(offset_loc[0] - bullet_width / 2)
+    y1 = int(offset_loc[1] - bullet_width / 2)
+    x2 = int(offset_loc[0] + bullet_width / 2)
+    y2 = int(offset_loc[1] + bullet_width / 2)
+    canvas.create_rectangle(x1, y1, x2, y2, fill=color)
+
+
 def vision_only():
     root = tk.Tk()
     root.overrideredirect(True)
@@ -89,13 +98,11 @@ def vision_only():
                     elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
                         Logger.info(f"Matched: Elixir")
                     elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
-                        Logger.info(f"Junk")
                         match = False
 
                 if item_descr is not None:
                     keep, did_match_affixes = Filter().should_keep(item_descr)
                     if not keep:
-                        Logger.info(f"Junk")
                         match = False
 
                 # Adapt colors based on config
@@ -104,9 +111,19 @@ def vision_only():
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")
 
+                # Show matched bullets
+                bullet_width = thick * 3
+                for affix in item_descr.affixes:
+                    if affix.loc is not None:
+                        draw_rect(canvas, bullet_width, affix, off, "#888888")
+
+                if item_descr.aspect is not None:
+                    draw_rect(canvas, bullet_width, item_descr.aspect, off, "#888888")
+
                 root.update_idletasks()
                 root.update()
         else:
+            canvas.delete("all")
             canvas.config(height=0, width=0)
             root.geometry(f"0x0+0+0")
             last_top_left_corner = None

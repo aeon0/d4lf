@@ -245,6 +245,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     if len(affix_bullets.matches) > 4:
         Logger.debug("Still too many bullet points, removing so we have only 4 left")
         affix_bullets.matches = affix_bullets.matches[-4:]
+    if len(affix_bullets.matches) == 0:
+        Logger.warning(f"Found affix bullet points, but removed them based on itemtype: {item.type}")
+        return None
     empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
     refs = ["aspect_bullet_point", "aspect_bullet_point_medium"]
@@ -309,6 +312,14 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             Logger.warning(f"Could not find affix: {cleaned_str}")
             screenshot("failed_affixes", img=img_item_descr)
             return None
+
+    # Add location to the found_values
+    affix_x = affix_bullets.matches[0].center[0]
+    for i, affix in enumerate(item.affixes):
+        if len(affix_bullets.matches) > i:
+            bullet = affix_bullets.matches[i]
+            affix.loc = [affix_x, bullet.center[1]]
+
     # print("Runtime (start_affix): ", time.time() - start_affix)
 
     # Aspect
@@ -356,7 +367,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             # Rapid detects 19 as 199
             if found_key == "rapid_aspect" and found_value == 199:
                 found_value = 19
-            item.aspect = Aspect(found_key, found_value, concatenated_str)
+            aspect_loc = [ab[0], ab[1]]
+            item.aspect = Aspect(found_key, found_value, concatenated_str, aspect_loc)
         else:
             Logger.warning(f"Could not find aspect: {cleaned_str}")
             screenshot("failed_aspect", img=img_item_descr)

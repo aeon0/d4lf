@@ -7,8 +7,13 @@ from utils.process_handler import kill_thread
 from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
+from scripts.vision_mode import vision_mode
 from config import Config
 from cam import Cam
+
+
+# Usage
+lock = threading.Lock()
 
 
 class ListboxHandler(logging.Handler):
@@ -30,8 +35,8 @@ class Overlay:
         self.is_minimized = True
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
-        self.root.attributes("-alpha", 0.87)
-        self.hide_id = self.root.after(15000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
+        self.root.attributes("-alpha", 0.94)
+        self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
         self.root.overrideredirect(True)
         # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)
@@ -39,7 +44,7 @@ class Overlay:
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
-        self.initial_width = int(self.screen_width * 0.072)
+        self.initial_width = int(self.screen_width * 0.07)
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)
 
@@ -55,7 +60,7 @@ class Overlay:
 
         self.toggle_button = tk.Button(
             self.root,
-            text="toggle",
+            text="max",
             bg="#222222",
             fg="#555555",
             borderwidth=0,
@@ -71,7 +76,9 @@ class Overlay:
             borderwidth=0,
             command=self.filter_items,
         )
-        self.canvas.create_window(int(self.initial_width * 0.5), self.initial_height // 2, window=self.filter_button)
+        self.canvas.create_window(int(self.initial_width * 0.45), self.initial_height // 2, window=self.filter_button)
+        if Config().general["vision_mode"]:
+            self.filter_items()
 
         self.start_scripts_button = tk.Button(
             self.root,
@@ -81,12 +88,13 @@ class Overlay:
             borderwidth=0,
             command=self.run_scripts,
         )
-        self.canvas.create_window(int(self.initial_width * 0.8), self.initial_height // 2, window=self.start_scripts_button)
+        self.canvas.create_window(int(self.initial_width * 0.75), self.initial_height // 2, window=self.start_scripts_button)
 
         font_size = 8
-        if Config().ui_pos["window_dimensions"] == (2560, 1440):
+        window_height = Config().ui_pos["window_dimensions"][1]
+        if window_height == 1440:
             font_size = 9
-        elif Config().ui_pos["window_dimensions"] == (3840, 2160):
+        elif window_height == 2160:
             font_size = 10
         self.terminal_listbox = tk.Listbox(
             self.canvas,
@@ -118,7 +126,7 @@ class Overlay:
             self.root.after_cancel(self.hide_id)
             self.hide_id = None
         # Make the window visible
-        self.root.attributes("-alpha", 0.89)
+        self.root.attributes("-alpha", 0.94)
 
     def hide_canvas(self, event):
         # Reset the hide timer
@@ -128,57 +136,84 @@ class Overlay:
             self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
 
     def toggle_size(self):
-        if not self.is_minimized:
-            self.canvas.config(height=self.initial_height, width=self.initial_width)
-            self.root.geometry(
-                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
-            )
+        if lock.acquire(blocking=False):
+            try:
+                if not self.is_minimized:
+                    self.canvas.config(height=self.initial_height, width=self.initial_width)
+                    self.root.geometry(
+                        f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
+                    )
+                else:
+                    self.canvas.config(height=self.maximized_height, width=self.maximized_width)
+                    self.root.geometry(
+                        f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
+                    )
+                self.is_minimized = not self.is_minimized
+                if self.is_minimized:
+                    self.hide_canvas(None)
+                    self.toggle_button.config(text="max")
+                else:
+                    self.show_canvas(None)
+                    self.toggle_button.config(text="min")
+                move_window_to_foreground()
+            finally:
+                lock.release()
         else:
-            self.canvas.config(height=self.maximized_height, width=self.maximized_width)
-            self.root.geometry(
-                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
-            )
-        self.is_minimized = not self.is_minimized
-        if self.is_minimized:
-            self.hide_canvas(None)
-        else:
-            self.show_canvas(None)
-        move_window_to_foreground()
+            return
 
     def filter_items(self):
-        if self.loot_filter_thread is not None:
-            Logger.info("Stoping Filter process")
-            kill_thread(self.loot_filter_thread)
-            self.loot_filter_thread = None
+        if lock.acquire(blocking=False):
+            try:
+                if self.loot_filter_thread is not None:
+                    Logger.info("Stoping Filter process")
+                    kill_thread(self.loot_filter_thread)
+                    self.loot_filter_thread = None
+                    self.filter_button.config(text="filter")
+                else:
+                    if self.is_minimized and not Config().general["vision_mode"]:
+                        self.toggle_size()
+                    self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, daemon=True)
+                    self.loot_filter_thread.start()
+                    self.filter_button.config(text="stop")
+            finally:
+                lock.release()
+        else:
             return
-        if self.is_minimized:
-            self.toggle_size()
-        self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, daemon=True)
-        self.loot_filter_thread.start()
 
     def _wrapper_run_loot_filter(self):
         try:
-            run_loot_filter()
+            if Config().general["vision_mode"]:
+                vision_mode()
+            else:
+                run_loot_filter()
         finally:
-            if not self.is_minimized:
+            if not self.is_minimized and not Config().general["vision_mode"]:
                 self.toggle_size()
             self.loot_filter_thread = None
 
     def run_scripts(self):
-        if len(self.script_threads) > 0:
-            Logger.info("Stoping Scripts")
-            for script_thread in self.script_threads:
-                kill_thread(script_thread)
-            self.script_threads = []
+        if lock.acquire(blocking=False):
+            try:
+                if len(self.script_threads) > 0:
+                    Logger.info("Stoping Scripts")
+                    self.start_scripts_button.config(text="scripts")
+                    for script_thread in self.script_threads:
+                        kill_thread(script_thread)
+                    self.script_threads = []
+                else:
+                    if len(Config().general["run_scripts"]) == 0:
+                        Logger.info("No scripts configured")
+                        return
+                    for name in Config().general["run_scripts"]:
+                        if name == "rogue_tb":
+                            rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
+                            rogue_tb_thread.start()
+                            self.script_threads.append(rogue_tb_thread)
+                        self.start_scripts_button.config(text="stop")
+            finally:
+                lock.release()
+        else:
             return
-        if len(Config().general["run_scripts"]) == 0:
-            Logger.info("No scripts configured")
-            return
-        for name in Config().general["run_scripts"]:
-            if name == "rogue_tb":
-                rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
-                rogue_tb_thread.start()
-                self.script_threads.append(rogue_tb_thread)
 
     def run(self):
         self.root.mainloop()

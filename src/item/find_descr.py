@@ -16,7 +16,7 @@ map_template_rarity = {
 }
 
 
-def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[int, int], ItemRarity, np.ndarray]:
+def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRarity, np.ndarray, tuple[int, int, int, int]]:
     item_descr_width = Config().ui_offsets["item_descr_width"]
     item_descr_pad = Config().ui_offsets["item_descr_pad"]
     _, window_height = Config().ui_pos["window_dimensions"]
@@ -40,12 +40,16 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
         match = res.matches[0]
         rarity = map_template_rarity[match.name.lower()]
         # find equipe template
-        offset_top = int(window_height * 0.1)
+        offset_top = int(window_height * 0.03)
         roi_y = match.region[1] + offset_top
         search_height = window_height - roi_y - offset_top
         roi = [match.region[0], roi_y, item_descr_width, search_height]
         res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.73, mode="best")
-        if res_bottom.success:
+
+        refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
+        sep_short = search(refs, img, 0.68, roi, True, mode="first", do_multi_process=False)
+
+        if res_bottom.success and sep_short.success:
             off_bottom_of_descr = Config().ui_offsets["item_descr_off_bottom_edge"]
             equip_match = res_bottom.matches[0]
             crop_roi = [
@@ -55,6 +59,6 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, tuple[in
                 equip_match.center[1] - off_bottom_of_descr - match.region[1],
             ]
             croped_descr = crop(img, crop_roi)
-            return True, match.center, rarity, croped_descr
+            return True, rarity, croped_descr, crop_roi
 
     return False, None, None, None

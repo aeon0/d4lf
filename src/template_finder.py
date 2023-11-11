@@ -179,6 +179,7 @@ def _get_cv_result(
         Logger.error(
             f"Image shape and template shape are incompatible: {template.name}. Image: {img.shape}, Template: {template_img.shape}, roi: {roi}"
         )
+        res = None
     else:
         res = cv2.matchTemplate(img, template_img, cv2.TM_CCOEFF_NORMED, mask=template.alpha_mask)
         np.nan_to_num(res, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
@@ -233,7 +234,7 @@ def search(
         res, template_img, new_roi = _get_cv_result(template, img, roi, color_match, use_grayscale)
 
         # i = 0
-        while True and not (matches and mode == "first"):
+        while True and not (matches and mode == "first") and res is not None:
             _, max_val, _, max_pos = cv2.minMaxLoc(res)
 
             if max_val >= threshold:

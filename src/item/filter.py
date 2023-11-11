@@ -114,13 +114,13 @@ class Filter:
 
                 Logger.info(info_str)
 
-    def should_keep(self, item: Item) -> tuple[bool, bool]:
+    def should_keep(self, item: Item) -> tuple[bool, bool, list[str]]:
         if not self.files_loaded:
             self.load_files()
 
         if item.rarity is ItemRarity.Unique:
             Logger.info(f"Matched: Unique")
-            return True, False
+            return True, False, []
 
         for profile_str, affix_filter in self.affix_filters.items():
             for filter_dict in affix_filter:
@@ -137,7 +137,7 @@ class Filter:
                     ):
                         continue
 
-                    matching_affix_count = 0
+                    matched_affixes = []
                     if filter_affix_pool is not None:
                         for affix in filter_affix_pool:
                             name, *rest = affix if isinstance(affix, list) else [affix]
@@ -152,14 +152,14 @@ class Filter:
                                     or (condition == "larger" and item_affix_value >= threshold)
                                     or (condition == "smaller" and item_affix_value <= threshold)
                                 ):
-                                    matching_affix_count += 1
+                                    matched_affixes.append(name)
                             elif any(a.type == name for a in item.affixes):
-                                matching_affix_count += 1
+                                matched_affixes.append(name)
 
-                    if filter_min_affix_count is None or matching_affix_count >= filter_min_affix_count:
+                    if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
                         affix_debug_msg = [affix.type for affix in item.affixes]
                         Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                        return True, True
+                        return True, True, matched_affixes
 
         if item.aspect:
             for profile_str, aspect_filter in self.aspect_filters.items():
@@ -176,6 +176,6 @@ class Filter:
                             or (condition == "smaller" and item.aspect.value <= threshold)
                         ):
                             Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
-                            return True, False
+                            return True, False, []
 
-        return False, False
+        return False, False, []

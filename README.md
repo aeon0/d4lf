@@ -4,17 +4,14 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 
 @Blizzard, please dont take this away from us. I can not bear to look at another affix...
 
-[![Alt text for thumbnail](assets/thumbnail.jpg)](https://streamable.com/m84fnq)
+[![Alt text for thumbnail](assets/thumbnail.jpg)](https://streamable.com/m8obnu)
 
 ## Features
-- Filter items in inventory and if chest is open also in chest tabs (can be configured which ones)
+- Filter items in inventory and stash
 - Filter by item type and item power
 - Filter by affix and thresholds of their values
 - Filter by aspects and threshold of their values
-- Mark everything that does not pass the filter as junk
-- Detect already marked as junk and marked as favorite and ignores them
-- Detect sigils, elixirs and matrial and ignores them
-- Supported resolutions: 1080p, 1440p, 1440p wide, 2160p
+- Supported resolutions: 1920x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
 
 ## How to Setup
 
@@ -27,11 +24,10 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
 - Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
-  - toggle: Minimize/Maximize the console
-  - filter: Start filtering items
-  - scripts: In case there are any scripts attached, run them
+  - max/min: Show or hide the console output. Good for checking ingame if there are some errors.
+  - start/stop: Turn filtering on/off
+  - scripts/stop: In case there are any scripts attached, run them
 - Alternative use the hotkeys. e.g. f11 for filtering
-- All items that do not match any of your filter configs will be marked as junk.
 
 ### Configs
 The config folder contains:
@@ -43,6 +39,7 @@ The config folder contains:
 | [general] | Description |
 | ----------------------- | --------------------------------------|
 | profiles | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles. |
+| vision_mode | Can be any of [True, False]. If True, it will show red and green boxes around detected item boxes depending on your filter configs. If False, it will automatically detect items in your chest and stash, hover them and mark them as junk if they dont pass your filter configs. |
 | check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
 | hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |
 | local_prefs_path | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file |
@@ -75,7 +72,7 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are discarded as junk by default.
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are not.
 
 ```yaml
 Affixes:

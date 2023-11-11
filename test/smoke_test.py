@@ -17,7 +17,7 @@ def test_smoke():
     stored_templates.cache_clear()
     img = cv2.imread("test/assets/item/find_descr_legendary_1440p.png")
     start = time.time()
-    found, _, rarity, cropped_descr = find_descr(img, anchor)
+    found, rarity, cropped_descr, _ = find_descr(img, anchor)
     print("Runtime (detect): ", time.time() - start)
     assert found
     if rarity == ItemRarity.Unique:
@@ -27,5 +27,5 @@ def test_smoke():
     item_descr = read_descr(rarity, cropped_descr)
     assert item_descr is not None
     filter = Filter()
-    keep, _ = filter.should_keep(item_descr)
+    keep, _, _ = filter.should_keep(item_descr)
     print("Runtime (full): ", time.time() - start, keep)

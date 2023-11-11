@@ -49,6 +49,7 @@ def vision_mode():
     possible_centers = np.array(possible_centers)
 
     last_top_left_corner = None
+    last_center = None
     while True:
         img = Cam().grab()
         # if chest.is_open(img) or inv.is_open(img):
@@ -65,6 +66,7 @@ def vision_mode():
                 last_top_left_corner is None
                 or last_top_left_corner[0] != top_left_corner[0]
                 or last_top_left_corner[1] != top_left_corner[1]
+                or (last_center is not None and last_center[1] != item_center[1])
             ):
                 # Make the canvas gray for "found the item"
                 x, y, w, h = item_roi
@@ -83,6 +85,7 @@ def vision_mode():
                 match = True
                 item_descr = None
                 last_top_left_corner = top_left_corner
+                last_center = item_center
                 if rarity in [ItemRarity.Unique]:
                     Logger.info("Matched: Unique")
                 else:
@@ -101,24 +104,23 @@ def vision_mode():
                         match = False
 
                 if item_descr is not None:
-                    keep, did_match_affixes = Filter().should_keep(item_descr)
+                    keep, did_match_affixes, matched_affixes = Filter().should_keep(item_descr)
                     if not keep:
                         match = False
 
                 # Adapt colors based on config
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
+                    # Show matched bullets
+                    bullet_width = thick * 3
+                    for affix in item_descr.affixes:
+                        if affix.loc is not None and any(a == affix.type for a in matched_affixes):
+                            draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
+
+                    if item_descr.aspect is not None and not did_match_affixes:
+                        draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")
-
-                # Show matched bullets
-                bullet_width = thick * 3
-                for affix in item_descr.affixes:
-                    if affix.loc is not None:
-                        draw_rect(canvas, bullet_width, affix, off, "#888888")
-
-                if item_descr.aspect is not None:
-                    draw_rect(canvas, bullet_width, item_descr.aspect, off, "#888888")
 
                 root.update_idletasks()
                 root.update()
@@ -126,6 +128,7 @@ def vision_mode():
             canvas.delete("all")
             canvas.config(height=0, width=0)
             root.geometry(f"0x0+0+0")
+            last_center = None
             last_top_left_corner = None
             root.update_idletasks()
             root.update()

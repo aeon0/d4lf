@@ -157,7 +157,7 @@ class Filter:
                                 matched_affixes.append(name)
 
                     if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
-                        affix_debug_msg = [affix.type for affix in item.affixes]
+                        affix_debug_msg = [name for name in matched_affixes]
                         Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
                         return True, True, matched_affixes
 

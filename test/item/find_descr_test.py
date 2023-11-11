@@ -28,7 +28,7 @@ def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_l
     img = cv2.imread(input_img)
     start = time.time()
     success, item_rarity, cropped_img, roi = find_descr(img, anchor)
-    top_left_corner = roi[:2]
+    top_left_corner = None if not success else roi[:2]
     print("Runtime (find_descr()): ", time.time() - start)
     if success and False:
         cv2.imwrite(f"item_descr.png", cropped_img)

@@ -16,7 +16,7 @@ map_template_rarity = {
 }
 
 
-def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRarity, np.ndarray, tuple[int, int], tuple[int, int, int, int]]:
+def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRarity, np.ndarray, tuple[int, int, int, int]]:
     item_descr_width = Config().ui_offsets["item_descr_width"]
     item_descr_pad = Config().ui_offsets["item_descr_pad"]
     _, window_height = Config().ui_pos["window_dimensions"]

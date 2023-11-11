@@ -15,19 +15,18 @@ import tkinter as tk
 
 
 def vision_only():
-    # Create the main window
     root = tk.Tk()
     root.overrideredirect(True)
-    root.attributes("-topmost", True)  # Keep on top of other windows
+    root.attributes("-topmost", True)
     root.attributes("-transparentcolor", "black")
     root.attributes("-alpha", 1.0)
     root.geometry(f"0x0+0+0")
 
-    canvas = tk.Canvas(root, bg="black", highlightthickness=5, highlightbackground="red")
+    thick = int(Cam().window_roi["height"] * 0.0047)
+    canvas = tk.Canvas(root, bg="black", highlightthickness=thick, highlightbackground="red")
     canvas.pack(fill=tk.BOTH, expand=True)
 
     Logger.info("Starting Vision Only Script")
-    # Filter().load_files()
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()
@@ -46,18 +45,32 @@ def vision_only():
         # if chest.is_open(img) or inv.is_open(img):
         mouse_pos = Cam().monitor_to_window(mouse.get_position())
         # get closest pos to a item center
-        differences = possible_centers - mouse_pos
-        distances = np.linalg.norm(differences, axis=1)
+        delta = possible_centers - mouse_pos
+        distances = np.linalg.norm(delta, axis=1)
         closest_index = np.argmin(distances)
         item_center = possible_centers[closest_index]
         found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
-        top_left_corner = item_roi[:2]
+        top_left_corner = None if not found else item_roi[:2]
         if found:
             if (
                 last_top_left_corner is None
                 or last_top_left_corner[0] != top_left_corner[0]
                 or last_top_left_corner[1] != top_left_corner[1]
             ):
+                # Make the canvas gray for "found the item"
+                x, y, w, h = item_roi
+                off = int(w * 0.086)
+                x -= off
+                y -= off
+                w += off * 2
+                h += off
+                canvas.config(height=h, width=w)
+                canvas.config(highlightbackground="#888888")
+                root.geometry(f"{w}x{h}+{x}+{y}")
+                root.update_idletasks()
+                root.update()
+
+                # Check if the item is a match based on our filters
                 match = True
                 item_descr = None
                 last_top_left_corner = top_left_corner
@@ -80,25 +93,17 @@ def vision_only():
                         match = False
 
                 if item_descr is not None:
-                    res = Filter().should_keep(item_descr)
-                    if not res:
+                    keep, did_match_affixes = Filter().should_keep(item_descr)
+                    if not keep:
                         Logger.info(f"Junk")
                         match = False
 
-                x, y, w, h = item_roi
-                off = int(w * 0.08)
-                x -= off
-                y -= off
-                w += off * 2
-                h += off * 2
+                # Adapt colors based on config
                 if match:
-                    canvas.config(height=h, width=w)
                     canvas.config(highlightbackground="#23fc5d")
-                    root.geometry(f"{w}x{h}+{x}+{y}")
                 elif not match:
-                    canvas.config(height=h, width=w)
                     canvas.config(highlightbackground="#fc2323")
-                    root.geometry(f"{w}x{h}+{x}+{y}")
+
                 root.update_idletasks()
                 root.update()
         else:
@@ -117,6 +122,7 @@ if __name__ == "__main__":
         start_detecting_window()
         while not Cam().is_offset_set():
             wait(0.2)
+        Filter().load_files()
         vision_only()
     except:
         traceback.print_exc()

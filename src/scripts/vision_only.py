@@ -50,7 +50,8 @@ def vision_only():
         distances = np.linalg.norm(differences, axis=1)
         closest_index = np.argmin(distances)
         item_center = possible_centers[closest_index]
-        found, rarity, cropped_descr, top_left_corner, item_roi = find_descr(img, item_center)
+        found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
+        top_left_corner = item_roi[:2]
         if found:
             if (
                 last_top_left_corner is None

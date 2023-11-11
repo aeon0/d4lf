@@ -17,7 +17,7 @@ def test_smoke():
     stored_templates.cache_clear()
     img = cv2.imread("test/assets/item/find_descr_legendary_1440p.png")
     start = time.time()
-    found, rarity, cropped_descr, _, _ = find_descr(img, anchor)
+    found, rarity, cropped_descr, _ = find_descr(img, anchor)
     print("Runtime (detect): ", time.time() - start)
     assert found
     if rarity == ItemRarity.Unique:

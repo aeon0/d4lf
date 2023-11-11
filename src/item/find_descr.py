@@ -59,6 +59,6 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
                 equip_match.center[1] - off_bottom_of_descr - match.region[1],
             ]
             croped_descr = crop(img, crop_roi)
-            return True, rarity, croped_descr, match.center, crop_roi
+            return True, rarity, croped_descr, crop_roi
 
-    return False, None, None, None, None
+    return False, None, None, None

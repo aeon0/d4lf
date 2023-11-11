@@ -40,7 +40,7 @@ def check_items(inv: InventoryBase):
             wait(0.15)
             img = Cam().grab()
             start_detect = time.time()
-            found, rarity, cropped_descr, _, _ = find_descr(img, item.center)
+            found, rarity, cropped_descr, _ = find_descr(img, item.center)
             Logger.debug(f"  Runtime (DetectItem): {time.time() - start_detect:.2f}s")
         if not found:
             continue
@@ -55,7 +55,7 @@ def check_items(inv: InventoryBase):
         if item_descr is None:
             Logger.info("Retry item detection")
             wait(0.3)
-            found, _, rarity, cropped_descr = find_descr(Cam().grab(), item.center)
+            found, rarity, cropped_descr, _ = find_descr(Cam().grab(), item.center)
             if found:
                 item_descr = read_descr(rarity, cropped_descr)
             if item_descr is None:

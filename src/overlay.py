@@ -7,7 +7,7 @@ from utils.process_handler import kill_thread
 from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
-from scripts.vision_only import vision_only
+from scripts.vision_mode import vision_mode
 from config import Config
 from cam import Cam
 
@@ -183,7 +183,7 @@ class Overlay:
     def _wrapper_run_loot_filter(self):
         try:
             if Config().general["vision_mode"]:
-                vision_only()
+                vision_mode()
             else:
                 run_loot_filter()
         finally:

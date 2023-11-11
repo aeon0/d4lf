@@ -23,7 +23,7 @@ def draw_rect(canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
-def vision_only():
+def vision_mode():
     root = tk.Tk()
     root.overrideredirect(True)
     root.attributes("-topmost", True)
@@ -140,7 +140,7 @@ if __name__ == "__main__":
         while not Cam().is_offset_set():
             wait(0.2)
         Filter().load_files()
-        vision_only()
+        vision_mode()
     except:
         traceback.print_exc()
         print("Press Enter to exit ...")

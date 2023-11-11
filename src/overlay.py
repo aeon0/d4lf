@@ -136,30 +136,24 @@ class Overlay:
             self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
 
     def toggle_size(self):
-        if lock.acquire(blocking=False):
-            try:
-                if not self.is_minimized:
-                    self.canvas.config(height=self.initial_height, width=self.initial_width)
-                    self.root.geometry(
-                        f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
-                    )
-                else:
-                    self.canvas.config(height=self.maximized_height, width=self.maximized_width)
-                    self.root.geometry(
-                        f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
-                    )
-                self.is_minimized = not self.is_minimized
-                if self.is_minimized:
-                    self.hide_canvas(None)
-                    self.toggle_button.config(text="max")
-                else:
-                    self.show_canvas(None)
-                    self.toggle_button.config(text="min")
-                move_window_to_foreground()
-            finally:
-                lock.release()
+        if not self.is_minimized:
+            self.canvas.config(height=self.initial_height, width=self.initial_width)
+            self.root.geometry(
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
+            )
         else:
-            return
+            self.canvas.config(height=self.maximized_height, width=self.maximized_width)
+            self.root.geometry(
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
+            )
+        self.is_minimized = not self.is_minimized
+        if self.is_minimized:
+            self.hide_canvas(None)
+            self.toggle_button.config(text="max")
+        else:
+            self.show_canvas(None)
+            self.toggle_button.config(text="min")
+        move_window_to_foreground()
 
     def filter_items(self):
         if lock.acquire(blocking=False):

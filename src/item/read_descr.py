@@ -75,6 +75,7 @@ ERROR_MAP = {
     "seythe": "scythe",
     "@arbarian": "(barbarian",
     "two-handed!": "two-handed",
+    "two-handed.": "two-handed",
 }
 
 affix_dict = dict()
@@ -100,6 +101,7 @@ def _closest_to(value, choices):
 
 
 def _find_number(s, idx: int = 0):
+    s = re.sub(r",", "", s)  # remove commas because of large numbers having a comma seperator
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
     if "Up to a 5%" in s:
         number = matches[1] if len(matches) > 1 else None
@@ -198,6 +200,16 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     if item.type is None:
         if "chest" in concatenated_str or "armor" in concatenated_str:
             item.type = ItemType.Armor
+    # common mistake that two-handed can not be added to the weapon type
+    if "two-handed" in concatenated_str:
+        if item.type == ItemType.Sword:
+            item.type = ItemType.Sword2H
+        if item.type == ItemType.Mace:
+            item.type = ItemType.Mace2H
+        if item.type == ItemType.Scythe:
+            item.type = ItemType.Scythe2H
+        if item.type == ItemType.Axe:
+            item.type = ItemType.Axe2H
 
     if rarity == ItemRarity.Magic:
         return item
@@ -284,9 +296,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             combined_lines = "\n".join(affix_lines[line_idx : line_idx + lines_to_add])
             line_idx += lines_to_add
         combined_lines = combined_lines.replace("\n", " ")
-        cleaned_str = _clean_str(combined_lines)
         for error, correction in ERROR_MAP.items():
-            cleaned_str = cleaned_str.replace(error, correction)
+            combined_lines = combined_lines.replace(error, correction)
+        cleaned_str = _clean_str(combined_lines)
 
         found_key = _closest_match(cleaned_str, affix_dict)
         found_value = _find_number(combined_lines)

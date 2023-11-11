@@ -1,0 +1,85 @@
+
+Affixes:
+  # HOTA barb
+  # =====================================
+
+  - Helm:
+      itemType: helm
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction]
+        - [total_armor]
+        - [maximum_life]
+      minAffixCount: 2
+
+  - Armor:
+      itemType: [chest armor, pants]
+      minPower: 780
+      affixPool:
+        - [damage_reduction_from_close_enemies]
+        - [damage_reduction_while_fortified]
+        - [overpower_damage_with_twohanded_bludgeoning_weapons]
+        - [total_armor]
+        - [maximum_life]
+        - [damage_reduction_while_injured]
+      minAffixCount: 3
+
+  - Gloves:
+      itemType: gloves
+      minPower: 780
+      affixPool:
+        - [attack_speed]
+        - [ranks_of_hammer_of_the_ancients]
+        - [critical_strike_chance]
+        - [overpower_damage]
+      minAffixCount: 3
+
+  - Boots:
+      itemType: boots
+      minPower: 780
+      affixPool:
+        - [movement_speed]
+        - [fury_cost_reduction]
+        - [damage_reduction_while_injured]
+      minAffixCount: 3
+
+  - Amulet:
+      itemType: amulet
+      minPower: 780
+      affixPool:
+        - [cooldown_reduction]
+        - [fury_cost_reduction]
+        - [ranks_of_the_counteroffensive_passive]
+        - [total_armor]
+        - [movement_speed]
+      minAffixCount: 3
+
+  - Ring:
+      itemType: ring
+      minPower: 780
+      affixPool:
+        - [critical_strike_chance]
+        - [maximum_fury]
+        - [damage_while_berserking]
+        - [resource_generation]
+      minAffixCount: 3
+
+  - WeaponClose:
+      itemType: [two-handed mace, two-handed sword, two-handed axe]
+      minPower: 900
+      affixPool:
+        - [damage_while_berserking]
+        - [overpower_damage]
+        - [all_stats]
+        - [strength]
+      minAffixCount: 3
+
+  - WeaponClose2:
+      itemType: [dagger, sword, axe, mace]
+      minPower: 900
+      affixPool:
+        - [damage_while_berserking]
+        - [overpower_damage]
+        - [all_stats]
+        - [strength]
+      minAffixCount: 3

@@ -16,6 +16,7 @@ BASE_PATH = "test/assets/ui"
         ((1920, 1080), f"{BASE_PATH}/char_inv_open_1080p.png"),
         ((2560, 1440), f"{BASE_PATH}/char_inv_open_1440p.png"),
         ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide.png"),
+        ((5120, 1440), f"{BASE_PATH}/char_inv_open_1440p_ultra_wide.png"),
         ((3840, 2160), f"{BASE_PATH}/char_inv_open_2160p.png"),
     ],
 )

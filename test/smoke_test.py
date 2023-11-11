@@ -27,5 +27,5 @@ def test_smoke():
     item_descr = read_descr(rarity, cropped_descr)
     assert item_descr is not None
     filter = Filter()
-    keep = filter.should_keep(item_descr)
+    keep, _ = filter.should_keep(item_descr)
     print("Runtime (full): ", time.time() - start, keep)

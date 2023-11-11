@@ -6,18 +6,29 @@ resolutions = {
     "1080p_wide": {"factor": 1, "width_org": 1920, "width_new": 2560, "filename": "config/game_2560x1080.ini"},
     "1440p": {"factor": 4 / 3, "filename": "config/game_2560x1440.ini"},
     "1440p_wide": {"factor": 4 / 3, "width_org": 2560, "width_new": 3440, "filename": "config/game_3440x1440.ini"},
+    "1440p_ultra_wide": {
+        "factor": 4 / 3,
+        "width_org": 2560,
+        "width_new": 5120,
+        "black_bars": [400, -400],
+        "filename": "config/game_5120x1440.ini",
+    },
     "2160p": {"factor": 2.0, "filename": "config/game_3840x2160.ini"},
 }
 
 
 # Function to scale values
-def scale_values(values, factor, width_org=None, width_new=None):
+def scale_values(values, factor, width_org=None, width_new=None, black_bars=None):
     # If the value is a list of numbers separated by commas, scale each one
     if "," in values:
         num_values = np.array([int(x) for x in values.split(",")], dtype=int) * factor
         if width_org is not None and width_new is not None:
-            if num_values[0] > width_org / 2:
+            is_right_side = num_values[0] > width_org / 2
+            if is_right_side:
                 num_values[0] += width_new - width_org
+            if black_bars is not None:
+                offset = black_bars[1] if is_right_side else black_bars[0]
+                num_values[0] += offset
         return ",".join(map(str, num_values.astype(int)))
     else:
         # It's a single number, scale it, convert it to int, and then to string
@@ -43,8 +54,9 @@ def main():
                 if section != "colors":  # Skip the [colors] section
                     # Scale the values
                     if "width_org" in value and "width_new" in value and not option.startswith("rel_"):
+                        black_bars = None if "black_bars" not in value else value["black_bars"]
                         new_config[section][option] = scale_values(
-                            new_config[section][option], value["factor"], value["width_org"], value["width_new"]
+                            new_config[section][option], value["factor"], value["width_org"], value["width_new"], black_bars
                         )
                     else:
                         new_config[section][option] = scale_values(new_config[section][option], value["factor"])

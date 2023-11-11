@@ -1,7 +1,5 @@
 from item.models import Item
 import yaml
-from yaml.parser import ParserError
-from yaml.scanner import ScannerError
 import json
 import os
 import time
@@ -116,13 +114,13 @@ class Filter:
 
                 Logger.info(info_str)
 
-    def should_keep(self, item: Item):
+    def should_keep(self, item: Item) -> tuple[bool, bool]:
         if not self.files_loaded:
             self.load_files()
 
         if item.rarity is ItemRarity.Unique:
             Logger.info(f"Matched: Unique")
-            return True
+            return True, False
 
         for profile_str, affix_filter in self.affix_filters.items():
             for filter_dict in affix_filter:
@@ -161,7 +159,7 @@ class Filter:
                     if filter_min_affix_count is None or matching_affix_count >= filter_min_affix_count:
                         affix_debug_msg = [affix.type for affix in item.affixes]
                         Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                        return True
+                        return True, True
 
         if item.aspect:
             for profile_str, aspect_filter in self.aspect_filters.items():
@@ -178,6 +176,6 @@ class Filter:
                             or (condition == "smaller" and item.aspect.value <= threshold)
                         ):
                             Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
-                            return True
+                            return True, False
 
-        return False
+        return False, False

@@ -101,17 +101,19 @@ def vision_mode():
                 else:
                     item_descr = read_descr(rarity, cropped_descr)
                     if item_descr is None:
-                        Logger.warning("Failed to read properties")
                         last_center = None
                         last_top_left_corner = None
                         continue
 
                     if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
                         Logger.info(f"Matched: Material / Sigil")
+                        continue
                     elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
                         Logger.info(f"Matched: Extracted Aspect")
+                        continue
                     elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
                         Logger.info(f"Matched: Elixir")
+                        continue
                     elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
                         match = False
 
@@ -129,7 +131,7 @@ def vision_mode():
                         for affix in item_descr.affixes:
                             if affix.loc is not None and any(a == affix.type for a in matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
-        
+
                         if item_descr.aspect is not None and not did_match_affixes:
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:

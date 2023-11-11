@@ -7,7 +7,7 @@ from utils.process_handler import kill_thread
 from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
-from scripts.vision_mode import vision_mode
+from vision_mode import vision_mode
 from config import Config
 from cam import Cam
 

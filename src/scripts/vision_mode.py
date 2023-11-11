@@ -23,6 +23,14 @@ def draw_rect(canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
+def reset_canvas(root, canvas):
+    canvas.delete("all")
+    canvas.config(height=0, width=0)
+    root.geometry(f"0x0+0+0")
+    root.update_idletasks()
+    root.update()
+
+
 def vision_mode():
     root = tk.Tk()
     root.overrideredirect(True)
@@ -68,6 +76,8 @@ def vision_mode():
                 or last_top_left_corner[1] != top_left_corner[1]
                 or (last_center is not None and last_center[1] != item_center[1])
             ):
+                reset_canvas(root, canvas)
+
                 # Make the canvas gray for "found the item"
                 x, y, w, h = item_roi
                 off = int(w * 0.086)
@@ -92,6 +102,8 @@ def vision_mode():
                     item_descr = read_descr(rarity, cropped_descr)
                     if item_descr is None:
                         Logger.warning("Failed to read properties")
+                        last_center = None
+                        last_top_left_corner = None
                         continue
 
                     if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
@@ -125,14 +137,10 @@ def vision_mode():
                 root.update_idletasks()
                 root.update()
         else:
-            canvas.delete("all")
-            canvas.config(height=0, width=0)
-            root.geometry(f"0x0+0+0")
+            reset_canvas(root, canvas)
             last_center = None
             last_top_left_corner = None
-            root.update_idletasks()
-            root.update()
-            wait(0.2)
+            wait(0.15)
 
 
 if __name__ == "__main__":

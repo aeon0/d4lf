@@ -35,7 +35,7 @@ def vision_only():
     canvas = tk.Canvas(root, bg="black", highlightthickness=thick, highlightbackground="red")
     canvas.pack(fill=tk.BOTH, expand=True)
 
-    Logger.info("Starting Vision Only Script")
+    Logger.info("Starting Vision Filter")
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()

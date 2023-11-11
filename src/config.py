@@ -76,6 +76,7 @@ class Config:
         profiles_str = str(self._select_val("general", "profiles"))
         self.general = {
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
+            "vision_mode": bool(self._select_val("general", "vision_mode")),
             "run_scripts": run_scripts_str.split(",") if run_scripts_str else [],
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),

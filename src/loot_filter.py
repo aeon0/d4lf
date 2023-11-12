@@ -51,7 +51,7 @@ def check_items(inv: InventoryBase):
 
         start_time_read = time.time()
         # Detect contents of item descr
-        item_descr = read_descr(rarity, cropped_descr)
+        item_descr = read_descr(rarity, cropped_descr, False)
         if item_descr is None:
             Logger.info("Retry item detection")
             wait(0.3)
@@ -59,7 +59,6 @@ def check_items(inv: InventoryBase):
             if found:
                 item_descr = read_descr(rarity, cropped_descr)
             if item_descr is None:
-                Logger.warning("Failed to read properties. Keeping it")
                 continue
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 

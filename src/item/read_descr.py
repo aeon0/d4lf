@@ -136,7 +136,7 @@ def _clean_str(s):
     return cleaned_str
 
 
-def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
+def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item:
     item = Item(rarity)
     img_height, img_width, _ = img_item_descr.shape
     line_height = Config().ui_offsets["item_descr_line_height"]
@@ -147,8 +147,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
     roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
     if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
-        Logger.warning("Could not detect item_seperator_short.")
-        screenshot("failed_seperator_short", img=img_item_descr)
+        if show_warnings:
+            Logger.warning("Could not detect item_seperator_short.")
+            screenshot("failed_seperator_short", img=img_item_descr)
         return None
     sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
     sep_short_match = sorted_matches[0]
@@ -215,8 +216,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         return item
 
     if item.power is None or item.type is None:
-        Logger().warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
-        screenshot("failed_itempower_itemtype", img=img_item_descr)
+        if show_warnings:
+            Logger.warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
+            screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
     # print("Runtime (start_power): ", time.time() - start_power)
 
@@ -226,8 +228,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
     roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"] + 20, img_height]
     if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.91, roi_bullets, True, mode="all")).success:
         if not (affix_bullets := search("affix_bullet_point_medium", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
-            Logger.warning("Could not detect affix_bullet_points.")
-            screenshot("failed_affix_bullet_points", img=img_item_descr)
+            if show_warnings:
+                Logger.warning("Could not detect affix_bullet_points.")
+                screenshot("failed_affix_bullet_points", img=img_item_descr)
             return None
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     # Depending on the item type we have to remove some of the topmost affixes as they are fixed
@@ -246,15 +249,17 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         Logger.debug("Still too many bullet points, removing so we have only 4 left")
         affix_bullets.matches = affix_bullets.matches[-4:]
     if len(affix_bullets.matches) == 0:
-        Logger.warning(f"Found affix bullet points, but removed them based on itemtype: {item.type}")
+        if show_warnings:
+            Logger.warning(f"Found affix bullet points, but removed them based on itemtype: {item.type}")
         return None
     empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
     refs = ["aspect_bullet_point", "aspect_bullet_point_medium"]
     aspect_bullets = search(refs, img_item_descr, 0.87, roi_bullets, True, mode="first")
     if rarity == ItemRarity.Legendary and not aspect_bullets.success:
-        Logger.warning("Could not detect aspect_bullet for a legendary item.")
-        screenshot("failed_aspect_bullet", img=img_item_descr)
+        if show_warnings:
+            Logger.warning("Could not detect aspect_bullet for a legendary item.")
+            screenshot("failed_aspect_bullet", img=img_item_descr)
         return None
     # print("Runtime (start_tex_2): ", time.time() - start_tex_2)
 
@@ -309,8 +314,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
         if found_key is not None:
             item.affixes.append(Affix(found_key, found_value, combined_lines))
         else:
-            Logger.warning(f"Could not find affix: {cleaned_str}")
-            screenshot("failed_affixes", img=img_item_descr)
+            if show_warnings:
+                Logger.warning(f"Could not find affix: {cleaned_str}")
+                screenshot("failed_affixes", img=img_item_descr)
             return None
 
     # Add location to the found_values
@@ -370,8 +376,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
             aspect_loc = [ab[0], ab[1]]
             item.aspect = Aspect(found_key, found_value, concatenated_str, aspect_loc)
         else:
-            Logger.warning(f"Could not find aspect: {cleaned_str}")
-            screenshot("failed_aspect", img=img_item_descr)
+            if show_warnings:
+                Logger.warning(f"Could not find aspect: {cleaned_str}")
+                screenshot("failed_aspect", img=img_item_descr)
             return None
     # print("Runtime (start_aspect): ", time.time() - start_aspect)
 

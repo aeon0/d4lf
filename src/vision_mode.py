@@ -99,7 +99,7 @@ def vision_mode():
                 if rarity in [ItemRarity.Unique]:
                     Logger.info("Matched: Unique")
                 else:
-                    item_descr = read_descr(rarity, cropped_descr)
+                    item_descr = read_descr(rarity, cropped_descr, False)
                     if item_descr is None:
                         last_center = None
                         last_top_left_corner = None

@@ -19,7 +19,7 @@ class Hud(SearchArgs):
         img = img if img is not None else Cam().grab()
         cropped_img = cv2.cvtColor(crop(img, Config().ui_roi["mini_map_visible"]), cv2.COLOR_BGR2GRAY)
         _, binary_mask = cv2.threshold(cropped_img, 155, 255, cv2.THRESH_BINARY)
-        mini_map_visible = cv2.countNonZero(binary_mask) > 40
+        mini_map_visible = cv2.countNonZero(binary_mask) > 5
         return self.is_visible(img=img) and mini_map_visible
 
     @staticmethod

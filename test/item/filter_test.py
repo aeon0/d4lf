@@ -20,5 +20,5 @@ def test_should_keep():
         ],
     )
     filter = Filter()
-    keep, _, _ = filter.should_keep(item)
+    keep, _, _, _ = filter.should_keep(item)
     print(keep)

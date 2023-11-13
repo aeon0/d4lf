@@ -12,9 +12,10 @@ from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
 from item.filter import Filter
 import tkinter as tk
+from config import Config
 
 
-def draw_rect(canvas, bullet_width, obj, off, color):
+def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     offset_loc = np.array(obj.loc) + off
     x1 = int(offset_loc[0] - bullet_width / 2)
     y1 = int(offset_loc[1] - bullet_width / 2)
@@ -118,13 +119,20 @@ def vision_mode():
                         match = False
 
                 if item_descr is not None:
-                    keep, did_match_affixes, matched_affixes = Filter().should_keep(item_descr)
+                    keep, did_match_affixes, matched_affixes, matched_str = Filter().should_keep(item_descr)
                     if not keep:
                         match = False
 
                 # Adapt colors based on config
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
+                    font_size = 12
+                    window_height = Config().ui_pos["window_dimensions"][1]
+                    if window_height == 1440:
+                        font_size = 13
+                    elif window_height == 2160:
+                        font_size = 14
+                    canvas.create_text(off * 3, h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
                     # Show matched bullets
                     if item_descr is not None:
                         bullet_width = thick * 3

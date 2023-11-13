@@ -114,16 +114,16 @@ class Filter:
 
                 Logger.info(info_str)
 
-    def should_keep(self, item: Item) -> tuple[bool, bool, list[str]]:
+    def should_keep(self, item: Item) -> tuple[bool, bool, list[str], str]:
         if not self.files_loaded:
             self.load_files()
 
         if item.rarity is ItemRarity.Unique:
             Logger.info(f"Matched: Unique")
-            return True, False, []
+            return True, False, [], ""
 
         if item.type is None or item.power is None:
-            return False, False, []
+            return False, False, [], ""
 
         for profile_str, affix_filter in self.affix_filters.items():
             for filter_dict in affix_filter:
@@ -162,7 +162,7 @@ class Filter:
                     if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
                         affix_debug_msg = [name for name in matched_affixes]
                         Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                        return True, True, matched_affixes
+                        return True, True, matched_affixes, f"{profile_str}.{filter_name}"
 
         if item.aspect:
             for profile_str, aspect_filter in self.aspect_filters.items():
@@ -179,6 +179,6 @@ class Filter:
                             or (condition == "smaller" and item.aspect.value <= threshold)
                         ):
                             Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
-                            return True, False, []
+                            return True, False, [], f"{profile_str}.Aspects"
 
-        return False, False, []
+        return False, False, [], ""

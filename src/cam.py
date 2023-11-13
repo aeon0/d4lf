@@ -1,3 +1,7 @@
+import mss.windows
+
+mss.windows.CAPTUREBLT = 0
+
 import numpy as np
 import os
 import threading

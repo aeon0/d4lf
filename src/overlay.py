@@ -7,6 +7,7 @@ from utils.process_handler import kill_thread
 from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
+from scripts.heal import heal
 from vision_mode import vision_mode
 from config import Config
 from cam import Cam
@@ -203,6 +204,10 @@ class Overlay:
                             rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
                             rogue_tb_thread.start()
                             self.script_threads.append(rogue_tb_thread)
+                        if name == "heal":
+                            heal_thread = threading.Thread(target=heal, daemon=True)
+                            heal_thread.start()
+                            self.script_threads.append(heal)
                         self.start_scripts_button.config(text="stop")
             finally:
                 lock.release()

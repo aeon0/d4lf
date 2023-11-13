@@ -180,7 +180,14 @@ class Overlay:
             if Config().general["vision_mode"]:
                 vision_mode()
             else:
+                # We will stop all scripts if they are currently running and restart them afterwards if needed
+                did_stop_scripts = False
+                if len(self.script_threads) > 0:
+                    self.run_scripts()  # TODO: Its stopping them in this case, have better function naming!
+                    did_stop_scripts = True
                 run_loot_filter()
+                if did_stop_scripts:
+                    self.run_scripts()
         finally:
             if not self.is_minimized and not Config().general["vision_mode"]:
                 self.toggle_size()
@@ -207,7 +214,14 @@ class Overlay:
                         if name == "heal":
                             heal_thread = threading.Thread(target=heal, daemon=True)
                             heal_thread.start()
-                            self.script_threads.append(heal)
+                            self.script_threads.append(heal_thread)
+                        if name == "vision_mode":
+                            if Config().general["vision_mode"]:
+                                Logger.warning("Vision mode is already active. Will not be started as script.")
+                            else:
+                                vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
+                                vision_mode_thread.start()
+                                self.script_threads.append(vision_mode_thread)
                         self.start_scripts_button.config(text="stop")
             finally:
                 lock.release()

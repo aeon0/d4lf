@@ -183,7 +183,11 @@ class Overlay:
                 # We will stop all scripts if they are currently running and restart them afterwards if needed
                 did_stop_scripts = False
                 if len(self.script_threads) > 0:
-                    self.run_scripts()  # TODO: Its stopping them in this case, have better function naming!
+                    Logger.info("Stoping Scripts")
+                    self.start_scripts_button.config(text="scripts")
+                    for script_thread in self.script_threads:
+                        kill_thread(script_thread)
+                    self.script_threads = []
                     did_stop_scripts = True
                 run_loot_filter()
                 if did_stop_scripts:

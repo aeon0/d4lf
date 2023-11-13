@@ -2,8 +2,6 @@
 
 Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/4rG6yD3dnD) or use github issues.
 
-@Blizzard, please dont take this away from us. I can not bear to look at another affix...
-
 [![Alt text for thumbnail](assets/thumbnail.jpg)](https://streamable.com/m8obnu)
 
 ## Features
@@ -18,7 +16,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 ### Game Settings
 - Font size can be small or medium (better tested on small) in the Gameplay Settings
 - Game Language must be English
-- Advanced Tooltip Information (showing min and max values) is fine. But the _Advanced Tooltip Compare_ has to be truned off
+- Advanced Tooltip Information (showing min and max values) is fine. But the __Advanced Tooltip Compare has to be truned off__!
 
 ### Run
 - Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
@@ -28,6 +26,8 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
   - start/stop: Turn filtering on/off
   - scripts/stop: In case there are any scripts attached, run them
 - Alternative use the hotkeys. e.g. f11 for filtering
+
+Note: If you rerolled an affix, that affix (and the one above) will not be considered. So these items will most likely not show up with a green box.
 
 ### Configs
 The config folder contains:

@@ -118,6 +118,7 @@ def vision_mode():
                     elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
                         match = False
 
+                matched_str = ""
                 if item_descr is not None:
                     keep, did_match_affixes, matched_affixes, matched_str = Filter().should_keep(item_descr)
                     if not keep:

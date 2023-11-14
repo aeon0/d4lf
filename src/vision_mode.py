@@ -133,6 +133,9 @@ def vision_mode():
                         font_size = 13
                     elif window_height == 2160:
                         font_size = 14
+                    if len(matched_str) > 13:
+                        matched_str = matched_str[:13]
+                        matched_str += "..."
                     canvas.create_text(off * 3, h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
                     # Show matched bullets
                     if item_descr is not None:

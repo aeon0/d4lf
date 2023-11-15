@@ -102,6 +102,22 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Amulet,
+                823,
+                None,
+                [
+                    Affix("strength", 7.3),
+                    Affix("damage_reduction_while_fortified", 8.5),
+                    Affix("slow_duration_reduction", 18.5),
+                    Affix("ranks_of_the_crushing_earth_passive", 1),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

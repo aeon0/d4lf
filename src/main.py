@@ -23,8 +23,8 @@ def main():
         wait(0.2)
 
     # Create folders for logging stuff
-    user = os.getlogin()
-    config_dir = Path(f"C:/Users/{user}/.d4lf")
+    user_dir = os.path.expanduser("~")
+    config_dir = Path(f"{user_dir}/.d4lf")
     for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 

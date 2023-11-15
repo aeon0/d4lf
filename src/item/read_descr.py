@@ -74,6 +74,8 @@ ERROR_MAP = {
     "thoms": "thorns",
     "seythe": "scythe",
     "@arbarian": "(barbarian",
+    "mruid": "(druid",
+    "gorcerer": "sorcerer",
     "two-handed!": "two-handed",
     "two-handed.": "two-handed",
 }
@@ -87,7 +89,7 @@ with open("assets/aspects.json", "r") as f:
     aspect_dict = json.load(f)
 
 
-def _closest_match(target, candidates, min_score=89):
+def _closest_match(target, candidates, min_score=84):
     keys, values = zip(*candidates.items())
     result = process.extractOne(target, values)
     if result and result[1] >= min_score:
@@ -128,7 +130,7 @@ def _clean_str(s):
     )  # this is not included in our affix table
     cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "requires lev", "account", "sell value"])
     cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
+        r"(scroll up|account bound|requires level|only)|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
         "",
         cleaned_str,
     )  # Remove new terms

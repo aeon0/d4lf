@@ -75,7 +75,9 @@ ERROR_MAP = {
     "seythe": "scythe",
     "@arbarian": "(barbarian",
     "mruid": "(druid",
+    "omuid": "(druid",
     "gorcerer": "sorcerer",
+    "garbarian": "barbarian",
     "two-handed!": "two-handed",
     "two-handed.": "two-handed",
 }

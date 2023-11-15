@@ -79,7 +79,7 @@ def check_items(inv: InventoryBase):
 
         # Check if we want to keep the item
         start_filter = time.time()
-        keeping, did_match_affixes, _ = Filter().should_keep(item_descr)
+        keeping, did_match_affixes, _, _ = Filter().should_keep(item_descr)
         Logger.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
         if not keeping:
             keyboard.send("space")

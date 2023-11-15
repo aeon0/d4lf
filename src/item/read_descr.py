@@ -251,6 +251,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     if len(affix_bullets.matches) == 0:
         if show_warnings:
             Logger.warning(f"Found affix bullet points, but removed them based on itemtype: {item.type}")
+            screenshot("failed_affix_bullet_remove", img=img_item_descr)
         return None
     empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])

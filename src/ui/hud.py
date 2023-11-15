@@ -35,9 +35,9 @@ class Hud(SearchArgs):
         cropped = crop(cropped, Config().ui_roi["rel_skill_cd"])
         mask, _ = color_filter(cropped, Config().colors[f"skill_cd"], False)
         # at least half of the row must be filled
-        target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.8
+        target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.85
         cd_sum = np.sum(mask)
-        ready = avg_saturation > 100 and cd_sum < target_sum
+        ready = avg_saturation > 90 and cd_sum < target_sum
         return ready
 
     @staticmethod
@@ -50,7 +50,7 @@ class Hud(SearchArgs):
             cropped = crop(img, roi)
             mask, _ = color_filter(cropped, Config().colors[color], False)
             # at least half of the row must be filled
-            target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.3
+            target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.35
             cd_sum = np.sum(mask)
             if cd_sum > target_sum:
                 return True
@@ -63,14 +63,14 @@ class Hud(SearchArgs):
         sobel_y = cv2.Sobel(cut_img, cv2.CV_64F, 0, 1, ksize=3)
         _, binary = cv2.threshold(np.abs(sobel_y), 100, 255, cv2.THRESH_BINARY)
         blue, green, red = cv2.split(binary)
-        lines_red = cv2.HoughLinesP(red.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
-        lines_green = cv2.HoughLinesP(green.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
+        # lines_red = cv2.HoughLinesP(red.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
+        # lines_green = cv2.HoughLinesP(green.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
+        combined = cv2.bitwise_or(red, green)
+        lines_combined = cv2.HoughLinesP(combined.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
         lines_blue = cv2.HoughLinesP(blue.astype(np.uint8), 1, math.pi / 2, 2, None, 30, 1)
         lines = []
-        if lines_red is not None:
-            lines.extend(lines_red)
-        if lines_green is not None:
-            lines.extend(lines_green)
+        if lines_combined is not None:
+            lines.extend(lines_combined)
         if lines_blue is not None:
             lines.extend(lines_blue)
         # for line in lines[0]:

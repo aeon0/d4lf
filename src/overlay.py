@@ -171,6 +171,7 @@ class Overlay:
                     self.loot_filter_thread.start()
                     self.filter_button.config(text="stop")
             finally:
+                self.filter_button.config(text="filter")
                 lock.release()
         else:
             return

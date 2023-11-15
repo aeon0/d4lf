@@ -114,7 +114,7 @@ BASE_PATH = "test/assets/item"
                     Affix("strength", 7.3),
                     Affix("damage_reduction_while_fortified", 8.5),
                     Affix("slow_duration_reduction", 18.5),
-                    Affix("ranks_of_the_crushing_earth_passive", 5.8),
+                    Affix("ranks_of_the_crushing_earth_passive", 1),
                 ],
             ),
         ),

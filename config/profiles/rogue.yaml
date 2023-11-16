@@ -21,7 +21,7 @@ Affixes:
       itemType: helm
       minPower: 800
       affixPool:
-        - [basic_skill_attack_speed, 6]
+        - [basic_skill_attack_speed, 7]
         - [cooldown_reduction, 5]
         - [dexterity, 36]
         - [maximum_life, 580]

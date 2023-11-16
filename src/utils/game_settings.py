@@ -5,7 +5,8 @@ from logger import Logger
 
 def is_fontsize_ok() -> bool:
     custom_path = Config().general["local_prefs_path"]
-    default_path = f"C:\\Users\\{os.getlogin()}\\Documents\\Diablo IV/LocalPrefs.txt"
+    user_dir = os.path.expanduser("~")
+    default_path = f"{user_dir}\\Documents\\Diablo IV/LocalPrefs.txt"
     file_path = custom_path if custom_path != "" else default_path
     if not os.path.exists(file_path):
         Logger.warning("Could not find LocalPrefs.txt to check font size. Make sure you have font size set to small!")

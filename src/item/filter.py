@@ -31,8 +31,8 @@ class Filter:
         self.files_loaded = True
         profiles: list[str] = Config().general["profiles"]
 
-        user = os.getlogin()
-        custom_profile_path = Path(f"C:/Users/{user}/.d4lf/profiles")
+        user_dir = os.path.expanduser("~")
+        custom_profile_path = Path(f"{user_dir}/.d4lf/profiles")
         params_profile_path = Path(f"config/profiles")
 
         for profile_str in profiles:

@@ -65,8 +65,8 @@ class Config:
         self.configs["params"]["parser"].read("config/params.ini")
         self.configs["game"]["parser"].read(f"config/game_{Cam().res_key}.ini")
 
-        user = os.getlogin()
-        custom_params_path = Path(f"C:/Users/{user}/.d4lf/params.ini")
+        user_dir = os.path.expanduser("~")
+        custom_params_path = Path(f"{user_dir}/.d4lf/params.ini")
         if os.environ.get("RUN_ENV") != "test" and os.path.exists(custom_params_path):
             try:
                 self.configs["custom"]["parser"].read(custom_params_path)

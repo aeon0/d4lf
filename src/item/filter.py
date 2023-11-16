@@ -18,6 +18,8 @@ class Filter:
     with open("assets/aspects.json", "r") as f:
         aspect_dict = json.load(f)
     files_loaded = False
+    all_file_pathes = []
+    last_loaded = None
 
     _initialized: bool = False
     _instance = None
@@ -29,11 +31,14 @@ class Filter:
 
     def load_files(self):
         self.files_loaded = True
+        self.affix_filters = dict()
+        self.aspect_filters = dict()
         profiles: list[str] = Config().general["profiles"]
 
         user_dir = os.path.expanduser("~")
         custom_profile_path = Path(f"{user_dir}/.d4lf/profiles")
         params_profile_path = Path(f"config/profiles")
+        self.all_file_pathes = []
 
         for profile_str in profiles:
             custom_file_path = custom_profile_path / f"{profile_str}.yaml"
@@ -46,6 +51,7 @@ class Filter:
                 Logger.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}, {params_file_path}")
                 continue
 
+            self.all_file_pathes.append(profile_path)
             with open(profile_path) as f:
                 try:
                     config = yaml.safe_load(f)
@@ -114,8 +120,19 @@ class Filter:
 
                 Logger.info(info_str)
 
+        self.last_loaded = time.time()
+
+    def _did_files_change(self) -> bool:
+        if self.last_loaded is None:
+            return True
+
+        for file_path in self.all_file_pathes:
+            if os.path.getmtime(file_path) > self.last_loaded:
+                return True
+        return False
+
     def should_keep(self, item: Item) -> tuple[bool, bool, list[str], str]:
-        if not self.files_loaded:
+        if not self.files_loaded or self._did_files_change():
             self.load_files()
 
         if item.rarity is ItemRarity.Unique:

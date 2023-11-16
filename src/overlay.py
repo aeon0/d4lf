@@ -45,7 +45,7 @@ class Overlay:
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
-        self.initial_width = int(self.screen_width * 0.07)
+        self.initial_width = int(self.screen_width * 0.065)
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)
 
@@ -77,19 +77,17 @@ class Overlay:
             borderwidth=0,
             command=self.filter_items,
         )
-        self.canvas.create_window(int(self.initial_width * 0.45), self.initial_height // 2, window=self.filter_button)
-        if Config().general["vision_mode"]:
-            self.filter_items()
+        self.canvas.create_window(int(self.initial_width * 0.5), self.initial_height // 2, window=self.filter_button)
 
         self.start_scripts_button = tk.Button(
             self.root,
-            text="scripts",
+            text="vison",
             bg="#222222",
             fg="#555555",
             borderwidth=0,
             command=self.run_scripts,
         )
-        self.canvas.create_window(int(self.initial_width * 0.75), self.initial_height // 2, window=self.start_scripts_button)
+        self.canvas.create_window(int(self.initial_width * 0.83), self.initial_height // 2, window=self.start_scripts_button)
 
         font_size = 8
         window_height = Config().ui_pos["window_dimensions"][1]
@@ -120,6 +118,9 @@ class Overlay:
         listbox_handler = ListboxHandler(self.terminal_listbox)
         listbox_handler.setLevel(Logger._logger_level)
         Logger.logger.addHandler(listbox_handler)
+
+        if Config().general["run_vision_mode_on_startup"]:
+            self.run_scripts()
 
     def show_canvas(self, event):
         # Cancel the pending hide if it exists
@@ -165,7 +166,7 @@ class Overlay:
                     self.loot_filter_thread = None
                     self.filter_button.config(text="filter")
                 else:
-                    if self.is_minimized and not Config().general["vision_mode"]:
+                    if self.is_minimized:
                         self.toggle_size()
                     self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, daemon=True)
                     self.loot_filter_thread.start()
@@ -178,23 +179,20 @@ class Overlay:
 
     def _wrapper_run_loot_filter(self):
         try:
-            if Config().general["vision_mode"]:
-                vision_mode()
-            else:
-                # We will stop all scripts if they are currently running and restart them afterwards if needed
-                did_stop_scripts = False
-                if len(self.script_threads) > 0:
-                    Logger.info("Stoping Scripts")
-                    self.start_scripts_button.config(text="scripts")
-                    for script_thread in self.script_threads:
-                        kill_thread(script_thread)
-                    self.script_threads = []
-                    did_stop_scripts = True
-                run_loot_filter()
-                if did_stop_scripts:
-                    self.run_scripts()
+            # We will stop all scripts if they are currently running and restart them afterwards if needed
+            did_stop_scripts = False
+            if len(self.script_threads) > 0:
+                Logger.info("Stoping Scripts")
+                self.start_scripts_button.config(text="vision")
+                for script_thread in self.script_threads:
+                    kill_thread(script_thread)
+                self.script_threads = []
+                did_stop_scripts = True
+            run_loot_filter()
+            if did_stop_scripts:
+                self.run_scripts()
         finally:
-            if not self.is_minimized and not Config().general["vision_mode"]:
+            if not self.is_minimized:
                 self.toggle_size()
             self.loot_filter_thread = None
 
@@ -202,16 +200,16 @@ class Overlay:
         if lock.acquire(blocking=False):
             try:
                 if len(self.script_threads) > 0:
-                    Logger.info("Stoping Scripts")
-                    self.start_scripts_button.config(text="scripts")
+                    Logger.info("Stoping Vision Mode")
+                    self.start_scripts_button.config(text="vison")
                     for script_thread in self.script_threads:
                         kill_thread(script_thread)
                     self.script_threads = []
                 else:
-                    if len(Config().general["run_scripts"]) == 0:
+                    if len(Config().advanced_options["scripts"]) == 0:
                         Logger.info("No scripts configured")
                         return
-                    for name in Config().general["run_scripts"]:
+                    for name in Config().advanced_options["scripts"]:
                         if name == "rogue_tb":
                             rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
                             rogue_tb_thread.start()
@@ -221,12 +219,9 @@ class Overlay:
                             heal_thread.start()
                             self.script_threads.append(heal_thread)
                         if name == "vision_mode":
-                            if Config().general["vision_mode"]:
-                                Logger.warning("Vision mode is already active. Will not be started as script.")
-                            else:
-                                vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
-                                vision_mode_thread.start()
-                                self.script_threads.append(vision_mode_thread)
+                            vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
+                            vision_mode_thread.start()
+                            self.script_threads.append(vision_mode_thread)
                         self.start_scripts_button.config(text="stop")
             finally:
                 lock.release()

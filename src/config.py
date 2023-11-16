@@ -73,12 +73,10 @@ class Config:
             except configparser.MissingSectionHeaderError:
                 Logger.error("custom.ini missing section header, defaulting to params.ini")
 
-        run_scripts_str = str(self._select_val("general", "run_scripts"))
         profiles_str = str(self._select_val("general", "profiles"))
         self.general = {
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
-            "vision_mode": ast.literal_eval(self._select_val("general", "vision_mode").title()),
-            "run_scripts": run_scripts_str.split(",") if run_scripts_str else [],
+            "run_vision_mode_on_startup": ast.literal_eval(self._select_val("general", "run_vision_mode_on_startup").title()),
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),
             "profiles": profiles_str.split(",") if profiles_str else [],
@@ -88,7 +86,11 @@ class Config:
             self.char[key] = self._select_val("char", key)
 
         for key in self.configs["params"]["parser"]["advanced_options"]:
-            self.advanced_options[key] = self._select_val("advanced_options", key)
+            if key == "scripts":
+                as_string = str(self._select_val("advanced_options", key))
+                self.advanced_options[key] = as_string.split(",") if as_string else []
+            else:
+                self.advanced_options[key] = self._select_val("advanced_options", key)
 
         for key in self.configs["game"]["parser"]["colors"]:
             self.colors[key] = np.split(np.array([int(x) for x in self._select_val("colors", key).split(",")]), 2)

@@ -279,5 +279,6 @@
     "core_skill_damage": "core skill damage",
     "total_armor_while_in_werebear_form": "total armor while in werebear form",
     "critical_strike_damage_with_imbued_skills": "critical strike damage with imbued skills",
-    "ranks_of_ground_stomp": "ranks of ground stomp"
+    "ranks_of_ground_stomp": "ranks of ground stomp",
+    "maximum_resource": "maximum_resource"
 }

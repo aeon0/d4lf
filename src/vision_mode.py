@@ -127,15 +127,14 @@ def vision_mode():
                 # Adapt colors based on config
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
-                    font_size = 12
+                    font_size = 11
                     window_height = Config().ui_pos["window_dimensions"][1]
                     if window_height == 1440:
-                        font_size = 13
+                        font_size = 12
                     elif window_height == 2160:
-                        font_size = 14
-                    if len(matched_str) > 13:
-                        matched_str = matched_str[:13]
-                        matched_str += "..."
+                        font_size = 13
+                    if len(matched_str) > 16:
+                        matched_str = matched_str[:14] + "..."
                     canvas.create_text(off * 3, h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
                     # Show matched bullets
                     if item_descr is not None:

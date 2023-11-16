@@ -57,6 +57,9 @@ def vision_mode():
     possible_centers += [slot.center for slot in empty_chest]
     possible_centers = np.array(possible_centers)
 
+    screen_off_x = Cam().window_roi["left"]
+    screen_off_y = Cam().window_roi["top"]
+
     last_top_left_corner = None
     last_center = None
     while True:
@@ -88,7 +91,7 @@ def vision_mode():
                 h += off
                 canvas.config(height=h, width=w)
                 canvas.config(highlightbackground="#888888")
-                root.geometry(f"{w}x{h}+{x}+{y}")
+                root.geometry(f"{w}x{h}+{x+screen_off_x}+{y+screen_off_y}")
                 root.update_idletasks()
                 root.update()
 

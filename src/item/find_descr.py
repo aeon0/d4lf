@@ -43,8 +43,9 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
         offset_top = int(window_height * 0.03)
         roi_y = match.region[1] + offset_top
         search_height = window_height - roi_y - offset_top
-        roi = [match.region[0], roi_y, item_descr_width, search_height]
-        res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.73, mode="best")
+        delta_x = int(item_descr_width * 0.03)
+        roi = [match.region[0] - delta_x, roi_y, item_descr_width + 2 * delta_x, search_height]
+        res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.68, mode="best")
 
         refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
         sep_short = search(refs, img, 0.68, roi, True, mode="first", do_multi_process=False)

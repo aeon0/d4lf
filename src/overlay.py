@@ -8,7 +8,7 @@ from logger import Logger
 import logging
 from scripts.rogue_tb import run_rogue_tb
 from scripts.heal import heal
-from vision_mode import vision_mode
+from scripts.vision_mode import vision_mode
 from config import Config
 from cam import Cam
 

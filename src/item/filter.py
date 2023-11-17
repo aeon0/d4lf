@@ -158,46 +158,49 @@ class Filter:
         if item.type is None or item.power is None:
             return False, False, [], ""
 
-        for profile_str, affix_filter in self.affix_filters.items():
-            for filter_dict in affix_filter:
-                for filter_name, filter_data in filter_dict.items():
-                    filter_item_types = [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
-                    filter_min_power = filter_data["minPower"]
-                    filter_affix_pool = (
-                        [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
-                    )
-                    filter_min_affix_count = filter_data["minAffixCount"]
+        if item.rarity != ItemRarity.Unique:
+            for profile_str, affix_filter in self.affix_filters.items():
+                for filter_dict in affix_filter:
+                    for filter_name, filter_data in filter_dict.items():
+                        filter_item_types = (
+                            [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
+                        )
+                        filter_min_power = filter_data["minPower"]
+                        filter_affix_pool = (
+                            [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
+                        )
+                        filter_min_affix_count = filter_data["minAffixCount"]
 
-                    if item.type.value not in filter_item_types or (
-                        item.power is not None and filter_min_power is not None and item.power < filter_min_power
-                    ):
-                        continue
+                        if item.type.value not in filter_item_types or (
+                            item.power is not None and filter_min_power is not None and item.power < filter_min_power
+                        ):
+                            continue
 
-                    matched_affixes = []
-                    if filter_affix_pool is not None:
-                        for affix in filter_affix_pool:
-                            name, *rest = affix if isinstance(affix, list) else [affix]
-                            threshold = rest[0] if rest else None
-                            condition = rest[1] if len(rest) > 1 else "larger"
+                        matched_affixes = []
+                        if filter_affix_pool is not None:
+                            for affix in filter_affix_pool:
+                                name, *rest = affix if isinstance(affix, list) else [affix]
+                                threshold = rest[0] if rest else None
+                                condition = rest[1] if len(rest) > 1 else "larger"
 
-                            item_affix_value = next((a.value for a in item.affixes if a.type == name), None)
+                                item_affix_value = next((a.value for a in item.affixes if a.type == name), None)
 
-                            if item_affix_value is not None:
-                                if (
-                                    threshold is None
-                                    or (condition == "larger" and item_affix_value >= threshold)
-                                    or (condition == "smaller" and item_affix_value <= threshold)
-                                ):
+                                if item_affix_value is not None:
+                                    if (
+                                        threshold is None
+                                        or (condition == "larger" and item_affix_value >= threshold)
+                                        or (condition == "smaller" and item_affix_value <= threshold)
+                                    ):
+                                        matched_affixes.append(name)
+                                elif any(a.type == name for a in item.affixes):
                                     matched_affixes.append(name)
-                            elif any(a.type == name for a in item.affixes):
-                                matched_affixes.append(name)
 
-                    if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
-                        affix_debug_msg = [name for name in matched_affixes]
-                        Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                        return True, True, matched_affixes, f"{profile_str}.{filter_name}"
+                        if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
+                            affix_debug_msg = [name for name in matched_affixes]
+                            Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
+                            return True, True, matched_affixes, f"{profile_str}.{filter_name}"
 
-        if item.aspect:
+        if item.aspect and item.rarity != ItemRarity.Unique:
             for profile_str, aspect_filter in self.aspect_filters.items():
                 for filter_data in aspect_filter:
                     aspect_name, *rest = filter_data if isinstance(filter_data, list) else [filter_data]
@@ -250,7 +253,7 @@ class Filter:
                                     matched_affixes.append(name)
 
                         if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
-                            av = filter_data["aspectValue"]
+                            av = filter_data["aspectValue"] if "aspectValue" in filter_data else None
                             if av is not None:
                                 rest = filter_data if isinstance(filter_data["aspectValue"], list) else [filter_data["aspectValue"]]
                                 threshold = rest[0] if rest else None
@@ -267,5 +270,7 @@ class Filter:
                                 if aspect_ok:
                                     Logger.info(f"Matched {profile_str}.{filter_name}")
                                     return True, True, [], f"{profile_str}.{filter_name}"
+                            else:
+                                return True, True, [], f"{profile_str}.{filter_name}"
 
         return False, False, [], ""

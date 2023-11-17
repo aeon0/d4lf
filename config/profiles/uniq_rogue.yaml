@@ -83,7 +83,7 @@ Uniques:
 
   - Word of Hakan:
       itemType: amulet
-      minPower: 900
+      minPower: 860
       affixPool:
         - [movement_speed]
         - [ultimate_skill_damage]

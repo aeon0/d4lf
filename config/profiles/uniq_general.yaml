@@ -189,7 +189,7 @@ Uniques:
 
   - Flickerstep:
       itemType: boots
-      minPower: 900
+      minPower: 820
       affixPool:
         - [all_stats]
         - [movement_speed]

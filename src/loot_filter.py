@@ -44,10 +44,6 @@ def check_items(inv: InventoryBase):
             Logger.debug(f"  Runtime (DetectItem): {time.time() - start_detect:.2f}s")
         if not found:
             continue
-        # Hardcoded rarity filter
-        if rarity in [ItemRarity.Unique]:
-            Logger.info("Matched: Unique")
-            continue
 
         start_time_read = time.time()
         # Detect contents of item descr

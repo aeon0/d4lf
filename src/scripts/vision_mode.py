@@ -100,26 +100,23 @@ def vision_mode():
                 item_descr = None
                 last_top_left_corner = top_left_corner
                 last_center = item_center
-                if rarity in [ItemRarity.Unique]:
-                    Logger.info("Matched: Unique")
-                else:
-                    item_descr = read_descr(rarity, cropped_descr, False)
-                    if item_descr is None:
-                        last_center = None
-                        last_top_left_corner = None
-                        continue
+                item_descr = read_descr(rarity, cropped_descr, False)
+                if item_descr is None:
+                    last_center = None
+                    last_top_left_corner = None
+                    continue
 
-                    if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
-                        Logger.info(f"Matched: Material / Sigil")
-                        continue
-                    elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
-                        Logger.info(f"Matched: Extracted Aspect")
-                        continue
-                    elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
-                        Logger.info(f"Matched: Elixir")
-                        continue
-                    elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
-                        match = False
+                if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
+                    Logger.info(f"Matched: Material / Sigil")
+                    continue
+                elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
+                    Logger.info(f"Matched: Extracted Aspect")
+                    continue
+                elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
+                    Logger.info(f"Matched: Elixir")
+                    continue
+                elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
+                    match = False
 
                 matched_str = ""
                 if item_descr is not None:
@@ -136,9 +133,9 @@ def vision_mode():
                         font_size = 12
                     elif window_height == 2160:
                         font_size = 13
-                    if len(matched_str) > 16:
-                        matched_str = matched_str[:14] + "..."
-                    canvas.create_text(off * 3, h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
+                    if len(matched_str) > 25:
+                        matched_str = matched_str[:22] + "..."
+                    canvas.create_text((off * 4.3), h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
                     # Show matched bullets
                     if item_descr is not None:
                         bullet_width = thick * 3

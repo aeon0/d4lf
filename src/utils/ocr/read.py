@@ -6,7 +6,25 @@ from utils.ocr.models import OcrResult
 
 TESSDATA_PATH = "assets/tessdata"
 
+
+#   0    Orientation and script detection (OSD) only.
+#   1    Automatic page segmentation with OSD.
+#   2    Automatic page segmentation, but no OSD, or OCR.
+#   3    Fully automatic page segmentation, but no OSD. (Default)
+#   4    Assume a single column of text of variable sizes.
+#   5    Assume a single uniform block of vertically aligned text.
+#   6    Assume a single uniform block of text.
+#   7    Treat the image as a single text line.
+#   8    Treat the image as a single word.
+#   9    Treat the image as a single word in a circle.
+#  10    Treat the image as a single character.
+#  11    Sparse text. Find as much text as possible in no particular order.
+#  12    Sparse text with OSD.
+#  13    Raw line. Treat the image as a single text line,
+#           bypassing hacks that are Tesseract-specif
+
 API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
+API2 = PyTessBaseAPI(psm=12, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
 # supposed to give fruther runtime improvements, but reading performance really goes down...
 # API.SetVariable("tessedit_do_invert", "0")
 
@@ -44,7 +62,7 @@ def _strip_new_lines(original_text: str, psm: int) -> str:
     return new_text
 
 
-def image_to_text(img: np.ndarray) -> OcrResult:
+def image_to_text(img: np.ndarray, spares_text: bool = False) -> OcrResult:
     """
     Extract text from the entire image.
     :param img: The input image.
@@ -54,8 +72,12 @@ def image_to_text(img: np.ndarray) -> OcrResult:
     :return: The OCR result.
     """
     psm = 3
-    API.SetImageBytes(*_img_to_bytes(img))
-    original_text = API.GetUTF8Text().strip()
+    if spares_text:
+        API2.SetImageBytes(*_img_to_bytes(img))
+        original_text = API2.GetUTF8Text().strip()
+    else:
+        API.SetImageBytes(*_img_to_bytes(img))
+        original_text = API.GetUTF8Text().strip()
     text = _strip_new_lines(original_text, psm)
     res = OcrResult(
         original_text=original_text,

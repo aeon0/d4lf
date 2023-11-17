@@ -1,0 +1,110 @@
+# Source: https://d4builds.gg/database/uniques/
+
+Uniques:
+  - 100000 Steps:
+      itemType: boots
+      minPower: 860
+      affixPool:
+        - [dexterity]
+        - [damage_with_skills_that_swap_to_new_weapons]
+        - [movement_speed]
+        - [ranks_of_ground_stomp]
+      aspectValue: 32
+
+  - Ancients Oath:
+      itemType: boots
+      minPower: 860
+      affixPool:
+        - [damage_to_close_enemies]
+        - [vulnerable_damage]
+        - [damage_while_berserking]
+        - [ranks_of_steel_grasp]
+      aspectValue: 30
+
+  - Azurewrath:
+      itemType: sword
+      minPower: 900
+      affixPool:
+        - [attack_speed]
+        - [core_skill_damage]
+        - [nonphysical_damage]
+        - [ranks_of_ground_stomp]
+      aspectValue: 32
+
+  - Battle Trance:
+      itemType: amulet
+      minPower: 860
+      affixPool:
+        - [cooldown_reduction]
+        - [damage_reduction_from_close_enemies]
+        - [maximum_fury]
+        - [ranks_of_frenzy]
+      aspectValue: 35
+
+  - Fields of Crimson:
+      itemType: two-handed sword
+      minPower: 900
+      affixPool:
+        - [damage_with_twohanded_slashing_weapons]
+        - [damage_over_time]
+        - [critical_strike_damage]
+        - [rupture_cooldown_reduction]
+
+  - Gohrs Devastating Grips:
+      itemType: gloves
+      minPower: 850
+      affixPool:
+        - [critical_strike_chance_against_close_enemies]
+        - [lucky_hit_chance]
+        - [damage]
+        - [ranks_of_whirlwind]
+      aspectValue: 32
+
+  - Hellhammer:
+      itemType: two-handed mace
+      minPower: 900
+      affixPool:
+        - [damage_with_twohanded_bludgeoning_weapons]
+        - [damage_to_burning_enemies]
+        - [damage_reduction_from_enemies_that_are_burning]
+        - [ranks_of_upheaval]
+
+  - Overkill:
+      itemType: two-handed mace
+      minPower: 900
+      affixPool:
+        - [physical_damage]
+        - [overpower_damage]
+        - [damage_to_injured_enemies]
+        - [ranks_of_death_blow]
+      aspectValue: 24
+
+  - Rage of Harrogath:
+      itemType: chest armor
+      minPower: 850
+      affixPool:
+        - [physical_damage]
+        - [critical_strike_chance_with_physical_damage_against_elites]
+        - [damage_reduction_from_enemies_that_are_bleeding]
+        - [thorns]
+      aspectValue: 20
+
+  - Ramaladnis Magnum Opus:
+      itemType: sword
+      minPower: 900
+      affixPool:
+        - [damage_with_dualwielded_weapons]
+        - [damage_to_close_enemies]
+        - [maximum_fury]
+        - [lucky_hit_up_to_a_chance_to_restore_primary_resource]
+      aspectValue: 0.2
+
+  - Tuskhelm of Joritz the Mighty:
+      itemType: helm
+      minPower: 850
+      affixPool:
+        - [maximum_fury]
+        - [attack_speed]
+        - [damage_while_berserking]
+        - [ranks_of_the_aggressive_resistance_passive]
+      aspectValue: 40

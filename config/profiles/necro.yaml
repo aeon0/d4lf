@@ -93,7 +93,7 @@ Affixes:
         - [ranks_of_corpse_explosion, 3]
         - [total_armor]
         - [maximum_life]
-        - [damage_reduction_from_affected_by_shadow_damage_over_time_enemies]
+        - [damage_reduction_from_enemies_that_are_affected_by_shadow_damage_over_time]
       minAffixCount: 3
 
   - GlovesInfi:
@@ -168,7 +168,7 @@ Affixes:
         - [damage_reduction]
         - [total_armor]
         - [maximum_life]
-        - [damage_reduction_from_affected_by_shadow_damage_over_time_enemies]
+        - [damage_reduction_from_enemies_that_are_affected_by_shadow_damage_over_time]
       minAffixCount: 3
 
   - RingPentadot:

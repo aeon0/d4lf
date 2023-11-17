@@ -13,6 +13,7 @@ from item.data.rarity import ItemRarity
 class Filter:
     affix_filters = dict()
     aspect_filters = dict()
+    unique_filters = dict()
     with open("assets/affixes.json", "r") as f:
         affix_dict = json.load(f)
     with open("assets/aspects.json", "r") as f:
@@ -29,10 +30,43 @@ class Filter:
             cls._instance = super(Filter, cls).__new__(cls)
         return cls._instance
 
+    @staticmethod
+    def check_item_types(filters):
+        for filter_dict in filters:
+            for filter_name, filter_data in filter_dict.items():
+                user_item_types = [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
+                if user_item_types is None:
+                    Logger.warning(f"Warning: Missing itemtype in {filter_name}")
+                    continue
+                invalid_types = []
+                for val in user_item_types:
+                    try:
+                        ItemType(val)
+                    except ValueError:
+                        invalid_types.append(val)
+                if invalid_types:
+                    Logger.warning(f"Warning: Invalid ItemTypes in filter {filter_name}: {', '.join(invalid_types)}")
+
+    @staticmethod
+    def check_affixes(filters, affix_dict):
+        for filter_dict in filters:
+            for filter_name, filter_data in filter_dict.items():
+                user_affix_pool = [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
+                invalid_affixes = []
+                if user_affix_pool is None:
+                    continue
+                for affix in user_affix_pool:
+                    affix_name = affix if isinstance(affix, str) else affix[0]
+                    if affix_name not in affix_dict:
+                        invalid_affixes.append(affix_name)
+                if invalid_affixes:
+                    Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
+
     def load_files(self):
         self.files_loaded = True
         self.affix_filters = dict()
         self.aspect_filters = dict()
+        self.unique_filters = dict()
         profiles: list[str] = Config().general["profiles"]
 
         user_dir = os.path.expanduser("~")
@@ -75,34 +109,9 @@ class Filter:
                         Logger.error(f"Empty Affixes section in {profile_str}. Remove it")
                         return
                     # Sanity check on the item types
-                    for filter_dict in self.affix_filters[profile_str]:
-                        for filter_name, filter_data in filter_dict.items():
-                            user_item_types = (
-                                [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
-                            )
-                            invalid_types = []
-                            for val in user_item_types:
-                                try:
-                                    ItemType(val)
-                                except ValueError:
-                                    invalid_types.append(val)
-                            if invalid_types:
-                                Logger.warning(f"Warning: Invalid ItemTypes in filter {filter_name}: {', '.join(invalid_types)}")
+                    self.check_item_types(self.affix_filters[profile_str])
                     # Sanity check on the affixes
-                    for filter_dict in self.affix_filters[profile_str]:
-                        for filter_name, filter_data in filter_dict.items():
-                            user_affix_pool = (
-                                [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
-                            )
-                            invalid_affixes = []
-                            if user_affix_pool is None:
-                                continue
-                            for affix in user_affix_pool:
-                                affix_name = affix if isinstance(affix, str) else affix[0]
-                                if affix_name not in self.affix_dict:
-                                    invalid_affixes.append(affix_name)
-                            if invalid_affixes:
-                                Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
+                    self.check_affixes(self.affix_filters[profile_str], self.affix_dict)
 
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "
@@ -117,6 +126,17 @@ class Filter:
                             invalid_aspects.append(aspect_name)
                     if invalid_aspects:
                         Logger.warning(f"Warning: Invalid Aspect: {', '.join(invalid_aspects)}")
+
+                if config is not None and "Uniques" in config:
+                    info_str += "Uniques"
+                    self.unique_filters[profile_str] = config["Uniques"]
+                    if config["Uniques"] is None:
+                        Logger.error(f"Empty Uniques section in {profile_str}. Remove it")
+                        return
+                    # Sanity check on the item types
+                    self.check_item_types(self.unique_filters[profile_str])
+                    # Sanity check on the affixes
+                    self.check_affixes(self.unique_filters[profile_str], self.affix_dict)
 
                 Logger.info(info_str)
 
@@ -134,10 +154,6 @@ class Filter:
     def should_keep(self, item: Item) -> tuple[bool, bool, list[str], str]:
         if not self.files_loaded or self._did_files_change():
             self.load_files()
-
-        if item.rarity is ItemRarity.Unique:
-            Logger.info(f"Matched: Unique")
-            return True, False, [], ""
 
         if item.type is None or item.power is None:
             return False, False, [], ""
@@ -197,5 +213,59 @@ class Filter:
                         ):
                             Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
                             return True, False, [], f"{profile_str}.Aspects"
+
+        if item.rarity == ItemRarity.Unique:
+            for profile_str, unique_filter in self.unique_filters.items():
+                for filter_dict in unique_filter:
+                    for filter_name, filter_data in filter_dict.items():
+                        filter_item_types = filter_data["itemType"]
+                        filter_min_power = filter_data["minPower"]
+                        filter_affix_pool = (
+                            [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
+                        )
+                        filter_min_affix_count = len(filter_affix_pool)  # all have to match
+
+                        if item.type.value not in filter_item_types or (
+                            item.power is not None and filter_min_power is not None and item.power < filter_min_power
+                        ):
+                            continue
+
+                        matched_affixes = []
+                        if filter_affix_pool is not None:
+                            for affix in filter_affix_pool:
+                                name, *rest = affix if isinstance(affix, list) else [affix]
+                                threshold = rest[0] if rest else None
+                                condition = rest[1] if len(rest) > 1 else "larger"
+
+                                item_affix_value = next((a.value for a in item.affixes if a.type == name), None)
+
+                                if item_affix_value is not None:
+                                    if (
+                                        threshold is None
+                                        or (condition == "larger" and item_affix_value >= threshold)
+                                        or (condition == "smaller" and item_affix_value <= threshold)
+                                    ):
+                                        matched_affixes.append(name)
+                                elif any(a.type == name for a in item.affixes):
+                                    matched_affixes.append(name)
+
+                        if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
+                            av = filter_data["aspectValue"]
+                            if av is not None:
+                                rest = filter_data if isinstance(filter_data["aspectValue"], list) else [filter_data["aspectValue"]]
+                                threshold = rest[0] if rest else None
+                                condition = rest[1] if len(rest) > 1 else "larger"
+
+                                aspect_ok = (
+                                    item.aspect is None
+                                    or item.aspect.value is None
+                                    or threshold is None
+                                    or (condition == "larger" and item.aspect.value >= threshold)
+                                    or (condition == "smaller" and item.aspect.value <= threshold)
+                                )
+
+                                if aspect_ok:
+                                    Logger.info(f"Matched {profile_str}.{filter_name}")
+                                    return True, True, [], f"{profile_str}.{filter_name}"
 
         return False, False, [], ""

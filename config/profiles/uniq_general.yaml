@@ -1,0 +1,207 @@
+# Source: https://d4builds.gg/database/uniques/
+
+Uniques:
+  # Ubers
+  # =========================
+  - Ahavarion Spear of Lycander:
+      itemType: staff
+      minPower:
+      affixPool:
+        - [critical_strike_chance]
+        - [attack_speed]
+        - [damage]
+        - [lucky_hit_up_to_a_chance_to_stun]
+
+  - Andariels Visage:
+      itemType: helm
+      minPower:
+      affixPool:
+        - [all_stats]
+        - [attack_speed]
+        - [life_steal]
+        - [poison_resistance]
+
+  - Doombringer:
+      itemType: sword
+      minPower:
+      affixPool:
+        - [core_skill_damage]
+        - [damage]
+        - [lucky_hit_up_to_a_chance_to_heal_life]
+        - [maximum_life]
+
+  - Harlequin Crest:
+      itemType: helm
+      minPower:
+      affixPool:
+        - [maximum_life]
+        - [cooldown_reduction]
+        - [resource_generation]
+        - [all_stats]
+
+
+  - Melted Heart of Selig:
+      itemType: amulet
+      minPower:
+      affixPool:
+        - [all_stats]
+        - [core_skill_damage]
+        - [damage_while_healthy]
+        - [resource_regeneration]
+
+  - Ring of Starless Skies:
+      itemType: ring
+      minPower:
+      affixPool:
+        - [lucky_hit_chance]
+        - [critical_strike_chance]
+        - [critical_strike_damage]
+        - [core_skill_damage]
+
+  - The Grandfather:
+      itemType: two-handed sword
+      minPower:
+      affixPool:
+        - [damage]
+        - [maximum_life]
+        - [all_stats]
+        - [ignores_durability_loss]
+
+
+  # Others
+  # ==========================
+  - Frostburn:
+      itemType: gloves
+      minPower: 900
+      affixPool:
+        - [attack_speed]
+        - [critical_strike_chance]
+        - [freeze_duration]
+        - [lucky_hit_up_to_a_chance_to_restore_primary_resource]
+      aspectValue: 20
+
+  - Banished Lords Talisman:
+      itemType: amulet
+      minPower: 900
+      affixPool:
+        - [critical_strike_chance]
+        - [overpower_damage]
+        - [resource_generation]
+        - [ranks_of_all_core_skills]
+      aspectValue: 100
+
+  - Godslayer Crown:
+      itemType: helm
+      minPower: 900
+      affixPool:
+        - [cooldown_reduction]
+        - [crowd_control_duration]
+        - [maximum_life]
+        - [damage]
+      aspectValue: 60
+
+  - Fists of Fate:
+      itemType: gloves
+      minPower: 850
+      affixPool:
+        - [lucky_hit_up_to_a_chance_to_gain_damage_for_seconds]
+        - [lucky_hit_up_to_a_chance_to_restore_primary_resource]
+        - [lucky_hit_up_to_a_chance_to_immobilize]
+        - [lucky_hit_up_to_a_chance_to_daze]
+      aspectValue: 279
+
+  - Mothers Embrace:
+      itemType: ring
+      minPower: 850
+      affixPool:
+        - [all_stats]
+        - [lucky_hit_chance]
+        - [critical_strike_damage]
+        - [maximum_life]
+      aspectValue: 40
+
+  - Penitent Greaves:
+      itemType: boots
+      minPower: 850
+      affixPool:
+        - [movement_speed]
+        - [crowd_control_duration]
+        - [slow_duration_reduction]
+        - [cold_resistance]
+      aspectValue: 9
+
+  - Razorplate:
+      itemType: chest armor
+      minPower: 900
+      affixPool:
+        - [thorns]
+      aspectValue: 12000
+
+  - Soulbrand:
+      itemType: chest armor
+      minPower: 900
+      affixPool:
+        - [lucky_hit_chance_while_you_have_a_barrier]
+        - [barrier_generation]
+        - [maximum_life]
+        - [damage_reduction_from_close_enemies]
+      aspectValue: 20
+
+  - Tassets of the Dawning Sky:
+      itemType: pants
+      minPower: 900
+      affixPool:
+        - [control_impaired_duration_reduction]
+        - [maximum_life]
+        - [all_stats]
+        - [resistance_to_all_elements]
+      aspectValue: 10
+
+  - Temerity:
+      itemType: pants
+      minPower: 900
+      affixPool:
+        - [maximum_life]
+        - [potion_drop_rate]
+        - [lucky_hit_up_to_a_chance_to_heal_life]
+        - [healing_received]
+      aspectValue: 70
+
+  - Tibaults Will:
+      itemType: pants
+      minPower: 900
+      affixPool:
+        - [damage_reduction_from_close_enemies]
+        - [potion_capacity]
+        - [damage]
+        - [maximum_resource]
+      aspectValue: 30
+
+  - The Butchers Cleaver:
+      itemType: axe
+      minPower: 900
+      affixPool:
+        - [physical_damage]
+        - [damage_to_crowd_controlled_enemies]
+        - [critical_strike_damage]
+        - [critical_strike_chance_against_injured_enemies]
+      aspectValue: 70
+
+  - Flickerstep:
+      itemType: boots
+      minPower: 900
+      affixPool:
+        - [all_stats]
+        - [movement_speed]
+        - [ultimate_skill_damage]
+        - [damage_reduction_from_close_enemies]
+      aspectValue: 4
+
+  - XFals Corroded Signet:
+      itemType: ring
+      minPower: 870
+      affixPool:
+        - [physical_damage]
+        - [damage_to_crowd_controlled_enemies]
+        - [critical_strike_damage]
+        - [critical_strike_chance_against_injured_enemies]

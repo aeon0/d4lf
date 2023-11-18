@@ -70,6 +70,7 @@ Uniques:
 
   # Others
   # ==========================
+  # NOTE: We can not filter for Razorplate as it has no affixes!
   - Frostburn:
       itemType: gloves
       minPower: 900
@@ -129,11 +130,6 @@ Uniques:
         - [slow_duration_reduction]
         - [cold_resistance]
       aspectValue: 9
-
-  - Razorplate:
-      itemType: chest armor
-      minPower: 900
-      affixPool:
 
   - Soulbrand:
       itemType: chest armor

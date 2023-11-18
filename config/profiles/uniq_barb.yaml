@@ -28,8 +28,8 @@ Uniques:
         - [attack_speed]
         - [core_skill_damage]
         - [nonphysical_damage]
-        - [ranks_of_ground_stomp]
-      aspectValue: 32
+        - [damage_to_crowd_controlled_enemies]
+      aspectValue: 30
 
   - Battle Trance:
       itemType: amulet

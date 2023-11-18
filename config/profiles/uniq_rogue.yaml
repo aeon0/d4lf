@@ -89,3 +89,13 @@ Uniques:
         - [ultimate_skill_damage]
         - [rain_of_arrows_skill_cooldown_reduction]
         - [ranks_of_all_imbuement_skills]
+
+  - Ashearas Khanjar:
+      itemType: dagger
+      minPower: 900
+      affixPool:
+        - [basic_skill_damage]
+        - [damage_to_crowd_controlled_enemies]
+        - [movement_speed_for_seconds_after_killing_an_elite]
+        - [lucky_hit_chance]
+      aspectValue: 20

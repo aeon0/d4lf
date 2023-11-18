@@ -134,8 +134,6 @@ Uniques:
       itemType: chest armor
       minPower: 900
       affixPool:
-        - [thorns]
-      aspectValue: 12000
 
   - Soulbrand:
       itemType: chest armor

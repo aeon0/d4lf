@@ -27,7 +27,10 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
   - scripts/stop: In case there are any scripts attached, run them
 - Alternative use the hotkeys. e.g. f11 for filtering
 
-Note: If you rerolled an affix, that affix (and the one above) will not be considered. So these items will most likely not show up with a green box.
+
+### Limitations
+- If you rerolled an affix, that affix (and the one above) will not be considered. So these items will most likely not show up with a green box
+- The tool does not play well with HDR as it makes everything super bright
 
 ### Configs
 The config folder contains:
@@ -39,23 +42,23 @@ The config folder contains:
 | [general] | Description |
 | ----------------------- | --------------------------------------|
 | profiles | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles. |
-| vision_mode | Can be any of [True, False]. If True, it will show red and green boxes around detected item boxes depending on your filter configs. If False, it will automatically detect items in your chest and stash, hover them and mark them as junk if they dont pass your filter configs. |
+| whitelist_uniques | If True: Uniques will only be kept if they are found in the yaml profiles and match the requierments. If False: Uniques will be kept if they are found in the yaml and match the requierments or if they are not found at all in the profiles (default) |
+| run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey. |
 | check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
 | hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |
 | local_prefs_path | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file |
-| run_scripts | Running different scripts that can further help your gameplay |
 
 | [char] | Description |
 | ----------------------- | --------------------------------------|
 | inventory | Hotkey for opening inventory |
-| skill4 | Hotkey for casting the 4th skill in your skill bar. (Not needed for lootfilter!) |
 
 | [advanced_options] | Description |
 | ----------------------- | --------------------------------------|
-| run_scripts | Hotkey to run scripts |
+| run_scripts | Hotkey to start/stop vision mode |
 | run_filter | Hotkey to start/stop filtering items |
 | exit_key | Hotkey to exit d4lf.exe |
 | log_level | Logging level. Can be any of [debug, info, warning, error] |
+| scripts | Running different scripts |
 
 ## How to filter
 ### Aspects
@@ -87,6 +90,23 @@ Affixes:
         - [total_armor, 9]
         - [maximum_life, 700]
       minAffixCount: 3
+```
+
+### Uniques
+Uniques look similar to affixes, but will need the full unique description of itemtype and affixes to be able to be matched:
+
+```yaml
+# Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25. Note that the other affixes still must be specified to be able to match the unique item to the config!
+Uniques:
+  - Tibaults Will:
+      itemType: pants
+      minPower: 900
+      affixPool:
+        - [damage_reduction_from_close_enemies, 12]
+        - [potion_capacity]
+        - [damage]
+        - [maximum_resource]
+      aspectValue: 25
 ```
 
 Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! So if you want to take all items of a certain type, add it and leave minPower, affixPool and minAffixCount empty.

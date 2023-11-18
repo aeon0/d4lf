@@ -228,12 +228,8 @@ class Filter:
                         )
                         filter_min_affix_count = len(filter_affix_pool)  # all have to match
 
-                        if item.type.value not in filter_item_types or (
-                            item.power is not None and filter_min_power is not None and item.power < filter_min_power
-                        ):
-                            continue
-
                         matched_affixes = []
+                        found_affixes = []
                         if filter_affix_pool is not None:
                             for affix in filter_affix_pool:
                                 name, *rest = affix if isinstance(affix, list) else [affix]
@@ -241,6 +237,9 @@ class Filter:
                                 condition = rest[1] if len(rest) > 1 else "larger"
 
                                 item_affix_value = next((a.value for a in item.affixes if a.type == name), None)
+
+                                if any(a.type == name for a in item.affixes):
+                                    found_affixes.append(name)
 
                                 if item_affix_value is not None:
                                     if (
@@ -252,7 +251,13 @@ class Filter:
                                 elif any(a.type == name for a in item.affixes):
                                     matched_affixes.append(name)
 
-                        if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
+                        item_type_ok = item.type.value in filter_item_types
+                        item_power_ok = item.power is None or filter_min_power is None or item.power >= filter_min_power
+                        if (
+                            (filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count)
+                            and item_type_ok
+                            and item_power_ok
+                        ):
                             av = filter_data["aspectValue"] if "aspectValue" in filter_data else None
                             if av is not None:
                                 rest = filter_data if isinstance(filter_data["aspectValue"], list) else [filter_data["aspectValue"]]
@@ -272,5 +277,12 @@ class Filter:
                                     return True, True, [], f"{profile_str}.{filter_name}"
                             else:
                                 return True, True, [], f"{profile_str}.{filter_name}"
+
+                        if filter_min_affix_count is not None and len(found_affixes) >= filter_min_affix_count:
+                            return False, False, [], f"{profile_str}.{filter_name}"
+
+            if not Config().general["whitelist_uniques"]:
+                # We didnt find any match to that unique, if whitelist is false we return True
+                return True, True, [], "unique.no_config"
 
         return False, False, [], ""

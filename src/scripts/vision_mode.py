@@ -24,6 +24,20 @@ def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
+def draw_text(canvas, text, color, h, off):
+    if text is None or text == "":
+        return
+    font_size = 11
+    window_height = Config().ui_pos["window_dimensions"][1]
+    if window_height == 1440:
+        font_size = 12
+    elif window_height == 2160:
+        font_size = 13
+    if len(text) > 25:
+        text = text[:22] + "..."
+    canvas.create_text((off * 4.3), h - off, text=text, font=("Courier New", font_size), fill=color)
+
+
 def reset_canvas(root, canvas):
     canvas.delete("all")
     canvas.config(height=0, width=0)
@@ -120,22 +134,14 @@ def vision_mode():
 
                 matched_str = ""
                 if item_descr is not None:
-                    keep, did_match_affixes, matched_affixes, matched_str = Filter().should_keep(item_descr)
+                    keep, did_match_affixes, matched_affixes, info_str = Filter().should_keep(item_descr)
                     if not keep:
                         match = False
 
                 # Adapt colors based on config
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
-                    font_size = 11
-                    window_height = Config().ui_pos["window_dimensions"][1]
-                    if window_height == 1440:
-                        font_size = 12
-                    elif window_height == 2160:
-                        font_size = 13
-                    if len(matched_str) > 25:
-                        matched_str = matched_str[:22] + "..."
-                    canvas.create_text((off * 4.3), h - off, text=matched_str, font=("Courier New", font_size), fill="#23fc5d")
+                    draw_text(canvas, info_str, "#23fc5d", h, off)
                     # Show matched bullets
                     if item_descr is not None:
                         bullet_width = thick * 3
@@ -147,6 +153,7 @@ def vision_mode():
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")
+                    draw_text(canvas, info_str, "#fc2323", h, off)
 
                 root.update_idletasks()
                 root.update()

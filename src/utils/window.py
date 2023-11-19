@@ -3,7 +3,7 @@ import ctypes
 from dataclasses import dataclass
 import time
 import psutil
-from win32gui import GetWindowText, EnumWindows, GetClientRect
+from win32gui import GetWindowText, EnumWindows, GetClientRect, GetWindowRect, ClientToScreen
 from win32process import GetWindowThreadProcessId
 from logger import Logger
 from utils.misc import wait
@@ -79,7 +79,8 @@ def find_and_set_window_position(window_spec: WindowSpec = D4_WINDOW):
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
         pos = GetClientRect(hwnd)
-        Cam().update_window_pos(pos[0], pos[1], pos[2] - pos[0], pos[3] - pos[1])
+        top_left = ClientToScreen(hwnd, (pos[0], pos[1]))
+        Cam().update_window_pos(top_left[0], top_left[1], pos[2], pos[3])
     wait(0.5)
 
 

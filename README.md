@@ -97,15 +97,10 @@ Uniques look similar to affixes, but will need the full unique description of it
 ```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25. Note that the other affixes still must be specified to be able to match the unique item to the config!
 Uniques:
-  - Tibaults Will:
-      itemType: pants
-      minPower: 900
-      affixPool:
-        - [damage_reduction_from_close_enemies, 12]
-        - [potion_capacity]
-        - [damage]
-        - [maximum_resource]
-      aspectValue: 25
+  - aspect: [tibaults_will]
+    minPower: 900
+    affixPool:
+      - [damage_reduction_from_close_enemies, 12]
 ```
 
 Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! So if you want to take all items of a certain type, add it and leave minPower, affixPool and minAffixCount empty.

@@ -42,7 +42,6 @@ The config folder contains:
 | [general] | Description |
 | ----------------------- | --------------------------------------|
 | profiles | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles. |
-| whitelist_uniques | If True: Uniques will only be kept if they are found in the yaml profiles and match the requierments. If False: Uniques will be kept if they are found in the yaml and match the requierments or if they are not found at all in the profiles (default) |
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey. |
 | check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
 | hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |

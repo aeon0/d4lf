@@ -76,7 +76,6 @@ class Config:
         profiles_str = str(self._select_val("general", "profiles"))
         self.general = {
             "check_chest_tabs": int(self._select_val("general", "check_chest_tabs")),
-            "whitelist_uniques": ast.literal_eval(self._select_val("general", "whitelist_uniques").title()),
             "run_vision_mode_on_startup": ast.literal_eval(self._select_val("general", "run_vision_mode_on_startup").title()),
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),

@@ -125,7 +125,7 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Unique,
                 ItemType.Dagger,
                 892,
-                Aspect(None, 22),
+                Aspect("condemnation", 22),
                 [
                     Affix("basic_skill_attack_speed", 5.6),
                     Affix("critical_strike_damage", 20.5),

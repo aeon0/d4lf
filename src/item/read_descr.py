@@ -7,6 +7,7 @@ from item.data.item_type import ItemType
 from item.data.affix import Affix
 from item.data.aspect import Aspect
 from item.models import Item
+from item.corrections import ASPECT_NUMBER_AT_IDX1, ASPECT_NUMBER_AT_IDX2, ERROR_MAP
 from template_finder import search
 from utils.ocr.read import image_to_text
 from utils.image_operations import crop, color_filter
@@ -16,19 +17,6 @@ import json
 from rapidfuzz import process
 from config import Config
 
-
-ERROR_MAP = {
-    "thoms": "thorns",
-    "seythe": "scythe",
-    "@arbarian": "(barbarian",
-    "mruid": "(druid",
-    "omuid": "(druid",
-    "gorcerer": "sorcerer",
-    "garbarian": "barbarian",
-    "two-handed!": "two-handed",
-    "two-handed.": "two-handed",
-}
-
 affix_dict = dict()
 with open("assets/affixes.json", "r") as f:
     affix_dict = json.load(f)
@@ -36,6 +24,10 @@ with open("assets/affixes.json", "r") as f:
 aspect_dict = dict()
 with open("assets/aspects.json", "r") as f:
     aspect_dict = json.load(f)
+
+aspect_unique_dict = dict()
+with open("assets/aspects_unique.json", "r") as f:
+    aspect_unique_dict = json.load(f)
 
 
 def _closest_match(target, candidates, min_score=84):
@@ -228,6 +220,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         cropped_bottom = crop(img_item_descr, roi_bottom)
         unique_filtered, _ = color_filter(cropped_bottom, Config().colors["unique_gold"], False)
         unique_aspect_row = affix_bullets.matches[0].center[1] + np.any(unique_filtered != 0, axis=1).argmax()
+        unique_aspect_row_end = (
+            affix_bullets.matches[0].center[1] + len(unique_filtered) - np.any(unique_filtered[::-1] != 0, axis=1).argmax() - 1
+        )
+
     # print("Runtime (start_tex_2): ", time.time() - start_tex_2)
 
     # Affixes
@@ -303,9 +299,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     if rarity in [ItemRarity.Legendary, ItemRarity.Unique]:
         if rarity == ItemRarity.Legendary:
             ab = aspect_bullets.matches[0].center
+            bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else img_height
         else:
             ab = [unique_offset_x, unique_aspect_row + int(line_height / 3)]
-        bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else img_height
+            bottom_limit = unique_aspect_row_end
         dy = bottom_limit - ab[1]
         dx_offset = line_height // 4
         dy_offset = int(line_height * 0.7)
@@ -315,21 +312,18 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         concatenated_str = image_to_text(img_full_aspect).text.lower().replace("\n", " ")
         cleaned_str = _clean_str(concatenated_str)
 
-        found_key = None
         if rarity == ItemRarity.Legendary:
             found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
-
-        # Filter for the "blue number"
-        mask, _ = color_filter(img_full_aspect, Config().colors[f"aspect_number"], False)
-        if Config().ui_pos["window_dimensions"][1] == 2160:
-            kernel = np.ones((4, 4), np.uint8)
-        elif Config().ui_pos["window_dimensions"][1] == 1440:
-            kernel = np.ones((3, 3), np.uint8)
         else:
-            kernel = np.ones((2, 2), np.uint8)
-        mask = cv2.dilate(mask, kernel, iterations=1)
-        value_str = image_to_text(mask, spares_text=True).text.lower().replace("\n", " ")
-        found_value = _find_number(value_str)
+            found_key = _closest_match(cleaned_str, aspect_unique_dict, min_score=77)
+
+        if found_key in ASPECT_NUMBER_AT_IDX1:
+            idx = 1
+        elif found_key in ASPECT_NUMBER_AT_IDX2:
+            idx = 2
+        else:
+            idx = 0
+        found_value = _find_number(concatenated_str, idx)
 
         # Scale the aspect down to the canonical range if found on an item that scales it up
         if found_value is not None and rarity == ItemRarity.Legendary:
@@ -348,16 +342,17 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             ]:
                 found_value /= 2
 
-        if found_key is not None or rarity == ItemRarity.Unique:
-            # Rapid detects 19 as 199
+        Logger.debug(f"{found_key}: {found_value}")
+        if found_key is not None:
+            # Rapid detects 19 as 199 often
             if found_key == "rapid_aspect" and found_value == 199:
                 found_value = 19
             aspect_loc = [ab[0], ab[1]]
             item.aspect = Aspect(found_key, found_value, concatenated_str, aspect_loc)
         else:
             if show_warnings:
-                Logger.warning(f"Could not find aspect: {cleaned_str}")
-                screenshot("failed_aspect", img=img_item_descr)
+                Logger.warning(f"Could not find aspect/unique: {cleaned_str}")
+                screenshot("failed_aspect_or_unique", img=img_item_descr)
             return None
     # print("Runtime (start_aspect): ", time.time() - start_aspect)
 

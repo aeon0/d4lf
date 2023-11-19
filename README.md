@@ -7,8 +7,9 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 ## Features
 - Filter items in inventory and stash
 - Filter by item type and item power
-- Filter by affix and thresholds of their values
-- Filter by aspects and threshold of their values
+- Filter by affix and their values
+- Filter by aspects and their values
+- Filter uniques and their affix and aspect values
 - Supported resolutions: 1920x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
 
 ## How to Setup

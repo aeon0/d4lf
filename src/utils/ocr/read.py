@@ -24,7 +24,6 @@ TESSDATA_PATH = "assets/tessdata"
 #           bypassing hacks that are Tesseract-specif
 
 API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
-API2 = PyTessBaseAPI(psm=12, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
 # supposed to give fruther runtime improvements, but reading performance really goes down...
 # API.SetVariable("tessedit_do_invert", "0")
 
@@ -62,7 +61,7 @@ def _strip_new_lines(original_text: str, psm: int) -> str:
     return new_text
 
 
-def image_to_text(img: np.ndarray, spares_text: bool = False) -> OcrResult:
+def image_to_text(img: np.ndarray) -> OcrResult:
     """
     Extract text from the entire image.
     :param img: The input image.
@@ -72,12 +71,8 @@ def image_to_text(img: np.ndarray, spares_text: bool = False) -> OcrResult:
     :return: The OCR result.
     """
     psm = 3
-    if spares_text:
-        API2.SetImageBytes(*_img_to_bytes(img))
-        original_text = API2.GetUTF8Text().strip()
-    else:
-        API.SetImageBytes(*_img_to_bytes(img))
-        original_text = API.GetUTF8Text().strip()
+    API.SetImageBytes(*_img_to_bytes(img))
+    original_text = API.GetUTF8Text().strip()
     text = _strip_new_lines(original_text, psm)
     res = OcrResult(
         original_text=original_text,

@@ -18,26 +18,23 @@ from item.filter import Filter
 
 
 def main():
-    start_detecting_window()
-    while not Cam().is_offset_set():
-        wait(0.2)
-
     # Create folders for logging stuff
     user_dir = os.path.expanduser("~")
     config_dir = Path(f"{user_dir}/.d4lf")
     for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
+    Logger.init(logging.INFO)
+    start_detecting_window()
+    while not Cam().is_offset_set():
+        wait(0.2)
+
+    if Config().advanced_options["log_lvl"] == "debug":
+        Logger.init(logging.DEBUG)
+
     file_path = config_dir / "params.ini"
     if not file_path.exists():
         file_path.touch()
-
-    if Config().advanced_options["log_lvl"] == "info":
-        Logger.init(logging.INFO)
-    elif Config().advanced_options["log_lvl"] == "debug":
-        Logger.init(logging.DEBUG)
-    else:
-        print(f"ERROR: Unkown log_lvl {Config().advanced_options['log_lvl']}. Must be one of [info, debug]")
 
     if not is_fontsize_ok():
         Logger.warning("You do not have your font size set to small! The lootfilter might not work as intended.")

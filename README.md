@@ -62,7 +62,7 @@ The config folder contains:
 
 ## How to filter
 ### Aspects
-In your profile .yaml files any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
+In your profile .yaml files any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given. Smaller has to be used when the aspect go from high value to a lower value (eg. ‍Blood-bathed Aspect)
 
 For example:
 ```yaml

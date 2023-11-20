@@ -258,7 +258,7 @@ class Filter:
                             or (condition == "smaller" and item.aspect.value <= threshold)
                         ):
                             filter_affix_pool = [] if "affixPool" not in filter_dict else filter_dict["affixPool"]
-                            filter_min_affix_count = len(filter_affix_pool)
+                            filter_min_affix_count = len(filter_affix_pool) if filter_affix_pool is not None else 0
                             power_ok = self._check_power(filter_dict, item)
                             if not power_ok:
                                 continue

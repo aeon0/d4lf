@@ -257,16 +257,14 @@ class Filter:
                             or (condition == "larger" and item.aspect.value >= threshold)
                             or (condition == "smaller" and item.aspect.value <= threshold)
                         ):
-                            # CHeck Affixes
-                            for filter_name, filter_data in filter_dict.items():
-                                filter_affix_pool = [] if "affixPool" not in filter_data else filter_data["affixPool"]
-                                filter_min_affix_count = len(filter_affix_pool)
-                                power_ok = self._check_power(filter_data, item)
-                                if not power_ok:
-                                    continue
-                                matched_affixes = self._match_affixes(filter_data, item)
-                                if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
-                                    Logger.info(f"Matched {profile_str}.Unique: [{item.aspect.type}, {item.aspect.value}]")
-                                    return True, True, [], f"{profile_str}.{item.aspect.type}"
+                            filter_affix_pool = [] if "affixPool" not in filter_dict else filter_dict["affixPool"]
+                            filter_min_affix_count = len(filter_affix_pool)
+                            power_ok = self._check_power(filter_dict, item)
+                            if not power_ok:
+                                continue
+                            matched_affixes = self._match_affixes(filter_dict, item)
+                            if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
+                                Logger.info(f"Matched {profile_str}.Unique: [{item.aspect.type}, {item.aspect.value}]")
+                                return True, True, [], f"{profile_str}.{item.aspect.type}"
 
         return False, False, [], ""

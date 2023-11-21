@@ -165,7 +165,7 @@ class Filter:
 
     def _check_power(self, filter_data: dict, item: Item) -> bool:
         filter_min_power = filter_data["minPower"] if "minPower" in filter_data else None
-        item_power_ok = item.power is None or filter_min_power is None or item.power > filter_min_power
+        item_power_ok = item.power is None or filter_min_power is None or item.power >= filter_min_power
         return item_power_ok
 
     def _check_item_type(self, filter_data: dict, item: Item) -> bool:

@@ -1,19 +1,45 @@
+# Includes builds for Poison TB Rogue and Rapidshot / Penshot Rogue
+# Its rather on the strict side
+
 Aspects:
-  - [aspect_of_bursting_venoms]
-  - [aspect_of_corruption, 40]
-  - [aspect_of_elusive_menace, 7]
-  - [aspect_of_pestilent_points, 150]
-  - [aspect_of_noxious_ice, 29]
-  - [aspect_of_repeating, 45]
+  # offensive
   - [bladedancers_aspect, 15]
-  - [assimilation_aspect, 10]
+  - [aspect_of_branching_volleys, 25]
+  - [trickshot_aspect, 25]
+  - [aspect_of_corruption, 40]
+  - [aspect_of_bursting_venoms, 10000]
+  - [aspect_of_repeating, 45]
+  - [aspect_of_pestilent_points, 150]
+
+  # defensive
+  - [umbrous_aspect, 58]
   - [cheats_aspect, 25]
-  - [energizing_aspect, 9]
   - [enshrouding_aspect, 4]
+  - [aspect_of_elusive_menace, 7]
+
+  # resource, utility
+  - [energizing_aspect, 9]
+  - [ravenous_aspect, 65]
+  - [aspect_of_noxious_ice, 29]
+  - [blasttrappers_aspect, 15]
   - [frostbitten_aspect, 25]
   - [manglers_aspect, 45]
-  - [ravenous_aspect, 65]
-  - [umbrous_aspect, 59]
+  - [assimilation_aspect, 10]
+
+  # general
+  - [accelerating_aspect, 25]
+  - [aspect_of_might, 6]
+  - [aspect_of_disobedience, 1.1]
+  - [aspect_of_inner_calm, 10]
+  - [aspect_of_retribution, 20]
+  - [aspect_of_the_expectant, 10]
+  - [edgemasters_aspect, 20]
+  - [rapid_aspect, 28]
+  - [aspect_of_shared_misery, 45]
+  - [ghostwalker_aspect, 25]
+  - [aspect_of_the_umbral, 4]
+  - [conceited_aspect, 25]
+  - [starlight_aspect, 39]
 
 
 Affixes:
@@ -24,10 +50,9 @@ Affixes:
         - [basic_skill_attack_speed, 7]
         - [cooldown_reduction, 5]
         - [dexterity, 36]
-        - [maximum_life, 580]
+        - [maximum_life, 640]
         - [total_armor, 9]
         - [ranks_of_poison_imbuement, 3]
-        - [ranks_of_shadow_imbuement, 3]
       minAffixCount: 3
 
   - Gloves:
@@ -39,6 +64,7 @@ Affixes:
         - [lucky_hit_chance, 7.8]
         - [critical_strike_chance, 5.5]
         - [ranks_of_twisting_blades, 3]
+        - [ranks_of_penetrating_shot, 3]
         - [ranks_of_rapid_fire, 3]
       minAffixCount: 3
 
@@ -50,6 +76,7 @@ Affixes:
         - [dexterity, 40]
         - [dodge_chance, 5]
         - [energy_cost_reduction, 6]
+        - [dodge_chance_against_distant_enemies]
       minAffixCount: 3
 
   - Amulet:
@@ -60,6 +87,7 @@ Affixes:
         - [damage_reduction, 6]
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction_from_enemies_that_are_poisoned, 8]
         - [total_armor, 9]
         - [energy_cost_reduction, 6]
         - [movement_speed]
@@ -83,7 +111,7 @@ Affixes:
       minAffixCount: 3
 
   - WeaponClose:
-      itemType: [dagger, sword]
+      itemType: dagger
       minPower: 915
       affixPool:
         - [all_stats, 22]
@@ -91,6 +119,8 @@ Affixes:
         - [core_skill_damage, 17]
         - [damage_to_close_enemies, 19]
         - [vulnerable_damage, 16]
+        - [damage_to_slowed_enemies, 19]
+        - [damage_to_dazed_enemies, 19]
       minAffixCount: 2
 
   - WeaponFar:
@@ -102,4 +132,75 @@ Affixes:
         - [core_skill_damage, 25]
         - [damage_to_close_enemies, 37]
         - [vulnerable_damage, 34]
+        - [damage_to_slowed_enemies, 37]
+        - [damage_to_dazed_enemies, 37]
       minAffixCount: 3
+
+  - Armor:
+      itemType: [chest armor, pants]
+      minPower: 725
+      affixPool:
+        - [damage_reduction_from_close_enemies, 10]
+        - [damage_reduction_from_distant_enemies, 12]
+        - [damage_reduction, 5]
+        - [total_armor, 9]
+        - [maximum_life, 700]
+        - [dodge_chance_against_close_enemies, 6.5]
+        - [dodge_chance, 5.0]
+        - [damage_reduction_from_enemies_that_are_poisoned, 8]
+      minAffixCount: 3
+
+Uniques:
+  - aspect: [ashearas_khanjar, 6]
+    minPower: 900
+    affixPool:
+      - [lucky_hit_chance, 4.5]
+
+  - aspect: [condemnation]
+    minPower: 900
+
+  - aspect: [cowl_of_the_nameless, 23]
+    minPower: 825
+    affixPool:
+      - [damage_reduction_from_close_enemies, 10]
+      - [ranks_of_all_imbuement_skills, 3]
+      - [cooldown_reduction, 6]
+
+  - aspect: [eaglehorn, 78]
+    minPower: 900
+
+  - aspect: [skyhunter, 20]
+    minPower: 900
+    affixPool:
+      - [ranks_of_the_exploit_passive, 2]
+
+  - aspect: [windforce, 29]
+    minPower: 900
+    affixPool:
+      - [ranks_of_the_concussive_passive, 2]
+
+  - aspect: [godslayer_crown, 58]
+    minPower: 825
+    affixPool:
+      - [maximum_life, 680]
+
+  - aspect: [penitent_greaves, 10]
+    affixPool:
+      - [movement_speed, 16]
+
+  - aspect: [tibaults_will, 30]
+    affixPool:
+      - [damage_reduction_from_close_enemies, 10]
+
+  - aspect: [xfals_corroded_signet]
+    affixPool:
+      - [lucky_hit_chance, 5]
+
+  - aspect: [fists_of_fate, 280]
+  - aspect: [forstburn, 22]
+
+  - aspect: [andariels_visage]
+  - aspect: [doombringer]
+  - aspect: [harlequin_crest]
+  - aspect: [melted_heart_of_selig]
+  - aspect: [ring_of_starless_skies]

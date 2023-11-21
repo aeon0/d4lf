@@ -134,6 +134,22 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_unique_1080p_2.png",
+            Item(
+                ItemRarity.Unique,
+                ItemType.Dagger,
+                892,
+                Aspect("lidless_wall", 10),
+                [
+                    Affix("attack_speed", 5.6),
+                    Affix("lucky_hit_up_to_a_chance_to_restore_primary_resource", 10),
+                    Affix("maximum_life", 873),
+                    Affix("maximum_essence", 5),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

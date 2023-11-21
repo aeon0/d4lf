@@ -46,7 +46,7 @@ def _closest_to(value, choices):
 def _find_number(s, idx: int = 0):
     s = re.sub(r",", "", s)  # remove commas because of large numbers having a comma seperator
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
-    if "Up to a 5%" in s:
+    if "up to a 5%" in s:
         number = matches[1] if len(matches) > 1 else None
     else:
         number = matches[idx] if matches and len(matches) > idx else None

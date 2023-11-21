@@ -139,11 +139,11 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_unique_1080p_2.png",
             Item(
                 ItemRarity.Unique,
-                ItemType.Dagger,
-                892,
+                ItemType.Shield,
+                897,
                 Aspect("lidless_wall", 10),
                 [
-                    Affix("attack_speed", 5.6),
+                    Affix("attack_speed", 9.2),
                     Affix("lucky_hit_up_to_a_chance_to_restore_primary_resource", 10),
                     Affix("maximum_life", 873),
                     Affix("maximum_essence", 5),

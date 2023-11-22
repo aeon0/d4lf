@@ -176,9 +176,9 @@ def _get_cv_result(
     else:
         template_img = template.img_bgr
     if not (img.shape[0] > template_img.shape[0] and img.shape[1] > template_img.shape[1]):
-        Logger.error(
-            f"Image shape and template shape are incompatible: {template.name}. Image: {img.shape}, Template: {template_img.shape}, roi: {roi}"
-        )
+        # Logger.error(
+        #     f"Image shape and template shape are incompatible: {template.name}. Image: {img.shape}, Template: {template_img.shape}, roi: {roi}"
+        # )
         res = None
     else:
         res = cv2.matchTemplate(img, template_img, cv2.TM_CCOEFF_NORMED, mask=template.alpha_mask)

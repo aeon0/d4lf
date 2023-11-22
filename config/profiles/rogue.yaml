@@ -97,7 +97,7 @@ Affixes:
         - [ranks_of_the_malice_passive, 2]
         - [ranks_of_the_frigid_finesse_passive, 2]
         - [ranks_of_the_deadly_venom_passive, 2]
-      minAffixCount: 3
+      minAffixCount: 2
 
   - Ring:
       itemType: ring
@@ -197,7 +197,7 @@ Uniques:
       - [lucky_hit_chance, 5]
 
   - aspect: [fists_of_fate, 280]
-  - aspect: [forstburn, 22]
+  - aspect: [frostburn, 22]
 
   - aspect: [andariels_visage]
   - aspect: [doombringer]

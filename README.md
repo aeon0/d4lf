@@ -10,7 +10,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Filter by affix and their values
 - Filter by aspects and their values
 - Filter uniques and their affix and aspect values
-- Supported resolutions: 1920x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
+- Supported resolutions: 1920x1080, 3840x1920, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
 
 ## How to Setup
 

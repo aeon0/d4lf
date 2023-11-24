@@ -10,7 +10,7 @@ from utils.custom_mouse import mouse
 
 class Chest(InventoryBase):
     def __init__(self):
-        super().__init__(5, 10)
+        super().__init__(5, 10, is_stash=True)
         self.menu_name = "Chest"
         self.is_open_search_args = SearchArgs(
             ref=["stash_menu_icon", "stash_menu_icon_medium"],

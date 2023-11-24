@@ -17,7 +17,7 @@ def heal():
         if hud.is_ingame(img) and not inv.is_open():
             health = hud.get_health(img)
             if health < 0.8:
-                keyboard.send(Config().char["health_pot"])
+                keyboard.send("tab")
                 Logger.debug(f"Healing {health}")
 
         wait(0.3, 0.35)

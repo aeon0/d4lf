@@ -18,8 +18,7 @@ def run_rogue_tb():
             imbued = hud.is_imbued(img)
             if not imbued:
                 if ready4:
-                    keyboard.send(Config().char["skill4"])
-                    Logger.debug("Casting imbuement (skill4)")
+                    keyboard.send("r")
         wait(0.1, 0.15)
 
 

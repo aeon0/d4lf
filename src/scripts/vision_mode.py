@@ -14,6 +14,9 @@ from item.filter import Filter
 import tkinter as tk
 from config import Config
 
+from utils.ocr.read import image_to_text
+from utils.image_operations import crop
+
 
 def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     offset_loc = np.array(obj.loc) + off
@@ -44,6 +47,12 @@ def reset_canvas(root, canvas):
     root.geometry(f"0x0+0+0")
     root.update_idletasks()
     root.update()
+
+
+def is_vendor_open(img: np.ndarray):
+    cropped = crop(img, Config().ui_roi["vendor_text"])
+    res = image_to_text(cropped)
+    return res.text.strip().lower() == "vendor"
 
 
 def vision_mode():
@@ -86,6 +95,10 @@ def vision_mode():
         closest_index = np.argmin(distances)
         item_center = possible_centers[closest_index]
         found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
+        if not found and is_vendor_open(img):
+            vendor_item_center = [Config().ui_offsets["vendor_center_item_x"], 0]
+            found, rarity, cropped_descr, item_roi = find_descr(img, vendor_item_center)
+
         top_left_corner = None if not found else item_roi[:2]
         if found:
             if (

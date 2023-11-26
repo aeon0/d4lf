@@ -128,7 +128,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             item.power = int(preceding_word)
         elif "+" in preceding_word:
             item_power_numbers = preceding_word.split("+")
-            item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
+            if item_power_numbers[0].isdigit() and item_power_numbers[1].isdigit():
+                item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
     max_length = 0
     last_char_idx = 0
     for error, correction in ERROR_MAP.items():
@@ -145,14 +146,14 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         if "chest" in concatenated_str or "armor" in concatenated_str:
             item.type = ItemType.Armor
     # common mistake that two-handed can not be added to the weapon type
-    if "two-handed" in concatenated_str:
+    if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
         if item.type == ItemType.Sword:
             item.type = ItemType.Sword2H
-        if item.type == ItemType.Mace:
+        elif item.type == ItemType.Mace:
             item.type = ItemType.Mace2H
-        if item.type == ItemType.Scythe:
+        elif item.type == ItemType.Scythe:
             item.type = ItemType.Scythe2H
-        if item.type == ItemType.Axe:
+        elif item.type == ItemType.Axe:
             item.type = ItemType.Axe2H
 
     if rarity == ItemRarity.Magic:

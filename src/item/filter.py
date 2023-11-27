@@ -86,7 +86,7 @@ class Filter:
                 continue
 
             self.all_file_pathes.append(profile_path)
-            with open(profile_path) as f:
+            with open(profile_path, encoding="utf-8") as f:
                 try:
                     config = yaml.safe_load(f)
                 except yaml.YAMLError as e:

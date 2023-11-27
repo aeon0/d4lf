@@ -2,7 +2,7 @@ import numpy as np
 from copy import copy
 from item.data.rarity import ItemRarity
 from config import Config
-from template_finder import search
+from template_finder import search, SearchResult
 from utils.image_operations import crop
 from utils.roi_operations import fit_roi_to_window_size
 
@@ -16,25 +16,39 @@ map_template_rarity = {
 }
 
 
+def choose_best_result(res_left: SearchResult, res_right: SearchResult) -> SearchResult:
+    if res_left.success and not res_right.success:
+        return res_left
+    elif res_right.success and not res_left.success:
+        return res_right
+    elif res_left.success and res_right.success:
+        return res_left if res_left.matches[0].score > res_right.matches[0].score else res_right
+    else:
+        return None
+
+
 def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRarity, np.ndarray, tuple[int, int, int, int]]:
     item_descr_width = Config().ui_offsets["item_descr_width"]
     item_descr_pad = Config().ui_offsets["item_descr_pad"]
     _, window_height = Config().ui_pos["window_dimensions"]
 
     refs = list(map_template_rarity.keys())
-    res = None
+    res_left = None
+    res_right = None
 
     roi_left = copy(Config().ui_roi["rel_descr_search_left"])
     roi_left[0] += anchor[0]
     ok, roi_left = fit_roi_to_window_size(roi_left, Config().ui_pos["window_dimensions"])
     if ok:
-        res = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.8, mode="best")
-    if res is not None and not res.success:
-        roi_right = copy(Config().ui_roi["rel_descr_search_right"])
-        roi_right[0] += anchor[0]
-        ok, roi_right = fit_roi_to_window_size(roi_right, Config().ui_pos["window_dimensions"])
-        if ok:
-            res = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.8, mode="best")
+        res_left = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.8, mode="best")
+
+    roi_right = copy(Config().ui_roi["rel_descr_search_right"])
+    roi_right[0] += anchor[0]
+    ok, roi_right = fit_roi_to_window_size(roi_right, Config().ui_pos["window_dimensions"])
+    if ok:
+        res_right = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.8, mode="best")
+
+    res = choose_best_result(res_left, res_right)
 
     if res is not None and res.success:
         match = res.matches[0]

@@ -45,7 +45,7 @@ class Overlay:
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
-        self.initial_width = int(self.screen_width * 0.065)
+        self.initial_width = int(self.screen_width * 0.068)
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)
 
@@ -81,13 +81,13 @@ class Overlay:
 
         self.start_scripts_button = tk.Button(
             self.root,
-            text="vison",
+            text="vision",
             bg="#222222",
             fg="#555555",
             borderwidth=0,
             command=self.run_scripts,
         )
-        self.canvas.create_window(int(self.initial_width * 0.83), self.initial_height // 2, window=self.start_scripts_button)
+        self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
 
         font_size = 8
         window_height = Config().ui_pos["window_dimensions"][1]
@@ -201,7 +201,7 @@ class Overlay:
             try:
                 if len(self.script_threads) > 0:
                     Logger.info("Stoping Vision Mode")
-                    self.start_scripts_button.config(text="vison")
+                    self.start_scripts_button.config(text="vision")
                     for script_thread in self.script_threads:
                         kill_thread(script_thread)
                     self.script_threads = []

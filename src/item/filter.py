@@ -194,8 +194,8 @@ class Filter:
                 if item_affix_value is not None:
                     if (
                         threshold is None
-                        or (condition == "larger" and item_affix_value >= threshold)
-                        or (condition == "smaller" and item_affix_value <= threshold)
+                        or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
+                        or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
                     ):
                         matched_affixes.append(name)
                 elif any(a.type == name for a in item.affixes):
@@ -236,8 +236,8 @@ class Filter:
                             if (
                                 threshold is None
                                 or item.aspect.value is None
-                                or (condition == "larger" and item.aspect.value >= threshold)
-                                or (condition == "smaller" and item.aspect.value <= threshold)
+                                or (isinstance(condition, str) and condition == "larger" and item.aspect.value >= threshold)
+                                or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
                             ):
                                 Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
                                 return True, False, [], f"{profile_str}.Aspects"
@@ -254,8 +254,8 @@ class Filter:
                         if (
                             threshold is None
                             or item.aspect.value is None
-                            or (condition == "larger" and item.aspect.value >= threshold)
-                            or (condition == "smaller" and item.aspect.value <= threshold)
+                            or (isinstance(condition, str) and condition == "larger" and item.aspect.value >= threshold)
+                            or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
                         ):
                             filter_affix_pool = [] if "affixPool" not in filter_dict else filter_dict["affixPool"]
                             filter_min_affix_count = len(filter_affix_pool) if filter_affix_pool is not None else 0

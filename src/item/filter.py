@@ -194,8 +194,8 @@ class Filter:
                 if item_affix_value is not None:
                     if (
                         threshold is None
-                        or (isinstance(condition, str) and condition == "larger" and item.aspect.value >= threshold)
-                        or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
+                        or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
+                        or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
                     ):
                         matched_affixes.append(name)
                 elif any(a.type == name for a in item.affixes):

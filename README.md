@@ -1,6 +1,6 @@
 # ![logo](assets/logo.png)
 
-Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/4rG6yD3dnD) or use github issues.
+Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6T) or use github issues.
 
 [![Alt text for thumbnail](assets/thumbnail.jpg)](https://www.youtube.com/watch?v=Paorfwl3GCg)
 

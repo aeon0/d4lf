@@ -170,8 +170,14 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # =====================================
     start_tex_2 = time.time()
     roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"] + 20, img_height]
-    if not (affix_bullets := search("affix_bullet_point", img_item_descr, 0.91, roi_bullets, True, mode="all")).success:
-        if not (affix_bullets := search("affix_bullet_point_medium", img_item_descr, 0.87, roi_bullets, True, mode="all")).success:
+    if not (
+        affix_bullets := search(["affix_bullet_point", "rerolled_bullet_point"], img_item_descr, 0.91, roi_bullets, True, mode="all")
+    ).success:
+        if not (
+            affix_bullets := search(
+                ["affix_bullet_point_medium", "rerolled_bullet_point_medium"], img_item_descr, 0.87, roi_bullets, True, mode="all"
+            )
+        ).success:
             if show_warnings:
                 Logger.warning("Could not detect affix_bullet_points.")
                 screenshot("failed_affix_bullet_points", img=img_item_descr)
@@ -202,28 +208,31 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     aspect_bullets = None
     unique_offset_x = None
     unique_aspect_row = None
-    if rarity == ItemRarity.Legendary:
-        refs = ["aspect_bullet_point", "aspect_bullet_point_medium"]
+    if rarity == ItemRarity.Legendary or rarity == ItemRarity.Unique:
+        if rarity == ItemRarity.Legendary:
+            refs = ["aspect_bullet_point", "aspect_bullet_point_medium"]
+        else:
+            refs = ["unique_bullet_point", "unique_bullet_point_medium"]
         aspect_bullets = search(refs, img_item_descr, 0.87, roi_bullets, True, mode="first")
         if not aspect_bullets.success:
             if show_warnings:
-                Logger.warning("Could not detect aspect_bullet for a legendary item.")
+                Logger.warning("Could not detect aspect_bullet for a legendary/unique item.")
                 screenshot("failed_aspect_bullet", img=img_item_descr)
             return None
-    elif rarity == ItemRarity.Unique:
-        unique_offset_x = int(img_width * 0.05)
-        roi_bottom = [
-            unique_offset_x,
-            affix_bullets.matches[0].center[1],
-            img_width - 2 * unique_offset_x,
-            int(img_height * 0.95) - affix_bullets.matches[0].center[1],
-        ]
-        cropped_bottom = crop(img_item_descr, roi_bottom)
-        unique_filtered, _ = color_filter(cropped_bottom, Config().colors["unique_gold"], False)
-        unique_aspect_row = affix_bullets.matches[0].center[1] + np.any(unique_filtered != 0, axis=1).argmax()
-        unique_aspect_row_end = (
-            affix_bullets.matches[0].center[1] + len(unique_filtered) - np.any(unique_filtered[::-1] != 0, axis=1).argmax() - 1
-        )
+        if rarity == ItemRarity.Unique:
+            unique_offset_x = int(img_width * 0.05)
+            roi_bottom = [
+                unique_offset_x,
+                aspect_bullets.matches[0].center[1],
+                img_width - 2 * unique_offset_x,
+                int(img_height * 0.95) - aspect_bullets.matches[0].center[1],
+            ]
+            cropped_bottom = crop(img_item_descr, roi_bottom)
+            unique_filtered, _ = color_filter(cropped_bottom, Config().colors["unique_gold"], False)
+            unique_aspect_row = aspect_bullets.matches[0].center[1] + np.any(unique_filtered != 0, axis=1).argmax()
+            unique_aspect_row_end = (
+                aspect_bullets.matches[0].center[1] + len(unique_filtered) - np.any(unique_filtered[::-1] != 0, axis=1).argmax() - 1
+            )
 
     # print("Runtime (start_tex_2): ", time.time() - start_tex_2)
 
@@ -234,10 +243,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     affix_start = [affix_bullets.matches[0].center[0] + line_height // 4, affix_bullets.matches[0].center[1] - int(line_height * 0.7)]
     # Affix ends at aspect bullet or empty sockets
     bottom_limit = 0
-    if rarity == ItemRarity.Legendary:
+    if rarity == ItemRarity.Legendary or rarity == ItemRarity.Unique:
         bottom_limit = aspect_bullets.matches[0].center[1]
-    elif rarity == ItemRarity.Unique:
-        bottom_limit = unique_aspect_row
     elif len(empty_sockets.matches) > 0:
         bottom_limit = empty_sockets.matches[0].center[1]
     if bottom_limit < affix_start[1]:
@@ -314,9 +321,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         cleaned_str = _clean_str(concatenated_str)
 
         if rarity == ItemRarity.Legendary:
-            found_key = _closest_match(cleaned_str, aspect_dict, min_score=77)
+            found_key = _closest_match(cleaned_str, aspect_dict, min_score=82)
         else:
-            found_key = _closest_match(cleaned_str, aspect_unique_dict, min_score=77)
+            found_key = _closest_match(cleaned_str, aspect_unique_dict, min_score=82)
 
         if found_key in ASPECT_NUMBER_AT_IDX1:
             idx = 1

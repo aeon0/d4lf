@@ -77,7 +77,7 @@ class Overlay:
             borderwidth=0,
             command=self.filter_items,
         )
-        self.canvas.create_window(int(self.initial_width * 0.5), self.initial_height // 2, window=self.filter_button)
+        self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
 
         self.start_scripts_button = tk.Button(
             self.root,
@@ -164,15 +164,15 @@ class Overlay:
                     Logger.info("Stoping Filter process")
                     kill_thread(self.loot_filter_thread)
                     self.loot_filter_thread = None
-                    self.filter_button.config(text="filter")
+                    self.filter_button.config(fg="#555555")
                 else:
                     if self.is_minimized:
                         self.toggle_size()
                     self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, daemon=True)
                     self.loot_filter_thread.start()
-                    self.filter_button.config(text="stop")
+                    self.filter_button.config(fg="#006600")
             finally:
-                self.filter_button.config(text="filter")
+                self.filter_button.config(fg="#555555")
                 lock.release()
         else:
             return
@@ -183,7 +183,7 @@ class Overlay:
             did_stop_scripts = False
             if len(self.script_threads) > 0:
                 Logger.info("Stoping Scripts")
-                self.start_scripts_button.config(text="vision")
+                self.start_scripts_button.config(fg="#555555")
                 for script_thread in self.script_threads:
                     kill_thread(script_thread)
                 self.script_threads = []
@@ -200,8 +200,8 @@ class Overlay:
         if lock.acquire(blocking=False):
             try:
                 if len(self.script_threads) > 0:
-                    Logger.info("Stoping Vision Mode")
-                    self.start_scripts_button.config(text="vision")
+                    Logger.info("Stopping Vision Mode")
+                    self.start_scripts_button.config(fg="#555555")
                     for script_thread in self.script_threads:
                         kill_thread(script_thread)
                     self.script_threads = []
@@ -222,7 +222,7 @@ class Overlay:
                             vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
                             vision_mode_thread.start()
                             self.script_threads.append(vision_mode_thread)
-                        self.start_scripts_button.config(text="stop")
+                    self.start_scripts_button.config(fg="#006600")
             finally:
                 lock.release()
         else:

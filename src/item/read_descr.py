@@ -30,7 +30,7 @@ with open("assets/aspects_unique.json", "r") as f:
     aspect_unique_dict = json.load(f)
 
 
-def _closest_match(target, candidates, min_score=84):
+def _closest_match(target, candidates, min_score=86):
     keys, values = zip(*candidates.items())
     result = process.extractOne(target, values)
     if result and result[1] >= min_score:
@@ -321,9 +321,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         cleaned_str = _clean_str(concatenated_str)
 
         if rarity == ItemRarity.Legendary:
-            found_key = _closest_match(cleaned_str, aspect_dict, min_score=82)
+            found_key = _closest_match(cleaned_str, aspect_dict)
         else:
-            found_key = _closest_match(cleaned_str, aspect_unique_dict, min_score=82)
+            found_key = _closest_match(cleaned_str, aspect_unique_dict)
 
         if found_key in ASPECT_NUMBER_AT_IDX1:
             idx = 1

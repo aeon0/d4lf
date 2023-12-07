@@ -118,6 +118,22 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_unique_1080p.png",
+            Item(
+                ItemRarity.Unique,
+                ItemType.Amulet,
+                896,
+                Aspect("esadoras_overflowing_cameo", 4781),
+                [
+                    Affix("movement_speed", 10.5),
+                    Affix("crackling_energy_damage", 24),
+                    Affix("cooldown_reduction", 5.2),
+                    Affix("ranks_of_the_shocking_impact_passive", 2),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

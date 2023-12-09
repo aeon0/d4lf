@@ -18,7 +18,7 @@
     "doombringer": "lucky hit up to an chance to deal shadow damage to surrounding enemies and reduce their damage done by for seconds.",
     "harlequin_crest": "gain damage reduction. in addition, gain ranks to all skills.",
     "melted_heart_of_selig": "gain maximum resource. in addition, when you take damage, drain resource for every of life you would have lost instead.",
-    "ring_of_starless_skies": "each consecutive core skill cast reduces the resource cost of your next core skill by, up to a maximum of.",
+    "ring_of_starless_skies": "casting a core skill cast reduces the resource cost of your core skills by up to a maximum of. resets upon using a noncore skill.",
     "the_grandfather": "increases your critical strike damage by.",
     "100000_steps": "after gaining the final damage bonus from the walking arsenal key passive, you automatically cast ground stomp and gain fury. this cannot happen more than once every seconds.",
     "ancients_oath": "steel grasp launches additional chains. enemies that have been pulled by steel grasp take xx bonus damage from you for seconds.",

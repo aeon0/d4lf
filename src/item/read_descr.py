@@ -64,7 +64,9 @@ def _remove_text_after_first_keyword(text, keywords):
 
 
 def _clean_str(s):
-    cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", s)  # Remove numbers and trailing % or preceding +
+    cleaned_str = re.sub(r"(\d)[, ]+(\d)", r"\1\2", s)  # Remove , between numbers (large number seperator)
+    cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", cleaned_str)  # Remove numbers and trailing % or preceding +
+    cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
     cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str

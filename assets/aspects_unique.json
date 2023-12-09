@@ -47,7 +47,7 @@
     "blood_artisans_cuirass": "when you pick up blood orbs, a free bone spirit is spawned, dealing bonus damage based on your current life percent.",
     "blood_moon_breeches": "your minions have a chance to curse enemies. enemies affected by at least of your curses take (multiplicative damage) increased overpower damage from you.",
     "bloodless_scream": "your darkness skills chill enemies for up to. lucky hit your darkness skills have up to a chance to generate additional essence against frozen targets. darkness skills deal xx bonus damage to frozen enemies",
-    "deathless_visage": "bone spear leaves behind echoes as it travels that explode, dealing damage. echoes deal increased damage based on your critical strike bonus damage stat",
+    "deathless_visage": "bone spear leaves behind echoes as it travels that explode, dealing damage, increased by for every of your critical strike damage bonus.",
     "deathspeakers_pendant": "blood surge casts a mini nova on your minions, dealing damage. damage is increased by per target drained by the initial cast, up to.",
     "greaves_of_the_empty_tomb": "create desecrated ground beneath your sever spectrers as they travel, damaging enemies for shadow damage over seconds.",
     "howl_from_below": "instead of detonating immediately, corpse explosion summons a volatile skeleton that charges at a random enemy and explodes. corpse explosions damage is increased by.",

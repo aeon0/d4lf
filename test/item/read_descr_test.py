@@ -118,6 +118,38 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_unique_1080p.png",
+            Item(
+                ItemRarity.Unique,
+                ItemType.Amulet,
+                896,
+                Aspect("esadoras_overflowing_cameo", 4781),
+                [
+                    Affix("movement_speed", 10.5),
+                    Affix("crackling_energy_damage", 24),
+                    Affix("cooldown_reduction", 5.2),
+                    Affix("ranks_of_the_shocking_impact_passive", 2),
+                ],
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_unique_1080p_2.png",
+            Item(
+                ItemRarity.Unique,
+                ItemType.Helm,
+                942,
+                Aspect("deathless_visage", 2254),
+                [
+                    Affix("critical_strike_damage_with_bone_skills", 26.2),
+                    Affix("physical_damage", 22.5),
+                    Affix("maximum_essence", 18),
+                    Affix("damage_reduction", 9.4),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

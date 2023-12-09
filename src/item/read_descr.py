@@ -30,7 +30,7 @@ with open("assets/aspects_unique.json", "r") as f:
     aspect_unique_dict = json.load(f)
 
 
-def _closest_match(target, candidates, min_score=84):
+def _closest_match(target, candidates, min_score=86):
     keys, values = zip(*candidates.items())
     result = process.extractOne(target, values)
     if result and result[1] >= min_score:
@@ -64,7 +64,9 @@ def _remove_text_after_first_keyword(text, keywords):
 
 
 def _clean_str(s):
-    cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", s)  # Remove numbers and trailing % or preceding +
+    cleaned_str = re.sub(r"(\d)[, ]+(\d)", r"\1\2", s)  # Remove , between numbers (large number seperator)
+    cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", cleaned_str)  # Remove numbers and trailing % or preceding +
+    cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
     cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
@@ -321,9 +323,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         cleaned_str = _clean_str(concatenated_str)
 
         if rarity == ItemRarity.Legendary:
-            found_key = _closest_match(cleaned_str, aspect_dict, min_score=82)
+            found_key = _closest_match(cleaned_str, aspect_dict)
         else:
-            found_key = _closest_match(cleaned_str, aspect_unique_dict, min_score=82)
+            found_key = _closest_match(cleaned_str, aspect_unique_dict)
 
         if found_key in ASPECT_NUMBER_AT_IDX1:
             idx = 1

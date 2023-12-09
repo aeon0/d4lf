@@ -5,14 +5,14 @@ Aspects:
   # offensive
   - [bladedancers_aspect, 15]
   - [aspect_of_branching_volleys, 25]
-  - [trickshot_aspect, 25]
+  - [trickshot_aspect, 20]
   - [aspect_of_corruption, 40]
   - [aspect_of_bursting_venoms, 10000]
   - [aspect_of_repeating, 45]
   - [aspect_of_pestilent_points, 150]
 
   # defensive
-  - [umbrous_aspect, 58]
+  - [umbrous_aspect, 55]
   - [cheats_aspect, 25]
   - [enshrouding_aspect, 4]
   - [aspect_of_elusive_menace, 7]
@@ -27,9 +27,9 @@ Aspects:
   - [assimilation_aspect, 10]
 
   # general
-  - [accelerating_aspect, 25]
+  - [accelerating_aspect, 24]
   - [aspect_of_might, 6]
-  - [aspect_of_disobedience, 1.1]
+  - [aspect_of_disobedience, 1.0]
   - [aspect_of_inner_calm, 10]
   - [aspect_of_retribution, 20]
   - [aspect_of_the_expectant, 10]
@@ -77,6 +77,11 @@ Affixes:
         - [dodge_chance, 5]
         - [energy_cost_reduction, 6]
         - [dodge_chance_against_distant_enemies]
+        - [fire_resistance]
+        - [shadow_resistance]
+        - [poison_resistance]
+        - [lightning_resistance]
+        - [cold_resistance]
       minAffixCount: 3
 
   - Amulet:

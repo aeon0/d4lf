@@ -172,7 +172,6 @@ class Overlay:
                     self.loot_filter_thread.start()
                     self.filter_button.config(fg="#006600")
             finally:
-                self.filter_button.config(fg="#555555")
                 lock.release()
         else:
             return
@@ -195,6 +194,7 @@ class Overlay:
             if not self.is_minimized:
                 self.toggle_size()
             self.loot_filter_thread = None
+            self.filter_button.config(fg="#555555")
 
     def run_scripts(self):
         if lock.acquire(blocking=False):

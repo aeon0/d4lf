@@ -67,13 +67,14 @@ def _clean_str(s):
     cleaned_str = re.sub(r"(\d)[, ]+(\d)", r"\1\2", s)  # Remove , between numbers (large number seperator)
     cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", cleaned_str)  # Remove numbers and trailing % or preceding +
     cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
+    cleaned_str = cleaned_str.replace("durability:", "")
     cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
     cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "requires lev", "account", "sell value"])
     cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|only\)|sell value|durability|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
+        r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
         "",
         cleaned_str,
     )  # Remove new terms

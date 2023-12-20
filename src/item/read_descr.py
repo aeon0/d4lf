@@ -232,10 +232,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             ]
             cropped_bottom = crop(img_item_descr, roi_bottom)
             unique_filtered, _ = color_filter(cropped_bottom, Config().colors["unique_gold"], False)
-            unique_aspect_row = aspect_bullets.matches[0].center[1] + np.any(unique_filtered != 0, axis=1).argmax()
-            unique_aspect_row_end = (
-                aspect_bullets.matches[0].center[1] + len(unique_filtered) - np.any(unique_filtered[::-1] != 0, axis=1).argmax() - 1
-            )
+            bounding_values = np.nonzero(unique_filtered)
+            unique_aspect_row = aspect_bullets.matches[0].center[1] + bounding_values[0].min()
+            unique_aspect_row_end = aspect_bullets.matches[0].center[1] + bounding_values[0].max() - 1
 
     # print("Runtime (start_tex_2): ", time.time() - start_tex_2)
 
@@ -313,7 +312,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             bottom_limit = empty_sockets.matches[0].center[1] if len(empty_sockets.matches) > 0 else img_height
         else:
             ab = [unique_offset_x, unique_aspect_row + int(line_height / 3)]
-            bottom_limit = unique_aspect_row_end
+            bottom_limit = unique_aspect_row_end + int(line_height)
         dy = bottom_limit - ab[1]
         dx_offset = line_height // 4
         dy_offset = int(line_height * 0.7)

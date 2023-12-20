@@ -134,4 +134,5 @@ ERROR_MAP = {
     "garbarian": "barbarian",
     "two-handed!": "two-handed",
     "two-handed.": "two-handed",
+    "(arbarian": "barbarian",
 }

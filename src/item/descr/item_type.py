@@ -35,6 +35,12 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
     else:
         item = _find_item_power_and_type(item, concatenated_str)
 
+    if item.type is None:
+        masked_red, _ = color_filter(crop_top, Config().colors[f"unusable_red"], False)
+        crop_top[masked_red == 255] = [235, 235, 235]
+        concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+        item = _find_item_power_and_type(item, concatenated_str)
+
     if item.rarity != ItemRarity.Magic and (item.power is None or item.type is None):
         return None, concatenated_str
 

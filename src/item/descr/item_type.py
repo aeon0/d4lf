@@ -35,7 +35,7 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
     else:
         item = _find_item_power_and_type(item, concatenated_str)
 
-    if item.power is None or item.type is None:
+    if item.rarity != ItemRarity.Magic and (item.power is None or item.type is None):
         return None, concatenated_str
 
     return item, concatenated_str

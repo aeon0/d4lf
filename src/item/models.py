@@ -10,8 +10,9 @@ class Item:
     rarity: ItemRarity
     type: ItemType | None = None
     power: int | None = None
-    aspect: Aspect | None = None  # only used for legendary items, for uniques it will only contain the number
+    aspect: Aspect | None = None
     affixes: list[Affix] = field(default_factory=list)
+    inherent: list[Affix] = field(default_factory=list)
 
     def __eq__(self, other):
         if not isinstance(other, Item):

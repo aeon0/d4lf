@@ -70,8 +70,9 @@ def image_to_text(img: np.ndarray) -> OcrResult:
     :param scale: The scaling factor for the image.
     :return: The OCR result.
     """
+    pre_proced_img = pre_proc_img(img)
     psm = 3
-    API.SetImageBytes(*_img_to_bytes(img))
+    API.SetImageBytes(*_img_to_bytes(pre_proced_img))
     original_text = API.GetUTF8Text().strip()
     text = _strip_new_lines(original_text, psm)
     res = OcrResult(
@@ -81,3 +82,22 @@ def image_to_text(img: np.ndarray) -> OcrResult:
         mean_confidence=API.MeanTextConf(),
     )
     return res
+
+
+def pre_proc_img(img: np.ndarray) -> np.ndarray:
+    # Convert the image to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    gamma = 1.5
+    gamma_corrected = np.power(gray / 255.0, gamma) * 255.0
+    gamma_corrected = gamma_corrected.astype(np.uint8)
+
+    # Apply Gaussian blur to reduce noise and smoothen the image
+    blurred = cv2.GaussianBlur(gamma_corrected, (3, 3), 0)
+
+    # Perform morphological operations to further enhance text regions
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
+    dilated = cv2.dilate(blurred, kernel, iterations=1)
+    eroded = cv2.erode(dilated, kernel, iterations=1)
+
+    return eroded

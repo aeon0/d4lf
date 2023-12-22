@@ -7,7 +7,7 @@ from utils.custom_mouse import mouse
 from utils.misc import wait
 from logger import Logger
 from item.find_descr import find_descr
-from item.read_descr import read_descr
+from item.descr.read_descr import read_descr
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
 from item.filter import Filter

@@ -1,6 +1,5 @@
 import numpy as np
 import time
-import cv2
 from logger import Logger
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
@@ -12,10 +11,13 @@ from template_finder import search
 from utils.ocr.read import image_to_text
 from utils.image_operations import crop, color_filter
 from utils.window import screenshot
-import re
 import json
-from rapidfuzz import process
 from config import Config
+
+from item.descr.texture import find_seperator_short
+from item.descr.item_type import read_item_type
+from item.descr.text import clean_str, closest_match, closest_to, find_number
+
 
 affix_dict = dict()
 with open("assets/affixes.json", "r") as f:
@@ -29,169 +31,29 @@ aspect_unique_dict = dict()
 with open("assets/aspects_unique.json", "r") as f:
     aspect_unique_dict = json.load(f)
 
-
-def _closest_match(target, candidates, min_score=86):
-    keys, values = zip(*candidates.items())
-    result = process.extractOne(target, values)
-    if result and result[1] >= min_score:
-        matched_key = keys[values.index(result[0])]
-        return matched_key
-    return None
+affix_sigil_dict = dict()
+with open("assets/sigils.json", "r") as f:
+    affix_sigil_dict = json.load(f)
 
 
-def _closest_to(value, choices):
-    return min(choices, key=lambda x: abs(x - value))
-
-
-def _find_number(s, idx: int = 0):
-    s = re.sub(r",", "", s)  # remove commas because of large numbers having a comma seperator
-    matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
-    if "up to a 5%" in s:
-        number = matches[1] if len(matches) > 1 else None
-    else:
-        number = matches[idx] if matches and len(matches) > idx else None
-    if number is not None:
-        return float(number.replace("+", "").replace("%", ""))
-    return None
-
-
-def _remove_text_after_first_keyword(text, keywords):
-    for keyword in keywords:
-        match = re.search(re.escape(keyword), text)
-        if match:
-            return text[: match.start()]
-    return text
-
-
-def _clean_str(s):
-    cleaned_str = re.sub(r"(\d)[, ]+(\d)", r"\1\2", s)  # Remove , between numbers (large number seperator)
-    cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", cleaned_str)  # Remove numbers and trailing % or preceding +
-    cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
-    cleaned_str = cleaned_str.replace("durability:", "")
-    cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
-    cleaned_str = re.sub(
-        r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
-    )  # this is not included in our affix table
-    cleaned_str = _remove_text_after_first_keyword(cleaned_str, ["requires level", "requires lev", "account", "sell value"])
-    cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
-        "",
-        cleaned_str,
-    )  # Remove new terms
-    cleaned_str = " ".join(cleaned_str.split())  # Remove extra spaces
-    return cleaned_str
-
-
-def find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
-    idx = None
-    # TODO: Handle common mistakes nicer
-    if "item power" in concatenated_str:
-        idx = concatenated_str.index("item power")
-    elif "ttem power" in concatenated_str:
-        idx = concatenated_str.index("ttem power")
-    elif "item" in concatenated_str:
-        idx = concatenated_str.index("item")
-    if idx is not None:
-        preceding_word = concatenated_str[:idx].split()[-1]
-        if preceding_word.isdigit():
-            item.power = int(preceding_word)
-        elif "+" in preceding_word:
-            item_power_numbers = preceding_word.split("+")
-            if item_power_numbers[0].isdigit() and item_power_numbers[1].isdigit():
-                item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
-
-    max_length = 0
-    last_char_idx = 0
-    for error, correction in ERROR_MAP.items():
-        concatenated_str = concatenated_str.replace(error, correction)
-    for item_type in ItemType:
-        if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
-            tmp_idx = found_idx + len(item_type.value)
-            if tmp_idx >= last_char_idx and len(item_type.value) > max_length:
-                item.type = item_type
-                last_char_idx = tmp_idx
-                max_length = len(item_type.value)
-    # common mistake is that "Armor" is on a seperate line and can not be detected properly
-    if item.type is None:
-        if "chest" in concatenated_str or "armor" in concatenated_str:
-            item.type = ItemType.Armor
-    # common mistake that two-handed can not be added to the weapon type
-    if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
-        if item.type == ItemType.Sword:
-            item.type = ItemType.Sword2H
-        elif item.type == ItemType.Mace:
-            item.type = ItemType.Mace2H
-        elif item.type == ItemType.Scythe:
-            item.type = ItemType.Scythe2H
-        elif item.type == ItemType.Axe:
-            item.type = ItemType.Axe2H
-    return item
-
-
-def find_sigil_tier(concatenated_str: str) -> int:
-    idx = None
-    if "tier" in concatenated_str:
-        idx = concatenated_str.index("tier")
-    if idx is not None:
-        following_word = concatenated_str[idx:].split()[1]
-        if following_word.isdigit():
-            return int(following_word)
-    return None
-
-
-def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item:
+def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
     item = Item(rarity)
     img_height, img_width, _ = img_item_descr.shape
     line_height = Config().ui_offsets["item_descr_line_height"]
 
-    # Detect textures (1)
-    # =====================================
-    start_tex_1 = time.time()
-    refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
-    roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
-    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
-        if show_warnings:
-            Logger.warning("Could not detect item_seperator_short.")
-            screenshot("failed_seperator_short", img=img_item_descr)
+    sep_short_match = find_seperator_short(img_item_descr)
+    if sep_short_match is None and show_warnings:
+        Logger.warning("Could not detect item_seperator_short.")
+        screenshot("failed_seperator_short", img=img_item_descr)
+
+    item, item_type_str = read_item_type(item, img_item_descr, sep_short_match)
+    if item is None and show_warnings:
+        Logger.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")
+        screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
-    sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
-    sep_short_match = sorted_matches[0]
-    # print("-----")
-    # print("Runtime (start_tex_1): ", time.time() - start_tex_1)
 
-    # Item Type and Item Power
-    # =====================================
-    # start_power = time.time()
-    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
-    crop_top = crop(img_item_descr, roi_top)
-    concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
-
-    if "sigil" in concatenated_str and "tier" in concatenated_str:
-        # process sigil
-        item.type = ItemType.Sigil
-    elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
-        # We check if it is a material
-        mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
-        mean_val = np.mean(mask)
-        if mean_val > 2.0:
-            item.type = ItemType.Material
-            return item
-        elif rarity == ItemRarity.Common:
-            return item
-
-    if item.type == ItemType.Sigil:
-        item.power = find_sigil_tier(concatenated_str)
-    else:
-        item = find_item_power_and_type(item, concatenated_str)
-
-    if rarity == ItemRarity.Magic:
+    if item.type == ItemType.Material or item.rarity in [ItemRarity.Magic, ItemRarity.Common]:
         return item
-    elif item.power is None or item.type is None:
-        if show_warnings:
-            Logger.warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
-            screenshot("failed_itempower_itemtype", img=img_item_descr)
-        return None
-    # print("Runtime (start_power): ", time.time() - start_power)
 
     # Detect textures (2)
     # =====================================
@@ -212,7 +74,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     # Depending on the item type we have to remove some of the topmost affixes as they are fixed
     remove_top_most = 1
-    if item.type in [ItemType.Armor, ItemType.Helm, ItemType.Gloves]:
+    if item.type in [ItemType.Sigil, ItemType.Armor, ItemType.Helm, ItemType.Gloves]:
         remove_top_most = 0
     elif item.type in [ItemType.Ring]:
         remove_top_most = 2
@@ -293,7 +155,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         if dy is None:
             combined_lines = "\n".join(affix_lines[line_idx:])
         else:
-            closest_value = _closest_to(dy, [line_height, line_height * 2, line_height * 3])
+            closest_value = closest_to(dy, [line_height, line_height * 2, line_height * 3])
             if closest_value == line_height:
                 lines_to_add = 1
             elif closest_value == line_height * 2:
@@ -305,10 +167,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         combined_lines = combined_lines.replace("\n", " ")
         for error, correction in ERROR_MAP.items():
             combined_lines = combined_lines.replace(error, correction)
-        cleaned_str = _clean_str(combined_lines)
+        cleaned_str = clean_str(combined_lines)
 
-        found_key = _closest_match(cleaned_str, affix_dict)
-        found_value = _find_number(combined_lines)
+        found_key = closest_match(cleaned_str, affix_dict)
+        found_value = find_number(combined_lines)
 
         if found_key is not None:
             item.affixes.append(Affix(found_key, found_value, combined_lines))
@@ -344,12 +206,12 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         img_full_aspect = crop(img_item_descr, roi_full_aspect)
         # cv2.imwrite("img_full_aspect.png", img_full_aspect)
         concatenated_str = image_to_text(img_full_aspect).text.lower().replace("\n", " ")
-        cleaned_str = _clean_str(concatenated_str)
+        cleaned_str = clean_str(concatenated_str)
 
         if rarity == ItemRarity.Legendary:
-            found_key = _closest_match(cleaned_str, aspect_dict)
+            found_key = closest_match(cleaned_str, aspect_dict)
         else:
-            found_key = _closest_match(cleaned_str, aspect_unique_dict)
+            found_key = closest_match(cleaned_str, aspect_unique_dict)
 
         if found_key in ASPECT_NUMBER_AT_IDX1:
             idx = 1
@@ -357,7 +219,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             idx = 2
         else:
             idx = 0
-        found_value = _find_number(concatenated_str, idx)
+        found_value = find_number(concatenated_str, idx)
 
         # Scale the aspect down to the canonical range if found on an item that scales it up
         if found_value is not None and rarity == ItemRarity.Legendary:

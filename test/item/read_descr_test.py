@@ -1,7 +1,7 @@
 import time
 import pytest
 import cv2
-from item.read_descr import read_descr
+from item.descr.read_descr import read_descr
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
 from item.data.affix import Affix

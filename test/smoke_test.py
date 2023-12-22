@@ -1,7 +1,7 @@
 import cv2
 import time
 from item.find_descr import find_descr
-from item.read_descr import read_descr
+from item.descr.read_descr import read_descr
 from item.filter import Filter
 from item.data.rarity import ItemRarity
 from cam import Cam

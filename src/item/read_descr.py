@@ -82,41 +82,7 @@ def _clean_str(s):
     return cleaned_str
 
 
-def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item:
-    item = Item(rarity)
-    img_height, img_width, _ = img_item_descr.shape
-    line_height = Config().ui_offsets["item_descr_line_height"]
-
-    # Detect textures (1)
-    # =====================================
-    start_tex_1 = time.time()
-    refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
-    roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
-    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
-        if show_warnings:
-            Logger.warning("Could not detect item_seperator_short.")
-            screenshot("failed_seperator_short", img=img_item_descr)
-        return None
-    sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
-    sep_short_match = sorted_matches[0]
-    # print("-----")
-    # print("Runtime (start_tex_1): ", time.time() - start_tex_1)
-
-    # Item Type and Item Power
-    # =====================================
-    start_power = time.time()
-    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
-    crop_top = crop(img_item_descr, roi_top)
-    if rarity in [ItemRarity.Common, ItemRarity.Legendary]:
-        # We check if it is a material
-        mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
-        mean_val = np.mean(mask)
-        if mean_val > 2.0:
-            item.type = ItemType.Material
-            return item
-        elif rarity == ItemRarity.Common:
-            return item
-    concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+def find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
     idx = None
     # TODO: Handle common mistakes nicer
     if "item power" in concatenated_str:
@@ -133,6 +99,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             item_power_numbers = preceding_word.split("+")
             if item_power_numbers[0].isdigit() and item_power_numbers[1].isdigit():
                 item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
+
     max_length = 0
     last_char_idx = 0
     for error, correction in ERROR_MAP.items():
@@ -158,11 +125,68 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             item.type = ItemType.Scythe2H
         elif item.type == ItemType.Axe:
             item.type = ItemType.Axe2H
+    return item
+
+
+def find_sigil_tier(concatenated_str: str) -> int:
+    idx = None
+    if "tier" in concatenated_str:
+        idx = concatenated_str.index("tier")
+    if idx is not None:
+        following_word = concatenated_str[idx:].split()[1]
+        if following_word.isdigit():
+            return int(following_word)
+    return None
+
+
+def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item:
+    item = Item(rarity)
+    img_height, img_width, _ = img_item_descr.shape
+    line_height = Config().ui_offsets["item_descr_line_height"]
+
+    # Detect textures (1)
+    # =====================================
+    start_tex_1 = time.time()
+    refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
+    roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
+    if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
+        if show_warnings:
+            Logger.warning("Could not detect item_seperator_short.")
+            screenshot("failed_seperator_short", img=img_item_descr)
+        return None
+    sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
+    sep_short_match = sorted_matches[0]
+    # print("-----")
+    # print("Runtime (start_tex_1): ", time.time() - start_tex_1)
+
+    # Item Type and Item Power
+    # =====================================
+    # start_power = time.time()
+    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
+    crop_top = crop(img_item_descr, roi_top)
+    concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+
+    if "sigil" in concatenated_str and "tier" in concatenated_str:
+        # process sigil
+        item.type = ItemType.Sigil
+    elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
+        # We check if it is a material
+        mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
+        mean_val = np.mean(mask)
+        if mean_val > 2.0:
+            item.type = ItemType.Material
+            return item
+        elif rarity == ItemRarity.Common:
+            return item
+
+    if item.type == ItemType.Sigil:
+        item.power = find_sigil_tier(concatenated_str)
+    else:
+        item = find_item_power_and_type(item, concatenated_str)
 
     if rarity == ItemRarity.Magic:
         return item
-
-    if item.power is None or item.type is None:
+    elif item.power is None or item.type is None:
         if show_warnings:
             Logger.warning(f"Could not detect ItemPower and ItemType: {concatenated_str}")
             screenshot("failed_itempower_itemtype", img=img_item_descr)

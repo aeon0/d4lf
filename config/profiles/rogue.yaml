@@ -41,6 +41,12 @@ Aspects:
   - [conceited_aspect, 25]
   - [starlight_aspect, 39]
 
+  # - [snap_frozen_aspect]
+  # - [aspect_of_uncanny_treachery]
+  # - [aspect_of_lethal_dusk]
+  # - [icy_alchemists_aspect]
+  # - [toxic_alchemists_aspect]
+  # - [aspect_of_artful_initiative]
 
 Affixes:
   - Helm:
@@ -126,6 +132,7 @@ Affixes:
         - [vulnerable_damage, 16]
         - [damage_to_slowed_enemies, 19]
         - [damage_to_dazed_enemies, 19]
+        - [damage_to_crowd_controlled_enemies]
       minAffixCount: 2
 
   - WeaponFar:
@@ -139,6 +146,7 @@ Affixes:
         - [vulnerable_damage, 34]
         - [damage_to_slowed_enemies, 37]
         - [damage_to_dazed_enemies, 37]
+        - [damage_to_crowd_controlled_enemies]
       minAffixCount: 3
 
   - Armor:

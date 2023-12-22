@@ -150,6 +150,38 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_2.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Boots,
+                925,
+                Aspect("ghostwalker_aspect", 13),
+                [
+                    Affix("all_stats", 18),
+                    Affix("intelligence", 42),
+                    Affix("movement_speed", 17.5),
+                    Affix("fortify_generation", 21.5),
+                ],
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p_2.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Gloves,
+                908,
+                None,
+                [
+                    Affix("attack_speed", 4.8),
+                    Affix("lucky_hit_up_to_a_chance_to_restore_primary_resource", 14),
+                    Affix("ranks_of_hammer_of_the_ancients", 3),
+                    Affix("ranks_of_upheaval", 2),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

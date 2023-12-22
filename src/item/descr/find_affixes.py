@@ -3,7 +3,7 @@ import json
 from template_finder import TemplateMatch
 from item.corrections import ERROR_MAP
 from item.data.affix import Affix
-from item.descr.text import clean_str, closest_match, closest_to, find_number
+from item.descr.text import clean_str, closest_match, closest_to, find_number, remove_text_after_first_keyword
 from config import Config
 from utils.image_operations import crop
 from template_finder import TemplateMatch
@@ -17,7 +17,7 @@ with open("assets/affixes.json", "r") as f:
 affix_sigil_dict = dict()
 with open("assets/sigils.json", "r") as f:
     affix_sigil_dict_all = json.load(f)
-    affix_sigil_dict = {**affix_sigil_dict_all["negative"], **affix_sigil_dict_all["positive"]}
+    affix_sigil_dict = {**affix_sigil_dict_all["negative"], **affix_sigil_dict_all["positive"], **affix_sigil_dict_all["inherent"]}
 
 
 def find_affixes(
@@ -61,6 +61,9 @@ def find_affixes(
         cleaned_str = clean_str(combined_lines)
 
         if is_sigil:
+            # A bit of a hack to match the locations...
+            if len(affix_bullets) == 2:
+                cleaned_str = remove_text_after_first_keyword(cleaned_str, [" in "])
             found_key = closest_match(cleaned_str, affix_sigil_dict)
         else:
             found_key = closest_match(cleaned_str, affix_dict)

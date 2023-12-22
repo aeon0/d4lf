@@ -27,7 +27,7 @@ def find_number(s: str, idx: int = 0) -> float:
     return None
 
 
-def remove_text_after_first_keyword(text: str, keywords: str) -> str:
+def remove_text_after_first_keyword(text: str, keywords: list[str]) -> str:
     for keyword in keywords:
         match = re.search(re.escape(keyword), text)
         if match:
@@ -44,9 +44,11 @@ def clean_str(s: str) -> str:
     cleaned_str = re.sub(
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
-    cleaned_str = remove_text_after_first_keyword(cleaned_str, ["requires level", "requires lev", "account", "sell value", "pacts"])
+    cleaned_str = remove_text_after_first_keyword(
+        cleaned_str, ["requires level", "requires lev", "account", "sell value", "pacts", "requires world"]
+    )
     cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas)",
+        r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas|dungeon affixes)",
         "",
         cleaned_str,
     )  # Remove new terms

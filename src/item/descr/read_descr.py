@@ -34,7 +34,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
-    if item.type != ItemType.Sigil or (item.type == ItemType.Material and item.rarity in [ItemRarity.Magic, ItemRarity.Common]):
+    if item.type == ItemType.Material or (item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.type != ItemType.Sigil):
         return item
 
     # Find textures for bullets and sockets
@@ -64,7 +64,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     line_height = Config().ui_offsets["item_descr_line_height"]
     bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
     if len(inhernet_affixe_bullets) > 0 and is_sigil:
-        item.inherent = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil)
+        item.inherent, _ = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil)
 
     # Find normal affixes
     # =========================

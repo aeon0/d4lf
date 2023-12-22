@@ -32,4 +32,6 @@ class Item:
             and self.type == other.type
             and len(self.affixes) == len(other.affixes)
             and all(s.type == o.type and s.value == o.value for s, o in zip(self.affixes, other.affixes))
+            and len(self.inherent) == len(other.inherent)
+            and all(s.type == o.type and s.value == o.value for s, o in zip(self.inherent, other.inherent))
         )

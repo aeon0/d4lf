@@ -78,13 +78,26 @@ BASE_PATH = "test/assets/item"
         ),
         (
             (1920, 1080),
-            f"{BASE_PATH}/read_descr_sigil_1080p.png",
-            Item(ItemRarity.Common, ItemType.Material),
+            f"{BASE_PATH}/read_descr_elixir_1080p.png",
+            Item(ItemRarity.Magic, ItemType.Elixir),
         ),
         (
             (1920, 1080),
-            f"{BASE_PATH}/read_descr_elixir_1080p.png",
-            Item(ItemRarity.Magic, ItemType.Elixir),
+            f"{BASE_PATH}/read_descr_sigil_1080p.png",
+            Item(
+                ItemRarity.Common,
+                ItemType.Sigil,
+                100,
+                None,
+                [
+                    Affix("lightning_damage", 15),
+                    Affix("death_pulse"),
+                    Affix("monster_lightning_damage", 20),
+                    Affix("monster_life", 30),
+                    Affix("potion_breakers", 0.75),
+                ],
+                [Affix("tormented_ruins"), Affix("revives_allowed", 4)],
+            ),
         ),
         (
             (3840, 2160),

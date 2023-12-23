@@ -125,7 +125,7 @@ BASE_PATH = "test/assets/item"
                 [
                     Affix("resistance_to_all_elements", 8.0),
                     Affix("shadow_resistance", 8.0),
-                ]
+                ],
             ),
         ),
         (
@@ -144,7 +144,7 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("resistance_to_all_elements", 14.7),
-                ]
+                ],
             ),
         ),
         (
@@ -163,7 +163,7 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("resistance_to_all_elements", 19),
-                ]
+                ],
             ),
         ),
         (
@@ -196,9 +196,7 @@ BASE_PATH = "test/assets/item"
                     Affix("movement_speed", 17.5),
                     Affix("fortify_generation", 21.5),
                 ],
-                [
-                    Affix("evade_grants_movement_speed", 50)
-                ]
+                [Affix("evade_grants_movement_speed", 50)],
             ),
         ),
         (

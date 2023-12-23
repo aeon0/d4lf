@@ -14,7 +14,7 @@ class Filter:
     affix_filters = dict()
     aspect_filters = dict()
     unique_filters = dict()
-    sigil_filters= dict()
+    sigil_filters = dict()
     with open("assets/affixes.json", "r") as f:
         affix_dict = json.load(f)
     with open("assets/aspects.json", "r") as f:

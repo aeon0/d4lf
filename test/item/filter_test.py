@@ -15,17 +15,20 @@ def test_should_keep():
     stored_templates.cache_clear()
 
     item = Item(
-        ItemRarity.Legendary,
-        ItemType.Boots,
-        925,
-        Aspect("ghostwalker_aspect", 13),
+        ItemRarity.Common,
+        ItemType.Sigil,
+        100,
+        None,
         [
-            Affix("all_stats", 18),
-            Affix("intelligence", 42),
-            Affix("movement_speed", 17.5),
-            Affix("fortify_generation", 421.5),  # this is currently predicting wrongly!
+            Affix("lightning_damage", 15),
+            Affix("death_pulse"),
+            Affix("monster_lightning_damage", 20),
+            Affix("monster_life", 30),
+            Affix("potion_breakers", 0.75),
         ],
+        [Affix("tormented_ruins"), Affix("revives_allowed", 4)],
     )
+
     filter = Filter()
     keep, x, matched_affixes, filter_name = filter.should_keep(item)
     print(keep)

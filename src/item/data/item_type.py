@@ -31,6 +31,6 @@ class ItemType(Enum):
     Offhand = "offhand"
     Totem = "totem"
     Focus = "focus"
-    # Material
-    Material = "material"  # TODO: Currently also sigils and extracted aspects are seens as materials
+    Material = "material"
+    Sigil = "sigil"
     Elixir = "elixir"

@@ -317,5 +317,14 @@
     "damage_reduction_from_enemies_affected_by_curse_skills": "damage reduction from enemies affected by curse skills",
     "lucky_hit_chance_with_shadow_damage": "lucky hit chance with shadow damage",
     "corpse_skill_attack_speed": "corpse skill attack speed",
-    "lucky_hit_up_to_a_chance_to_fear": "lucky hit up to a chance to fear"
+    "lucky_hit_up_to_a_chance_to_fear": "lucky hit up to a chance to fear",
+    "blocked_damage_reduction": "blocked damage reduction",
+    "block_chance": "block chance",
+    "main_hand_weapon_damage": "main hand weapon damage",
+    "injured_potion_max_life": "while injured, your potion also grants maximum life as barrier",
+    "injured_potion_movement_speed": "while injured, your potion also grants movement speed for seconds",
+    "injured_potion_resource": "while injured, your potion also restores resource",
+    "maximum_evade_charges": "maximum evade charges",
+    "evade_grants_movement_speed": "evade grants movement speed for second",
+    "attacks_reduce_evades_cooldown": "attacks reduce evades cooldown by seconds"
 }

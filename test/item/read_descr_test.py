@@ -48,6 +48,9 @@ BASE_PATH = "test/assets/item"
                     Affix("damage_with_ranged_weapons", 17),
                     Affix("damage_with_dualwielded_weapons", 16),
                 ],
+                [
+                    Affix("resistance_to_all_elements", 19.0),
+                ],
             ),
         ),
         (
@@ -63,6 +66,9 @@ BASE_PATH = "test/assets/item"
                     Affix("thorns", 873),
                     Affix("damage_reduction_from_close_enemies", 11),
                     Affix("imbuement_skill_cooldown_reduction", 5.8),
+                ],
+                [
+                    Affix("injured_potion_resource", 20),
                 ],
             ),
         ),
@@ -96,7 +102,10 @@ BASE_PATH = "test/assets/item"
                     Affix("monster_life", 30),
                     Affix("potion_breakers", 0.75),
                 ],
-                [Affix("tormented_ruins"), Affix("revives_allowed", 4)],
+                [
+                    Affix("tormented_ruins"),
+                    Affix("revives_allowed", 4),
+                ],
             ),
         ),
         (
@@ -113,6 +122,10 @@ BASE_PATH = "test/assets/item"
                     Affix("lucky_hit_chance", 4.8),
                     Affix("resource_generation", 9.5),
                 ],
+                [
+                    Affix("resistance_to_all_elements", 8.0),
+                    Affix("shadow_resistance", 8.0),
+                ]
             ),
         ),
         (
@@ -129,6 +142,9 @@ BASE_PATH = "test/assets/item"
                     Affix("slow_duration_reduction", 18.5),
                     Affix("ranks_of_the_crushing_earth_passive", 1),
                 ],
+                [
+                    Affix("resistance_to_all_elements", 14.7),
+                ]
             ),
         ),
         (
@@ -145,6 +161,9 @@ BASE_PATH = "test/assets/item"
                     Affix("cooldown_reduction", 5.2),
                     Affix("ranks_of_the_shocking_impact_passive", 2),
                 ],
+                [
+                    Affix("resistance_to_all_elements", 19),
+                ]
             ),
         ),
         (
@@ -177,6 +196,9 @@ BASE_PATH = "test/assets/item"
                     Affix("movement_speed", 17.5),
                     Affix("fortify_generation", 21.5),
                 ],
+                [
+                    Affix("evade_grants_movement_speed", 50)
+                ]
             ),
         ),
         (

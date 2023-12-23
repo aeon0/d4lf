@@ -45,7 +45,7 @@ def clean_str(s: str) -> str:
         r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
     )  # this is not included in our affix table
     cleaned_str = remove_text_after_first_keyword(
-        cleaned_str, ["requires level", "requires lev", "account", "sell value", "pacts", "requires world"]
+        cleaned_str, ["requires level", "requires lev", "account", "sell value", "pacts", "requires world", "granted"]
     )
     cleaned_str = re.sub(
         r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas|dungeon affixes)",

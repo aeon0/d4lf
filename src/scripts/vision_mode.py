@@ -140,14 +140,14 @@ def vision_mode():
                 item_descr = None
                 last_top_left_corner = top_left_corner
                 last_center = item_center
-                item_descr = read_descr(rarity, cropped_descr, False)
+                item_descr = read_descr(rarity, cropped_descr, True)
                 if item_descr is None:
                     last_center = None
                     last_top_left_corner = None
                     continue
 
                 if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
-                    Logger.info(f"Matched: Material / Sigil")
+                    Logger.info(f"Matched: Material")
                     continue
                 elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
                     Logger.info(f"Matched: Extracted Aspect")
@@ -155,7 +155,7 @@ def vision_mode():
                 elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
                     Logger.info(f"Matched: Elixir")
                     continue
-                elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
+                elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
                     match = False
 
                 matched_str = ""

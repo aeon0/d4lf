@@ -20,6 +20,32 @@ with open("assets/sigils.json", "r") as f:
     affix_sigil_dict = {**affix_sigil_dict_all["negative"], **affix_sigil_dict_all["positive"], **affix_sigil_dict_all["inherent"]}
 
 
+def split_into_paragraphs(
+    affix_lines: list[str],
+    line_pos: list[any],
+    affix_bullets: list[TemplateMatch],
+    threshold: int,
+    offset_y_affix_bullets: int,
+):
+    paragraphs = []
+    current_paragraph = ""
+
+    for text, pos in zip(affix_lines, line_pos):
+        # Check if any bullet point is close to the line
+        is_bullet_close = any(abs(pos[1]["y"] - (bullet.center[1] - offset_y_affix_bullets)) < threshold for bullet in affix_bullets)
+        if is_bullet_close:
+            if current_paragraph:
+                paragraphs.append(current_paragraph)
+            current_paragraph = text
+        else:
+            current_paragraph += f"{text} "
+
+    if current_paragraph:
+        paragraphs.append(current_paragraph)
+
+    return paragraphs
+
+
 def find_affixes(
     img_item_descr: np.ndarray, affix_bullets: list[TemplateMatch], bottom_limit: int, is_sigil: bool = False
 ) -> tuple[list[Affix] | None, str]:
@@ -36,26 +62,14 @@ def find_affixes(
     full_affix_region = [*affix_top_left, affix_width, affix_height]
     crop_full_affix = crop(img_item_descr, full_affix_region)
     # cv2.imwrite("crop_full_affix.png", crop_full_affix)
-    affix_lines = image_to_text(crop_full_affix).text.lower().split("\n")
+    res, line_pos = image_to_text(crop_full_affix, line_boxes=True)
+    affix_lines = res.text.lower().split("\n")
     affix_lines = [line for line in affix_lines if line]  # remove empty lines
-    # split affix text based on distance of affix bullet points
-    delta_y_arr = [affix_bullets[i].center[1] - affix_bullets[i - 1].center[1] for i in range(1, len(affix_bullets))]
-    delta_y_arr.append(None)
-    line_idx = 0
-    for dy in delta_y_arr:
-        if dy is None:
-            combined_lines = "\n".join(affix_lines[line_idx:])
-        else:
-            closest_value = closest_to(dy, [line_height, line_height * 2, line_height * 3])
-            if closest_value == line_height:
-                lines_to_add = 1
-            elif closest_value == line_height * 2:
-                lines_to_add = 2
-            else:  # the most lines an affix can have is 3
-                lines_to_add = 3
-            combined_lines = "\n".join(affix_lines[line_idx : line_idx + lines_to_add])
-            line_idx += lines_to_add
-        combined_lines = combined_lines.replace("\n", " ")
+    if len(affix_lines) != len(line_pos):
+        return None, "affix_lines and line_pos not same length"
+    paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
+
+    for combined_lines in paragraphs:
         for error, correction in ERROR_MAP.items():
             combined_lines = combined_lines.replace(error, correction)
         cleaned_str = clean_str(combined_lines)

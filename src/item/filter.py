@@ -14,12 +14,17 @@ class Filter:
     affix_filters = dict()
     aspect_filters = dict()
     unique_filters = dict()
+    sigil_filters = dict()
     with open("assets/affixes.json", "r") as f:
         affix_dict = json.load(f)
     with open("assets/aspects.json", "r") as f:
         aspect_dict = json.load(f)
     with open("assets/aspects_unique.json", "r") as f:
         aspect_unique_dict = json.load(f)
+    with open("assets/sigils.json", "r") as f:
+        sigil_dict_all = json.load(f)
+        sigil_dict = {**sigil_dict_all["negative"], **sigil_dict_all["positive"], **sigil_dict_all["inherent"]}
+
     files_loaded = False
     all_file_pathes = []
     last_loaded = None
@@ -116,6 +121,15 @@ class Filter:
                             if "affixPool" in filter_data:
                                 self.check_affix_pool(filter_data["affixPool"], self.affix_dict, filter_name)
 
+                if config is not None and "Sigils" in config:
+                    info_str += "Sigils "
+                    self.sigil_filters[profile_str] = config["Sigils"]
+                    if config["Sigils"] is None:
+                        Logger.error(f"Empty Sigils section in {profile_str}. Remove it")
+                        return
+                    # Sanity check on the sigil affixes
+                    self.check_affix_pool(self.sigil_filters[profile_str]["blacklist"], self.sigil_dict, f"{profile_str}.Sigils")
+
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "
                     self.aspect_filters[profile_str] = config["Aspects"]
@@ -163,6 +177,11 @@ class Filter:
                 return True
         return False
 
+    def _check_sigil_tier(self, filter_data: dict, item: Item) -> bool:
+        min_tier = filter_data["minTier"] if "minTier" in filter_data and filter_data["minTier"] is not None else 0
+        max_tier = filter_data["maxTier"] if "maxTier" in filter_data and filter_data["maxTier"] is not None else 9999
+        return min_tier <= item.power <= max_tier
+
     def _check_power(self, filter_data: dict, item: Item) -> bool:
         filter_min_power = filter_data["minPower"] if "minPower" in filter_data else None
         item_power_ok = item.power is None or filter_min_power is None or item.power >= filter_min_power
@@ -176,11 +195,11 @@ class Filter:
         item_type_ok = item.type is None or filter_item_types is None or item.type.value in filter_item_types
         return item_type_ok
 
-    def _match_affixes(self, filter_data: dict, item: Item) -> list:
-        if "affixPool" not in filter_data or filter_data["affixPool"] is None:
+    def _match_affixes(self, filter_data: dict, item: Item, key: str = "affixPool", match_inherent: bool = False) -> list:
+        if key not in filter_data or filter_data[key] is None:
             filter_affix_pool = []
         else:
-            filter_affix_pool = [filter_data["affixPool"]] if isinstance(filter_data["affixPool"], str) else filter_data["affixPool"]
+            filter_affix_pool = [filter_data[key]] if isinstance(filter_data[key], str) else filter_data[key]
 
         matched_affixes = []
         if filter_affix_pool is not None:
@@ -188,8 +207,12 @@ class Filter:
                 name, *rest = affix if isinstance(affix, list) else [affix]
                 threshold = rest[0] if rest else None
                 condition = rest[1] if len(rest) > 1 else "larger"
+                if match_inherent:
+                    item_affix_pool = item.inherent
+                else:
+                    item_affix_pool = item.affixes
 
-                item_affix_value = next((a.value for a in item.affixes if a.type == name), None)
+                item_affix_value = next((a.value for a in item_affix_pool if a.type == name), None)
 
                 if item_affix_value is not None:
                     if (
@@ -198,19 +221,32 @@ class Filter:
                         or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
                     ):
                         matched_affixes.append(name)
-                elif any(a.type == name for a in item.affixes):
+                elif any(a.type == name for a in item_affix_pool):
                     matched_affixes.append(name)
         return matched_affixes
 
     def should_keep(self, item: Item) -> tuple[bool, bool, list[str], str]:
+        # Returns: should_keep: bool, affixes_matched: bool, matche_affixes: list[str], profile_that_matched: str
         if not self.files_loaded or self._did_files_change():
             self.load_files()
 
         if item.type is None or item.power is None:
             return False, False, [], ""
 
+        if item.type == ItemType.Sigil:
+            if len(self.sigil_filters.items()) == 0:
+                return True, False, [], ""
+            for profile_str, filter_data in self.sigil_filters.items():
+                tier_ok = self._check_sigil_tier(filter_data, item)
+                if not tier_ok:
+                    continue
+                matched_blacklist_affixes = self._match_affixes(filter_data, item, "blacklist")
+                matched_blacklist_inherent_affixes = self._match_affixes(filter_data, item, "blacklist", True)
+                if (len(matched_blacklist_affixes) + len(matched_blacklist_inherent_affixes)) == 0:
+                    return True, False, [], f"{profile_str}.Sigil"
+
         # Filter Magic, Rare, Legendary
-        if item.rarity != ItemRarity.Unique:
+        if item.rarity != ItemRarity.Unique and item.type != ItemType.Sigil:
             for profile_str, affix_filter in self.affix_filters.items():
                 for filter_dict in affix_filter:
                     for filter_name, filter_data in filter_dict.items():

@@ -1,6 +1,7 @@
+import time
 import cv2
 import numpy as np
-from tesserocr import OEM, PyTessBaseAPI
+from tesserocr import OEM, PyTessBaseAPI, RIL
 
 from utils.ocr.models import OcrResult
 
@@ -48,20 +49,7 @@ def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
     return image.tobytes(), width, height, bytes_per_pixel, bytes_per_line
 
 
-def _strip_new_lines(original_text: str, psm: int) -> str:
-    """
-    Post-process the extracted text
-    :param original_text: The original extracted text.
-    :param psm: The PSM mode used for extraction.
-    :return: The post-processed text.
-    """
-    new_text = original_text
-    if psm in {7, 8, 13}:
-        new_text.replace("\n", "")
-    return new_text
-
-
-def image_to_text(img: np.ndarray) -> OcrResult:
+def image_to_text(img: np.ndarray, line_boxes: bool = False) -> OcrResult | tuple[OcrResult, list[int]]:
     """
     Extract text from the entire image.
     :param img: The input image.
@@ -71,16 +59,21 @@ def image_to_text(img: np.ndarray) -> OcrResult:
     :return: The OCR result.
     """
     pre_proced_img = pre_proc_img(img)
-    psm = 3
     API.SetImageBytes(*_img_to_bytes(pre_proced_img))
-    original_text = API.GetUTF8Text().strip()
-    text = _strip_new_lines(original_text, psm)
+    start = time.time()
+    text = API.GetUTF8Text().strip()
+    # print(f"Get Text: {time.time() - start}")
     res = OcrResult(
-        original_text=original_text,
+        original_text=text,
         text=text,
         word_confidences=API.AllWordConfidences(),
         mean_confidence=API.MeanTextConf(),
     )
+    if line_boxes:
+        start = time.time()
+        line_boxes = API.GetComponentImages(RIL.TEXTLINE, True)
+        # print(f"Get Lines: {time.time() - start}")
+        return res, line_boxes
     return res
 
 

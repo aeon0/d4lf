@@ -10,8 +10,9 @@ class Item:
     rarity: ItemRarity
     type: ItemType | None = None
     power: int | None = None
-    aspect: Aspect | None = None  # only used for legendary items, for uniques it will only contain the number
+    aspect: Aspect | None = None
     affixes: list[Affix] = field(default_factory=list)
+    inherent: list[Affix] = field(default_factory=list)
 
     def __eq__(self, other):
         if not isinstance(other, Item):
@@ -31,4 +32,6 @@ class Item:
             and self.type == other.type
             and len(self.affixes) == len(other.affixes)
             and all(s.type == o.type and s.value == o.value for s, o in zip(self.affixes, other.affixes))
+            and len(self.inherent) == len(other.inherent)
+            and all(s.type == o.type and s.value == o.value for s, o in zip(self.inherent, other.inherent))
         )

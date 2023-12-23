@@ -6,7 +6,7 @@ from ui.char_inventory import CharInventory
 from ui.inventory_base import InventoryBase
 from ui.chest import Chest
 from item.find_descr import find_descr
-from item.read_descr import read_descr
+from item.descr.read_descr import read_descr
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
 from item.filter import Filter

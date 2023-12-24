@@ -32,26 +32,6 @@
         "whispering_vault": "whispering vault",
         "revives_allowed": "revives allowed"
     },
-    "positive": {
-        "quick_killer": "quick killer killing a monster grants attack and move speed. stacking up to.",
-        "reduce_cooldowns_on_kill": "reduce cooldowns on kill killing a monster reduces your cooldowns by seconds.",
-        "battle_hardened": "battle hardened gain damage reduction for every health you are missing.",
-        "poisonous_evade": "poisonous evade using evade leaves a pool of poison behind that damages enemies.",
-        "nudging_evade": "nudging evade using evade pushes enemies back.",
-        "fire_damage": "fire damage you deal more fire damage.",
-        "frost_damage": "frost damage you deal more frost damage.",
-        "gold_find": "gold find you find more gold.",
-        "increased_critical_strike": "increased critical strike your critical strike chance is increased by.",
-        "increased_healing": "increased healing your healing received is increased by.",
-        "lightning_damage": "lightning damage you deal more lightning damage.",
-        "magic_find": "magic find you find more items from enemies.",
-        "lightning_caller": "lightning caller you occasionally call down lightning strikes that damage nearby enemies.",
-        "physical_damage": "physical damage you deal more physical damage.",
-        "poison_damage": "poison damage you deal more poison damage.",
-        "shadow_damage": "shadow damage you deal more shadow damage.",
-        "control_impaired_explosions": "control impaired explosions being hit by control impairing effects creates an explosion around you.",
-        "thorns": "thorns your thorns are increased by."
-    },
     "negative": {
         "avenger": "avenger killing a monster enrages monsters near it, making them dealing more damage.",
         "blood_blister": "blood blister killing a monster has a chance to spawn a blood blister. after a short time, it explodes, dealing heavy area damage.",
@@ -105,5 +85,25 @@
         "monster_thorns": "monster thorns monsters reflect of nonphysical damage.",
         "armor_breakers": "armor breakers monster attacks from a distance reduce your armor by for seconds, stacking up to.",
         "unstoppable_monsters": "unstoppable monsters monsters become unstoppable when life drops below."
+    },
+    "positive": {
+        "quick_killer": "quick killer killing a monster grants attack and move speed. stacking up to.",
+        "reduce_cooldowns_on_kill": "reduce cooldowns on kill killing a monster reduces your cooldowns by seconds.",
+        "battle_hardened": "battle hardened gain damage reduction for every health you are missing.",
+        "poisonous_evade": "poisonous evade using evade leaves a pool of poison behind that damages enemies.",
+        "nudging_evade": "nudging evade using evade pushes enemies back.",
+        "fire_damage": "fire damage you deal more fire damage.",
+        "frost_damage": "frost damage you deal more frost damage.",
+        "gold_find": "gold find you find more gold.",
+        "increased_critical_strike": "increased critical strike your critical strike chance is increased by.",
+        "increased_healing": "increased healing your healing received is increased by.",
+        "lightning_damage": "lightning damage you deal more lightning damage.",
+        "magic_find": "magic find you find more items from enemies.",
+        "lightning_caller": "lightning caller you occasionally call down lightning strikes that damage nearby enemies.",
+        "physical_damage": "physical damage you deal more physical damage.",
+        "poison_damage": "poison damage you deal more poison damage.",
+        "shadow_damage": "shadow damage you deal more shadow damage.",
+        "control_impaired_explosions": "control impaired explosions being hit by control impairing effects creates an explosion around you.",
+        "thorns": "thorns your thorns are increased by."
     }
 }

@@ -1,6 +1,6 @@
 # ![logo](assets/logo.png)
 
-Filter items in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6T) or use github issues.
+Filter items and sigils in your inventory based on affixes, aspects and thresholds of their values. For questions, feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6T) or use github issues.
 
 [![Alt text for thumbnail](assets/thumbnail.jpg)](https://www.youtube.com/watch?v=Paorfwl3GCg)
 
@@ -10,6 +10,7 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Filter by affix and their values
 - Filter by aspects and their values
 - Filter uniques and their affix and aspect values
+- Filter sigils by blacklisting locations and affixes
 - Supported resolutions: 1920x1080, 3840x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
 
 ## How to Setup
@@ -23,14 +24,13 @@ Filter items in your inventory based on affixes, aspects and thresholds of their
 - Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
 - Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
-  - max/min: Show or hide the console output. Good for checking ingame if there are some errors.
-  - start/stop: Turn filtering on/off
-  - scripts/stop: In case there are any scripts attached, run them
+  - max/min: Show or hide the console output
+  - filter: Auto filter inventory and stash if open (number of stash tabs configurable)
+  - vision: Turn vision mode (overlay) on/off
 - Alternative use the hotkeys. e.g. f11 for filtering
 
 
 ### Limitations
-- If you rerolled an affix, that affix (and the one above) will not be considered. So these items will most likely not show up with a green box
 - The tool does not play well with HDR as it makes everything super bright
 
 ### Configs
@@ -61,6 +61,9 @@ The config folder contains:
 | scripts | Running different scripts |
 
 ## How to filter
+
+All items are whitelist filters. If a filter for an unique or a certain item type is not included in your .yaml filters, they will be discarded. All sigils are blacklist filted, meaning by default all sigils are good unless they match any of the blacklisted affixes. See more detailed descriptions below.
+
 ### Aspects
 In your profile .yaml files any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given. Smaller has to be used when the aspect go from high value to a lower value (eg. ‍Blood-bathed Aspect)
 
@@ -75,12 +78,12 @@ Aspects:
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). Uniques are by default always kept while Magic and Common items are not.
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). For items with inherent affixes `inherentPool` can be specified, then at least one of these has to match the inherent affixes on that item.
 
 ```yaml
 Affixes:
   # Search for armor and pants that have at least 3 affixes of the affixPool
-  - Armor:
+  - NiceArmor:
       itemType: [armor, pants]
       minPower: 725
       affixPool:
@@ -90,13 +93,27 @@ Affixes:
         - [total_armor, 9]
         - [maximum_life, 700]
       minAffixCount: 3
+
+  # Search for boots that have at least 2 of the specified affixes and
+  # either max evade charges or reduced evade cooldown as inherent affix
+  - GreatBoots:
+      itemType: boots
+      minPower: 800
+      inherentPool:
+        - maximum_evade_charges
+        - attacks_reduce_evades_cooldown
+      affixPool:
+        - [movement_speed, 16]
+        - [cold_resistance]
+        - [lightning_resistance]
+      minAffixCount: 2
 ```
 
 ### Uniques
-Uniques look similar to affixes, but will need the full unique description of itemtype and affixes to be able to be matched:
+Uniques are identified by their aspect (see [assets/aspects_unique.json](assets/aspects_unique.json)). They also have a affixPool, but since uniques have these fixed you only need to specify the ones you want to threshold.
 
 ```yaml
-# Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25. Note that the other affixes still must be specified to be able to match the unique item to the config!
+# Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
 Uniques:
   - aspect: [tibaults_will]
     minPower: 900
@@ -104,7 +121,21 @@ Uniques:
       - [damage_reduction_from_close_enemies, 12]
 ```
 
-Note: If an itemType is not included in your filters, all items of this type will be discarded as junk! So if you want to take all items of a certain type, add it and leave minPower, affixPool and minAffixCount empty.
+### Sigils
+Sigils are all ok unless they match any of the blacklisted locations or affixes. See all sigil locations and affixes here: [assets/sigils.json](assets/sigils.json)
+```yaml
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    # locations
+    - endless_gates
+    - vault_of_the_forsaken
+
+    # affixes
+    - armor_breakers
+    - resistance_breakers
+```
 
 ## Custom configs
 D4LF will look for __params.ini__ and for __profiles/*.yaml__ also in C:/Users/WINDOWS_USER/.d4lf. All values in params.ini will overwrite the value from the param.ini in the D4LF folder. In the profiles folder additional custom profiles can be added and used.

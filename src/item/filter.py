@@ -120,6 +120,8 @@ class Filter:
                         for filter_name, filter_data in filter_dict.items():
                             if "affixPool" in filter_data:
                                 self.check_affix_pool(filter_data["affixPool"], self.affix_dict, filter_name)
+                            if "inherentPool" in filter_data:
+                                self.check_affix_pool(filter_data["inherentPool"], self.affix_dict, filter_name)
 
                 if config is not None and "Sigils" in config:
                     info_str += "Sigils "
@@ -233,6 +235,7 @@ class Filter:
         if item.type is None or item.power is None:
             return False, False, [], ""
 
+        # Filter Sigils
         if item.type == ItemType.Sigil:
             if len(self.sigil_filters.items()) == 0:
                 return True, False, [], ""
@@ -256,10 +259,17 @@ class Filter:
                         if not power_ok or not type_ok:
                             continue
                         matched_affixes = self._match_affixes(filter_data, item)
-                        if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
-                            affix_debug_msg = [name for name in matched_affixes]
+                        affixes_ok = filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count
+                        inherent_ok = True
+                        matched_inherent = []
+                        if "inherentPool" in filter_data:
+                            matched_inherent = self._match_affixes(filter_data, item, "inherentPool", match_inherent=True)
+                            inherent_ok = len(matched_inherent) > 0
+                        if affixes_ok and inherent_ok:
+                            all_matched_affixes = matched_affixes + matched_inherent
+                            affix_debug_msg = [name for name in all_matched_affixes]
                             Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                            return True, True, matched_affixes, f"{profile_str}.{filter_name}"
+                            return True, True, all_matched_affixes, f"{profile_str}.{filter_name}"
 
             if item.aspect:
                 for profile_str, aspect_filter in self.aspect_filters.items():

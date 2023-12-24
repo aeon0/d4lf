@@ -158,14 +158,13 @@ def vision_mode():
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
                     match = False
 
-                matched_str = ""
                 if item_descr is not None:
-                    keep, did_match_affixes, matched_affixes, info_str = Filter().should_keep(item_descr)
-                    if not keep:
+                    res = Filter().should_keep(item_descr)
+                    if not res.keep:
                         match = False
 
                 # Adapt colors based on config
-
+                info_str = "" if len(res.matched) == 0 else res.matched[0].profile
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
                     draw_text(canvas, info_str, "#23fc5d", h, off, w // 2)
@@ -173,10 +172,10 @@ def vision_mode():
                     if item_descr is not None:
                         bullet_width = thick * 3
                         for affix in item_descr.affixes:
-                            if affix.loc is not None and any(a == affix.type for a in matched_affixes):
+                            if affix.loc is not None and any(a == affix.type for a in res.matched[0].matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
 
-                        if item_descr.aspect is not None and not did_match_affixes:
+                        if item_descr.aspect is not None and res.matched[0].did_match_aspect:
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")

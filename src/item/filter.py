@@ -1,4 +1,5 @@
 from item.models import Item
+from dataclasses import dataclass, field
 import yaml
 import json
 import os
@@ -8,6 +9,19 @@ from logger import Logger
 from config import Config
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
+
+
+@dataclass
+class MatchedFilter:
+    profile: str
+    matched_affixes: list[str] = field(default_factory=list)
+    did_match_aspect: bool = False
+
+
+@dataclass
+class FilterResult:
+    keep: bool
+    matched: list[MatchedFilter]
 
 
 class Filter:
@@ -227,18 +241,20 @@ class Filter:
                     matched_affixes.append(name)
         return matched_affixes
 
-    def should_keep(self, item: Item) -> tuple[bool, bool, list[str], str]:
-        # Returns: should_keep: bool, affixes_matched: bool, matche_affixes: list[str], profile_that_matched: str
+    def should_keep(self, item: Item) -> FilterResult:
         if not self.files_loaded or self._did_files_change():
             self.load_files()
 
+        res = FilterResult(False, [])
+
         if item.type is None or item.power is None:
-            return False, False, [], ""
+            return res
 
         # Filter Sigils
         if item.type == ItemType.Sigil:
             if len(self.sigil_filters.items()) == 0:
-                return True, False, [], ""
+                res.keep = True
+                res.matched.append(MatchedFilter(""))
             for profile_str, filter_data in self.sigil_filters.items():
                 tier_ok = self._check_sigil_tier(filter_data, item)
                 if not tier_ok:
@@ -246,7 +262,8 @@ class Filter:
                 matched_blacklist_affixes = self._match_affixes(filter_data, item, "blacklist")
                 matched_blacklist_inherent_affixes = self._match_affixes(filter_data, item, "blacklist", True)
                 if (len(matched_blacklist_affixes) + len(matched_blacklist_inherent_affixes)) == 0:
-                    return True, False, [], f"{profile_str}.Sigil"
+                    res.keep = True
+                    res.matched.append(MatchedFilter(f"{profile_str}.Sigil"))
 
         # Filter Magic, Rare, Legendary
         if item.rarity != ItemRarity.Unique and item.type != ItemType.Sigil:
@@ -269,7 +286,8 @@ class Filter:
                             all_matched_affixes = matched_affixes + matched_inherent
                             affix_debug_msg = [name for name in all_matched_affixes]
                             Logger.info(f"Matched {profile_str}.{filter_name}: {affix_debug_msg}")
-                            return True, True, all_matched_affixes, f"{profile_str}.{filter_name}"
+                            res.keep = True
+                            res.matched.append(MatchedFilter(f"{profile_str}.{filter_name}", all_matched_affixes))
 
             if item.aspect:
                 for profile_str, aspect_filter in self.aspect_filters.items():
@@ -286,7 +304,8 @@ class Filter:
                                 or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
                             ):
                                 Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
-                                return True, False, [], f"{profile_str}.Aspects"
+                                res.keep = True
+                                res.matched.append(MatchedFilter(f"{profile_str}.Aspects", did_match_aspect=True))
 
         # Filter Uniques
         if item.rarity == ItemRarity.Unique:
@@ -311,6 +330,7 @@ class Filter:
                             matched_affixes = self._match_affixes(filter_dict, item)
                             if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
                                 Logger.info(f"Matched {profile_str}.Unique: [{item.aspect.type}, {item.aspect.value}]")
-                                return True, True, [], f"{profile_str}.{item.aspect.type}"
+                                res.keep = True
+                                res.matched.append(MatchedFilter(f"{profile_str}.{item.aspect.type}", did_match_aspect=True))
 
-        return False, False, [], ""
+        return res

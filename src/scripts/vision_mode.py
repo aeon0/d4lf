@@ -178,7 +178,7 @@ def vision_mode():
                             if affix.loc is not None and any(a == affix.type for a in res.matched[0].matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
 
-                        if item_descr.aspect is not None and res.matched[0].did_match_aspect:
+                        if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")

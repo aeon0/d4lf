@@ -9,6 +9,7 @@ from logger import Logger
 from config import Config
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
+from item.data.affix import Affix
 
 
 @dataclass
@@ -75,9 +76,14 @@ class Filter:
         if user_affix_pool is None:
             return
         for affix in user_affix_pool:
-            affix_name = affix if isinstance(affix, str) else affix[0]
-            if affix_name not in affix_dict:
-                invalid_affixes.append(affix_name)
+            if isinstance(affix, dict) and "any_of" in affix:
+                affix_list = affix["any_of"] if affix["any_of"] is not None else []
+            else:
+                affix_list = [affix]
+            for a in affix_list:
+                affix_name = a if isinstance(a, str) else a[0]
+                if affix_name not in affix_dict:
+                    invalid_affixes.append(affix_name)
         if invalid_affixes:
             Logger.warning(f"Warning: Invalid Affixes in filter {filter_name}: {', '.join(invalid_affixes)}")
 
@@ -134,6 +140,8 @@ class Filter:
                         for filter_name, filter_data in filter_dict.items():
                             if "affixPool" in filter_data:
                                 self.check_affix_pool(filter_data["affixPool"], self.affix_dict, filter_name)
+                            else:
+                                filter_data["affixPool"] = []
                             if "inherentPool" in filter_data:
                                 self.check_affix_pool(filter_data["inherentPool"], self.affix_dict, filter_name)
 
@@ -144,6 +152,8 @@ class Filter:
                         Logger.error(f"Empty Sigils section in {profile_str}. Remove it")
                         return
                     # Sanity check on the sigil affixes
+                    if "blacklist" not in self.sigil_filters[profile_str]:
+                        self.sigil_filters[profile_str]["blacklist"] = []
                     self.check_affix_pool(self.sigil_filters[profile_str]["blacklist"], self.sigil_dict, f"{profile_str}.Sigils")
 
                 if config is not None and "Aspects" in config:
@@ -211,25 +221,23 @@ class Filter:
         item_type_ok = item.type is None or filter_item_types is None or item.type.value in filter_item_types
         return item_type_ok
 
-    def _match_affixes(self, filter_data: dict, item: Item, key: str = "affixPool", match_inherent: bool = False) -> list:
-        if key not in filter_data or filter_data[key] is None:
-            filter_affix_pool = []
-        else:
-            filter_affix_pool = [filter_data[key]] if isinstance(filter_data[key], str) else filter_data[key]
-
+    def _match_affixes(self, filter_affix_pool: list, item_affix_pool: list[Affix]) -> list:
         matched_affixes = []
-        if filter_affix_pool is not None:
-            for affix in filter_affix_pool:
+        if filter_affix_pool is None:
+            return matched_affixes
+        filter_affix_pool = [filter_affix_pool] if isinstance(filter_affix_pool, str) else filter_affix_pool
+
+        for affix in filter_affix_pool:
+            if isinstance(affix, dict) and "any_of" in affix:
+                any_of_matched = self._match_affixes(affix["any_of"], item_affix_pool)
+                if len(any_of_matched) > 0:
+                    matched_affixes.append(any_of_matched[0])
+            else:
                 name, *rest = affix if isinstance(affix, list) else [affix]
                 threshold = rest[0] if rest else None
                 condition = rest[1] if len(rest) > 1 else "larger"
-                if match_inherent:
-                    item_affix_pool = item.inherent
-                else:
-                    item_affix_pool = item.affixes
 
                 item_affix_value = next((a.value for a in item_affix_pool if a.type == name), None)
-
                 if item_affix_value is not None:
                     if (
                         threshold is None
@@ -259,8 +267,8 @@ class Filter:
                 tier_ok = self._check_sigil_tier(filter_data, item)
                 if not tier_ok:
                     continue
-                matched_blacklist_affixes = self._match_affixes(filter_data, item, "blacklist")
-                matched_blacklist_inherent_affixes = self._match_affixes(filter_data, item, "blacklist", True)
+                matched_blacklist_affixes = self._match_affixes(filter_data["blacklist"], item.affixes)
+                matched_blacklist_inherent_affixes = self._match_affixes(filter_data["blacklist"], item.inherent)
                 if (len(matched_blacklist_affixes) + len(matched_blacklist_inherent_affixes)) == 0:
                     res.keep = True
                     res.matched.append(MatchedFilter(f"{profile_str}.Sigil"))
@@ -270,17 +278,21 @@ class Filter:
             for profile_str, affix_filter in self.affix_filters.items():
                 for filter_dict in affix_filter:
                     for filter_name, filter_data in filter_dict.items():
-                        filter_min_affix_count = filter_data["minAffixCount"]
+                        filter_min_affix_count = (
+                            filter_data["minAffixCount"]
+                            if "minAffixCount" in filter_data and filter_data["minAffixCount"] is not None
+                            else 0
+                        )
                         power_ok = self._check_power(filter_data, item)
                         type_ok = self._check_item_type(filter_data, item)
                         if not power_ok or not type_ok:
                             continue
-                        matched_affixes = self._match_affixes(filter_data, item)
+                        matched_affixes = self._match_affixes(filter_data["affixPool"], item.affixes)
                         affixes_ok = filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count
                         inherent_ok = True
                         matched_inherent = []
                         if "inherentPool" in filter_data:
-                            matched_inherent = self._match_affixes(filter_data, item, "inherentPool", match_inherent=True)
+                            matched_inherent = self._match_affixes(filter_data["inherentPool"], item.inherent)
                             inherent_ok = len(matched_inherent) > 0
                         if affixes_ok and inherent_ok:
                             all_matched_affixes = matched_affixes + matched_inherent
@@ -327,7 +339,7 @@ class Filter:
                             power_ok = self._check_power(filter_dict, item)
                             if not power_ok:
                                 continue
-                            matched_affixes = self._match_affixes(filter_dict, item)
+                            matched_affixes = self._match_affixes(filter_affix_pool, item.affixes)
                             if filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count:
                                 Logger.info(f"Matched {profile_str}.Unique: [{item.aspect.type}, {item.aspect.value}]")
                                 res.keep = True

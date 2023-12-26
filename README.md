@@ -107,6 +107,25 @@ Affixes:
         - [cold_resistance]
         - [lightning_resistance]
       minAffixCount: 2
+
+  # Search with "any_of" affixPool. Any of these will be ok, but they will only contribute
+  # once to the overall matched affix count. Any affix on the item can only match once!
+  # Example: We want to have boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res
+  - ResBoots:
+      itemType: boots
+      minPower: 800
+      affixPool:
+        - [movement_speed, 16]
+        - any_of:
+          - [shadow_resistance]
+          - [cold_resistance]
+          - [lightning_resistance]
+        - any_of:
+          - [shadow_resistance]
+          - [cold_resistance]
+          - [lightning_resistance]
+      minAffixCount: 3
+
 ```
 
 ### Uniques

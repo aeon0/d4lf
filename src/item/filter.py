@@ -222,6 +222,7 @@ class Filter:
         return item_type_ok
 
     def _match_affixes(self, filter_affix_pool: list, item_affix_pool: list[Affix]) -> list:
+        item_affix_pool = item_affix_pool[:]
         matched_affixes = []
         if filter_affix_pool is None:
             return matched_affixes
@@ -231,7 +232,9 @@ class Filter:
             if isinstance(affix, dict) and "any_of" in affix:
                 any_of_matched = self._match_affixes(affix["any_of"], item_affix_pool)
                 if len(any_of_matched) > 0:
-                    matched_affixes.append(any_of_matched[0])
+                    name = any_of_matched[0]
+                    item_affix_pool = [a for a in item_affix_pool if a.type != name]
+                    matched_affixes.append(name)
             else:
                 name, *rest = affix if isinstance(affix, list) else [affix]
                 threshold = rest[0] if rest else None
@@ -244,8 +247,10 @@ class Filter:
                         or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
                         or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
                     ):
+                        item_affix_pool = [a for a in item_affix_pool if a.type != name]
                         matched_affixes.append(name)
                 elif any(a.type == name for a in item_affix_pool):
+                    item_affix_pool = [a for a in item_affix_pool if a.type != name]
                     matched_affixes.append(name)
         return matched_affixes
 

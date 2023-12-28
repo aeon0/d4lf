@@ -15,6 +15,9 @@ from overlay import Overlay
 import keyboard
 from utils.game_settings import is_fontsize_ok
 from item.filter import Filter
+from PIL import Image
+
+t = Image.new("RGB", (100, 100))
 
 
 def main():

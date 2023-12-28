@@ -50,5 +50,5 @@ def test_should_keep(item_descr: Item):
     stored_templates.cache_clear()
 
     filter = Filter()
-    keep, did_match_affixes, matched_affixes, filter_name = filter.should_keep(item_descr)
-    print(keep)
+    res = filter.should_keep(item_descr)
+    print(res.keep)

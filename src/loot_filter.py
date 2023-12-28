@@ -60,7 +60,7 @@ def check_items(inv: InventoryBase):
 
         # Hardcoded filters
         if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
-            Logger.info(f"Matched: Material / Sigil")
+            Logger.info(f"Matched: Material")
             continue
         if rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
             Logger.info(f"Matched: Extracted Aspect")
@@ -75,12 +75,13 @@ def check_items(inv: InventoryBase):
 
         # Check if we want to keep the item
         start_filter = time.time()
-        keeping, did_match_affixes, _, _ = Filter().should_keep(item_descr)
+        res = Filter().should_keep(item_descr)
+        matched_any_affixes = len(res.matched) > 0 and len(res.matched[0].matched_affixes) > 0
         Logger.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
-        if not keeping:
+        if not res.keep:
             keyboard.send("space")
             wait(0.13, 0.14)
-        elif did_match_affixes:
+        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
             Logger.info("Mark as favorite")
             keyboard.send("space")
             wait(0.26, 0.3)

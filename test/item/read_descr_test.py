@@ -109,6 +109,27 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_sigil_1080p_2.png",
+            Item(
+                ItemRarity.Common,
+                ItemType.Sigil,
+                100,
+                None,
+                [
+                    Affix("lightning_damage", 15),
+                    Affix("drifting_shade"),
+                    Affix("monster_lightning_damage", 20),
+                    Affix("monster_critical_resist", 3),
+                    Affix("unstoppable_monsters", 30),
+                ],
+                [
+                    Affix("crusaders_cathedral"),
+                    Affix("revives_allowed", 4),
+                ],
+            ),
+        ),
+        (
             (3840, 2160),
             f"{BASE_PATH}/read_descr_rare_2160p.png",
             Item(

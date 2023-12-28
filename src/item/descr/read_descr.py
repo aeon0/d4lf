@@ -62,8 +62,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # =========================
     is_sigil = item.type == ItemType.Sigil
     line_height = Config().ui_offsets["item_descr_line_height"]
-    bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
-    if len(inhernet_affixe_bullets) > 0:
+    if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
+        bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
         item.inherent, _ = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil)
 
     # Find normal affixes

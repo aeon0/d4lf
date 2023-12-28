@@ -135,4 +135,5 @@ ERROR_MAP = {
     "two-handed!": "two-handed",
     "two-handed.": "two-handed",
     "(arbarian": "barbarian",
+    "tier s": "tier 5",
 }

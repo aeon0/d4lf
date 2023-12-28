@@ -27,7 +27,7 @@ def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
-def draw_text(canvas, text, color, h, off, center):
+def draw_text(canvas, text, color, h, off, center) -> int:
     if text is None or text == "":
         return
     font_size = 13
@@ -40,18 +40,19 @@ def draw_text(canvas, text, color, h, off, center):
         text = text[:24] + "..."
 
     # Create a white rectangle as the background
-    text_width = 1.02 * len(text) * font_size  # You might need to adjust this based on your text and font
-    text_height = 2.0 * font_size  # You might need to adjust this based on your font size
-    dark_gray_color = "#111111"  # Dark gray with transparency (adjust the alpha value as needed)
+    text_width = 1.02 * len(text) * font_size
+    text_height = 2.0 * font_size
+    dark_gray_color = "#111111"
     canvas.create_rectangle(
-        center - text_width // 2,
-        h - off - text_height // 2,
-        center + text_width // 2,
-        h - off + text_height // 2,
+        center - text_width // 2,  # x1
+        h - off - text_height // 2,  # y1
+        center + text_width // 2,  # x2
+        h - off + text_height // 2,  # y2
         fill=dark_gray_color,
         outline="",
     )
     canvas.create_text(center, h - off, text=text, font=("Courier New", font_size), fill=color)
+    return int(h - off - text_height // 2)
 
 
 def reset_canvas(root, canvas):
@@ -128,7 +129,7 @@ def vision_mode():
                 x -= off
                 y -= off
                 w += off * 2
-                h += off
+                h += off * 5
                 canvas.config(height=h, width=w)
                 canvas.config(highlightbackground="#888888")
                 root.geometry(f"{w}x{h}+{x+screen_off_x}+{y+screen_off_y}")
@@ -140,7 +141,7 @@ def vision_mode():
                 item_descr = None
                 last_top_left_corner = top_left_corner
                 last_center = item_center
-                item_descr = read_descr(rarity, cropped_descr, True)
+                item_descr = read_descr(rarity, cropped_descr, False)
                 if item_descr is None:
                     last_center = None
                     last_top_left_corner = None
@@ -158,29 +159,29 @@ def vision_mode():
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
                     match = False
 
-                matched_str = ""
                 if item_descr is not None:
-                    keep, did_match_affixes, matched_affixes, info_str = Filter().should_keep(item_descr)
-                    if not keep:
+                    res = Filter().should_keep(item_descr)
+                    if not res.keep:
                         match = False
 
                 # Adapt colors based on config
-
                 if match:
                     canvas.config(highlightbackground="#23fc5d")
-                    draw_text(canvas, info_str, "#23fc5d", h, off, w // 2)
+                    # show all info strings of the profiles
+                    text_y = h
+                    for match in reversed(res.matched):
+                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, off // 1.3, w // 2)
                     # Show matched bullets
-                    if item_descr is not None:
+                    if item_descr is not None and len(res.matched) > 0:
                         bullet_width = thick * 3
                         for affix in item_descr.affixes:
-                            if affix.loc is not None and any(a == affix.type for a in matched_affixes):
+                            if affix.loc is not None and any(a == affix.type for a in res.matched[0].matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
 
-                        if item_descr.aspect is not None and not did_match_affixes:
+                        if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
                     canvas.config(highlightbackground="#fc2323")
-                    draw_text(canvas, info_str, "#fc2323", h, off, w // 2)
 
                 root.update_idletasks()
                 root.update()

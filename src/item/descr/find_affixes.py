@@ -38,10 +38,10 @@ def split_into_paragraphs(
                 paragraphs.append(current_paragraph)
             current_paragraph = text
         else:
-            current_paragraph += f"{text} "
+            current_paragraph += f" {text}"
 
     if current_paragraph:
-        paragraphs.append(current_paragraph)
+        paragraphs.append(current_paragraph.strip())
 
     return paragraphs
 
@@ -50,6 +50,8 @@ def find_affixes(
     img_item_descr: np.ndarray, affix_bullets: list[TemplateMatch], bottom_limit: int, is_sigil: bool = False
 ) -> tuple[list[Affix] | None, str]:
     affixes: list[Affix] = []
+    if len(affix_bullets) == 0:
+        return affixes, ""
 
     # Affix starts at first bullet point
     img_width = img_item_descr.shape[1]

@@ -59,19 +59,20 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
         search_height = window_height - roi_y - offset_top
         delta_x = int(item_descr_width * 0.03)
         roi = [match.region[0] - delta_x, roi_y, item_descr_width + 2 * delta_x, search_height]
-        res_bottom = search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.68, mode="best")
 
         refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
         sep_short = search(refs, img, 0.68, roi, True, mode="first", do_multi_process=False)
 
-        if res_bottom.success and sep_short.success:
+        if sep_short.success:
             off_bottom_of_descr = Config().ui_offsets["item_descr_off_bottom_edge"]
-            equip_match = res_bottom.matches[0]
+            roi_height = Config().ui_pos["window_dimensions"][1] - (2 * off_bottom_of_descr) - match.region[1]
+            if (res_bottom := search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.68, mode="best")).success:
+                roi_height = res_bottom.matches[0].center[1] - off_bottom_of_descr - match.region[1]
             crop_roi = [
                 match.region[0] + item_descr_pad,
                 match.region[1] + item_descr_pad,
                 item_descr_width - 2 * item_descr_pad,
-                equip_match.center[1] - off_bottom_of_descr - match.region[1],
+                roi_height,
             ]
             croped_descr = crop(img, crop_roi)
             return True, rarity, croped_descr, crop_roi

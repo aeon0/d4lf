@@ -86,7 +86,7 @@ def pre_proc_img(img: np.ndarray) -> np.ndarray:
     gamma_corrected = gamma_corrected.astype(np.uint8)
 
     # Apply Gaussian blur to reduce noise and smoothen the image
-    blurred = cv2.GaussianBlur(gamma_corrected, (3, 3), 0)
+    blurred = gamma_corrected  # cv2.GaussianBlur(gamma_corrected, (3, 3), 0)
 
     # Perform morphological operations to further enhance text regions
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))

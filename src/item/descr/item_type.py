@@ -96,6 +96,8 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
 
 def _find_sigil_tier(concatenated_str: str) -> int:
     idx = None
+    for error, correction in ERROR_MAP.items():
+        concatenated_str = concatenated_str.replace(error, correction)
     if "tier" in concatenated_str:
         idx = concatenated_str.index("tier")
     if idx is not None:

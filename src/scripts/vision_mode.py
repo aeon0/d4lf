@@ -141,7 +141,7 @@ def vision_mode():
                 item_descr = None
                 last_top_left_corner = top_left_corner
                 last_center = item_center
-                item_descr = read_descr(rarity, cropped_descr, True)
+                item_descr = read_descr(rarity, cropped_descr, False)
                 if item_descr is None:
                     last_center = None
                     last_top_left_corner = None
@@ -170,7 +170,7 @@ def vision_mode():
                     # show all info strings of the profiles
                     text_y = h
                     for match in reversed(res.matched):
-                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, off, w // 2)
+                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, off // 1.3, w // 2)
                     # Show matched bullets
                     if item_descr is not None and len(res.matched) > 0:
                         bullet_width = thick * 3

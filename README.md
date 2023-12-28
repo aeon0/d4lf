@@ -168,7 +168,7 @@ This is helpful to make it easier to update to a new version as you dont need to
 ```bash
 git clone https://github.com/aeon0/d4lf
 cd d4lf
-conda env create environment.yaml
+conda env create -f environment.yaml
 conda activate d4lf
 python src/main.py
 ```

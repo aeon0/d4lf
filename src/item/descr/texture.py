@@ -31,7 +31,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
                 ["affix_bullet_point_medium", "rerolled_bullet_point_medium"], img_item_descr, 0.87, roi_bullets, True, mode="all"
             )
         ).success:
-            return None
+            return []
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     return affix_bullets.matches
 

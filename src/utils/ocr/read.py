@@ -50,7 +50,7 @@ def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
     return image.tobytes(), width, height, bytes_per_pixel, bytes_per_line
 
 
-def image_to_text(img: np.ndarray, line_boxes: bool = False) -> OcrResult | tuple[OcrResult, list[int]]:
+def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool = True) -> OcrResult | tuple[OcrResult, list[int]]:
     """
     Extract text from the entire image.
     :param img: The input image.
@@ -59,8 +59,11 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False) -> OcrResult | tupl
     :param scale: The scaling factor for the image.
     :return: The OCR result.
     """
-    pre_proced_img = pre_proc_img(img)
-    API.SetImageBytes(*_img_to_bytes(pre_proced_img))
+    if do_pre_proc:
+        pre_proced_img = pre_proc_img(img)
+        API.SetImageBytes(*_img_to_bytes(pre_proced_img))
+    else:
+        API.SetImageBytes(*_img_to_bytes(img))
     start = time.time()
     text = API.GetUTF8Text().strip()
     # print(f"Get Text: {time.time() - start}")

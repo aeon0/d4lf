@@ -94,6 +94,6 @@ def find_affixes(
     affix_x = affix_bullets[0].center[0]
     for i, affix in enumerate(affixes):
         if len(affix_bullets) > i:
-            affix.loc = [affix_x, affix_bullets[i].center[1]]
+            affix.loc = [affix_x, affix_bullets[i].center[1] - 2]
 
     return affixes, ""

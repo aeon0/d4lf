@@ -65,7 +65,7 @@ def reset_canvas(root, canvas):
 
 def is_vendor_open(img: np.ndarray):
     cropped = crop(img, Config().ui_roi["vendor_text"])
-    res = image_to_text(cropped)
+    res = image_to_text(cropped, do_pre_proc=False)
     return res.text.strip().lower() == "vendor"
 
 

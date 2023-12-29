@@ -311,8 +311,6 @@
     "lucky_hit_chance_with_fire_damage": "lucky hit chance with fire damage",
     "fireball_attack_speed": "fireball attack speed",
     "fire_damage_ranks_of_the_inner_flames_passive": "fire damage ranks of the inner flames passive",
-    "max_evade_charges": "max evade charges",
-    "attacks_reduce_evades_cooldown_by_seconds": "attacks reduce evades cooldown by seconds",
     "ranks_of_the_hewed_flesh_passive": "ranks of the hewed flesh passive",
     "damage_reduction_from_enemies_affected_by_curse_skills": "damage reduction from enemies affected by curse skills",
     "lucky_hit_chance_with_shadow_damage": "lucky hit chance with shadow damage",
@@ -324,7 +322,7 @@
     "injured_potion_max_life": "while injured, your potion also grants maximum life as barrier",
     "injured_potion_movement_speed": "while injured, your potion also grants movement speed for seconds",
     "injured_potion_resource": "while injured, your potion also restores resource",
-    "maximum_evade_charges": "maximum evade charges",
     "evade_grants_movement_speed": "evade grants movement speed for second",
+    "maximum_evade_charges": "maximum evade charges",
     "attacks_reduce_evades_cooldown": "attacks reduce evades cooldown by seconds"
 }

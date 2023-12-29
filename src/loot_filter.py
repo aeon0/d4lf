@@ -68,7 +68,7 @@ def check_items(inv: InventoryBase):
         elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
             Logger.info(f"Matched: Elixir")
             continue
-        elif rarity in [ItemRarity.Magic, ItemRarity.Common]:
+        elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
             keyboard.send("space")
             wait(0.13, 0.14)
             continue

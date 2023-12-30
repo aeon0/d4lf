@@ -92,6 +92,9 @@ def vision_mode():
     possible_centers += [slot.center for slot in empty_inv]
     possible_centers += [slot.center for slot in occ_chest]
     possible_centers += [slot.center for slot in empty_chest]
+    # add possible centers of equiped items
+    for i in range(0, 11):
+        possible_centers.append(Config().ui_pos[f"possible_centers_{i}"])
     possible_centers = np.array(possible_centers)
 
     screen_off_x = Cam().window_roi["left"]

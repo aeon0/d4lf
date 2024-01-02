@@ -132,8 +132,9 @@ ERROR_MAP = {
     "omuid": "(druid",
     "gorcerer": "sorcerer",
     "garbarian": "barbarian",
+    " arbarian": " barbarian",
     "two-handed!": "two-handed",
     "two-handed.": "two-handed",
-    "(arbarian": "barbarian",
+    "(arbarian": "(barbarian",
     "tier s": "tier 5",
 }

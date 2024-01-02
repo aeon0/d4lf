@@ -60,6 +60,7 @@ def clean_str(s: str) -> str:
             "scroll down",
             "compare",
             " cts ",
+            "dearest will",
         ],
     )
     cleaned_str = re.sub(

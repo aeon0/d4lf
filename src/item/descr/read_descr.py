@@ -64,7 +64,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     line_height = Config().ui_offsets["item_descr_line_height"]
     if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
         bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
-        item.inherent, _ = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil)
+        item.inherent, debug_str = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil)
         if item.inherent is None:
             if show_warnings:
                 Logger.warning(f"Could not find inherent: {debug_str}")

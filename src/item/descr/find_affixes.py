@@ -46,6 +46,21 @@ def split_into_paragraphs(
     return paragraphs
 
 
+def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[list[str], list[any]]:
+    filtered_affix_lines = []
+    filtered_line_pos = []
+    unique_lines = {}
+    for i, line in enumerate(line_pos):
+        lx = line[1]["x"]
+        ly = line[1]["y"]
+        if ly not in unique_lines or lx < unique_lines[ly][0]:
+            unique_lines[ly] = (lx, i)
+    for _, (_, i) in unique_lines.items():
+        filtered_affix_lines.append(affix_lines[i])
+        filtered_line_pos.append(line_pos[i])
+    return filtered_affix_lines, filtered_line_pos
+
+
 def find_affixes(
     img_item_descr: np.ndarray, affix_bullets: list[TemplateMatch], bottom_limit: int, is_sigil: bool = False
 ) -> tuple[list[Affix] | None, str]:
@@ -69,6 +84,8 @@ def find_affixes(
     affix_lines = [line for line in affix_lines if line]  # remove empty lines
     if len(affix_lines) != len(line_pos):
         return None, "affix_lines and line_pos not same length"
+    # filter lines that have the same y-coordinate by choosing the smallest x-coordinate. Remove from affix_lines and line_pos
+    affix_lines, line_pos = filter_affix_lines(affix_lines, line_pos)
     paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
 
     for combined_lines in paragraphs:

@@ -101,8 +101,9 @@ def _find_sigil_tier(concatenated_str: str) -> int:
         concatenated_str = concatenated_str.replace(error, correction)
     if "tier" in concatenated_str:
         idx = concatenated_str.index("tier")
-    if idx is not None:
-        following_word = concatenated_str[idx:].split()[1]
-        if following_word.isdigit():
-            return int(following_word)
+        split_words = concatenated_str[idx:].split()
+        if len(split_words) == 2:
+            following_word = split_words[1]
+            if following_word.isdigit():
+                return int(following_word)
     return None

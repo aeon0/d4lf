@@ -33,7 +33,7 @@
         "revives_allowed": "revives allowed"
     },
     "negative": {
-        "avenger": "avenger killing a monster enrages monsters near it, making them dealing more damage.",
+        "avenger": "avenger killing a monster enrages monsters near it after a short delay, making them deal more damage.",
         "blood_blister": "blood blister killing a monster has a chance to spawn a blood blister. after a short time, it explodes, dealing heavy area damage.",
         "death_pulse": "death pulse killing a monster releases a deadly lightning pulse after a short delay.",
         "drifting_shade": "drifting shade drifting shade chases players. upon reaching them, it explodes for heavy damage and creates a nightmare field that dazes victims.",

@@ -130,6 +130,48 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_sigil_1080p_3.png",
+            Item(
+                ItemRarity.Common,
+                ItemType.Sigil,
+                45,
+                None,
+                [
+                    Affix("quick_killer", 2),
+                    Affix("empowered_elites_poison_enchanted"),
+                    Affix("monster_cold_damage", 20),
+                    Affix("ranged_defenders", 60),
+                    Affix("barrier_breakers", 100),
+                ],
+                [
+                    Affix("ghoa_ruins"),
+                    Affix("revives_allowed", 4),
+                ],
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_sigil_1080p_4.png",
+            Item(
+                ItemRarity.Common,
+                ItemType.Sigil,
+                45,
+                None,
+                [
+                    Affix("fire_damage", 15),
+                    Affix("nightmare_portal"),
+                    Affix("monster_burning_damage", 30),
+                    Affix("monsters_lightning_resist", 40),
+                    Affix("backstabbers", 35),
+                ],
+                [
+                    Affix("steadfast_barracks"),
+                    Affix("revives_allowed", 4),
+                ],
+            ),
+        ),
+        (
             (3840, 2160),
             f"{BASE_PATH}/read_descr_rare_2160p.png",
             Item(

@@ -301,6 +301,25 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Pants,
+                858,
+                Aspect("protecting_aspect", 3),
+                [
+                    Affix("lightning_resistance", 31),
+                    Affix("damage_reduction_while_injured", 18.5),
+                    Affix("dodge_chance", 48),  # Note: Wrongly detected...
+                    Affix("control_impaired_duration_reduction", 10.5),
+                ],
+                [
+                    Affix("injured_potion_movement_speed", 30),
+                ],
+            ),
+        ),
+        (
             (2560, 1440),
             f"{BASE_PATH}/read_descr_rare_1440p_2.png",
             Item(

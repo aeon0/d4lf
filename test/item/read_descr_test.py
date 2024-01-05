@@ -263,6 +263,44 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_3.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Mace2H,
+                704,
+                Aspect("lightning_dancers_aspect", 1915),
+                [
+                    Affix("willpower", 82),
+                    Affix("critical_strike_damage", 25),
+                    Affix("overpower_damage", 87),
+                    Affix("damage_to_close_enemies", 26),
+                ],
+                [
+                    Affix("overpower_damage", 75),
+                ],
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_4.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Mace,
+                886,
+                Aspect("accelerating_aspect", 19),
+                [
+                    Affix("lightning_critical_strike_damage", 19),
+                    Affix("ultimate_skill_damage", 14.5),
+                    Affix("damage_to_crowd_controlled_enemies", 6.5),
+                    Affix("lucky_hit_up_to_a_chance_to_execute_injured_nonelites", 10),
+                ],
+                [
+                    Affix("overpower_damage", 52.5),
+                ],
+            ),
+        ),
+        (
             (2560, 1440),
             f"{BASE_PATH}/read_descr_rare_1440p_2.png",
             Item(

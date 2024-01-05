@@ -46,15 +46,23 @@ def split_into_paragraphs(
     return paragraphs
 
 
+def is_within_tolerance(num1, num2, tolerance=1):
+    return
+
+
 def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[list[str], list[any]]:
     filtered_affix_lines = []
     filtered_line_pos = []
     unique_lines = {}
+    curr_ly = None
     for i, line in enumerate(line_pos):
         lx = line[1]["x"]
         ly = line[1]["y"]
+        if curr_ly is not None and abs(curr_ly - ly) <= 2:
+            ly = curr_ly
         if ly not in unique_lines or lx < unique_lines[ly][0]:
             unique_lines[ly] = (lx, i)
+        curr_ly = ly
     for _, (_, i) in unique_lines.items():
         filtered_affix_lines.append(affix_lines[i])
         filtered_line_pos.append(line_pos[i])

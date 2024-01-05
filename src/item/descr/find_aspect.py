@@ -69,6 +69,6 @@ def find_aspect(
         if found_key == "rapid_aspect" and found_value == 199:
             found_value = 19
         loc = [aspect_bullet.center[0], aspect_bullet.center[1] - 2]
-        return Aspect(found_key, found_value, concatenated_str, loc), clean_str
+        return Aspect(found_key, found_value, concatenated_str, loc), cleaned_str
     else:
-        return None, clean_str
+        return None, cleaned_str

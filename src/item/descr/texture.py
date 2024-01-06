@@ -66,5 +66,6 @@ def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateM
     else:
         filtered, _ = color_filter(cropped_bottom, Config().colors["legendary_orange"], False)
     bounding_values = np.nonzero(filtered)
-    roi_aspect[3] = bounding_values[0].max() + int(line_height * 0.4)
+    if len(bounding_values[0]) > 0:
+        roi_aspect[3] = bounding_values[0].max() + int(line_height * 0.4)
     return roi_aspect

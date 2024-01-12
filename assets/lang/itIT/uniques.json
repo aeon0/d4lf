@@ -1,0 +1,326 @@
+{
+    "gibbosa_crescente": {
+        "desc": "Ottieni Furtività per s quando uccidi nemici con Dilaniamento. Interrompere la Furtività con un attacco fornisce Imboscata, che ti assicura di infliggere colpi critici per s.",
+        "snoId": 1306218
+    },
+    "mannaia_del_macellaio": {
+        "desc": "Colpo fortunato quando infliggi danni critici a un nemico hai fino al di probabilità di infliggere paura e il di rallentamento per s.",
+        "snoId": 941704
+    },
+    "pugnale_potenziato": {
+        "desc": "Questo è un oggetto di prova utilizzato per potenziamenti di massimo livello.",
+        "snoId": 941728
+    },
+    "condanna": {
+        "desc": "Le tue abilità primarie infliggono il di danni aggiuntivi spendendo punti combo. Le tue abilità Base che sfruttano questarma hanno una probabilità del di generare punti combo.",
+        "snoId": 941730
+    },
+    "khanjar_di_asheara": {
+        "desc": "I colpi con questarma aumentano la tua Velocità dattacco del per s, fino al .",
+        "snoId": 941731
+    },
+    "squarciacarne": {
+        "desc": "Ruggito Debilitante e Ululato Sanguinario infliggono danni ai nemici avvelenati vicini. I danni aumentano del per ogni Volontà.",
+        "snoId": 941798
+    },
+    "fiumenero": {
+        "desc": "Esplosione Cadaverica consuma fino a cadaveri aggiuntivi vicino al cadavere iniziale, infliggendo il di danni aggiuntivi con unarea più ampia del per cadavere aggiuntivo.",
+        "snoId": 1306235
+    },
+    "barriera_vigile": {
+        "desc": "Colpo fortunato Mentre hai una Tempesta dOssa attiva, colpendo un nemico al di fuori della Tempesta dOssa hai una probabilità del di generare una Tempesta dOssa aggiuntiva nella sua posizione. Ogni tuo bonus di sacrificio attivo aumenta la probabilità del e le Tempeste dOssa totali che puoi avere di .",
+        "snoId": 1439541
+    },
+    "magnum_opus_di_ramaladni": {
+        "desc": "Le abilità che prevedono lutilizzo di questarma infliggono il di danni aggiuntivi per ogni punto di furia presente, ma perdi furia al secondo.",
+        "snoId": 1304455
+    },
+    "irazzurra": {
+        "desc": "Colpo fortunato le tue abilità Primarie hanno fino al di probabilità di congelare i nemici per s e infliggere loro danni da freddo.",
+        "snoId": 1439438
+    },
+    "condanna_del_fato": {
+        "desc": "Colpo fortunato fino al di probabilità di infliggere danni da ombra ai nemici circostanti e di ridurre i loro danni del per s.",
+        "snoId": 941869
+    },
+    "sfregio_ardente": {
+        "desc": "Durante la canalizzazione di Incenerimento, lanci periodicamente braci che vengono attratte dai nemici e ciascuna infligge danni da fuoco.",
+        "snoId": 1214791
+    },
+    "loculus": {
+        "desc": "Ottieni gratuitamente leffetto dellincantamento Teletrasporto. Quando schivi usando lincantamento Teletrasporto raggiungi una posizione casuale.",
+        "snoId": 1439529
+    },
+    "giuramento_degli_antichi": {
+        "desc": "Morsa dAcciaio lancia catene aggiuntive. I nemici colpiti da Morsa dAcciaio subiscono danni aumentati del da te per s.",
+        "snoId": 941951
+    },
+    "cacciatore_celeste": {
+        "desc": "Il primo danno diretto che infliggi a un nemico è un colpo critico garantito. Se hai il numero massimo di accumuli della Passiva chiave Precisione, quando utilizzi unabilità Primaria i danni critici di quellabilità aumentano del e ottieni energia.",
+        "snoId": 941972
+    },
+    "uragano": {
+        "desc": "Colpo fortunato i colpi con questarma hanno fino al di probabilità di infliggere il doppio dei danni e di respingere il bersaglio.",
+        "snoId": 941973
+    },
+    "corno_daquila": {
+        "desc": "Tiro Penetrante ha una probabilità del di scagliare una freccia che rimbalza sulle pareti e sullo scenario. Infliggendo danni a nemici con Tiro Penetrante, lutilizzo successivo rende vulnerabili i nemici colpiti per s.",
+        "snoId": 1439537
+    },
+    "maglio_immondo": {
+        "desc": "Tumulto infiamma il suolo mandando in fiamme i nemici e infliggendo danni aggiuntivi in s.",
+        "snoId": 942021
+    },
+    "annientamento": {
+        "desc": "Colpo di Grazia crea unonda durto che infligge il dei suoi danni base. I nemici che muoiono per questo effetto ripristinano il tempo di recupero di Colpo di Grazia.",
+        "snoId": 1222183
+    },
+    "falce_potenziata": {
+        "desc": "Questo è un oggetto di prova utilizzato per potenziamenti di massimo livello.",
+        "snoId": 942068
+    },
+    "urlo_esangue": {
+        "desc": "Le tue abilità di Oscurità raggelano i nemici fino a un massimo del e infliggono danni aumentati del ai nemici congelati. Colpo fortunato le tue abilità di Oscurità hanno fino al di probabilità di generare essenza aggiuntiva contro i bersagli congelati.",
+        "snoId": 1220207
+    },
+    "scettro_della_megera": {
+        "desc": "Artigliata ora è unabilità di Tempesta e attiva anche Assalto della Tempesta al dei danni normali.",
+        "snoId": 942106
+    },
+    "ahavarion,_lancia_di_lycander": {
+        "desc": "Ottieni leffetto di un santuario casuale per s dopo aver ucciso un nemico élite. Questo effetto può verificarsi soltanto una volta ogni s.",
+        "snoId": 942108
+    },
+    "bastone_della_rabbia_imperitura": {
+        "desc": "Ogni utilizzi, Palla di Fuoco lancia proiettili aggiuntivi e infligge danni aumentati del .",
+        "snoId": 942111
+    },
+    "bastone_di_lam_esen": {
+        "desc": "Le tue Scariche Elettriche hanno una probabilità del di essere attratte dai nemici e durano il in più.",
+        "snoId": 1306310
+    },
+    "[mp]campi_cremisi": {
+        "desc": "Mentre utilizzi questarma, infliggere danni ad almeno un nemico con Strazio crea una pozza di sangue che infligge danni da sanguinamento in s. I nemici che sostano nella pozza subiscono il di danni da sanguinamento aggiuntivi.",
+        "snoId": 942134
+    },
+    "il_nonno": {
+        "desc": "Aumenta i tuoi danni critici del . Le altre proprietà di questarma possono essere più alte del normale.",
+        "snoId": 942135
+    },
+    "estasi_della_battaglia": {
+        "desc": "Aumenta gli accumuli massimi di Frenesia di . Mentre la tua Frenesia è al massimo, le altre abilità ottengono un aumento della velocità dattacco di .",
+        "snoId": 1304468
+    },
+    "pietra_del_dolmen": {
+        "desc": "Lanciando Macigno mentre cè un Uragano attivo, i tuoi macigni ruotano attorno a te.",
+        "snoId": 1610440
+    },
+    "cuore_fuso_di_selig": {
+        "desc": "Ottieni il della risorsa massima. Inoltre, quando subisci danni, prosciughi della tua risorsa per ogni della Vita che avresti perso.",
+        "snoId": 1275933
+    },
+    "talismano_del_signore_esiliato": {
+        "desc": "Dopo aver speso della tua risorsa principale, la tua abilità Primaria successiva attiva sempre Sopraffazione. I tuoi colpi critici con Sopraffazione infliggono il di danni aggiuntivi.",
+        "snoId": 1561309
+    },
+    "pendente_delloratore_della_morte": {
+        "desc": "Scarica di Sangue attiva una mini nova sui tuoi servitori che infligge danni. I danni aumentano del per bersaglio prosciugato dal lancio iniziale, fino al .",
+        "snoId": 1230484
+    },
+    "parola_di_hakan": {
+        "desc": "La tua Pioggia di Frecce è infusa sempre con tutte le infusioni contemporaneamente.",
+        "snoId": 1306258
+    },
+    "cameo_straripante_di_esadora": {
+        "desc": "Raccogliendo Energia Crepitante, cè una probabilità del di rilasciare una Nova del Fulmine che infligge danni da fulmine. Questi danni aumentano del per ogni Intelligenza.",
+        "snoId": 1225299
+    },
+    "[mp]i_100.000_passi": {
+        "desc": "Dopo aver ottenuto il bonus ai danni finale dalla Passiva chiave Arsenale Ambulante, lanci automaticamente Passo Tonante e ottieni furia. Può attivarsi solo una volta ogni s.",
+        "snoId": 1210595
+    },
+    "[mp]schinieri_penitenti": {
+        "desc": "Ti lasci dietro una scia gelida che raggela i nemici. Infliggi il di danni aggiuntivi ai nemici raggelati.",
+        "snoId": 942251
+    },
+    "passo_sfuggente": {
+        "desc": "Per ogni nemico che attraversi con Elusione riduci il tempo di recupero della tua Ultra di s, fino a s.",
+        "snoId": 942253
+    },
+    "[mp]schinieri_del_sepolcro_vuoto": {
+        "desc": "Crea un Terreno Sconsacrato sotto gli spettri evocati con Smembramento mentre si spostano, infliggendo danni da ombra ai nemici in s.",
+        "snoId": 1220257
+    },
+    "cimelio_di_esu": {
+        "desc": "La tua probabilità di critico aumenta del del bonus alla velocità di movimento.",
+        "snoId": 1306301
+    },
+    "rabbia_di_harrogath": {
+        "desc": "Colpo fortunato hai una probabilità massima del di ridurre il tempo di recupero delle tue abilità non Ultra per s quando infliggi sanguinamento a nemici élite.",
+        "snoId": 1304379
+    },
+    "ilarità_del_lupo_folle": {
+        "desc": "La forma di Lupo Mannaro ora è la tua vera forma e ottieni gradi a tutte le abilità da Lupo Mannaro.",
+        "snoId": 942354
+    },
+    "furia_insaziabile": {
+        "desc": "La forma di Orso Mannaro ora è la tua vera forma e ottieni gradi a tutte le abilità da Orso Mannaro.",
+        "snoId": 942355
+    },
+    "placcaguzza": {
+        "desc": "Ottieni Spine.",
+        "snoId": 1215064
+    },
+    "marchio_dellanima": {
+        "desc": "La tua Pozione di Cura non cura più istantaneamente, invece fornisce una barriera del della cura per s. Mentre hai una barriera, ottieni una riduzione danni del .",
+        "snoId": 1560873
+    },
+    "corazza_dellartigiano_del_sangue": {
+        "desc": "Quando raccogli Globi di Sangue,",
+        "snoId": 1306229
+    },
+    "[fp]pelli_di_lestofante": {
+        "desc": "Mentre hai energia infinita grazie a Vista Interiore, utilizzando unabilità Primaria hai una probabilità del di far apparire Triboli, una Trappola Avvelenata, o una Trappola Mortale.",
+        "snoId": 1612293
+    },
+    "[mp]panni_dellinfinito": {
+        "desc": "Dopo aver utilizzato il Teletrasporto, i nemici vicini vengono attirati verso di te e storditi per s, ma il tempo di recupero del Teletrasporto viene aumentato del .",
+        "snoId": 942363
+    },
+    "stretta_devastante_di_gohr": {
+        "desc": "Turbine esplode ogni s e non appena termina, infliggendo il dei danni base ai nemici circostanti come danni da fuoco.",
+        "snoId": 942555
+    },
+    "[mp]pugni_del_fato": {
+        "desc": "I tuoi attacchi infliggono casualmente dal al dei loro danni normali.",
+        "snoId": 942559
+    },
+    "gelardente": {
+        "desc": "Colpo fortunato fino al di probabilità di congelare i nemici per s.",
+        "snoId": 942560
+    },
+    "ululato_dal_profondo": {
+        "desc": "Anziché detonare immediatamente, Esplosione Cadaverica evoca uno scheletro instabile che carica un nemico casuale ed esplode. I danni inflitti da Esplosione Cadaverica aumentano del .",
+        "snoId": 1227277
+    },
+    "stretta_dellombra": {
+        "desc": "Colpo fortunato infliggere danni a un nemico vulnerabile con unabilità di Tiro di precisione o Sgozzamento ha una probabilità massima del di evocare un Clone dOmbra che imita i tuoi attacchi.",
+        "snoId": 1306250
+    },
+    "[mp]guanti_del_foriero_di_luce": {
+        "desc": "Palla di Fuoco ora rimbalza lungo la traiettoria, esplodendo ogni volta che colpisce il terreno, ma le esplosioni prodotte infliggono il di danni in meno.",
+        "snoId": 942564
+    },
+    "elmo_con_zanne_di_joritz_il_poderoso": {
+        "desc": "Quando ottieni Berserk mentre sei già in Berserk, hai una probabilità del di infuriarti ulteriormente, infliggendo il di danni aggiuntivi e ottenendo furia ogni secondo e una riduzione del tempo di recupero del .",
+        "snoId": 1489567
+    },
+    "ruggito_della_tempesta": {
+        "desc": "Colpo fortunato le abilità di Tempesta hanno fino al di probabilità di generare spirito. Le tue abilità Base di Tempesta ora sono anche abilità da Lupo Mannaro.",
+        "snoId": 1304489
+    },
+    "preghiera_di_vasily": {
+        "desc": "Le tue abilità di Terra ora sono anche abilità da Orso Mannaro e ti forniscono Fortificazione.",
+        "snoId": 1306213
+    },
+    "volto_di_andariel": {
+        "desc": "Colpo fortunato fino al di probabilità di attivare una Nova Velenosa che infligge danni da veleno in s ai nemici nellarea.",
+        "snoId": 942663
+    },
+    "cimiero_arlecchino": {
+        "desc": "Ottieni una riduzione danni del . Inoltre, ottieni gradi a tutte le abilità.",
+        "snoId": 942664
+    },
+    "corona_dellammazzadei": {
+        "desc": "Quando stordisci, congeli, o immobilizzi un nemico élite o danneggi un boss, attiri i nemici vicini. Infliggi loro il di danni aggiuntivi per s. Questo effetto può verificarsi solo una volta ogni s.",
+        "snoId": 1555196
+    },
+    "elmo_potenziato": {
+        "desc": "Questo è un oggetto di prova utilizzato per potenziamenti di massimo livello.",
+        "snoId": 942665
+    },
+    "volto_senza_morte": {
+        "desc": "Lancia dOssa lascia dietro di sé degli echi che esplodono, infliggendo danni, che aumentano del per ogni del bonus ai danni critici.",
+        "snoId": 1234672
+    },
+    "cappa_del_senza_nome": {
+        "desc": "La probabilità di attivare Colpo fortunato aumenta del contro i nemici sotto effetti debilitanti.",
+        "snoId": 942666
+    },
+    "compagno_della_tempesta": {
+        "desc": "I tuoi compagni lupi sono infusi con il potere della tempesta e infliggono danni da fulmine e ottengono labilità di Ululato della Tempesta.",
+        "snoId": 942972
+    },
+    "temerarietà": {
+        "desc": "Gli effetti che ti curano oltre il della Vita ti forniscono una barriera fino al della tua Vita massima che dura s. Le pozioni si possono usare con Vita al massimo.",
+        "snoId": 1306325
+    },
+    "[mp]fiancali_del_cielo_albeggiante": {
+        "desc": "Quando subisci danni non fisici, ottieni una resistenza massima del a quel tipo di danno per s. Questo effetto si può applicare solo a un tipo di danno per volta.",
+        "snoId": 1477079
+    },
+    "volontà_di_tibault": {
+        "desc": "Infliggi il di danni aggiuntivi mentre sei inarrestabile e per s dopo. Quando diventi inarrestabile, ottieni della tua risorsa principale.",
+        "snoId": 1559420
+    },
+    "protezione_per_gambe_potenziata": {
+        "desc": "Questo è un oggetto di prova utilizzato per potenziamenti di massimo livello.",
+        "snoId": 942975
+    },
+    "[fp]brache_della_luna_di_sangue": {
+        "desc": "I tuoi servitori hanno una probabilità del di maledire i nemici. I nemici colpiti da almeno delle tue maledizioni subiscono il di danni aggiuntivi da Sopraffazione da te.",
+        "snoId": 1217039
+    },
+    "[mp]occhi_nel_buio": {
+        "desc": "Trappola Mortale infligge danni aumentati del . A meno che colpisca un boss o un giocatore, Trappola Mortale continua ad armarsi finché non uccide un nemico.",
+        "snoId": 942977
+    },
+    "[fp]braghe_cuorgelido": {
+        "desc": "I nemici che muoiono mentre sono congelati hanno il di probabilità di scatenare una Nova Gelida.",
+        "snoId": 1306273
+    },
+    "anello_del_furore_rosso": {
+        "desc": "Dopo aver consumato furia entro s, il tuo utilizzo successivo di Maglio degli Antichi, Tumulto o Colpo di Grazia è sempre critico e infligge il di danni critici aggiuntivi.",
+        "snoId": 1706603
+    },
+    "zenit_del_cacciatore": {
+        "desc": "Ottieni un bonus quando uccidi con unabilità Mutaforma Lupo Mannaro la tua prossima abilità da Orso Mannaro non Ultra non consuma risorse e non ha tempo di recupero. Orso Mannaro la tua prossima abilità da Lupo Mannaro ti cura di quando infliggi i primi danni.",
+        "snoId": 989677
+    },
+    "volontà_inesorabile_di_airidah": {
+        "desc": "Quando utilizzi unabilità Ultra e la utilizzi nuovamente dopo s, attiri i nemici lontani e infliggi loro danni fisici. Questi danni sono aumentati del per ogni Volontà.",
+        "snoId": 1706650
+    },
+    "abbraccio_della_madre": {
+        "desc": "Se unabilità Primaria colpisce o più nemici, il del costo in risorse viene ripristinato.",
+        "snoId": 1215133
+    },
+    "anello_dei_cieli_senza_stelle": {
+        "desc": "Utilizzare unabilità Primaria riduce il costo in risorse delle tue abilità Primarie del , fino a un massimo del . Si azzera dopo aver utilizzato unabilità non Primaria.",
+        "snoId": 1306337
+    },
+    "sigillo_corroso_di_xfal": {
+        "desc": "Colpo fortunato gli effetti dei tuoi danni periodici hanno fino al di probabilità di attivarsi, infliggendo danni dello stesso tipo ai nemici vicini.",
+        "snoId": 1559923
+    },
+    "anello_di_mendeln": {
+        "desc": "Colpo fortunato una probabilità massima del di potenziare tutti i tuoi servitori, in modo che ogni loro prossimo attacco esploda, infliggendo danni fisici.",
+        "snoId": 1222626
+    },
+    "anello_dellanima_sacrilega": {
+        "desc": "Attivi automaticamente le seguenti abilità equipaggiate sui cadaveri vicini Rianima Scheletro ogni s. Esplosione Cadaverica ogni s. Tentacoli Cadaverici ogni s.",
+        "snoId": 1706659
+    },
+    "cerchio_serpeggiante_dellimbroglio": {
+        "desc": "Quando utilizzi unabilità di Sotterfugio, ti lasci dietro una Trappola Esca che provoca e attira continuamente i nemici. La Trappola Esca esplode dopo s infliggendo danni da ombra. Può verificarsi ogni s.",
+        "snoId": 1706657
+    },
+    "rosa_blu": {
+        "desc": "Colpo fortunato infliggendo danni a un nemico hai una probabilità fino al di creare un Aculeo di Ghiaccio esplosivo che infligge danni da freddo. Triplica questa probabilità se il nemico è congelato.",
+        "snoId": 1211653
+    },
+    "cerchio_iridescente_di_tal_rasha": {
+        "desc": "Per ogni tipo di danni elementali che infliggi, aumenti i danni del per s. Infliggere danni elementali ripristina tutti i bonus.",
+        "snoId": 1225567
+    }
+}

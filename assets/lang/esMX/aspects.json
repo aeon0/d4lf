@@ -1,0 +1,954 @@
+{
+    "del_desgarramiento_vesánico": {
+        "desc": "Cada vez que infliges daño directo mientras tienes enajenación, infliges un del daño de base infligido como daño de sangrado durante segundos.",
+        "snoId": 1105985
+    },
+    "terremoto": {
+        "desc": "Pisotón genera un Terremoto que inflige de daño físico a los enemigos durante segundos. Mientras estás en medio de los Terremotos, infliges un más de daño.",
+        "snoId": 1105986
+    },
+    "del_rompecráneos": {
+        "desc": "Aturdir a un enemigo que sangra le inflige un de su sangrado total como daño físico.",
+        "snoId": 1105987
+    },
+    "del_maestro_de_armas": {
+        "desc": "Tus habilidades de Dominio de Arma tienen una carga adicional. Golpe afortunado Al infligir daño a un enemigo con una habilidad de Dominio de Arma, tienes un de probabilidad de aturdirlo durante segundos.",
+        "snoId": 1105988
+    },
+    "sangre_de_hierro": {
+        "desc": "Obtienes un de reducción de daño por cada enemigo cercano que sangra, hasta un máximo del .",
+        "snoId": 1105989
+    },
+    "locura_de_batalla": {
+        "desc": "Obtienes enajenación durante segundos cuando cambias de arma veces.",
+        "snoId": 1105990
+    },
+    "de_furia_reverberante": {
+        "desc": "Tus habilidades de Grito generan de Furia por segundo mientras están activas.",
+        "snoId": 1105991
+    },
+    "del_guerrero_férreo": {
+        "desc": "Piel de Hierro te vuelve imparable y te otorga un de reducción de daño.",
+        "snoId": 1105992
+    },
+    "de_pasos_gigantes": {
+        "desc": "Reduce la recuperación de Salto segundos por cada enemigo golpeado, hasta un máximo de segundos.",
+        "snoId": 1105994
+    },
+    "del_vesánico_implacable": {
+        "desc": "Golpe afortunado Al infligir daño a un enemigo con una habilidad principal, tienes un de probabilidad de extender la duración de la enajenación segundos. Esta duración se duplica si hiciste un golpe crítico.",
+        "snoId": 1105995
+    },
+    "de_furia_implacable": {
+        "desc": "Matar a un enemigo o golpear a un jefe con una habilidad principal restablece un de su costo de Furia de base. Puede ocurrir solo una vez por lanzamiento de habilidad.",
+        "snoId": 1105997
+    },
+    "de_ecos_ancestrales": {
+        "desc": "Golpe afortunado Mientras Llamado Ancestral esté en tu barra de acción, al infligir daño a los enemigos con Salto, Conmoción o Remolino, tienes hasta un de probabilidad de invocar un Ancestro para que lance la misma habilidad.",
+        "snoId": 1105998
+    },
+    "de_ira_entumecedora": {
+        "desc": "Cada punto de Furia generado al máximo de Furia otorga de fortificación.",
+        "snoId": 1106001
+    },
+    "del_combatiente": {
+        "desc": "Los enemigos que reciben daño de Patada o Carga explotarán si se los mata dentro de los próximos segundos, lo que inflige de daño a los enemigos circundantes.",
+        "snoId": 1106002
+    },
+    "del_remolino_de_polvo": {
+        "desc": "Remolino deja Remolinos de Polvo que infligen de daño a los enemigos cercanos.",
+        "snoId": 1106003
+    },
+    "de_ira_inminente": {
+        "desc": "Tras gastar de Furia, tu siguiente habilidad de Dominio de Arma inflige más de daño.",
+        "snoId": 1106004
+    },
+    "del_maestro_de_armas_implacable": {
+        "desc": "Recibes un más de generación de Furia mientras todas las bonificaciones de daño de la pasiva clave Arsenal Andante están activas.",
+        "snoId": 1106005
+    },
+    "de_furia_vesánica": {
+        "desc": "Obtienes de Furia por segundo mientras tienes enajenación.",
+        "snoId": 1106006
+    },
+    "deseo_de_muerte": {
+        "desc": "Obtienes Espinas mientras tienes enajenación.",
+        "snoId": 1106007
+    },
+    "del_remolino_nefasto": {
+        "desc": "La probabilidad de golpe crítico de Remolino aumenta un por cada segundo en que se canaliza, hasta un .",
+        "snoId": 1106009
+    },
+    "de_bul-kathos": {
+        "desc": "Salto genera un Terremoto que inflige de daño físico a los enemigos durante segundos. Mientras estás inmóvil en medio de los Terremotos, obtienes un más de reducción de daño.",
+        "snoId": 1106010
+    },
+    "azotador": {
+        "desc": "Al lanzar Azote Doble dos veces en un lapso de segundos, se genera un Remolino de Polvo que inflige de daño a los enemigos detrás del objetivo.",
+        "snoId": 1106011
+    },
+    "del_combatiente_veterano": {
+        "desc": "Cada vez que una habilidad principal inflige daño directo a un enemigo, tu próxima Carga o Salto inflige un más de daño, hasta un .",
+        "snoId": 1106024
+    },
+    "de_fuerza_ancestral": {
+        "desc": "Martillo Ancestral tiembla hacia afuera y el daño aumenta en .",
+        "snoId": 1106025
+    },
+    "del_remolino_inmovilizante": {
+        "desc": "De manera periódica, Remolino atrae a los enemigos hacia ti.",
+        "snoId": 1106034
+    },
+    "del_vesánico_resuelto": {
+        "desc": "Golpe afortunado Otorga hasta un de probabilidad de obtener de fortificación cada vez que infliges daño directo mientras tienes enajenación.",
+        "snoId": 1106039
+    },
+    "del_caudillo_osado": {
+        "desc": "Cada vez que lanzas una habilidad de Grito, su recuperación se reduce segundos por cada enemigo cercano, hasta un máximo de segundos.",
+        "snoId": 1106041
+    },
+    "de_pisoteo_perpetuo": {
+        "desc": "Al infligir daño a un enemigo con Patada o Pisotón, se restablece la recuperación de Salto.",
+        "snoId": 1105863
+    },
+    "de_anemia": {
+        "desc": "Golpe afortunado Infligir daño directo a enemigos que sangran tiene un de probabilidad de aturdirlos durante segundos.",
+        "snoId": 1201316
+    },
+    "saciante": {
+        "desc": "Golpe afortunado Tienes hasta un de probabilidad de obtener de Furia mientras Tajar inflige daño directo a al menos un enemigo que sangra.",
+        "snoId": 1202014
+    },
+    "del_golpe_terrestre": {
+        "desc": "Después de cambiar de arma veces, tu próxima habilidad abrumará y causará más de daño abrumador.",
+        "snoId": 1199203
+    },
+    "de_golpes_temperados": {
+        "desc": "Después de cambiar de arma veces, obtienes de fortificación.",
+        "snoId": 1200857
+    },
+    "traesuerte": {
+        "desc": "Obtienes un más de probabilidad de golpe afortunado mientras todas las bonificaciones de daño de la pasiva clave Arsenal Andante están activas.",
+        "snoId": 1199205
+    },
+    "del_vesánico_del_clan_del_oso": {
+        "desc": "Matar a un enemigo mientras tienes enajenación otorga un de probabilidad de obtener un más de reducción de recuperación de tus habilidades de Combate durante segundos.",
+        "snoId": 1199207
+    },
+    "de_furia_ardiente": {
+        "desc": "Mientras tienes enajenación, infliges de daño de fuego cada segundo a los enemigos circundantes.",
+        "snoId": 1105876
+    },
+    "diabólico": {
+        "desc": "Tras generar de Furia, tu siguiente habilidad principal genera un Remolino de Polvo que inflige de daño a los enemigos detrás del objetivo.",
+        "snoId": 1199627
+    },
+    "de_furia_ilimitada": {
+        "desc": "Cada punto de Furia que generas mientras tienes la Furia al máximo le otorga a tu próxima habilidad principal un más de daño, hasta un máximo del .",
+        "snoId": 1106289
+    },
+    "de_carga_ancestral": {
+        "desc": "Carga llama a Ancestros, quienes también cargan e infligen un del daño normal.",
+        "snoId": 1427872
+    },
+    "ruptura_displicente": {
+        "desc": "La Ruptura no elimina el daño de sangrado de los enemigos. Esto puede suceder cada segundos.",
+        "snoId": 1603699
+    },
+    "de_los_insaciables": {
+        "desc": "Tras matar a un enemigo con Despedazar, tu siguiente habilidad de Hombre Lobo genera un más de Espíritu e inflige un más de daño.",
+        "snoId": 1106044
+    },
+    "mutilado": {
+        "desc": "Cuando te atacan mientras estás en forma de hombre oso, tienes un de probabilidad de obtener de Espíritu.",
+        "snoId": 1106047
+    },
+    "de_la_brisa_calma": {
+        "desc": "Golpe afortunado Viento Penetrante tiene hasta un de probabilidad de restaurar por completo tu Espíritu.",
+        "snoId": 1106050
+    },
+    "de_la_tempestad": {
+        "desc": "El daño de Huracán aumenta un cada segundo mientras la habilidad está activa.",
+        "snoId": 1106053
+    },
+    "de_arenas_movedizas": {
+        "desc": "El daño de las habilidades de Tierra ralentiza a los enemigos golpeados un durante segundos.",
+        "snoId": 1106058
+    },
+    "piedra_aplastante": {
+        "desc": "Las habilidades de Tierra infligen un más de daño crítico a los enemigos bajo los efectos de control de multitudes.",
+        "snoId": 1206644
+    },
+    "de_reparación_de_la_piedra": {
+        "desc": "La duración de Baluarte Rocoso aumenta segundos. Además, matar a un enemigo con habilidades de Tierra restablece de tu barrera de Baluarte Rocoso activa.",
+        "snoId": 1106061
+    },
+    "sobrecargado": {
+        "desc": "Golpe afortunado Al infligir daño de rayo, obtienes hasta un de probabilidad de sobrecargar al objetivo durante segundos esto hará que el daño directo que inflijas provoque de daño adicional a enemigos circundantes.",
+        "snoId": 1106063
+    },
+    "del_balance_natural": {
+        "desc": "Lanzar una habilidad de Tormenta les otorga a tus habilidades de Tierra de daño de golpe crítico durante segundos. Lanzar una habilidad de Tierra aumenta la probabilidad de golpe crítico de las habilidades de Tormenta un durante segundos.",
+        "snoId": 1106064
+    },
+    "de_la_deuda_del_cambiaformas": {
+        "desc": "Infligir daño a un enemigo envenenado con una habilidad de Hombre Oso infligirá instantáneamente un del daño de veneno y consumirá el veneno.",
+        "snoId": 1201950
+    },
+    "del_cambiapieles": {
+        "desc": "Cuando usas una habilidad de Metamorfosis que cambia tu forma, obtienes de vida. Al máximo de vida, obtienes la misma cantidad como fortificación.",
+        "snoId": 1200308
+    },
+    "movimiento_sísmico": {
+        "desc": "Púa Terrestre lanza púas en una línea y tiene una recuperación de segundos.",
+        "snoId": 1106138
+    },
+    "de_la_tierra_pisoteada": {
+        "desc": "Arrollar ahora invoca pilares de tierra de Desprendimiento en el transcurso de su duración, que infligen un de daño normal. Arrollar ahora también es una habilidad de Magia de la Naturaleza y Tierra.",
+        "snoId": 1106166
+    },
+    "de_la_garra_de_tormenta": {
+        "desc": "Los golpes críticos con Despedazar infligen un del daño infligido como daño de rayo al objetivo y a los enemigos circundantes.",
+        "snoId": 1106189
+    },
+    "equilibrado": {
+        "desc": "Aumenta tu Espíritu máximo en y la generación de Espíritu un mientras Furia Parda está activa.",
+        "snoId": 1106190
+    },
+    "de_fuerza_ciclónica": {
+        "desc": "Armadura de Ciclón también proporciona reducción de daño físico. Además, Armadura de Ciclón también se aplicará a todos los aliados cercanos.",
+        "snoId": 1106217
+    },
+    "del_temblor_secundario": {
+        "desc": "Los pilares de tierra de Desprendimiento golpean una segunda vez e infligen una bonificación de daño adicional del por golpe.",
+        "snoId": 1106228
+    },
+    "del_horror_osuno": {
+        "desc": "Pulverizar ahora también es una habilidad de Tierra. Después de lanzar Pulverizar, las púas tectónicas siguen infligiendo de daño durante segundos.",
+        "snoId": 1106260
+    },
+    "de_represalia": {
+        "desc": "Tus habilidades principales infligen hasta un más de daño según tu cantidad de fortificación.",
+        "snoId": 1106321
+    },
+    "onda_de_choque": {
+        "desc": "Pulverizar genera una onda de choque que se desplaza hacia adelante e inflige un de su daño a los objetivos en su camino.",
+        "snoId": 1106341
+    },
+    "del_alfa": {
+        "desc": "Tus lobos compañeros ahora son hombres lobo compañeros. Los hombres lobo compañeros infligen un más de daño y pueden propagar rabia.",
+        "snoId": 1106347
+    },
+    "del_aullador_nocturno": {
+        "desc": "Aullido Sanguinario aumenta la probabilidad de golpe crítico un . Además, Aullido Sanguinario también afecta a los jugadores y compañeros cercanos durante segundos.",
+        "snoId": 1106379
+    },
+    "de_salvajismo_de_la_naturaleza": {
+        "desc": "Las habilidades de Hombre Lobo funcionan como habilidades de Tormenta, y las habilidades de Hombre Oso funcionan como habilidades de Tierra para la pasiva clave Control de la Naturaleza.",
+        "snoId": 1106384
+    },
+    "del_pastor": {
+        "desc": "Las habilidades principales infligen un de daño adicional por cada compañero activo.",
+        "snoId": 1106407
+    },
+    "vigoroso": {
+        "desc": "Obtienes un de reducción de daño al cambiar de forma a hombre lobo.",
+        "snoId": 1206401
+    },
+    "del_aullido_oscuro": {
+        "desc": "Rugido Debilitante ahora es una habilidad de Hombre Lobo. Además, Rugido Debilitante inmovilizará a los enemigos envenenados durante segundos.",
+        "snoId": 1201796
+    },
+    "del_hombre_bestia_arrasador": {
+        "desc": "La duración de Furia Parda aumenta segundos. Además, los golpes críticos mientras Furia Parda está activa aumentan su daño un a lo largo de su duración, hasta un máximo de .",
+        "snoId": 1205996
+    },
+    "de_la_furia_salvaje": {
+        "desc": "Tus compañeros también obtienen bonificaciones de la pasiva clave Desenfreno Bestial cuando tú lo haces.",
+        "snoId": 1205052
+    },
+    "balístico": {
+        "desc": "Cuando tienes fortificación, tus habilidades de Tierra obtienen rangos.",
+        "snoId": 1202438
+    },
+    "del_cambiaformas_de_tormenta": {
+        "desc": "Mientras Huracán está activa, obtienes rangos para tus habilidades de Metamorfosis.",
+        "snoId": 1202540
+    },
+    "del_trotatormentas": {
+        "desc": "Tornado buscará hasta objetivos.",
+        "snoId": 1105817
+    },
+    "conducto_de_trabajador_de_runa": {
+        "desc": "Los golpes críticos de las habilidades de Tormenta que lanzas cargan el aire a tu alrededor durante segundos, lo que genera un Rayo para golpear periódicamente a un enemigo en el área por de daño de rayo. La duración puede extenderse con golpes críticos adicionales.",
+        "snoId": 1105842
+    },
+    "de_tormenta_poderosa": {
+        "desc": "La pasiva clave Fuerza Terrenal también se aplica a tus habilidades de Tormenta.",
+        "snoId": 1105865
+    },
+    "simbiótico": {
+        "desc": "Cuando la pasiva clave Furia de la Naturaleza activa una habilidad gratuita, se reducen segundos tus recuperaciones de habilidades no máximas del tipo opuesto.",
+        "snoId": 1212893
+    },
+    "guardia_terrestre": {
+        "desc": "Obtienes una bonificación del en tu siguiente Baluarte Rocoso por cada enemigo bajo los efectos de control de multitudes, hasta un máximo del .",
+        "snoId": 1214291
+    },
+    "del_bailarín_del_rayo": {
+        "desc": "Los golpes críticos de Tormenta Eléctrica generan Rayos Danzantes que buscan a enemigos en el área e infligen de daño de rayo.",
+        "snoId": 1105811
+    },
+    "del_lobo_temible": {
+        "desc": "Furia Parda ahora te transforma en un Hombre Lobo Temible. Como Hombre Lobo Temible, obtienes un de velocidad de movimiento en vez de una reducción de daño y una bonificación del de reducción del costo de Espíritu. Además, matar te sana por un de tu vida máxima.",
+        "snoId": 1105800
+    },
+    "de_la_estampida": {
+        "desc": "Obtienes compañero adicional. Además, tus habilidades de Compañero infligen un más de daño.",
+        "snoId": 1222401
+    },
+    "de_la_piedra_metamórfica": {
+        "desc": "Roca ahora es una habilidad principal y cuesta de Espíritu para lanzarla, lo que inflige de daño normal.",
+        "snoId": 1338010
+    },
+    "de_la_bestia_difusa": {
+        "desc": "Al arremeter, Despedazar busca a los enemigos envenenados cercanos y les inflige un de daño de veneno.",
+        "snoId": 1338284
+    },
+    "subterráneo": {
+        "desc": "La activa de Liana Venenosa también lanza Desprendimiento en un círculo a tu alrededor. Las habilidades de Tierra infligen un más de daño a los enemigos envenenados.",
+        "snoId": 1433952
+    },
+    "poderío_en_bruto": {
+        "desc": "Después de golpear a enemigos con las habilidades de Hombre Oso, la próxima habilidad de Hombre Oso causará más de daño y aturdirá a los enemigos durante segundos.",
+        "snoId": 1619484
+    },
+    "luz_estelar": {
+        "desc": "Obtienes de tu recurso primario por cada de tu vida sanada.",
+        "snoId": 1106452
+    },
+    "de_poder": {
+        "desc": "Las habilidades básicas otorgan un de reducción de daño durante segundos.",
+        "snoId": 1106483
+    },
+    "del_protector": {
+        "desc": "Infligir daño a un enemigo de Élite te otorga una barrera que absorbe hasta de daño durante segundos. Este efecto solo puede ocurrir una vez cada segundos.",
+        "snoId": 1106507
+    },
+    "de_calma_interior": {
+        "desc": "Infliges un más de daño por cada segundo que permaneces inmóvil, hasta un .",
+        "snoId": 1106533
+    },
+    "golpeador_de_viento": {
+        "desc": "Los golpes críticos otorgan un de velocidad de movimiento durante segundo, hasta un máximo de segundos.",
+        "snoId": 1106547
+    },
+    "del_umbral": {
+        "desc": "Restaura de tu recurso primario cuando tienes a un enemigo bajo el control de multitudes.",
+        "snoId": 1106601
+    },
+    "engreído": {
+        "desc": "Infliges un más de daño mientras tienes una barrera activa.",
+        "snoId": 1106658
+    },
+    "protector": {
+        "desc": "Cuando te atacan mientras no estás saludable, se invoca una burbuja mágica a tu alrededor durante segundos. Mientras permanecen dentro de la burbuja, los jugadores son inmunes. Solo puede ocurrir una vez cada segundos.",
+        "snoId": 1106730
+    },
+    "de_desobediencia": {
+        "desc": "Obtienes un más de armadura durante segundos al infligir cualquier clase de daño, que se acumula hasta un .",
+        "snoId": 1106104
+    },
+    "de_retribución": {
+        "desc": "Los enemigos lejanos tienen un de probabilidad de ser aturdidos durante segundos cuando te golpean. Infliges un más de daño a los enemigos aturdidos.",
+        "snoId": 1106134
+    },
+    "rápido": {
+        "desc": "Las habilidades básicas obtienen un de velocidad de ataque.",
+        "snoId": 1106177
+    },
+    "del_maestro_del_filo": {
+        "desc": "Las habilidades infligen hasta un más de daño según tu recurso primario disponible al momento del lanzamiento, por lo que se recibe el beneficio máximo al tener el recurso primario completo.",
+        "snoId": 1106385
+    },
+    "del_sabio_concurrido": {
+        "desc": "Te sanas un de vida por segundo por cada enemigo cercano, hasta de vida por segundo.",
+        "snoId": 1106409
+    },
+    "del_impaciente": {
+        "desc": "Golpear a enemigos con habilidades básicas aumenta el daño de tu siguiente habilidad principal lanzada un , hasta un .",
+        "snoId": 1106426
+    },
+    "caminante_fantasmal": {
+        "desc": "Al ser imparable y durante segundos después de que finaliza el efecto, obtienes un más de velocidad de movimiento y puedes atravesar a los enemigos libremente.",
+        "snoId": 1225424
+    },
+    "de_miseria_compartida": {
+        "desc": "Golpe afortunado Cuando golpeas a un enemigo bajo los efectos de control de multitudes, hay hasta un de probabilidad de que el efecto de control de multitudes se propague a otro enemigo no afectado.",
+        "snoId": 1227282
+    },
+    "evasivo": {
+        "desc": "Sufrir heridas mientras estás bajo los efectos de control de multitudes te vuelve imparable durante segundos. Este efecto tiene una recuperación de segundos.",
+        "snoId": 1223891
+    },
+    "asimilación": {
+        "desc": "Tienes un más de probabilidad de esquivar contra enemigos afectados por efectos de daño con el tiempo. Al esquivar, obtienes de tu recurso primario.",
+        "snoId": 1226354
+    },
+    "estallido_de_agujas": {
+        "desc": "El daño de espinas infligido tiene un de probabilidad de infligir daño a todos los enemigos a tu alrededor.",
+        "snoId": 1227650
+    },
+    "de_la_barrera_de_desvío": {
+        "desc": "Mientras tienes una barrera activa, hay un de probabilidad de ignorar el daño directo de enemigos distantes.",
+        "snoId": 1225448
+    },
+    "punitivo": {
+        "desc": "Tienes un más de probabilidad de golpe crítico contra enemigos heridos. Mientras estás saludable, obtienes un más de duración de control de multitudes.",
+        "snoId": 1105844
+    },
+    "acelerante": {
+        "desc": "Los golpes críticos con habilidades principales aumentan tu velocidad de ataque un durante segundos.",
+        "snoId": 1105816
+    },
+    "del_explotador": {
+        "desc": "Tienes un más de duración de control de multitudes. Mientras los enemigos son imparables, les infliges un más de daño.",
+        "snoId": 1225582
+    },
+    "cobarde": {
+        "desc": "Obtienes un más de velocidad de movimiento cuando te alejas de los enemigos ralentizados o helados.",
+        "snoId": 1437498
+    },
+    "de_audacia": {
+        "desc": "Cuando hay al menos enemigos cercanos, los aturdes durante segundos. Esto solo puede ocurrir una vez cada segundos.",
+        "snoId": 1438478
+    },
+    "de_elementos": {
+        "desc": "Obtienes un más de daño para un conjunto de tipos de daño durante segundos. Este efecto alterna entre conjuntos Fuego, rayo y físico. Frío, veneno y sombra.",
+        "snoId": 1485368
+    },
+    "de_matanza": {
+        "desc": "Obtienes de Velocidad de movimiento. Pierdes esta bonificación por segundos tras recibir daño.",
+        "snoId": 1602955
+    },
+    "del_muerto_frenético": {
+        "desc": "Cada vez que uno de tus esbirros invocados inflige daño a un enemigo, obtienen un de velocidad de ataque durante segundos, hasta un .",
+        "snoId": 1106475
+    },
+    "desgarrador_de_carne": {
+        "desc": "Después de que Descomponer genera un cadáver, obtienes de Esencia.",
+        "snoId": 1106485
+    },
+    "astillado": {
+        "desc": "El ataque primario de Lanza Ósea vuelve vulnerables a los enemigos que golpees, además del primero, durante segundos. Los fragmentos de hueso de Lanza Ósea infligen un más de daño a los enemigos vulnerables y los perforan.",
+        "snoId": 1106590
+    },
+    "de_oscuridad_profunda": {
+        "desc": "Prisión de Huesos genera un charco de Infestación que inflige un más de daño durante segundos.",
+        "snoId": 1106635
+    },
+    "del_vacío": {
+        "desc": "Cuando se genera, el área contaminada por Infestación atrae a enemigos alrededor del área afectada.",
+        "snoId": 1106639
+    },
+    "putrefacto": {
+        "desc": "Descomponer puede rebotar hasta en objetivos adicionales. Cuando Descomponer genera un cadáver, tiene un de probabilidad de generar un cadáver debajo de todos los objetivos afectados.",
+        "snoId": 1106650
+    },
+    "del_segador_potenciador": {
+        "desc": "Infligir daño con Escindir tiene de probabilidad de generar un charco de Infestación bajo el objetivo que inflige de daño bonificado. Este efecto solo puede ocurrir una vez cada segundos.",
+        "snoId": 1106675
+    },
+    "portador_de_frío": {
+        "desc": "Cada segundos, tus Magos Esqueléticos lanzan una ventisca que inflige de daño de frío e hiela de forma continua a los enemigos por durante segundos.",
+        "snoId": 1106690
+    },
+    "de_rastreasangre": {
+        "desc": "Lanza Sangrienta inflige un más de daño a su objetivo principal por enemigo atravesado.",
+        "snoId": 1106117
+    },
+    "de_sangre_hambrienta": {
+        "desc": "Cada lanzamiento de Lanza Sangrienta generará una Lanza Sangrienta adicional en un enemigo cercano cuando golpee primero a un enemigo ya atravesado por una lanza, lo que inflige de daño normal.",
+        "snoId": 1106130
+    },
+    "del_dominio_ocultista": {
+        "desc": "Tu cantidad máxima de Magos Esqueléticos aumenta en .",
+        "snoId": 1106156
+    },
+    "ensangrentado": {
+        "desc": "La nova de Torrente Sanguíneo hace eco nuevamente tras un breve lapso e inflige un menos de daño.",
+        "snoId": 1221658
+    },
+    "de_maldición_creciente": {
+        "desc": "Espíritu Óseo inflige más daño según la distancia recorrida, hasta un .",
+        "snoId": 1106206
+    },
+    "de_huesos_explosivos": {
+        "desc": "Cuando se destruye o caduca un segmento de Prisión de Huesos, inflige de daño en el área circundante.",
+        "snoId": 1106224
+    },
+    "del_comandante_implacable": {
+        "desc": "Mientras Ejército de Muertos está activa, tus esbirros obtienen un de velocidad de ataque y reciben un de daño reducido.",
+        "snoId": 1106382
+    },
+    "de_tormenta_protectora": {
+        "desc": "Cada vez que Tormenta Ósea inflige daño a un enemigo, obtienes una barrera equivalente al de tu vida de base durante segundos.",
+        "snoId": 1106392
+    },
+    "de_venas_inmovilizantes": {
+        "desc": "Obtienes un más de probabilidad de golpe crítico durante segundos al lanzar Zarcillos Cadavéricos. Infliges un más de daño de golpe crítico a los enemigos dañados por Zarcillos Cadavéricos.",
+        "snoId": 1106529
+    },
+    "del_obtenedor_de_sangre": {
+        "desc": "Tu cantidad máxima de Guerreros Esqueléticos aumenta en .",
+        "snoId": 1106545
+    },
+    "de_tormento": {
+        "desc": "Los golpes críticos infligidos con habilidades de Hueso aumentan la Regeneración de Esencia en durante segundos.",
+        "snoId": 1224752
+    },
+    "de_sierra": {
+        "desc": "La pasiva clave Esencia Osificada también aumenta el daño de golpe crítico de tus habilidades de Hueso un por Esencia arriba de , hasta un máximo del .",
+        "snoId": 1221425
+    },
+    "vendaval_óseo": {
+        "desc": "Tormenta Ósea consume hasta cadáveres para aumentar su duración hasta segundos.",
+        "snoId": 1220407
+    },
+    "de_carne_expuesta": {
+        "desc": "Golpe afortunado Hasta un de probabilidad de generar de Esencia cuando golpeas a un enemigo vulnerable.",
+        "snoId": 1220423
+    },
+    "infestado": {
+        "desc": "Infliges un más de daño durante segundos después de que la pasiva clave Infestación Umbría inflija daño a los enemigos veces.",
+        "snoId": 1220473
+    },
+    "tortuoso": {
+        "desc": "Los enemigos afectados por tu Doncella de Hierro tienen un de probabilidad de ser aturdidos durante segundo cuando se les inflige daño directo.",
+        "snoId": 1221466
+    },
+    "de_los_condenados": {
+        "desc": "Infliges un más de daño de sombra a los enemigos afectados por Decrepitar y Doncella de Hierro.",
+        "snoId": 1221014
+    },
+    "de_putrefacción": {
+        "desc": "Cada vez que la pasiva clave Infestación Umbría inflige daño a los enemigos, aumenta el daño de la siguiente Infestación Umbría que se lance en los siguientes segundos un , y se puede acumular hasta veces.",
+        "snoId": 1221533
+    },
+    "mareal": {
+        "desc": "Ola Sangrienta dispara dos olas adicionales, cada una inflige un menos de daño que la anterior.",
+        "snoId": 1223789
+    },
+    "sangre_veloz": {
+        "desc": "Los Orbes de Sangre reducen la recuperación de tu habilidad máxima segundos.",
+        "snoId": 1221650
+    },
+    "de_elegido_de_rathma": {
+        "desc": "Cada vez que tus habilidades de Sangre abrumen, obtienes un de velocidad de ataque durante segundos.",
+        "snoId": 1221701
+    },
+    "de_muerte_prematura": {
+        "desc": "Si te sanas más de un de tu vida máxima, cada porcentaje adicional te otorga un de bonificación de daño de abrumador en tu siguiente ataque abrumador, hasta un máximo del .",
+        "snoId": 1221706
+    },
+    "de_sangre_potente": {
+        "desc": "Si estás Saludable, los Orbes de Sangre te otorgan de Esencia.",
+        "snoId": 1221644
+    },
+    "corpulento": {
+        "desc": "Tu Gólem tiene un de probabilidad de reducir su recuperación activa segundos y también un de probabilidad de generar un cadáver cada vez que inflige daño a un enemigo con su ataque normal.",
+        "snoId": 1222122
+    },
+    "de_huesos_endurecidos": {
+        "desc": "Tus esbirros ganan de aumento de reducción de daño.",
+        "snoId": 1222591
+    },
+    "sacrificial": {
+        "desc": "Tus bonificaciones de Sacrificio aumentan un .",
+        "snoId": 1222267
+    },
+    "réquiem": {
+        "desc": "Obtienes de Esencia máxima por esbirro activo.",
+        "snoId": 1223238
+    },
+    "de_reanimación": {
+        "desc": "Tus esbirros ganan más daño mientras están vivos, hasta después de segundos.",
+        "snoId": 1223322
+    },
+    "cadavérico": {
+        "desc": "Consumir un cadáver aumenta el daño de tu siguiente habilidad principal un , hasta un .",
+        "snoId": 1222414
+    },
+    "del_embalsamador": {
+        "desc": "Consumir un cadáver tiene un de probabilidad de generar un Orbe de Sangre.",
+        "snoId": 1222471
+    },
+    "de_sombra_definitiva": {
+        "desc": "Tormenta Ósea y Ola Sangrienta ahora son también habilidades de Oscuridad, que infligen daño de sombra y obtienen efectos adicionales Los enemigos dañados por Tormenta Ósea reciben de daño de sombra durante segundos. Ola Sangrienta crea Tierra Profanada por la que se desplaza e inflige de daño de sombra durante segundos.",
+        "snoId": 1106218
+    },
+    "de_niebla_explosiva": {
+        "desc": "Niebla Sangrienta activa Explosión Cadavérica en los cadáveres circundantes. Cuando Niebla Sangrienta detona un cadáver, su recuperación se reduce segundos.",
+        "snoId": 1106610
+    },
+    "de_púas_truculentas": {
+        "desc": "Conjurar Lanza Sangrienta consumirá Orbes de Sangre para también generar lanzas de ellos. Cada Lanza Sangrienta adicional inflige un del daño normal y prioriza como objetivo a enemigos no atravesados.",
+        "snoId": 1439750
+    },
+    "de_la_larga_sombra": {
+        "desc": "Golpe afortunado Tus efectos de daño de sombra con el tiempo tienen un de probabilidad de generar Esencia. El daño de tu Infestación Umbría Pasiva clave siempre generará Esencia.",
+        "snoId": 1622848
+    },
+    "de_imbuición_imitada": {
+        "desc": "Tus Clones Umbríos también imitan las imbuiciones aplicadas a tus habilidades. Lanzar una habilidad de Imbuición le otorga a tu Clon Umbrío activo un más de daño durante segundos.",
+        "snoId": 1106666
+    },
+    "envolvente": {
+        "desc": "Obtienes una sombra de Sudario Oscuro sin costo cada segundos mientras permaneces inmóvil. Cada sombra de Sudario Oscuro otorga un más de reducción de daño.",
+        "snoId": 1106674
+    },
+    "artero": {
+        "desc": "Cada vez que Disparo Penetrante inflige daño a un enemigo, se divide en flechas más a cada lado. Estas flechas laterales infligen un del daño de base de Disparo Penetrante y no se dividen.",
+        "snoId": 1106115
+    },
+    "de_cuchillas_circundantes": {
+        "desc": "Ráfaga inflige daño a los enemigos en un círculo a tu alrededor e inflige un más de daño.",
+        "snoId": 1106126
+    },
+    "de_sombras_volátiles": {
+        "desc": "Cuando se elimina una sombra de Sudario Oscuro, se activa una explosión a tu alrededor que inflige de daño de sombra.",
+        "snoId": 1106158
+    },
+    "energizante": {
+        "desc": "Infligir daño a un enemigo de Élite con una habilidad básica genera de Energía.",
+        "snoId": 1106168
+    },
+    "de_sorpresa": {
+        "desc": "Cuando usas Evadir o Paso Umbrío, dejas un cúmulo de Granadas Aturdidoras explosivas que infligen de daño físico total y aturden a los enemigos durante segundos.",
+        "snoId": 1106222
+    },
+    "del_embustero": {
+        "desc": "Abrojos también lanza un cúmulo de Granadas Aturdidoras explosivas que infligen de daño físico total y aturden a los enemigos durante segundos.",
+        "snoId": 1106238
+    },
+    "de_imbuiciones_inestables": {
+        "desc": "Cuando lanzas una habilidad de Imbuición, se activa una explosión a tu alrededor, lo que aplica los efectos de Imbuición e inflige de daño del mismo tipo.",
+        "snoId": 1106246
+    },
+    "del_bailarín_de_cuchillas": {
+        "desc": "Cuchillas Inteligentes orbita durante un breve lapso después de regresar a ti, por lo que infliges un de daño de regreso de las Cuchillas Inteligentes por golpe. Según la distancia de regreso de las cuchillas, el daño al orbitar aumenta hasta un del daño de regreso.",
+        "snoId": 1106259
+    },
+    "del_alquimista_tóxico": {
+        "desc": "Golpe afortunado Cuando infliges daño a un enemigo envenenado con una habilidad de Imbuición Umbría tienes hasta un de probabilidad de crear una explosión tóxica que aplica de daño de veneno durante segundos al objetivo y a los enemigos circundantes.",
+        "snoId": 1106283
+    },
+    "del_alquimista_helado": {
+        "desc": "Golpe afortunado Cuando infliges daño a un enemigo helado o congelado con una habilidad de Imbuición Umbría tienes hasta un de probabilidad de liberar una explosión que inflige de daño de frío al objetivo y a los enemigos circundantes, lo que los hiela por .",
+        "snoId": 1106291
+    },
+    "rebanasombras": {
+        "desc": "Cuando usas Arremetida, se genera un Clon Umbrío en tu ubicación, que también usa Arremetida e inflige un del daño de base.",
+        "snoId": 1106314
+    },
+    "de_tormentas_de_flechas": {
+        "desc": "Golpe afortunado Tus habilidades de Tirador tienen hasta un de probabilidad de crear una tormenta de flechas en la ubicación del enemigo, lo que inflige de daño físico durante segundos. Puedes tener hasta tormentas de flechas activas.",
+        "snoId": 1106339
+    },
+    "de_venenos_explosivos": {
+        "desc": "Golpe afortunadoLas habilidades de Imbuición Venenosa tienen hasta un de probabilidad de crear un charco tóxico que inflige de daño de veneno durante segundos a los enemigos dentro. Al permanecer en el charco, tu habilidad de Imbuición Venenosa no tiene recuperación ni límite de cargas.",
+        "snoId": 1106355
+    },
+    "de_descargas_ramificadas": {
+        "desc": "Las flechas de Aluvión tienen un de probabilidad de dividir flechas siempre que reboten.",
+        "snoId": 1208170
+    },
+    "del_trampero_explosivo": {
+        "desc": "Golpe afortunado Al infligir daño directo a enemigos afectados por tus habilidades de Trampa, tienes hasta un de probabilidad de volverlos vulnerables durante segundos.",
+        "snoId": 1186573
+    },
+    "del_ímpetu_explosivo": {
+        "desc": "Tus habilidades de Granada cuentan como habilidades de Trampa. Cuando armas una Trampa o sueltas Granadas, obtienes un más de velocidad de movimiento durante segundos.",
+        "snoId": 1218947
+    },
+    "de_traición_asombrosa": {
+        "desc": "Infligir daño directo a un enemigo atontado con una habilidad de Agilidad te otorga Sigilo durante segundos. Si rompes el Sigilo con un ataque recibes un de reducción de duración de pérdida de control durante segundos.",
+        "snoId": 1184417
+    },
+    "de_cruel_sustento": {
+        "desc": "Las explosiones de la pasiva clave Victimizar te sanan por de vida por cada enemigo dañado, hasta un máximo de de vida.",
+        "snoId": 1184011
+    },
+    "vengativo": {
+        "desc": "Golpe afortunado Volver vulnerable a un enemigo tiene un de probabilidad de otorgar un más de probabilidad de golpe crítico durante segundos, hasta un .",
+        "snoId": 1184524
+    },
+    "voraz": {
+        "desc": "Matar a un enemigo vulnerable te otorga un más de generación de Energía durante segundos.",
+        "snoId": 1184468
+    },
+    "del_escapista": {
+        "desc": "Tras recibir daño de enemigos circundantes, sueltas una Granada de Humo y evades los siguientes ataques dentro de un lapso de segundos. Este efecto solo puede ocurrir una vez cada segundos.",
+        "snoId": 1185975
+    },
+    "de_vigor_robado": {
+        "desc": "Cada acumulación de la pasiva clave Impulso te sana por de vida por segundo.",
+        "snoId": 1186855
+    },
+    "de_oportunista": {
+        "desc": "Cuando rompes el Sigilo con un ataque, sueltas un cúmulo de Granadas Aturdidoras explosivas alrededor de tu ubicación que infligen de daño físico total y aturden a los enemigos durante segundos.",
+        "snoId": 1189296
+    },
+    "de_niebla_aceleradora": {
+        "desc": "Sueltas automáticamente una Granada de Humo cuando termina Arremetida. Las Granadas de Humo reducen la recuperación de Arremetida en segundos por cada enemigo que golpees y hasta segundos.",
+        "snoId": 1187878
+    },
+    "del_engaño": {
+        "desc": "Recibes un menos de daño de enemigos bajo los efectos de control de multitudes. Cuando un enemigo bajo estos efectos te inflige daño directo, obtienes un de velocidad de movimiento durante segundos.",
+        "snoId": 1186373
+    },
+    "de_provisiones_succionadas": {
+        "desc": "Golpe afortunado Al infligir daño a un enemigo vulnerable con una habilidad principal, tienes hasta un de probabilidad de que suelte una poción de vida.",
+        "snoId": 1186377
+    },
+    "de_corrupción": {
+        "desc": "Los efectos de tus habilidades de Imbuición tienen un más de potencia contra enemigos vulnerables.",
+        "snoId": 1186379
+    },
+    "del_mutilador": {
+        "desc": "Golpe afortunado Al infligir daño directo a un enemigo vulnerable, tienes un de probabilidad de atontarlo durante segundos.",
+        "snoId": 1186692
+    },
+    "umbrío": {
+        "desc": "Golpe afortunado Los golpes críticos con habilidades de Tirador tienen un de probabilidad de otorgar una sombra de Sudario Oscuro gratuita.",
+        "snoId": 1220101
+    },
+    "de_hielo_nocivo": {
+        "desc": "Los enemigos helados envenenados por Imbuición Venenosa se helarán aún más, a una velocidad de por segundo. Infliges un más de daño de veneno a enemigos congelados.",
+        "snoId": 1302490
+    },
+    "del_arrasador": {
+        "desc": "Paso Umbrío tiene una carga adicional. Eliminar a un enemigo con Paso Umbrío restablece una carga y aumenta el daño de Paso Umbrío un , hasta un durante segundos.",
+        "snoId": 1304553
+    },
+    "de_sinergia": {
+        "desc": "Usar una habilidad de Agilidad reduce la recuperación de tu siguiente habilidad de Subterfugio un . Usar una habilidad de Subterfugio aumenta el daño de tu siguiente habilidad de Agilidad un .",
+        "snoId": 1301737
+    },
+    "de_anochecer_letal": {
+        "desc": "Evadir a través de un enemigo infectado con Imbuición Umbría te otorga sigilo durante segundos. Si rompes el sigilo con un ataque recibes un de vida máxima con cada eliminación durante segundos.",
+        "snoId": 1301760
+    },
+    "de_amenaza_elusiva": {
+        "desc": "Mientras tienes ambas bonificaciones de la pasiva clave Combate Cuerpo a Cuerpo activas, tu probabilidad de evadir aumenta un cuando te golpea un enemigo. Evadir exitosamente restablece esta bonificación.",
+        "snoId": 1304680
+    },
+    "del_infiltrador": {
+        "desc": "Trampa Venenosa ya no rompe el sigilo y no tiene recuperación al armarse mientras estás en sigilo. Todas las Trampas Venenosas se activan cuando sales del sigilo y la recuperación de Trampa Venenosa será de segundos por cada trampa colocada.",
+        "snoId": 1304821
+    },
+    "congelado": {
+        "desc": "Los enemigos helados que golpeas con tus habilidades de Granadas tienen una probabilidad igual al doble de tu probabilidad de golpe crítico de congelarse instantáneamente durante segundos. Infliges un más de daño de golpe crítico a los enemigos congelados.",
+        "snoId": 1302633
+    },
+    "repetidor": {
+        "desc": "Disparo Rápido tiene un de probabilidad de rebotar en otro objetivo.",
+        "snoId": 1206102
+    },
+    "quiebre_gélido": {
+        "desc": "Cada enemigo helado o congelado que atravieses al evadir te otorga una barrera que absorbe de daño durante segundos, hasta un máximo de de daño absorbido.",
+        "snoId": 1219217
+    },
+    "de_puntos_pestilentes": {
+        "desc": "El tercer lanzamiento de Punzar tiene Imbuición Venenosa con un de la potencia normal.",
+        "snoId": 1439745
+    },
+    "de_iniciativa_artística": {
+        "desc": "Cuando gastas de Energía, liberas un cúmulo de Granadas Aturdidoras que explotan e infligen de daño físico total y aturden a los enemigos por segundos. Tus Habilidades de Granada infligen más de daño.",
+        "snoId": 1620632
+    },
+    "de_brasas_vinculantes": {
+        "desc": "Escudo Ígneo te permite moverte sin impedimentos entre los enemigos. Los enemigos por los que te mueves mientras Escudo Ígneo está activa quedan inmovilizados durante segundos.",
+        "snoId": 1106399
+    },
+    "de_la_guardia_de_nieve": {
+        "desc": "Mientras estás dentro de tu propia Ventisca y durante segundos después de partir, recibes menos de daño.",
+        "snoId": 1106418
+    },
+    "de_tres_maldiciones": {
+        "desc": "Aumenta el daño de golpe crítico de Meteoro y Bola de Fuego en . La bonificación se duplica contra objetivos saludables.",
+        "snoId": 1106440
+    },
+    "de_estática_perforadora": {
+        "desc": "Las Centellas perforan, pero infligen un menos de daño a los objetivos golpeados después del primer impacto.",
+        "snoId": 1106489
+    },
+    "bombardeo_gélido": {
+        "desc": "Nova Gélida obtiene una carga adicional, pero la recuperación por carga aumenta un .",
+        "snoId": 1106548
+    },
+    "cargado": {
+        "desc": "Recolectar Energía Crepitante aumenta tu velocidad de movimiento un durante segundos.",
+        "snoId": 1106644
+    },
+    "(ph)_of_ensnaring_current": {
+        "desc": "Rayo Globular arrastra a los enemigos a medida que se desplaza.",
+        "snoId": 1106717
+    },
+    "de_orbe_gélido": {
+        "desc": "Orbe Gélido permanece en su lugar cuando llega a su destino y explota veces más por de su daño.",
+        "snoId": 1106733
+    },
+    "serpentino": {
+        "desc": "Podrás tener Hidra adicional activa y la duración de Hidra aumenta en .",
+        "snoId": 1106123
+    },
+    "de_armagedón": {
+        "desc": "Una lluvia de meteoritos cae mientras dura Infierno, lo que inflige de daño de fuego al impactar. Tus meteoritos inmovilizan a los enemigos durante segundos.",
+        "snoId": 1106174
+    },
+    "de_conflagración": {
+        "desc": "Al canalizar Incinerar, tu daño de quemadura aumenta un .",
+        "snoId": 1212473
+    },
+    "de_llama_ancestral": {
+        "desc": "Mientras ambas bonificaciones de la pasiva clave Ferocidad de Esu están activas, tu velocidad de ataque aumenta un .",
+        "snoId": 1212492
+    },
+    "de_llamas_envolventes": {
+        "desc": "Infliges más de daño de quemadura a los enemigos con menos de de vida. Mientras los enemigos están bajo los efectos de más daño con el tiempo que su vida total, les infliges un más de daño de quemadura.",
+        "snoId": 1212468
+    },
+    "incendiario": {
+        "desc": "Golpe afortunado El daño de tus habilidades de Piromancia tiene hasta de probabilidad de restaurar de maná.",
+        "snoId": 1212482
+    },
+    "de_extremidades_chamuscadas": {
+        "desc": "Cuando la inmovilización desaparece, los enemigos son ralentizados un durante segundos.",
+        "snoId": 1213811
+    },
+    "del_caminante_ígneo": {
+        "desc": "Entrar en contacto con tu Muro de Fuego te otorga un de velocidad de movimiento durante segundos.",
+        "snoId": 1214264
+    },
+    "de_estrellas_destrozadas": {
+        "desc": "Caen meteoritos alrededor de Meteoro que infligen de daño de fuego al impactar. Tus meteoritos además queman a los enemigos que golpean por de daño durante segundos.",
+        "snoId": 1212514
+    },
+    "glacial": {
+        "desc": "Cuando lanzas Ventisca, esto hará aparecer periódicamente Púas de Hielo explosivas que infligen de daño. Tus Púas de Hielo infligen un más de daño a los enemigos congelados.",
+        "snoId": 1212317
+    },
+    "velo_de_nieve": {
+        "desc": "Lanzar Armadura Glacial te hace Imparable y otorga de armadura adicional durante segundos.",
+        "snoId": 1211282
+    },
+    "del_despertar_gélido": {
+        "desc": "Mientras Armadura Glacial está activa, dejas atrás Púas de Hielo explosivas que infligen de daño. Tus Púas Explosivas hielan a los enemigos por .",
+        "snoId": 1212315
+    },
+    "del_frío_penetrante": {
+        "desc": "Fragmentos de Hielo perfora veces, lo que inflige menos de daño por cada golpe consecutivo a un enemigo.",
+        "snoId": 1212505
+    },
+    "encerrado": {
+        "desc": "Mientras Congelación Extrema está activa, recuperas un de tu vida máxima y maná por segundo.",
+        "snoId": 1212496
+    },
+    "de_fortuna": {
+        "desc": "Tu probabilidad de golpe afortunado aumenta un mientras tengas una barrera activa.",
+        "snoId": 1212461
+    },
+    "de_frío_mordaz": {
+        "desc": "Cuando congelas a un enemigo, hay un de probabilidad de que se vuelva vulnerable durante segundos.",
+        "snoId": 1224522
+    },
+    "oleaje_de_tormenta": {
+        "desc": "Infliges un más de daño a los enemigos vulnerables mientras tengas una barrera.",
+        "snoId": 1224682
+    },
+    "de_la_tundra_congelada": {
+        "desc": "Mientras Congelación Extrema está activa, Púas de Hielo explosivas se forman en el área e infligen de daño de frío. Tus Púas de Hielo tienen un más de radio de explosión.",
+        "snoId": 1212280
+    },
+    "de_corrientes_abrumadoras": {
+        "desc": "Corrientes Inestables tiene un de probabilidad de lanzar una habilidad de Rayo adicional.",
+        "snoId": 1225182
+    },
+    "recarga": {
+        "desc": "Cada vez que Cadena de Relámpagos rebota, recibes de maná.",
+        "snoId": 1225217
+    },
+    "gravitatorio": {
+        "desc": "Rayo Globular orbita a tu alrededor e inflige más de daño.",
+        "snoId": 1229700
+    },
+    "del_señor_mago": {
+        "desc": "La pasiva clave Dominio de Vyr también otorga de reducción de daño por cada enemigo cercano hasta un .",
+        "snoId": 1227239
+    },
+    "de_energía_astillada": {
+        "desc": "Lanza de Rayo tiene un de probabilidad de generar una Lanza de Rayo adicional cuando la lanzas.",
+        "snoId": 1225294
+    },
+    "de_la_atadura_intacta": {
+        "desc": "Cadena de Relámpagos tiene un de probabilidad de encadenar veces adicionales.",
+        "snoId": 1225297
+    },
+    "del_conducto_de_salto": {
+        "desc": "Obtienes un de velocidad de movimiento durante segundos después de usar Teletransportar.",
+        "snoId": 1229077
+    },
+    "estable": {
+        "desc": "Cuando Corrientes Inestables no está activa, tus habilidades de Rayo tienen un de probabilidad de activar un lanzamiento de esta habilidad sin costo.",
+        "snoId": 1227269
+    },
+    "del_prodigio": {
+        "desc": "Usar una habilidad con recuperación restaura de maná.",
+        "snoId": 1214115
+    },
+    "del_firme": {
+        "desc": "Recibir daño directo tiene un de probabilidad de restablecer la recuperación de una de tus habilidades defensivas.",
+        "snoId": 1225190
+    },
+    "del_elementalista": {
+        "desc": "Las habilidades principales o de Dominio que se lanzan con de maná o superior obtienen un más de probabilidad de golpe crítico.",
+        "snoId": 1213532
+    },
+    "de_concentración": {
+        "desc": "Tu regeneración de maná aumenta un si no recibiste daño en los últimos segundos.",
+        "snoId": 1215683
+    },
+    "de_control": {
+        "desc": "Infliges un más de daño a los enemigos inmovilizados, aturdidos o congelados.",
+        "snoId": 1215771
+    },
+    "inmortal": {
+        "desc": "Recibes un menos de daño de los enemigos bajo los efectos de control de multitudes o vulnerables.",
+        "snoId": 1215398
+    },
+    "de_eficiencia": {
+        "desc": "Lanzar una habilidad básica reduce el costo de maná de tu siguiente habilidad principal o de Dominio un .",
+        "snoId": 1212247
+    },
+    "de_recuerdos_gélidos": {
+        "desc": "La pasiva clave Avalancha ahora se aplica a lanzamientos adicionales.",
+        "snoId": 1211551
+    },
+    "de_energía_abundante": {
+        "desc": "Energía Crepitante tiene un de probabilidad de encadenar a un enemigo adicional.",
+        "snoId": 1225569
+    },
+    "destruido": {
+        "desc": "Las explosiones de la pasiva clave Fragmentar infligen un más de daño si los enemigos mueren mientras están congelados.",
+        "snoId": 1211655
+    },
+    "de_protecciones_abrasadoras": {
+        "desc": "Después de gastar de maná, tu siguiente lanzamiento de Muro de Fuego es gratuito y destruirá pequeños misiles entrantes.",
+        "snoId": 1439761
+    },
+    "conjurador_de_batalla": {
+        "desc": "Golpe afortunado Cuando se activan tus Habilidades de Conjuración, tienes hasta de probabilidad de obtener Rango para tus habilidades de Conjuración por segundos. Esto se puede acumular hasta veces.",
+        "snoId": 1622933
+    }
+}

@@ -1,0 +1,958 @@
+{
+    "[n2]başıbozuk_sökme": {
+        "desc": "Çılgınlık sırasında doğrudan hasar verdiğinde saniye boyunca Temel hasarın kadarı ilave Kanama hasarı uygula.",
+        "snoId": 1105985
+    },
+    "deprem": {
+        "desc": "Tepinme, düşmanlara saniye boyunca Fiziksel hasar veren bir Deprem oluşturur. Depremin içinde artırılmış hasar verirsin.",
+        "snoId": 1105986
+    },
+    "kafatası_kıranın": {
+        "desc": "Kanayan bir düşmanı Sersemletmek, düşmana toplam Kanama miktarının kadarı Fiziksel hasar verir.",
+        "snoId": 1105987
+    },
+    "silah_ustasının": {
+        "desc": "Silah Ustalığı Yeteneklerin ek bir Yüke sahiptir. Şanslı Vuruş Bir düşmana Silah Ustalığı Yeteneği ile hasar vermek, onu en fazla ihtimalle saniye boyunca Sersemletir.",
+        "snoId": 1105988
+    },
+    "demir_kan": {
+        "desc": "Yakındaki her Kanayan düşman için maksimum olmak üzere Hasar Azaltma kazan.",
+        "snoId": 1105989
+    },
+    "savaş_delisi": {
+        "desc": "kez silah değiştirdikten sonra saniye boyunca Çılgınlık kazan.",
+        "snoId": 1105990
+    },
+    "[n2]yankılanan_hiddet": {
+        "desc": "Çığlık Yeteneklerin etkinken saniyede Hiddet oluşturur.",
+        "snoId": 1105991
+    },
+    "[n2]demir_savaşçı": {
+        "desc": "Demir Deri, Durdurulamaz ve Hasar Azaltma sağlar.",
+        "snoId": 1105992
+    },
+    "[n2]dev_adım": {
+        "desc": "Sıçranın Bekleme Süresini en fazla olmak üzere vurulan düşman başına saniye azaltır.",
+        "snoId": 1105994
+    },
+    "[n2]acımasız_başıbozuk": {
+        "desc": "Şanslı Vuruş Çekirdek Yetenek ile bir düşmana hasar vermek, Başıbozukluk süresini en fazla ihtimalle saniye uzatır. Kritik Vuruş olduğunda bu süre ikiye katlanır.",
+        "snoId": 1105995
+    },
+    "[n2]amansız_hiddet": {
+        "desc": "Çekirdek Yetenek ile düşman öldürmek veya bir Patrona vurmak, temel Hiddet bedelinin kadarını iade eder. Yetenek kullanımı başına sadece bir kez gerçekleşebilir.",
+        "snoId": 1105997
+    },
+    "[n2]kadim_yankı": {
+        "desc": "Şanslı Vuruş Kadimlerin Çağrısı, Eylem Çubuğundayken düşmanlara Sıçrama, Ayaklanma veya Burgaç ile hasar vermek en fazla ihtimalle aynı Yeteneği kullanacak bir Kadim çağırır.",
+        "snoId": 1105998
+    },
+    "[n2]hissizleştiren_gazap": {
+        "desc": "Maksimum Hiddet sırasında üretilen her bir Hiddet puanı Güçlendirme sağlar.",
+        "snoId": 1106001
+    },
+    "kavgacının": {
+        "desc": "Tekme veya Hücum ile hasar verilen düşmanlar sonraki saniye içinde öldürülürse çevredeki düşmanlara hasar vererek patlar.",
+        "snoId": 1106002
+    },
+    "kum_i̇blisinin": {
+        "desc": "Burgaç, arkasında çevredeki düşmanlara hasar veren Toz İblisleri bırakır.",
+        "snoId": 1106003
+    },
+    "[n2]arsız_gazap": {
+        "desc": "Hiddet harcadıktan sonraki Silah Ustalığı Yeteneğin, artırılmış hasar verir.",
+        "snoId": 1106004
+    },
+    "[n2]acımasız_silah_ustası": {
+        "desc": "Yürüyen Cephanelik Temel Pasifinden gelen tüm hasar bonusları etkinken artırılmış Hiddet Üretimi kazan.",
+        "snoId": 1106005
+    },
+    "[n2]başıbozuk_hiddeti": {
+        "desc": "Çılgınlık sırasında saniyede Hiddet kazanırsın.",
+        "snoId": 1106006
+    },
+    "ölüm_arzusu": {
+        "desc": "Çılgınlık sırasında Diken kazan.",
+        "snoId": 1106007
+    },
+    "[n2]korkunç_burgaç": {
+        "desc": "Burgacın Kritik Vuruş İhtimali, en fazla olmak üzere yönlendirildiği her saniye artar.",
+        "snoId": 1106009
+    },
+    "[n2]bul-kathos": {
+        "desc": "Sıçra, saniye boyunca Fiziksel hasar veren bir Deprem oluşturur. Depremin içinde artırılmış Hasar Azaltma kazanırsın.",
+        "snoId": 1106010
+    },
+    "rüzgâr_döven": {
+        "desc": "saniye içinde Çifte Savurmayı iki kez kullanmak, hedefin arkasındaki düşmanlara hasar veren bir Kum İblisi oluşturur.",
+        "snoId": 1106011
+    },
+    "kıdemli_kavgacının": {
+        "desc": "Çekirdek Yeteneklerinden biri bir düşmana her doğrudan hasar verdiğinde bir sonraki Hücum veya Sıçra en fazla olmak üzere artırılmış hasar verir.",
+        "snoId": 1106024
+    },
+    "[n2]kadim_kuvvet": {
+        "desc": "Kadimlerin Çekici dışa doğru sarsıntı yaratır ve verdiği hasar artar.",
+        "snoId": 1106025
+    },
+    "[n2]kavrayıcı_burgaç": {
+        "desc": "Burgaç düzenli aralıklarla düşmanları sana çeker.",
+        "snoId": 1106034
+    },
+    "sarsılmaz_başıbozuğun": {
+        "desc": "Şanslı Vuruş Başıbozukluk sırasında her doğrudan hasar verdiğinde en fazla ihtimalle Güçlendirme kazan.",
+        "snoId": 1106039
+    },
+    "atılgan_şefin": {
+        "desc": "Bir Çığlık Yeteneği kullandığında bu yeteneğin Bekleme Süresi, Yakındaki düşman başına saniye azalır. Azalma en fazla olabilir.",
+        "snoId": 1106041
+    },
+    "[n2]ebedî_ezme": {
+        "desc": "Tekme veya Tepinme ile bir düşmana hasar vermek, Sıçranın Bekleme Süresini sıfırlar.",
+        "snoId": 1105863
+    },
+    "[n2]anemi": {
+        "desc": "Şanslı Vuruş Kanayan düşmanlara doğrudan hasar vermek, onları saniyeliğine Sersemletmek en fazla ihtimalle Sersemletir.",
+        "snoId": 1201316
+    },
+    "ufalama": {
+        "desc": "Şanslı Vuruş Parçala en az bir Kanayan düşmana doğrudan hasar verdiğinde en fazla ihtimalle Hiddet kazanırsın.",
+        "snoId": 1202014
+    },
+    "toprak_vurucunun": {
+        "desc": "kez silah değiştirdikten sonra sıradaki Yeteneğin, Aşırı Güçlenerek artırılmış Aşırı Güç hasarı verir.",
+        "snoId": 1199203
+    },
+    "[n2]sertleştiren_darbe": {
+        "desc": "kez silah değiştirdikten sonra Güçlendirme kazan.",
+        "snoId": 1200857
+    },
+    "şans_getiren": {
+        "desc": "Yürüyen Cephanelik Temel Pasifinden gelen tüm hasar bonusları etkinken artırılmış Şanslı Vuruş İhtimali kazan.",
+        "snoId": 1199205
+    },
+    "ayı_klanı_başıbozuğunun": {
+        "desc": "Çılgınlık sırasında bir düşman öldürmek, saniye boyunca Kapışma Yeteneklerine ihtimalle artırılmış Bekleme Süresi Azaltma sağlar.",
+        "snoId": 1199207
+    },
+    "[n2]yanan_öfke": {
+        "desc": "Çılgınlık sırasında çevredeki düşmanlara her saniye Ateş hasarı verirsin.",
+        "snoId": 1105876
+    },
+    "şeytani": {
+        "desc": "Hiddet oluşturduktan sonra kullandığın Çekirdek Yeteneğin, hedefin arkasındaki düşmanlara hasar veren bir Kum İblisi oluşturur.",
+        "snoId": 1199627
+    },
+    "[n2]sınırsız_öfke": {
+        "desc": "Maksimum Hiddet sırasında ürettiğin her Hiddet puanı, sonraki Çekirdek Yeteneğin için en fazla olmak üzere artırılmış hasar sağlar.",
+        "snoId": 1106289
+    },
+    "[n2]hücum": {
+        "desc": "Hücum kullanıldığında, kendileri de Hücum eden ve normal hasarın kadarı hasar veren Kadim çağırılır.",
+        "snoId": 1427872
+    },
+    "serkeş_kesik": {
+        "desc": "Kesik kullandığında düşmanlardaki Kanama hasarı ortadan kalkmaz. Bu etki saniyede bir kez gerçekleşebilir.",
+        "snoId": 1603699
+    },
+    "[n2]doyumsuz": {
+        "desc": "Doğra ile bir düşman öldürdükten sonra kullanılan Kurt Adam Yeteneği daha fazla Ruh üretir ve artırılmış hasar verir.",
+        "snoId": 1106044
+    },
+    "parçalanmış": {
+        "desc": "Bir Ayı Adam olarak vurulduğunda ihtimalle Ruh kazanırsın.",
+        "snoId": 1106047
+    },
+    "[n2]sakin_esinti": {
+        "desc": "Şanslı Vuruş Rüzgâr Kırılması en fazla ihtimalle Ruhunu tamamen yeniler.",
+        "snoId": 1106050
+    },
+    "[n2]fırtına": {
+        "desc": "Kasırga hasarı, etkin olduğu her saniye artar.",
+        "snoId": 1106053
+    },
+    "[n2]kayan_kum": {
+        "desc": "Toprak Yetenekleri ile hasar alan düşmanlar saniye boyunca Yavaşlatılır.",
+        "snoId": 1106058
+    },
+    "çarpma_taşı": {
+        "desc": "Toprak Yetenekleri, Kitle Kontrolü altındaki düşmanlara daha fazla Kritik Vuruş Hasarı verir.",
+        "snoId": 1206644
+    },
+    "[n2]onarım_taşı": {
+        "desc": "Toprak Siperi süresi saniye artar. Ek olarak Toprak Yetenekleri ile bir düşman öldürmek, etkin Toprak Siperi Bariyerinin kadarını yeniler.",
+        "snoId": 1106061
+    },
+    "aşırı_yüklü": {
+        "desc": "Şanslı Vuruş Yıldırım hasarı verirken en fazla ihtimalle hedefi saniye boyunca aşırı yüklemek, hedefe verdiğin herhangi bir doğrudan hasarın çevredeki düşmanlara ek hasar vermesine neden olur.",
+        "snoId": 1106063
+    },
+    "[n2]doğal_denge": {
+        "desc": "Bir Fırtına Yeteneği kullanmak, Toprak Yeteneklerine saniyeliğine Kritik Vuruş Hasarı kazandırır. Bir Toprak Yeteneği kullanmak, Fırtına Yeteneklerinin Kritik Vuruş İhtimalini saniyeliğine artırır.",
+        "snoId": 1106064
+    },
+    "[n2]hainin_borcu": {
+        "desc": "Zehirlenmiş bir düşmana Ayı Adam Yeteneği ile hasar vermek, anında Zehirleme hasarının kadarı hasar verir ve Zehirlemeyi tüketir.",
+        "snoId": 1201950
+    },
+    "deri_gezicinin": {
+        "desc": "Formunu değiştiren bir Şekil Değiştirme Yeteneği kullandığında Can kazan. Canın tamamen doluysa aynı miktarda Güçlendirme kazan.",
+        "snoId": 1200308
+    },
+    "sismik_kayma": {
+        "desc": "Toprak Dikeni, bir çizgi boyunca sivri dikenler fırlatır ve saniyelik bir Bekleme Süresine sahiptir.",
+        "snoId": 1106138
+    },
+    "[n2]ezilmiş_dünya": {
+        "desc": "Ez artık süresi boyunca normal hasar veren Heyelan toprak sütunu çağırır. Ez artık aynı zamanda bir Doğa Sihri ve Toprak Yeteneği hâline gelir.",
+        "snoId": 1106166
+    },
+    "fırtına_pençesinin": {
+        "desc": "Doğra ile yapılan Kritik Vuruşlar, verilen hasarın kadarını hedefe ve çevredeki düşmanlara Yıldırım hasarı olarak verir.",
+        "snoId": 1106189
+    },
+    "dengelenmiş": {
+        "desc": "Bozayı Öfkesi etkinken Maksimum Ruhunu ve Ruh Üretimini artır.",
+        "snoId": 1106190
+    },
+    "[n2]siklonik_kuvvet": {
+        "desc": "Kasırga Zırhı ayrıca Fiziksel Hasar Azaltma sağlar. Ek olarak Kasırga Zırhı, tüm Yakın Müttefiklere de uygulanır.",
+        "snoId": 1106217
+    },
+    "[n2]artçı_şok": {
+        "desc": "Heyelanın toprak sütunlarının her biri ikinci kez vurur ve vuruş başına ek bonus hasar verir.",
+        "snoId": 1106228
+    },
+    "[n2]ayı_dehşeti": {
+        "desc": "Ufala artık aynı zamanda bir Toprak Yeteneği hâline gelir. Ufala kullanıldıktan sonra tektonik dikenler saniye boyunca hasar vermeye devam eder.",
+        "snoId": 1106260
+    },
+    "[n2]misilleme": {
+        "desc": "Çekirdek Yeteneklerin, Güçlendirme miktarına bağlı olarak en fazla kadar artırılmış hasar verir.",
+        "snoId": 1106321
+    },
+    "şok_dalgası": {
+        "desc": "Ufala, yolundaki hedeflere hasarının kadarına eşit hasar verip ileriye doğru hareket eden bir şok dalgası oluşturur.",
+        "snoId": 1106341
+    },
+    "[n2]alfa": {
+        "desc": "Kurt Yoldaşların, Kurt Adam Yoldaşlarına dönüşür. Kurt Adam Yoldaşlar ek hasar verir ve Kuduz yayabilir.",
+        "snoId": 1106347
+    },
+    "gece_uluyanının": {
+        "desc": "Kan Uluması, Kritik Vuruş İhtimalini artırır. Kan Uluması ayrıca saniye boyunca Yakın Yoldaşları ve Oyuncuları da etkiler.",
+        "snoId": 1106379
+    },
+    "[n2]doğanın_vahşeti": {
+        "desc": "Doğanın Hiddeti Temel Pasifleri için Kurt Adam Yetenekleri, Fırtına Yetenekleri gibi işler ve Ayı Adam Yetenekleri, Toprak Yetenekleri gibi işler.",
+        "snoId": 1106384
+    },
+    "önderin": {
+        "desc": "Çekirdek Yetenekler, her etkin Yoldaş için ek hasar verir.",
+        "snoId": 1106407
+    },
+    "dinç": {
+        "desc": "Kurt Adam olarak Şekil Değiştirirken Hasar Azaltma kazan.",
+        "snoId": 1206401
+    },
+    "[n2]karanlık_uluma": {
+        "desc": "Zayıflatıcı Kükreme artık bir Kurt Adam Yeteneği olur. Ek olarak Zayıflatıcı Kükreme Zehirlenen düşmanları saniyeliğine Sabitler.",
+        "snoId": 1201796
+    },
+    "[n2]dehşet_saçan_canavar": {
+        "desc": "Bozayı Öfkesi süresi saniye artar. Ek olarak Bozayı Öfkesi etkinken yapılan Kritik Vuruşlar, süre boyunca Kritik Vuruş Hasarını artırır. Bu artış en fazla olabilir.",
+        "snoId": 1205996
+    },
+    "[n2]deli_öfkesi": {
+        "desc": "Ayrıca sen kazandığında Yoldaşların da Hayvani Taşkınlık Temel Pasifinden bonus kazanır.",
+        "snoId": 1205052
+    },
+    "balistik": {
+        "desc": "Güçlendirmeye sahipken Toprak Yeteneklerin Kademe kazanır.",
+        "snoId": 1202438
+    },
+    "fırtına_değiştiricinin": {
+        "desc": "Kasırga etkinken Şekil Değiştirme Yeteneklerin için Kademe kazan.",
+        "snoId": 1202540
+    },
+    "fırtına_avcısının": {
+        "desc": "Hortum, maksimum hedefi arar.",
+        "snoId": 1105817
+    },
+    "rün_i̇şçisinin_kanalı": {
+        "desc": "Kullandığın Fırtına Yetenekleri ile yapılan Kritik Vuruşlar saniye boyunca etrafındaki havayı yükleyerek bölgedeki bir düşmana düzenli aralıklarla Yıldırım hasarı veren Yıldırım çarpmasına neden olur. Bu süre, ilave Kritik Vuruşlarla uzatılabilir.",
+        "snoId": 1105842
+    },
+    "kudretli_fırtınanın": {
+        "desc": "Toprak Kudreti Temel Pasifi ayrıca Fırtına Yeteneklerin için de geçerlidir.",
+        "snoId": 1105865
+    },
+    "simbiyotik": {
+        "desc": "Doğanın Hiddeti Temel Pasifi, bedelsiz bir Yeteneği tetiklediğinde karşı türdeki Ulti olmayan yeteneklerinin Bekleme Süresi saniye azalır.",
+        "snoId": 1212893
+    },
+    "toprak_muhafızı": {
+        "desc": "Kitle Kontrolü altındaki her düşman için bir sonraki Toprak Siperi için maksimum olmak üzere bonus miktar kazan.",
+        "snoId": 1214291
+    },
+    "yıldırım_dansçısının": {
+        "desc": "Yıldırım Fırtınası Kritik Vuruşları, alandaki düşmanları arayarak Yıldırım hasarı veren Dans Eden Yıldırım oluşturur.",
+        "snoId": 1105811
+    },
+    "korkunç_kurdun": {
+        "desc": "Bozayı Öfkesi artık seni Korkunç Kurt Adama dönüştürür. Korkunç Kurt Adam olarak Hasar Azaltma yerine Hareket Hızı ve Ruh bedeli azaltma bonusu kazanırsın. Ayrıca yaptığın öldürmeler Maksimum Canını kadar İyileştirir.",
+        "snoId": 1105800
+    },
+    "[n2]i̇zdiham": {
+        "desc": "ek Yoldaş kazan. Ek olarak Yoldaş Yeteneklerin bonus hasar verir.",
+        "snoId": 1222401
+    },
+    "[n2]başkalaşım_taşı": {
+        "desc": "Kaya artık bir Çekirdek Yetenek olur ve normal hasarın kadarı hasar vererek Ruha mal olur.",
+        "snoId": 1338010
+    },
+    "[n2]donuk_canavar": {
+        "desc": "Doğra, ileri atılırken Yakındaki Zehirlenmiş düşmanları arar ve onlara Zehirleme hasarının kadarını anında uygular.",
+        "snoId": 1338284
+    },
+    "[n2]yer_altı": {
+        "desc": "Zehirli Sarmaşığın aktifi ayrıca çevrene çember şeklinde Heyelan uygular. Toprak Yetenekleri, Zehirlenmiş düşmanlara fazladan hasar verir.",
+        "snoId": 1433952
+    },
+    "[n2]saf_kudret": {
+        "desc": "Ayı Adam Yeteneklerinle düşmana vurduktan sonra sıradaki Ayı Adam Yeteneğin fazladan hasar verir ve düşmanları saniyeliğine Sersemletir.",
+        "snoId": 1619484
+    },
+    "yıldız_işığı": {
+        "desc": "Canını her iyileştirdiğinde Birincil Kaynak kazan.",
+        "snoId": 1106452
+    },
+    "[n2]kudret": {
+        "desc": "Temel Yetenekler, saniye boyunca Hasar Azaltma sağlar.",
+        "snoId": 1106483
+    },
+    "[n2]koruyucu": {
+        "desc": "Seçkin bir düşmana hasar vermek, sana saniye boyunca en fazla hasar emen bir Bariyer sağlar. Bu etki yalnızca her saniyede bir gerçekleşebilir.",
+        "snoId": 1106507
+    },
+    "[n2]i̇ç_sakinlik": {
+        "desc": "En fazla olmak üzere hareketsiz kaldığın her saniye için artırılmış hasar ver.",
+        "snoId": 1106533
+    },
+    "rüzgâr_vurucu": {
+        "desc": "Kritik Vuruşlar, en fazla saniye olmak üzere saniyeliğine Hareket Hızı sağlar.",
+        "snoId": 1106547
+    },
+    "[n2]gölge": {
+        "desc": "Bir düşmana Kitle Kontrolü uyguladığında Birincil Kaynağını kadar yenile.",
+        "snoId": 1106601
+    },
+    "kibirli": {
+        "desc": "Etkin bir Bariyere sahipken artırılmış hasar ver.",
+        "snoId": 1106658
+    },
+    "koruyan": {
+        "desc": "Sağlıklı değilken isabet aldığında etrafına saniyeliğine sihirli bir baloncuk çağrılır. Oyuncular, baloncuğun içindeyken Bağışık olur. Yalnızca saniyede bir kez gerçekleşebilir.",
+        "snoId": 1106730
+    },
+    "[n2]i̇taatsizlik": {
+        "desc": "Herhangi bir türden hasar verdiğinde saniye boyunca en fazla kadar birikebilen artırılmış Zırh kazanırsın.",
+        "snoId": 1106104
+    },
+    "[n2]i̇ntikam": {
+        "desc": "Uzak düşmanlar sana vurduklarında saniye boyunca ihtimalle Sersemler. Sersemlemiş düşmanlara artırılmış hasar verirsin.",
+        "snoId": 1106134
+    },
+    "hızlı": {
+        "desc": "Temel Yetenekler Saldırı Hızı kazandırır.",
+        "snoId": 1106177
+    },
+    "eşik_ustasının": {
+        "desc": "Yetenekler, kullanıldıklarında mevcut Birincil Kaynağına bağlı olarak en fazla kadar artırılmış hasar verir ve Birincil Kaynağın tamamen doluyken maksimum fayda sağlar.",
+        "snoId": 1106385
+    },
+    "[n2]deneyimli_bilge": {
+        "desc": "Her Yakın düşman için saniye başına en fazla Can olmak üzere Canın saniyede iyileşir.",
+        "snoId": 1106409
+    },
+    "[n2]bekleyen": {
+        "desc": "Düşmanlara bir Temel Yetenek ile saldırmak, bir sonraki Çekirdek Yeteneğin hasarını en fazla olmak üzere artırır.",
+        "snoId": 1106426
+    },
+    "hayalet_gezici": {
+        "desc": "Durdurulamaz durumdayken ve sonraki saniye artırılmış Hareket Hızı kazanırsın ve düşmanların arasında özgürce hareket edebilirsin.",
+        "snoId": 1225424
+    },
+    "[n2]paylaşılan_sefalet": {
+        "desc": "Şanslı Vuruş Kitle Kontrolü etkisindeki bir düşmana vuruş yaptığında bu Kitle Kontrol etkisi ihtimalle etki altında olmayan başka bir düşmana yayılır.",
+        "snoId": 1227282
+    },
+    "firar_etme": {
+        "desc": "Kitle Kontrolü etkisi altındayken Yaralı hâle gelmek seni saniye boyunca Durdurulamaz yapar. Bu etkinin saniyelik bir Bekleme Süresi vardır.",
+        "snoId": 1223891
+    },
+    "asimilasyon": {
+        "desc": "Zamanla Hasar etkileriyle etkilenen düşmanlara karşı artırılmış Sıyrılma İhtimaline sahip olursun. Sıyrıldığında Birincil Kaynak kazanırsın.",
+        "snoId": 1226354
+    },
+    "i̇ğne_parlaması": {
+        "desc": "Dikenlerin hasarı, ihtimalle çevrendeki tüm düşmanlara hasar verir.",
+        "snoId": 1227650
+    },
+    "[n2]saptıran_bariyer": {
+        "desc": "Etkin bir Bariyere sahipken Uzak düşmanlardan gelen doğrudan hasarı ihtimalle yok sayarsın.",
+        "snoId": 1225448
+    },
+    "mahvetme": {
+        "desc": "Yaralı düşmanlara karşı artırılmış Kritik Vuruş İhtimaline sahip olursun. Sağlıklıyken artırılmış Kitle Kontrolü Süresi kazanırsın.",
+        "snoId": 1105844
+    },
+    "hızlandırıcı": {
+        "desc": "Çekirdek Yeteneklerle yaptığın Kritik Vuruşlar, Saldırı Hızını saniyeliğine artırır.",
+        "snoId": 1105816
+    },
+    "hilecinin": {
+        "desc": "artırılmış Kitle Kontrolü Süresine sahip olursun. Düşmanlar Durdurulamazken onlara artırılmış hasar verirsin.",
+        "snoId": 1225582
+    },
+    "[n2]korkak": {
+        "desc": "Yavaşlatılmış veya Soğutulmuş düşmanlardan uzaklaşırken artırılmış Hareket Hızı kazanırsın.",
+        "snoId": 1437498
+    },
+    "[n2]cüretkârlık": {
+        "desc": "Yakında en az düşman olduğunda bu düşmanlar saniyeliğine Sersemletilir. Sadece her saniyede bir gerçekleşebilir.",
+        "snoId": 1438478
+    },
+    "[n2]elementlerin": {
+        "desc": "Bir hasar türü grubuna saniye boyunca artırılmış hasar kazan. Bu etki set arasında değişir Ateş, Yıldırım ve Fiziksel. Soğuk, Zehir ve Gölge.",
+        "snoId": 1485368
+    },
+    "[n2]kıyımın": {
+        "desc": "Hareket Hızı kazanırsın. Bu bonus, hasar alındığında saniyeliğine kaybedilir.",
+        "snoId": 1602955
+    },
+    "[n2]çıldırmış_ölüm": {
+        "desc": "Çağırma Yardakçılarından biri bir düşmana her hasar verdiğinde saniyeliğine en fazla olmak üzere Saldırı Hızı kazanır.",
+        "snoId": 1106475
+    },
+    "[n1]et_parçalayan": {
+        "desc": "Çürüme bir Ceset oluşturduktan sonra Öz kazan.",
+        "snoId": 1106485
+    },
+    "parçalara_ayıran": {
+        "desc": "Kemik Mızrağın birincil saldırısı, ilk vurulan düşmandan sonraki düşmanları saniyeliğine Savunmasız hâle getirir. Kemik Mızrağın Kemik Parçaları, Savunmasız düşmanlara bonus hasar verip delme uygular.",
+        "snoId": 1106590
+    },
+    "[n2]batan_karanlık": {
+        "desc": "Kemik Hapishane, saniye boyunca bonus hasar veren bir Maraz havuzu oluşturur.",
+        "snoId": 1106635
+    },
+    "[n2]boşluk": {
+        "desc": "Marazın oluşturduğu kirli bölge, etkilediği bölgenin etrafındaki düşmanları kendine çeker.",
+        "snoId": 1106639
+    },
+    "çürümüş": {
+        "desc": "Çürüme en fazla ilave hedefi zincirleyebilir. Çürüme, bir Ceset ürettiğinde ihtimalle etkilenen tüm hedeflerin altında bir Ceset oluşturur.",
+        "snoId": 1106650
+    },
+    "[n2]güçlendirici_ölüm_meleği": {
+        "desc": "Ayır ile düşmanlara hasar vermek, ihtimalle hedefin altında bonus hasar veren bir Maraz birikintisi oluşturur. Bu etki en az saniyede bir gerçekleşebilir.",
+        "snoId": 1106675
+    },
+    "soğuk_getirenin": {
+        "desc": "İskelet Sihirbazların, her saniyede bir kez Soğuk Hasarı veren ve düşmanları saniye boyunca kadar sürekli olarak Soğutan bir kar fırtınası yaratır.",
+        "snoId": 1106690
+    },
+    "[n2]kan_arayanın": {
+        "desc": "Kanlı Kargı, kargılanmış düşman başına birincil hedefe artırılmış hasar verir.",
+        "snoId": 1106117
+    },
+    "[n2]aç_kan": {
+        "desc": "Her Kanlı Kargı kullanımı, önceden kargılanmış bir düşmana ilk kez isabet ettiğinde yakındaki bir düşmana ek bir Kanlı Kargı fırlatır ve normal hasarın kadarı hasar verir.",
+        "snoId": 1106130
+    },
+    "[n2]okültist_hâkimiyet": {
+        "desc": "Maksimum İskelet Sihirbazı sayın artar.",
+        "snoId": 1106156
+    },
+    "kana_bulanmış": {
+        "desc": "Kanlı Sis, saniyeliğine bir Kirletilmiş Toprak izi bırakarak içinde duran düşmanlara saniyede Gölge hasarı verir. Artık Kanlı Sis etkinken Hareket Hızın azalmaz.",
+        "snoId": 1106163
+    },
+    "[n2]kabaran_lanet": {
+        "desc": "Kemik Ruh, alınan mesafeye bağlı olarak en fazla kadar artırılmış hasar verir.",
+        "snoId": 1106206
+    },
+    "[n2]patlayan_kemik": {
+        "desc": "Kemik Hapishanenin bir bölümü yok edildiğinde veya süresi dolduğunda kendi çevresindeki bir alanda hasar verir.",
+        "snoId": 1106224
+    },
+    "i̇natçı_komutanın": {
+        "desc": "Ölüler Ordusu etkinken Yardakçıların Saldırı Hızı kazanır ve azaltılmış hasar alır.",
+        "snoId": 1106382
+    },
+    "[n2]koruyucu_fırtına": {
+        "desc": "Kemik Fırtınası bir düşmana her hasar verdiğinde saniyeliğine Temel Canının kadarına eşit bir Bariyer kazan.",
+        "snoId": 1106392
+    },
+    "[n2]kavrayıcı_damarlar": {
+        "desc": "Ceset Filizlerini kullandığında saniyeliğine artırılmış Kritik Vuruş İhtimali kazan. Ceset Filizleri ile hasar alan düşmanlara bonus Kritik Vuruş Hasarı verirsin.",
+        "snoId": 1106529
+    },
+    "kan_alıcının": {
+        "desc": "Maksimum İskelet Savaşçısı sayın artar.",
+        "snoId": 1106545
+    },
+    "[n2]i̇şkence": {
+        "desc": "Kemik Yetenekleri ile yapılan Kritik Vuruşlar, Öz Yenilemeni saniyeliğine artırır.",
+        "snoId": 1224752
+    },
+    "[n2]tırtık": {
+        "desc": "Kemikleşmiş Öz Temel Pasifi ayrıca Kemik Yeteneklerinin Kritik Vuruş Hasarını üzerindeki Öz başına artırır. Artış en fazla olabilir.",
+        "snoId": 1221425
+    },
+    "kemikli_fırtına": {
+        "desc": "Kemik Fırtınası, süresini saniyeye kadar uzatmak için en fazla Ceset tüketir.",
+        "snoId": 1220407
+    },
+    "[n2]çıplak_et": {
+        "desc": "Şanslı Vuruş Savunmasız bir düşmana vurduğunda en fazla ihtimalle Öz oluştur.",
+        "snoId": 1220423
+    },
+    "marazlı": {
+        "desc": "Gölgemaraz Temel Pasifi düşmanlara kez hasar verdikten sonra saniye boyunca artırılmış hasar verirsin.",
+        "snoId": 1220473
+    },
+    "acı_veren": {
+        "desc": "Çivili Tabuttan etkilenen düşmanlar, doğrudan hasar verdiklerinde ihtimalle saniye boyunca Sersemler.",
+        "snoId": 1221466
+    },
+    "[n2]lanetli": {
+        "desc": "Hem Yıprat hem de Çivili Tabut ile etkilenen düşmanlara artırılmış Gölge hasarı verirsin.",
+        "snoId": 1221014
+    },
+    "[n2]bozulma": {
+        "desc": "Gölgemaraz Temel Pasifin düşmanlara her hasar verdiğinde saniye içindeki bir sonraki Gölgemarazın hasarını artırır. En fazla defaya kadar birikebilir.",
+        "snoId": 1221533
+    },
+    "kan_banyosu": {
+        "desc": "Kan Yükselişi novası kısa bir gecikmenin ardından tekrar yankılanarak daha az hasar verir.",
+        "snoId": 1221658
+    },
+    "gelgit": {
+        "desc": "Kan Dalgası, her biri bir öncekinden daha az hasar veren iki ek dalga başlatır.",
+        "snoId": 1223789
+    },
+    "hızlı_kan": {
+        "desc": "Kan Küresi, UltiBekleme Süresini saniye azaltır.",
+        "snoId": 1221650
+    },
+    "[n2]rathmanın_seçilmişi": {
+        "desc": "Kan Yeteneklerin her Aşırı Güç kazandığında saniye boyunca Saldırı Hızı kazanırsın.",
+        "snoId": 1221701
+    },
+    "[n2]zamansız_ölüm": {
+        "desc": "üzerinde İyileştirdiğin Maksimum Canının her yüzdesi, bir sonraki Aşırı Güç saldırında sana bonus Aşırı Güç hasarı kazandırır. En fazla bonus birikebilir.",
+        "snoId": 1221706
+    },
+    "[n2]güçlü_kan": {
+        "desc": "Sağlıklıyken Kan Küreleri Öz verir.",
+        "snoId": 1221644
+    },
+    "hantal": {
+        "desc": "Goleminin etkin Bekleme Süresi ihtimalle saniye azalır ve Golem normal saldırıyla düşmanlara her hasar verdiğinde ihtimalle bir Ceset oluşur.",
+        "snoId": 1222122
+    },
+    "[n2]güçlenmiş_kemik": {
+        "desc": "Yardakçıların artırılmış Hasar Azaltma kazanır.",
+        "snoId": 1222591
+    },
+    "kurbanlık": {
+        "desc": "Kurban bonusların artar.",
+        "snoId": 1222267
+    },
+    "ağıt": {
+        "desc": "Etkin Yardakçı başına Maksimum Öz kazanırsın.",
+        "snoId": 1223238
+    },
+    "[n2]diriltme": {
+        "desc": "Yardakçıların saniye hayatta kaldıktan sonra artırılmış hasar kazanır. Artırılmış hasar en fazla olabilir.",
+        "snoId": 1223322
+    },
+    "kadavra": {
+        "desc": "Bir Ceset tüketmek, bir sonraki Çekirdek Yeteneğin hasarını en fazla olmak üzere artırır.",
+        "snoId": 1222414
+    },
+    "[n2]mumyalayıcı": {
+        "desc": "Bir Ceset tüketmek ihtimalle bir Kan Küresi oluşturur.",
+        "snoId": 1222471
+    },
+    "[n2]nihai_gölge": {
+        "desc": "Kemik Fırtınası ve Kan Dalgası da Karanlık Yetenekleri olur ve Gölge hasarı vererek ek etkiler kazanırlar Kemik Fırtınası ile hasar alan düşmanlar, saniye boyunca Gölge hasarı alır. Kan Dalgası, ilerledikçe saniye boyunca Gölge hasarı veren Kirletilmiş Toprak oluşturur.",
+        "snoId": 1106218
+    },
+    "[n2]patlayıcı_sis": {
+        "desc": "Kanlı Sis, çevredeki Cesetlerde Ceset Patlaması tetikler. Kanlı Sis bir Ceset patlattığında Bekleme Süresi saniye azalır.",
+        "snoId": 1106610
+    },
+    "[n2]kanlı_tüy": {
+        "desc": "Kanlı Kargı, kullanıldığında Kan Küreleri tüketir ve bunlardan da kargılar ortaya çıkarır. İlave her Kanlı Kargı, normalin kadarı hasar verir ve kargılanmamış düşmanlara öncelik verir.",
+        "snoId": 1439750
+    },
+    "[n2]uzun_gölgenin": {
+        "desc": "Şanslı Vuruş Zamanla Gölge Hasarı etkilerin ihtimalle Öz üretir. Gölgemaraz Temel Pasifinle verdiğin hasar her seferinde Öz üretir.",
+        "snoId": 1622848
+    },
+    "[n2]sahte_aşılama": {
+        "desc": "Gölge Kopyaların ayrıca Yeteneklerine uygulanan Aşılamaları taklit eder. Bir Aşılama Yeteneği kullanmak, etkin Gölge Kopyana saniyeliğine artırılmış hasar verir.",
+        "snoId": 1106666
+    },
+    "gizleme": {
+        "desc": "Hareketsiz durduğun her saniyede bir ücretsiz Karanlık Örtü gölgesi kazan. Her Karanlık Örtü gölgesi, artırılmış Hasar Azaltma sağlar.",
+        "snoId": 1106674
+    },
+    "aldatma_atışı": {
+        "desc": "Delici Atış bir düşmana hasar verdiğinde her iki yöne birden ilave ok bölünür. Bu yan oklar, Delici Atışın Temel hasarının kadarı hasar verir ve bölünmez.",
+        "snoId": 1106115
+    },
+    "[n2]kuşatan_kılıçlar": {
+        "desc": "Coşku, çevrendeki düşmanlara hasar verir ve artırılmış hasar verir.",
+        "snoId": 1106126
+    },
+    "[n2]uçucu_gölge": {
+        "desc": "Bir Karanlık Örtü gölgesi kaldırılacağında çevrende Gölge hasarı veren bir patlama tetiklersin.",
+        "snoId": 1106158
+    },
+    "enerji_verici": {
+        "desc": "Seçkin bir düşmana Temel Yetenek ile hasar vermek Enerji üretir.",
+        "snoId": 1106168
+    },
+    "[n2]sürpriz": {
+        "desc": "Kaçın veya Gölge Adımı yaptığında arkanda toplamda Fiziksel hasar veren ve düşmanları saniyeliğine Sersemleten bir dizi patlayan Sersemletme Bombası bırakırsın.",
+        "snoId": 1106222
+    },
+    "düzenbazın": {
+        "desc": "İğneler ayrıca toplamda Fiziksel hasar veren ve düşmanları saniyeliğine Sersemleten bir dizi patlayan Sersemletme Bombası fırlatır.",
+        "snoId": 1106238
+    },
+    "[n2]dengesiz_aşılama": {
+        "desc": "Aşılama Yeteneği kullanırken çevrene Aşılama etkileri uygulayan ve aynı türden hasar veren bir patlama tetiklersin.",
+        "snoId": 1106246
+    },
+    "kılıç_dansçısının": {
+        "desc": "Dönen Bıçaklar sana geri döndükten sonra kısa süreliğine yörüngede döner ve vuruş başına Dönen Bıçakların geri dönüş hasarının kadarı hasar verir. Bıçakların döndüğü mesafeye bağlı olarak yörünge hasarı, geri dönüş hasarının kadarı artar.",
+        "snoId": 1106259
+    },
+    "zehirli_simyacının": {
+        "desc": "Şanslı Vuruş Zehirlenmiş bir düşmana bir Gölge Aşılanmış Yetenek ile hasar vermek, en fazla ihtimalle hedefe ve çevredeki düşmanlara saniye boyunca Zehirleme hasarı veren zehirli bir patlama oluşturur.",
+        "snoId": 1106283
+    },
+    "donmuş_simyacının": {
+        "desc": "Şanslı Vuruş Soğutulmuş veya Donmuş bir düşmana bir Gölge Aşılanmış Yetenek ile hasar vermek, en fazla ihtimalle hedefe ve çevredeki düşmanlara Soğuk hasarı veren ve onları kadar Soğutan bir patlama serbest bırakır.",
+        "snoId": 1106291
+    },
+    "gölge_dilimleyen": {
+        "desc": "Atıl, kullandığında bulunduğun konumda bir Gölge Kopya oluşturulur ve bu kopya da Atıl kullanarak Temel hasarın kadarına eşit hasar verir.",
+        "snoId": 1106314
+    },
+    "[n2]ok_fırtınası": {
+        "desc": "Şanslı Vuruş Nişancı Yeteneklerin düşmanın konumunda en fazla ihtimalle saniyeliğine Fiziksel hasar veren bir ok fırtınası oluşturur. En fazla etkin ok fırtınan olabilir.",
+        "snoId": 1106339
+    },
+    "[n2]patlayan_zehir": {
+        "desc": "Şanslı Vuruş Zehir Aşılanmış Yeteneklerin, en fazla ihtimalle içindeki düşmanlara saniye boyunca Zehirleme hasarı veren bir zehir havuzu oluşturur. Havuzda dururken Zehir Aşılama Yeteneğinin Bekleme Süresi ve Yük sınırı yoktur.",
+        "snoId": 1106355
+    },
+    "[n2]dallanan_yaylım_ateşi": {
+        "desc": "Yaylım Ateşi okları, sektiklerinde ihtimalle oka bölünür.",
+        "snoId": 1208170
+    },
+    "[n2]patlama_tuzakçısı": {
+        "desc": "Şanslı Vuruş Tuzak Yeteneklerinden etkilenen düşmanlara doğrudan hasar vermek, onları saniyeliğine en fazla ihtimalle Savunmasız yapar.",
+        "snoId": 1186573
+    },
+    "[n2]patlayıcı_enerji": {
+        "desc": "El Bombası Yeteneklerin Tuzak Yetenekleri gibi işler. Bir Tuzak kurduğunda veya El Bombası bıraktığında saniye boyunca Hareket Hızı artışı kazanırsın.",
+        "snoId": 1218947
+    },
+    "[n2]esrarengiz_i̇hanet": {
+        "desc": "Çeviklik Yeteneğiyle Afallamış bir Düşmana doğrudan hasar vermek, saniye boyunca Saklanma kazandırır. Saklanmayı bir saldırı ile bozmak, sana saniye boyunca Kontrol Engelleme Süresi Azaltma sağlar.",
+        "snoId": 1184417
+    },
+    "[n2]acımasız_geçim": {
+        "desc": "Mağdur Et Temel Pasifi ile gelen patlamalar, maksimum Can olmak üzere hasar gören her düşman için Can İyileştirir.",
+        "snoId": 1184011
+    },
+    "i̇ntikamcı": {
+        "desc": "Şanslı Vuruş Bir düşmanı Savunmasız bırakmak, en fazla ihtimalle saniyeliğine en çok olmak üzere artırılmış Kritik Vuruş İhtimali sağlar.",
+        "snoId": 1184524
+    },
+    "gözü_dönmüş": {
+        "desc": "Savunmasız bir düşmanı öldürmek sana saniye boyunca artırılmış Enerji Yenilemesi sağlar.",
+        "snoId": 1184468
+    },
+    "kurtulma_performansçısının": {
+        "desc": "Çevredeki düşmanlardan hasar aldıktan sonra bir Sis Bombası atar ve saniye içinde sonraki saldırıdan Sıyrılırsın. Bu etki sadece her saniyede bir gerçekleşebilir.",
+        "snoId": 1185975
+    },
+    "[n2]çalınan_dinçlik": {
+        "desc": "Her Momentum Temel Pasifi birikmesi, Canını saniyede İyileştirir.",
+        "snoId": 1186855
+    },
+    "fırsatçının": {
+        "desc": "Saklanmayı bir saldırı yaparak bozduğunda olduğun yerin etrafına toplam Fiziksel hasar veren ve saniye boyunca düşmanları Sersemleten bir dizi patlayan Sersemletme Bombası bırakırsın.",
+        "snoId": 1189296
+    },
+    "[n2]hızlanan_sis": {
+        "desc": "Atılmanın sonunda otomatik olarak Sis Bombası atarsın. Sis Bombaları, Atılmanın Bekleme Süresini vurulan her düşman için saniye azaltır. Azalma süresi en fazla saniye olabilir.",
+        "snoId": 1187878
+    },
+    "hilenin": {
+        "desc": "Kitle Kontrolü altındaki düşmanlardan daha az hasar alırsın. Kitle Kontrolü altındaki bir düşman sana doğrudan hasar verdiğinde saniyeliğine Hareket Hızı kazan.",
+        "snoId": 1186373
+    },
+    "[n2]hortumlanan_erzak": {
+        "desc": "Şanslı Vuruş Savunmasız bir düşmana Çekirdek Yetenek ile hasar vermek, en fazla ihtimalle bir İyileşme İksiri düşürür.",
+        "snoId": 1186377
+    },
+    "[n2]yozlaşma": {
+        "desc": "Aşılama Yeteneği etkilerin, Savunmasız düşmanlara karşı artırılmış tesire sahiptir.",
+        "snoId": 1186379
+    },
+    "ezicinin": {
+        "desc": "Şanslı Vuruş Savunmasız bir düşmana doğrudan hasar vermek, onu en fazla ihtimalle saniye boyunca Afallatır.",
+        "snoId": 1186692
+    },
+    "gölgeler_i̇çinde": {
+        "desc": "Şanslı Vuruş Nişancı Yetenekleri ile yapılan Kritik Vuruşlar en fazla ihtimalle bedelsiz bir Karanlık Örtü gölgesi sağlar.",
+        "snoId": 1220101
+    },
+    "[n2]tehlikeli_buz": {
+        "desc": "Zehir Aşılaması ile Zehirlenen Soğutulmuş düşmanlar, saniye başına daha Soğutulur. Donmuşdüşmanlara ek Zehir hasarı verirsin.",
+        "snoId": 1302490
+    },
+    "yağmacının": {
+        "desc": "Gölge Adım ek bir Yüke sahiptir. Gölge Adım ile bir düşmanı öldürmek, bir Yükü geri verir ve Gölge Adımın hasarını saniye boyunca en fazla olmak üzere artırır.",
+        "snoId": 1304553
+    },
+    "[n2]sinerji": {
+        "desc": "Çeviklik Yeteneğini kullanmak, sonraki Hile Yeteneğinin bekleme süresini azaltır. Bir Hile Yeteneği kullanmak, sonraki Çeviklik Yeteneğinin hasarını artırır.",
+        "snoId": 1301737
+    },
+    "[n2]öldürücü_alacakaranlık": {
+        "desc": "Gölge Aşılaması ile enfekte olmuş bir düşmanı Kaçınarak geçmek, saniyeliğine Saklanma sağlar. Saklanmayı bir saldırı ile bozmak, Öldürmede saniyeliğine Maksimum Can kazandırır.",
+        "snoId": 1301760
+    },
+    "[n2]tutulmaz_tehlike": {
+        "desc": "Yakın Mesafe Çarpışma Temel Pasifi bonuslarının ikisi de etkinken bir düşman tarafından her vurulduğunda Sıyrılma İhtimalin artar. Başarıyla Sıyrılmak bu bonusu sıfırlar.",
+        "snoId": 1304680
+    },
+    "casusun": {
+        "desc": "Zehir Tuzağı artık Saklanmayı bozmaz ve sen Saklanırken Bekleme Süresini veya devreye girme süresini tetiklemez. Saklanma durumundan çıktığında tüm Zehir Tuzakları etkinleşir ve Zehir Tuzağının Bekleme Süresi, yerleştirilen tuzak başına saniye olur.",
+        "snoId": 1304821
+    },
+    "ayazlanmış": {
+        "desc": "El Bombası Yeteneklerinle vurduğun Soğutulmuş düşmanların saniyeliğine anında Donma ihtimalleri, Kritik Vuruş İhtimalinin iki katı olur. Donmuş düşmanlara artırılmış Kritik Vuruş Hasarı verirsin.",
+        "snoId": 1302633
+    },
+    "tekrarlayan": {
+        "desc": "Hızlı Atış, ihtimalle başka bir hedefe seker.",
+        "snoId": 1206102
+    },
+    "anında_dondurma": {
+        "desc": "Kaçınarak içinden geçtiğin her Soğutulmuş veya Donmuş düşman, maksimum olmak üzere saniyeliğine hasar soğuran bir Bariyer sağlar.",
+        "snoId": 1219217
+    },
+    "[n2]tehlikeli_nokta": {
+        "desc": "Her . Del kullanımı, normal tesirin kadarı Zehir Aşılı olur.",
+        "snoId": 1439745
+    },
+    "[n2]sanatsal_girişimin": {
+        "desc": "Enerji harcadığında toplam Fiziksel hasar veren ve saniye boyunca düşmanları Sersemleten bir dizi patlayan Sersemletme Bombası bırakırsın. El Bombası Yeteneklerin daha fazla hasar verir.",
+        "snoId": 1620632
+    },
+    "[n2]bağlayıcı_köz": {
+        "desc": "Alev Kalkanı, düşmanların içinden geçmeni sağlar. Alev Kalkanı etkinken içinden geçtiğin düşmanlar saniye boyunca Sabitlenir.",
+        "snoId": 1106399
+    },
+    "kar_muhafızının": {
+        "desc": "Kendi Kar Fırtınanın içindeyken ve çıktıktan saniye sonra daha az hasar alırsın.",
+        "snoId": 1106418
+    },
+    "[n2]üç_lanet": {
+        "desc": "Meteor ve Ateş Topu Kritik Vuruş Hasarını artırır. Sağlıklı hedeflere karşı bu bonusu ikiye katlar.",
+        "snoId": 1106440
+    },
+    "[n1]delici_statik": {
+        "desc": "Yüklü Şimşekler delme uygular ancak ilk saldırıdan sonra vurulan hedeflere daha az hasar verir.",
+        "snoId": 1106489
+    },
+    "buz_fırtınası": {
+        "desc": "Buz Novası ek bir Yük kazanır ancak Yük başına Bekleme Süresi artar.",
+        "snoId": 1106548
+    },
+    "yüklü": {
+        "desc": "Çatırtı Enerjisi toplamak Hareket Hızını saniye boyunca artırır.",
+        "snoId": 1106644
+    },
+    "(ph)_of_ensnaring_current": {
+        "desc": "Yıldırım Topu hareket ettikçe düşmanları kendine çeker.",
+        "snoId": 1106717
+    },
+    "[n2]donmuş_yörünge": {
+        "desc": "Donmuş Küre, hedefine ulaştıktan sonra yerinde kalır ve hasarının kadarı hasar vererek kez daha patlar.",
+        "snoId": 1106733
+    },
+    "yılan": {
+        "desc": "Ek etkin Hidran olabilir ve Hidranın süresi artar.",
+        "snoId": 1106123
+    },
+    "[n2]mahşer": {
+        "desc": "Tamu sırasında düşen Meteorlar, çarptıkları anda Ateş hasarı verir. Meteorların düşmanları saniye boyunca Sabitler.",
+        "snoId": 1106174
+    },
+    "[n2]yangın_felaketi": {
+        "desc": "Yakmayı yönlendirirken Yanma hasarın artar.",
+        "snoId": 1212473
+    },
+    "[n2]kadim_ateş": {
+        "desc": "Esunun Vahşiliği Temel Pasifinden gelen her iki bonus da etkinken Saldırı Hızın artar.",
+        "snoId": 1212492
+    },
+    "[n2]yutan_alev": {
+        "desc": "Canın altındaki düşmanlara artırılmış Yanma hasarı verirsin. Zamanla Hasardan toplam Canlarından daha fazla etkilenen düşmanlara artırılmış Yanma hasarı verirsin.",
+        "snoId": 1212468
+    },
+    "yakıcı": {
+        "desc": "Şanslı Vuruş Alev Büyüsü Yeteneklerinden alınan Hasarın, en fazla olmak üzere Mana yenileme şansı bulunur.",
+        "snoId": 1212482
+    },
+    "[n2]tutuşmuş_uzuv": {
+        "desc": "Sabitlenin etkisi geçtikten sonra düşmanlar saniye boyunca Yavaşlatılır.",
+        "snoId": 1213811
+    },
+    "alevde_yürüyenin": {
+        "desc": "Ateş Duvarı ile temasa geçerek saniye boyunca Hareket Hızı kazanırsın.",
+        "snoId": 1214264
+    },
+    "[n2]parçalanmış_yıldızlar": {
+        "desc": "Meteorlar, Meteorun çevresine düşerek çarpma anında Ateş hasarı verir. Meteorların ayrıca isabet ettiği düşmanları saniye boyunca hasar vererek yakar.",
+        "snoId": 1212514
+    },
+    "buzul": {
+        "desc": "Kar Fırtınası kullanıldığında, düzenli aralıklarla hasar vererek patlayan Buz Dikenleroluşturur. Buz Dikenlerin, Donmuş düşmanlara artırılmış hasar verir.",
+        "snoId": 1212317
+    },
+    "karla_örtülü": {
+        "desc": "Buz Zırhı kullanmak seni Durdurulamaz kılar ve saniye boyunca artırılmış Zırh verir.",
+        "snoId": 1211282
+    },
+    "[n2]donmuş_uyanış": {
+        "desc": "Buz Zırh etkinken arkanda hasar vererek patlayan Buz Dikenler bırakırsın. Buz Dikenlerin düşmanları kadar Soğutur.",
+        "snoId": 1212315
+    },
+    "[n2]delici_soğuk": {
+        "desc": "Buz Parçaları kez delerek sonraki isabet ettiği düşman başına daha az hasar verir.",
+        "snoId": 1212505
+    },
+    "gömülü": {
+        "desc": "Derin Dondurma etkinken, saniyede Maksimum Can ve Mananın kadarını yenilersin.",
+        "snoId": 1212496
+    },
+    "[n2]talih": {
+        "desc": "Etkin bir Bariyere sahipken Şanslı Vuruş İhtimalin artar.",
+        "snoId": 1212461
+    },
+    "[n2]sert_soğuk": {
+        "desc": "Bir düşmanı Dondurduğunda ihtimalle saniyeliğine Savunmasız hâle gelir.",
+        "snoId": 1224522
+    },
+    "fırtına_kabarması": {
+        "desc": "Bir Bariyere sahipken Savunmasız düşmanlara artırılmış hasar verirsin.",
+        "snoId": 1224682
+    },
+    "[n2]donmuş_tundra": {
+        "desc": "Derin Dondurma etkinken bölgede Soğuk hasarı vererek patlayan Buz Dikenler oluşur. Buz Dikenlerin artırılmış patlama yarıçapına sahiptir.",
+        "snoId": 1212280
+    },
+    "[n2]kuvvetli_akımlar": {
+        "desc": "Dengesiz Akımlar, ihtimalle ilave bir Şok Yeteneği kullanır.",
+        "snoId": 1225182
+    },
+    "yeniden_yükleme": {
+        "desc": "Zincirleme Yıldırım her sektiğinde Mana kazanırsın.",
+        "snoId": 1225217
+    },
+    "yer_çekimsel": {
+        "desc": "Yıldırım Topu senin etrafında döner ve artırılmış hasar verir.",
+        "snoId": 1229700
+    },
+    "sihirbaz_lordun": {
+        "desc": "Vyrin Ustalığı Temel Pasifi aynı zamanda her Yakın düşman için Hasar Azaltma verir. Hasar Azaltma en fazla olabilir.",
+        "snoId": 1227239
+    },
+    "[n2]dağılan_enerji": {
+        "desc": "Yıldırım Mızrağı, kullanıldığında ihtimalle ek bir Yıldırım Mızrağı oluşturur.",
+        "snoId": 1225294
+    },
+    "[n2]kırılmamış_zincir": {
+        "desc": "Zincirleme Yıldırım, ihtimalle kez daha zincirlenir.",
+        "snoId": 1225297
+    },
+    "[n2]sınırlandırıcı_kanal": {
+        "desc": "Işınlanma sonrası saniye boyunca Hareket Hızı kazan.",
+        "snoId": 1229077
+    },
+    "ahır": {
+        "desc": "Dengesiz Akımlar etkin değilken Şok Yeteneklerin ihtimalle ondan bedelsiz bir kullanım tetikler.",
+        "snoId": 1227269
+    },
+    "dehânın": {
+        "desc": "Bir Bekleme Süresi kullanmak Mana yeniler.",
+        "snoId": 1214115
+    },
+    "[n2]sarsılmaz": {
+        "desc": "Doğrudan hasar almak, ihtimalle Savunma Yeteneklerinden birinin Bekleme Süresini sıfırlar.",
+        "snoId": 1225190
+    },
+    "elementalistin": {
+        "desc": "veya daha yüksek Mana değeriyle kullanılan Çekirdek veya Ustalık Yetenekleri, artırılmış Kritik Vuruş İhtimaline sahiptir.",
+        "snoId": 1213532
+    },
+    "[n2]yoğunlaşma": {
+        "desc": "Son saniye içinde hasar almadıysan Mana Yenilemesi oranın artar.",
+        "snoId": 1215683
+    },
+    "[n2]kontrol": {
+        "desc": "Sabitlenmiş, Sersemletilmiş veya Donmuş düşmanlara daha fazla hasar verirsin.",
+        "snoId": 1215771
+    },
+    "[n2]ölümsüz": {
+        "desc": "Kitle Kontrolü altındaki veya Savunmasız düşmanlardan daha az hasar alırsın.",
+        "snoId": 1215398
+    },
+    "[n2]verimlilik": {
+        "desc": "Bir Temel Yetenek kullanmak, sonraki Çekirdek veya Ustalık Yeteneğinin Mana bedelini azaltır.",
+        "snoId": 1212247
+    },
+    "[n2]donmuş_anı": {
+        "desc": "Çığ Temel Pasifi artık ek kullanım için geçerli.",
+        "snoId": 1211551
+    },
+    "[n2]gani_enerji": {
+        "desc": "Çatırtı Enerjisi, ihtimalle ilave bir düşmana daha zincirlenir.",
+        "snoId": 1225569
+    },
+    "dağılmış": {
+        "desc": "Düşmanlar Donmuş durumdayken ölürse Dağıt Temel Pasifi patlamaları, artırılmış hasar verir.",
+        "snoId": 1211655
+    },
+    "[n2]kavurucu_koruma": {
+        "desc": "Mana harcadıktan sonraki Ateş Duvarı kullanımının bedeli olmaz ve bu duvar, gelen Küçük Füzeleri yok eder.",
+        "snoId": 1439761
+    },
+    "[n2]savaş_büyücüsünün": {
+        "desc": "Şanslı Vuruş Çağrı Yeteneklerin isabet ettiğinde saniyeliğine en fazla ihtimalle Kademe kazanırsın. En fazla kez birikebilir.",
+        "snoId": 1622933
+    }
+}

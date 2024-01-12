@@ -1,0 +1,958 @@
+{
+    "of_berserk_ripping": {
+        "desc": "Whenever you deal direct damage while Berserking, inflict of the Base damage dealt as additional Bleeding damage over seconds.",
+        "snoId": 1105985
+    },
+    "earthquake": {
+        "desc": "Ground Stomp creates an Earthquake damaging enemies for Physical damage over seconds. While standing in Earthquakes, you deal increased damage.",
+        "snoId": 1105986
+    },
+    "skullbreakers": {
+        "desc": "Stunning a Bleeding enemy deals of their total Bleeding amount to them as Physical damage.",
+        "snoId": 1105987
+    },
+    "weapon_masters": {
+        "desc": "Your Weapon Mastery Skills have an additional Charge. Lucky Hit Damaging an enemy with a Weapon Mastery Skill has up to a chance to Stun them for seconds.",
+        "snoId": 1105988
+    },
+    "iron_blood": {
+        "desc": "Gain Damage Reduction for each Nearby Bleeding enemy up to maximum.",
+        "snoId": 1105989
+    },
+    "battle-mad": {
+        "desc": "Gain Berserking for seconds after swapping weapons times.",
+        "snoId": 1105990
+    },
+    "of_echoing_fury": {
+        "desc": "Your Shout Skills generate Fury per second while active.",
+        "snoId": 1105991
+    },
+    "of_the_iron_warrior": {
+        "desc": "Iron Skin grants Unstoppable, and Damage Reduction.",
+        "snoId": 1105992
+    },
+    "of_giant_strides": {
+        "desc": "Reduces the Cooldown of Leap by seconds per enemy hit, up to a maximum of seconds.",
+        "snoId": 1105994
+    },
+    "relentless_berserkers": {
+        "desc": "Lucky Hit Damaging an enemy with a Core Skill has up to a chance to extend the duration of Berserking by seconds. Double this duration if it was a Critical Strike.",
+        "snoId": 1105995
+    },
+    "of_unrelenting_fury": {
+        "desc": "Killing an enemy or hitting a Boss with a Core Skill refunds of its base Fury cost. Can only happen once per Skill cast.",
+        "snoId": 1105997
+    },
+    "of_ancestral_echoes": {
+        "desc": "Lucky Hit While Call of the Ancients is on your Action Bar, damaging enemies with Leap, Upheaval, or Whirlwind have up to a chance to summon an Ancient to perform the same Skill.",
+        "snoId": 1105998
+    },
+    "of_numbing_wrath": {
+        "desc": "Each point of Fury generated while at Maximum Fury grants Fortify.",
+        "snoId": 1106001
+    },
+    "brawlers": {
+        "desc": "Enemies damaged by Kick or Charge will explode if they are killed within the next seconds, dealing damage to surrounding enemies.",
+        "snoId": 1106002
+    },
+    "dust_devils": {
+        "desc": "Whirlwind leaves behind Dust Devils that deal damage to surrounding enemies.",
+        "snoId": 1106003
+    },
+    "of_encroaching_wrath": {
+        "desc": "After spending Fury, your next Weapon Mastery Skill deals increased damage.",
+        "snoId": 1106004
+    },
+    "of_the_relentless_armsmaster": {
+        "desc": "Gain increased Fury Generation while all damage bonuses from the Walking Arsenal Key Passive are active.",
+        "snoId": 1106005
+    },
+    "of_berserk_fury": {
+        "desc": "You gain Fury per second while Berserking.",
+        "snoId": 1106006
+    },
+    "death_wish": {
+        "desc": "Gain Thorns while Berserking.",
+        "snoId": 1106007
+    },
+    "of_the_dire_whirlwind": {
+        "desc": "Whirlwinds Critical Strike Chance is increased by for each second it is channeled, up to .",
+        "snoId": 1106009
+    },
+    "of_bul-kathos": {
+        "desc": "Leap creates an Earthquake that deals Physical damage over seconds. While standing in Earthquakes, you gain increased Damage Reduction.",
+        "snoId": 1106010
+    },
+    "windlasher": {
+        "desc": "Casting Double Swing twice within seconds creates a Dust Devil that deals damage to enemies behind the target.",
+        "snoId": 1106011
+    },
+    "veteran_brawlers": {
+        "desc": "Each time a Core Skill deals direct damage to an enemy, your next Charge or Leap deals increased damage, up to .",
+        "snoId": 1106024
+    },
+    "of_ancestral_force": {
+        "desc": "Hammer of the Ancients quakes outward and its damage is increased by .",
+        "snoId": 1106025
+    },
+    "of_grasping_whirlwind": {
+        "desc": "Whirlwind periodically Pulls enemies to you.",
+        "snoId": 1106034
+    },
+    "steadfast_berserkers": {
+        "desc": "Lucky Hit Up to a chance to gain Fortify whenever you deal direct damage while Berserking.",
+        "snoId": 1106039
+    },
+    "bold_chieftains": {
+        "desc": "Whenever you cast a Shout Skill, its Cooldown is reduced by seconds per Nearby enemy, up to a maximum of seconds.",
+        "snoId": 1106041
+    },
+    "of_perpetual_stomping": {
+        "desc": "Damaging an enemy with Kick or Ground Stomp resets Leaps Cooldown.",
+        "snoId": 1105863
+    },
+    "of_anemia": {
+        "desc": "Lucky Hit Direct damage against Bleeding enemies has up to a chance to Stun them for seconds.",
+        "snoId": 1201316
+    },
+    "slaking": {
+        "desc": "Lucky Hit You have up to a chance to gain Fury when Rend deals direct damage to at least one Bleeding enemy.",
+        "snoId": 1202014
+    },
+    "earthstrikers": {
+        "desc": "After swapping weapons times, your next Skill will Overpower and deal increased Overpower damage.",
+        "snoId": 1199203
+    },
+    "of_tempering_blows": {
+        "desc": "After swapping weapons times, gain Fortify.",
+        "snoId": 1200857
+    },
+    "luckbringer": {
+        "desc": "Gain increased Lucky Hit Chance while all damage bonuses from the Walking Arsenal Key Passive are active.",
+        "snoId": 1199205
+    },
+    "bear_clan_berserkers": {
+        "desc": "Killing an enemy while Berserking has a chance to grant increased Cooldown Reduction to your Brawling Skills for seconds.",
+        "snoId": 1199207
+    },
+    "of_burning_rage": {
+        "desc": "While Berserking, you deal Fire damage every second to surrounding enemies.",
+        "snoId": 1105876
+    },
+    "devilish": {
+        "desc": "After generating Fury your next Core Skill creates a Dust Devil that deals damage to enemies behind the target.",
+        "snoId": 1199627
+    },
+    "of_limitless_rage": {
+        "desc": "Each point of Fury you generate while at Maximum Fury grants your next Core Skill increased damage, up to .",
+        "snoId": 1106289
+    },
+    "of_ancestral_charge": {
+        "desc": "Charge calls forth Ancients who also Charge, dealing of normal damage.",
+        "snoId": 1427872
+    },
+    "wanton_rupture": {
+        "desc": "Your Rupture does not remove the Bleeding damage from enemies. This can occur once every seconds.",
+        "snoId": 1603699
+    },
+    "of_the_unsatiated": {
+        "desc": "After killing an enemy with Shred, your next Werewolf Skill generates more Spirit and deals increased damage.",
+        "snoId": 1106044
+    },
+    "mangled": {
+        "desc": "When you are struck as a Werebear you have a chance to gain Spirit.",
+        "snoId": 1106047
+    },
+    "of_the_calm_breeze": {
+        "desc": "Lucky Hit Wind Shear has up to a chance to fully restore your Spirit.",
+        "snoId": 1106050
+    },
+    "of_the_tempest": {
+        "desc": "Hurricane damage is increased by each second while active.",
+        "snoId": 1106053
+    },
+    "of_quicksand": {
+        "desc": "Damage from Earth Skills Slow enemies hit by for seconds.",
+        "snoId": 1106058
+    },
+    "crashstone": {
+        "desc": "Earth Skills deal more Critical Strike Damage to Crowd Controlled enemies.",
+        "snoId": 1206644
+    },
+    "of_mending_stone": {
+        "desc": "The duration of Earthen Bulwark is increased by seconds. In addition, killing an enemy with Earth Skills replenishes of your active Earthen Bulwarks Barrier.",
+        "snoId": 1106061
+    },
+    "overcharged": {
+        "desc": "Lucky Hit Up to a chance when dealing Lightning damage to overload the target for seconds, causing any direct damage you deal to them to pulse additional damage to surrounding enemies.",
+        "snoId": 1106063
+    },
+    "of_natural_balance": {
+        "desc": "Casting a Storm Skill grants your Earth Skills Critical Strike Damage for seconds. Casting a Earth Skill increases the Critical Strike Chance of Storm Skills by for seconds.",
+        "snoId": 1106064
+    },
+    "of_the_changelings_debt": {
+        "desc": "Damaging a Poisoned enemy with a Werebear Skill will instantly deal of the Poisoning damage and consume the Poisoning.",
+        "snoId": 1201950
+    },
+    "skinwalkers": {
+        "desc": "When you use a Shapeshifting Skill that changes your form, gain Life. If you are at full Life, gain the same amount as Fortify.",
+        "snoId": 1200308
+    },
+    "seismic-shift": {
+        "desc": "Earth Spike launches spikes in a line and has a second Cooldown.",
+        "snoId": 1106138
+    },
+    "of_the_trampled_earth": {
+        "desc": "Trample now summons Landslide pillars of earth during its duration that deal normal damage. Trample is now also a Nature Magic and Earth Skill.",
+        "snoId": 1106166
+    },
+    "stormclaws": {
+        "desc": "Critical Strikes with Shred deal of the damage dealt as Lightning damage to the target and surrounding enemies.",
+        "snoId": 1106189
+    },
+    "balanced": {
+        "desc": "Increase your Maximum Spirit by and Spirit Generation by while Grizzly Rage is active.",
+        "snoId": 1106190
+    },
+    "of_cyclonic_force": {
+        "desc": "Cyclone Armor also provides Physical Damage Reduction. In addition, Cyclone Armor will also be applied to all Nearby Allies.",
+        "snoId": 1106217
+    },
+    "of_the_aftershock": {
+        "desc": "Landslides earth pillars each strike a second time and deal an additional bonus damage per hit.",
+        "snoId": 1106228
+    },
+    "of_the_ursine_horror": {
+        "desc": "Pulverize is now also an Earth Skill. After casting Pulverize, tectonic spikes continue to deal damage over seconds.",
+        "snoId": 1106260
+    },
+    "of_retaliation": {
+        "desc": "Your Core Skills deal up to increased damage based on your amount of Fortify.",
+        "snoId": 1106321
+    },
+    "shockwave": {
+        "desc": "Pulverize creates a shockwave that travels forward, dealing of its damage to targets in the path.",
+        "snoId": 1106341
+    },
+    "of_the_alpha": {
+        "desc": "Your Wolf Companions are now Werewolf Companions. Werewolf Companions deal additional damage and can spread Rabies.",
+        "snoId": 1106347
+    },
+    "nighthowlers": {
+        "desc": "Blood Howl increases Critical Strike Chance by . In addition, Blood Howl also affects Nearby Companions and Players for seconds.",
+        "snoId": 1106379
+    },
+    "of_natures_savagery": {
+        "desc": "Werewolf Skills function as Storm Skills and Werebear Skills function as Earth Skills for the Natures Fury Key Passive.",
+        "snoId": 1106384
+    },
+    "shepherds": {
+        "desc": "Core Skills deal an additional damage for each active Companion.",
+        "snoId": 1106407
+    },
+    "vigorous": {
+        "desc": "Gain Damage Reduction while Shapeshifted into a Werewolf.",
+        "snoId": 1206401
+    },
+    "of_the_dark_howl": {
+        "desc": "Debilitating Roar is now a Werewolf Skill. In addition, Debilitating Roar will Immobilize Poisoned enemies for seconds.",
+        "snoId": 1201796
+    },
+    "of_the_rampaging_werebeast": {
+        "desc": "The duration of Grizzly Rage is increased by seconds. In addition, Critical Strikes while Grizzly Rage is active increase your Critical Strike Damage by for the duration, up to a maximum of .",
+        "snoId": 1205996
+    },
+    "of_the_wildrage": {
+        "desc": "Your Companions also gain the bonuses from the Bestial Rampage Key Passive when you do.",
+        "snoId": 1205052
+    },
+    "ballistic": {
+        "desc": "When you have Fortify your Earth Skills gain Ranks.",
+        "snoId": 1202438
+    },
+    "stormshifters": {
+        "desc": "While Hurricane is active, gain Ranks to your Shapeshifting Skills.",
+        "snoId": 1202540
+    },
+    "stormchasers": {
+        "desc": "Tornado will seek up to targets.",
+        "snoId": 1105817
+    },
+    "runeworkers_conduit": {
+        "desc": "Critical Strikes with Storm Skills that you cast charge the air around you for seconds causing a Lightning Bolt to periodically hit an enemy in the area for Lightning damage. This duration can be extended by additional Critical Strikes.",
+        "snoId": 1105842
+    },
+    "mighty_storms": {
+        "desc": "The Earthen Might Key Passive also applies to your Storm Skills.",
+        "snoId": 1105865
+    },
+    "symbiotic": {
+        "desc": "When the Natures Fury Key Passive triggers a free Skill, your nonUltimate Cooldowns of the opposite type are reduced by seconds.",
+        "snoId": 1212893
+    },
+    "earthguard": {
+        "desc": "Gain bonus amount to your next Earthen Bulwark for each enemy you Crowd Control up to a maximum of .",
+        "snoId": 1214291
+    },
+    "lightning_dancers": {
+        "desc": "Lightning Storm Critical Strikes spawn Dancing Bolts that seek enemies in the area dealing Lightning damage.",
+        "snoId": 1105811
+    },
+    "dire_wolfs": {
+        "desc": "Grizzly Rage now Shapeshifts you into a Dire Werewolf. As a Dire Werewolf you gain Movement Speed instead of Damage Reduction and a Spirit cost reduction bonus. In addition, kills Heal you for of your Maximum Life.",
+        "snoId": 1105800
+    },
+    "of_the_stampede": {
+        "desc": "Gain additional Companion. In addition, your Companion Skills deal bonus damage.",
+        "snoId": 1222401
+    },
+    "of_metamorphic_stone": {
+        "desc": "Boulder is now a Core Skill and costs Spirit to cast dealing of normal damage.",
+        "snoId": 1338010
+    },
+    "of_the_blurred_beast": {
+        "desc": "While dashing, Shred seeks out Nearby Poisoned enemies instantly dealing of the Poisoning damage to them.",
+        "snoId": 1338284
+    },
+    "subterranean": {
+        "desc": "Poison Creepers active also casts Landslide in a circle around you. Earth Skills deal increased damage to Poisoned enemies.",
+        "snoId": 1433952
+    },
+    "raw_might": {
+        "desc": "After you hit enemies with your Werebear Skills, your next Werebear Skill will deal more damage and Stun enemies for seconds.",
+        "snoId": 1619484
+    },
+    "starlight": {
+        "desc": "Gain of your Primary Resource for every of your Life that you Heal.",
+        "snoId": 1106452
+    },
+    "of_might": {
+        "desc": "Basic Skills grant Damage Reduction for seconds.",
+        "snoId": 1106483
+    },
+    "of_the_protector": {
+        "desc": "Damaging an Elite enemy grants you a Barrier absorbing up to damage for seconds. This effect can only happen once every seconds.",
+        "snoId": 1106507
+    },
+    "of_inner_calm": {
+        "desc": "Deal increased damage for each second you stand still, up to .",
+        "snoId": 1106533
+    },
+    "wind_striker": {
+        "desc": "Critical Strikes grant Movement Speed for second, up to seconds.",
+        "snoId": 1106547
+    },
+    "of_the_umbral": {
+        "desc": "Restore of your Primary Resource when you Crowd Control an enemy.",
+        "snoId": 1106601
+    },
+    "conceited": {
+        "desc": "Deal increased damage while you have a Barrier active.",
+        "snoId": 1106658
+    },
+    "protecting": {
+        "desc": "When hit while not Healthy, a magical bubble is summoned around you for seconds. While standing in the bubble, Players are Immune. Can only occur once every seconds.",
+        "snoId": 1106730
+    },
+    "of_disobedience": {
+        "desc": "You gain increased Armor for seconds when you deal any form of damage, stacking up to .",
+        "snoId": 1106104
+    },
+    "of_retribution": {
+        "desc": "Distant enemies have a chance to be Stunned for seconds when they hit you. You deal increased damage to Stunned enemies.",
+        "snoId": 1106134
+    },
+    "rapid": {
+        "desc": "Basic Skills gain Attack Speed.",
+        "snoId": 1106177
+    },
+    "edgemasters": {
+        "desc": "Skills deal up to increased damage based on your available Primary Resource when cast, receiving the maximum benefit while you have full Primary Resource.",
+        "snoId": 1106385
+    },
+    "of_the_crowded_sage": {
+        "desc": "You Heal for Life per second for each Close enemy, up to Life per second.",
+        "snoId": 1106409
+    },
+    "of_the_expectant": {
+        "desc": "Attacking enemies with a Basic Skill increases the damage of your next Core Skill cast by , up to .",
+        "snoId": 1106426
+    },
+    "ghostwalker": {
+        "desc": "While Unstoppable and for seconds after, you gain increased Movement Speed and can move freely through enemies.",
+        "snoId": 1225424
+    },
+    "of_shared_misery": {
+        "desc": "Lucky Hit When you hit a Crowd Controlled enemy, there is up to a chance for that Crowd Control effect to spread to another unaffected enemy.",
+        "snoId": 1227282
+    },
+    "eluding": {
+        "desc": "Becoming Injured while Crowd Controlled grants you Unstoppable for seconds. This effect has a second Cooldown.",
+        "snoId": 1223891
+    },
+    "assimilation": {
+        "desc": "You have increased Dodge Chance versus enemies affected by Damage Over Time effects. When you Dodge you gain of your Primary Resource.",
+        "snoId": 1226354
+    },
+    "needleflare": {
+        "desc": "Thorns damage dealt has a chance to deal damage to all enemies around you.",
+        "snoId": 1227650
+    },
+    "of_the_deflecting_barrier": {
+        "desc": "While you have a Barrier active, there is a chance to ignore incoming direct damage from Distant enemies.",
+        "snoId": 1225448
+    },
+    "smiting": {
+        "desc": "You have increased Critical Strike Chance against Injured enemies. While you are Healthy, you gain increased Crowd Control Duration.",
+        "snoId": 1105844
+    },
+    "accelerating": {
+        "desc": "Critical Strikes with Core Skills increase your Attack Speed by for seconds.",
+        "snoId": 1105816
+    },
+    "exploiters": {
+        "desc": "You have increased Crowd Control Duration. While enemies are Unstoppable, you deal increased damage to them.",
+        "snoId": 1225582
+    },
+    "craven": {
+        "desc": "You gain increased Movement Speed when moving away from Slowed or Chilled enemies.",
+        "snoId": 1437498
+    },
+    "of_audacity": {
+        "desc": "When there are at least Close enemies, Stun them for seconds. This can only occur once every seconds.",
+        "snoId": 1438478
+    },
+    "of_elements": {
+        "desc": "Gain increased damage to a set of damage types for seconds. This effect alternates between sets Fire, Lightning, and Physical. Cold, Poison, and Shadow.",
+        "snoId": 1485368
+    },
+    "of_slaughter": {
+        "desc": "You gain Movement Speed. Lose this bonus for seconds after taking damage.",
+        "snoId": 1602955
+    },
+    "of_frenzied_dead": {
+        "desc": "Each time one of your Summoning Minions damages an enemy, they gain Attack Speed for seconds, up to .",
+        "snoId": 1106475
+    },
+    "flesh-rending": {
+        "desc": "After Decompose spawns a Corpse, gain Essence.",
+        "snoId": 1106485
+    },
+    "splintering": {
+        "desc": "Bone Spears primary attack makes enemies hit beyond the first Vulnerable for seconds. Bone Shards from Bone Spear deal bonus damage to Vulnerable enemies and pierce them.",
+        "snoId": 1106590
+    },
+    "of_plunging_darkness": {
+        "desc": "Bone Prison spawns a pool of Blight that deals bonus damage over seconds.",
+        "snoId": 1106635
+    },
+    "of_the_void": {
+        "desc": "Blights defiled area, when spawned, pulls in enemies around the affected area.",
+        "snoId": 1106639
+    },
+    "rotting": {
+        "desc": "Decompose can chain up to additional targets. When Decompose spawns a Corpse, it has a chance to spawn a Corpse under all afflicted targets.",
+        "snoId": 1106650
+    },
+    "of_empowering_reaper": {
+        "desc": "Damaging enemies with Sever has a chance to spawn a pool of Blight under the target that deals bonus damage. This effect can only happen once every seconds.",
+        "snoId": 1106675
+    },
+    "coldbringers": {
+        "desc": "Every seconds, your Skeletal Mages cast a blizzard that deals Cold damage and continuously Chills enemies for over seconds.",
+        "snoId": 1106690
+    },
+    "blood_seekers": {
+        "desc": "Blood Lance deals increased damage to its primary target per lanced enemy.",
+        "snoId": 1106117
+    },
+    "of_hungry_blood": {
+        "desc": "Each cast of Blood Lance will launch an additional Blood Lance at a Nearby enemy when it first hits an enemy that is already lanced, dealing of normal damage.",
+        "snoId": 1106130
+    },
+    "of_occult_dominion": {
+        "desc": "Your maximum number of Skeletal Mages is increased by .",
+        "snoId": 1106156
+    },
+    "blood-soaked": {
+        "desc": "Blood Mist leaves a trail of Desecrated Ground that lasts for seconds and deals Shadow damage per second to enemies who stand in it. Your Movement Speed is no longer reduced while Blood Mist is active.",
+        "snoId": 1106163
+    },
+    "of_swelling_curse": {
+        "desc": "Bone Spirit deals increased damage based on distance traveled, up to .",
+        "snoId": 1106206
+    },
+    "of_bursting_bones": {
+        "desc": "When a segment of Bone Prison is destroyed or expires, it deals damage in an area around itself.",
+        "snoId": 1106224
+    },
+    "unyielding_commanders": {
+        "desc": "While Army of the Dead is active, your Minions gain Attack Speed and take reduced damage.",
+        "snoId": 1106382
+    },
+    "of_shielding_storm": {
+        "desc": "Each time that Bone Storm damages an enemy, gain a Barrier equal to of your Base Life for seconds.",
+        "snoId": 1106392
+    },
+    "of_grasping_veins": {
+        "desc": "Gain increased Critical Strike Chance for seconds when you cast Corpse Tendrils. You deal bonus Critical Strike Damage to enemies damaged by Corpse Tendrils.",
+        "snoId": 1106529
+    },
+    "blood_getters": {
+        "desc": "Your maximum number of Skeletal Warriors is increased by .",
+        "snoId": 1106545
+    },
+    "of_torment": {
+        "desc": "Critical Strikes with Bone Skills increase your Essence Regeneration by for seconds.",
+        "snoId": 1224752
+    },
+    "of_serration": {
+        "desc": "The Ossified Essence Key Passive also increases the Critical Strike Damage of your Bone Skills by per Essence above , up to .",
+        "snoId": 1221425
+    },
+    "osseous_gale": {
+        "desc": "Bone Storm consumes up to Corpses to increase its duration by up to seconds.",
+        "snoId": 1220407
+    },
+    "of_exposed_flesh": {
+        "desc": "Lucky Hit Up to a chance to generate Essence when hitting a Vulnerable enemy.",
+        "snoId": 1220423
+    },
+    "blighted": {
+        "desc": "You deal increased damage for seconds after the Shadowblight Key Passive damages enemies times.",
+        "snoId": 1220473
+    },
+    "torturous": {
+        "desc": "Enemies afflicted by your Iron Maiden have a chance to be Stunned for second when they deal direct damage.",
+        "snoId": 1221466
+    },
+    "of_the_damned": {
+        "desc": "You deal increased Shadow damage to enemies afflicted by both Decrepify and Iron Maiden.",
+        "snoId": 1221014
+    },
+    "of_decay": {
+        "desc": "Each time the Shadowblight Key Passive deals damage to enemies, it increases the next Shadowblights damage within seconds by , stacking up to times.",
+        "snoId": 1221533
+    },
+    "blood-bathed": {
+        "desc": "Blood Surges nova echoes again after a short delay, dealing less damage.",
+        "snoId": 1221658
+    },
+    "tidal": {
+        "desc": "Blood Wave fires two additional waves, each dealing less damage than the previous.",
+        "snoId": 1223789
+    },
+    "fastblood": {
+        "desc": "Blood Orbs reduce your Ultimate Cooldown by seconds.",
+        "snoId": 1221650
+    },
+    "of_rathmas_chosen": {
+        "desc": "Whenever your Blood Skills Overpower you gain Attack Speed for seconds.",
+        "snoId": 1221701
+    },
+    "of_untimely_death": {
+        "desc": "Each percent of your Maximum Life you Heal beyond grants you bonus Overpower damage on your next Overpowering attack, up to a bonus.",
+        "snoId": 1221706
+    },
+    "of_potent_blood": {
+        "desc": "While Healthy, Blood Orbs grant Essence.",
+        "snoId": 1221644
+    },
+    "hulking": {
+        "desc": "Your Golem has a chance to reduce its active Cooldown by seconds and a chance to spawn a Corpse each time it damages an enemy with its normal attack.",
+        "snoId": 1222122
+    },
+    "of_hardened_bones": {
+        "desc": "Your Minions gain increased Damage Reduction.",
+        "snoId": 1222591
+    },
+    "sacrificial": {
+        "desc": "Your Sacrifice bonuses are increased by .",
+        "snoId": 1222267
+    },
+    "requiem": {
+        "desc": "You gain Maximum Essence per active Minion.",
+        "snoId": 1223238
+    },
+    "of_reanimation": {
+        "desc": "Your Minions gain increased damage while alive, up to after seconds.",
+        "snoId": 1223322
+    },
+    "cadaverous": {
+        "desc": "Consuming a Corpse increases the damage of your next Core Skill by , up to .",
+        "snoId": 1222414
+    },
+    "of_the_embalmer": {
+        "desc": "Consuming a Corpse has a chance to spawn a Blood Orb.",
+        "snoId": 1222471
+    },
+    "of_ultimate_shadow": {
+        "desc": "Bone Storm and Blood Wave are also Darkness Skills, deal Shadow damage, and gain additional effects Enemies damaged by Bone Storm take Shadow damage over seconds. Blood Wave creates Desecrated Ground as it travels, dealing Shadow damage over seconds",
+        "snoId": 1106218
+    },
+    "of_explosive_mist": {
+        "desc": "Blood Mist triggers Corpse Explosion on surrounding Corpses. When Blood Mist detonates a Corpse, its Cooldown is reduced by seconds.",
+        "snoId": 1106610
+    },
+    "of_gore_quills": {
+        "desc": "Casting Blood Lance will consume Blood Orbs to also conjure lances from them. Each additional Blood Lance deals of normal damage and prioritizes targeting unlanced enemies.",
+        "snoId": 1439750
+    },
+    "of_the_long_shadow": {
+        "desc": "Lucky Hit Your Shadow Damage Over Time effects have a chance to generate Essence. Damage from your Shadowblight Key Passive will always generate Essence.",
+        "snoId": 1622848
+    },
+    "of_imitated_imbuement": {
+        "desc": "Your Shadow Clones also mimic the Imbuements applied to your Skills. Casting an Imbuement Skill grants your active Shadow Clone increased damage for seconds.",
+        "snoId": 1106666
+    },
+    "enshrouding": {
+        "desc": "Gain a free Dark Shroud shadow every seconds when standing still. Each Dark Shroud shadow grants increased Damage Reduction.",
+        "snoId": 1106674
+    },
+    "trickshot": {
+        "desc": "Whenever Penetrating Shot damages an enemy, additional arrows split off to either side. These side arrows deal of Penetrating Shots Base damage and do not split.",
+        "snoId": 1106115
+    },
+    "of_encircling_blades": {
+        "desc": "Flurry damages enemies in a circle around you and deals increased damage.",
+        "snoId": 1106126
+    },
+    "of_volatile_shadows": {
+        "desc": "When a Dark Shroud shadow would be removed you trigger an explosion around yourself that deals Shadow damage.",
+        "snoId": 1106158
+    },
+    "energizing": {
+        "desc": "Damaging an Elite enemy with a Basic Skill generates Energy.",
+        "snoId": 1106168
+    },
+    "of_surprise": {
+        "desc": "When you Evade or Shadow Step, you leave behind a cluster of exploding Stun Grenades that deal total Physical damage and Stun enemies for seconds.",
+        "snoId": 1106222
+    },
+    "tricksters": {
+        "desc": "Caltrops also throw a cluster of exploding Stun Grenades that deal total Physical damage and Stun enemies for seconds.",
+        "snoId": 1106238
+    },
+    "of_unstable_imbuements": {
+        "desc": "When casting an Imbuement Skill you trigger an explosion around yourself, applying the Imbuement effects and dealing damage of the same type.",
+        "snoId": 1106246
+    },
+    "bladedancers": {
+        "desc": "Twisting Blades orbit for a short time after they return to you, dealing of Twisting Blades return damage per hit. Based on the distance the blades returned, the orbit damage increases up to of the return damage.",
+        "snoId": 1106259
+    },
+    "toxic_alchemists": {
+        "desc": "Lucky Hit Damaging a Poisoned enemy with a Shadow Imbued Skill has up to a chance to create a toxic explosion that applies Poisoning damage over seconds to the target and surrounding enemies.",
+        "snoId": 1106283
+    },
+    "icy_alchemists": {
+        "desc": "Lucky Hit Damaging a Chilled or Frozen enemy with a Shadow Imbued Skill has up to a chance to release an explosion that deals Cold damage to the target and surrounding enemies, Chilling them for .",
+        "snoId": 1106291
+    },
+    "shadowslicer": {
+        "desc": "When you cast Dash, a Shadow Clone is spawned at your location that also casts Dash, dealing of the Base damage.",
+        "snoId": 1106314
+    },
+    "of_arrow_storms": {
+        "desc": "Lucky Hit Your Marksman Skills have up to a chance to create an arrow storm at the enemys location, dealing Physical damage over seconds. You can have up to active arrow storms.",
+        "snoId": 1106339
+    },
+    "of_bursting_venoms": {
+        "desc": "Lucky Hit Poison Imbued Skills have up to a chance to create a toxic pool that deals Poisoning damage over seconds to enemies within. While standing in the pool, your Poison Imbuement Skill has no Cooldown and no Charge limit.",
+        "snoId": 1106355
+    },
+    "of_branching_volleys": {
+        "desc": "Barrages arrows have a chance to split into arrows whenever they ricochet.",
+        "snoId": 1208170
+    },
+    "blast-trappers": {
+        "desc": "Lucky Hit Dealing direct damage to enemies affected by your Trap Skills has up to a chance to make them Vulnerable for seconds.",
+        "snoId": 1186573
+    },
+    "of_explosive_verve": {
+        "desc": "Your Grenade Skills count as Trap Skills. Whenever you arm a Trap or drop Grenades, you gain increased Movement Speed for seconds.",
+        "snoId": 1218947
+    },
+    "of_uncanny_treachery": {
+        "desc": "Dealing direct damage to a Dazed Enemy with an Agility Skill grants Stealth for seconds. Breaking Stealth with an attack grants you Control Impaired Duration Reduction for seconds.",
+        "snoId": 1184417
+    },
+    "of_cruel_sustenance": {
+        "desc": "Explosions from the Victimize Key Passive Heal you for Life for each enemy damaged, up to a maximum of Life.",
+        "snoId": 1184011
+    },
+    "vengeful": {
+        "desc": "Lucky Hit Making an enemy Vulnerable has up to a chance to grant increased Critical Strike Chance for seconds, up to .",
+        "snoId": 1184524
+    },
+    "ravenous": {
+        "desc": "Killing a Vulnerable enemy grants you increased Energy Regeneration for seconds.",
+        "snoId": 1184468
+    },
+    "escape_artists": {
+        "desc": "Upon taking damage from surrounding enemies, you drop a Smoke Grenade and Dodge the next attacks within seconds. This effect can only occur once every seconds.",
+        "snoId": 1185975
+    },
+    "of_stolen_vigor": {
+        "desc": "Each stack of the Momentum Key Passive Heals you for Life per second.",
+        "snoId": 1186855
+    },
+    "opportunists": {
+        "desc": "When you break Stealth with an attack, you drop a cluster of exploding Stun Grenades around your location that deal total Physical damage and Stun enemies for seconds.",
+        "snoId": 1189296
+    },
+    "of_quickening_fog": {
+        "desc": "You automatically drop a Smoke Grenade at the end of Dash. Smoke Grenades reduce Dashs Cooldown by seconds for each enemy hit, up to seconds.",
+        "snoId": 1187878
+    },
+    "cheats": {
+        "desc": "You take less damage from Crowd Controlled enemies. Whenever a Crowd Controlled enemy deals direct damage to you, gain Movement Speed for seconds.",
+        "snoId": 1186373
+    },
+    "of_siphoned_victuals": {
+        "desc": "Lucky Hit Damaging a Vulnerable enemy with a Core Skill has up to a chance to drop a Healing Potion.",
+        "snoId": 1186377
+    },
+    "of_corruption": {
+        "desc": "Your Imbuement Skill effects have increased potency against Vulnerable enemies.",
+        "snoId": 1186379
+    },
+    "manglers": {
+        "desc": "Lucky Hit Dealing direct damage to a Vulnerable enemy has up to a chance to Daze them for seconds.",
+        "snoId": 1186692
+    },
+    "umbrous": {
+        "desc": "Lucky Hit Critical Strikes with Marksman Skills have up to a chance to grant a free Dark Shroud shadow.",
+        "snoId": 1220101
+    },
+    "of_noxious_ice": {
+        "desc": "Chilled enemies Poisoned by Poison Imbuement will be further Chilled for per second. You deal additional Poison damage to Frozen enemies.",
+        "snoId": 1302490
+    },
+    "ravagers": {
+        "desc": "Shadow Step has an additional Charge. Killing an enemy with Shadow Step refunds a Charge and increases the damage of Shadow Step by for seconds, up to .",
+        "snoId": 1304553
+    },
+    "of_synergy": {
+        "desc": "Using an Agility Skill reduces the Cooldown of your next Subterfuge Skill by . Using a Subterfuge Skill increases the damage of your next Agility Skill by .",
+        "snoId": 1301737
+    },
+    "of_lethal_dusk": {
+        "desc": "Evading through an enemy infected by Shadow Imbuement grants Stealth for seconds. Breaking Stealth with an attack grants you Maximum Life on Kill for seconds.",
+        "snoId": 1301760
+    },
+    "of_elusive_menace": {
+        "desc": "While you have both bonuses from the Close Quarters Combat Key Passive active, your Dodge Chance increases by whenever youre hit by an enemy. Successfully Dodging resets this bonus.",
+        "snoId": 1304680
+    },
+    "infiltrators": {
+        "desc": "Poison Trap no longer breaks Stealth and triggers no Cooldown or arm time while you are in Stealth. All Poison Traps activate when you exit Stealth and Poison Traps Cooldown will be seconds per trap placed.",
+        "snoId": 1304821
+    },
+    "frostbitten": {
+        "desc": "Chilled enemies hit by your Grenade Skills have a chance equal to double your Critical Strike Chance to be instantly Frozen for seconds. You deal increased Critical Strike Damage against Frozen enemies.",
+        "snoId": 1302633
+    },
+    "repeating": {
+        "desc": "Rapid Fire has a chance to ricochet to another target.",
+        "snoId": 1206102
+    },
+    "snap_frozen": {
+        "desc": "Each Chilled or Frozen enemy you Evade through grants you a Barrier that absorbs damage for seconds, absorbing up to a maximum of damage.",
+        "snoId": 1219217
+    },
+    "of_pestilent_points": {
+        "desc": "Every rd cast of Puncture is Poison Imbued with of normal potency.",
+        "snoId": 1439745
+    },
+    "of_artful_initiative": {
+        "desc": "When you spend Energy you release a cluster of exploding Stun Grenades that deal total Physical damage and Stun enemies for seconds. Your Grenade Skills deal more damage.",
+        "snoId": 1620632
+    },
+    "of_binding_embers": {
+        "desc": "Flame Shield lets you move unhindered through enemies. Enemies you move through while Flame Shield is active are Immobilized for seconds.",
+        "snoId": 1106399
+    },
+    "snowguards": {
+        "desc": "While within your own Blizzard and for seconds after leaving it, you take less damage.",
+        "snoId": 1106418
+    },
+    "of_three_curses": {
+        "desc": "Increase the Critical Strike Damage of Meteor and Fireball by . Double this bonus against Healthy targets.",
+        "snoId": 1106440
+    },
+    "of_piercing_static": {
+        "desc": "Charged Bolts pierce, but deal less damage to targets hit after the first.",
+        "snoId": 1106489
+    },
+    "frostblitz": {
+        "desc": "Frost Nova gains an additional Charge but the Cooldown per Charge is increased by .",
+        "snoId": 1106548
+    },
+    "charged": {
+        "desc": "Collecting Crackling Energy increases your Movement Speed by for seconds.",
+        "snoId": 1106644
+    },
+    "(ph)_of_ensnaring_current": {
+        "desc": "Ball Lightning pulls enemies with it as it travels.",
+        "snoId": 1106717
+    },
+    "of_frozen_orbit": {
+        "desc": "Frozen Orb stays in place after reaching its destination and explodes additional times for of its damage.",
+        "snoId": 1106733
+    },
+    "serpentine": {
+        "desc": "You may have additional Hydra active, and Hydras duration is increased by .",
+        "snoId": 1106123
+    },
+    "of_armageddon": {
+        "desc": "A hail of Meteorites falls during Inferno, dealing Fire damage on impact. Your Meteorites Immobilize enemies for seconds.",
+        "snoId": 1106174
+    },
+    "of_conflagration": {
+        "desc": "While channeling Incinerate, your Burning damage is increased by .",
+        "snoId": 1212473
+    },
+    "of_ancient_flame": {
+        "desc": "While both bonuses from the Esus Ferocity Key Passive are active, your Attack Speed is increased by .",
+        "snoId": 1212492
+    },
+    "of_engulfing_flames": {
+        "desc": "You deal increased Burning damage to enemies below Life. While enemies are affected by more Damage Over Time than their total Life, you deal increased Burning damage to them.",
+        "snoId": 1212468
+    },
+    "incendiary": {
+        "desc": "Lucky Hit Damage from your Pyromancy Skills has up to a chance to restore Mana.",
+        "snoId": 1212482
+    },
+    "of_singed_extremities": {
+        "desc": "After Immobilize wears off, enemies are Slowed by for seconds.",
+        "snoId": 1213811
+    },
+    "flamewalkers": {
+        "desc": "Coming in contact with your Firewall grants you Movement Speed for seconds.",
+        "snoId": 1214264
+    },
+    "of_shattered_stars": {
+        "desc": "Meteorites fall around Meteor, dealing Fire damage on impact. Your Meteorites additionally Burn enemies they hit for damage over seconds.",
+        "snoId": 1212514
+    },
+    "glacial": {
+        "desc": "When you cast Blizzard it will periodically spawn exploding Ice Spikes that deal damage. Your Ice Spikes deal increased damage to Frozen enemies.",
+        "snoId": 1212317
+    },
+    "snowveiled": {
+        "desc": "Casting Ice Armor makes you Unstoppable and grants increased Armor for seconds.",
+        "snoId": 1211282
+    },
+    "of_the_frozen_wake": {
+        "desc": "While Ice Armor is active, you leave behind exploding Ice Spikes that deal damage. Your Ice Spikes Chill enemies for .",
+        "snoId": 1212315
+    },
+    "of_piercing_cold": {
+        "desc": "Ice Shards pierce times, dealing less damage per subsequent enemy hit.",
+        "snoId": 1212505
+    },
+    "encased": {
+        "desc": "While Deep Freeze is active, you restore of your Maximum Life and Mana per second.",
+        "snoId": 1212496
+    },
+    "of_fortune": {
+        "desc": "Your Lucky Hit Chance is increased by while you have a Barrier active.",
+        "snoId": 1212461
+    },
+    "of_biting_cold": {
+        "desc": "When you Freeze an enemy there is a chance they become Vulnerable for seconds.",
+        "snoId": 1224522
+    },
+    "storm_swell": {
+        "desc": "You deal increased damage to Vulnerable enemies while you have a Barrier.",
+        "snoId": 1224682
+    },
+    "of_the_frozen_tundra": {
+        "desc": "While Deep Freeze is active, exploding Ice Spikes form in the area, dealing Cold damage. Your Ice Spikes have a increased explosion radius.",
+        "snoId": 1212280
+    },
+    "of_overwhelming_currents": {
+        "desc": "Unstable Currents has a chance to cast an additional Shock Skill.",
+        "snoId": 1225182
+    },
+    "recharging": {
+        "desc": "Each time Chain Lightning bounces, gain Mana.",
+        "snoId": 1225217
+    },
+    "gravitational": {
+        "desc": "Ball Lightning orbits around you and deals increased damage.",
+        "snoId": 1229700
+    },
+    "mage-lords": {
+        "desc": "The Vyrs Mastery Key Passive also grants Damage Reduction for each Close enemy, up to .",
+        "snoId": 1227239
+    },
+    "of_splintering_energy": {
+        "desc": "Lightning Spear has a chance to spawn an additional Lightning Spear when you cast it.",
+        "snoId": 1225294
+    },
+    "of_the_unbroken_tether": {
+        "desc": "Chain Lightning has a chance to chain additional times.",
+        "snoId": 1225297
+    },
+    "of_the_bounding_conduit": {
+        "desc": "Gain Movement Speed for seconds after Teleporting.",
+        "snoId": 1229077
+    },
+    "stable": {
+        "desc": "While Unstable Currents is not active, your Shock Skills have a chance to trigger a free cast from it.",
+        "snoId": 1227269
+    },
+    "prodigys": {
+        "desc": "Using a Cooldown restores Mana.",
+        "snoId": 1214115
+    },
+    "of_the_unwavering": {
+        "desc": "Taking direct damage has a chance to reset the Cooldown of one of your Defensive Skills.",
+        "snoId": 1225190
+    },
+    "elementalists": {
+        "desc": "Core or Mastery Skills cast at or above Mana gain a increased Critical Strike Chance.",
+        "snoId": 1213532
+    },
+    "of_concentration": {
+        "desc": "Your Mana Regeneration is increased by if you have not taken damage in the last seconds.",
+        "snoId": 1215683
+    },
+    "of_control": {
+        "desc": "You deal more damage to Immobilized, Stunned, or Frozen enemies.",
+        "snoId": 1215771
+    },
+    "everliving": {
+        "desc": "You take less damage from Crowd Controlled or Vulnerable enemies.",
+        "snoId": 1215398
+    },
+    "of_efficiency": {
+        "desc": "Casting a Basic Skill reduces the Mana cost of your next Core or Mastery Skill by .",
+        "snoId": 1212247
+    },
+    "of_frozen_memories": {
+        "desc": "The Avalanche Key Passive now applies to additional casts.",
+        "snoId": 1211551
+    },
+    "of_abundant_energy": {
+        "desc": "Crackling Energy has a chance to chain to an additional enemy.",
+        "snoId": 1225569
+    },
+    "shattered": {
+        "desc": "Explosions from the Shatter Key Passive deal increased damage if enemies die while Frozen.",
+        "snoId": 1211655
+    },
+    "of_searing_wards": {
+        "desc": "After spending Mana your next Firewall is free to cast and will destroy incoming Small Missiles.",
+        "snoId": 1439761
+    },
+    "battle_casters": {
+        "desc": "Lucky Hit When your Conjuration Skills hit you have up to a chance to gain Rank to your Conjuration skills for seconds. This can stack up to times.",
+        "snoId": 1622933
+    }
+}

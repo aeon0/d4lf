@@ -1,0 +1,958 @@
+{
+    "des_berserkerhaften_zerreißens": {
+        "desc": "Jedes Mal, wenn Ihr im Berserkermodus direkten Schaden verursacht, verursacht Ihr im Verlauf von Sek. des Basisschadens als zusätzlichen Blutungsschaden.",
+        "snoId": 1105985
+    },
+    "bebender": {
+        "desc": "Aufstampfen verursacht ein Erdbeben, das Gegnern im Verlauf von Sek. physischen Schaden zufügt. Solange Ihr in Erdbeben steht, verursacht Ihr mehr Schaden.",
+        "snoId": 1105986
+    },
+    "schädelbrechender": {
+        "desc": "Wenn Ihr einen blutenden Gegner betäubt, erleidet er seiner gesamten Blutung als physischen Schaden.",
+        "snoId": 1105987
+    },
+    "waffenmeisters": {
+        "desc": "Eure Waffenbeherrschungsfertigkeiten verfügen über eine zusätzliche Aufladung. Glückstreffer Wenn Ihr einem Gegner mit einer Waffenbeherrschungsfertigkeit Schaden zufügt, besteht eine Chance von , ihn Sek. lang zu betäuben.",
+        "snoId": 1105988
+    },
+    "eisenblütiger": {
+        "desc": "Ihr erhaltet Schadensreduktion für jeden blutenden Gegner in der Nähe, bis maximal .",
+        "snoId": 1105989
+    },
+    "kampfwütiger": {
+        "desc": "Verfallt Sek. lang in den Berserkermodus, nachdem Ihr mal die Waffen gewechselt habt.",
+        "snoId": 1105990
+    },
+    "der_schallenden_wut": {
+        "desc": "Eure Ruffertigkeiten erzeugen Wut pro Sekunde, solange sie aktiv sind.",
+        "snoId": 1105991
+    },
+    "des_eisernen_kriegers": {
+        "desc": "Eisenhaut verleiht Unaufhaltsamkeit und Schadensreduktion.",
+        "snoId": 1105992
+    },
+    "der_riesenschritte": {
+        "desc": "Reduziert die Abklingzeit von Sprung um Sek. pro getroffenen Gegner, bis maximal Sek.",
+        "snoId": 1105994
+    },
+    "blutberserkers": {
+        "desc": "Glückstreffer Wenn Ihr einem Gegner mit einer Kernfertigkeit Schaden zufügt, besteht eine Chance von bis zu , die Dauer des Berserkermodus um Sek. zu verlängern. Diese Dauer wird bei einem kritischen Treffer verdoppelt.",
+        "snoId": 1105995
+    },
+    "des_unerbittlichen_zorns": {
+        "desc": "Wenn Ihr einen Gegner mit einer Kernfertigkeit tötet oder einen Boss damit trefft, erhaltet Ihr der GrundWutkosten zurück. Dieser Effekt kann nur einmal pro Einsatz auftreten.",
+        "snoId": 1105997
+    },
+    "der_ahnenechos": {
+        "desc": "Glückstreffer Wenn Ihr Gegnern mit Sprung, Aufwühlen oder Wirbelwind Schaden zufügt, während Anrufung der Urahnen in Eurer Aktionsleiste ist, besteht eine Chance von , einen Urahnen zu beschwören, der die gleiche Fertigkeit einsetzt.",
+        "snoId": 1105998
+    },
+    "des_betäubenden_zorns": {
+        "desc": "Jeder Wutpunkt, der bei maximaler Wut erzeugt wird, verleiht Stählung.",
+        "snoId": 1106001
+    },
+    "raufender": {
+        "desc": "Gegner, die durch Tritt oder Ansturm Schaden erleiden, explodieren, wenn sie innerhalb der nächsten Sek. getötet werden, und fügen Gegnern in der Nähe Schaden zu.",
+        "snoId": 1106002
+    },
+    "staubteufels": {
+        "desc": "Wirbelwind hinterlässt Staubteufel, die Gegnern in der Nähe Schaden zufügen.",
+        "snoId": 1106003
+    },
+    "des_einnehmenden_zorns": {
+        "desc": "Nachdem Ihr Wut verbraucht habt, verursacht Eure nächste Waffenbeherrschungsfertigkeit mehr Schaden.",
+        "snoId": 1106004
+    },
+    "des_unerbittlichen_waffenmeisters": {
+        "desc": "Eure Wuterzeugung ist um erhöht, solange alle Schadensboni der zentralen passiven Fertigkeit Wandelndes Arsenal aktiv sind.",
+        "snoId": 1106005
+    },
+    "der_berserkerwut": {
+        "desc": "Ihr erhaltet Wut pro Sekunde, solange Ihr im Berserkermodus seid.",
+        "snoId": 1106006
+    },
+    "todessehnsüchtiger": {
+        "desc": "Erhaltet Dornen, solange Ihr im Berserkermodus seid.",
+        "snoId": 1106007
+    },
+    "des_schrecklichen_wirbelwinds": {
+        "desc": "Die kritische Trefferchance von Wirbelwind wird pro Sekunde, die er kanalisiert wird, um erhöht, bis maximal .",
+        "snoId": 1106009
+    },
+    "von_bul-kathos": {
+        "desc": "Sprung erzeugt ein Erdbeben, das im Verlauf von Sek. physischen Schaden verursacht. Solange Ihr in Erdbeben steht, erhaltet Ihr mehr Schadensreduktion.",
+        "snoId": 1106010
+    },
+    "windpeitschender": {
+        "desc": "Beim erneuten Wirken von Doppelschwung innerhalb von Sek. wird ein Staubteufel erzeugt, der Gegnern hinter dem Ziel Schaden zufügt.",
+        "snoId": 1106011
+    },
+    "erfahrener": {
+        "desc": "Jedes Mal, wenn eine Kernfertigkeit einem Gegner direkten Schaden zufügt, verursacht Euer nächster Ansturm oder Sprung mehr Schaden, bis maximal .",
+        "snoId": 1106024
+    },
+    "der_ahnenmacht": {
+        "desc": "Hammer der Urahnen erzeugt Beben, die sich ausbreiten. Sein Schaden wird um erhöht.",
+        "snoId": 1106025
+    },
+    "des_packenden_wirbelwinds": {
+        "desc": "Wirbelwind zieht Gegner in regelmäßigen Abständen zu Euch.",
+        "snoId": 1106034
+    },
+    "stahlberserkers": {
+        "desc": "Glückstreffer Ihr habt eine Chance von bis zu , jedes Mal Stählung zu erhalten, wenn Ihr im Berserkermodus direkten Schaden verursacht.",
+        "snoId": 1106039
+    },
+    "schlachthäuptlings": {
+        "desc": "Jedes Mal, wenn Ihr eine Ruffertigkeit wirkt, wird ihre Abklingzeit pro Gegner in der Nähe um Sek. reduziert, bis maximal Sek.",
+        "snoId": 1106041
+    },
+    "des_beständigen_stampfens": {
+        "desc": "Wenn Ihr einem Gegner mit Tritt oder Aufstampfen Schaden zufügt, wird die Abklingzeit von Sprung abgeschlossen.",
+        "snoId": 1105863
+    },
+    "der_blutarmut": {
+        "desc": "Glückstreffer Wenn Ihr blutenden Gegnern direkten Schaden zufügt, besteht eine Chance von bis zu , sie Sek. lang zu betäuben.",
+        "snoId": 1201316
+    },
+    "löschender": {
+        "desc": "Glückstreffer Ihr habt eine Chance von bis zu , Wut zu erhalten, wenn Zerteilen mindestens einem blutenden Gegner Schaden zufügt.",
+        "snoId": 1202014
+    },
+    "erdwüters": {
+        "desc": "Nach Waffenwechseln überwältigt Eure nächste Fertigkeit und verursacht um erhöhten Überwältigungsschaden.",
+        "snoId": 1199203
+    },
+    "der_härtenden_schläge": {
+        "desc": "Nach Waffenwechseln erhaltet Ihr Stählung.",
+        "snoId": 1200857
+    },
+    "glücksbringender": {
+        "desc": "Eure Glückstrefferchance ist um erhöht, solange alle Schadensboni der zentralen passiven Fertigkeit Wandelndes Arsenal aktiv sind.",
+        "snoId": 1199205
+    },
+    "bärenklan-berserkers": {
+        "desc": "Wenn Ihr einen Gegner im Berserkermodus tötet, besteht eine Chance von , die Abklingzeitreduktion Eurer Raufboldfertigkeiten Sek. lang um zu erhöhen.",
+        "snoId": 1199207
+    },
+    "der_brennenden_wut": {
+        "desc": "Im Berserkermodus fügt Ihr Gegnern in der Nähe pro Sekunde Feuerschaden zu.",
+        "snoId": 1105876
+    },
+    "teuflischer": {
+        "desc": "Nachdem Ihr Wut erzeugt hab, erschafft Eure nächste Kernfertigkeit einen Staubteufel, der Gegnern hinter dem Ziel Schaden zufügt.",
+        "snoId": 1199627
+    },
+    "der_grenzenlosen_wut": {
+        "desc": "Jeder Wutpunkt, den Ihr bei maximaler Wut erzeugt, verleiht Eurer nächsten Kernfertigkeit mehr Schaden, bis maximal .",
+        "snoId": 1106289
+    },
+    "des_ahnensturms": {
+        "desc": "Ansturm ruft Urahnen herbei, die ebenfalls Ansturm mit des normalen Schadens einsetzen.",
+        "snoId": 1427872
+    },
+    "mutwilliger_blutspieß": {
+        "desc": "Euer Blutspieß entfernt den Blutungsschaden von Gegnern nicht. Dies kann einmal alle Sek. auftreten.",
+        "snoId": 1603699
+    },
+    "der_unersättlichen": {
+        "desc": "Nachdem Ihr einen Gegner mit Zerfetzen getötet habt, erzeugt Eure nächste Werwolffertigkeit mehr Geisteskraft und verursacht mehr Schaden.",
+        "snoId": 1106044
+    },
+    "verstümmelter": {
+        "desc": "Wenn Ihr in Werbärgestalt getroffen werdet, besteht eine Chance von , dass Ihr Geisteskraft erhaltet.",
+        "snoId": 1106047
+    },
+    "der_sanften_brise": {
+        "desc": "Glückstreffer Windschere hat eine Chance von bis zu , Eure Geisteskraft komplett wiederherzustellen.",
+        "snoId": 1106050
+    },
+    "des_wütenden_sturms": {
+        "desc": "Der Schaden von Hurrikan wird pro Sekunde um erhöht, solange er aktiv ist.",
+        "snoId": 1106053
+    },
+    "des_treibsands": {
+        "desc": "Schaden durch Erdfertigkeiten verlangsamt getroffene Gegner Sek. lang um .",
+        "snoId": 1106058
+    },
+    "steinbrüchiger": {
+        "desc": "Erdfertigkeiten fügen Gegnern mit Kontrollverlusteffekten mehr kritischen Trefferschaden zu.",
+        "snoId": 1206644
+    },
+    "des_lindernden_steins": {
+        "desc": "Die Dauer von Irdenes Bollwerk ist um Sek. erhöht. Zusätzlich wird die Barriere Eures aktiven Irdenen Bollwerks um wiederhergestellt, wenn Ihr einen Gegner mit Erdfertigkeiten tötet.",
+        "snoId": 1106061
+    },
+    "überladener": {
+        "desc": "Glückstreffer Wenn Ihr Blitzschaden verursacht, besteht eine Chance von bis zu , das Ziel Sek. lang zu überladen. Euer direkter Schaden an überladenen Zielen löst Impulse aus, die Gegnern in der Nähe Schaden zufügen.",
+        "snoId": 1106063
+    },
+    "des_natürlichen_gleichgewichts": {
+        "desc": "Eure Sturmfertigkeiten erhöhen den kritischen Trefferschaden Eurer Erdfertigkeiten Sek. lang um . Eure Erdfertigkeiten erhöhen die kritische Trefferchance Eurer Sturmfertigkeiten Sek. lang um .",
+        "snoId": 1106064
+    },
+    "der_schuld_des_wechselbalgs": {
+        "desc": "Wenn Ihr einem vergifteten Gegner mit einer Werbärfertigkeit Schaden zufügt, werden sofort des Giftschadens verursacht und die Vergiftung beendet.",
+        "snoId": 1201950
+    },
+    "gestaltwandelnder": {
+        "desc": "Wenn Ihr eine Gestaltwandelfertigkeit verwendet, die Eure Gestalt verändert, erhaltet Ihr Leben. Bei vollem Leben erhaltet Ihr dieselbe Menge als Stählung.",
+        "snoId": 1200308
+    },
+    "seismischer": {
+        "desc": "Erdspieß erzeugt Stacheln in einer Linie und hat eine Abklingzeit von Sek.",
+        "snoId": 1106138
+    },
+    "der_zertrampelten_erde": {
+        "desc": "Niedertrampeln beschwört jetzt während der Dauer Erdsäulen von Erdrutsch, die des normalen Schaden verursachen. Niedertrampeln ist jetzt auch eine Naturmagie und Erdfertigkeit.",
+        "snoId": 1106166
+    },
+    "sturmklaues": {
+        "desc": "Kritische Treffer mit Zerfetzen fügen dem Ziel und Gegnern in der Nähe des verursachten Schadens als Blitzschaden zu.",
+        "snoId": 1106189
+    },
+    "ausbalancierter": {
+        "desc": "Erhöht Eure maximale Geisteskraft um und Eure Geisteskrafterzeugung um , solange Grizzlyzorn aktiv ist.",
+        "snoId": 1106190
+    },
+    "der_zyklonmacht": {
+        "desc": "Zyklonrüstung gewährt auch physische Schadensreduktion. Zusätzlich wirkt sich Zyklonrüstung auch auf alle Verbündeten in der Nähe aus.",
+        "snoId": 1106217
+    },
+    "des_nachbebens": {
+        "desc": "Jede Erdsäule von Erdrutsch trifft ein zweites Mal und verursacht zusätzlich Bonusschaden pro Treffer.",
+        "snoId": 1106228
+    },
+    "des_bärenschreckens": {
+        "desc": "Pulverisieren ist jetzt auch eine Erdfertigkeit. Nachdem Pulverisieren gewirkt wurde, verursachen tektonische Stacheln im Verlauf von Sek. Schaden.",
+        "snoId": 1106260
+    },
+    "der_rachsucht": {
+        "desc": "Eure Kernfertigkeiten verursachen bis zu mehr Schaden basierend auf Eurer Stählung.",
+        "snoId": 1106321
+    },
+    "überrollender": {
+        "desc": "Pulverisieren erzeugt eine Schockwelle, die sich nach vorne ausbreitet und Zielen in ihrem Weg des Schadens zufügt.",
+        "snoId": 1106341
+    },
+    "des_alphas": {
+        "desc": "Eure Wolfgefährten sind jetzt Werwolfgefährten. Werwolfgefährten verursachen mehr Schaden und können Tollwut verbreiten.",
+        "snoId": 1106347
+    },
+    "nachtheulers": {
+        "desc": "Blutgeheul erhöht die kritische Trefferchance um . Zusätzlich wirkt sich Blutgeheul auch Sek. lang auf Gefährten und Spieler in der Nähe aus.",
+        "snoId": 1106379
+    },
+    "der_naturgewalt": {
+        "desc": "Für die zentrale passive Fertigkeit Zorn der Natur gelten Werwolffertigkeiten als Sturmfertigkeiten und Werbärfertigkeiten als Erdfertigkeiten.",
+        "snoId": 1106384
+    },
+    "schäfers": {
+        "desc": "Kernfertigkeiten verursachen für jeden aktiven Gefährten mehr Schaden.",
+        "snoId": 1106407
+    },
+    "energischer": {
+        "desc": "Ihr erhaltet Schadensreduktion, während Ihr in einen Werwolf verwandelt seid.",
+        "snoId": 1206401
+    },
+    "des_dunklen_heulens": {
+        "desc": "Schwächendes Gebrüll ist jetzt eine Werwolffertigkeit. Zusätzlich macht Schwächendes Gebrüll vergiftete Gegner Sek. lang bewegungsunfähig.",
+        "snoId": 1201796
+    },
+    "der_tobenden_werbestie": {
+        "desc": "Die Dauer von Grizzlyzorn erhöht sich um Sek. Zusätzlich wird Euer kritischer Trefferschaden während der Dauer um erhöht (bis zu einem Maximum von ), wenn Ihr kritische Treffer landet, während Grizzlyzorn aktiv ist.",
+        "snoId": 1205996
+    },
+    "des_wildzorns": {
+        "desc": "Eure Gefährten erhalten ebenfalls die Boni der zentralen passiven Fertigkeit Bestialische Raserei.",
+        "snoId": 1205052
+    },
+    "ballistischer": {
+        "desc": "Wenn Ihr gestählt seid, erhaltet Ihr Ränge für Eure Erdfertigkeiten.",
+        "snoId": 1202438
+    },
+    "sturmwandelnder": {
+        "desc": "Während Hurrikan aktiv ist, erhaltet Ihr Ränge für Eure Gestaltwandelfertigkeiten.",
+        "snoId": 1202540
+    },
+    "sturmjagender": {
+        "desc": "Tornado verfolgt bis zu Ziele.",
+        "snoId": 1105817
+    },
+    "runenbindender": {
+        "desc": "Kritische Treffer mit Sturmfertigkeiten, die Ihr wirkt, laden die Luft um Euch Sek. lang auf, wodurch regelmäßig ein Gegner im Wirkungsbereich von einem Blitzschlag getroffen wird, der Blitzschaden verursacht. Die Dauer kann durch zusätzliche kritische Treffer verlängert werden.",
+        "snoId": 1105842
+    },
+    "sturmgewaltiger": {
+        "desc": "Die zentrale passive Fertigkeit Irdene Macht wirkt sich auch auf Eure Sturmfertigkeiten aus.",
+        "snoId": 1105865
+    },
+    "symbiotischer": {
+        "desc": "Wenn die zentrale passive Fertigkeit Zorn der Natur eine kostenlose Fertigkeit auslöst, werden Eure nichtultimativen Abklingzeiten des gegensätzlichen Typs um Sek. verringert.",
+        "snoId": 1212893
+    },
+    "erdschützender": {
+        "desc": "Euer nächstes Irdenes Bollwerk erhält pro Gegner, den Ihr mit Kontrollverlusteffekten belegt habt, einen Bonus von , bis maximal .",
+        "snoId": 1214291
+    },
+    "blitztänzelnder": {
+        "desc": "Kritische Treffer mit Gewittersturm erzeugen Tanzende Blitze, die Gegner im Wirkungsbereich verfolgen und ihnen Blitzschaden zufügen.",
+        "snoId": 1105811
+    },
+    "wölfischer": {
+        "desc": "Grizzlyzorn verwandelt Euch jetzt in einen Todeswerwolf. Als Todeswerwolf erhaltet Ihr Bewegungsgeschwindigkeit anstatt Schadensreduktion und einen Bonus von auf Geisteskraftkostenreduktion. Zusätzlich werdet Ihr beim Töten eines Gegners um Eures maximalen Lebens geheilt.",
+        "snoId": 1105800
+    },
+    "der_stampede": {
+        "desc": "Erhaltet zusätzlichen Gefährten. Zusätzlich verursachen Eure Gefährtenfertigkeiten Bonusschaden.",
+        "snoId": 1222401
+    },
+    "des_metamorphen_steins": {
+        "desc": "Felsbrocken ist jetzt eine Kernfertigkeit, kostet beim Wirken Geisteskraft und verursacht des normalen Schadens.",
+        "snoId": 1338010
+    },
+    "der_verschwommenen_bestie": {
+        "desc": "Während Ihr stürmt, sucht Zerfetzen nach vergifteten Gegnern in der Nähe und fügt ihnen sofort des Giftschadens zu.",
+        "snoId": 1338284
+    },
+    "unterirdischer": {
+        "desc": "Die aktive Fertigkeit von Giftranke wirkt auch Erdrutsch in einem Kreis um Euch. Erdfertigkeiten fügen vergifteten Gegnern mehr Schaden zu.",
+        "snoId": 1433952
+    },
+    "rohe_macht": {
+        "desc": "Nachdem Ihr Gegner mit Euren Werbärfertigkeiten getroffen habt, verursacht Eure nächste Werbärfertigkeit mehr Schaden und betäubt Gegner Sek. lang.",
+        "snoId": 1619484
+    },
+    "sternenbeschienener": {
+        "desc": "Ihr erhaltet pro Eures geheilten Lebens Eurer Primärressource.",
+        "snoId": 1106452
+    },
+    "der_macht": {
+        "desc": "Basisfertigkeiten verleihen Sek. lang Schadensreduktion.",
+        "snoId": 1106483
+    },
+    "des_beschützers": {
+        "desc": "Wenn Ihr einem Elitegegner Schaden zufügt, erhaltet Ihr eine Barriere, die Sek. lang bis zu Schaden absorbiert. Dieser Effekt kann nur einmal alle Sek. auftreten.",
+        "snoId": 1106507
+    },
+    "der_inneren_ruhe": {
+        "desc": "Verursacht pro Sekunde, die Ihr stillsteht, mehr Schaden, bis maximal .",
+        "snoId": 1106533
+    },
+    "windwütender": {
+        "desc": "Kritische Treffer verleihen Sek. lang Bewegungsgeschwindigkeit, bis maximal Sek.",
+        "snoId": 1106547
+    },
+    "des_schattens": {
+        "desc": "Stellt Eurer Primärressource wieder her, wenn Ihr einen Gegner mit Kontrollverlusteffekten belegt.",
+        "snoId": 1106601
+    },
+    "eitler": {
+        "desc": "Verursacht mehr Schaden, solange Ihr eine aktive Barriere habt.",
+        "snoId": 1106658
+    },
+    "schützender": {
+        "desc": "Wenn Ihr getroffen werdet, während Ihr nicht gesund seid, bildet sich Sek. lang eine magische Blase um Euch. Solange Spieler in der Blase stehen, sind sie immun. Kann nur einmal alle Sek. auftreten.",
+        "snoId": 1106730
+    },
+    "des_ungehorsams": {
+        "desc": "Ihr erhaltet Sek. lang erhöhte Rüstung, wenn Ihr irgendeine Art von Schaden verursacht. Bis zu stapelbar.",
+        "snoId": 1106104
+    },
+    "der_vergeltung": {
+        "desc": "Entfernte Gegner werden mit einer Chance von Sek. lang betäubt, wenn sie Euch treffen. Ihr fügt betäubten Gegnern mehr Schaden zu.",
+        "snoId": 1106134
+    },
+    "schneller": {
+        "desc": "Basisfertigkeiten erhalten Angriffsgeschwindigkeit.",
+        "snoId": 1106177
+    },
+    "klingenmeisters": {
+        "desc": "Fertigkeiten verursachen bis zu mehr Schaden basierend auf der zur Wirkzeit verfügbaren Primärressource. Bei voller Primärressource erhaltet Ihr den maximalen Bonus.",
+        "snoId": 1106385
+    },
+    "des_umringten_weisen": {
+        "desc": "Pro Gegner in der Nähe werdet Ihr um Leben pro Sekunde geheilt, bis maximal Leben pro Sekunde.",
+        "snoId": 1106409
+    },
+    "der_erwartungsvollen": {
+        "desc": "Wenn Ihr Gegner mit einer Basisfertigkeit angreift, erhöht sich der Schaden Eurer nächsten gewirkten Kernfertigkeit um , bis maximal .",
+        "snoId": 1106426
+    },
+    "geistwandelnder": {
+        "desc": "Solange Ihr unaufhaltsam seid sowie in den Sek. danach, erhaltet Ihr höhere Bewegungsgeschwindigkeit und könnt Euch frei durch Gegner bewegen.",
+        "snoId": 1225424
+    },
+    "des_geteilten_leids": {
+        "desc": "Glückstreffer Wenn Ihr einen Gegner trefft, der mit Kontrollverlusteffekten belegt ist, besteht eine Chance von bis zu , dass der Kontrollverlusteffekt auf einen weiteren, nicht betroffenen Gegner überspringt.",
+        "snoId": 1227282
+    },
+    "entwischender": {
+        "desc": "Wenn Ihr verletzt werdet, während Ihr unter dem Einfluss von Kontrollverlusteffekten steht, werdet Ihr Sek. lang unaufhaltsam. Dieser Effekt hat eine Abklingzeit von Sek.",
+        "snoId": 1223891
+    },
+    "assimilierender": {
+        "desc": "Ihr habt eine höhere Ausweichchance bei Gegnern, die von SchadenüberZeitEffekten betroffen sind. Wenn Ihr ausweicht, erhaltet Ihr Eurer Primärressource.",
+        "snoId": 1226354
+    },
+    "nadelfeuriger": {
+        "desc": "Verursachter Dornenschaden hat eine Chance von , allen Gegnern um Euch Schaden zuzufügen.",
+        "snoId": 1227650
+    },
+    "der_ablenkenden_barriere": {
+        "desc": "Während Ihr eine aktive Barriere habt, besteht eine Chance von , dass eingehender direkter Schaden von entfernten Gegnern ignoriert wird.",
+        "snoId": 1225448
+    },
+    "schmetternder": {
+        "desc": "Ihr habt eine höhere kritische Trefferchance gegen verletzte Gegner. Solange Ihr gesund seid, erhaltet Ihr höhere Kontrollverlustdauer.",
+        "snoId": 1105844
+    },
+    "beschleunigender": {
+        "desc": "Kritische Treffer mit Kernfertigkeiten erhöhen Eure Angriffsgeschwindigkeit Sek. lang um .",
+        "snoId": 1105816
+    },
+    "ausbeutender": {
+        "desc": "Die Dauer Eurer Kontrollverlusteffekte ist um erhöht. Ihr fügt unaufhaltsamen Gegnern mehr Schaden zu.",
+        "snoId": 1225582
+    },
+    "feiger": {
+        "desc": "Ihr erhaltet mehr Bewegungsgeschwindigkeit, wenn Ihr Euch von verlangsamten oder unterkühlten Gegnern fortbewegt.",
+        "snoId": 1437498
+    },
+    "der_kühnheit": {
+        "desc": "Wenn mindestens Gegner in Eurer Nähe sind, betäubt Ihr sie Sek. lang. Dieser Effekt kann nur einmal alle Sek. auftreten.",
+        "snoId": 1438478
+    },
+    "der_elemente": {
+        "desc": "Erhaltet Sek. lang um erhöhten Schaden für gewisse Arten Schaden. Dieser Effekt wechselt zwischen Kategorien Feuer, Blitz und Physisch. Kälte, Gift und Schatten.",
+        "snoId": 1485368
+    },
+    "des_abschlachtens": {
+        "desc": "Ihr erhaltet Bewegungsgeschwindigkeit. Erleidet Ihr Schaden, verliert Ihr diesen Bonus für Sekunden.",
+        "snoId": 1602955
+    },
+    "des_rasenden_todes": {
+        "desc": "Jedes Mal, wenn einer Eurer beschworenen Diener einem Gegner Schaden zufügt, erhält er Sek. lang Angriffsgeschwindigkeit, bis maximal .",
+        "snoId": 1106475
+    },
+    "zerfleischender": {
+        "desc": "Wenn Zersetzen eine Leiche erzeugt, erhaltet Ihr Essenz.",
+        "snoId": 1106485
+    },
+    "splitternder": {
+        "desc": "Der Primärangriff von Knochenspeer macht alle weiteren getroffenen Gegner nach dem ersten Sek. lang verwundbar. Knochensplitter von Knochenspeer fügen verwundbaren Gegnern Bonusschaden zu und durchschlagen sie.",
+        "snoId": 1106590
+    },
+    "der_einbrechenden_dunkelheit": {
+        "desc": "Knochengefängnis erzeugt eine Pestlache, die im Verlauf von Sek. Bonusschaden verursacht.",
+        "snoId": 1106635
+    },
+    "der_leere": {
+        "desc": "Pest zieht beim Wirken Gegner um das betroffene Gebiet in den verseuchten Bereich.",
+        "snoId": 1106639
+    },
+    "verrottender": {
+        "desc": "Zersetzen kann bis zu zusätzliche Ziele betreffen. Wenn Zersetzen eine Leiche erzeugt, besteht eine Chance von , dass eine Leiche unter allen betroffenen Zielen erscheint.",
+        "snoId": 1106650
+    },
+    "des_stärkenden_seelenernters": {
+        "desc": "Gegner mit Schnitter Schaden zuzufügen hat eine Chance von , unter dem Ziel eine Pestlache zu erzeugen, die Bonusschaden verursacht. Dieser Effekt kann nur einmal alle Sek. auftreten.",
+        "snoId": 1106675
+    },
+    "kältebringender": {
+        "desc": "Alle Sek. wirken Eure Skelettmagier einen Blizzard, der Kälteschaden verursacht und Gegner im Verlauf von Sek. für unterkühlt.",
+        "snoId": 1106690
+    },
+    "blutsuchender": {
+        "desc": "Blutlanze fügt dem Primärziel pro aufgespießtem Gegner mehr Schaden zu.",
+        "snoId": 1106117
+    },
+    "des_hungernden_blutes": {
+        "desc": "Jedes Mal, wenn du mit Blutlanze einen Gegner triffst, der bereits aufgespießt wurde, wird eine weitere Blutlanze auf einen Gegner in der Nähe abgefeuert, die des normalen Schadens verursacht.",
+        "snoId": 1106130
+    },
+    "der_okkulten_herrschaft": {
+        "desc": "Euer Maximum an Skelettmagiern wird um erhöht.",
+        "snoId": 1106156
+    },
+    "blutgetränkter": {
+        "desc": "Blutnebel hinterlässt eine Spur aus entweihtem Boden, die Sek. anhält und Gegnern Schattenschaden pro Sekunde zufügt. Eure Bewegungsgeschwindigkeit ist während Blutnebel nicht mehr verringert.",
+        "snoId": 1106163
+    },
+    "des_schwellenden_fluchs": {
+        "desc": "Knochengeist verursacht mehr Schaden auf Basis der zurückgelegten Distanz, bis maximal .",
+        "snoId": 1106206
+    },
+    "der_berstenden_knochen": {
+        "desc": "Wenn ein Segment des Knochengefängnisses zerstört wird oder abläuft, verursacht es Schaden in seinem Umkreis.",
+        "snoId": 1106224
+    },
+    "des_totengenerals": {
+        "desc": "Solange Armee der Toten aktiv ist, erhalten Eure Diener Angriffsgeschwindigkeit und erleiden weniger Schaden.",
+        "snoId": 1106382
+    },
+    "des_schützenden_sturms": {
+        "desc": "Jedes Mal, wenn Knochensturm einem Gegner Schaden zufügt, erhaltet Ihr Sek. lang eine Barriere in Höhe von Eures Basislebens.",
+        "snoId": 1106392
+    },
+    "der_greifenden_adern": {
+        "desc": "Erhaltet Sek. lang eine höhere kritische Trefferchance, wenn Ihr Leichenranken wirkt. Ihr fügt Gegnern, die durch Leichenranken Schaden erleiden, zusätzlichen kritischen Trefferschaden zu.",
+        "snoId": 1106529
+    },
+    "blutholender": {
+        "desc": "Euer Maximum an Skelettkriegern wird um erhöht.",
+        "snoId": 1106545
+    },
+    "der_qual": {
+        "desc": "Kritische Treffer mit Knochenfertigkeiten erhöhen Eure Essenzregeneration Sek. lang um .",
+        "snoId": 1224752
+    },
+    "der_verzahnung": {
+        "desc": "Die zentrale passive Fertigkeit Knöcherne Essenz erhöht auch den kritischen Trefferschaden Eurer Knochenfertigkeiten um pro Essenz über , bis maximal .",
+        "snoId": 1221425
+    },
+    "knochenstürmender": {
+        "desc": "Knochensturm verbraucht bis zu Leichen, um die Dauer um bis zu Sek. zu erhöhen.",
+        "snoId": 1220407
+    },
+    "des_entblößten_fleisches": {
+        "desc": "Glückstreffer Wenn Ihr einen verwundbaren Gegner trefft, erhaltet Ihr eine Chance von bis zu , Essenz zu erzeugen.",
+        "snoId": 1220423
+    },
+    "verpesteter": {
+        "desc": "Ihr verursacht Sek. lang mehr Schaden, nachdem die zentrale passive Fertigkeit Schattenseuche Gegnern mal Schaden zugefügt hat.",
+        "snoId": 1220473
+    },
+    "peinigender": {
+        "desc": "Gegner, die von Eurer Eisernen Jungfrau betroffen sind, werden mit einer Chance von , Sek. lang betäubt, wenn sie direkten Schaden verursachen.",
+        "snoId": 1221466
+    },
+    "der_verdammten": {
+        "desc": "Ihr fügt Gegnern, die sowohl von Altern als auch von Eiserne Jungfrau betroffen sind, mehr Schattenschaden zu.",
+        "snoId": 1221014
+    },
+    "des_verfalls": {
+        "desc": "Jedes Mal, wenn die zentrale passive Fertigkeit Schattenseuche Gegnern Schaden zufügt, erhöht sich der Schaden der nächsten Schattenseuche innerhalb von Sek. um . Bis zu mal stapelbar.",
+        "snoId": 1221533
+    },
+    "blutgebadeter": {
+        "desc": "Die Nova von Blutwoge breitet sich nach kurzer Verzögerung erneut aus und verursacht dabei weniger Schaden.",
+        "snoId": 1221658
+    },
+    "blutwogender": {
+        "desc": "Blutwelle erzeugt zwei zusätzliche Wellen, wobei jede weniger Schaden als die vorherige verursacht.",
+        "snoId": 1223789
+    },
+    "schnellblütiger": {
+        "desc": "Blutkugeln verringern die Abklingzeit Eurer ultimativen Fertigkeit um Sek.",
+        "snoId": 1221650
+    },
+    "von_rathmas_auserwählten": {
+        "desc": "Jedes Mal, wenn Eure Blutfertigkeiten überwältigen, erhaltet Ihr Sek. lang Angriffsgeschwindigkeit.",
+        "snoId": 1221701
+    },
+    "des_frühzeitigen_todes": {
+        "desc": "Jedes geheilte Prozent Eures maximalen Lebens oberhalb von verleiht Euch zusätzlich Überwältigungsschaden bei Eurem nächsten überwältigenden Angriff, bis maximal .",
+        "snoId": 1221706
+    },
+    "des_mächtigen_blutes": {
+        "desc": "Wenn Ihr gesund seid, gewähren Blutkugeln Euch Essenz.",
+        "snoId": 1221644
+    },
+    "hünenhafter": {
+        "desc": "Euer Golem hat eine Chance von , seine aktive Abklingzeit um Sek. zu reduzieren, und eine Chance von , eine Leiche zu erzeugen, wenn er einem Gegner mit seinem normalen Angriff Schaden zufügt.",
+        "snoId": 1222122
+    },
+    "der_gehärteten_knochen": {
+        "desc": "Eure Diener erhalten erhöhte Schadensreduktion.",
+        "snoId": 1222591
+    },
+    "opfernder": {
+        "desc": "Eure Opfer Boni sind um erhöht.",
+        "snoId": 1222267
+    },
+    "bestattender": {
+        "desc": "Ihr erhaltet maximale Essenz pro aktivem Diener.",
+        "snoId": 1223238
+    },
+    "der_reanimation": {
+        "desc": "Eure Diener erhalten höheren Schaden, solange sie am Leben sind, bis maximal nach Sek.",
+        "snoId": 1223322
+    },
+    "leichenhafter": {
+        "desc": "Das Verbrauchen einer Leiche erhöht den Schaden Eurer nächsten Kernfertigkeit um , bis maximal .",
+        "snoId": 1222414
+    },
+    "des_einbalsamierens": {
+        "desc": "Beim Verbrauchen einer Leiche besteht eine Chance von , dass eine Blutkugel erscheint.",
+        "snoId": 1222471
+    },
+    "des_ultimativen_schattens": {
+        "desc": "Knochensturm und Blutwelle sind zusätzlich Dunkelheitsfertigkeiten, verursachen Schattenschaden und erhalten zusätzliche Effekte Gegner, die durch Knochensturm Schaden erleiden, erleiden im Verlauf von Sek. Schattenschaden. Blutwelle erschafft in ihrer Bahn entweihten Boden, der im Verlauf von Sek. Schattenschaden verursacht.",
+        "snoId": 1106218
+    },
+    "des_explosiven_nebels": {
+        "desc": "Blutnebel löst bei Leichen in der Nähe Leichenexplosion aus. Wenn Blutnebel eine Leiche sprengt, verringert sich seine Abklingzeit um .",
+        "snoId": 1106610
+    },
+    "der_blutstacheln": {
+        "desc": "Wenn Ihr Blutlanze wirkt, werden Blutkugeln verbraucht, die ebenfalls Lanzen beschwören. Jede zusätzliche Blutlanze verursacht des normalen Schadens und priorisiert nicht aufgespießte Gegner.",
+        "snoId": 1439750
+    },
+    "des_langen_schattens": {
+        "desc": "Glückstreffer Eure \"Schattenschaden über Zeit\"Effekte haben eine Chance von , Essenz zu erzeugen. Der Schaden Eurer zentralen passiven Fertigkeit Schattenseuche erzeugt immer Essenz.",
+        "snoId": 1622848
+    },
+    "der_imitierten_infusion": {
+        "desc": "Eure Schattenklone imitieren außerdem die auf Eure Fertigkeiten angewandten Infusionen. Wenn Ihr eine Infusionsfertigkeit wirkt, verursacht Euer aktiver Schattenklon Sek. lang mehr Schaden.",
+        "snoId": 1106666
+    },
+    "verhüllender": {
+        "desc": "Ihr erhaltet alle Sek. einen kostenlosen Schatten von Dunkler Schleier, wenn Ihr stillsteht. Jeder Schatten von Dunkler Schleier verleiht mehr Schadensreduktion.",
+        "snoId": 1106674
+    },
+    "trickreicher": {
+        "desc": "Jedes Mal, wenn Durchschlagender Schuss einem Gegner Schaden zufügt, spalten sich auf beiden Seiten zusätzliche Pfeile ab. Diese seitlichen Pfeile verursachen des Basisschadens von Durchschlagender Schuss und spalten sich nicht auf.",
+        "snoId": 1106115
+    },
+    "der_umkreisenden_klingen": {
+        "desc": "Klingensturm fügt Gegnern in einem Kreis um Euch Schaden zu und verursacht mehr Schaden.",
+        "snoId": 1106126
+    },
+    "der_flüchtigen_schatten": {
+        "desc": "Wenn ein Schatten von Dunkler Schleier entfernt wird, löst Ihr eine Explosion um Euch aus, die Schattenschaden verursacht.",
+        "snoId": 1106158
+    },
+    "energiespendender": {
+        "desc": "Wenn Ihr einem Elitegegner mit einer Basisfertigkeit Schaden zufügt, wird Energie erzeugt.",
+        "snoId": 1106168
+    },
+    "der_überraschung": {
+        "desc": "Wenn Ihr Entrinnen oder Schattenschritt wirkt, hinterlasst Ihr explodierende Blendgranaten, die insgesamt physischen Schaden verursachen und Gegner Sek. lang betäuben.",
+        "snoId": 1106222
+    },
+    "täuschender": {
+        "desc": "Krähenfüße werfen auch explodierende Blendgranaten, die insgesamt physischen Schaden verursachen und Gegner Sek. lang betäuben.",
+        "snoId": 1106238
+    },
+    "der_instabilen_infusionen": {
+        "desc": "Wenn Ihr eine Infusionsfertigkeit wirkt, löst Ihr eine Explosion um Euch aus, die die Infusionseffekte anwendet und Schaden desselben Schadenstyps verursacht.",
+        "snoId": 1106246
+    },
+    "klingentanzender": {
+        "desc": "Schraubklingen umkreisen Euch für kurze Zeit, nachdem sie zurückgekehrt sind, und verursachen pro Treffer des Rückkehrschadens von Schraubklingen. Je nach zurückgelegter Distanz der Klingen bei ihrer Rückkehr erhöht sich der Umkreisungsschaden auf bis zu des Rückkehrschadens.",
+        "snoId": 1106259
+    },
+    "giftalchemischer": {
+        "desc": "Glückstreffer Wenn ein vergifteter Gegner Schaden durch eine Fertigkeit mit Schatteninfusion erleidet, besteht eine Chance von bis zu , eine toxische Explosion zu erzeugen, die dem Ziel und Gegnern in der Nähe im Verlauf von Sek. Giftschaden zufügt.",
+        "snoId": 1106283
+    },
+    "eisalchemischer": {
+        "desc": "Glückstreffer Wenn ein unterkühlter oder eingefrorener Gegner Schaden durch eine Fertigkeit mit Schatteninfusion erleidet, besteht eine Chance von bis zu , eine Explosion zu erzeugen, die dem Ziel und Gegnern in der Nähe Kälteschaden zufügt und sie Sek. lang unterkühlt.",
+        "snoId": 1106291
+    },
+    "schattenschnitters": {
+        "desc": "Wenn Ihr Preschen wirkt, erscheint ein Schattenklon an Eurer Position, der ebenfalls Preschen wirkt und des Basisschadens verursacht.",
+        "snoId": 1106314
+    },
+    "des_pfeilhagels": {
+        "desc": "Glückstreffer Eure Präzisionsfertigkeiten haben eine Chance von bis zu , einen Pfeilhagel auf die Position des Gegners niedergehen zu lassen, der im Verlauf von Sek. physischen Schaden verursacht. Ihr könnt bis zu aktive Pfeilhagel haben.",
+        "snoId": 1106339
+    },
+    "der_berstenden_gifte": {
+        "desc": "Glückstreffer Fertigkeiten mit Giftinfusion haben eine Chance von bis zu , eine Giftlache zu erzeugen, die Gegnern in ihr im Verlauf von Sek. Giftschaden zufügt. Solange Ihr in der Lache steht, hat Eure Giftinfusion keine Abklingzeit und kein Aufladungsmaximum.",
+        "snoId": 1106355
+    },
+    "der_abzweigenden_salven": {
+        "desc": "Die Pfeile von Sperrfeuer haben jedes Mal, wenn sie abprallen, eine Chance von , sich in Pfeile zu spalten.",
+        "snoId": 1208170
+    },
+    "sprengfallenstellender": {
+        "desc": "Glückstreffer Wenn Ihr Gegnern, die unter Euren Fallenfertigkeiten leiden, direkten Schaden zufügt, besteht eine Chance von bis zu , sie Sek. lang verwundbar zu machen.",
+        "snoId": 1186573
+    },
+    "des_explosiven_schwungs": {
+        "desc": "Eure Granatenfertigkeiten gelten als Fallenfertigkeiten. Immer wenn Ihr eine Falle scharfmacht oder Granaten fallen lasst, erhaltet Ihr Sek. lang Bewegungsgeschwindigkeit.",
+        "snoId": 1218947
+    },
+    "des_unheimlichen_verrats": {
+        "desc": "Wenn Ihr einem benommenen Gegner mit einer Wendigkeitsfertigkeit Schaden zufügt, erhaltet Ihr Sek. lang Verstohlenheit. Wenn Ihr mit einem Angriff Eure Verstohlenheit beendet, profitiert Ihr Sek. lang von einer um verringerten Dauer von Kontrollbeeinträchtigungen.",
+        "snoId": 1184417
+    },
+    "der_grausamen_versorgung": {
+        "desc": "Explosionen der zentralen passiven Fertigkeit Bestrafen verleihen Euch pro getroffenem Gegner Leben, bis maximal Leben.",
+        "snoId": 1184011
+    },
+    "rachsüchtiger": {
+        "desc": "Glückstreffer Wenn Ihr einen Gegner verwundbar macht, habt Ihr eine Chance von bis zu , Sek. lang kritische Trefferchance zu erhalten, bis maximal .",
+        "snoId": 1184524
+    },
+    "gefräßiger": {
+        "desc": "Das Töten eines verwundbaren Gegners erhöht Eure Energieregeneration Sek. lang um .",
+        "snoId": 1184468
+    },
+    "entfesselnder": {
+        "desc": "Wenn Gegner in der Nähe Euch Schaden zufügen, lasst Ihr eine Rauchgranate fallen und weicht den nächsten Angriffen innerhalb von Sek. aus. Dieser Effekt kann nur einmal alle Sek. auftreten.",
+        "snoId": 1185975
+    },
+    "des_geraubten_elans": {
+        "desc": "Jeder Stapel der zentralen passiven Fertigkeit Schwung heilt Euch um Leben pro Sekunde.",
+        "snoId": 1186855
+    },
+    "opportuner": {
+        "desc": "Wenn Ihr Eure Verstohlenheit mit einem Angriff beendet, lasst Ihr explodierende Blendgranaten rund um Eure Position fallen, die insgesamt physischen Schaden verursachen und Gegner Sek. lang betäuben.",
+        "snoId": 1189296
+    },
+    "des_stimulierenden_nebels": {
+        "desc": "Ihr lasst am Ende von Preschen automatisch eine Rauchgranate fallen. Rauchgranaten verkürzen die Abklingzeit von Preschen für jeden auf diese Weise getroffenen Gegner um Sek., bis maximal Sek.",
+        "snoId": 1187878
+    },
+    "betrügender": {
+        "desc": "Ihr erleidet weniger Schaden von Gegnern, die von Kontrollverlusteffekten betroffen sind und erhaltet jedes Mal, wenn sie Euch direkten Schaden zufügen, Sek. lang Bewegungsgeschwindigkeit.",
+        "snoId": 1186373
+    },
+    "der_abgeschöpften_verpflegung": {
+        "desc": "Glückstreffer Wenn Ihr einem verwundbaren Gegner mit einer Kernfertigkeit Schaden zufügt, besteht eine Chance von bis zu , dass ein Heiltrank fallen gelassen wird.",
+        "snoId": 1186377
+    },
+    "der_verderbnis": {
+        "desc": "Eure Infusionseffekte sind wirksamer gegen verwundbare Gegner.",
+        "snoId": 1186379
+    },
+    "zerfleischers": {
+        "desc": "Glückstreffer Wenn Ihr einem verwundbaren Gegner direkten Schaden zufügt, besteht eine Chance von bis zu , ihn Sek. lang benommen zu machen.",
+        "snoId": 1186692
+    },
+    "schattiger": {
+        "desc": "Glückstreffer Kritische Treffer mit Präzisionsfertigkeiten haben eine Chance von bis zu , einen kostenlosen Schatten von Dunkler Schleier zu verleihen.",
+        "snoId": 1220101
+    },
+    "des_giftigen_eises": {
+        "desc": "Unterkühlte Gegner, die von Giftinfusion vergiftet werden, werden pro Sekunde um weitere unterkühlt. Ihr fügt eingefrorenen Gegnern zusätzlichen Giftschaden zu.",
+        "snoId": 1302490
+    },
+    "verwüstender": {
+        "desc": "Schattenschritt hat eine zusätzliche Aufladung. Wenn Ihr einen Gegner mit Schattenschritt tötet, erhaltet Ihr eine Aufladung zurück und der Schaden von Schattenschritt wird Sek. lang um erhöht, bis maximal .",
+        "snoId": 1304553
+    },
+    "der_synergie": {
+        "desc": "Der Einsatz einer Wendigkeitsfertigkeit verringert die Abklingzeit Eurer nächsten Täuschungsfertigkeit um . Der Einsatz einer Täuschungsfertigkeit erhöht den Schaden Eurer nächsten Wendigkeitsfertigkeit um .",
+        "snoId": 1301737
+    },
+    "der_tödlichen_dämmerung": {
+        "desc": "Wenn Ihr durch einen Gegner hindurch entrinnt, der von Schatteninfusion betroffen ist, erhaltet Ihr Sek. lang Verstohlenheit. Wenn Ihr mit einem Angriff Eure Verstohlenheit beendet, erhaltet Ihr beim Töten eines Gegners Sek. lang maximales Leben.",
+        "snoId": 1301760
+    },
+    "der_flüchtigen_bedrohung": {
+        "desc": "Solange beide Boni der zentralen passiven Fertigkeit Auf engem Raum aktiv sind, erhöht sich Eure Ausweichchance jedes Mal um , wenn Ihr von einem Gegner getroffen werdet. Wenn Ihr erfolgreich ausweicht, wird dieser Bonus zurückgesetzt.",
+        "snoId": 1304680
+    },
+    "eindringender": {
+        "desc": "Giftfalle unterbricht nicht länger Verstohlenheit und löst keine Abkling oder Scharfmachzeit aus, solange Ihr verstohlen seid. Alle Giftfallen werden aktiviert, wenn Ihr Verstohlenheit verlasst, und die Abklingzeit von Giftfalle beträgt Sek. pro platzierter Falle.",
+        "snoId": 1304821
+    },
+    "erfrorener": {
+        "desc": "Unterkühlte Gegner, die von Euren Granatenfertigkeiten getroffen werden, werden mit einer Chance in Höhe Eurer doppelten kritischen Trefferchance sofort Sek. lang eingefroren. Ihr fügt eingefrorenen Gegnern mehr kritischen Trefferschaden zu.",
+        "snoId": 1302633
+    },
+    "wiederholender": {
+        "desc": "Schnellfeuer hat eine Chance von , auf ein weiteres Ziel überzuspringen.",
+        "snoId": 1206102
+    },
+    "schockgefrorener": {
+        "desc": "Jeder unterkühlte oder eingefrorene Gegner, durch den Ihr entrinnt, verleiht Euch eine Barriere, die Sek. lang Schaden absorbiert, bis maximal Schaden.",
+        "snoId": 1219217
+    },
+    "der_seuchenspitzen": {
+        "desc": "Jeder . Einsatz von Einstich hat Giftinfusion mit der normalen Stärke.",
+        "snoId": 1439745
+    },
+    "der_kunstvollen_initiative": {
+        "desc": "Wenn Ihr Energie verbraucht, gebt Ihr eine Reihe von explodierenden Blendgranaten frei, die insgesamt physischen Schaden verursachen und Gegner Sek. lang betäuben. Eure Granatenfertigkeiten verursachen mehr Schaden.",
+        "snoId": 1620632
+    },
+    "der_bindenden_glut": {
+        "desc": "Mit Flammenschild könnt Ihr Euch ungehindert durch Gegner bewegen. Gegner, durch die Ihr Euch bewegt, während Flammenschild aktiv ist, werden Sek. lang bewegungsunfähig.",
+        "snoId": 1106399
+    },
+    "schneewachender": {
+        "desc": "Solange Ihr innerhalb Eures Blizzards steht und für Sek., nachdem Ihr ihn verlasst, erleidet Ihr weniger Schaden.",
+        "snoId": 1106418
+    },
+    "der_drei_flüche": {
+        "desc": "Erhöht den kritischen Trefferschaden von Meteor und Feuerball um . Dieser Bonus wird bei gesunden Zielen verdoppelt.",
+        "snoId": 1106440
+    },
+    "der_durchdringenden_statik": {
+        "desc": "Comboblitze durchschlagen Gegner, aber verursachen bei Zielen, die nach dem ersten getroffen werden, weniger Schaden.",
+        "snoId": 1106489
+    },
+    "frostblitzender": {
+        "desc": "Frostnova erhält eine zusätzliche Aufladung, aber die Abklingzeit pro Aufladung erhöht sich um .",
+        "snoId": 1106548
+    },
+    "geladener": {
+        "desc": "Wenn Ihr Knisternde Energie sammelt, erhöht sich Eure Bewegungsgeschwindigkeit Sek. lang um .",
+        "snoId": 1106644
+    },
+    "(ph)_of_ensnaring_current": {
+        "desc": "Kugelblitz zieht Gegner auf seinem Weg mit sich.",
+        "snoId": 1106717
+    },
+    "des_gefrorenen_orbits": {
+        "desc": "Gefrorene Kugel bleibt stehen, sobald sie ihr Ziel erreicht hat, explodiert weitere mal und verursacht dabei ihres Schadens.",
+        "snoId": 1106733
+    },
+    "züngelnder": {
+        "desc": "Ihr könnt Hydra mal zusätzlich aktiv haben, und die Dauer von Hydra wird um verlängert.",
+        "snoId": 1106123
+    },
+    "des_armageddon": {
+        "desc": "Während der Dauer von Inferno fällt um Euch herum ein Hagel von Meteoriten herab und verursacht beim Aufprall Feuerschaden. Eure Meteoriten machen Gegner Sek. lang bewegungsunfähig.",
+        "snoId": 1106174
+    },
+    "des_funkenschlags": {
+        "desc": "Während des Kanalisierens von Flammentod ist Euer Verbrennungsschaden um erhöht.",
+        "snoId": 1212473
+    },
+    "der_uralten_flamme": {
+        "desc": "Solange beide Boni der zentralen passiven Fertigkeit Esus Wildheit aktiv sind, erhöht sich Eure Angriffsgeschwindigkeit um .",
+        "snoId": 1212492
+    },
+    "der_verzehrenden_flammen": {
+        "desc": "Ihr verursacht erhöhten Verbrennungsschaden bei Gegnern mit weniger als Leben. Solange Gegner von Schaden über Zeit betroffen sind, der ihr maximales Leben übersteigt, fügt Ihr ihnen mehr Verbrennungsschaden zu.",
+        "snoId": 1212468
+    },
+    "zündelnder": {
+        "desc": "Glückstreffer Der Schaden Eurer Fertigkeit Pyromanie hat eine Chance von bis zu , Mana wiederherzustellen.",
+        "snoId": 1212482
+    },
+    "der_versengten_extremitäten": {
+        "desc": "Nach Abklingen der Bewegungsunfähigkeit werden Gegner Sek. lang um verlangsamt.",
+        "snoId": 1213811
+    },
+    "feuerwandlers": {
+        "desc": "Wenn Ihr Eure Feuerwand berührt, erhaltet Ihr Sek. lang Bewegungsgeschwindigkeit.",
+        "snoId": 1214264
+    },
+    "der_zerborstenen_sterne": {
+        "desc": "Um Euren Meteor herum fallen Meteoriten, die beim Aufprall Feuerschaden verursachen. Eure Meteoriten verbrennen getroffene Gegner zusätzlich und verursachen im Verlauf von Sek. Schaden.",
+        "snoId": 1212514
+    },
+    "vergletscherter": {
+        "desc": "Blizzard erzeugt regelmäßig explodierende Eisstacheln, die Schaden verursachen. Eure Eisstacheln fügen eingefrorenen Gegnern mehr Schaden zu.",
+        "snoId": 1212317
+    },
+    "schneeverschleierter": {
+        "desc": "Wenn Ihr Eisrüstung wirkt, seid Ihr unaufhaltsam und erhaltet Sek. lang erhöhte Rüstung.",
+        "snoId": 1211282
+    },
+    "des_gefrorenen_sogs": {
+        "desc": "Solange Eisrüstung aktiv ist, hinterlasst Ihr explodierende Eisstacheln, die Schaden verursachen. Eure Eisstacheln unterkühlen Gegner in Höhe von .",
+        "snoId": 1212315
+    },
+    "der_schneidenden_kälte": {
+        "desc": "Eissplitter durchbohren mal und verursachen weniger Schaden pro nachfolgend getroffenem Gegner.",
+        "snoId": 1212505
+    },
+    "umhüllter": {
+        "desc": "Solange Tieffrieren aktiv ist, stellt Ihr pro Sekunde Eures maximalen Lebens und Manas wieder her.",
+        "snoId": 1212496
+    },
+    "der_gunst": {
+        "desc": "Eure Glückstrefferchance ist um bis zu erhöht, solange Ihr eine aktive Barriere habt.",
+        "snoId": 1212461
+    },
+    "der_beißenden_kälte": {
+        "desc": "Wenn Ihr einen Gegner einfriert, besteht eine Chance von , dass er Sek. lang verwundbar wird.",
+        "snoId": 1224522
+    },
+    "sturmschwellender": {
+        "desc": "Ihr fügt verwundbaren Gegnern mehr Schaden zu, solange Ihr eine Barriere habt.",
+        "snoId": 1224682
+    },
+    "der_gefrorenen_tundra": {
+        "desc": "Solange Tieffrieren aktiv ist, bilden sich im Wirkungsbereich Eisstacheln, die Kälteschaden verursachen. Eure Eisstacheln haben einen größeren Explosionsradius.",
+        "snoId": 1212280
+    },
+    "der_überwältigenden_strömung": {
+        "desc": "Instabile Strömung hat eine Chance von , eine zusätzliche Schockfertigkeit zu wirken.",
+        "snoId": 1225182
+    },
+    "aufladender": {
+        "desc": "Jedes Mal, wenn Kettenblitz abprallt, erhaltet Ihr Mana.",
+        "snoId": 1225217
+    },
+    "gravitativer": {
+        "desc": "Kugelblitz umkreist Euch und verursacht erhöhten Schaden.",
+        "snoId": 1229700
+    },
+    "magierfürstlicher": {
+        "desc": "Die zentrale passiven Fertigkeit Vyrs Beherrschung verleiht zusätzlich Schadensreduktion für jeden Gegner in der Nähe, bis maximal .",
+        "snoId": 1227239
+    },
+    "der_zersplitternden_energie": {
+        "desc": "Blitzspeer hat eine Chance von , beim Wirken einen zusätzlichen Blitzspeer zu erzeugen.",
+        "snoId": 1225294
+    },
+    "der_ungebrochenen_kette": {
+        "desc": "Kettenblitz hat eine Chance von , zusätzliche Male überzuspringen.",
+        "snoId": 1225297
+    },
+    "der_zügigen_verbindung": {
+        "desc": "Ihr erhaltet nach Teleportation Sek. lang Bewegungsgeschwindigkeit.",
+        "snoId": 1229077
+    },
+    "stabiler": {
+        "desc": "Während Instabile Strömung nicht aktiv ist, haben Eure Schockfertigkeiten eine Chance von , eine kostenlose Wirkung durch Instabile Strömung auszulösen.",
+        "snoId": 1227269
+    },
+    "wunderkinds": {
+        "desc": "Die Verwendung einer Fertigkeit mit Abklingzeit stellt Mana wieder her.",
+        "snoId": 1214115
+    },
+    "des_unerschütterlichen": {
+        "desc": "Wenn Ihr direkten Schaden erleidet, besteht eine Chance von , die Abklingzeit einer Eurer defensiven Fertigkeiten abzuschließen.",
+        "snoId": 1225190
+    },
+    "elementarer": {
+        "desc": "Kern oder Beherrschungsfertigkeiten, die mit mindestens Mana gewirkt werden, haben mehr kritische Trefferchance.",
+        "snoId": 1213532
+    },
+    "der_konzentration": {
+        "desc": "Eure Manaregeneration wird um erhöht, wenn Ihr in den letzten Sek. keinen Schaden erlitten habt.",
+        "snoId": 1215683
+    },
+    "der_kontrolle": {
+        "desc": "Ihr fügt bewegungsunfähigen, betäubten oder eingefrorenen Gegnern mehr Schaden zu.",
+        "snoId": 1215771
+    },
+    "ewiglebender": {
+        "desc": "Ihr erleidet weniger Schaden durch Gegner, die unter Kontrollverlusteffekten leiden oder verwundbar sind.",
+        "snoId": 1215398
+    },
+    "der_effizienz": {
+        "desc": "Wenn Ihr eine Basisfertigkeit wirkt, verringern sich die Manakosten Eurer nächsten Kern oder Beherrschungsfertigkeit um .",
+        "snoId": 1212247
+    },
+    "der_gefrorenen_erinnerungen": {
+        "desc": "Die zentrale passive Fertigkeit Lawine betrifft jetzt zusätzliche Wirkungen.",
+        "snoId": 1211551
+    },
+    "der_energiefülle": {
+        "desc": "Knisternde Energie hat eine Chance von , auf einen zusätzlichen Gegner überzuspringen.",
+        "snoId": 1225569
+    },
+    "zerschmetterter": {
+        "desc": "Explosionen der zentralen passiven Fertigkeit Zersplittern verursachen mehr Schaden, wenn Gegner sterben, während sie eingefroren sind.",
+        "snoId": 1211655
+    },
+    "des_sengenden_schutzes": {
+        "desc": "Nachdem Ihr Mana verbraucht habt, ist Eure nächste Feuerwand kostenlos und sie zerstört kleine Geschosse.",
+        "snoId": 1439761
+    },
+    "des_kampfmagiers": {
+        "desc": "Glückstreffer Wenn Eure Beschwörungsfertigkeiten treffen, besteht Sek. lang eine Chance von bis zu , Ränge für Eure Beschwörungsfertigkeiten zu erhalten. Bis zu mal stapelbar.",
+        "snoId": 1622933
+    }
+}

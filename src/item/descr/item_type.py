@@ -1,10 +1,11 @@
 import numpy as np
+import json
 from item.models import Item, ItemRarity, ItemType
 from utils.ocr.read import image_to_text
 from utils.image_operations import crop, color_filter
 from template_finder import TemplateMatch
 from config import Config
-from item.corrections import ERROR_MAP
+from dataloader import Dataloader
 
 
 def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> tuple[Item | None, str]:
@@ -69,7 +70,7 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
 
     max_length = 0
     last_char_idx = 0
-    for error, correction in ERROR_MAP.items():
+    for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
     for item_type in ItemType:
         if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
@@ -97,7 +98,7 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
 
 def _find_sigil_tier(concatenated_str: str) -> int:
     idx = None
-    for error, correction in ERROR_MAP.items():
+    for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
     if "tier" in concatenated_str:
         idx = concatenated_str.index("tier")

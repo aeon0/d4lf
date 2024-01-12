@@ -19,7 +19,7 @@
         "desc": "Gain Damage Reduction for each Nearby Bleeding enemy up to maximum.",
         "snoId": 1105989
     },
-    "battle-mad": {
+    "battlemad": {
         "desc": "Gain Berserking for seconds after swapping weapons times.",
         "snoId": 1105990
     },
@@ -79,7 +79,7 @@
         "desc": "Whirlwinds Critical Strike Chance is increased by for each second it is channeled, up to .",
         "snoId": 1106009
     },
-    "of_bul-kathos": {
+    "of_bulkathos": {
         "desc": "Leap creates an Earthquake that deals Physical damage over seconds. While standing in Earthquakes, you gain increased Damage Reduction.",
         "snoId": 1106010
     },
@@ -199,7 +199,7 @@
         "desc": "When you use a Shapeshifting Skill that changes your form, gain Life. If you are at full Life, gain the same amount as Fortify.",
         "snoId": 1200308
     },
-    "seismic-shift": {
+    "seismicshift": {
         "desc": "Earth Spike launches spikes in a line and has a second Cooldown.",
         "snoId": 1106138
     },
@@ -435,7 +435,7 @@
         "desc": "Each time one of your Summoning Minions damages an enemy, they gain Attack Speed for seconds, up to .",
         "snoId": 1106475
     },
-    "flesh-rending": {
+    "fleshrending": {
         "desc": "After Decompose spawns a Corpse, gain Essence.",
         "snoId": 1106485
     },
@@ -475,7 +475,7 @@
         "desc": "Your maximum number of Skeletal Mages is increased by .",
         "snoId": 1106156
     },
-    "blood-soaked": {
+    "bloodsoaked": {
         "desc": "Blood Mist leaves a trail of Desecrated Ground that lasts for seconds and deals Shadow damage per second to enemies who stand in it. Your Movement Speed is no longer reduced while Blood Mist is active.",
         "snoId": 1106163
     },
@@ -535,7 +535,7 @@
         "desc": "Each time the Shadowblight Key Passive deals damage to enemies, it increases the next Shadowblights damage within seconds by , stacking up to times.",
         "snoId": 1221533
     },
-    "blood-bathed": {
+    "bloodbathed": {
         "desc": "Blood Surges nova echoes again after a short delay, dealing less damage.",
         "snoId": 1221658
     },
@@ -667,7 +667,7 @@
         "desc": "Barrages arrows have a chance to split into arrows whenever they ricochet.",
         "snoId": 1208170
     },
-    "blast-trappers": {
+    "blasttrappers": {
         "desc": "Lucky Hit Dealing direct damage to enemies affected by your Trap Skills has up to a chance to make them Vulnerable for seconds.",
         "snoId": 1186573
     },
@@ -887,7 +887,7 @@
         "desc": "Ball Lightning orbits around you and deals increased damage.",
         "snoId": 1229700
     },
-    "mage-lords": {
+    "magelords": {
         "desc": "The Vyrs Mastery Key Passive also grants Damage Reduction for each Close enemy, up to .",
         "snoId": 1227239
     },

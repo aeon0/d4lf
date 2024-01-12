@@ -45,7 +45,7 @@
             "type": "python",
             "request": "launch",
             "program": "src/tools/gen_data.py",
-            "args": ["../d4data"],
+            "args": ["../d4data", "../Diablo4Companion"],
             "console": "integratedTerminal",
             "justMyCode": true,
             "cwd": "${workspaceFolder}",

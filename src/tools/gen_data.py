@@ -12,6 +12,7 @@ def remove_content_in_braces(input_string):
     result = re.sub(pattern, "", input_string)
     pattern = r"\[.*?\]"
     result = re.sub(pattern, "", result)
+    result = re.sub(r"#%.*?#%", "", result)
     result = re.sub(r"\|.*?:", "|:", result)
     result = result.replace("|", "")
     result = result.replace(";", "")
@@ -38,14 +39,23 @@ def check_ms(input_string):
     return input_string
 
 
-def main(d4data_dir: Path):
+def main(d4data_dir: Path, companion_app_dir: Path):
     lang_arr = ["enUS", "deDE", "frFR", "esES", "esMX", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "trTR", "zhCN", "zhTW"]
 
     for l in lang_arr:
-        p = f"assets/lang/{l}"
-        if os.path.exists(p):
-            shutil.rmtree(p)
-        os.makedirs(p)
+        f = f"assets/lang/{l}/affixes.json"
+        if os.path.exists(f):
+            os.remove(f)
+        f = f"assets/lang/{l}/aspects.json"
+        if os.path.exists(f):
+            os.remove(f)
+        f = f"assets/lang/{l}/uniques.json"
+        if os.path.exists(f):
+            os.remove(f)
+        f = f"assets/lang/{l}/sigils.json"
+        if os.path.exists(f):
+            os.remove(f)
+        os.makedirs(f"assets/lang/{l}", exist_ok=True)
 
     for language in lang_arr:
         # Create Aspects
@@ -59,7 +69,7 @@ def main(d4data_dir: Path):
                 snoId = data["__snoID__"]
                 name_idx, desc_idx = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
                 aspect_name = data["arStrings"][name_idx]["szText"]
-                aspect_name_clean = aspect_name.replace(" ", "_").lower().replace("’", "").replace("'", "")
+                aspect_name_clean = aspect_name.replace(" ", "_").lower().replace("’", "").replace("'", "").replace("-", "")
                 aspect_name_clean = check_ms(aspect_name_clean)
                 aspect_desc = data["arStrings"][desc_idx]["szText"]
                 aspect_descr_clean = clean_str(remove_content_in_braces(aspect_desc.replace("’", "")))
@@ -80,7 +90,7 @@ def main(d4data_dir: Path):
                 snoId = data["__snoID__"]
                 name_idx, _ = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
                 name = data["arStrings"][name_idx]["szText"]
-                name_clean = name.replace(" ", "_").lower().replace("’", "").replace("'", "")
+                name_clean = name.replace(" ", "_").lower().replace("’", "").replace("'", "").replace(",", "")
                 name_clean = check_ms(name_clean)
                 # Open affix file for affix
                 splits = json_file.name.split("_")
@@ -137,14 +147,17 @@ def main(d4data_dir: Path):
             json_file.write("\n")
 
         # Create Affixes
+        # Its quite the hustle to reconstruct the displayed affixes. So using the companion app parsed json. Generated from here:
+        # https://github.com/josdemmers/D4DataParser/blob/main/D4DataParser/Parsers/AffixParser.cs
         print(f"Gen Affixes for {language}")
         affix_dict = {}
-        json_file = d4data_dir / f"json/{language}_Text/meta/StringList/AttributeDescriptions.stl.json"
+        json_file = companion_app_dir / f"D4Companion/Data/Affixes.{language}.json"
         with open(json_file, "r", encoding="utf-8") as file:
             data = json.load(file)
-            for affix in data["arStrings"]:
-                name = affix["szLabel"].lower().replace("’", "").replace("'", "")
-                desc = clean_str(remove_content_in_braces(affix["szText"].replace("’", "").lower()))
+            for affix in data:
+                desc: str = affix["Description"]
+                desc = clean_str(remove_content_in_braces(desc.lower()).replace("'", "").replace("’", "").replace("#", "").replace("#", ""))
+                name = desc.replace(",", "").replace(" ", "_")
                 if len(desc) > 2:
                     affix_dict[name] = desc
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
@@ -159,11 +172,13 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Path Argument Parser")
     parser.add_argument("d4data_dir", type=str, help="Provide a path to d4data repo")
+    parser.add_argument("companion_app_dir", type=str, help="Provide a path to d4data repo")
     args = parser.parse_args()
 
     input_path = Path(args.d4data_dir)
+    input_path2 = Path(args.companion_app_dir)
 
-    if input_path.exists() and input_path.is_dir():
-        main(input_path)
+    if input_path.exists() and input_path.is_dir() and input_path2.exists() and input_path2.is_dir():
+        main(input_path, input_path2)
     else:
-        print(f"The provided path '{input_path}' does not exist or is not a directory.")
+        print(f"The provided path '{input_path}' or '{input_path2}' does not exist or is not a directory.")

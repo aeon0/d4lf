@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from tesserocr import OEM, PyTessBaseAPI, RIL
+from config import Config
 
 from utils.ocr.models import OcrResult
 
@@ -25,9 +26,14 @@ TESSDATA_PATH = "assets/tessdata"
 #  13    Raw line. Treat the image as a single text line,
 #           bypassing hacks that are Tesseract-specif
 
-API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang="eng")
+API = None
 # supposed to give fruther runtime improvements, but reading performance really goes down...
 # API.SetVariable("tessedit_do_invert", "0")
+
+
+def load_api():
+    global API
+    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=Config().general["language"])
 
 
 def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
@@ -59,6 +65,9 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
     :param scale: The scaling factor for the image.
     :return: The OCR result.
     """
+    if API is None:
+        load_api()
+
     if do_pre_proc:
         pre_proced_img = pre_proc_img(img)
         API.SetImageBytes(*_img_to_bytes(pre_proced_img))

@@ -7,7 +7,7 @@
         "desc": "Choc terrestre génère un tremblement de terre infligeant points de dégâts physiques en s. Lorsque vous vous trouvez au milieu dun tremblement de terre, vous infligez de dégâts supplémentaires.",
         "snoId": 1105986
     },
-    "de_brise-crâne": {
+    "de_brisecrâne": {
         "desc": "Étourdir une cible qui saigne lui inflige un montant de dégâts physiques égal à de son saignement total.",
         "snoId": 1105987
     },
@@ -79,11 +79,11 @@
         "desc": "Les chances dinfliger un coup critique de Tourbillon sont augmentées de par seconde de canalisation de la compétence, jusquà un maximum de .",
         "snoId": 1106009
     },
-    "de_bul-kathos": {
+    "de_bulkathos": {
         "desc": "Bond génère un tremblement de terre infligeant points de dégâts physiques en s. Lorsque vous vous trouvez au milieu dun tremblement de terre, vous gagnez de réduction des dégâts.",
         "snoId": 1106010
     },
-    "du_fouette-vent": {
+    "du_fouettevent": {
         "desc": "Utiliser Coup double deux fois en s génère un tourbillon de poussière qui inflige points de dégâts aux adversaires derrière la cible.",
         "snoId": 1106011
     },
@@ -119,7 +119,7 @@
         "desc": "Coup de chance vous avez jusquà de chances de gagner points de fureur lorsque Déchirure inflige des dégâts directs à au moins une cible qui saigne.",
         "snoId": 1202014
     },
-    "du_frappe-terre": {
+    "du_frappeterre": {
         "desc": "Après avoir changé darme fois, votre prochaine compétence accablera et infligera de dégâts daccablement supplémentaires.",
         "snoId": 1199203
     },
@@ -127,7 +127,7 @@
         "desc": "Après avoir changé darme fois, vous obtenez points de fortification.",
         "snoId": 1200857
     },
-    "porte-bonheur": {
+    "portebonheur": {
         "desc": "Vos chances dobtenir un coup de chance sont augmentées de tant que tous vos bonus de dégâts de votre compétence passive principale Arsenal ambulant sont actifs.",
         "snoId": 1199205
     },
@@ -271,11 +271,11 @@
         "desc": "Tant que vous bénéficiez dune fortification, vos compétences de terre gagnent rangs.",
         "snoId": 1202438
     },
-    "de_change-tempête": {
+    "de_changetempête": {
         "desc": "Tant quOuragan est actif, vos compétences de métamorphose gagnent rangs.",
         "snoId": 1202540
     },
-    "du_traque-tempêtes": {
+    "du_traquetempêtes": {
         "desc": "Tornade pourchasse jusquà cibles.",
         "snoId": 1105817
     },
@@ -327,7 +327,7 @@
         "desc": "Vous gagnez de votre ressource principale par tranche de de points de vie soignés.",
         "snoId": 1106452
     },
-    "de_toute-puissance": {
+    "de_toutepuissance": {
         "desc": "Les compétences de base confèrent de réduction des dégâts pendant s.",
         "snoId": 1106483
     },
@@ -459,7 +459,7 @@
         "desc": "Lorsque vous infligez des dégâts avec Section, vous avez de chances de créer une flaque de chancre sous la cible, ce qui inflige de dégâts supplémentaires. Cet effet ne peut se produire quune fois toutes les s.",
         "snoId": 1106675
     },
-    "du_porte-froid": {
+    "du_portefroid": {
         "desc": "Toutes les s, vos mages squelettes lancent un blizzard qui inflige points de dégâts de froid et qui glace en continu les adversaires à hauteur de en s.",
         "snoId": 1106690
     },
@@ -499,7 +499,7 @@
         "desc": "Vos chances dinfliger un coup critique sont augmentées de pendant s lorsque vous lancez Vrilles nécrophages. Vous infligez de dégâts critiques supplémentaires aux cibles blessées par Vrilles nécrophages.",
         "snoId": 1106529
     },
-    "des_cherche-sangs": {
+    "des_cherchesangs": {
         "desc": "Votre nombre maximum de guerriers squelettes est augmenté de .",
         "snoId": 1106545
     },
@@ -539,7 +539,7 @@
         "desc": "La nova dAfflux sanguin explose à nouveau après un bref instant, infligeant de dégâts en moins.",
         "snoId": 1221658
     },
-    "de_raz-de-marée": {
+    "de_razdemarée": {
         "desc": "Vague de sang projette deux vagues supplémentaires, chacune infligeant de dégâts de moins que la précédente.",
         "snoId": 1223789
     },
@@ -555,7 +555,7 @@
         "desc": "Chaque pour cent de votre maximum de points de vie que vous récupérez audelà de ajoute de dégâts daccablement à votre prochaine attaque accablante, jusquà un bonus maximum de .",
         "snoId": 1221706
     },
-    "de_sang_tout-puissant": {
+    "de_sang_toutpuissant": {
         "desc": "Lorsque vous êtes en bonne santé, les orbes de sang octroient essences.",
         "snoId": 1221644
     },
@@ -775,7 +775,7 @@
         "desc": "Bouclier de feu vous permet de vous mouvoir librement parmi les adversaires. Les cibles que vous traversez alors que Bouclier de feu est actif sont immobilisées pendant s.",
         "snoId": 1106399
     },
-    "du_garde-neige": {
+    "du_gardeneige": {
         "desc": "Tant que vous êtes dans votre Blizzard et pendant s après avoir quitté sa zone deffet, vous subissez de dégâts en moins.",
         "snoId": 1106418
     },
@@ -831,7 +831,7 @@
         "desc": "Une fois que leffet dimmobilisation se dissipe, les cibles sont ralenties de pendant s.",
         "snoId": 1213811
     },
-    "du_marche-flammes": {
+    "du_marcheflammes": {
         "desc": "Entrer en contact avec votre Mur de feu augmente votre vitesse de déplacement de pendant s.",
         "snoId": 1214264
     },

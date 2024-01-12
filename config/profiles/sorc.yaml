@@ -1,15 +1,15 @@
 # Ball Lightning Sorcerer Endgame
 Aspects:
-  - [magelords_aspect, 8]
-  - [aspect_of_the_unwavering, 5]
-  - [gravitational_aspect, 25]
-  - [recharging_aspect, 2.5]
-  - [storm_swell_aspect, 25]
-  - [everliving_aspect, 24]
-  - [aspect_of_disobedience]
-  - [aspect_of_fortune, 19]
-  - [elementalists_aspect, 38]
-  - [accelerating_aspect, 24]
+  - [magelords, 8]
+  - [of_the_unwavering, 5]
+  - [gravitational, 25]
+  - [recharging, 2.5]
+  - [storm_swell, 25]
+  - [everliving, 24]
+  - [of_disobedience]
+  - [of_fortune, 19]
+  - [elementalists, 38]
+  - [accelerating, 24]
 
 Affixes:
   - Helm:
@@ -29,7 +29,7 @@ Affixes:
       affixPool:
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
-        - [damage_reduction_from_enemies_that_are_burning, 10]
+        - [damage_reduction_from_burning_enemies, 10]
         - [damage_reduction, 5]
         - [total_armor, 9]
         - [maximum_life, 580]

@@ -87,7 +87,7 @@
         "desc": "Claw is now a Storm Skill and also casts Storm Strike at normal damage.",
         "snoId": 942106
     },
-    "ahavarion,_spear_of_lycander": {
+    "ahavarion_spear_of_lycander": {
         "desc": "Gain a random Shrine effect for seconds after killing an Elite enemy. Can only occur once every seconds.",
         "snoId": 942108
     },
@@ -135,7 +135,7 @@
         "desc": "Upon collecting Crackling Energy, theres a chance to release a lightning nova, dealing Lightning damage, increased by for every Intelligence you have.",
         "snoId": 1225299
     },
-    "100,000_steps": {
+    "100000_steps": {
         "desc": "After gaining the final damage bonus from the Walking Arsenal Key Passive, you automatically cast Ground Stomp and gain Fury. This cannot happen more than once every seconds.",
         "snoId": 1210595
     },

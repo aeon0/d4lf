@@ -1,7 +1,8 @@
 import numpy as np
 import json
+from config import Config
 from template_finder import TemplateMatch
-from item.corrections import ASPECT_NUMBER_AT_IDX1, ASPECT_NUMBER_AT_IDX2
+from item.descr.aspect_num_idx import ASPECT_NUMBER_AT_IDX1, ASPECT_NUMBER_AT_IDX2
 from item.data.aspect import Aspect
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
@@ -11,14 +12,7 @@ from template_finder import TemplateMatch
 from utils.ocr.read import image_to_text
 from item.descr.texture import find_aspect_search_area
 from logger import Logger
-
-aspect_dict = dict()
-with open("assets/aspects.json", "r") as f:
-    aspect_dict = json.load(f)
-
-aspect_unique_dict = dict()
-with open("assets/aspects_unique.json", "r") as f:
-    aspect_unique_dict = json.load(f)
+from dataloader import Dataloader
 
 
 def find_aspect(
@@ -34,13 +28,13 @@ def find_aspect(
     cleaned_str = clean_str(concatenated_str)
 
     if rarity == ItemRarity.Legendary:
-        found_key = closest_match(cleaned_str, aspect_dict)
+        found_key = closest_match(cleaned_str, Dataloader().aspect_dict)
     else:
-        found_key = closest_match(cleaned_str, aspect_unique_dict)
+        found_key = closest_match(cleaned_str, Dataloader().aspect_unique_dict)
 
-    if found_key in ASPECT_NUMBER_AT_IDX1:
+    if Dataloader().aspect_snoids[found_key] in ASPECT_NUMBER_AT_IDX1:
         idx = 1
-    elif found_key in ASPECT_NUMBER_AT_IDX2:
+    elif Dataloader().aspect_snoids[found_key] in ASPECT_NUMBER_AT_IDX2:
         idx = 2
     else:
         idx = 0

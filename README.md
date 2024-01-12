@@ -71,9 +71,9 @@ For example:
 ```yaml
 Aspects:
     # Filter for a perfect umbral
-    - [aspect_of_the_umbral, 4]
+    - [of_the_umbral, 4]
     # Filter for any umbral
-    - aspect_of_the_umbral
+    - of_the_umbral
 ```
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
 

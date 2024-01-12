@@ -7,7 +7,7 @@
         "desc": "Pisada Poderosa cria um Terremoto que causa de dano físico aos inimigos ao longo de segundos. Enquanto está no terremoto, você causa de dano aumentado.",
         "snoId": 1105986
     },
-    "do_rompe-crânios": {
+    "do_rompecrânios": {
         "desc": "Atordoar um inimigo que está sangrando causa do valor total de sangramento ao inimigo como dano físico.",
         "snoId": 1105987
     },
@@ -79,11 +79,11 @@
         "desc": "A chance de acerto crítico de Redemoinho é aumentada em por cada segundo de canalização, até o máximo de .",
         "snoId": 1106009
     },
-    "de_bul-kathos": {
+    "de_bulkathos": {
         "desc": "Salto cria um Terremoto que causa de dano físico ao longo de segundos. Enquanto está no Terremoto, você recebe de redução de dano aumentada.",
         "snoId": 1106010
     },
-    "do_retalha-vento": {
+    "do_retalhavento": {
         "desc": "Lançar Golpe Duplo duas vezes dentro de segundos cria um demônio de poeira que causa de dano a inimigos atrás do alvo.",
         "snoId": 1106011
     },
@@ -127,7 +127,7 @@
         "desc": "Depois de trocar de armas vezes, recebe de fortificação.",
         "snoId": 1200857
     },
-    "do_traz-sorte": {
+    "do_trazsorte": {
         "desc": "Recebe de chance de Golpe de Sorte aumentada enquanto todos os bônus de dano da passiva principal de Arsenal Ambulante estão ativos.",
         "snoId": 1199205
     },
@@ -183,7 +183,7 @@
         "desc": "Causar dano a um inimigo envenenado com uma habilidade de Urso causará instantaneamente de dano venenoso e consumirá o veneno.",
         "snoId": 1201950
     },
-    "do_caminha-pele": {
+    "do_caminhapele": {
         "desc": "Ao usar uma habilidade de Metamorfose que altera sua forma, você recebe de vida. Se estiver com vida cheia, você recebe o mesmo valor como fortificação.",
         "snoId": 1200308
     },
@@ -239,7 +239,7 @@
         "desc": "Rugido Debilitante agora é uma habilidade de Lobisomem. Além disso, Rugido Debilitante imobilizará inimigos envenenados por segundos.",
         "snoId": 1201796
     },
-    "da_fúria_do_homem-fera": {
+    "da_fúria_do_homemfera": {
         "desc": "A duração de Fúria do Urso é aumentada em segundos. Além disso, acertos críticos enquanto Fúria do Urso está ativa aumentam o dano de acerto crítico em durante o efeito, até o máximo de .",
         "snoId": 1205996
     },
@@ -251,7 +251,7 @@
         "desc": "Enquanto Furacão está ativo, recebe graus para suas habilidades de Metamorfose.",
         "snoId": 1202540
     },
-    "caça-tempestades": {
+    "caçatempestades": {
         "desc": "Tornado perseguirá até alvos.",
         "snoId": 1105817
     },
@@ -339,7 +339,7 @@
         "desc": "Atacar inimigos com uma habilidade básica aumenta o dano da sua próxima habilidade principal lançada em , até .",
         "snoId": 1106426
     },
-    "do_caminha-espírito": {
+    "do_caminhaespírito": {
         "desc": "Enquanto estiver implacável e durante os segundos seguintes, você recebe de velocidade de movimento aumentada e pode se mover livremente através de inimigos.",
         "snoId": 1225424
     },
@@ -391,7 +391,7 @@
         "desc": "A cada s, seus Magos Esqueletos lançam uma nevasca que causa de dano gélido e gela continuamente inimigos por ao longo de segundos.",
         "snoId": 1106690
     },
-    "do_busca-sangue": {
+    "do_buscasangue": {
         "desc": "Lança de Sangue causa de dano aumentado ao alvo principal por inimigo atingido por lança.",
         "snoId": 1106117
     },
@@ -635,7 +635,7 @@
         "desc": "Escudo Flamejante permite que você se mova livremente através de inimigos. Inimigos que você atravessa enquanto Escudo Flamejante está ativo ficam imobilizados por segundos.",
         "snoId": 1106399
     },
-    "do_guarda-neve": {
+    "do_guardaneve": {
         "desc": "Dentro da sua Nevasca e por s após sair dela, você recebe menos dano.",
         "snoId": 1106418
     },
@@ -683,7 +683,7 @@
         "desc": "Depois que a imobilização acaba, os inimigos são desacelerados em por segundos.",
         "snoId": 1213811
     },
-    "do_caminha-fogo": {
+    "do_caminhafogo": {
         "desc": "Entrar em contato com sua Parede de Chamas concede a você de velocidade de movimento por segundos.",
         "snoId": 1214264
     },

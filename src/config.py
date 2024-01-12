@@ -84,7 +84,26 @@ class Config:
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),
             "profiles": profiles_str.split(",") if profiles_str else [],
+            "language": self._select_val("general", "language"),
         }
+        if self.general["language"] not in [
+            "enUS",
+            "deDE",
+            "frFR",
+            "esES",
+            "esMX",
+            "itIT",
+            "jaJP",
+            "koKR",
+            "plPL",
+            "ptBR",
+            "ruRU",
+            "trTR",
+            "zhCN",
+            "zhTW",
+        ]:
+            Logger.error(f"params.general.language={self.general['language']} is not supported")
+            os._exit(1)
 
         for key in self.configs["params"]["parser"]["char"]:
             self.char[key] = self._select_val("char", key)

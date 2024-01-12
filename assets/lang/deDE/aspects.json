@@ -79,7 +79,7 @@
         "desc": "Die kritische Trefferchance von Wirbelwind wird pro Sekunde, die er kanalisiert wird, um erhöht, bis maximal .",
         "snoId": 1106009
     },
-    "von_bul-kathos": {
+    "von_bulkathos": {
         "desc": "Sprung erzeugt ein Erdbeben, das im Verlauf von Sek. physischen Schaden verursacht. Solange Ihr in Erdbeben steht, erhaltet Ihr mehr Schadensreduktion.",
         "snoId": 1106010
     },
@@ -131,7 +131,7 @@
         "desc": "Eure Glückstrefferchance ist um erhöht, solange alle Schadensboni der zentralen passiven Fertigkeit Wandelndes Arsenal aktiv sind.",
         "snoId": 1199205
     },
-    "bärenklan-berserkers": {
+    "bärenklanberserkers": {
         "desc": "Wenn Ihr einen Gegner im Berserkermodus tötet, besteht eine Chance von , die Abklingzeitreduktion Eurer Raufboldfertigkeiten Sek. lang um zu erhöhen.",
         "snoId": 1199207
     },

@@ -3,50 +3,50 @@
 
 Aspects:
   # offensive
-  - [bladedancers_aspect, 15]
-  - [aspect_of_branching_volleys, 25]
-  - [trickshot_aspect, 20]
-  - [aspect_of_corruption, 40]
-  - [aspect_of_bursting_venoms, 10000]
-  - [aspect_of_repeating, 45]
-  - [aspect_of_pestilent_points, 150]
+  - [bladedancers, 15]
+  - [of_branching_volleys, 25]
+  - [trickshot, 20]
+  - [of_corruption, 40]
+  - [of_bursting_venoms, 10000]
+  - [repeating, 45]
+  - [of_pestilent_points, 150]
 
   # defensive
-  - [umbrous_aspect, 55]
-  - [cheats_aspect, 25]
-  - [enshrouding_aspect, 4]
-  - [aspect_of_elusive_menace, 7]
+  - [umbrous, 55]
+  - [cheats, 25]
+  - [enshrouding, 4]
+  - [of_elusive_menace, 7]
 
   # resource, utility
-  - [energizing_aspect, 9]
-  - [ravenous_aspect, 65]
-  - [aspect_of_noxious_ice, 29]
-  - [blasttrappers_aspect, 15]
-  - [frostbitten_aspect, 25]
-  - [manglers_aspect, 45]
-  - [assimilation_aspect, 10]
+  - [energizing, 9]
+  - [ravenous, 65]
+  - [of_noxious_ice, 29]
+  - [blasttrappers, 15]
+  - [frostbitten, 25]
+  - [manglers, 45]
+  - [assimilation, 10]
 
   # general
-  - [accelerating_aspect, 24]
-  - [aspect_of_might, 6]
-  - [aspect_of_disobedience, 1.0]
-  - [aspect_of_inner_calm, 10]
-  - [aspect_of_retribution, 20]
-  - [aspect_of_the_expectant, 10]
-  - [edgemasters_aspect, 20]
-  - [rapid_aspect, 28]
-  - [aspect_of_shared_misery, 45]
-  - [ghostwalker_aspect, 25]
-  - [aspect_of_the_umbral, 4]
-  - [conceited_aspect, 25]
-  - [starlight_aspect, 39]
+  - [accelerating, 24]
+  - [of_might, 6]
+  - [of_disobedience, 1.0]
+  - [of_inner_calm, 10]
+  - [of_retribution, 20]
+  - [of_the_expectant, 10]
+  - [edgemasters, 20]
+  - [rapid, 28]
+  - [of_shared_misery, 45]
+  - [ghostwalker, 25]
+  - [of_the_umbral, 4]
+  - [conceited, 25]
+  - [starlight, 39]
 
-  # - [snap_frozen_aspect]
-  # - [aspect_of_uncanny_treachery]
-  # - [aspect_of_lethal_dusk]
-  # - [icy_alchemists_aspect]
-  # - [toxic_alchemists_aspect]
-  # - [aspect_of_artful_initiative]
+  # - [snap_frozen]
+  # - [of_uncanny_treachery]
+  # - [of_lethal_dusk]
+  # - [icy_alchemists]
+  # - [toxic_alchemists]
+  # - [of_artful_initiative]
 
 Affixes:
   - Helm:
@@ -98,7 +98,7 @@ Affixes:
         - [damage_reduction, 6]
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
-        - [damage_reduction_from_enemies_that_are_poisoned, 8]
+        - [damage_reduction_from_poisoned_enemies, 8]
         - [total_armor, 9]
         - [energy_cost_reduction, 6]
         - [movement_speed]
@@ -160,7 +160,7 @@ Affixes:
         - [maximum_life, 700]
         - [dodge_chance_against_close_enemies, 6.5]
         - [dodge_chance, 5.0]
-        - [damage_reduction_from_enemies_that_are_poisoned, 8]
+        - [damage_reduction_from_poisoned_enemies, 8]
       minAffixCount: 3
 
 Uniques:
@@ -189,8 +189,6 @@ Uniques:
 
   - aspect: [windforce, 29]
     minPower: 900
-    affixPool:
-      - [ranks_of_the_concussive_passive, 2]
 
   - aspect: [godslayer_crown, 58]
     minPower: 825

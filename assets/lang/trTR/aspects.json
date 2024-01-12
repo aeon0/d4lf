@@ -79,7 +79,7 @@
         "desc": "Burgacın Kritik Vuruş İhtimali, en fazla olmak üzere yönlendirildiği her saniye artar.",
         "snoId": 1106009
     },
-    "[n2]bul-kathos": {
+    "[n2]bulkathos": {
         "desc": "Sıçra, saniye boyunca Fiziksel hasar veren bir Deprem oluşturur. Depremin içinde artırılmış Hasar Azaltma kazanırsın.",
         "snoId": 1106010
     },

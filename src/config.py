@@ -48,6 +48,8 @@ class Config:
                 return_value = self.configs["custom"]["parser"][section][key]
             elif section in self.configs["params"]["parser"]:
                 return_value = self.configs["params"]["parser"][section][key]
+            elif section in self.configs["game_res"]["parser"]:
+                return_value = self.configs["game_res"]["parser"][section][key]
             else:
                 return_value = self.configs["game"]["parser"][section][key]
             return return_value
@@ -60,10 +62,12 @@ class Config:
         self.configs = {
             "params": {"parser": configparser.ConfigParser(), "vars": {}},
             "game": {"parser": configparser.ConfigParser(), "vars": {}},
+            "game_res": {"parser": configparser.ConfigParser(), "vars": {}},
             "custom": {"parser": configparser.ConfigParser(), "vars": {}},
         }
         self.configs["params"]["parser"].read("config/params.ini")
-        self.configs["game"]["parser"].read(f"config/game_{Cam().res_key}.ini")
+        self.configs["game"]["parser"].read("config/game.ini")
+        self.configs["game_res"]["parser"].read(f"config/res/game_{Cam().res_key}.ini")
 
         user_dir = os.path.expanduser("~")
         custom_params_path = Path(f"{user_dir}/.d4lf/params.ini")
@@ -95,13 +99,13 @@ class Config:
         for key in self.configs["game"]["parser"]["colors"]:
             self.colors[key] = np.split(np.array([int(x) for x in self._select_val("colors", key).split(",")]), 2)
 
-        for key in self.configs["game"]["parser"]["ui_pos"]:
+        for key in self.configs["game_res"]["parser"]["ui_pos"]:
             self.ui_pos[key] = tuple(int(val) for val in self._select_val("ui_pos", key).split(","))
 
-        for key in self.configs["game"]["parser"]["ui_offsets"]:
+        for key in self.configs["game_res"]["parser"]["ui_offsets"]:
             self.ui_offsets[key] = int(self._select_val("ui_offsets", key))
 
-        for key in self.configs["game"]["parser"]["ui_roi"]:
+        for key in self.configs["game_res"]["parser"]["ui_roi"]:
             self.ui_roi[key] = np.array([int(x) for x in self._select_val("ui_roi", key).split(",")])
 
 

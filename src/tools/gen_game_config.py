@@ -3,23 +3,23 @@ import numpy as np
 
 # Define the scaling factors and file names for each resolution
 resolutions = {
-    "1080p_wide": {"factor": 1, "width_org": 1920, "width_new": 2560, "filename": "config/game_2560x1080.ini"},
-    "1440p": {"factor": 4 / 3, "filename": "config/game_2560x1440.ini"},
-    "1440p_wide": {"factor": 4 / 3, "width_org": 2560, "width_new": 3440, "filename": "config/game_3440x1440.ini"},
-    "2160p": {"factor": 2.0, "filename": "config/game_3840x2160.ini"},
+    "1080p_wide": {"factor": 1, "width_org": 1920, "width_new": 2560, "filename": "config/res/game_2560x1080.ini"},
+    "1440p": {"factor": 4 / 3, "filename": "config/res/game_2560x1440.ini"},
+    "1440p_wide": {"factor": 4 / 3, "width_org": 2560, "width_new": 3440, "filename": "config/res/game_3440x1440.ini"},
+    "2160p": {"factor": 2.0, "filename": "config/res/game_3840x2160.ini"},
     "1440p_ultra_wide": {
         "factor": 4 / 3,
         "width_org": 2560,
         "width_new": 5120,
         "black_bars": [400, -400],
-        "filename": "config/game_5120x1440.ini",
+        "filename": "config/res/game_5120x1440.ini",
     },
     "1080p_ultra_wide": {
         "factor": 1,
         "width_org": 1920,
         "width_new": 3840,
         "black_bars": [300, -300],
-        "filename": "config/game_3840x1080.ini",
+        "filename": "config/res/game_3840x1080.ini",
     },
 }
 
@@ -47,7 +47,7 @@ def main():
     config = configparser.ConfigParser()
 
     # Read the original ini file
-    config.read("config/game_1920x1080.ini")
+    config.read("config/res/game_1920x1080.ini")
 
     # Iterate over the resolutions to create new files
     for key, value in resolutions.items():

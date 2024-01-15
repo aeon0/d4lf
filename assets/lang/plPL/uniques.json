@@ -1,326 +1,326 @@
 {
     "przybywający_księżyc": {
-        "desc": "Po zabiciu wroga przy użyciu Rozszarpania zyskujesz ukrycie na sek. Przerwanie ukrycia atakiem zapewnia Zasadzkę, która gwarantuje trafienia krytyczne przez sek.",
+        "desc": "po zabiciu wroga przy użyciu rozszarpania zyskujesz ukrycie na sek. przerwanie ukrycia atakiem zapewnia zasadzkę, która gwarantuje trafienia krytyczne przez sek.",
         "snoId": 1306218
     },
     "tasak_rzeźnika": {
-        "desc": "Szczęśliwy traf Trafienie krytyczne zadane wrogowi ma maksymalnie szans na to, aby go wystraszyć i spowolnić o na sek.",
+        "desc": "szczęśliwy traf trafienie krytyczne zadane wrogowi ma maksymalnie szans na to, aby go wystraszyć i spowolnić o na sek.",
         "snoId": 941704
     },
     "sztylet_wzmocnienia": {
-        "desc": "To przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
+        "desc": "to przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
         "snoId": 941728
     },
     "potępienie": {
-        "desc": "Twoje umiejętności Główne zadają obrażenia zwiększone o za każde zużyte pkt. kombinacji. Umiejętności Podstawowe wykorzystujące tę broń mają szans na wygenerowanie pkt. kombinacji.",
+        "desc": "twoje umiejętności główne zadają obrażenia zwiększone o za każde zużyte pkt. kombinacji. umiejętności podstawowe wykorzystujące tę broń mają szans na wygenerowanie pkt. kombinacji.",
         "snoId": 941730
     },
     "handżar_asheary": {
-        "desc": "Trafienia z użyciem tej broni zwiększają twoją szybkość ataku o na sek., maksymalnie do .",
+        "desc": "trafienia z użyciem tej broni zwiększają twoją szybkość ataku o na sek., maksymalnie do .",
         "snoId": 941731
     },
     "rozrywacz_ciał": {
-        "desc": "Obezwładniający Ryk i Zew Krwi zadają pkt. obrażeń pobliskim zatrutym celom. Obrażenia te są zwiększone o za każde pkt. siły woli.",
+        "desc": "obezwładniający ryk i zew krwi zadają pkt. obrażeń pobliskim zatrutym celom. obrażenia te są zwiększone o za każde pkt. siły woli.",
         "snoId": 941798
     },
     "czarna_rzeka": {
-        "desc": "Wybuch Zwłok pochłania dodatkowo maksymalnie sztukisztuk pobliskich zwłok wokół pierwotnie użytych zwłok. Każdy pochłonięty trup zwiększa obrażenia o oraz pole rażenia o .",
+        "desc": "wybuch zwłok pochłania dodatkowo maksymalnie sztukisztuk pobliskich zwłok wokół pierwotnie użytych zwłok. każdy pochłonięty trup zwiększa obrażenia o oraz pole rażenia o .",
         "snoId": 1306235
     },
     "bezoki_mur": {
-        "desc": "Szczęśliwy traf Kiedy masz aktywną Nawałnicę Kości, trafienie wroga nieobjętego jej efektem zapewnia szans na utworzenie w jego miejscu kolejnej Nawałnicy Kości. Każda aktywna premia za Ofiarę zwiększa tę szansę o , a całkowitą liczbę dodatkowych Nawałnic Kości, które możesz stworzyć, o .",
+        "desc": "szczęśliwy traf kiedy masz aktywną nawałnicę kości, trafienie wroga nieobjętego jej efektem zapewnia szans na utworzenie w jego miejscu kolejnej nawałnicy kości. każda aktywna premia za ofiarę zwiększa tę szansę o , a całkowitą liczbę dodatkowych nawałnic kości, które możesz stworzyć, o .",
         "snoId": 1439541
     },
     "opus_magnum_ramaladniego": {
-        "desc": "Umiejętności wykorzystujące tę broń zadają obrażenia zwiększone o za każdy posiadany przez ciebie punkt furii, ale tracisz pkt. furii na sekundę.",
+        "desc": "umiejętności wykorzystujące tę broń zadają obrażenia zwiększone o za każdy posiadany przez ciebie punkt furii, ale tracisz pkt. furii na sekundę.",
         "snoId": 1304455
     },
     "lazurowy_gniew": {
-        "desc": "Szczęśliwy traf Twoje umiejętności Główne mają maksymalnie szans na zamrożenie wrogów na sek. i zadanie im pkt. obrażeń od Zimna.",
+        "desc": "szczęśliwy traf twoje umiejętności główne mają maksymalnie szans na zamrożenie wrogów na sek. i zadanie im pkt. obrażeń od zimna.",
         "snoId": 1439438
     },
     "trybun_zagłady": {
-        "desc": "Szczęśliwy traf Istnieje maksymalnie szans na zadanie pkt. obrażeń Cienia pobliskim wrogom i zmniejszenie zadawanych przez nich obrażeń o na sek.",
+        "desc": "szczęśliwy traf istnieje maksymalnie szans na zadanie pkt. obrażeń cienia pobliskim wrogom i zmniejszenie zadawanych przez nich obrażeń o na sek.",
         "snoId": 941869
     },
     "szrama_żaru": {
-        "desc": "Podczas podtrzymywania Spopielenia co jakiś czas wystrzeliwujesz iskry, które podążają za wrogami. Każda z nich zadaje pkt. obrażeń od Ognia.",
+        "desc": "podczas podtrzymywania spopielenia co jakiś czas wystrzeliwujesz iskry, które podążają za wrogami. każda z nich zadaje pkt. obrażeń od ognia.",
         "snoId": 1214791
     },
     "okulus": {
-        "desc": "Zyskujesz darmowy efekt zaklinania Teleportacji. Kiedy wykonujesz unik z użyciem zaklinania Teleportacji, przenosisz się w losowe miejsce.",
+        "desc": "zyskujesz darmowy efekt zaklinania teleportacji. kiedy wykonujesz unik z użyciem zaklinania teleportacji, przenosisz się w losowe miejsce.",
         "snoId": 1439529
     },
     "przysięga_starożytnych": {
-        "desc": "Stalowy Potrzask wysyła dodatkowe łańcuchy. Wrogowie trafieni przez Stalowy Potrzask odnoszą obrażenia zwiększone o przez sek.",
+        "desc": "stalowy potrzask wysyła dodatkowe łańcuchy. wrogowie trafieni przez stalowy potrzask odnoszą obrażenia zwiększone o przez sek.",
         "snoId": 941951
     },
     "podniebny_łowca": {
-        "desc": "Pierwsze bezpośrednie obrażenia zadane przez ciebie wrogowi wywołają gwarantowane trafienie krytyczne. Jeśli podczas użycia umiejętności Głównej masz maksymalną kumulację mocy pasywnej Precyzja, ta umiejętność zadaje obrażenia krytyczne zwiększone o , a ty zyskujesz pkt. energii.",
+        "desc": "pierwsze bezpośrednie obrażenia zadane przez ciebie wrogowi wywołają gwarantowane trafienie krytyczne. jeśli podczas użycia umiejętności głównej masz maksymalną kumulację mocy pasywnej precyzja, ta umiejętność zadaje obrażenia krytyczne zwiększone o , a ty zyskujesz pkt. energii.",
         "snoId": 941972
     },
     "siła_wiatru": {
-        "desc": "Szczęśliwy traf Trafienia przy użyciu tej broni mają szans na zadanie podwójnych obrażeń i odrzucenie celu.",
+        "desc": "szczęśliwy traf trafienia przy użyciu tej broni mają szans na zadanie podwójnych obrażeń i odrzucenie celu.",
         "snoId": 941973
     },
     "orli_róg": {
-        "desc": "Przebijający Strzał ma szans na wystrzelenie strzały, która będzie odbijać się od ścian i elementów otoczenia. Zranienie wrogówwrogów Przebijającym Strzałem sprawi, że następne użycie umiejętności spowoduje odsłonięcie trafionych wrogów na sek.",
+        "desc": "przebijający strzał ma szans na wystrzelenie strzały, która będzie odbijać się od ścian i elementów otoczenia. zranienie wrogówwrogów przebijającym strzałem sprawi, że następne użycie umiejętności spowoduje odsłonięcie trafionych wrogów na sek.",
         "snoId": 1439537
     },
     "piekłomiot": {
-        "desc": "Wypiętrzenie podpala przeciwników i zadaje im dodatkowo pkt. obrażeń w ciągu sek.",
+        "desc": "wypiętrzenie podpala przeciwników i zadaje im dodatkowo pkt. obrażeń w ciągu sek.",
         "snoId": 942021
     },
     "mord": {
-        "desc": "Śmiertelny Cios tworzy falę uderzeniową, która zadaje wrogom równowartość obrażeń podstawowych od tej umiejętności. Przeciwnicy, którzy zginą pod wpływem tego efektu, powodują wyzerowanie czasu odnowienia Śmiertelnego Ciosu.",
+        "desc": "śmiertelny cios tworzy falę uderzeniową, która zadaje wrogom równowartość obrażeń podstawowych od tej umiejętności. przeciwnicy, którzy zginą pod wpływem tego efektu, powodują wyzerowanie czasu odnowienia śmiertelnego ciosu.",
         "snoId": 1222183
     },
     "kosa_wzmocnienia": {
-        "desc": "To przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
+        "desc": "to przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
         "snoId": 942068
     },
     "bezkrwawy_wrzask": {
-        "desc": "Twoje umiejętności Ciemności wyziębiają wrogów do maksymalnie i zadają obrażenia zwiększone o zamrożonym wrogom. Szczęśliwy traf Twoje umiejętności Ciemności mają maksymalnie szans na wygenerowanie dodatkowych punktów esencji, kiedy walczysz z zamrożonymi celami.",
+        "desc": "twoje umiejętności ciemności wyziębiają wrogów do maksymalnie i zadają obrażenia zwiększone o zamrożonym wrogom. szczęśliwy traf twoje umiejętności ciemności mają maksymalnie szans na wygenerowanie dodatkowych punktów esencji, kiedy walczysz z zamrożonymi celami.",
         "snoId": 1220207
     },
     "kostur_staruchy": {
-        "desc": "Pazury stają się umiejętnością Burzy i wywołują Uderzenie Burzy, które zadaje standardowych obrażeń.",
+        "desc": "pazury stają się umiejętnością burzy i wywołują uderzenie burzy, które zadaje standardowych obrażeń.",
         "snoId": 942106
     },
-    "ahavarion,_włócznia_likandry": {
-        "desc": "Przez sek. po zabiciu elitarnego wroga otrzymujesz efekt losowej kapliczki. Efekt może wystąpić tylko raz na sek.",
+    "ahavarion_włócznia_likandry": {
+        "desc": "przez sek. po zabiciu elitarnego wroga otrzymujesz efekt losowej kapliczki. efekt może wystąpić tylko raz na sek.",
         "snoId": 942108
     },
     "kostur_nieskończonego_szału": {
-        "desc": "Co . Kula Ognia powoduje wystrzelenie dodatkowych pocisków i zadaje obrażenia zwiększone o .",
+        "desc": "co . kula ognia powoduje wystrzelenie dodatkowych pocisków i zadaje obrażenia zwiększone o .",
         "snoId": 942111
     },
     "kostur_lam_esena": {
-        "desc": "Twoje Wiązki Błyskawic mają szans na podążanie za wrogami i utrzymują się o dłużej.",
+        "desc": "twoje wiązki błyskawic mają szans na podążanie za wrogami i utrzymują się o dłużej.",
         "snoId": 1306310
     },
     "karmazynowe_pole": {
-        "desc": "Kiedy korzystasz z tej broni, zranienie co najmniej wroga Rozerwaniem tworzy kałużę krwi, która zadaje przeciwnikom pkt. obrażeń od krwawienia i utrzymuje się przez sek. Wrogowie stojący w kałuży otrzymują obrażenia od krwawienia zwiększone o .",
+        "desc": "kiedy korzystasz z tej broni, zranienie co najmniej wroga rozerwaniem tworzy kałużę krwi, która zadaje przeciwnikom pkt. obrażeń od krwawienia i utrzymuje się przez sek. wrogowie stojący w kałuży otrzymują obrażenia od krwawienia zwiększone o .",
         "snoId": 942134
     },
     "pradziad": {
-        "desc": "Zwiększa twoje obrażenia od trafień krytycznych o . Pozostałe właściwości tej broni mogą być wyższe niż standardowo.",
+        "desc": "zwiększa twoje obrażenia od trafień krytycznych o . pozostałe właściwości tej broni mogą być wyższe niż standardowo.",
         "snoId": 942135
     },
     "trans_bitewny": {
-        "desc": "Maksymalna liczba poziomów kumulacji Amoku wzrasta o . Kiedy posiadasz maksymalną liczbę poziomów kumulacji Amoku, twoje pozostałe umiejętności zyskują premię do szybkości ataku.",
+        "desc": "maksymalna liczba poziomów kumulacji amoku wzrasta o . kiedy posiadasz maksymalną liczbę poziomów kumulacji amoku, twoje pozostałe umiejętności zyskują premię do szybkości ataku.",
         "snoId": 1304468
     },
     "dolmen": {
-        "desc": "Rzucenie Głazu podczas aktywnego Huraganu spowoduje, że głazy będą wirować wokół ciebie.",
+        "desc": "rzucenie głazu podczas aktywnego huraganu spowoduje, że głazy będą wirować wokół ciebie.",
         "snoId": 1610440
     },
     "stopione_serce_seliga": {
-        "desc": "Zyskujesz maksymalnej wartości zasobu. Dodatkowo, gdy odnosisz obrażenia, zużywasz pkt. zasobu za każde zdrowia, które zostałoby utracone.",
+        "desc": "zyskujesz maksymalnej wartości zasobu. dodatkowo, gdy odnosisz obrażenia, zużywasz pkt. zasobu za każde zdrowia, które zostałoby utracone.",
         "snoId": 1275933
     },
     "talizman_wygnanego_lorda": {
-        "desc": "Po wykorzystaniu pkt. podstawowego zasobu następna umiejętność Główna gwarantuje przytłoczenie. Trafienia krytyczne, które przytłaczają, zadają obrażenia zwiększone o .",
+        "desc": "po wykorzystaniu pkt. podstawowego zasobu następna umiejętność główna gwarantuje przytłoczenie. trafienia krytyczne, które przytłaczają, zadają obrażenia zwiększone o .",
         "snoId": 1561309
     },
     "wisior_mówcy_śmierci": {
-        "desc": "Napływ Krwi wywołuje wokół twoich sług miniaturową novę, która zadaje pkt. obrażeń. Obrażenia są zwiększone o za każdy cel wykrwawiony na początku użycia umiejętności, maksymalnie do .",
+        "desc": "napływ krwi wywołuje wokół twoich sług miniaturową novę, która zadaje pkt. obrażeń. obrażenia są zwiększone o za każdy cel wykrwawiony na początku użycia umiejętności, maksymalnie do .",
         "snoId": 1230484
     },
     "słowo_hakana": {
-        "desc": "Twój Grad Strzał jest zawsze nasycony wszystkimi nasyceniami jednocześnie.",
+        "desc": "twój grad strzał jest zawsze nasycony wszystkimi nasyceniami jednocześnie.",
         "snoId": 1306258
     },
     "kamea_przepełnienia_esadory": {
-        "desc": "Zebranie Roziskrzonej Energii daje szans na uwolnienie novy błyskawic, która zadaje pkt. obrażeń od Błyskawic. Obrażenia te są zwiększone o za każde pkt. inteligencji.",
+        "desc": "zebranie roziskrzonej energii daje szans na uwolnienie novy błyskawic, która zadaje pkt. obrażeń od błyskawic. obrażenia te są zwiększone o za każde pkt. inteligencji.",
         "snoId": 1225299
     },
     "sto_tysięcy_kroków": {
-        "desc": "Po uzyskaniu ostatniej premii do obrażeń od mocy pasywnej Kroczący Arsenał, automatycznie wywołujesz Tąpnięcie i otrzymujesz pkt. furii. Efekt ten może wystąpić raz na sek.",
+        "desc": "po uzyskaniu ostatniej premii do obrażeń od mocy pasywnej kroczący arsenał, automatycznie wywołujesz tąpnięcie i otrzymujesz pkt. furii. efekt ten może wystąpić raz na sek.",
         "snoId": 1210595
     },
     "pokutnicze_trzewiki": {
-        "desc": "Pozostawiasz lodowy ślad, który wyziębia wrogów. Zadajesz wyziębionym wrogom obrażenia zwiększone o .",
+        "desc": "pozostawiasz lodowy ślad, który wyziębia wrogów. zadajesz wyziębionym wrogom obrażenia zwiększone o .",
         "snoId": 942251
     },
     "migotliwe_kroki": {
-        "desc": "Każdy wróg, przez którego przenikasz, wykonując unik, skraca czas odnowienia twojej aktywnej Mocy Specjalnej o sek., maksymalnie do sek.",
+        "desc": "każdy wróg, przez którego przenikasz, wykonując unik, skraca czas odnowienia twojej aktywnej mocy specjalnej o sek., maksymalnie do sek.",
         "snoId": 942253
     },
     "trzewiki_pustego_grobowca": {
-        "desc": "Przemieszczając się, widma przywołane przez Rozdarcie pozostawiają za sobą Zbezczeszczoną Ziemię, która zadaje wrogom pkt. obrażeń od Cienia w ciągu sek.",
+        "desc": "przemieszczając się, widma przywołane przez rozdarcie pozostawiają za sobą zbezczeszczoną ziemię, która zadaje wrogom pkt. obrażeń od cienia w ciągu sek.",
         "snoId": 1220257
     },
     "scheda_esu": {
-        "desc": "Szansa na trafienie krytyczne jest zwiększona o równowartość twojej premii do szybkości ruchu.",
+        "desc": "szansa na trafienie krytyczne jest zwiększona o równowartość twojej premii do szybkości ruchu.",
         "snoId": 1306301
     },
     "wściekłość_harrogath": {
-        "desc": "Szczęśliwy traf Kiedy wywołujesz krwawienie u elitarnych wrogów, istnieje maksymalnie szans na skrócenie czasów odnowienia twoich umiejętności (poza Mocą Specjalną) o sek.",
+        "desc": "szczęśliwy traf kiedy wywołujesz krwawienie u elitarnych wrogów, istnieje maksymalnie szans na skrócenie czasów odnowienia twoich umiejętności (poza mocą specjalną) o sek.",
         "snoId": 1304379
     },
     "uciecha_szalonego_wilka": {
-        "desc": "Postać wilkołaka staje się twoją prawdziwą postacią. Zyskujesz do rangi wszystkich umiejętności Wilkołaka.",
+        "desc": "postać wilkołaka staje się twoją prawdziwą postacią. zyskujesz do rangi wszystkich umiejętności wilkołaka.",
         "snoId": 942354
     },
     "nienasycona_furia": {
-        "desc": "Postać niedźwiedziołaka staje się twoją prawdziwą postacią. Zyskujesz do rangi wszystkich umiejętności Niedźwiedziołaka.",
+        "desc": "postać niedźwiedziołaka staje się twoją prawdziwą postacią. zyskujesz do rangi wszystkich umiejętności niedźwiedziołaka.",
         "snoId": 942355
     },
     "brzytwiasta_zbroja": {
-        "desc": "Zyskujesz pkt. obrażeń od cierni.",
+        "desc": "zyskujesz pkt. obrażeń od cierni.",
         "snoId": 1215064
     },
     "piętno_duszy": {
-        "desc": "Mikstura leczenia nie leczy już natychmiastowo, lecz zapewnia ci barierę o mocy równej wartości leczenia na sek. Gdy posiadasz barierę, zyskujesz premię do redukcji obrażeń.",
+        "desc": "mikstura leczenia nie leczy już natychmiastowo, lecz zapewnia ci barierę o mocy równej wartości leczenia na sek. gdy posiadasz barierę, zyskujesz premię do redukcji obrażeń.",
         "snoId": 1560873
     },
     "kirys_krwawego_rzemieślnika": {
-        "desc": "Kiedy podnosisz Kule Krwi (), tworzysz darmowe Kościane Widmo, które zadaje dodatkowe obrażenia w oparciu o bieżący odsetek twoich punktów zdrowia.",
+        "desc": "kiedy podnosisz kule krwi (), tworzysz darmowe kościane widmo, które zadaje dodatkowe obrażenia w oparciu o bieżący odsetek twoich punktów zdrowia.",
         "snoId": 1306229
     },
     "skóry_szelmy": {
-        "desc": "Gdy Wewnętrzne Spojrzenie zapewnia ci nieograniczoną energię, użycie umiejętności Głównej daje szans na stworzenie Kolczatek, Trującej Pułapki albo Zabójczej Pułapki.",
+        "desc": "gdy wewnętrzne spojrzenie zapewnia ci nieograniczoną energię, użycie umiejętności głównej daje szans na stworzenie kolczatek, trującej pułapki albo zabójczej pułapki.",
         "snoId": 1612293
     },
     "odzienie_nieskończonego": {
-        "desc": "Kiedy skorzystasz z Teleportacji, pobliscy wrogowie zostaną do ciebie przyciągnięci i ogłuszeni na sek., ale czas odnowienia Teleportacji zostanie wydłużony o .",
+        "desc": "kiedy skorzystasz z teleportacji, pobliscy wrogowie zostaną do ciebie przyciągnięci i ogłuszeni na sek., ale czas odnowienia teleportacji zostanie wydłużony o .",
         "snoId": 942363
     },
     "niszczycielski_uścisk_gora": {
-        "desc": "Gdy Trąba Powietrzna dobiega końca, wybucha co sek. i zadaje pobliskim wrogom równowartość obrażeń podstawowych w postaci obrażeń od Ognia.",
+        "desc": "gdy trąba powietrzna dobiega końca, wybucha co sek. i zadaje pobliskim wrogom równowartość obrażeń podstawowych w postaci obrażeń od ognia.",
         "snoId": 942555
     },
     "pięści_przeznaczenia": {
-        "desc": "Twoje ataki zadają losowo wybraną równowartość – standardowych obrażeń.",
+        "desc": "twoje ataki zadają losowo wybraną równowartość – standardowych obrażeń.",
         "snoId": 942559
     },
     "odmrażający_płomień": {
-        "desc": "Szczęśliwy traf Istnieje maksymalnie szans na zamrożenie wrogów na sek.",
+        "desc": "szczęśliwy traf istnieje maksymalnie szans na zamrożenie wrogów na sek.",
         "snoId": 942560
     },
     "skowyt_z_otchłani": {
-        "desc": "Zamiast eksplodować natychmiast, Wybuch Zwłok przyzywa niestabilny szkielet, który szarżuje na losowego wroga i wybucha. Wybuch Zwłok zadaje obrażenia zwiększone o .",
+        "desc": "zamiast eksplodować natychmiast, wybuch zwłok przyzywa niestabilny szkielet, który szarżuje na losowego wroga i wybucha. wybuch zwłok zadaje obrażenia zwiększone o .",
         "snoId": 1227277
     },
     "chwyt_cienia": {
-        "desc": "Szczęśliwy traf Zranienie odsłoniętego wroga umiejętnością Strzelectwa lub Napaści daje maksymalnie szans na przywołanie Klona Cienia, który powtórzy twój atak.",
+        "desc": "szczęśliwy traf zranienie odsłoniętego wroga umiejętnością strzelectwa lub napaści daje maksymalnie szans na przywołanie klona cienia, który powtórzy twój atak.",
         "snoId": 1306250
     },
     "rękawice_rozświetlenia": {
-        "desc": "Kula Ognia przeskakuje teraz, gdy się przemieszcza. Za każdym razem, gdy spada na ziemię, wybucha, ale eksplozja zadaje obrażenia zmniejszone o .",
+        "desc": "kula ognia przeskakuje teraz, gdy się przemieszcza. za każdym razem, gdy spada na ziemię, wybucha, ale eksplozja zadaje obrażenia zmniejszone o .",
         "snoId": 942564
     },
     "rogaty_hełm_joritza_mocarnego": {
-        "desc": "Gdy zyskasz berserkowanie w czasie trwania berserkowania, masz szans na to, że twoje rozwścieczenie jeszcze wzrośnie i zyskasz premie do obrażeń, pkt. furii na sekundę oraz redukcji czasu odnowienia.",
+        "desc": "gdy zyskasz berserkowanie w czasie trwania berserkowania, masz szans na to, że twoje rozwścieczenie jeszcze wzrośnie i zyskasz premie do obrażeń, pkt. furii na sekundę oraz redukcji czasu odnowienia.",
         "snoId": 1489567
     },
     "ryk_orkanu": {
-        "desc": "Szczęśliwy traf Umiejętności Burzy mają maksymalnie szans na przyznanie pkt. siły duchowej. Twoje podstawowe umiejętności Burzy stają się również umiejętnościami Wilkołaka.",
+        "desc": "szczęśliwy traf umiejętności burzy mają maksymalnie szans na przyznanie pkt. siły duchowej. twoje podstawowe umiejętności burzy stają się również umiejętnościami wilkołaka.",
         "snoId": 1304489
     },
     "modlitwa_wasilija": {
-        "desc": "Twoje umiejętności Ziemi stają się również umiejętnościami Niedźwiedziołaka i zapewniają ci pkt. umocnionego zdrowia.",
+        "desc": "twoje umiejętności ziemi stają się również umiejętnościami niedźwiedziołaka i zapewniają ci pkt. umocnionego zdrowia.",
         "snoId": 1306213
     },
     "oblicze_andariel": {
-        "desc": "Szczęśliwy traf Istnieje szans na wywołanie trującej novy zadającej pkt. obrażeń od zatrucia w ciągu sek. wrogom na obszarze.",
+        "desc": "szczęśliwy traf istnieje szans na wywołanie trującej novy zadającej pkt. obrażeń od zatrucia w ciągu sek. wrogom na obszarze.",
         "snoId": 942663
     },
     "czapka_arlekina": {
-        "desc": "Zyskujesz redukcji obrażeń. Dodatkowo zyskujesz do rangi wszystkich umiejętności.",
+        "desc": "zyskujesz redukcji obrażeń. dodatkowo zyskujesz do rangi wszystkich umiejętności.",
         "snoId": 942664
     },
     "korona_pogromcy_bogów": {
-        "desc": "Kiedy ogłuszasz, zamrażasz lub unieruchamiasz elitarnego wroga albo zadajesz obrażenia bossowi, przyciągasz do siebie pobliskich wrogów. Zadajesz im obrażenia zwiększone o przez sek. Ten efekt może wystąpić raz na sek.",
+        "desc": "kiedy ogłuszasz, zamrażasz lub unieruchamiasz elitarnego wroga albo zadajesz obrażenia bossowi, przyciągasz do siebie pobliskich wrogów. zadajesz im obrażenia zwiększone o przez sek. ten efekt może wystąpić raz na sek.",
         "snoId": 1555196
     },
     "hełm_wzmocnienia": {
-        "desc": "To przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
+        "desc": "to przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
         "snoId": 942665
     },
     "bezśmiertne_oblicze": {
-        "desc": "Włócznia z Kości pozostawia na swojej drodze echa, które wybuchają i zadają przy tym pkt. obrażeń. Obrażenia te są zwiększone o za każde twojej premii do obrażeń od trafień krytycznych.",
+        "desc": "włócznia z kości pozostawia na swojej drodze echa, które wybuchają i zadają przy tym pkt. obrażeń. obrażenia te są zwiększone o za każde twojej premii do obrażeń od trafień krytycznych.",
         "snoId": 1234672
     },
     "kapuza_bezimiennego": {
-        "desc": "Zyskujesz zwiększoną o szansę na szczęśliwy traf przeciwko wrogom o ograniczonej kontroli.",
+        "desc": "zyskujesz zwiększoną o szansę na szczęśliwy traf przeciwko wrogom o ograniczonej kontroli.",
         "snoId": 942666
     },
     "towarzysz_nawałnicy": {
-        "desc": "Twoi wilczy kompani nasyceni są mocą burzy i zadają obrażenia od Błyskawic oraz zyskują zdolność Burzowy Skowyt.",
+        "desc": "twoi wilczy kompani nasyceni są mocą burzy i zadają obrażenia od błyskawic oraz zyskują zdolność burzowy skowyt.",
         "snoId": 942972
     },
     "zuchwałość": {
-        "desc": "Efekty, które przywracają ci ponad zdrowia, przez sek. zapewniają ci barierę o wartości do maksimum zdrowia. Możesz używać mikstur, gdy masz pełne zdrowie.",
+        "desc": "efekty, które przywracają ci ponad zdrowia, przez sek. zapewniają ci barierę o wartości do maksimum zdrowia. możesz używać mikstur, gdy masz pełne zdrowie.",
         "snoId": 1306325
     },
     "taszki_świtającego_nieba": {
-        "desc": "Kiedy odnosisz obrażenia niefizyczne, zyskujesz premię do maksymalnej odporności na ten typ obrażeń na sek. Efekt obowiązuje tylko w przypadku jednego typu obrażeń naraz.",
+        "desc": "kiedy odnosisz obrażenia niefizyczne, zyskujesz premię do maksymalnej odporności na ten typ obrażeń na sek. efekt obowiązuje tylko w przypadku jednego typu obrażeń naraz.",
         "snoId": 1477079
     },
     "wola_tybalta": {
-        "desc": "Zadajesz obrażenia zwiększone o , gdy posiadasz nieustępliwość oraz przez sek. po zakończeniu jej działania. Kiedy zyskujesz nieustępliwość, otrzymujesz swojego podstawowego zasobu.",
+        "desc": "zadajesz obrażenia zwiększone o , gdy posiadasz nieustępliwość oraz przez sek. po zakończeniu jej działania. kiedy zyskujesz nieustępliwość, otrzymujesz swojego podstawowego zasobu.",
         "snoId": 1559420
     },
     "spodnie_wzmocnienia": {
-        "desc": "To przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
+        "desc": "to przedmiot testowy wykorzystywany do awansu na maksymalny poziom.",
         "snoId": 942975
     },
     "bryczesy_krwawego_księżyca": {
-        "desc": "Twoje sługi mają szans na rzucenie klątwy na wrogów. Wrogowie dotknięci przynajmniej klątwą odnoszą więcej obrażeń od twojego Przytłoczenia.",
+        "desc": "twoje sługi mają szans na rzucenie klątwy na wrogów. wrogowie dotknięci przynajmniej klątwą odnoszą więcej obrażeń od twojego przytłoczenia.",
         "snoId": 1217039
     },
     "ślepia_w_ciemności": {
-        "desc": "Zabójcza Pułapka zadaje obrażenia zwiększone o . Jeśli Zabójcza Pułapka nie trafi bossa ani gracza, będzie ponownie się uzbrajać, dopóki nie zabije wroga.",
+        "desc": "zabójcza pułapka zadaje obrażenia zwiększone o . jeśli zabójcza pułapka nie trafi bossa ani gracza, będzie ponownie się uzbrajać, dopóki nie zabije wroga.",
         "snoId": 942977
     },
     "bryczesy_lodowego_serca": {
-        "desc": "Istnieje szans, że wrogowie uwolnią Novę Mrozu, jeśli zginą w stanie zamrożenia.",
+        "desc": "istnieje szans, że wrogowie uwolnią novę mrozu, jeśli zginą w stanie zamrożenia.",
         "snoId": 1306273
     },
     "pierścień_czerwonej_furory": {
-        "desc": "Po zużyciu pkt. furii w ciągu sek. twoje następne użycie umiejętności Młot Starożytnych, Wypiętrzenie lub Śmiertelny Cios gwarantuje trafienie krytyczne i zadaje obrażenia od trafień krytycznych zwiększone o .",
+        "desc": "po zużyciu pkt. furii w ciągu sek. twoje następne użycie umiejętności młot starożytnych, wypiętrzenie lub śmiertelny cios gwarantuje trafienie krytyczne i zadaje obrażenia od trafień krytycznych zwiększone o .",
         "snoId": 1706603
     },
     "zenit_łowcy": {
-        "desc": "Gdy zabijesz cel umiejętnością Zmiennokształtności, zyskujesz premię Wilkołak Twoja następna umiejętność Niedźwiedziołaka (poza Mocą Specjalną) nie zużywa zasobów i nie ma czasu odnowienia. Niedźwiedziołak Twoja następna umiejętność Wilkołaka przywróci ci pkt. zdrowia po pierwszym zadaniu obrażeń.",
+        "desc": "gdy zabijesz cel umiejętnością zmiennokształtności, zyskujesz premię wilkołak twoja następna umiejętność niedźwiedziołaka (poza mocą specjalną) nie zużywa zasobów i nie ma czasu odnowienia. niedźwiedziołak twoja następna umiejętność wilkołaka przywróci ci pkt. zdrowia po pierwszym zadaniu obrażeń.",
         "snoId": 989677
     },
     "nieugięta_wola_airidy": {
-        "desc": "Gdy używasz umiejętności Specjalnej i ponownie po sek., przyciągasz odległych wrogów i zadajesz im pkt. obrażeń fizycznych. Te obrażenia są zwiększone o za każde pkt. twojej Siły Woli.",
+        "desc": "gdy używasz umiejętności specjalnej i ponownie po sek., przyciągasz odległych wrogów i zadajesz im pkt. obrażeń fizycznych. te obrażenia są zwiększone o za każde pkt. twojej siły woli.",
         "snoId": 1706650
     },
     "objęcia_matki": {
-        "desc": "Jeśli umiejętność Główna trafi lub więcej wrogów, zwrócona zostanie równowartość kosztu zasobów.",
+        "desc": "jeśli umiejętność główna trafi lub więcej wrogów, zwrócona zostanie równowartość kosztu zasobów.",
         "snoId": 1215133
     },
     "pierścień_bezgwiezdnej_nocy": {
-        "desc": "Użycie umiejętności Głównych zmniejsza koszt zasobów twoich umiejętności Głównych o , maksymalnie do . Efekt ten zeruje się po użyciu umiejętności innej niż Główna.",
+        "desc": "użycie umiejętności głównych zmniejsza koszt zasobów twoich umiejętności głównych o , maksymalnie do . efekt ten zeruje się po użyciu umiejętności innej niż główna.",
         "snoId": 1306337
     },
     "skorodowany_sygnet_xfala": {
-        "desc": "Szczęśliwy traf Twoje efekty wywołujące obrażenia z upływem czasu mają do szans na wybuch i zadanie pobliskim wrogom pkt. obrażeń tego samego typu.",
+        "desc": "szczęśliwy traf twoje efekty wywołujące obrażenia z upływem czasu mają do szans na wybuch i zadanie pobliskim wrogom pkt. obrażeń tego samego typu.",
         "snoId": 1559923
     },
     "sygnet_mendelna": {
-        "desc": "Szczęśliwy traf masz maksymalnie szans na wzmocnienie wszystkich swoich sług. Wzmocnienie to sprawi, że następny atak każdego z nich wywoła wybuch, który zada pkt. obrażeń fizycznych.",
+        "desc": "szczęśliwy traf masz maksymalnie szans na wzmocnienie wszystkich swoich sług. wzmocnienie to sprawi, że następny atak każdego z nich wywoła wybuch, który zada pkt. obrażeń fizycznych.",
         "snoId": 1222626
     },
     "pierścień_świętokradczej_duszy": {
-        "desc": "Automatycznie aktywujesz następujące wyposażone umiejętności na zwłokach wokół ciebie Ożywienie Szkieletu – co sek. Wybuch Zwłok – co sek. Trupie Macki – co sek.",
+        "desc": "automatycznie aktywujesz następujące wyposażone umiejętności na zwłokach wokół ciebie ożywienie szkieletu – co sek. wybuch zwłok – co sek. trupie macki – co sek.",
         "snoId": 1706659
     },
     "wijący_się_sygnet_szachrajstwa": {
-        "desc": "Użycie umiejętności Podstępu pozostawia za sobą pułapkęatrapę, która stale prowokuje i wabi wrogów. Pułapkaatrapa eksploduje po sek. i zadaje pkt. obrażeń Cienia. Efekt może wystąpić co sek.",
+        "desc": "użycie umiejętności podstępu pozostawia za sobą pułapkęatrapę, która stale prowokuje i wabi wrogów. pułapkaatrapa eksploduje po sek. i zadaje pkt. obrażeń cienia. efekt może wystąpić co sek.",
         "snoId": 1706657
     },
     "niebieska_róża": {
-        "desc": "Szczęśliwy traf zranienie wroga daje maksymalnie szans na stworzenie wybuchającego Lodowego Kolca, który zadaje pkt. obrażeń od Zimna. Szansa jest potrojona, jeśli wróg jest zamrożony.",
+        "desc": "szczęśliwy traf zranienie wroga daje maksymalnie szans na stworzenie wybuchającego lodowego kolca, który zadaje pkt. obrażeń od zimna. szansa jest potrojona, jeśli wróg jest zamrożony.",
         "snoId": 1211653
     },
     "opalizująca_obrączka_tal_rashy": {
-        "desc": "Za każde zadane obrażenia od żywiołów zyskujesz obrażenia zwiększone o na sek. Zadawanie obrażeń od żywiołów odświeża wszystkie premie.",
+        "desc": "za każde zadane obrażenia od żywiołów zyskujesz obrażenia zwiększone o na sek. zadawanie obrażeń od żywiołów odświeża wszystkie premie.",
         "snoId": 1225567
     }
 }

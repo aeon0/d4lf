@@ -83,6 +83,10 @@ def find_affixes(
     affix_lines, line_pos = filter_affix_lines(affix_lines, line_pos)
     paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
 
+    if is_sigil and len(paragraphs) == 2:
+        # A bit of a hack to remove the "revives allowed" affix as it is not part of the generated affix list...
+        paragraphs = paragraphs[:-1]
+
     for combined_lines in paragraphs:
         for error, correction in Dataloader().error_map.items():
             combined_lines = combined_lines.replace(error, correction)

@@ -29,12 +29,17 @@ def find_aspect(
 
     if rarity == ItemRarity.Legendary:
         found_key = closest_match(cleaned_str, Dataloader().aspect_dict)
+        snoids = Dataloader().aspect_snoids
     else:
         found_key = closest_match(cleaned_str, Dataloader().aspect_unique_dict)
+        snoids = Dataloader().aspect_unique_snoids
 
-    if Dataloader().aspect_snoids[found_key] in ASPECT_NUMBER_AT_IDX1:
+    if found_key is None:
+        return None, cleaned_str
+
+    if snoids[found_key] in ASPECT_NUMBER_AT_IDX1:
         idx = 1
-    elif Dataloader().aspect_snoids[found_key] in ASPECT_NUMBER_AT_IDX2:
+    elif snoids[found_key] in ASPECT_NUMBER_AT_IDX2:
         idx = 2
     else:
         idx = 0
@@ -58,11 +63,9 @@ def find_aspect(
             found_value /= 2
 
     Logger.debug(f"{found_key}: {found_value}")
-    if found_key is not None:
-        # Rapid detects 19 as 199 often
-        if found_key == "rapid_aspect" and found_value == 199:
-            found_value = 19
-        loc = [aspect_bullet.center[0], aspect_bullet.center[1] - 2]
-        return Aspect(found_key, found_value, concatenated_str, loc), cleaned_str
-    else:
-        return None, cleaned_str
+
+    # Rapid detects 19 as 199 often
+    if found_key == "rapid_aspect" and found_value == 199:
+        found_value = 19
+    loc = [aspect_bullet.center[0], aspect_bullet.center[1] - 2]
+    return Aspect(found_key, found_value, concatenated_str, loc), cleaned_str

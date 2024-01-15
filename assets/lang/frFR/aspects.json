@@ -1,958 +1,958 @@
 {
     "dhémorragie_du_berserker": {
-        "desc": "Chaque fois que vous infligez des dégâts directs sous leffet de Rage du berserker, vous infligez de vos dégâts de base sous forme de dégâts de saignement supplémentaires en s.",
+        "desc": "chaque fois que vous infligez des dégâts directs sous leffet de rage du berserker, vous infligez de vos dégâts de base sous forme de dégâts de saignement supplémentaires en s.",
         "snoId": 1105985
     },
     "de_tremblement_de_terre": {
-        "desc": "Choc terrestre génère un tremblement de terre infligeant points de dégâts physiques en s. Lorsque vous vous trouvez au milieu dun tremblement de terre, vous infligez de dégâts supplémentaires.",
+        "desc": "choc terrestre génère un tremblement de terre infligeant points de dégâts physiques en s. lorsque vous vous trouvez au milieu dun tremblement de terre, vous infligez de dégâts supplémentaires.",
         "snoId": 1105986
     },
     "de_brisecrâne": {
-        "desc": "Étourdir une cible qui saigne lui inflige un montant de dégâts physiques égal à de son saignement total.",
+        "desc": "étourdir une cible qui saigne lui inflige un montant de dégâts physiques égal à de son saignement total.",
         "snoId": 1105987
     },
     "de_maître_darmes": {
-        "desc": "Vos compétences de maîtrise darme disposent dune charge supplémentaire. Coup de chance lorsque vous infligez des dégâts à une cible avec une compétence de maîtrise darme, vous avez jusquà de chances de létourdir pendant s.",
+        "desc": "vos compétences de maîtrise darme disposent dune charge supplémentaire. coup de chance lorsque vous infligez des dégâts à une cible avec une compétence de maîtrise darme, vous avez jusquà de chances de létourdir pendant s.",
         "snoId": 1105988
     },
     "du_sang_de_fer": {
-        "desc": "Vous gagnez de réduction des dégâts par adversaire proche qui saigne, jusquà une réduction maximum de .",
+        "desc": "vous gagnez de réduction des dégâts par adversaire proche qui saigne, jusquà une réduction maximum de .",
         "snoId": 1105989
     },
     "de_folie_guerrière": {
-        "desc": "Vous obtenez leffet de Rage du berserker pendant s après avoir changé darme fois.",
+        "desc": "vous obtenez leffet de rage du berserker pendant s après avoir changé darme fois.",
         "snoId": 1105990
     },
     "de_fureur_retentissante": {
-        "desc": "Vos compétences de cri génèrent points de fureur par seconde tant quelles sont actives.",
+        "desc": "vos compétences de cri génèrent points de fureur par seconde tant quelles sont actives.",
         "snoId": 1105991
     },
     "de_défense_de_fer": {
-        "desc": "Galvanisation octroie létat inarrêtable, ainsi que de réduction des dégâts.",
+        "desc": "galvanisation octroie létat inarrêtable, ainsi que de réduction des dégâts.",
         "snoId": 1105992
     },
     "de_pas_de_géant": {
-        "desc": "Réduit le temps de recharge de Bond de s par cible touchée, jusquà un maximum de s.",
+        "desc": "réduit le temps de recharge de bond de s par cible touchée, jusquà un maximum de s.",
         "snoId": 1105994
     },
     "du_berserker_implacable": {
-        "desc": "Coup de chance en infligeant des dégâts à une cible adverse avec une compétence principale, vous avez jusquà de chances daugmenter la durée de leffet de Rage du berserker de s. Cette durée est doublée si le coup de chance est un coup critique.",
+        "desc": "coup de chance en infligeant des dégâts à une cible adverse avec une compétence principale, vous avez jusquà de chances daugmenter la durée de leffet de rage du berserker de s. cette durée est doublée si le coup de chance est un coup critique.",
         "snoId": 1105995
     },
     "de_furie_implacable": {
-        "desc": "Lorsque vous tuez une cible ou frappez un ou une boss avec une compétence principale, vous recevez de son coût de base en fureur. Cet effet ne peut se produire quune fois par utilisation.",
+        "desc": "lorsque vous tuez une cible ou frappez un ou une boss avec une compétence principale, vous recevez de son coût de base en fureur. cet effet ne peut se produire quune fois par utilisation.",
         "snoId": 1105997
     },
     "des_échos_ancestraux": {
-        "desc": "Coup de chance lorsquAppel des anciens est sur votre barre dactions et que vous infligez des dégâts aux adversaires avec Bond, Soulèvement ou Tourbillon, vous avez jusquà de chances dinvoquer un Ancien qui répétera la même compétence.",
+        "desc": "coup de chance lorsquappel des anciens est sur votre barre dactions et que vous infligez des dégâts aux adversaires avec bond, soulèvement ou tourbillon, vous avez jusquà de chances dinvoquer un ancien qui répétera la même compétence.",
         "snoId": 1105998
     },
     "de_colère_anesthésiante": {
-        "desc": "Chaque point de fureur généré alors quelle est déjà à son maximum confère points de fortification.",
+        "desc": "chaque point de fureur généré alors quelle est déjà à son maximum confère points de fortification.",
         "snoId": 1106001
     },
     "du_combat": {
-        "desc": "Les cibles tuées dans les s après avoir été touchées par Coup de pied ou Charge explosent en infligeant points de dégâts aux adversaires à proximité.",
+        "desc": "les cibles tuées dans les s après avoir été touchées par coup de pied ou charge explosent en infligeant points de dégâts aux adversaires à proximité.",
         "snoId": 1106002
     },
     "du_tourbillon_de_poussière": {
-        "desc": "Tourbillon laisse des tourbillons de poussière sur son passage qui infligent points de dégâts aux adversaires à proximité.",
+        "desc": "tourbillon laisse des tourbillons de poussière sur son passage qui infligent points de dégâts aux adversaires à proximité.",
         "snoId": 1106003
     },
     "de_colère_débordante": {
-        "desc": "Après avoir dépensé points de fureur, votre prochaine compétence de maîtrise darme inflige de dégâts supplémentaires.",
+        "desc": "après avoir dépensé points de fureur, votre prochaine compétence de maîtrise darme inflige de dégâts supplémentaires.",
         "snoId": 1106004
     },
     "du_maître_darmes_intransigeant": {
-        "desc": "Votre génération de fureur est augmentée de tant que tous vos bonus de dégâts de la compétence passive principale Arsenal ambulant sont actifs.",
+        "desc": "votre génération de fureur est augmentée de tant que tous vos bonus de dégâts de la compétence passive principale arsenal ambulant sont actifs.",
         "snoId": 1106005
     },
     "de_fureur_du_berserker": {
-        "desc": "Vous obtenez points de fureur par seconde tant que vous êtes sous leffet de Rage du berserker.",
+        "desc": "vous obtenez points de fureur par seconde tant que vous êtes sous leffet de rage du berserker.",
         "snoId": 1106006
     },
     "de_pulsion_de_mort": {
-        "desc": "Vous gagnez points de dégâts dépines tant que vous êtes sous leffet de Rage du berserker.",
+        "desc": "vous gagnez points de dégâts dépines tant que vous êtes sous leffet de rage du berserker.",
         "snoId": 1106007
     },
     "de_trombe_mortelle": {
-        "desc": "Les chances dinfliger un coup critique de Tourbillon sont augmentées de par seconde de canalisation de la compétence, jusquà un maximum de .",
+        "desc": "les chances dinfliger un coup critique de tourbillon sont augmentées de par seconde de canalisation de la compétence, jusquà un maximum de .",
         "snoId": 1106009
     },
     "de_bulkathos": {
-        "desc": "Bond génère un tremblement de terre infligeant points de dégâts physiques en s. Lorsque vous vous trouvez au milieu dun tremblement de terre, vous gagnez de réduction des dégâts.",
+        "desc": "bond génère un tremblement de terre infligeant points de dégâts physiques en s. lorsque vous vous trouvez au milieu dun tremblement de terre, vous gagnez de réduction des dégâts.",
         "snoId": 1106010
     },
     "du_fouettevent": {
-        "desc": "Utiliser Coup double deux fois en s génère un tourbillon de poussière qui inflige points de dégâts aux adversaires derrière la cible.",
+        "desc": "utiliser coup double deux fois en s génère un tourbillon de poussière qui inflige points de dégâts aux adversaires derrière la cible.",
         "snoId": 1106011
     },
     "de_vétéran_du_combat": {
-        "desc": "Chaque fois quune compétence principale inflige des dégâts directs à une cible, votre prochaine utilisation de Charge ou Bond inflige de dégâts supplémentaires, jusquà un maximum de .",
+        "desc": "chaque fois quune compétence principale inflige des dégâts directs à une cible, votre prochaine utilisation de charge ou bond inflige de dégâts supplémentaires, jusquà un maximum de .",
         "snoId": 1106024
     },
     "de_force_ancestrale": {
-        "desc": "La secousse de Marteau des Anciens se propage vers lextérieur et ses dégâts sont augmentés de .",
+        "desc": "la secousse de marteau des anciens se propage vers lextérieur et ses dégâts sont augmentés de .",
         "snoId": 1106025
     },
     "de_trombe_centripète": {
-        "desc": "Tourbillon attire périodiquement les adversaires proches vers vous.",
+        "desc": "tourbillon attire périodiquement les adversaires proches vers vous.",
         "snoId": 1106034
     },
     "du_berserker_robuste": {
-        "desc": "Coup de chance vous avez jusquà de chances de gagner points de fortification chaque fois que vous infligez des dégâts directs sous leffet de Berserk.",
+        "desc": "coup de chance vous avez jusquà de chances de gagner points de fortification chaque fois que vous infligez des dégâts directs sous leffet de berserk.",
         "snoId": 1106039
     },
     "du_chef_de_guerre": {
-        "desc": "Chaque fois que vous utilisez une compétence de cri, son temps de recharge est réduit de s par adversaire proche, jusquà un maximum de s.",
+        "desc": "chaque fois que vous utilisez une compétence de cri, son temps de recharge est réduit de s par adversaire proche, jusquà un maximum de s.",
         "snoId": 1106041
     },
     "de_piétinement_perpétuel": {
-        "desc": "Blesser une cible ennemie avec Coup de pied ou Choc terrestre réinitialise le temps de recharge de Bond.",
+        "desc": "blesser une cible ennemie avec coup de pied ou choc terrestre réinitialise le temps de recharge de bond.",
         "snoId": 1105863
     },
     "danémie": {
-        "desc": "Coup de chance infliger des dégâts directs à une cible qui saigne a jusquà de chances de létourdir pendant s.",
+        "desc": "coup de chance infliger des dégâts directs à une cible qui saigne a jusquà de chances de létourdir pendant s.",
         "snoId": 1201316
     },
     "dassouvissement": {
-        "desc": "Coup de chance vous avez jusquà de chances de gagner points de fureur lorsque Déchirure inflige des dégâts directs à au moins une cible qui saigne.",
+        "desc": "coup de chance vous avez jusquà de chances de gagner points de fureur lorsque déchirure inflige des dégâts directs à au moins une cible qui saigne.",
         "snoId": 1202014
     },
     "du_frappeterre": {
-        "desc": "Après avoir changé darme fois, votre prochaine compétence accablera et infligera de dégâts daccablement supplémentaires.",
+        "desc": "après avoir changé darme fois, votre prochaine compétence accablera et infligera de dégâts daccablement supplémentaires.",
         "snoId": 1199203
     },
     "de_coups_calculés": {
-        "desc": "Après avoir changé darme fois, vous obtenez points de fortification.",
+        "desc": "après avoir changé darme fois, vous obtenez points de fortification.",
         "snoId": 1200857
     },
     "portebonheur": {
-        "desc": "Vos chances dobtenir un coup de chance sont augmentées de tant que tous vos bonus de dégâts de votre compétence passive principale Arsenal ambulant sont actifs.",
+        "desc": "vos chances dobtenir un coup de chance sont augmentées de tant que tous vos bonus de dégâts de votre compétence passive principale arsenal ambulant sont actifs.",
         "snoId": 1199205
     },
     "du_berserker_de_lours": {
-        "desc": "En tuant une cible sous leffet de Rage du berserker, vous avez de chances daugmenter de la réduction du temps de recharge de vos compétences de combat pendant s.",
+        "desc": "en tuant une cible sous leffet de rage du berserker, vous avez de chances daugmenter de la réduction du temps de recharge de vos compétences de combat pendant s.",
         "snoId": 1199207
     },
     "de_rage_ardente": {
-        "desc": "Tant que vous êtes sous leffet de Rage du berserker, vous infligez points de dégâts de feu par seconde aux adversaires à proximité.",
+        "desc": "tant que vous êtes sous leffet de rage du berserker, vous infligez points de dégâts de feu par seconde aux adversaires à proximité.",
         "snoId": 1105876
     },
     "diabolique": {
-        "desc": "Après avoir généré points de fureur, votre prochaine compétence principale génère un tourbillon de poussière qui inflige points de dégâts aux adversaires derrière la cible.",
+        "desc": "après avoir généré points de fureur, votre prochaine compétence principale génère un tourbillon de poussière qui inflige points de dégâts aux adversaires derrière la cible.",
         "snoId": 1199627
     },
     "de_rage_infinie": {
-        "desc": "Chaque point de fureur que vous générez audelà du maximum augmente les dégâts de votre prochaine compétence principale de , jusquà un maximum de .",
+        "desc": "chaque point de fureur que vous générez audelà du maximum augmente les dégâts de votre prochaine compétence principale de , jusquà un maximum de .",
         "snoId": 1106289
     },
     "de_charge_ancestrale": {
-        "desc": "Charge invoque Anciens qui chargent avec vous, infligeant des dégâts normaux.",
+        "desc": "charge invoque anciens qui chargent avec vous, infligeant des dégâts normaux.",
         "snoId": 1427872
     },
     "de_rupture_arbitraire": {
-        "desc": "Rupture ne retire pas les dégâts de saignement sur les adversaires. Ne se produit quune fois toutes les s.",
+        "desc": "rupture ne retire pas les dégâts de saignement sur les adversaires. ne se produit quune fois toutes les s.",
         "snoId": 1603699
     },
     "de_linsatiable": {
-        "desc": "Après avoir tué une cible avec Déchiquetage, votre prochaine compétence de lycanthrope génère desprit supplémentaire et inflige de dégâts supplémentaires.",
+        "desc": "après avoir tué une cible avec déchiquetage, votre prochaine compétence de lycanthrope génère desprit supplémentaire et inflige de dégâts supplémentaires.",
         "snoId": 1106044
     },
     "mutilé": {
-        "desc": "Vous avez de chances de gagner points desprit chaque fois que lon vous touche lorsque vous êtes sous forme dursoïde.",
+        "desc": "vous avez de chances de gagner points desprit chaque fois que lon vous touche lorsque vous êtes sous forme dursoïde.",
         "snoId": 1106047
     },
     "de_la_brise_légère": {
-        "desc": "Coup de chance Vent cisaillant a jusquà de chances de vous rendre tous vos points desprit.",
+        "desc": "coup de chance vent cisaillant a jusquà de chances de vous rendre tous vos points desprit.",
         "snoId": 1106050
     },
     "de_la_tempête": {
-        "desc": "Les dégâts dOuragan augmentent de par seconde où il reste actif.",
+        "desc": "les dégâts douragan augmentent de par seconde où il reste actif.",
         "snoId": 1106053
     },
     "de_sables_mouvants": {
-        "desc": "Les cibles touchées par des compétences de terre sont ralenties de pendant s.",
+        "desc": "les cibles touchées par des compétences de terre sont ralenties de pendant s.",
         "snoId": 1106058
     },
     "de_roche_écrasante": {
-        "desc": "Les compétences de terre infligent de dégâts critiques supplémentaires contre les adversaires subissant une perte de contrôle.",
+        "desc": "les compétences de terre infligent de dégâts critiques supplémentaires contre les adversaires subissant une perte de contrôle.",
         "snoId": 1206644
     },
     "de_pierre_de_guérison": {
-        "desc": "La durée de Rempart de terre est augmentée de s. De plus, tuer une cible avec une compétence de terre rend points de santé à la barrière de votre rempart de terre actif.",
+        "desc": "la durée de rempart de terre est augmentée de s. de plus, tuer une cible avec une compétence de terre rend points de santé à la barrière de votre rempart de terre actif.",
         "snoId": 1106061
     },
     "surchargé": {
-        "desc": "Coup de chance lorsque vous infligez des dégâts de foudre, vous avez jusquà de chances de surcharger la cible pendant s, ce qui a pour effet dinfliger points de dégâts supplémentaires aux adversaires proches de la cible chaque fois que vous lui infligez des dégâts directs.",
+        "desc": "coup de chance lorsque vous infligez des dégâts de foudre, vous avez jusquà de chances de surcharger la cible pendant s, ce qui a pour effet dinfliger points de dégâts supplémentaires aux adversaires proches de la cible chaque fois que vous lui infligez des dégâts directs.",
         "snoId": 1106063
     },
     "déquilibre_naturel": {
-        "desc": "Utiliser une compétence de tempête augmente les dégâts critiques de vos compétences de terre de pendant s. Utiliser une compétence de terre augmente les chances dinfliger un coup critique de vos compétences de tempête de pendant s.",
+        "desc": "utiliser une compétence de tempête augmente les dégâts critiques de vos compétences de terre de pendant s. utiliser une compétence de terre augmente les chances dinfliger un coup critique de vos compétences de tempête de pendant s.",
         "snoId": 1106064
     },
     "de_la_dette_du_métamorphe": {
-        "desc": "Blesser une cible empoisonnée avec une compétence dursoïde inflige instantanément des dégâts de poison et consomme lempoisonnement.",
+        "desc": "blesser une cible empoisonnée avec une compétence dursoïde inflige instantanément des dégâts de poison et consomme lempoisonnement.",
         "snoId": 1201950
     },
     "de_marchepeau": {
-        "desc": "Quand vous utilisez une compétence de métamorphose qui vous fait changer de forme, vous récupérez points de vie. Si vous avez déjà tous vos points de vie, vous obtenez le même montant de points de fortification.",
+        "desc": "quand vous utilisez une compétence de métamorphose qui vous fait changer de forme, vous récupérez points de vie. si vous avez déjà tous vos points de vie, vous obtenez le même montant de points de fortification.",
         "snoId": 1200308
     },
     "dactivité_sismique": {
-        "desc": "Pointe de terre projette sur une ligne des piques acérées et a désormais un temps de recharge de s.",
+        "desc": "pointe de terre projette sur une ligne des piques acérées et a désormais un temps de recharge de s.",
         "snoId": 1106138
     },
     "de_la_terre_piétinée": {
-        "desc": "Piétinement génère maintenant piliers de terre dÉboulement infligeant des dégâts normaux pendant toute la durée de la compétence. Piétinement est désormais également une compétence de magie naturelle et de terre.",
+        "desc": "piétinement génère maintenant piliers de terre déboulement infligeant des dégâts normaux pendant toute la durée de la compétence. piétinement est désormais également une compétence de magie naturelle et de terre.",
         "snoId": 1106166
     },
     "des_griffes_de_la_tempête": {
-        "desc": "Les coups critiques effectués avec Déchiquetage infligent de leurs dégâts sous forme de dégâts de foudre à la cible et aux adversaires à proximité.",
+        "desc": "les coups critiques effectués avec déchiquetage infligent de leurs dégâts sous forme de dégâts de foudre à la cible et aux adversaires à proximité.",
         "snoId": 1106189
     },
     "équilibré": {
-        "desc": "Augmente votre esprit maximum de points et votre génération desprit de tant que Rage du grizzly est active.",
+        "desc": "augmente votre esprit maximum de points et votre génération desprit de tant que rage du grizzly est active.",
         "snoId": 1106190
     },
     "de_force_cyclonique": {
-        "desc": "Armure cyclonique confère aussi une réduction des dégâts physiques et est également lancée sur les forces alliées proches.",
+        "desc": "armure cyclonique confère aussi une réduction des dégâts physiques et est également lancée sur les forces alliées proches.",
         "snoId": 1106217
     },
     "de_la_réplique": {
-        "desc": "Chacun des piliers de terre dÉboulement frappe une seconde fois et inflige de dégâts supplémentaires par coup.",
+        "desc": "chacun des piliers de terre déboulement frappe une seconde fois et inflige de dégâts supplémentaires par coup.",
         "snoId": 1106228
     },
     "de_la_terreur_ursine": {
-        "desc": "Pulvérisation est désormais aussi une compétence de terre. Après avoir lancé Pulvérisation, les pics de terre continuent dinfliger points de dégâts en s.",
+        "desc": "pulvérisation est désormais aussi une compétence de terre. après avoir lancé pulvérisation, les pics de terre continuent dinfliger points de dégâts en s.",
         "snoId": 1106260
     },
     "de_représailles": {
-        "desc": "Vos compétences principales infligent jusquà de dégâts supplémentaires en fonction de votre montant de fortification.",
+        "desc": "vos compétences principales infligent jusquà de dégâts supplémentaires en fonction de votre montant de fortification.",
         "snoId": 1106321
     },
     "donde_de_choc": {
-        "desc": "Pulvérisation génère aussi une onde de choc qui se propage vers lavant en infligeant de ses dégâts aux cibles sur son passage.",
+        "desc": "pulvérisation génère aussi une onde de choc qui se propage vers lavant en infligeant de ses dégâts aux cibles sur son passage.",
         "snoId": 1106341
     },
     "de_lalpha": {
-        "desc": "Vos compagnons loups sont maintenant des compagnons lycanthropes. Ils infligent de dégâts supplémentaires et peuvent répandre le virus rabique.",
+        "desc": "vos compagnons loups sont maintenant des compagnons lycanthropes. ils infligent de dégâts supplémentaires et peuvent répandre le virus rabique.",
         "snoId": 1106347
     },
     "du_hurleur_nocturne": {
-        "desc": "Hurlement sanglant augmente de vos chances dinfliger un coup critique. De plus, Hurlement sanglant affecte aussi les compagnons et les personnagesjoueurs proches pendant s.",
+        "desc": "hurlement sanglant augmente de vos chances dinfliger un coup critique. de plus, hurlement sanglant affecte aussi les compagnons et les personnagesjoueurs proches pendant s.",
         "snoId": 1106379
     },
     "de_la_nature_sauvage": {
-        "desc": "Les compétences de lycanthrope sont considérées comme des compétences de tempête et les compétences dursoïde comme des compétences de terre pour la compétence passive principale Fureur de la nature.",
+        "desc": "les compétences de lycanthrope sont considérées comme des compétences de tempête et les compétences dursoïde comme des compétences de terre pour la compétence passive principale fureur de la nature.",
         "snoId": 1106384
     },
     "du_berger": {
-        "desc": "Les compétences principales infligent de dégâts supplémentaires pour chaque compagnon actif.",
+        "desc": "les compétences principales infligent de dégâts supplémentaires pour chaque compagnon actif.",
         "snoId": 1106407
     },
     "vigoureux": {
-        "desc": "Vous gagnez de réduction des dégâts tant que vous êtes sous forme de lycanthrope.",
+        "desc": "vous gagnez de réduction des dégâts tant que vous êtes sous forme de lycanthrope.",
         "snoId": 1206401
     },
     "du_sombre_hurlement": {
-        "desc": "Rugissement débilitant est désormais une compétence de lycanthrope. De plus, Rugissement débilitant immobilise les cibles empoisonnées pendant s.",
+        "desc": "rugissement débilitant est désormais une compétence de lycanthrope. de plus, rugissement débilitant immobilise les cibles empoisonnées pendant s.",
         "snoId": 1201796
     },
     "de_la_bête_humaine_enragée": {
-        "desc": "La durée de Rage du grizzly est augmentée de s. De plus, les coups critiques portés alors que Rage du grizzly est active infligent de dégâts critiques supplémentaires, jusquà un maximum de .",
+        "desc": "la durée de rage du grizzly est augmentée de s. de plus, les coups critiques portés alors que rage du grizzly est active infligent de dégâts critiques supplémentaires, jusquà un maximum de .",
         "snoId": 1205996
     },
     "de_sauvagerie": {
-        "desc": "Vos compagnons obtiennent également les bonus que vous octroie la compétence passive principale Saccage bestial.",
+        "desc": "vos compagnons obtiennent également les bonus que vous octroie la compétence passive principale saccage bestial.",
         "snoId": 1205052
     },
     "balistique": {
-        "desc": "Tant que vous bénéficiez dune fortification, vos compétences de terre gagnent rangs.",
+        "desc": "tant que vous bénéficiez dune fortification, vos compétences de terre gagnent rangs.",
         "snoId": 1202438
     },
     "de_changetempête": {
-        "desc": "Tant quOuragan est actif, vos compétences de métamorphose gagnent rangs.",
+        "desc": "tant quouragan est actif, vos compétences de métamorphose gagnent rangs.",
         "snoId": 1202540
     },
     "du_traquetempêtes": {
-        "desc": "Tornade pourchasse jusquà cibles.",
+        "desc": "tornade pourchasse jusquà cibles.",
         "snoId": 1105817
     },
     "de_conduction_runomancienne": {
-        "desc": "Les coups critiques infligés avec les compétences de tempête que vous lancez chargent lair autour de vous délectricité pendant s, ce qui génère un trait de foudre qui inflige périodiquement points de dégâts de foudre à une cible dans la zone. Cette durée peut être prolongée par des coups critiques supplémentaires.",
+        "desc": "les coups critiques infligés avec les compétences de tempête que vous lancez chargent lair autour de vous délectricité pendant s, ce qui génère un trait de foudre qui inflige périodiquement points de dégâts de foudre à une cible dans la zone. cette durée peut être prolongée par des coups critiques supplémentaires.",
         "snoId": 1105842
     },
     "de_la_puissance_tempêtueuse": {
-        "desc": "La compétence passive principale Puissance tectonique sapplique aussi à vos compétences de tempête.",
+        "desc": "la compétence passive principale puissance tectonique sapplique aussi à vos compétences de tempête.",
         "snoId": 1105865
     },
     "symbiotique": {
-        "desc": "Lorsque la compétence passive principale Fureur de la nature déclenche gratuitement une compétence, vos temps de recharge non ultimes du type opposé sont réduits de s.",
+        "desc": "lorsque la compétence passive principale fureur de la nature déclenche gratuitement une compétence, vos temps de recharge non ultimes du type opposé sont réduits de s.",
         "snoId": 1212893
     },
     "castral": {
-        "desc": "Vous gagnez un bonus de à votre prochain Rempart de terre pour chaque cible à laquelle vous avez infligé un effet de perte de contrôle, jusquà un maximum de .",
+        "desc": "vous gagnez un bonus de à votre prochain rempart de terre pour chaque cible à laquelle vous avez infligé un effet de perte de contrôle, jusquà un maximum de .",
         "snoId": 1214291
     },
     "de_virevolte": {
-        "desc": "Les coups critiques dOrage génèrent éclairs virevoltants qui pourchassent les cibles dans la zone et leur infligent points de dégâts de foudre.",
+        "desc": "les coups critiques dorage génèrent éclairs virevoltants qui pourchassent les cibles dans la zone et leur infligent points de dégâts de foudre.",
         "snoId": 1105811
     },
     "de_loup_féroce": {
-        "desc": "Rage du grizzly vous transforme désormais en lycanthrope féroce. Sous cette forme, votre vitesse de déplacement est augmentée de au lieu de votre réduction des dégâts, et vos coûts en esprit sont réduits de supplémentaires. De plus, chaque victime vous rend de votre maximum de vie.",
+        "desc": "rage du grizzly vous transforme désormais en lycanthrope féroce. sous cette forme, votre vitesse de déplacement est augmentée de au lieu de votre réduction des dégâts, et vos coûts en esprit sont réduits de supplémentaires. de plus, chaque victime vous rend de votre maximum de vie.",
         "snoId": 1105800
     },
     "de_cavalcade": {
-        "desc": "Vous gagnez compagnon supplémentaire. De plus, les compétences de compagnon infligent de dégâts supplémentaires.",
+        "desc": "vous gagnez compagnon supplémentaire. de plus, les compétences de compagnon infligent de dégâts supplémentaires.",
         "snoId": 1222401
     },
     "de_roche_métamorphique": {
-        "desc": "Rocher est maintenant une compétence principale qui coûte points desprit et qui inflige des dégâts normaux.",
+        "desc": "rocher est maintenant une compétence principale qui coûte points desprit et qui inflige des dégâts normaux.",
         "snoId": 1338010
     },
     "de_la_bête_trouble": {
-        "desc": "Lorsque vous foncez sur les adversaires, Déchiquetage recherche les cibles empoisonnées à proximité et leur inflige instantanément des dégâts de poison.",
+        "desc": "lorsque vous foncez sur les adversaires, déchiquetage recherche les cibles empoisonnées à proximité et leur inflige instantanément des dégâts de poison.",
         "snoId": 1338284
     },
     "souterrain": {
-        "desc": "La compétence active de Lierre empoisonné lance également Éboulement dans un cercle autour de vous. Les compétences de terre infligent de dégâts supplémentaires aux cibles empoisonnées.",
+        "desc": "la compétence active de lierre empoisonné lance également éboulement dans un cercle autour de vous. les compétences de terre infligent de dégâts supplémentaires aux cibles empoisonnées.",
         "snoId": 1433952
     },
     "de_force_brute": {
-        "desc": "Après avoir atteint adversaires avec vos compétences dursoïde, la prochaine fois que vous utiliserez lune dentre elles, vous infligerez de dégâts supplémentaires et étourdirez vos cibles pendant s.",
+        "desc": "après avoir atteint adversaires avec vos compétences dursoïde, la prochaine fois que vous utiliserez lune dentre elles, vous infligerez de dégâts supplémentaires et étourdirez vos cibles pendant s.",
         "snoId": 1619484
     },
     "de_lumière_stellaire": {
-        "desc": "Vous gagnez de votre ressource principale par tranche de de points de vie soignés.",
+        "desc": "vous gagnez de votre ressource principale par tranche de de points de vie soignés.",
         "snoId": 1106452
     },
     "de_toutepuissance": {
-        "desc": "Les compétences de base confèrent de réduction des dégâts pendant s.",
+        "desc": "les compétences de base confèrent de réduction des dégâts pendant s.",
         "snoId": 1106483
     },
     "du_protecteur": {
-        "desc": "Le fait de blesser une cible adverse élite vous octroie une barrière qui absorbe jusquà points de dégâts pendant s. Cet effet ne peut se produire quune fois toutes les s.",
+        "desc": "le fait de blesser une cible adverse élite vous octroie une barrière qui absorbe jusquà points de dégâts pendant s. cet effet ne peut se produire quune fois toutes les s.",
         "snoId": 1106507
     },
     "de_calme_intérieur": {
-        "desc": "Vous infligez de dégâts supplémentaires par seconde dimmobilité, jusquà un maximum de .",
+        "desc": "vous infligez de dégâts supplémentaires par seconde dimmobilité, jusquà un maximum de .",
         "snoId": 1106533
     },
     "de_la_frappe_du_vent": {
-        "desc": "Les coups critiques augmentent votre vitesse de déplacement de pendant s, jusquà s.",
+        "desc": "les coups critiques augmentent votre vitesse de déplacement de pendant s, jusquà s.",
         "snoId": 1106547
     },
     "de_lombre": {
-        "desc": "Vous récupérez de votre ressource principale lorsque vous infligez un effet de perte de contrôle à une cible adverse.",
+        "desc": "vous récupérez de votre ressource principale lorsque vous infligez un effet de perte de contrôle à une cible adverse.",
         "snoId": 1106601
     },
     "darrogance": {
-        "desc": "Vous infligez de dégâts supplémentaires tant que vous avez une barrière active.",
+        "desc": "vous infligez de dégâts supplémentaires tant que vous avez une barrière active.",
         "snoId": 1106658
     },
     "protecteur": {
-        "desc": "Si vous subissez des dégâts lorsque vous nêtes pas en bonne santé, une bulle magique est invoquée autour de vous pendant s. Les personnagesjoueurs alliés sont insensibles aux dégâts tant quils se trouvent dans la bulle. Ne peut se produire quune fois toutes les s.",
+        "desc": "si vous subissez des dégâts lorsque vous nêtes pas en bonne santé, une bulle magique est invoquée autour de vous pendant s. les personnagesjoueurs alliés sont insensibles aux dégâts tant quils se trouvent dans la bulle. ne peut se produire quune fois toutes les s.",
         "snoId": 1106730
     },
     "de_désobéissance": {
-        "desc": "Votre armure est augmentée de pendant s lorsque vous infligez nimporte quel type de dégâts, jusquà un maximum de .",
+        "desc": "votre armure est augmentée de pendant s lorsque vous infligez nimporte quel type de dégâts, jusquà un maximum de .",
         "snoId": 1106104
     },
     "de_vindicte": {
-        "desc": "Les cibles à distance ont de chances dêtre étourdies pendant s lorsquelles vous infligent des dégâts. Vous infligez de dégâts supplémentaires aux cibles étourdies.",
+        "desc": "les cibles à distance ont de chances dêtre étourdies pendant s lorsquelles vous infligent des dégâts. vous infligez de dégâts supplémentaires aux cibles étourdies.",
         "snoId": 1106134
     },
     "expéditif": {
-        "desc": "La vitesse dattaque des compétences de base est augmentée de .",
+        "desc": "la vitesse dattaque des compétences de base est augmentée de .",
         "snoId": 1106177
     },
     "de_funambule": {
-        "desc": "Les compétences infligent jusquà de dégâts supplémentaires en fonction de votre ressource principale disponible à leur lancement, pour un résultat maximal lorsque votre ressource principale est au maximum.",
+        "desc": "les compétences infligent jusquà de dégâts supplémentaires en fonction de votre ressource principale disponible à leur lancement, pour un résultat maximal lorsque votre ressource principale est au maximum.",
         "snoId": 1106385
     },
     "de_sagesse_par_le_nombre": {
-        "desc": "Vous récupérez points de vie par seconde pour chaque adversaire à proximité, jusquà un maximum de points de vie par seconde.",
+        "desc": "vous récupérez points de vie par seconde pour chaque adversaire à proximité, jusquà un maximum de points de vie par seconde.",
         "snoId": 1106409
     },
     "de_lattente": {
-        "desc": "Lorsque vous attaquez des adversaires avec une compétence de base, les dégâts de votre prochaine compétence principale sont augmentés de , jusquà un maximum de .",
+        "desc": "lorsque vous attaquez des adversaires avec une compétence de base, les dégâts de votre prochaine compétence principale sont augmentés de , jusquà un maximum de .",
         "snoId": 1106426
     },
     "darpenteur_spectral": {
-        "desc": "Lorsque vous êtes inarrêtable et durant les s qui suivent la fin de cet effet, votre vitesse de déplacement est augmentée de et vous pouvez vous mouvoir librement parmi les adversaires.",
+        "desc": "lorsque vous êtes inarrêtable et durant les s qui suivent la fin de cet effet, votre vitesse de déplacement est augmentée de et vous pouvez vous mouvoir librement parmi les adversaires.",
         "snoId": 1225424
     },
     "de_misère_partagée": {
-        "desc": "Coup de chance lorsque vous touchez une cible subissant une perte de contrôle, vous avez de chances que cet effet se propage à une autre cible non affectée.",
+        "desc": "coup de chance lorsque vous touchez une cible subissant une perte de contrôle, vous avez de chances que cet effet se propage à une autre cible non affectée.",
         "snoId": 1227282
     },
     "élusif": {
-        "desc": "Si lon vous blesse lorsque vous subissez des effets de perte de contrôle, vous obtenez létat inarrêtable pendant s. Cet effet a un temps de recharge de s.",
+        "desc": "si lon vous blesse lorsque vous subissez des effets de perte de contrôle, vous obtenez létat inarrêtable pendant s. cet effet a un temps de recharge de s.",
         "snoId": 1223891
     },
     "dassimilation": {
-        "desc": "Vos chances desquiver sont augmentées de contre les cibles affectées par des effets de dégâts sur la durée. Lorsque vous esquivez, vous gagnez points de votre ressource principale.",
+        "desc": "vos chances desquiver sont augmentées de contre les cibles affectées par des effets de dégâts sur la durée. lorsque vous esquivez, vous gagnez points de votre ressource principale.",
         "snoId": 1226354
     },
     "dhirsutisme": {
-        "desc": "Les dégâts dépines infligés ont de chances dinfliger des dégâts à tous les adversaires autour de vous.",
+        "desc": "les dégâts dépines infligés ont de chances dinfliger des dégâts à tous les adversaires autour de vous.",
         "snoId": 1227650
     },
     "de_barrière_réfléchissante": {
-        "desc": "Tant que vous avez une barrière active, vous avez de chances dignorer les dégâts directs provenant des adversaires à distance.",
+        "desc": "tant que vous avez une barrière active, vous avez de chances dignorer les dégâts directs provenant des adversaires à distance.",
         "snoId": 1225448
     },
     "de_châtiment": {
-        "desc": "Vos chances dinfliger un coup critique aux cibles blessées sont augmentées de . Lorsque vous êtes en bonne santé, vous bénéficiez dune augmentation de la durée des effets de perte de contrôle de .",
+        "desc": "vos chances dinfliger un coup critique aux cibles blessées sont augmentées de . lorsque vous êtes en bonne santé, vous bénéficiez dune augmentation de la durée des effets de perte de contrôle de .",
         "snoId": 1105844
     },
     "daccélération": {
-        "desc": "Les coups critiques avec les compétences principales augmentent votre vitesse dattaque de pendant s.",
+        "desc": "les coups critiques avec les compétences principales augmentent votre vitesse dattaque de pendant s.",
         "snoId": 1105816
     },
     "dabus": {
-        "desc": "La durée des effets de perte de contrôle que vous infligez est augmentée de . Tant que les adversaires sont inarrêtables, vous leur infligez de dégâts supplémentaires.",
+        "desc": "la durée des effets de perte de contrôle que vous infligez est augmentée de . tant que les adversaires sont inarrêtables, vous leur infligez de dégâts supplémentaires.",
         "snoId": 1225582
     },
     "lâche": {
-        "desc": "Votre vitesse de déplacement est augmentée de lorsque vous vous éloignez de cibles ralenties ou glacées.",
+        "desc": "votre vitesse de déplacement est augmentée de lorsque vous vous éloignez de cibles ralenties ou glacées.",
         "snoId": 1437498
     },
     "daudace": {
-        "desc": "Lorsquil y a au moins adversaires à proximité, vous les étourdissez pendant s. Cet effet ne peut se produire quune fois toutes les s.",
+        "desc": "lorsquil y a au moins adversaires à proximité, vous les étourdissez pendant s. cet effet ne peut se produire quune fois toutes les s.",
         "snoId": 1438478
     },
     "des_éléments": {
-        "desc": "Augmente les dégâts infligés par un ensemble de types de dégâts de pendant s. Cet effet alterne entre deux ensembles feu, foudre et physiques froid, poison et ombre.",
+        "desc": "augmente les dégâts infligés par un ensemble de types de dégâts de pendant s. cet effet alterne entre deux ensembles feu, foudre et physiques froid, poison et ombre.",
         "snoId": 1485368
     },
     "de_carnage": {
-        "desc": "Vous obtenez de vitesse de déplacement. Ce bonus disparaît s après avoir subi des dégâts.",
+        "desc": "vous obtenez de vitesse de déplacement. ce bonus disparaît s après avoir subi des dégâts.",
         "snoId": 1602955
     },
     "des_morts_frénétiques": {
-        "desc": "Chaque fois quun de vos serviteurs invoqués blesse une cible, sa vitesse dattaque augmente de pendant s, jusquà un maximum de .",
+        "desc": "chaque fois quun de vos serviteurs invoqués blesse une cible, sa vitesse dattaque augmente de pendant s, jusquà un maximum de .",
         "snoId": 1106475
     },
     "de_déchiquetage": {
-        "desc": "Lorsque Décomposition génère un cadavre, vous gagnez points dessence.",
+        "desc": "lorsque décomposition génère un cadavre, vous gagnez points dessence.",
         "snoId": 1106485
     },
     "fracturant": {
-        "desc": "Lattaque principale de Lance dos rend vulnérables les cibles touchées après la première cible pendant s. Les éclats osseux de Lance dos infligent de dégâts supplémentaires aux adversaires vulnérables et les transpercent.",
+        "desc": "lattaque principale de lance dos rend vulnérables les cibles touchées après la première cible pendant s. les éclats osseux de lance dos infligent de dégâts supplémentaires aux adversaires vulnérables et les transpercent.",
         "snoId": 1106590
     },
     "des_ténèbres_descendantes": {
-        "desc": "Prison dos crée un bassin de chancre qui inflige de dégâts supplémentaires en s.",
+        "desc": "prison dos crée un bassin de chancre qui inflige de dégâts supplémentaires en s.",
         "snoId": 1106635
     },
     "du_vide": {
-        "desc": "Une fois générée, la zone souillée du chancre attire les adversaires proches.",
+        "desc": "une fois générée, la zone souillée du chancre attire les adversaires proches.",
         "snoId": 1106639
     },
     "putréfié": {
-        "desc": "Décomposition peut atteindre jusquà cibles supplémentaires. Lorsque Décomposition génère un cadavre, vous avez de chances de générer un cadavre avec chaque cible affligée.",
+        "desc": "décomposition peut atteindre jusquà cibles supplémentaires. lorsque décomposition génère un cadavre, vous avez de chances de générer un cadavre avec chaque cible affligée.",
         "snoId": 1106650
     },
     "de_la_faucheuse_libératrice": {
-        "desc": "Lorsque vous infligez des dégâts avec Section, vous avez de chances de créer une flaque de chancre sous la cible, ce qui inflige de dégâts supplémentaires. Cet effet ne peut se produire quune fois toutes les s.",
+        "desc": "lorsque vous infligez des dégâts avec section, vous avez de chances de créer une flaque de chancre sous la cible, ce qui inflige de dégâts supplémentaires. cet effet ne peut se produire quune fois toutes les s.",
         "snoId": 1106675
     },
     "du_portefroid": {
-        "desc": "Toutes les s, vos mages squelettes lancent un blizzard qui inflige points de dégâts de froid et qui glace en continu les adversaires à hauteur de en s.",
+        "desc": "toutes les s, vos mages squelettes lancent un blizzard qui inflige points de dégâts de froid et qui glace en continu les adversaires à hauteur de en s.",
         "snoId": 1106690
     },
     "du_traqueur_de_sang": {
-        "desc": "Prélèvement inflige de dégâts supplémentaires à sa cible principale par cible empalée.",
+        "desc": "prélèvement inflige de dégâts supplémentaires à sa cible principale par cible empalée.",
         "snoId": 1106117
     },
     "de_sang_insatiable": {
-        "desc": "Chaque fois que Prélèvement touche en premier une cible déjà atteinte par cette compétence, déclenche un nouveau Prélèvement infligeant des dégâts normaux à un personnage ennemi à proximité.",
+        "desc": "chaque fois que prélèvement touche en premier une cible déjà atteinte par cette compétence, déclenche un nouveau prélèvement infligeant des dégâts normaux à un personnage ennemi à proximité.",
         "snoId": 1106130
     },
     "de_domination_occulte": {
-        "desc": "Votre nombre maximum de mages squelettes est augmenté de .",
+        "desc": "votre nombre maximum de mages squelettes est augmenté de .",
         "snoId": 1106156
     },
     "de_bain_de_sang": {
-        "desc": "Brume de sang laisse un sol souillé sur son passage qui dure s et inflige points de dégâts dombre par seconde aux adversaires qui se tiennent dedans. Votre vitesse de déplacement nest plus réduite lorsque Brume de sang est active.",
+        "desc": "brume de sang laisse un sol souillé sur son passage qui dure s et inflige points de dégâts dombre par seconde aux adversaires qui se tiennent dedans. votre vitesse de déplacement nest plus réduite lorsque brume de sang est active.",
         "snoId": 1106163
     },
     "de_la_malédiction_grandissante": {
-        "desc": "Esprit dos inflige des dégâts supplémentaires en fonction de la distance parcourue, jusquà un maximum de .",
+        "desc": "esprit dos inflige des dégâts supplémentaires en fonction de la distance parcourue, jusquà un maximum de .",
         "snoId": 1106206
     },
     "dexplosion_osseuse": {
-        "desc": "Lorsquun fragment de Prison dos est détruit ou expire, celuici inflige points de dégâts dans la zone autour de lui.",
+        "desc": "lorsquun fragment de prison dos est détruit ou expire, celuici inflige points de dégâts dans la zone autour de lui.",
         "snoId": 1106224
     },
     "de_commandement_inflexible": {
-        "desc": "Tant quArmée de morts est active, la vitesse dattaque de vos serviteurs est augmentée de et ils subissent de dégâts en moins.",
+        "desc": "tant quarmée de morts est active, la vitesse dattaque de vos serviteurs est augmentée de et ils subissent de dégâts en moins.",
         "snoId": 1106382
     },
     "de_la_tempête_protectrice": {
-        "desc": "Chaque fois que Tempête dos blesse une cible, vous obtenez une barrière équivalente à de vos points de vie de base pendant s.",
+        "desc": "chaque fois que tempête dos blesse une cible, vous obtenez une barrière équivalente à de vos points de vie de base pendant s.",
         "snoId": 1106392
     },
     "des_veines_rapaces": {
-        "desc": "Vos chances dinfliger un coup critique sont augmentées de pendant s lorsque vous lancez Vrilles nécrophages. Vous infligez de dégâts critiques supplémentaires aux cibles blessées par Vrilles nécrophages.",
+        "desc": "vos chances dinfliger un coup critique sont augmentées de pendant s lorsque vous lancez vrilles nécrophages. vous infligez de dégâts critiques supplémentaires aux cibles blessées par vrilles nécrophages.",
         "snoId": 1106529
     },
     "des_cherchesangs": {
-        "desc": "Votre nombre maximum de guerriers squelettes est augmenté de .",
+        "desc": "votre nombre maximum de guerriers squelettes est augmenté de .",
         "snoId": 1106545
     },
     "de_tourment": {
-        "desc": "Les coups critiques infligés avec des compétences dos augmentent votre régénération dessence de pendant s.",
+        "desc": "les coups critiques infligés avec des compétences dos augmentent votre régénération dessence de pendant s.",
         "snoId": 1224752
     },
     "de_dents_de_scie": {
-        "desc": "La compétence passive principale Essence ossifiée augmente aussi les dégâts critiques de vos compétences dos de par point dessence audessus de , jusquà un maximum de .",
+        "desc": "la compétence passive principale essence ossifiée augmente aussi les dégâts critiques de vos compétences dos de par point dessence audessus de , jusquà un maximum de .",
         "snoId": 1221425
     },
     "du_déluge_dos": {
-        "desc": "Tempête dos consomme jusquà cadavres pour augmenter sa durée jusquà un maximum de s.",
+        "desc": "tempête dos consomme jusquà cadavres pour augmenter sa durée jusquà un maximum de s.",
         "snoId": 1220407
     },
     "de_chair_mise_à_nu": {
-        "desc": "Coup de chance vous avez jusquà de chances de générer points dessence lorsque vous touchez une cible vulnérable.",
+        "desc": "coup de chance vous avez jusquà de chances de générer points dessence lorsque vous touchez une cible vulnérable.",
         "snoId": 1220423
     },
     "putrescent": {
-        "desc": "Vous infligez de dégâts supplémentaires pendant s après que la capacité passive principale Chancre dombre a blessé les adversaires fois.",
+        "desc": "vous infligez de dégâts supplémentaires pendant s après que la capacité passive principale chancre dombre a blessé les adversaires fois.",
         "snoId": 1220473
     },
     "tortionnaire": {
-        "desc": "Les cibles affectées par votre Vierge de fer ont de chances dêtre étourdies pendant s lorsquelles infligent des dégâts directs.",
+        "desc": "les cibles affectées par votre vierge de fer ont de chances dêtre étourdies pendant s lorsquelles infligent des dégâts directs.",
         "snoId": 1221466
     },
     "des_damnés": {
-        "desc": "Vos dégâts dombre sont augmentés de contre les cibles affectées à la fois par Décrépitude et Vierge de fer.",
+        "desc": "vos dégâts dombre sont augmentés de contre les cibles affectées à la fois par décrépitude et vierge de fer.",
         "snoId": 1221014
     },
     "de_flétrissure": {
-        "desc": "Chaque fois que la capacité passive principale Chancre dombre inflige des dégâts aux adversaires, elle augmente les dégâts du prochain Chancre dombre infligés dans les s de , cet effet pouvant se cumuler jusquà fois.",
+        "desc": "chaque fois que la capacité passive principale chancre dombre inflige des dégâts aux adversaires, elle augmente les dégâts du prochain chancre dombre infligés dans les s de , cet effet pouvant se cumuler jusquà fois.",
         "snoId": 1221533
     },
     "baigné_de_sang": {
-        "desc": "La nova dAfflux sanguin explose à nouveau après un bref instant, infligeant de dégâts en moins.",
+        "desc": "la nova dafflux sanguin explose à nouveau après un bref instant, infligeant de dégâts en moins.",
         "snoId": 1221658
     },
     "de_razdemarée": {
-        "desc": "Vague de sang projette deux vagues supplémentaires, chacune infligeant de dégâts de moins que la précédente.",
+        "desc": "vague de sang projette deux vagues supplémentaires, chacune infligeant de dégâts de moins que la précédente.",
         "snoId": 1223789
     },
     "dhémorragie": {
-        "desc": "Les orbes de sang réduisent le temps de recharge de votre compétence ultime de s.",
+        "desc": "les orbes de sang réduisent le temps de recharge de votre compétence ultime de s.",
         "snoId": 1221650
     },
     "des_élus_de_rathma": {
-        "desc": "Votre vitesse dattaque augmente de pendant s chaque fois que vos compétences de sang infligent des dégâts daccablement.",
+        "desc": "votre vitesse dattaque augmente de pendant s chaque fois que vos compétences de sang infligent des dégâts daccablement.",
         "snoId": 1221701
     },
     "de_mort_inopinée": {
-        "desc": "Chaque pour cent de votre maximum de points de vie que vous récupérez audelà de ajoute de dégâts daccablement à votre prochaine attaque accablante, jusquà un bonus maximum de .",
+        "desc": "chaque pour cent de votre maximum de points de vie que vous récupérez audelà de ajoute de dégâts daccablement à votre prochaine attaque accablante, jusquà un bonus maximum de .",
         "snoId": 1221706
     },
     "de_sang_toutpuissant": {
-        "desc": "Lorsque vous êtes en bonne santé, les orbes de sang octroient essences.",
+        "desc": "lorsque vous êtes en bonne santé, les orbes de sang octroient essences.",
         "snoId": 1221644
     },
     "massif": {
-        "desc": "Votre golem a de chances de réduire son temps de recharge actif de s et de chances de générer un cadavre chaque fois quil inflige des dégâts à une cible adverse avec son attaque normale.",
+        "desc": "votre golem a de chances de réduire son temps de recharge actif de s et de chances de générer un cadavre chaque fois quil inflige des dégâts à une cible adverse avec son attaque normale.",
         "snoId": 1222122
     },
     "dos_durcis": {
-        "desc": "La réduction des dégâts de vos serviteurs est augmentée de .",
+        "desc": "la réduction des dégâts de vos serviteurs est augmentée de .",
         "snoId": 1222591
     },
     "sacrificiel": {
-        "desc": "Vos bonus de Sacrifice sont augmentés de .",
+        "desc": "vos bonus de sacrifice sont augmentés de .",
         "snoId": 1222267
     },
     "de_requiem": {
-        "desc": "Votre maximum dessence est augmenté de points par serviteur actif.",
+        "desc": "votre maximum dessence est augmenté de points par serviteur actif.",
         "snoId": 1223238
     },
     "de_réanimation": {
-        "desc": "Tant quils sont en vie, vos serviteurs infligent des dégâts accrus, jusquà une augmentation maximale de après s.",
+        "desc": "tant quils sont en vie, vos serviteurs infligent des dégâts accrus, jusquà une augmentation maximale de après s.",
         "snoId": 1223322
     },
     "cadavérique": {
-        "desc": "Consommer un cadavre augmente les dégâts de votre prochaine compétence principale de , jusquà un maximum de .",
+        "desc": "consommer un cadavre augmente les dégâts de votre prochaine compétence principale de , jusquà un maximum de .",
         "snoId": 1222414
     },
     "dembaumement": {
-        "desc": "Consommer un cadavre a de chances de faire apparaître un orbe de sang.",
+        "desc": "consommer un cadavre a de chances de faire apparaître un orbe de sang.",
         "snoId": 1222471
     },
     "dombre_ultime": {
-        "desc": "Tempête dos et Vague de sang sont désormais également des compétences de ténèbres, infligent des dégâts dombre et bénéficient deffets supplémentaires Les cibles touchées par Tempête dos subissent points de dégâts dombre en s. Vague de sang laisse un sol souillé sur son passage, infligeant points de dégâts dombre en s.",
+        "desc": "tempête dos et vague de sang sont désormais également des compétences de ténèbres, infligent des dégâts dombre et bénéficient deffets supplémentaires les cibles touchées par tempête dos subissent points de dégâts dombre en s. vague de sang laisse un sol souillé sur son passage, infligeant points de dégâts dombre en s.",
         "snoId": 1106218
     },
     "de_brume_explosive": {
-        "desc": "Brume de sang déclenche Explosion macabre sur les cadavres proches. Lorsque Brume de sang fait exploser un cadavre, son temps de recharge est réduit de s.",
+        "desc": "brume de sang déclenche explosion macabre sur les cadavres proches. lorsque brume de sang fait exploser un cadavre, son temps de recharge est réduit de s.",
         "snoId": 1106610
     },
     "de_pointes_dhémorragie": {
-        "desc": "Lorsque vous lancez Prélèvement, vous consommez des orbes de sang afin dinvoquer également des lances depuis ces orbes. Chaque lance de sang additionnelle inflige des dégâts normaux et cible en priorité les cibles non empalées.",
+        "desc": "lorsque vous lancez prélèvement, vous consommez des orbes de sang afin dinvoquer également des lances depuis ces orbes. chaque lance de sang additionnelle inflige des dégâts normaux et cible en priorité les cibles non empalées.",
         "snoId": 1439750
     },
     "de_lombre_éternelle": {
-        "desc": "Coup de chance vos dégâts dombre sur la durée ont de chances de générer points dessence. Les dégâts de la compétence passive principale de Chancre dombre généreront toujours points dessence.",
+        "desc": "coup de chance vos dégâts dombre sur la durée ont de chances de générer points dessence. les dégâts de la compétence passive principale de chancre dombre généreront toujours points dessence.",
         "snoId": 1622848
     },
     "dimitation_dimprégnation": {
-        "desc": "Vos clones dombre reproduisent aussi les imprégnations appliquées à vos compétences. Lancer une compétence dimprégnation augmente les dégâts de votre clone dombre actif de pendant s.",
+        "desc": "vos clones dombre reproduisent aussi les imprégnations appliquées à vos compétences. lancer une compétence dimprégnation augmente les dégâts de votre clone dombre actif de pendant s.",
         "snoId": 1106666
     },
     "embrumé": {
-        "desc": "Vous obtenez une ombre de Sombre voile toutes les s tant que vous restez immobile. Chaque ombre de Sombre voile augmente votre réduction des dégâts de .",
+        "desc": "vous obtenez une ombre de sombre voile toutes les s tant que vous restez immobile. chaque ombre de sombre voile augmente votre réduction des dégâts de .",
         "snoId": 1106674
     },
     "de_fine_gâchette": {
-        "desc": "Chaque fois que Tir pénétrant blesse une cible, le tir se scinde en flèches supplémentaires partant de chaque côté. Ces flèches infligent des dégâts de base de Tir pénétrant et ne se scindent pas.",
+        "desc": "chaque fois que tir pénétrant blesse une cible, le tir se scinde en flèches supplémentaires partant de chaque côté. ces flèches infligent des dégâts de base de tir pénétrant et ne se scindent pas.",
         "snoId": 1106115
     },
     "de_cercle_de_lames": {
-        "desc": "Rafale blesse les adversaires dans un cercle autour de vous et inflige de dégâts supplémentaires.",
+        "desc": "rafale blesse les adversaires dans un cercle autour de vous et inflige de dégâts supplémentaires.",
         "snoId": 1106126
     },
     "dombres_volatiles": {
-        "desc": "Lorsquune ombre de Sombre voile devrait se dissiper, vous déclenchez autour de vous une explosion infligeant points de dégâts dombre à la place.",
+        "desc": "lorsquune ombre de sombre voile devrait se dissiper, vous déclenchez autour de vous une explosion infligeant points de dégâts dombre à la place.",
         "snoId": 1106158
     },
     "énergisant": {
-        "desc": "Lorsque vous infligez des dégâts à une élite avec une compétence de base, vous générez points dénergie.",
+        "desc": "lorsque vous infligez des dégâts à une élite avec une compétence de base, vous générez points dénergie.",
         "snoId": 1106168
     },
     "de_surprise": {
-        "desc": "Lorsque vous utilisez Esquive ou Pas de lombre, vous laissez derrière vous des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
+        "desc": "lorsque vous utilisez esquive ou pas de lombre, vous laissez derrière vous des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
         "snoId": 1106222
     },
     "de_la_crapule": {
-        "desc": "Chaussetrappe lance aussi des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
+        "desc": "chaussetrappe lance aussi des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
         "snoId": 1106238
     },
     "dimprégnations_instables": {
-        "desc": "Lorsque vous lancez une compétence dimprégnation, vous déclenchez une explosion autour de vous, ce qui applique les effets dimprégnation et inflige points de dégâts du même type.",
+        "desc": "lorsque vous lancez une compétence dimprégnation, vous déclenchez une explosion autour de vous, ce qui applique les effets dimprégnation et inflige points de dégâts du même type.",
         "snoId": 1106246
     },
     "de_la_danse_des_lames": {
-        "desc": "Après être revenues à vous, les Lames sournoises orbitent un court instant en infligeant des dégâts de retour de Lames sournoises par coup. En fonction de la distance à laquelle les lames sont revenues, les dégâts dorbite peuvent augmenter jusquà des dégâts de retour.",
+        "desc": "après être revenues à vous, les lames sournoises orbitent un court instant en infligeant des dégâts de retour de lames sournoises par coup. en fonction de la distance à laquelle les lames sont revenues, les dégâts dorbite peuvent augmenter jusquà des dégâts de retour.",
         "snoId": 1106259
     },
     "de_lalchimiste_toxique": {
-        "desc": "Coup de chance blesser une cible empoisonnée avec une compétence imprégnée dombre a jusquà de chances de générer une explosion toxique qui inflige points de dégâts de poison en s à la cible et aux adversaires à proximité.",
+        "desc": "coup de chance blesser une cible empoisonnée avec une compétence imprégnée dombre a jusquà de chances de générer une explosion toxique qui inflige points de dégâts de poison en s à la cible et aux adversaires à proximité.",
         "snoId": 1106283
     },
     "de_lalchimiste_glacial": {
-        "desc": "Coup de chance blesser une cible glacée ou gelée avec une compétence imprégnée dombre a jusquà de chances de déclencher une explosion infligeant points de dégâts de froid à la cible et aux adversaires à proximité, ce qui les glace à hauteur de .",
+        "desc": "coup de chance blesser une cible glacée ou gelée avec une compétence imprégnée dombre a jusquà de chances de déclencher une explosion infligeant points de dégâts de froid à la cible et aux adversaires à proximité, ce qui les glace à hauteur de .",
         "snoId": 1106291
     },
     "du_trancheur_dombre": {
-        "desc": "Lorsque vous utilisez Célérité, un Clone dombre est généré à votre position et celuici utilise aussi Célérité, infligeant des dégâts de base.",
+        "desc": "lorsque vous utilisez célérité, un clone dombre est généré à votre position et celuici utilise aussi célérité, infligeant des dégâts de base.",
         "snoId": 1106314
     },
     "de_pluie_de_flèches": {
-        "desc": "Coup de chance vos compétences de tir délite ont jusquà de chances de créer une pluie de flèches sur la position de ladversaire, infligeant points de dégâts physiques en s. Vous pouvez avoir jusquà pluies de flèches actives en même temps.",
+        "desc": "coup de chance vos compétences de tir délite ont jusquà de chances de créer une pluie de flèches sur la position de ladversaire, infligeant points de dégâts physiques en s. vous pouvez avoir jusquà pluies de flèches actives en même temps.",
         "snoId": 1106339
     },
     "de_venin_bouillonnant": {
-        "desc": "Coup de chance les compétences imprégnées de poison ont jusquà de chances de créer une flaque toxique, qui inflige points de dégâts de poison en s aux cibles qui se tiennent dedans. Tant que vous restez dans la flaque, votre Imprégnation de poison na aucun temps de recharge ni aucune limite de charges.",
+        "desc": "coup de chance les compétences imprégnées de poison ont jusquà de chances de créer une flaque toxique, qui inflige points de dégâts de poison en s aux cibles qui se tiennent dedans. tant que vous restez dans la flaque, votre imprégnation de poison na aucun temps de recharge ni aucune limite de charges.",
         "snoId": 1106355
     },
     "de_dispersion": {
-        "desc": "Les flèches de Déluge ont de chances de se diviser en flèches chaque fois quelles ricochent.",
+        "desc": "les flèches de déluge ont de chances de se diviser en flèches chaque fois quelles ricochent.",
         "snoId": 1208170
     },
     "de_piège_explosif": {
-        "desc": "Coup de chance en infligeant des dégâts directs aux cibles affectées par vos compétences de piège, vous avez jusquà de chances de les rendre vulnérables pendant s.",
+        "desc": "coup de chance en infligeant des dégâts directs aux cibles affectées par vos compétences de piège, vous avez jusquà de chances de les rendre vulnérables pendant s.",
         "snoId": 1186573
     },
     "de_verve_explosive": {
-        "desc": "Vos compétences de grenade comptent comme des compétences de piège. Chaque fois que vous armez un piège ou que vous lâchez des grenades, votre vitesse de déplacement augmente de pendant s.",
+        "desc": "vos compétences de grenade comptent comme des compétences de piège. chaque fois que vous armez un piège ou que vous lâchez des grenades, votre vitesse de déplacement augmente de pendant s.",
         "snoId": 1218947
     },
     "de_traîtrise_inouïe": {
-        "desc": "Infliger des dégâts directs à une cible hébétée avec une compétence dagilité octroie un camouflage de s. Sortir du camouflage en attaquant vous octroie de réduction de la durée des effets de perte de contrôle pendant s.",
+        "desc": "infliger des dégâts directs à une cible hébétée avec une compétence dagilité octroie un camouflage de s. sortir du camouflage en attaquant vous octroie de réduction de la durée des effets de perte de contrôle pendant s.",
         "snoId": 1184417
     },
     "de_subsistance_cruelle": {
-        "desc": "Les explosions de la compétence passive principale Victimisation vous rendent points de vie pour chaque cible blessée, jusquà un maximum de points de vie.",
+        "desc": "les explosions de la compétence passive principale victimisation vous rendent points de vie pour chaque cible blessée, jusquà un maximum de points de vie.",
         "snoId": 1184011
     },
     "vengeur": {
-        "desc": "Coup de chance lorsque vous rendez une cible vulnérable, vous avez jusquà de chances daugmenter les chances dinfliger un coup critique de pendant s, jusquà un maximum de .",
+        "desc": "coup de chance lorsque vous rendez une cible vulnérable, vous avez jusquà de chances daugmenter les chances dinfliger un coup critique de pendant s, jusquà un maximum de .",
         "snoId": 1184524
     },
     "vorace": {
-        "desc": "Tuer une cible vulnérable augmente votre régénération dénergie de pendant s.",
+        "desc": "tuer une cible vulnérable augmente votre régénération dénergie de pendant s.",
         "snoId": 1184468
     },
     "de_maître_de_lévasion": {
-        "desc": "Lorsque vous subissez des dégâts de la part dadversaires proches, vous lâchez une bombe fumigène et esquivez les prochaines attaques dans les s qui suivent. Cet effet ne peut se produire quune fois toutes les s.",
+        "desc": "lorsque vous subissez des dégâts de la part dadversaires proches, vous lâchez une bombe fumigène et esquivez les prochaines attaques dans les s qui suivent. cet effet ne peut se produire quune fois toutes les s.",
         "snoId": 1185975
     },
     "de_vigueur_dérobée": {
-        "desc": "Chaque cumul de la compétence passive principale Inertie vous rend points de vie par seconde.",
+        "desc": "chaque cumul de la compétence passive principale inertie vous rend points de vie par seconde.",
         "snoId": 1186855
     },
     "de_lopportuniste": {
-        "desc": "Lorsque vous sortez de Camouflage en attaquant, vous lâchez des grenades étourdissantes autour de vous qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
+        "desc": "lorsque vous sortez de camouflage en attaquant, vous lâchez des grenades étourdissantes autour de vous qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s.",
         "snoId": 1189296
     },
     "de_la_brume_vivace": {
-        "desc": "Vous lâchez automatiquement une bombe fumigène à la fin de Célérité. Les bombes fumigènes réduisent le temps de recharge de Célérité de s par cible atteinte, jusquà un maximum de s.",
+        "desc": "vous lâchez automatiquement une bombe fumigène à la fin de célérité. les bombes fumigènes réduisent le temps de recharge de célérité de s par cible atteinte, jusquà un maximum de s.",
         "snoId": 1187878
     },
     "de_tromperie": {
-        "desc": "Vous subissez de dégâts en moins de la part des cibles subissant une perte de contrôle. Chaque fois quune cible subissant une perte de contrôle vous inflige des dégâts directs, votre vitesse de déplacement est augmentée de pendant s.",
+        "desc": "vous subissez de dégâts en moins de la part des cibles subissant une perte de contrôle. chaque fois quune cible subissant une perte de contrôle vous inflige des dégâts directs, votre vitesse de déplacement est augmentée de pendant s.",
         "snoId": 1186373
     },
     "de_vivres_siphonnées": {
-        "desc": "Coup de chance en infligeant des dégâts directs aux cibles vulnérables avec une compétence principale, cellesci ont jusquà de faire apparaître une potion de soins.",
+        "desc": "coup de chance en infligeant des dégâts directs aux cibles vulnérables avec une compétence principale, cellesci ont jusquà de faire apparaître une potion de soins.",
         "snoId": 1186377
     },
     "de_corruption": {
-        "desc": "Les effets des compétences dimprégnation sont plus puissants contre les adversaires vulnérables.",
+        "desc": "les effets des compétences dimprégnation sont plus puissants contre les adversaires vulnérables.",
         "snoId": 1186379
     },
     "de_mutilation": {
-        "desc": "Coup de chance en infligeant des dégâts directs à une cible vulnérable, vous avez jusquà de chances de lhébéter pendant s.",
+        "desc": "coup de chance en infligeant des dégâts directs à une cible vulnérable, vous avez jusquà de chances de lhébéter pendant s.",
         "snoId": 1186692
     },
     "ombreux": {
-        "desc": "Coup de chance les coups critiques infligés avec des compétences de tir délite ont jusquà de chances de générer gratuitement une ombre de Sombre voile.",
+        "desc": "coup de chance les coups critiques infligés avec des compétences de tir délite ont jusquà de chances de générer gratuitement une ombre de sombre voile.",
         "snoId": 1220101
     },
     "de_glace_toxique": {
-        "desc": "Les adversaires glacés empoisonnés par imprégnation de poison sont à nouveau glacés de par seconde. Vous infligez de dégâts de poison supplémentaires aux adversaires gelés.",
+        "desc": "les adversaires glacés empoisonnés par imprégnation de poison sont à nouveau glacés de par seconde. vous infligez de dégâts de poison supplémentaires aux adversaires gelés.",
         "snoId": 1302490
     },
     "de_ravage": {
-        "desc": "Pas de lombre obtient une charge supplémentaire. Faire une victime avec Pas de lombre rend une charge et augmente les dégâts de Pas de lombre de pendant s, jusquà un maximum de .",
+        "desc": "pas de lombre obtient une charge supplémentaire. faire une victime avec pas de lombre rend une charge et augmente les dégâts de pas de lombre de pendant s, jusquà un maximum de .",
         "snoId": 1304553
     },
     "de_synergie": {
-        "desc": "Utiliser une compétence dagilité réduit le temps de recharge de votre prochaine compétence de subterfuge de . Utiliser une compétence de subterfuge augmente les dégâts de votre prochaine compétence dagilité de .",
+        "desc": "utiliser une compétence dagilité réduit le temps de recharge de votre prochaine compétence de subterfuge de . utiliser une compétence de subterfuge augmente les dégâts de votre prochaine compétence dagilité de .",
         "snoId": 1301737
     },
     "de_soir_funeste": {
-        "desc": "Effectuer une esquive en traversant une cible affectée par imprégnation dombre octroie un camouflage de s. Sortir du camouflage en attaquant augmente votre maximum de points de vie par victime de pendant s.",
+        "desc": "effectuer une esquive en traversant une cible affectée par imprégnation dombre octroie un camouflage de s. sortir du camouflage en attaquant augmente votre maximum de points de vie par victime de pendant s.",
         "snoId": 1301760
     },
     "de_menace_insaisissable": {
-        "desc": "Quand les deux bonus de la compétence passive principale Corps à corps sont actifs, vos chances desquiver augmentent de chaque fois quun adversaire vous touche. Réussir une esquive réinitialise ce bonus.",
+        "desc": "quand les deux bonus de la compétence passive principale corps à corps sont actifs, vos chances desquiver augmentent de chaque fois quun adversaire vous touche. réussir une esquive réinitialise ce bonus.",
         "snoId": 1304680
     },
     "dinfiltration": {
-        "desc": "Piège de poison ne dissipe plus le camouflage et ne déclenche pas de temps de recharge ou darmement pendant le camouflage. Tous les pièges de poison sactivent quand vous quittez le camouflage et le temps de recharge des pièges de poison sera de s par piège placé.",
+        "desc": "piège de poison ne dissipe plus le camouflage et ne déclenche pas de temps de recharge ou darmement pendant le camouflage. tous les pièges de poison sactivent quand vous quittez le camouflage et le temps de recharge des pièges de poison sera de s par piège placé.",
         "snoId": 1304821
     },
     "dengelure": {
-        "desc": "Les adversaires glacés touchés par vos compétences de grenade ont le double de vos chances de coup critique dêtre instantanément gelés pendant s. Vous infligez de dégâts critiques supplémentaires aux adversaires gelés.",
+        "desc": "les adversaires glacés touchés par vos compétences de grenade ont le double de vos chances de coup critique dêtre instantanément gelés pendant s. vous infligez de dégâts critiques supplémentaires aux adversaires gelés.",
         "snoId": 1302633
     },
     "à_répétition": {
-        "desc": "Tir rapide a de chances de ricocher sur une deuxième cible.",
+        "desc": "tir rapide a de chances de ricocher sur une deuxième cible.",
         "snoId": 1206102
     },
     "figé": {
-        "desc": "Chaque adversaire glacé ou gelé que vous esquivez en le traversant vous octroie une barrière qui absorbe points de dégâts pendant s, jusquà un maximum de points de dégâts.",
+        "desc": "chaque adversaire glacé ou gelé que vous esquivez en le traversant vous octroie une barrière qui absorbe points de dégâts pendant s, jusquà un maximum de points de dégâts.",
         "snoId": 1219217
     },
     "de_poinçons_pestilentiels": {
-        "desc": "La e utilisation daffilée de Perforation est imprégnée de poison à hauteur de de la puissance normale.",
+        "desc": "la e utilisation daffilée de perforation est imprégnée de poison à hauteur de de la puissance normale.",
         "snoId": 1439745
     },
     "dinitiative_astucieuse": {
-        "desc": "Quand vous consommez points dénergie, vous lancez des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s. Vos compétences lançant des grenades infligent de dégâts supplémentaires.",
+        "desc": "quand vous consommez points dénergie, vous lancez des grenades étourdissantes qui explosent en infligeant un total de points de dégâts physiques et étourdissent les adversaires pendant s. vos compétences lançant des grenades infligent de dégâts supplémentaires.",
         "snoId": 1620632
     },
     "de_braises_entravantes": {
-        "desc": "Bouclier de feu vous permet de vous mouvoir librement parmi les adversaires. Les cibles que vous traversez alors que Bouclier de feu est actif sont immobilisées pendant s.",
+        "desc": "bouclier de feu vous permet de vous mouvoir librement parmi les adversaires. les cibles que vous traversez alors que bouclier de feu est actif sont immobilisées pendant s.",
         "snoId": 1106399
     },
     "du_gardeneige": {
-        "desc": "Tant que vous êtes dans votre Blizzard et pendant s après avoir quitté sa zone deffet, vous subissez de dégâts en moins.",
+        "desc": "tant que vous êtes dans votre blizzard et pendant s après avoir quitté sa zone deffet, vous subissez de dégâts en moins.",
         "snoId": 1106418
     },
     "des_trois_sortilèges": {
-        "desc": "Augmente les dégâts critiques de Météore et Boule de feu de . Ce bonus est doublé contre les cibles en bonne santé.",
+        "desc": "augmente les dégâts critiques de météore et boule de feu de . ce bonus est doublé contre les cibles en bonne santé.",
         "snoId": 1106440
     },
     "de_courant_perçant": {
-        "desc": "Décharge électrique transperce vos adversaires, mais inflige de dégâts en moins après la première cible.",
+        "desc": "décharge électrique transperce vos adversaires, mais inflige de dégâts en moins après la première cible.",
         "snoId": 1106489
     },
     "de_lassaut_de_givre": {
-        "desc": "Nova de givre obtient une charge supplémentaire, mais chaque temps de recharge est augmenté de .",
+        "desc": "nova de givre obtient une charge supplémentaire, mais chaque temps de recharge est augmenté de .",
         "snoId": 1106548
     },
     "chargé": {
-        "desc": "Ramassez de lénergie crépitante pour augmenter votre vitesse de déplacement de pendant s.",
+        "desc": "ramassez de lénergie crépitante pour augmenter votre vitesse de déplacement de pendant s.",
         "snoId": 1106644
     },
     "(ph)_of_ensnaring_current": {
-        "desc": "Sphère foudroyante attire les adversaires sur son chemin.",
+        "desc": "sphère foudroyante attire les adversaires sur son chemin.",
         "snoId": 1106717
     },
     "dorbite_gelée": {
-        "desc": "Orbe gelé reste sur place une fois sa destination atteinte et explose fois supplémentaires en infligeant de ses dégâts.",
+        "desc": "orbe gelé reste sur place une fois sa destination atteinte et explose fois supplémentaires en infligeant de ses dégâts.",
         "snoId": 1106733
     },
     "du_serpent": {
-        "desc": "Augmente de le nombre dhydres actives et leur durée de .",
+        "desc": "augmente de le nombre dhydres actives et leur durée de .",
         "snoId": 1106123
     },
     "darmageddon": {
-        "desc": "Une pluie de météorites tombe pendant Inferno, infligeant points de dégâts de feu à limpact. Vos météorites immobilisent les adversaires pendant s.",
+        "desc": "une pluie de météorites tombe pendant inferno, infligeant points de dégâts de feu à limpact. vos météorites immobilisent les adversaires pendant s.",
         "snoId": 1106174
     },
     "de_conflagration": {
-        "desc": "Pendant la canalisation dIncinération, vos dégâts de brûlure sont augmentés de .",
+        "desc": "pendant la canalisation dincinération, vos dégâts de brûlure sont augmentés de .",
         "snoId": 1212473
     },
     "de_la_flamme_antique": {
-        "desc": "Tant que les deux bonus de la compétence passive principale de Férocité dEsu sont actifs, votre vitesse dattaque est augmentée de .",
+        "desc": "tant que les deux bonus de la compétence passive principale de férocité desu sont actifs, votre vitesse dattaque est augmentée de .",
         "snoId": 1212492
     },
     "du_brasier_ardent": {
-        "desc": "Vous infligez de dégâts de brûlure supplémentaires aux adversaires disposant de moins de de points de vie. Lorsque les cibles sont affectées par plus de dégâts sur la durée que leur maximum de points de vie, vous leur infligez de dégâts de brûlure supplémentaires.",
+        "desc": "vous infligez de dégâts de brûlure supplémentaires aux adversaires disposant de moins de de points de vie. lorsque les cibles sont affectées par plus de dégâts sur la durée que leur maximum de points de vie, vous leur infligez de dégâts de brûlure supplémentaires.",
         "snoId": 1212468
     },
     "incendiaire": {
-        "desc": "Coup de chance les dégâts de vos compétences de pyromancie ont jusquà de chances de restaurer points de mana.",
+        "desc": "coup de chance les dégâts de vos compétences de pyromancie ont jusquà de chances de restaurer points de mana.",
         "snoId": 1212482
     },
     "dextrémités_roussies": {
-        "desc": "Une fois que leffet dimmobilisation se dissipe, les cibles sont ralenties de pendant s.",
+        "desc": "une fois que leffet dimmobilisation se dissipe, les cibles sont ralenties de pendant s.",
         "snoId": 1213811
     },
     "du_marcheflammes": {
-        "desc": "Entrer en contact avec votre Mur de feu augmente votre vitesse de déplacement de pendant s.",
+        "desc": "entrer en contact avec votre mur de feu augmente votre vitesse de déplacement de pendant s.",
         "snoId": 1214264
     },
     "détoiles_brisées": {
-        "desc": "Des météorites sabattent autour du météore en infligeant points de dégâts de feu à limpact. De plus, vos météorites brûlent les cibles quelles frappent et leur infligent points de dégâts en s.",
+        "desc": "des météorites sabattent autour du météore en infligeant points de dégâts de feu à limpact. de plus, vos météorites brûlent les cibles quelles frappent et leur infligent points de dégâts en s.",
         "snoId": 1212514
     },
     "glacial": {
-        "desc": "Lorsque vous lancez Blizzard, celuici génère périodiquement des pointes de glace explosives qui infligent points de dégâts. Vos pointes de glace infligent de dégâts supplémentaires aux cibles gelées.",
+        "desc": "lorsque vous lancez blizzard, celuici génère périodiquement des pointes de glace explosives qui infligent points de dégâts. vos pointes de glace infligent de dégâts supplémentaires aux cibles gelées.",
         "snoId": 1212317
     },
     "du_voile_de_neige": {
-        "desc": "Lancer Armure de glace vous rend inarrêtable et vous octroie de bonus darmure pendant s.",
+        "desc": "lancer armure de glace vous rend inarrêtable et vous octroie de bonus darmure pendant s.",
         "snoId": 1211282
     },
     "du_sillage_glacial": {
-        "desc": "LorsquArmure de glace est active, vous laissez des pointes de glace dans votre sillage qui infligent points de dégâts de froid. Vos pointes de glace glacent les adversaires à hauteur de .",
+        "desc": "lorsquarmure de glace est active, vous laissez des pointes de glace dans votre sillage qui infligent points de dégâts de froid. vos pointes de glace glacent les adversaires à hauteur de .",
         "snoId": 1212315
     },
     "de_froid_pénétrant": {
-        "desc": "Les Éclats de glace perforent fois les adversaires, en infligeant de dégâts en moins à chaque cible touchée suivant la première.",
+        "desc": "les éclats de glace perforent fois les adversaires, en infligeant de dégâts en moins à chaque cible touchée suivant la première.",
         "snoId": 1212505
     },
     "verglacé": {
-        "desc": "Tant que Froid intense est actif, vous récupérez de votre maximum de vie et de mana par seconde.",
+        "desc": "tant que froid intense est actif, vous récupérez de votre maximum de vie et de mana par seconde.",
         "snoId": 1212496
     },
     "de_réussite": {
-        "desc": "Vos chances dobtenir un coup de chance sont augmentées de tant que vous avez une barrière active.",
+        "desc": "vos chances dobtenir un coup de chance sont augmentées de tant que vous avez une barrière active.",
         "snoId": 1212461
     },
     "de_froid_mordant": {
-        "desc": "Lorsque vous gelez une cible, celleci a de chances de devenir vulnérable pendant s.",
+        "desc": "lorsque vous gelez une cible, celleci a de chances de devenir vulnérable pendant s.",
         "snoId": 1224522
     },
     "de_tempête_grondante": {
-        "desc": "Vous infligez de dégâts supplémentaires aux adversaires vulnérables tant que vous avez une barrière.",
+        "desc": "vous infligez de dégâts supplémentaires aux adversaires vulnérables tant que vous avez une barrière.",
         "snoId": 1224682
     },
     "de_la_toundra_glacée": {
-        "desc": "Tant que Froid intense est actif, des pointes de glace explosives se forment dans la zone et infligent points de dégâts de froid. Le rayon dexplosion de vos pointes de glace est augmenté de .",
+        "desc": "tant que froid intense est actif, des pointes de glace explosives se forment dans la zone et infligent points de dégâts de froid. le rayon dexplosion de vos pointes de glace est augmenté de .",
         "snoId": 1212280
     },
     "des_courants_accablants": {
-        "desc": "Courant instable a de chances de lancer une compétence de foudre supplémentaire.",
+        "desc": "courant instable a de chances de lancer une compétence de foudre supplémentaire.",
         "snoId": 1225182
     },
     "de_rechargement": {
-        "desc": "Chaque fois que Chaîne déclairs ricoche, vous gagnez points de mana.",
+        "desc": "chaque fois que chaîne déclairs ricoche, vous gagnez points de mana.",
         "snoId": 1225217
     },
     "de_gravité": {
-        "desc": "Sphère foudroyante tournoie autour de vous et inflige de dégâts supplémentaires.",
+        "desc": "sphère foudroyante tournoie autour de vous et inflige de dégâts supplémentaires.",
         "snoId": 1229700
     },
     "du_mage_seigneurial": {
-        "desc": "La compétence passive principale Maîtrise de Vyr vous octroie également de réduction des dégâts pour chaque adversaire à proximité, jusquà un maximum de .",
+        "desc": "la compétence passive principale maîtrise de vyr vous octroie également de réduction des dégâts pour chaque adversaire à proximité, jusquà un maximum de .",
         "snoId": 1227239
     },
     "des_esquilles_dénergie": {
-        "desc": "Lance de foudre a de chances de générer une Lance de foudre supplémentaire lorsque vous la lancez.",
+        "desc": "lance de foudre a de chances de générer une lance de foudre supplémentaire lorsque vous la lancez.",
         "snoId": 1225294
     },
     "du_lien_intact": {
-        "desc": "Chaîne déclairs a de chances de rebondir fois supplémentaires.",
+        "desc": "chaîne déclairs a de chances de rebondir fois supplémentaires.",
         "snoId": 1225297
     },
     "de_conduction_bondissante": {
-        "desc": "Votre vitesse de déplacement est augmentée de pendant s après avoir utilisé Téléportation.",
+        "desc": "votre vitesse de déplacement est augmentée de pendant s après avoir utilisé téléportation.",
         "snoId": 1229077
     },
     "de_stabilité": {
-        "desc": "Lorsque Courant instable est inactif, vos compétences de foudre ont de chances den déclencher un gratuitement.",
+        "desc": "lorsque courant instable est inactif, vos compétences de foudre ont de chances den déclencher un gratuitement.",
         "snoId": 1227269
     },
     "de_prodige": {
-        "desc": "Utiliser une compétence avec temps de recharge vous rend points de mana.",
+        "desc": "utiliser une compétence avec temps de recharge vous rend points de mana.",
         "snoId": 1214115
     },
     "de_linébranlable": {
-        "desc": "Lorsque vous subissez des dégâts directs, vous avez de chances de réinitialiser le temps de recharge dune de vos compétences défensives.",
+        "desc": "lorsque vous subissez des dégâts directs, vous avez de chances de réinitialiser le temps de recharge dune de vos compétences défensives.",
         "snoId": 1225190
     },
     "délémentaliste": {
-        "desc": "Les compétences principales ou de maîtrise lancées lorsque vous avez au moins points de mana ont de chances supplémentaires dinfliger un coup critique.",
+        "desc": "les compétences principales ou de maîtrise lancées lorsque vous avez au moins points de mana ont de chances supplémentaires dinfliger un coup critique.",
         "snoId": 1213532
     },
     "de_concentration": {
-        "desc": "Votre régénération de mana augmente de lorsque vous ne subissez pas de dégâts pendant s.",
+        "desc": "votre régénération de mana augmente de lorsque vous ne subissez pas de dégâts pendant s.",
         "snoId": 1215683
     },
     "de_contrôle": {
-        "desc": "Vous infligez de dégâts supplémentaires aux cibles immobilisées, étourdies ou gelées.",
+        "desc": "vous infligez de dégâts supplémentaires aux cibles immobilisées, étourdies ou gelées.",
         "snoId": 1215771
     },
     "perpétuel": {
-        "desc": "Vous subissez de dégâts en moins de la part des adversaires vulnérables ou subissant une perte de contrôle.",
+        "desc": "vous subissez de dégâts en moins de la part des adversaires vulnérables ou subissant une perte de contrôle.",
         "snoId": 1215398
     },
     "defficacité": {
-        "desc": "Lancer une compétence de base réduit le coût en mana de votre prochaine compétence principale ou de maîtrise de .",
+        "desc": "lancer une compétence de base réduit le coût en mana de votre prochaine compétence principale ou de maîtrise de .",
         "snoId": 1212247
     },
     "des_souvenirs_de_glace": {
-        "desc": "La compétence passive principale Avalanche sapplique désormais à lancers supplémentaires.",
+        "desc": "la compétence passive principale avalanche sapplique désormais à lancers supplémentaires.",
         "snoId": 1211551
     },
     "dabondance": {
-        "desc": "Lénergie crépitante a de chances de se propager à une cible supplémentaire.",
+        "desc": "lénergie crépitante a de chances de se propager à une cible supplémentaire.",
         "snoId": 1225569
     },
     "fracassant": {
-        "desc": "Les explosions de la compétence passive principale Fracas infligent de dégâts supplémentaires si les cibles meurent en étant gelées.",
+        "desc": "les explosions de la compétence passive principale fracas infligent de dégâts supplémentaires si les cibles meurent en étant gelées.",
         "snoId": 1211655
     },
     "de_protections_ardentes": {
-        "desc": "Après avoir dépensé points de mana, votre prochain Mur de feu est gratuit et détruit les petits projectiles.",
+        "desc": "après avoir dépensé points de mana, votre prochain mur de feu est gratuit et détruit les petits projectiles.",
         "snoId": 1439761
     },
     "de_sorcellerie_de_combat": {
-        "desc": "Coup de chance quand vos compétences de conjuration atteignent une cible, elles ont de chances dobtenir rangs pendant s. Cet effet peut se cumuler jusquà fois.",
+        "desc": "coup de chance quand vos compétences de conjuration atteignent une cible, elles ont de chances dobtenir rangs pendant s. cet effet peut se cumuler jusquà fois.",
         "snoId": 1622933
     }
 }

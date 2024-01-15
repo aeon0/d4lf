@@ -1,326 +1,326 @@
 {
     "zunehmender_mond": {
-        "desc": "Erhaltet Sek. lang Verstohlenheit, wenn Ihr Gegner mit Zerfetzen tötet. Wenn Ihr Verstohlenheit mit einem Angriff verlasst, erhaltet Ihr Hinterhalt, wodurch Sek. lang kritische Treffer garantiert sind.",
+        "desc": "erhaltet sek. lang verstohlenheit, wenn ihr gegner mit zerfetzen tötet. wenn ihr verstohlenheit mit einem angriff verlasst, erhaltet ihr hinterhalt, wodurch sek. lang kritische treffer garantiert sind.",
         "snoId": 1306218
     },
     "hackbeil_des_schlächters": {
-        "desc": "Glückstreffer Wenn Ihr einen Gegner kritisch trefft, habt Ihr eine Chance von bis zu , ihn Sek. lang mit Furcht zu erfüllen und um zu verlangsamen.",
+        "desc": "glückstreffer wenn ihr einen gegner kritisch trefft, habt ihr eine chance von bis zu , ihn sek. lang mit furcht zu erfüllen und um zu verlangsamen.",
         "snoId": 941704
     },
     "verstärkungsdolch": {
-        "desc": "This is a test item used for max level boosts.",
+        "desc": "this is a test item used for max level boosts.",
         "snoId": 941728
     },
     "verdammung": {
-        "desc": "Eure Kernfertigkeiten verursachen mehr Schaden, wenn Ihr Kombopunkte ausgebt. Eure Basisfertigkeiten mit dieser Waffe haben eine Chance von , Kombopunkte zu erzeugen.",
+        "desc": "eure kernfertigkeiten verursachen mehr schaden, wenn ihr kombopunkte ausgebt. eure basisfertigkeiten mit dieser waffe haben eine chance von , kombopunkte zu erzeugen.",
         "snoId": 941730
     },
     "asharas_khanjar": {
-        "desc": "Treffer mit dieser Waffe erhöhen Eure Angriffsgeschwindigkeit Sek. lang um , bis maximal .",
+        "desc": "treffer mit dieser waffe erhöhen eure angriffsgeschwindigkeit sek. lang um , bis maximal .",
         "snoId": 941731
     },
     "fleischwolf": {
-        "desc": "Schwächendes Gebrüll und Blutgeheul fügen vergifteten Gegnern in der Nähe Schaden zu, der sich pro Eurer Willenskraft um erhöht.",
+        "desc": "schwächendes gebrüll und blutgeheul fügen vergifteten gegnern in der nähe schaden zu, der sich pro eurer willenskraft um erhöht.",
         "snoId": 941798
     },
     "schwarzer_fluss": {
-        "desc": "Leichenexplosion verbraucht bis zu zusätzliche Leichen rund um die ursprüngliche Leiche und verursacht mehr Schaden mit größerem Radius pro zusätzlicher Leiche.",
+        "desc": "leichenexplosion verbraucht bis zu zusätzliche leichen rund um die ursprüngliche leiche und verursacht mehr schaden mit größerem radius pro zusätzlicher leiche.",
         "snoId": 1306235
     },
     "lidlose_wand": {
-        "desc": "Glückstreffer Verfügt Ihr über einen aktiven Knochensturm, besteht bei Treffern gegen Gegner außerhalb eines Knochensturms eine Chance von bis zu , dass an deren Position ein zusätzlicher Knochensturm entsteht. Jeder Eurer aktiven Opferboni erhöht diese Chance um und die maximale Anzahl an zusätzlichen Knochenstürmen, die Ihr haben könnt, um .",
+        "desc": "glückstreffer verfügt ihr über einen aktiven knochensturm, besteht bei treffern gegen gegner außerhalb eines knochensturms eine chance von bis zu , dass an deren position ein zusätzlicher knochensturm entsteht. jeder eurer aktiven opferboni erhöht diese chance um und die maximale anzahl an zusätzlichen knochenstürmen, die ihr haben könnt, um .",
         "snoId": 1439541
     },
     "ramaladnis_opus_magnum": {
-        "desc": "Fertigkeiten, die diese Waffe nutzen, verursachen mehr Schaden pro Wutpunkt, über den Ihr verfügt, allerdings verliert Ihr jede Sekunde Wut.",
+        "desc": "fertigkeiten, die diese waffe nutzen, verursachen mehr schaden pro wutpunkt, über den ihr verfügt, allerdings verliert ihr jede sekunde wut.",
         "snoId": 1304455
     },
     "blauzorn": {
-        "desc": "Glückstreffer Eure Kernfertigkeiten haben eine Chance von bis zu , Gegner Sek. lang einzufrieren und ihnen Kälteschaden zuzufügen.",
+        "desc": "glückstreffer eure kernfertigkeiten haben eine chance von bis zu , gegner sek. lang einzufrieren und ihnen kälteschaden zuzufügen.",
         "snoId": 1439438
     },
     "verhängnisbringer": {
-        "desc": "Glückstreffer Ihr habt eine Chance von bis zu , Gegnern in der Nähe Schattenschaden zuzufügen und ihren verursachten Schaden Sek. lang um zu verringern.",
+        "desc": "glückstreffer ihr habt eine chance von bis zu , gegnern in der nähe schattenschaden zuzufügen und ihren verursachten schaden sek. lang um zu verringern.",
         "snoId": 941869
     },
     "brandnarbe": {
-        "desc": "Während des Kanalisierens von Flammentod verschießt Ihr regelmäßig Glut, die von Gegnern angezogen wird und jeweils Feuerschaden verursacht.",
+        "desc": "während des kanalisierens von flammentod verschießt ihr regelmäßig glut, die von gegnern angezogen wird und jeweils feuerschaden verursacht.",
         "snoId": 1214791
     },
     "der_okulus": {
-        "desc": "Ihr erhaltet den Effekt der Verzauberung Teleportation kostenlos. Wenn Ihr Entrinnen mit der Verzauberung Teleportation einsetzt, landet Ihr an einem zufälligen Ort.",
+        "desc": "ihr erhaltet den effekt der verzauberung teleportation kostenlos. wenn ihr entrinnen mit der verzauberung teleportation einsetzt, landet ihr an einem zufälligen ort.",
         "snoId": 1439529
     },
     "zorn_der_urahnen": {
-        "desc": "Stahlgriff verschießt weitere Ketten. Von Stahlgriff getroffene Gegner erleiden für Sek. um erhöhten Schaden von Euch.",
+        "desc": "stahlgriff verschießt weitere ketten. von stahlgriff getroffene gegner erleiden für sek. um erhöhten schaden von euch.",
         "snoId": 941951
     },
     "himmelsjäger": {
-        "desc": "Der erste direkte Schaden, den Ihr einem Gegner zufügt, ist garantiert ein kritischer Treffer. Wenn Ihr beim Wirken einer Kernfertigkeit die maximalen Stapel der zentralen passiven Fertigkeit Präzision habt, verursacht diese Fertigkeit um erhöhten kritischen Trefferschaden und Ihr erhaltet Energie.",
+        "desc": "der erste direkte schaden, den ihr einem gegner zufügt, ist garantiert ein kritischer treffer. wenn ihr beim wirken einer kernfertigkeit die maximalen stapel der zentralen passiven fertigkeit präzision habt, verursacht diese fertigkeit um erhöhten kritischen trefferschaden und ihr erhaltet energie.",
         "snoId": 941972
     },
     "windmacht": {
-        "desc": "Glückstreffer Treffer mit dieser Waffe verfügen über eine Chance von bis zu , doppelten Schaden zu verursachen und das Ziel zurückzustoßen.",
+        "desc": "glückstreffer treffer mit dieser waffe verfügen über eine chance von bis zu , doppelten schaden zu verursachen und das ziel zurückzustoßen.",
         "snoId": 941973
     },
     "adlerhorn": {
-        "desc": "Durchschlagender Schuss verschießt mit einer Chance von einen Pfeil, der von Wänden und Landschaftsobjekten abprallt. Fügt Ihr Gegnern mit Durchschlagender Schuss Schaden zu, macht das nächste Wirken getroffene Gegner für Sek. verwundbar.",
+        "desc": "durchschlagender schuss verschießt mit einer chance von einen pfeil, der von wänden und landschaftsobjekten abprallt. fügt ihr gegnern mit durchschlagender schuss schaden zu, macht das nächste wirken getroffene gegner für sek. verwundbar.",
         "snoId": 1439537
     },
     "höllhammer": {
-        "desc": "Aufwühlen entzündet den Boden und verbrennt Gegner im Verlauf von Sek. für zusätzliche Schaden.",
+        "desc": "aufwühlen entzündet den boden und verbrennt gegner im verlauf von sek. für zusätzliche schaden.",
         "snoId": 942021
     },
     "auslöscher": {
-        "desc": "Todesstoß erzeugt eine Schockwelle, die Gegnern des Basisschadens zufügt. Gegner, die durch diesen Effekt sterben, schließen die Abklingzeit von Todesstoß ab.",
+        "desc": "todesstoß erzeugt eine schockwelle, die gegnern des basisschadens zufügt. gegner, die durch diesen effekt sterben, schließen die abklingzeit von todesstoß ab.",
         "snoId": 1222183
     },
     "verstärkungssense": {
-        "desc": "This is a test item used for max level boosts.",
+        "desc": "this is a test item used for max level boosts.",
         "snoId": 942068
     },
     "blutloser_schrei": {
-        "desc": "Eure Dunkelheitsfertigkeiten unterkühlen Gegner für bis zu und fügen eingefrorenen Gegnern um erhöhten Schaden zu. Glückstreffer Eure Dunkelheitsfertigkeiten haben eine Chance von bis zu , bei eingefrorenen Zielen zusätzliche Essenz zu erzeugen.",
+        "desc": "eure dunkelheitsfertigkeiten unterkühlen gegner für bis zu und fügen eingefrorenen gegnern um erhöhten schaden zu. glückstreffer eure dunkelheitsfertigkeiten haben eine chance von bis zu , bei eingefrorenen zielen zusätzliche essenz zu erzeugen.",
         "snoId": 1220207
     },
     "großstab_der_vettel": {
-        "desc": "Klaue ist jetzt eine Sturmfertigkeit und wirkt außerdem Sturmschlag, der des normalen Schadens verursacht.",
+        "desc": "klaue ist jetzt eine sturmfertigkeit und wirkt außerdem sturmschlag, der des normalen schadens verursacht.",
         "snoId": 942106
     },
-    "ahavarion,_stab_von_lycander": {
-        "desc": "Nach dem Töten eines Elitegegners erhaltet Ihr Sek. lang einen zufälligen Schreineffekt. Kann nur einmal alle Sek. auftreten.",
+    "ahavarion_stab_von_lycander": {
+        "desc": "nach dem töten eines elitegegners erhaltet ihr sek. lang einen zufälligen schreineffekt. kann nur einmal alle sek. auftreten.",
         "snoId": 942108
     },
     "stab_des_endlosen_zorns": {
-        "desc": "Jeder . Einsatz von Feuerball schleudert zusätzliche Geschosse und verursacht erhöhten Schaden.",
+        "desc": "jeder . einsatz von feuerball schleudert zusätzliche geschosse und verursacht erhöhten schaden.",
         "snoId": 942111
     },
     "stab_von_lam_esen": {
-        "desc": "Eure Comboblitze haben eine Chance von , von Gegnern angezogen zu werden, und halten länger an.",
+        "desc": "eure comboblitze haben eine chance von , von gegnern angezogen zu werden, und halten länger an.",
         "snoId": 1306310
     },
     "purpurne_felder": {
-        "desc": "Wenn Ihr diese Waffe verwendet und mindestens einem Gegner mit Blutspieß Schaden zufügt, entsteht eine Blutlache, die im Verlauf von Sek. Blutungsschaden verursacht. Gegner, die in der Lache stehen, erleiden höheren Blutungsschaden.",
+        "desc": "wenn ihr diese waffe verwendet und mindestens einem gegner mit blutspieß schaden zufügt, entsteht eine blutlache, die im verlauf von sek. blutungsschaden verursacht. gegner, die in der lache stehen, erleiden höheren blutungsschaden.",
         "snoId": 942134
     },
     "der_großvater": {
-        "desc": "Erhöht Euren kritischen Trefferschaden um . Bei den anderen Eigenschaften dieser Waffe können höhere Werte ausgewürfelt werden.",
+        "desc": "erhöht euren kritischen trefferschaden um . bei den anderen eigenschaften dieser waffe können höhere werte ausgewürfelt werden.",
         "snoId": 942135
     },
     "kampftrance": {
-        "desc": "Erhöht die maximalen Stapel von Raserei um . Solange Ihr maximale Raserei habt, haben Eure anderen Fertigkeiten mehr Angriffsgeschwindigkeit.",
+        "desc": "erhöht die maximalen stapel von raserei um . solange ihr maximale raserei habt, haben eure anderen fertigkeiten mehr angriffsgeschwindigkeit.",
         "snoId": 1304468
     },
     "dolmenstein": {
-        "desc": "Felsbrocken zu wirken, während Hurrikan aktiv ist, lässt Eure Felsbrocken um Euch herum rotieren.",
+        "desc": "felsbrocken zu wirken, während hurrikan aktiv ist, lässt eure felsbrocken um euch herum rotieren.",
         "snoId": 1610440
     },
     "geschmolzenes_herz_von_selig": {
-        "desc": "Euer Ressourcenmaximum ist um erhöht. Wenn Ihr Schaden erleidet, werden jeweils statt Leben Ressourcen entzogen.",
+        "desc": "euer ressourcenmaximum ist um erhöht. wenn ihr schaden erleidet, werden jeweils statt leben ressourcen entzogen.",
         "snoId": 1275933
     },
     "talisman_des_verbannten_fürsten": {
-        "desc": "Nachdem Ihr Eurer Primärressource ausgegeben habt, überwältigt Eure nächste Kernfertigkeit garantiert. Eure überwältigenden kritischen Treffer verursachen erhöhten Schaden.",
+        "desc": "nachdem ihr eurer primärressource ausgegeben habt, überwältigt eure nächste kernfertigkeit garantiert. eure überwältigenden kritischen treffer verursachen erhöhten schaden.",
         "snoId": 1561309
     },
     "anhänger_des_todessprechers": {
-        "desc": "Blutwoge löst bei Euren Dienern eine MiniNova aus, die Schaden verursacht. Der Schaden wird für jedes Ziel, das bei der ursprünglichen Wirkung getroffen wurde, um erhöht, bis maximal .",
+        "desc": "blutwoge löst bei euren dienern eine mininova aus, die schaden verursacht. der schaden wird für jedes ziel, das bei der ursprünglichen wirkung getroffen wurde, um erhöht, bis maximal .",
         "snoId": 1230484
     },
     "botschaft_hakans": {
-        "desc": "Euer Pfeilhagel ist immer mit allen Infusionen gleichzeitig erfüllt.",
+        "desc": "euer pfeilhagel ist immer mit allen infusionen gleichzeitig erfüllt.",
         "snoId": 1306258
     },
     "esadoras_überfließende_kamee": {
-        "desc": "Wenn Ihr Knisternde Energie sammelt, besteht eine Chance von , dass eine Blitznova entfesselt wird, die Blitzschaden verursacht, der sich pro Eurer Intelligenz um erhöht.",
+        "desc": "wenn ihr knisternde energie sammelt, besteht eine chance von , dass eine blitznova entfesselt wird, die blitzschaden verursacht, der sich pro eurer intelligenz um erhöht.",
         "snoId": 1225299
     },
     "100.000_schritte": {
-        "desc": "Nachdem Ihr den letzten Schadensbonus der zentralen passiven Fertigkeit Wandelndes Arsenal erhalten habt, wirkt Ihr automatisch Aufstampfen und erhaltet Wut. Dieser Effekt kann nur einmal alle Sek. auftreten.",
+        "desc": "nachdem ihr den letzten schadensbonus der zentralen passiven fertigkeit wandelndes arsenal erhalten habt, wirkt ihr automatisch aufstampfen und erhaltet wut. dieser effekt kann nur einmal alle sek. auftreten.",
         "snoId": 1210595
     },
     "beinschienen_der_reue": {
-        "desc": "Ihr hinterlasst eine Spur aus Frost, die Gegner unterkühlt. Ihr fügt unterkühlten Gegnern mehr Schaden zu.",
+        "desc": "ihr hinterlasst eine spur aus frost, die gegner unterkühlt. ihr fügt unterkühlten gegnern mehr schaden zu.",
         "snoId": 942251
     },
     "flickerschritt": {
-        "desc": "Jeder Gegner, durch den Ihr entrinnt, reduziert Eure aktive Abklingzeit um Sek., bis zu Sek.",
+        "desc": "jeder gegner, durch den ihr entrinnt, reduziert eure aktive abklingzeit um sek., bis zu sek.",
         "snoId": 942253
     },
     "beinschienen_der_leeren_gruft": {
-        "desc": "Eure Phantome von Schnitter hinterlassen auf ihrem Weg entweihten Boden, der Gegnern im Verlauf von Sek. Schattenschaden zufügt.",
+        "desc": "eure phantome von schnitter hinterlassen auf ihrem weg entweihten boden, der gegnern im verlauf von sek. schattenschaden zufügt.",
         "snoId": 1220257
     },
     "esus_erbstück": {
-        "desc": "Erhöht Eure kritische Trefferchance um Eures Bewegungsgeschwindigkeitsbonus.",
+        "desc": "erhöht eure kritische trefferchance um eures bewegungsgeschwindigkeitsbonus.",
         "snoId": 1306301
     },
     "zorn_von_harrogath": {
-        "desc": "Glückstreffer Ihr habt eine Chance von bis zu , die Abklingzeiten Eurer nichtultimativen Fertigkeiten um Sek. zu verringern, wenn Ihr bei Elitegegnern Blutung verursacht.",
+        "desc": "glückstreffer ihr habt eine chance von bis zu , die abklingzeiten eurer nichtultimativen fertigkeiten um sek. zu verringern, wenn ihr bei elitegegnern blutung verursacht.",
         "snoId": 1304379
     },
     "entzücken_des_wahnsinnigen_wolfes": {
-        "desc": "Die Werwolfgestalt ist jetzt Eure wahre Gestalt, und Ihr erhaltet Ränge für alle Werwolffertigkeiten.",
+        "desc": "die werwolfgestalt ist jetzt eure wahre gestalt, und ihr erhaltet ränge für alle werwolffertigkeiten.",
         "snoId": 942354
     },
     "unersättliche_wut": {
-        "desc": "Die Werbärgestalt ist jetzt Eure wahre Gestalt, und Ihr erhaltet Ränge für alle Werbärfertigkeiten.",
+        "desc": "die werbärgestalt ist jetzt eure wahre gestalt, und ihr erhaltet ränge für alle werbärfertigkeiten.",
         "snoId": 942355
     },
     "klingenplatte": {
-        "desc": "Erhaltet Dornen.",
+        "desc": "erhaltet dornen.",
         "snoId": 1215064
     },
     "seelenbrand": {
-        "desc": "Eure Heiltränke heilen nicht mehr sofort, sondern errichten Sek. lang eine Barriere mit der Stärke von der Heilung. Solange diese Barriere besteht, erhaltet Ihr eine Schadensreduktion von .",
+        "desc": "eure heiltränke heilen nicht mehr sofort, sondern errichten sek. lang eine barriere mit der stärke von der heilung. solange diese barriere besteht, erhaltet ihr eine schadensreduktion von .",
         "snoId": 1560873
     },
     "kürass_des_bluthandwerkers": {
-        "desc": "Wenn Ihr Blutkugeln aufhebt, erscheint ein zusätzlicher Knochengeist, der Bonusschaden auf Basis Eures aktuellen prozentualen Lebens verursacht.",
+        "desc": "wenn ihr blutkugeln aufhebt, erscheint ein zusätzlicher knochengeist, der bonusschaden auf basis eures aktuellen prozentualen lebens verursacht.",
         "snoId": 1306229
     },
     "leder_des_gauners": {
-        "desc": "Während Ihr durch Inneres Auge unbegrenzte Energie habt, besteht beim Wirken einer Kernfertigkeit eine Chance von , Krähenfüße, eine Giftfalle oder eine Todesfalle entstehen zu lassen.",
+        "desc": "während ihr durch inneres auge unbegrenzte energie habt, besteht beim wirken einer kernfertigkeit eine chance von , krähenfüße, eine giftfalle oder eine todesfalle entstehen zu lassen.",
         "snoId": 1612293
     },
     "gewand_des_unendlichen": {
-        "desc": "Nach dem Einsatz von Teleportation werden Gegner in der Nähe zu Euch herangezogen und Sek. lang betäubt, aber die Abklingzeit der Teleportation ist um erhöht.",
+        "desc": "nach dem einsatz von teleportation werden gegner in der nähe zu euch herangezogen und sek. lang betäubt, aber die abklingzeit der teleportation ist um erhöht.",
         "snoId": 942363
     },
     "gohrs_vernichtende_greifer": {
-        "desc": "Wirbelwind explodiert alle Sek. sowie bei Ablauf und fügt Gegnern in der Nähe des verursachten Basisschadens als Feuerschaden zu.",
+        "desc": "wirbelwind explodiert alle sek. sowie bei ablauf und fügt gegnern in der nähe des verursachten basisschadens als feuerschaden zu.",
         "snoId": 942555
     },
     "fäuste_des_schicksals": {
-        "desc": "Eure Angriffe verursachen zufällig zwischen und ihres normalen Schadens.",
+        "desc": "eure angriffe verursachen zufällig zwischen und ihres normalen schadens.",
         "snoId": 942559
     },
     "frostbrand": {
-        "desc": "Glückstreffer Es besteht eine Chance von bis zu , Gegner Sek. lang einzufrieren.",
+        "desc": "glückstreffer es besteht eine chance von bis zu , gegner sek. lang einzufrieren.",
         "snoId": 942560
     },
     "gebrüll_aus_den_tiefen": {
-        "desc": "Anstatt sofort zu explodieren, beschwört Leichenexplosion ein instabiles Skelett, das auf einen zufälligen Gegner zustürmt und explodiert. Der Schaden von Leichenexplosion ist um erhöht.",
+        "desc": "anstatt sofort zu explodieren, beschwört leichenexplosion ein instabiles skelett, das auf einen zufälligen gegner zustürmt und explodiert. der schaden von leichenexplosion ist um erhöht.",
         "snoId": 1227277
     },
     "schattenberührung": {
-        "desc": "Glückstreffer Wenn Ihr einem verwundbaren Gegner mit einer Präzisions oder Meuchelfertigkeit Schaden zufügt, besteht eine Chance von bis zu , einen Schattenklon zu beschwören, der Euren Angriff nachahmt.",
+        "desc": "glückstreffer wenn ihr einem verwundbaren gegner mit einer präzisions oder meuchelfertigkeit schaden zufügt, besteht eine chance von bis zu , einen schattenklon zu beschwören, der euren angriff nachahmt.",
         "snoId": 1306250
     },
     "handschuhe_des_erleuchters": {
-        "desc": "Feuerball prallt jetzt auf seinem Weg wiederholt vom Boden ab und explodiert dabei jedes Mal, allerdings verursacht die Explosion weniger Schaden.",
+        "desc": "feuerball prallt jetzt auf seinem weg wiederholt vom boden ab und explodiert dabei jedes mal, allerdings verursacht die explosion weniger schaden.",
         "snoId": 942564
     },
     "hauerhelm_von_joritz_dem_mächtigen": {
-        "desc": "Wenn Ihr in den Berserkermodus gelangt, obwohl Ihr bereits im Berserkermodus seid, habt Ihr eine Chance von , noch wütender zu werden, wodurch Ihr erhöhten Schaden, Wut pro Sek. und eine Abklingzeitreduktion von erhaltet.",
+        "desc": "wenn ihr in den berserkermodus gelangt, obwohl ihr bereits im berserkermodus seid, habt ihr eine chance von , noch wütender zu werden, wodurch ihr erhöhten schaden, wut pro sek. und eine abklingzeitreduktion von erhaltet.",
         "snoId": 1489567
     },
     "sturmgebrüll": {
-        "desc": "Glückstreffer Sturmfertigkeiten haben eine Chance von bis zu , Euch Geisteskraft zu verleihen. Eure Sturmfertigkeiten sind jetzt auch Werwolffertigkeiten.",
+        "desc": "glückstreffer sturmfertigkeiten haben eine chance von bis zu , euch geisteskraft zu verleihen. eure sturmfertigkeiten sind jetzt auch werwolffertigkeiten.",
         "snoId": 1304489
     },
     "vasilys_gebet": {
-        "desc": "Eure Erdfertigkeiten sind jetzt auch Werbärfertigkeiten und verleihen Euch Stählung.",
+        "desc": "eure erdfertigkeiten sind jetzt auch werbärfertigkeiten und verleihen euch stählung.",
         "snoId": 1306213
     },
     "andariels_antlitz": {
-        "desc": "Glückstreffer Es besteht eine Chance von bis zu , eine Giftnova auszulösen, die Gegnern im Wirkungsbereich im Verlauf von Sek. Giftschaden zufügt.",
+        "desc": "glückstreffer es besteht eine chance von bis zu , eine giftnova auszulösen, die gegnern im wirkungsbereich im verlauf von sek. giftschaden zufügt.",
         "snoId": 942663
     },
     "harlekinskrone": {
-        "desc": "Ihr erhaltet Schadensreduktion. Ihr erhaltet zusätzlich Ränge für alle Fertigkeiten.",
+        "desc": "ihr erhaltet schadensreduktion. ihr erhaltet zusätzlich ränge für alle fertigkeiten.",
         "snoId": 942664
     },
     "gottestöterkrone": {
-        "desc": "Wenn Ihr einen Elitegegner betäubt, einfriert oder bewegungsunfähig macht, oder Schaden gegen einen Boss verursacht, werden Gegner in der Nähe angezogen. Ihr verursacht Sek. lang um erhöhten Schaden an ihnen. Dieser Effekt kann nur einmal alle Sek. eintreten.",
+        "desc": "wenn ihr einen elitegegner betäubt, einfriert oder bewegungsunfähig macht, oder schaden gegen einen boss verursacht, werden gegner in der nähe angezogen. ihr verursacht sek. lang um erhöhten schaden an ihnen. dieser effekt kann nur einmal alle sek. eintreten.",
         "snoId": 1555196
     },
     "verstärkungskopfschutz": {
-        "desc": "This is a test item used for max level boosts.",
+        "desc": "this is a test item used for max level boosts.",
         "snoId": 942665
     },
     "unsterbliches_antlitz": {
-        "desc": "Knochenspeer hinterlässt auf seinem Weg Echos, die explodieren und Schaden verursachen, der sich pro Eures Bonus auf kritischen Trefferschaden um erhöht.",
+        "desc": "knochenspeer hinterlässt auf seinem weg echos, die explodieren und schaden verursachen, der sich pro eures bonus auf kritischen trefferschaden um erhöht.",
         "snoId": 1234672
     },
     "gugel_des_namenlosen": {
-        "desc": "Eure Glückstrefferchance gegen Gegner, die unter Kontrollverlusteffekten leiden, ist um erhöht.",
+        "desc": "eure glückstrefferchance gegen gegner, die unter kontrollverlusteffekten leiden, ist um erhöht.",
         "snoId": 942666
     },
     "sturmgefährte": {
-        "desc": "Eure Wolfgefährten sind von der Kraft des Sturms erfüllt, verursachen Blitzschaden und erhalten die Fertigkeit Sturmgeheul.",
+        "desc": "eure wolfgefährten sind von der kraft des sturms erfüllt, verursachen blitzschaden und erhalten die fertigkeit sturmgeheul.",
         "snoId": 942972
     },
     "verwegenheit": {
-        "desc": "Effekte, die Euch um mehr als Leben heilen, verleihen Euch eine Barriere von bis zu Eures maximalen Lebens, die Sek. lang anhält. Ihr könnt Tränke verwenden, wenn Euer Leben voll ist.",
+        "desc": "effekte, die euch um mehr als leben heilen, verleihen euch eine barriere von bis zu eures maximalen lebens, die sek. lang anhält. ihr könnt tränke verwenden, wenn euer leben voll ist.",
         "snoId": 1306325
     },
     "tassetten_des_morgenhimmels": {
-        "desc": "Wenn Ihr Schaden durch eine nichtphysische Schadensart erleidet, erhaltet Ihr Sek. lang max. Widerstand gegen diese Schadensart. Dieser Effekt kann nur für jeweils eine Schadensart wirken.",
+        "desc": "wenn ihr schaden durch eine nichtphysische schadensart erleidet, erhaltet ihr sek. lang max. widerstand gegen diese schadensart. dieser effekt kann nur für jeweils eine schadensart wirken.",
         "snoId": 1477079
     },
     "tibaults_wille": {
-        "desc": "Ihr verursacht erhöhten Schaden, solange Ihr unaufhaltsam seid und noch Sek. danach. Wenn Ihr unaufhaltsam werdet, erhaltet Ihr Eurer Primärressource.",
+        "desc": "ihr verursacht erhöhten schaden, solange ihr unaufhaltsam seid und noch sek. danach. wenn ihr unaufhaltsam werdet, erhaltet ihr eurer primärressource.",
         "snoId": 1559420
     },
     "verstärkungsbeinschutz": {
-        "desc": "This is a test item used for max level boosts.",
+        "desc": "this is a test item used for max level boosts.",
         "snoId": 942975
     },
     "blutmondbeinlinge": {
-        "desc": "Eure Diener haben eine Chance von , Gegner zu verfluchen. Gegner, die von mindestens Eurer Flüche betroffen sind, erleiden erhöhten Überwältigungsschaden von Euch.",
+        "desc": "eure diener haben eine chance von , gegner zu verfluchen. gegner, die von mindestens eurer flüche betroffen sind, erleiden erhöhten überwältigungsschaden von euch.",
         "snoId": 1217039
     },
     "augen_in_der_dunkelheit": {
-        "desc": "Todesfalle verursacht um erhöhten Schaden. Solange die Todesfalle keinen Boss oder Spieler trifft oder einen Gegner tötet, wird Todesfalle immer wieder scharf gemacht.",
+        "desc": "todesfalle verursacht um erhöhten schaden. solange die todesfalle keinen boss oder spieler trifft oder einen gegner tötet, wird todesfalle immer wieder scharf gemacht.",
         "snoId": 942977
     },
     "eisherzbruoch": {
-        "desc": "Gegner, die sterben, während sie eingefroren sind, haben eine Chance von , eine Frostnova zu entfesseln.",
+        "desc": "gegner, die sterben, während sie eingefroren sind, haben eine chance von , eine frostnova zu entfesseln.",
         "snoId": 1306273
     },
     "ring_des_roten_furors": {
-        "desc": "Nachdem Ihr Wut innerhalb von Sekunden verbraucht habt, trifft Euer nächster Einsatz von Hammer der Urahnen, Aufwühlen oder Todesstoß garantiert kritisch und verursacht kritischen Trefferschaden zusätzlich.",
+        "desc": "nachdem ihr wut innerhalb von sekunden verbraucht habt, trifft euer nächster einsatz von hammer der urahnen, aufwühlen oder todesstoß garantiert kritisch und verursacht kritischen trefferschaden zusätzlich.",
         "snoId": 1706603
     },
     "zenit_des_jägers": {
-        "desc": "Erhaltet einen Bonus, wenn Ihr mit einer Gestaltwandelfertigkeit tötet Werwolf Eure nächste nichtultimative Werbärfertigkeit kostet keine Ressourcen und hat keine Abklingzeit. Werbär Eure nächste Werwolffertigkeit verleiht Euch Heilung, wenn der erste Schaden verursacht wird.",
+        "desc": "erhaltet einen bonus, wenn ihr mit einer gestaltwandelfertigkeit tötet werwolf eure nächste nichtultimative werbärfertigkeit kostet keine ressourcen und hat keine abklingzeit. werbär eure nächste werwolffertigkeit verleiht euch heilung, wenn der erste schaden verursacht wird.",
         "snoId": 989677
     },
     "airidahs_unerbittlicher_wille": {
-        "desc": "Wirkt Ihr Sekunden, nachdem Ihr dies bereits zuvor getan habt, erneut eine ultimative Fertigkeit, zieht Ihr entfernte Gegner heran und fügt ihnen physischen Schaden zu. Dieser Schaden wird pro WillenskraftPunkt(e) um erhöht.",
+        "desc": "wirkt ihr sekunden, nachdem ihr dies bereits zuvor getan habt, erneut eine ultimative fertigkeit, zieht ihr entfernte gegner heran und fügt ihnen physischen schaden zu. dieser schaden wird pro willenskraftpunkt(e) um erhöht.",
         "snoId": 1706650
     },
     "umarmung_der_mutter": {
-        "desc": "Wenn eine Kernfertigkeit mindestens Gegner trifft, werden der Ressourcenkosten zurückerstattet.",
+        "desc": "wenn eine kernfertigkeit mindestens gegner trifft, werden der ressourcenkosten zurückerstattet.",
         "snoId": 1215133
     },
     "ring_der_sternenlosen_himmel": {
-        "desc": "Das Wirken einer Kernfertigkeit verringert die Ressourcenkosten Eurer Kernfertigkeiten um , bis maximal . Wird bei Verwendung von Fertigkeiten, die keine Kernfertigkeiten sind, zurückgesetzt.",
+        "desc": "das wirken einer kernfertigkeit verringert die ressourcenkosten eurer kernfertigkeiten um , bis maximal . wird bei verwendung von fertigkeiten, die keine kernfertigkeiten sind, zurückgesetzt.",
         "snoId": 1306337
     },
     "rostiger_siegelring_von_xfal": {
-        "desc": "Glückstreffer Eure Effekte, die Schaden über Zeit verursachen, haben eine Chance von , auszubrechen und Schaden derselben Art gegen nahe Gegner zu verursachen.",
+        "desc": "glückstreffer eure effekte, die schaden über zeit verursachen, haben eine chance von , auszubrechen und schaden derselben art gegen nahe gegner zu verursachen.",
         "snoId": 1559923
     },
     "mendelns_ring": {
-        "desc": "Glückstreffer Es besteht eine Chance von bis zu , all Eure Diener zu stärken, wodurch der nächste Angriff jedes Dieners explodiert und physischen Schaden verursacht.",
+        "desc": "glückstreffer es besteht eine chance von bis zu , all eure diener zu stärken, wodurch der nächste angriff jedes dieners explodiert und physischen schaden verursacht.",
         "snoId": 1222626
     },
     "ring_der_seele_des_sakrilegs": {
-        "desc": "Folgende ausgerüstete Fertigkeiten werden für Leichen in Eurer Umgebung automatisch aktiviert Skelett erwecken alle Sekunden. Leichenexplosion alle Sekunden. Leichenranken alle Sekunden.",
+        "desc": "folgende ausgerüstete fertigkeiten werden für leichen in eurer umgebung automatisch aktiviert skelett erwecken alle sekunden. leichenexplosion alle sekunden. leichenranken alle sekunden.",
         "snoId": 1706659
     },
     "windendes_band_der_irreführung": {
-        "desc": "Wirkt Ihr eine Täuschungsfertigkeit, hinterlasst Ihr eine Köderfalle, die Eure Gegner dauerhaft verspottet und anlockt. Die Köderfalle explodiert nach Sekunden und verursacht dabei Schattenschaden. Kann einmal alle auftreten.",
+        "desc": "wirkt ihr eine täuschungsfertigkeit, hinterlasst ihr eine köderfalle, die eure gegner dauerhaft verspottet und anlockt. die köderfalle explodiert nach sekunden und verursacht dabei schattenschaden. kann einmal alle auftreten.",
         "snoId": 1706657
     },
     "blaue_rose": {
-        "desc": "Glückstreffer Wird einem Gegner Schaden zugefügt, besteht eine Chance von bis zu , dass sich ein explodierender Eisstachel bildet, der Kälteschaden verursacht. Diese Chance verdreifacht sich, wenn der Gegner eingefroren ist.",
+        "desc": "glückstreffer wird einem gegner schaden zugefügt, besteht eine chance von bis zu , dass sich ein explodierender eisstachel bildet, der kälteschaden verursacht. diese chance verdreifacht sich, wenn der gegner eingefroren ist.",
         "snoId": 1211653
     },
     "tal_rashas_schillernder_reif": {
-        "desc": "Für jede Art von Elementarschaden, die Ihr verursacht, erhaltet Ihr Sekunden lang erhöhten Schaden. Verursacht Ihr Elementarschaden, werden all Eure Boni aktualisiert.",
+        "desc": "für jede art von elementarschaden, die ihr verursacht, erhaltet ihr sekunden lang erhöhten schaden. verursacht ihr elementarschaden, werden all eure boni aktualisiert.",
         "snoId": 1225567
     }
 }

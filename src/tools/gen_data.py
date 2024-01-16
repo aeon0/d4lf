@@ -43,7 +43,7 @@ def check_ms(input_string) -> str:
 
 
 def main(d4data_dir: Path, companion_app_dir: Path):
-    lang_arr = ["enUS", "deDE", "frFR", "esES", "esMX", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "trTR", "zhCN", "zhTW"]
+    lang_arr = ["enUS"]  # "deDE", "frFR", "esES", "esMX", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "trTR", "zhCN", "zhTW"]
 
     for l in lang_arr:
         file_names = [

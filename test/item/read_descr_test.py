@@ -58,7 +58,7 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_rare_1080p_2.png",
             Item(
                 ItemRarity.Rare,
-                ItemType.Pants,
+                ItemType.Legs,
                 844,
                 None,
                 [
@@ -301,7 +301,7 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
             Item(
                 ItemRarity.Legendary,
-                ItemType.Pants,
+                ItemType.Legs,
                 858,
                 Aspect("protecting", 3),
                 [

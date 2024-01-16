@@ -52,7 +52,7 @@ def find_aspect(
         # Possibly add Bow and Crossbow if those scale it up as well
         if item_type in [
             ItemType.Bow,
-            ItemType.Crossbow,
+            ItemType.Crossbow2H,
             ItemType.Axe2H,
             ItemType.Sword2H,
             ItemType.Mace2H,

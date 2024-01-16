@@ -5,7 +5,7 @@ import re
 import os
 
 
-def remove_content_in_braces(input_string):
+def remove_content_in_braces(input_string) -> str:
     pattern = r"\{.*?\}"
     result = re.sub(pattern, "", input_string)
     pattern = r"\[.*?\]"
@@ -22,7 +22,7 @@ def remove_content_in_braces(input_string):
     return result
 
 
-def check_ms(input_string):
+def check_ms(input_string) -> str:
     start_index = input_string.find("[ms]")
     end_index = input_string.find("[fs]")
 
@@ -46,18 +46,17 @@ def main(d4data_dir: Path, companion_app_dir: Path):
     lang_arr = ["enUS", "deDE", "frFR", "esES", "esMX", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "trTR", "zhCN", "zhTW"]
 
     for l in lang_arr:
-        f = f"assets/lang/{l}/affixes.json"
-        if os.path.exists(f):
-            os.remove(f)
-        f = f"assets/lang/{l}/aspects.json"
-        if os.path.exists(f):
-            os.remove(f)
-        f = f"assets/lang/{l}/uniques.json"
-        if os.path.exists(f):
-            os.remove(f)
-        f = f"assets/lang/{l}/sigils.json"
-        if os.path.exists(f):
-            os.remove(f)
+        file_names = [
+            f"assets/lang/{l}/affixes.json",
+            f"assets/lang/{l}/aspects.json",
+            f"assets/lang/{l}/uniques.json",
+            f"assets/lang/{l}/sigils.json",
+            f"assets/lang/{l}/item_types.json",
+            f"assets/lang/{l}/tooltips.json",
+        ]
+        for f in file_names:
+            if os.path.exists(f):
+                os.remove(f)
         os.makedirs(f"assets/lang/{l}", exist_ok=True)
 
     for language in lang_arr:
@@ -147,6 +146,67 @@ def main(d4data_dir: Path, companion_app_dir: Path):
 
         with open(f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
             json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False)
+            json_file.write("\n")
+
+        print(f"Gen ItemTypes for {language}")
+        whitelist_types = [
+            "Amulet",
+            "Axe",
+            "Axe2H",
+            "Boots",
+            "Bow",
+            "ChestArmor",
+            "Crossbow2H",
+            "Dagger",
+            "Elixir",
+            "Focus",
+            "Gloves",
+            "Helm",
+            "Legs",
+            "Mace",
+            "Mace2H",
+            "Polearm",
+            "Ring",
+            "Scythe",
+            "Scythe2H",
+            "Shield",
+            "Staff",
+            "Sword",
+            "Sword2H",
+            "Tome",
+            "Wand",
+            "OffHandTotem",
+        ]
+        item_typ_dict = {
+            "Material": "custom type material",
+            "Sigil": "custom type sigil",
+        }
+        pattern = f"json/{language}_Text/meta/StringList/ItemType_*.stl.json"
+        json_files = list(d4data_dir.glob(pattern))
+        for json_file in json_files:
+            item_type = json_file.stem.split("_")[1].split(".")[0].strip()
+            with open(json_file, "r", encoding="utf-8") as file:
+                data = json.load(file)
+                name_idx = 0 if data["arStrings"][0]["szLabel"] == "Name" else 1
+                name_str: str = check_ms(data["arStrings"][name_idx]["szText"]).lower().strip()
+                if item_type in whitelist_types:
+                    item_typ_dict[item_type] = name_str
+        with open(f"assets/lang/{language}/item_types.json", "w", encoding="utf-8") as json_file:
+            json.dump(item_typ_dict, json_file, indent=4, ensure_ascii=False)
+            json_file.write("\n")
+
+        print(f"Gen Tooltips for {language}")
+        tooltip_dict = {}
+        tooltip_path = d4data_dir / f"json/{language}_Text/meta/StringList/UIToolTips.stl.json"
+        with open(tooltip_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            for arString in data["arStrings"]:
+                if arString["szLabel"] == "ItemPower":
+                    tooltip_dict["ItemPower"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
+                if arString["szLabel"] == "ItemTier":
+                    tooltip_dict["ItemTier"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
+        with open(f"assets/lang/{language}/tooltips.json", "w", encoding="utf-8") as json_file:
+            json.dump(tooltip_dict, json_file, indent=4, ensure_ascii=False)
             json_file.write("\n")
 
         # Create Affixes

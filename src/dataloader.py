@@ -3,6 +3,7 @@ import os
 import threading
 from logger import Logger
 from config import Config
+from item.data.item_type import ItemType
 
 dataloader_lock = threading.Lock()
 
@@ -15,6 +16,7 @@ class Dataloader:
     aspect_snoids = dict()
     aspect_unique_dict = dict()
     aspect_unique_snoids = dict()
+    tooltips = dict()
 
     _instance = None
     data_loaded = False
@@ -74,3 +76,15 @@ class Dataloader:
                 **affix_sigil_dict_all["major"],
                 **affix_sigil_dict_all["positive"],
             }
+
+        with open(f"assets/lang/{Config().general['language']}/item_types.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            for item, value in data.items():
+                if item in ItemType.__members__:
+                    enum_member = ItemType[item]
+                    enum_member._value_ = value
+                else:
+                    Logger.warning(f"{item} type not in item_type.py")
+
+        with open(f"assets/lang/{Config().general['language']}/tooltips.json", "r", encoding="utf-8") as f:
+            self.tooltips = json.load(f)

@@ -17,8 +17,10 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
     roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
     concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+    for error, correction in Dataloader().error_map.items():
+        concatenated_str = concatenated_str.replace(error, correction)
 
-    if "sigil" in concatenated_str and "tier" in concatenated_str:
+    if Dataloader().tooltips["ItemTier"] in concatenated_str:
         # process sigil
         item.type = ItemType.Sigil
     elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
@@ -52,13 +54,8 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
 
 def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
     idx = None
-    # TODO: Handle common mistakes nicer
-    if "item power" in concatenated_str:
-        idx = concatenated_str.index("item power")
-    elif "ttem power" in concatenated_str:
-        idx = concatenated_str.index("ttem power")
-    elif "item" in concatenated_str:
-        idx = concatenated_str.index("item")
+    if Dataloader().tooltips["ItemPower"] in concatenated_str:
+        idx = concatenated_str.index(Dataloader().tooltips["ItemPower"])
     if idx is not None:
         preceding_word = concatenated_str[:idx].split()[-1]
         if preceding_word.isdigit():
@@ -70,8 +67,6 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
 
     max_length = 0
     last_char_idx = 0
-    for error, correction in Dataloader().error_map.items():
-        concatenated_str = concatenated_str.replace(error, correction)
     for item_type in ItemType:
         if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
             tmp_idx = found_idx + len(item_type.value)
@@ -80,19 +75,10 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
                 last_char_idx = tmp_idx
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
+    # TODO: This is language specific!
     if item.type is None:
         if "chest" in concatenated_str or "armor" in concatenated_str:
-            item.type = ItemType.Armor
-    # common mistake that two-handed can not be added to the weapon type
-    if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
-        if item.type == ItemType.Sword:
-            item.type = ItemType.Sword2H
-        elif item.type == ItemType.Mace:
-            item.type = ItemType.Mace2H
-        elif item.type == ItemType.Scythe:
-            item.type = ItemType.Scythe2H
-        elif item.type == ItemType.Axe:
-            item.type = ItemType.Axe2H
+            item.type = ItemType.ChestArmor
     return item
 
 
@@ -100,8 +86,8 @@ def _find_sigil_tier(concatenated_str: str) -> int:
     idx = None
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
-    if "tier" in concatenated_str:
-        idx = concatenated_str.index("tier")
+    if Dataloader().tooltips["ItemTier"] in concatenated_str:
+        idx = concatenated_str.index(Dataloader().tooltips["ItemTier"])
         split_words = concatenated_str[idx:].split()
         if len(split_words) == 2:
             following_word = split_words[1]

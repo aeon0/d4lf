@@ -1,5 +1,7 @@
 {
     "error_map": {
+        "ttem": "item",
+        "two- handed": "two-handed",
         "thoms": "thorns",
         "seythe": "scythe",
         "@arbarian": "(barbarian",

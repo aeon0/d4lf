@@ -1,3 +1,35 @@
 {
-
+    "error_map": {
+        "stufe s": "stufe 5",
+        "stufe1": "stufe 1",
+        "stufe2": "stufe 2",
+        "stufe3": "stufe 3",
+        "stufe4": "stufe 4",
+        "stufe5": "stufe 5",
+        "stufe6": "stufe 6",
+        "stufe7": "stufe 7",
+        "stufe8": "stufe 8",
+        "stufe9": "stufe 9"
+    },
+    "filter_words": [
+        "druide",
+        "barbar",
+        "jäger",
+        "zauberer",
+        "totenbeschwörer",
+        "(nur",
+        "kann von eurer klasse",
+        "dungeon affixe"
+    ],
+    "filter_after_keyword": [
+        "benötigt welt",
+        "benötigt stufe",
+        "account",
+        "verkaufswert",
+        "pakte",
+        "nach unten",
+        "nach oben",
+        "vergleiche",
+        " cts "
+    ]
 }

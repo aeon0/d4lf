@@ -146,7 +146,9 @@ class Filter:
                     # Sanity check on the sigil affixes
                     if "blacklist" not in self.sigil_filters[profile_str]:
                         self.sigil_filters[profile_str]["blacklist"] = []
-                    self.check_affix_pool(self.sigil_filters[profile_str]["blacklist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils")
+                    self.check_affix_pool(
+                        self.sigil_filters[profile_str]["blacklist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
+                    )
 
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "

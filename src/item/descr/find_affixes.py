@@ -1,23 +1,13 @@
 import numpy as np
 import json
 from template_finder import TemplateMatch
-from item.corrections import ERROR_MAP
 from item.data.affix import Affix
-from item.descr.text import clean_str, closest_match, closest_to, find_number, remove_text_after_first_keyword
+from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
 from config import Config
+from dataloader import Dataloader
 from utils.image_operations import crop
 from template_finder import TemplateMatch
 from utils.ocr.read import image_to_text
-
-
-affix_dict = dict()
-with open("assets/affixes.json", "r") as f:
-    affix_dict = json.load(f)
-
-affix_sigil_dict = dict()
-with open("assets/sigils.json", "r") as f:
-    affix_sigil_dict_all = json.load(f)
-    affix_sigil_dict = {**affix_sigil_dict_all["negative"], **affix_sigil_dict_all["positive"], **affix_sigil_dict_all["inherent"]}
 
 
 def split_into_paragraphs(
@@ -26,7 +16,7 @@ def split_into_paragraphs(
     affix_bullets: list[TemplateMatch],
     threshold: int,
     offset_y_affix_bullets: int,
-):
+) -> list[str]:
     paragraphs = []
     current_paragraph = ""
 
@@ -44,10 +34,6 @@ def split_into_paragraphs(
         paragraphs.append(current_paragraph.strip())
 
     return paragraphs
-
-
-def is_within_tolerance(num1, num2, tolerance=1):
-    return
 
 
 def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[list[str], list[any]]:
@@ -97,8 +83,12 @@ def find_affixes(
     affix_lines, line_pos = filter_affix_lines(affix_lines, line_pos)
     paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
 
+    if is_sigil and len(paragraphs) == 2:
+        # A bit of a hack to remove the "revives allowed" affix as it is not part of the generated affix list...
+        paragraphs = paragraphs[:-1]
+
     for combined_lines in paragraphs:
-        for error, correction in ERROR_MAP.items():
+        for error, correction in Dataloader().error_map.items():
             combined_lines = combined_lines.replace(error, correction)
         cleaned_str = clean_str(combined_lines)
 
@@ -106,9 +96,9 @@ def find_affixes(
             # A bit of a hack to match the locations...
             if len(affix_bullets) == 2:
                 cleaned_str = remove_text_after_first_keyword(cleaned_str, [" in "])
-            found_key = closest_match(cleaned_str, affix_sigil_dict)
+            found_key = closest_match(cleaned_str, Dataloader().affix_sigil_dict)
         else:
-            found_key = closest_match(cleaned_str, affix_dict)
+            found_key = closest_match(cleaned_str, Dataloader().affix_dict)
         found_value = find_number(combined_lines)
 
         if found_key is not None:

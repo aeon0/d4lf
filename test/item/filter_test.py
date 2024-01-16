@@ -29,7 +29,7 @@ from template_finder import stored_templates
         ),
         Item(
             ItemRarity.Rare,
-            ItemType.Pants,
+            ItemType.Legs,
             844,
             None,
             [

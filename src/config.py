@@ -84,6 +84,7 @@ class Config:
             "hidden_transparency": max(0.01, float(self._select_val("general", "hidden_transparency"))),
             "local_prefs_path": self._select_val("general", "local_prefs_path"),
             "profiles": profiles_str.split(",") if profiles_str else [],
+            "language": "enUS",
         }
 
         for key in self.configs["params"]["parser"]["char"]:

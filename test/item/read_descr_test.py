@@ -41,7 +41,7 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Legendary,
                 ItemType.Amulet,
                 894,
-                Aspect("frostbitten_aspect", 22),
+                Aspect("frostbitten", 22),
                 [
                     Affix("strength", 5.5),
                     Affix("imbuement_skill_damage", 28),
@@ -58,7 +58,7 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_rare_1080p_2.png",
             Item(
                 ItemRarity.Rare,
-                ItemType.Pants,
+                ItemType.Legs,
                 844,
                 None,
                 [
@@ -68,7 +68,7 @@ BASE_PATH = "test/assets/item"
                     Affix("imbuement_skill_cooldown_reduction", 5.8),
                 ],
                 [
-                    Affix("injured_potion_resource", 20),
+                    Affix("while_injured_your_potion_also_restores_resource", 20),
                 ],
             ),
         ),
@@ -104,7 +104,6 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("tormented_ruins"),
-                    Affix("revives_allowed", 4),
                 ],
             ),
         ),
@@ -125,7 +124,6 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("crusaders_cathedral"),
-                    Affix("revives_allowed", 4),
                 ],
             ),
         ),
@@ -146,7 +144,6 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("ghoa_ruins"),
-                    Affix("revives_allowed", 4),
                 ],
             ),
         ),
@@ -167,7 +164,6 @@ BASE_PATH = "test/assets/item"
                 ],
                 [
                     Affix("steadfast_barracks"),
-                    Affix("revives_allowed", 4),
                 ],
             ),
         ),
@@ -252,14 +248,14 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Legendary,
                 ItemType.Boots,
                 925,
-                Aspect("ghostwalker_aspect", 13),
+                Aspect("ghostwalker", 13),
                 [
                     Affix("all_stats", 18),
                     Affix("intelligence", 42),
                     Affix("movement_speed", 17.5),
                     Affix("fortify_generation", 21.5),
                 ],
-                [Affix("evade_grants_movement_speed", 50)],
+                [Affix("evade_grants_movement_speed_for_second", 50.0)],
             ),
         ),
         (
@@ -269,7 +265,7 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Legendary,
                 ItemType.Mace2H,
                 704,
-                Aspect("lightning_dancers_aspect", 1915),
+                Aspect("lightning_dancers", 1915),
                 [
                     Affix("willpower", 82),
                     Affix("critical_strike_damage", 25),
@@ -288,7 +284,7 @@ BASE_PATH = "test/assets/item"
                 ItemRarity.Legendary,
                 ItemType.Mace,
                 886,
-                Aspect("accelerating_aspect", 19),
+                Aspect("accelerating", 19),
                 [
                     Affix("lightning_critical_strike_damage", 19),
                     Affix("ultimate_skill_damage", 14.5),
@@ -305,9 +301,9 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
             Item(
                 ItemRarity.Legendary,
-                ItemType.Pants,
+                ItemType.Legs,
                 858,
-                Aspect("protecting_aspect", 3),
+                Aspect("protecting", 3),
                 [
                     Affix("lightning_resistance", 31),
                     Affix("damage_reduction_while_injured", 18.5),
@@ -315,7 +311,7 @@ BASE_PATH = "test/assets/item"
                     Affix("control_impaired_duration_reduction", 10.5),
                 ],
                 [
-                    Affix("injured_potion_movement_speed", 30),
+                    Affix("while_injured_your_potion_also_grants_movement_speed_for_seconds", 30),
                 ],
             ),
         ),

@@ -3,19 +3,19 @@
 # CONDITON can be "larger" or "smaller" and defaults to "larger"
 
 Aspects:
-  - [accelerating_aspect, 25]
-  - [aspect_of_might, 6.0]
-  - [aspect_of_disobedience, 1.1]
-  - [aspect_of_inner_calm, 10]
-  - [aspect_of_retribution, 20]
-  - [aspect_of_the_expectant, 10]
-  - [edgemasters_aspect, 20]
-  - [rapid_aspect, 30]
-  - [aspect_of_shared_misery, 45]
-  - [ghostwalker_aspect, 25]
-  - [aspect_of_the_umbral, 4]
-  - [conceited_aspect, 25]
-  - [starlight_aspect, 39]
+  - [accelerating, 25]
+  - [of_might, 6.0]
+  - [of_disobedience, 1.1]
+  - [of_inner_calm, 10]
+  - [of_retribution, 20]
+  - [of_the_expectant, 10]
+  - [edgemasters, 20]
+  - [rapid, 30]
+  - [of_shared_misery, 45]
+  - [ghostwalker, 25]
+  - [of_the_umbral, 4]
+  - [conceited, 25]
+  - [starlight, 39]
 
 
 # Find all affix keys in "config/affixes.json". Resource of possible affixes: https://d4builds.gg/database/gear-affixes/

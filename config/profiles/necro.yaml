@@ -2,16 +2,16 @@
 
 Aspects:
   # General
-  - [aspect_of_shared_misery, 46]
-  - [aspect_of_disobedience, 1.0]
-  - [ghostwalker_aspect, 20]
-  - [aspect_of_the_umbral, 3]
+  - [of_shared_misery, 46]
+  - [of_disobedience, 1.0]
+  - [ghostwalker, 20]
+  - [of_the_umbral, 3]
   # Necromancer
-  - [aspect_of_grasping_veins, 16]
-  - [aspect_of_shielding_storm, 3]
-  - [bloodbathed_aspect, 50]
-  - [aspect_of_rathmas_chosen, 45]
-  - [aspect_of_potent_blood, 16]
+  - [of_grasping_veins, 16]
+  - [of_shielding_storm, 3]
+  - [bloodbathed, 50]
+  - [of_rathmas_chosen, 45]
+  - [of_potent_blood, 16]
 
 Affixes:
   - Chest:

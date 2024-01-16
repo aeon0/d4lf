@@ -1,5 +1,6 @@
 import re
 from rapidfuzz import process
+from dataloader import Dataloader
 
 
 def closest_match(target, candidates, min_score=86):
@@ -44,29 +45,9 @@ def clean_str(s: str) -> str:
     cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
     cleaned_str = cleaned_str.replace("durability:", "")
     cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
-    cleaned_str = re.sub(
-        r"\((rogue|barbarian|druid|sorcerer|necromancer) only\)", "", cleaned_str
-    )  # this is not included in our affix table
-    cleaned_str = remove_text_after_first_keyword(
-        cleaned_str,
-        [
-            "requires world",
-            "requires level",
-            "requires lev",
-            "account",
-            "sell value",
-            "pacts",
-            "granted",
-            "scroll down",
-            "compare",
-            " cts ",
-            "dearest will",
-        ],
-    )
-    cleaned_str = re.sub(
-        r"(scroll up|account bound|requires level|only\)|sell value|barbarian|rogue|sorceress|druid|necromancer|not useable|by your class|by your clas|dungeon affixes)",
-        "",
-        cleaned_str,
-    )  # Remove new terms
+    cleaned_str = remove_text_after_first_keyword(cleaned_str, Dataloader().filter_after_keyword)
+    for s in Dataloader().filter_words:
+        cleaned_str = cleaned_str.replace(s, "")
+    cleaned_str = cleaned_str.replace("(", "").replace(")", "")
     cleaned_str = " ".join(cleaned_str.split())  # Remove extra spaces
     return cleaned_str

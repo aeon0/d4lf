@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 from logger import Logger
 from config import Config
+from dataloader import Dataloader
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.data.affix import Affix
@@ -30,15 +31,6 @@ class Filter:
     aspect_filters = dict()
     unique_filters = dict()
     sigil_filters = dict()
-    with open("assets/affixes.json", "r") as f:
-        affix_dict = json.load(f)
-    with open("assets/aspects.json", "r") as f:
-        aspect_dict = json.load(f)
-    with open("assets/aspects_unique.json", "r") as f:
-        aspect_unique_dict = json.load(f)
-    with open("assets/sigils.json", "r") as f:
-        sigil_dict_all = json.load(f)
-        sigil_dict = {**sigil_dict_all["negative"], **sigil_dict_all["positive"], **sigil_dict_all["inherent"]}
 
     files_loaded = False
     all_file_pathes = []
@@ -139,11 +131,11 @@ class Filter:
                     for filter_dict in self.affix_filters[profile_str]:
                         for filter_name, filter_data in filter_dict.items():
                             if "affixPool" in filter_data:
-                                self.check_affix_pool(filter_data["affixPool"], self.affix_dict, filter_name)
+                                self.check_affix_pool(filter_data["affixPool"], Dataloader().affix_dict, filter_name)
                             else:
                                 filter_data["affixPool"] = []
                             if "inherentPool" in filter_data:
-                                self.check_affix_pool(filter_data["inherentPool"], self.affix_dict, filter_name)
+                                self.check_affix_pool(filter_data["inherentPool"], Dataloader().affix_dict, filter_name)
 
                 if config is not None and "Sigils" in config:
                     info_str += "Sigils "
@@ -154,7 +146,9 @@ class Filter:
                     # Sanity check on the sigil affixes
                     if "blacklist" not in self.sigil_filters[profile_str]:
                         self.sigil_filters[profile_str]["blacklist"] = []
-                    self.check_affix_pool(self.sigil_filters[profile_str]["blacklist"], self.sigil_dict, f"{profile_str}.Sigils")
+                    self.check_affix_pool(
+                        self.sigil_filters[profile_str]["blacklist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
+                    )
 
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "
@@ -165,7 +159,7 @@ class Filter:
                     invalid_aspects = []
                     for aspect in self.aspect_filters[profile_str]:
                         aspect_name = aspect if isinstance(aspect, str) else aspect[0]
-                        if aspect_name not in self.aspect_dict:
+                        if aspect_name not in Dataloader().aspect_dict:
                             invalid_aspects.append(aspect_name)
                     if invalid_aspects:
                         Logger.warning(f"Warning: Invalid Aspect: {', '.join(invalid_aspects)}")
@@ -183,10 +177,10 @@ class Filter:
                             Logger.warning(f"Warning: Unique missing mandatory 'aspect' field in {profile_str} profile")
                             continue
                         unique_name = unique["aspect"] if isinstance(unique["aspect"], str) else unique["aspect"][0]
-                        if unique_name not in self.aspect_unique_dict:
+                        if unique_name not in Dataloader().aspect_unique_dict:
                             invalid_uniques.append(unique_name)
                         elif "affixPool" in unique:
-                            self.check_affix_pool(unique["affixPool"], self.affix_dict, unique_name)
+                            self.check_affix_pool(unique["affixPool"], Dataloader().affix_dict, unique_name)
                     if invalid_uniques:
                         Logger.warning(f"Warning: Invalid Unique: {', '.join(invalid_uniques)}")
 

@@ -1,7 +1,7 @@
 Aspects:
-  - [vigorous_aspect, 13]
-  - [overcharged_aspect, 15]
-  - [mighty_storms_aspect]
+  - [vigorous, 13]
+  - [overcharged, 15]
+  - [mighty_storms]
 
 
 Affixes:
@@ -24,7 +24,7 @@ Affixes:
       affixPool:
         - [damage_reduction_while_fortified, 6]
         - [damage_reduction_from_close_enemies, 10]
-        - [damage_reduction_from_enemies_that_are_poisoned, 6]
+        - [damage_reduction_from_poisoned_enemies, 6]
         - [damage_reduction_from_distant_enemies, 12]
         - [damage_reduction, 5]
         - [willpower, 35]
@@ -60,7 +60,7 @@ Affixes:
         # - [damage_reduction, 6]
         - [damage_reduction_from_close_enemies, 10]
         - [damage_reduction_from_distant_enemies, 12]
-        - [damage_reduction_from_enemies_that_are_poisoned, 6]
+        - [damage_reduction_from_poisoned_enemies, 6]
         - [total_armor_while_in_werewolf_form, 15]
         # - [total_armor, 9]
         - [movement_speed, 12]

@@ -16,6 +16,7 @@ import keyboard
 from utils.game_settings import is_fontsize_ok
 from item.filter import Filter
 from PIL import Image
+from utils.ocr.read import load_api
 
 t = Image.new("RGB", (100, 100))
 
@@ -34,6 +35,8 @@ def main():
 
     if Config().advanced_options["log_lvl"] == "debug":
         Logger.init(logging.DEBUG)
+
+    load_api()
 
     file_path = config_dir / "params.ini"
     if not file_path.exists():

@@ -20,7 +20,8 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
 
-    if Dataloader().tooltips["ItemTier"] in concatenated_str:
+    # TODO: Language specific
+    if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
         # process sigil
         item.type = ItemType.Sigil
     elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
@@ -75,10 +76,19 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
                 last_char_idx = tmp_idx
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
-    # TODO: This is language specific!
+    # TODO: Language specific
     if item.type is None:
         if "chest" in concatenated_str or "armor" in concatenated_str:
             item.type = ItemType.ChestArmor
+    if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
+        if item.type == ItemType.Sword:
+            item.type = ItemType.Sword2H
+        elif item.type == ItemType.Mace:
+            item.type = ItemType.Mace2H
+        elif item.type == ItemType.Scythe:
+            item.type = ItemType.Scythe2H
+        elif item.type == ItemType.Axe:
+            item.type = ItemType.Axe2H
     return item
 
 

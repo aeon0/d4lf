@@ -65,6 +65,7 @@ def find_aspect(
     Logger.debug(f"{found_key}: {found_value}")
 
     # Rapid detects 19 as 199 often
+    # TODO: Language specific
     if found_key == "rapid_aspect" and found_value == 199:
         found_value = 19
     loc = [aspect_bullet.center[0], aspect_bullet.center[1] - 2]

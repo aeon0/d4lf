@@ -46,7 +46,10 @@ class Dataloader:
             }
 
         with open(f"assets/lang/{Config().general['language']}/corrections.json", "r", encoding="utf-8") as f:
-            self.error_map: dict = json.load(f)
+            data = json.load(f)
+            self.error_map = data["error_map"]
+            self.filter_after_keyword = data["filter_after_keyword"]
+            self.filter_words = data["filter_words"]
 
         with open(f"assets/lang/{Config().general['language']}/aspects.json", "r") as f:
             data = json.load(f)

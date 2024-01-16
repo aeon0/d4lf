@@ -3,8 +3,6 @@ from pathlib import Path
 import json
 import re
 import os
-import shutil
-from item.descr.text import clean_str
 
 
 def remove_content_in_braces(input_string):
@@ -16,6 +14,11 @@ def remove_content_in_braces(input_string):
     result = re.sub(r"\|.*?:", "|:", result)
     result = result.replace("|", "")
     result = result.replace(";", "")
+    result = re.sub(r"(\d)[, ]+(\d)", r"\1\2", result)  # Remove , between numbers (large number seperator)
+    result = re.sub(r"(\+)?\d+(\.\d+)?%?", "", result)  # Remove numbers and trailing % or preceding +
+    result = re.sub(r"[\[\]+\-:%\'\#]", "", result)  # Remove [ and ] and leftover +, -, %, :, ', #
+    result = " ".join(result.split())  # Remove extra spaces
+    result.strip()
     return result
 
 
@@ -72,7 +75,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 aspect_name_clean = aspect_name.strip().replace(" ", "_").lower().replace("’", "").replace("'", "").replace("-", "")
                 aspect_name_clean = check_ms(aspect_name_clean)
                 aspect_desc = data["arStrings"][desc_idx]["szText"]
-                aspect_descr_clean = clean_str(remove_content_in_braces(aspect_desc.lower().replace("’", "")))
+                aspect_descr_clean = remove_content_in_braces(aspect_desc.lower().replace("’", ""))
                 aspects_dict[aspect_name_clean] = {"desc": aspect_descr_clean, "snoId": snoId}
 
         with open(f"assets/lang/{language}/aspects.json", "w", encoding="utf-8") as json_file:
@@ -101,7 +104,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 with open(affix_file_path, "r", encoding="utf-8") as affix_file:
                     data = json.load(affix_file)
                     desc = data["arStrings"][0]["szText"]
-                    desc_clean = clean_str(remove_content_in_braces(desc.lower().replace("’", "")))
+                    desc_clean = remove_content_in_braces(desc.lower().replace("’", ""))
                     unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId}
 
         with open(f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
@@ -140,7 +143,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                             name = name.replace("(", "").replace(")", "").replace("{c_bonus}", "").replace("{/c}", "")
                         else:
                             desc = sigil_affix["szText"].lower().strip().replace("’", "").replace("'", "")
-                        sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {clean_str(desc)}"
+                        sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {remove_content_in_braces(desc)}"
 
         with open(f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
             json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False)
@@ -156,9 +159,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             data = json.load(file)
             for affix in data:
                 desc: str = affix["Description"]
-                desc = clean_str(
-                    remove_content_in_braces(desc.lower().strip()).replace("'", "").replace("’", "").replace("#", "").replace("#", "")
-                )
+                desc = remove_content_in_braces(desc.lower().strip().replace("'", "").replace("’", ""))
                 name = desc.replace(",", "").replace(" ", "_")
                 if len(desc) > 2:
                     affix_dict[name] = desc

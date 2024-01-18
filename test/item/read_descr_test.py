@@ -54,6 +54,22 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_legendary_1440p.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.ChestArmor,
+                726,
+                Aspect("snap_frozen", 197),
+                [
+                    Affix("physical_damage", 7.5),
+                    Affix("damage_with_ranged_weapons", 7.5),
+                    Affix("maximum_life", 273),
+                    Affix("damage_reduction_from_close_enemies", 6.5),
+                ],
+            ),
+        ),
+        (
             (1920, 1080),
             f"{BASE_PATH}/read_descr_rare_1080p_2.png",
             Item(

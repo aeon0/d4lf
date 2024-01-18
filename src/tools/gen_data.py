@@ -223,6 +223,12 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 name = desc.replace(",", "").replace(" ", "_")
                 if len(desc) > 2:
                     affix_dict[name] = desc
+        # Some of the unique specific affixes are missing. Add them manually
+        if language == "enUS":
+            json_file = "src/tools/data/custom_affixes.json"
+            with open(json_file, "r", encoding="utf-8") as file:
+                data = json.load(file)
+                affix_dict.update(data)
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
             json.dump(affix_dict, json_file, indent=4, ensure_ascii=False)
             json_file.write("\n")

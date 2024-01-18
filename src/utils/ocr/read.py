@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 from tesserocr import OEM, PyTessBaseAPI, RIL
 from config import Config
+from logger import Logger
 
 from utils.ocr.models import OcrResult
 
@@ -68,6 +69,10 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
     if API is None:
         load_api()
 
+    if img is None or len(img) == 0:
+        Logger.warning("img provided to image_to_text() is empty!")
+        return "", [] if line_boxes else ""
+
     if do_pre_proc:
         pre_proced_img = pre_proc_img(img)
         API.SetImageBytes(*_img_to_bytes(pre_proced_img))
@@ -84,9 +89,9 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
     )
     if line_boxes:
         start = time.time()
-        line_boxes = API.GetComponentImages(RIL.TEXTLINE, True)
+        line_boxes_res = API.GetComponentImages(RIL.TEXTLINE, True)
         # print(f"Get Lines: {time.time() - start}")
-        return res, line_boxes
+        return res, line_boxes_res
     return res
 
 

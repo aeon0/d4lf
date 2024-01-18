@@ -184,6 +184,24 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_sigil_1080p_5.png",
+            Item(
+                ItemRarity.Common,
+                ItemType.Sigil,
+                9,
+                None,
+                [
+                    Affix("increased_critical_strike", 6),
+                    Affix("empowered_elites_poison_enchanted"),
+                    Affix("monster_shadow_damage", 15),
+                ],
+                [
+                    Affix("belfry_zakara"),
+                ],
+            ),
+        ),
+        (
             (3840, 2160),
             f"{BASE_PATH}/read_descr_rare_2160p.png",
             Item(

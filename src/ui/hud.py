@@ -42,7 +42,7 @@ class Hud(SearchArgs):
 
     @staticmethod
     def is_imbued(img: np.ndarray = None, roi_name: str = "core_skill") -> bool:
-        colors = ["shadow_imbued", "posion_imbued", "cold_imbued"]
+        colors = ["shadow_imbued", "poison_imbued", "cold_imbued"]
         for color in colors:
             img = Cam().grab() if img is None else img
             # Check avg saturation

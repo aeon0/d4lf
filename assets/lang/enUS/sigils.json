@@ -155,6 +155,7 @@
         "resistance_breakers": "resistance breakers monster attacks from a distance reduce resistance to all elements by for seconds, stacking up to .",
         "monster_thorns": "monster thorns monsters reflect of damage.",
         "armor_breakers": "armor breakers monster attacks from a distance reduce your armor by for seconds, stacking up to .",
+        "fire_traps": "fire traps additional fire traps appear in this dungeon.",
         "unstoppable_monsters": "unstoppable monsters monsters become unstoppable when life drops below ."
     },
     "major": {
@@ -180,6 +181,7 @@
         "battle_hardened": "battle hardened gain damage reduction for every health you are missing.",
         "poisonous_evade": "poisonous evade using evade leaves a damaging pool of poison under the first enemy you evade through or at your destination.",
         "nudging_evade": "nudging evade using evade pushes enemies back.",
+        "extra_shrines": "extra shrines extra shrines will appear in the dungeon.",
         "fire_damage": "fire damage you deal more fire damage.",
         "frost_damage": "frost damage you deal more frost damage.",
         "gold_find": "gold find you find more gold.",

@@ -24,7 +24,7 @@
         "snoId": 1105990
     },
     "of_echoing_fury": {
-        "desc": "your shout skills generate fury per second while active.",
+        "desc": "you generate fury per second while any shout skill is active.",
         "snoId": 1105991
     },
     "of_the_iron_warrior": {
@@ -60,7 +60,7 @@
         "snoId": 1106003
     },
     "of_encroaching_wrath": {
-        "desc": "after spending fury, your next weapon mastery skill deals increased damage.",
+        "desc": "after spending fury, your next weapon mastery skill within seconds deals increased damage.",
         "snoId": 1106004
     },
     "of_the_relentless_armsmaster": {
@@ -88,7 +88,7 @@
         "snoId": 1106011
     },
     "veteran_brawlers": {
-        "desc": "each time a core skill deals direct damage to an enemy, your next charge or leap deals increased damage, up to .",
+        "desc": "each time a core skill deals direct damage to an enemy, your next charge or leap within seconds deals increased damage, up to .",
         "snoId": 1106024
     },
     "of_ancestral_force": {
@@ -120,7 +120,7 @@
         "snoId": 1202014
     },
     "earthstrikers": {
-        "desc": "after swapping weapons times, your next skill will overpower and deal increased overpower damage.",
+        "desc": "after swapping weapons times, your next nonbasic skill will overpower and deal increased overpower damage.",
         "snoId": 1199203
     },
     "of_tempering_blows": {
@@ -144,7 +144,7 @@
         "snoId": 1199627
     },
     "of_limitless_rage": {
-        "desc": "each point of fury you generate while at maximum fury grants your next core skill increased damage, up to .",
+        "desc": "each point of fury you generate while at maximum fury grants your next core skill within seconds increased damage, up to .",
         "snoId": 1106289
     },
     "of_ancestral_charge": {
@@ -154,6 +154,10 @@
     "wanton_rupture": {
         "desc": "your rupture does not remove the bleeding damage from enemies. this can occur once every seconds.",
         "snoId": 1603699
+    },
+    "of_sundered_ground": {
+        "desc": "every seconds, upheaval is guaranteed to overpower and deals increased damage. this timer is reduced by seconds when upheaval overpowers a boss or an elite enemy.",
+        "snoId": 1737619
     },
     "of_the_unsatiated": {
         "desc": "after killing an enemy with shred, your next werewolf skill generates more spirit and deals increased damage.",
@@ -300,7 +304,7 @@
         "snoId": 1105811
     },
     "dire_wolfs": {
-        "desc": "grizzly rage now shapeshifts you into a dire werewolf. as a dire werewolf you gain movement speed instead of damage reduction and a spirit cost reduction bonus. in addition, kills heal you for of your maximum life.",
+        "desc": "grizzly rage is now a werewolf skill and shapeshifts you into a dire werewolf. dire werewolves gain movement speed and spirit cost reduction instead of damage reduction. in addition, kills heal you for of your maximum life.",
         "snoId": 1105800
     },
     "of_the_stampede": {
@@ -312,7 +316,7 @@
         "snoId": 1338010
     },
     "of_the_blurred_beast": {
-        "desc": "while dashing, shred seeks out nearby poisoned enemies instantly dealing of the poisoning damage to them.",
+        "desc": "while dashing, shred seeks out nearby poisoned enemies and deals increased damage to them.",
         "snoId": 1338284
     },
     "subterranean": {
@@ -322,6 +326,10 @@
     "raw_might": {
         "desc": "after you hit enemies with your werebear skills, your next werebear skill will deal more damage and stun enemies for seconds.",
         "snoId": 1619484
+    },
+    "virulent": {
+        "desc": "when rabies infects an enemy, reduce its cooldown by seconds. this cooldown reduction is tripled when infecting elite enemies.",
+        "snoId": 1738555
     },
     "starlight": {
         "desc": "gain of your primary resource for every of your life that you heal.",
@@ -376,7 +384,7 @@
         "snoId": 1106409
     },
     "of_the_expectant": {
-        "desc": "attacking enemies with a basic skill increases the damage of your next core skill cast by , up to .",
+        "desc": "after attacking enemies with a basic skill, increase the damage of your next core skill cast within seconds by , up to .",
         "snoId": 1106426
     },
     "ghostwalker": {
@@ -431,6 +439,14 @@
         "desc": "you gain movement speed. lose this bonus for seconds after taking damage.",
         "snoId": 1602955
     },
+    "of_adaptability": {
+        "desc": "when cast below maximum resource, basic skills generate of your primary resource, once per cast. when cast at or above maximum resource, basic skills deal increased damage.",
+        "snoId": 1741828
+    },
+    "juggernauts": {
+        "desc": "you gain armor, but your evade has increased cooldown.",
+        "snoId": 1746092
+    },
     "of_frenzied_dead": {
         "desc": "each time one of your summoning minions damages an enemy, they gain attack speed for seconds, up to .",
         "snoId": 1106475
@@ -452,7 +468,7 @@
         "snoId": 1106639
     },
     "rotting": {
-        "desc": "decompose can chain up to additional targets. when decompose spawns a corpse, it has a chance to spawn a corpse under all afflicted targets.",
+        "desc": "decompose can chain and burst up to additional targets. when decompose spawns a corpse, it has a chance to spawn a corpse under all afflicted targets.",
         "snoId": 1106650
     },
     "of_empowering_reaper": {
@@ -480,7 +496,7 @@
         "snoId": 1106163
     },
     "of_swelling_curse": {
-        "desc": "bone spirit deals increased damage based on distance traveled, up to .",
+        "desc": "bone spirits critical strike chance is increased by . your maximum essence is increased by for each enemy hit for seconds.",
         "snoId": 1106206
     },
     "of_bursting_bones": {
@@ -524,7 +540,7 @@
         "snoId": 1220473
     },
     "torturous": {
-        "desc": "enemies afflicted by your iron maiden have a chance to be stunned for second when they deal direct damage.",
+        "desc": "iron maiden is now also a darkness skill and deals shadow damage. enemies afflicted by your iron maiden have a chance to be stunned for second when they deal direct damage.",
         "snoId": 1221466
     },
     "of_the_damned": {
@@ -603,6 +619,14 @@
         "desc": "lucky hit your shadow damage over time effects have a chance to generate essence. damage from your shadowblight key passive will always generate essence.",
         "snoId": 1622848
     },
+    "shattered_spirits": {
+        "desc": "casting bone spirit also launches bone splinters in all directions, dealing increased damage and generating essence per enemy hit.",
+        "snoId": 1740177
+    },
+    "(ph)_shadow_warriors": {
+        "desc": "(ph) your skeletal priests now empower your skeletal warriors attacks to deal shadow damage and have a chance to stun enemies for seconds.",
+        "snoId": 1754891
+    },
     "of_imitated_imbuement": {
         "desc": "your shadow clones also mimic the imbuements applied to your skills. casting an imbuement skill grants your active shadow clone increased damage for seconds.",
         "snoId": 1106666
@@ -640,15 +664,15 @@
         "snoId": 1106246
     },
     "bladedancers": {
-        "desc": "twisting blades orbit for a short time after they return to you, dealing of twisting blades return damage per hit. based on the distance the blades returned, the orbit damage increases up to of the return damage.",
+        "desc": "twisting blades orbit for a short time after they return to you, dealing of twisting blades return damage per hit.",
         "snoId": 1106259
     },
     "toxic_alchemists": {
-        "desc": "lucky hit damaging a poisoned enemy with a shadow imbued skill has up to a chance to create a toxic explosion that applies poisoning damage over seconds to the target and surrounding enemies.",
+        "desc": "lucky hit shadow imbued skills have up to a chance to create a toxic explosion that applies poisoning damage over seconds to the target and surrounding enemies. if they were already poisoned, increase this damage by .",
         "snoId": 1106283
     },
     "icy_alchemists": {
-        "desc": "lucky hit damaging a chilled or frozen enemy with a shadow imbued skill has up to a chance to release an explosion that deals cold damage to the target and surrounding enemies, chilling them for .",
+        "desc": "lucky hit shadow imbued skills have up to a chance to release an explosion that deals cold damage to the target and surrounding enemies, chilling them for . if they were already chilled or frozen, increase this damage by .",
         "snoId": 1106291
     },
     "shadowslicer": {
@@ -696,7 +720,7 @@
         "snoId": 1185975
     },
     "of_stolen_vigor": {
-        "desc": "each stack of the momentum key passive heals you for life per second.",
+        "desc": "each stack of the momentum key passive heals you for life per second and grants you damage reduction.",
         "snoId": 1186855
     },
     "opportunists": {
@@ -771,6 +795,10 @@
         "desc": "when you spend energy you release a cluster of exploding stun grenades that deal total physical damage and stun enemies for seconds. your grenade skills deal more damage.",
         "snoId": 1620632
     },
+    "resistant_assailants": {
+        "desc": "breaking concealment grants resistance and maximum resistance to all elements for seconds. killing an elite enemy reduces concealments cooldown by seconds.",
+        "snoId": 1739654
+    },
     "of_binding_embers": {
         "desc": "flame shield lets you move unhindered through enemies. enemies you move through while flame shield is active are immobilized for seconds.",
         "snoId": 1106399
@@ -836,7 +864,7 @@
         "snoId": 1214264
     },
     "of_shattered_stars": {
-        "desc": "meteorites fall around meteor, dealing fire damage on impact. your meteorites additionally burn enemies they hit for damage over seconds.",
+        "desc": "meteorites fall around meteor, dealing of meteors damage on impact. your meteorites additionally burn enemies they hit for damage over seconds.",
         "snoId": 1212514
     },
     "glacial": {
@@ -954,5 +982,13 @@
     "battle_casters": {
         "desc": "lucky hit when your conjuration skills hit you have up to a chance to gain rank to your conjuration skills for seconds. this can stack up to times.",
         "snoId": 1622933
+    },
+    "of_shredding_blades": {
+        "desc": "ice blades chance to apply vulnerable is increased by and the vulnerable duration is increased by seconds. you gain vulnerable damage.",
+        "snoId": 1743945
+    },
+    "(ph)_split_incinerate": {
+        "desc": "(ph) incinerate now splits into beams, each dealing reduced damage.",
+        "snoId": 1755012
     }
 }

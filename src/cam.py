@@ -42,7 +42,17 @@ class Cam:
         self.res_key = f"{width}x{height}"
         self.res_p = f"{height}p"
         Logger.info(f"Found Window Res: {self.res_key}")
-        if self.res_key not in ["1920x1080", "2560x1080", "2560x1440", "3440x1440", "5120x1440", "3840x2160", "3840x1080"]:
+        if self.res_key not in [
+            "1920x1080",
+            "2560x1080",
+            "2560x1440",
+            "3440x1440",
+            "5120x1440",
+            "2560x1600",
+            "3840x1600",
+            "3840x2160",
+            "3840x1080",
+        ]:
             Logger.error(f"The resoltuion: {self.res_key} is not supported.")
             os._exit(0)
 

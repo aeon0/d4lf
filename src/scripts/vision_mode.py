@@ -71,6 +71,26 @@ def is_vendor_open(img: np.ndarray):
     return res.text.strip().lower() == "vendor"
 
 
+def create_signal_rect(canvas, w, thick, color):
+    canvas.create_rectangle(0, 0, w, thick * 2, outline="", fill=color)
+    steps = int((thick * 20) / 40)
+    for i in range(100):
+        stipple = ""
+        if i > 75:
+            stipple = "gray75"
+        if i > 80:
+            stipple = "gray50"
+        if i > 95:
+            stipple = "gray25"
+        if i > 90:
+            stipple = "gray12"
+        start_y = steps * i
+        end_y = steps * (i + 1)
+
+        canvas.create_rectangle(0, start_y, thick * 2, end_y, fill=color, outline="", stipple=stipple)
+        canvas.create_rectangle(w - thick * 2, start_y, w, end_y, fill=color, outline="", stipple=stipple)
+
+
 def vision_mode():
     root = tk.Tk()
     root.overrideredirect(True)
@@ -80,7 +100,7 @@ def vision_mode():
     root.geometry(f"0x0+0+0")
 
     thick = int(Cam().window_roi["height"] * 0.0047)
-    canvas = tk.Canvas(root, bg="black", highlightthickness=thick, highlightbackground="red")
+    canvas = tk.Canvas(root, bg="black", highlightthickness=0)
     canvas.pack(fill=tk.BOTH, expand=True)
 
     Logger.info("Starting Vision Filter")
@@ -130,13 +150,14 @@ def vision_mode():
 
                 # Make the canvas gray for "found the item"
                 x, y, w, h = item_roi
-                off = int(w * 0.086)
+                off = int(w * 0.1)
                 x -= off
                 y -= off
                 w += off * 2
                 h += off * 5
                 canvas.config(height=h, width=w)
-                canvas.config(highlightbackground="#888888")
+                create_signal_rect(canvas, w, thick, "#888888")
+
                 root.geometry(f"{w}x{h}+{x+screen_off_x}+{y+screen_off_y}")
                 root.update_idletasks()
                 root.update()
@@ -171,7 +192,8 @@ def vision_mode():
 
                 # Adapt colors based on config
                 if match:
-                    canvas.config(highlightbackground="#23fc5d")
+                    create_signal_rect(canvas, w, thick, "#23fc5d")
+
                     # show all info strings of the profiles
                     text_y = h
                     for match in reversed(res.matched):
@@ -187,7 +209,7 @@ def vision_mode():
                         if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):
                             draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
                 elif not match:
-                    canvas.config(highlightbackground="#fc2323")
+                    create_signal_rect(canvas, w, thick, "#fc2323")
 
                 root.update_idletasks()
                 root.update()

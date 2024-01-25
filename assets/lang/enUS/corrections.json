@@ -35,7 +35,9 @@
         "not useable",
         "by your class",
         "by your clas",
-        "dungeon affixe"
+        "dungeon affixe",
+        "properties lost",
+        "operties lost"
     ],
     "filter_after_keyword": [
         "requires world",
@@ -49,6 +51,7 @@
         "scroll up",
         "compare",
         " cts ",
-        "dearest will"
+        "dearest will",
+        "when equipped"
     ]
 }

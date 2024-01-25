@@ -383,6 +383,22 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_rare_1080p_4.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Helm,
+                916,
+                None,
+                [
+                    Affix("dexterity", 31),
+                    Affix("total_armor", 17.5),
+                    Affix("maximum_life", 840),
+                    Affix("ranks_of_poison_imbuement", 3),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

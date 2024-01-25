@@ -5,7 +5,7 @@ from PIL import Image
 from tesserocr import OEM, PyTessBaseAPI, RIL
 from config import Config
 from logger import Logger
-
+from utils.image_operations import color_filter
 from utils.ocr.models import OcrResult
 
 TESSDATA_PATH = "assets/tessdata"
@@ -95,7 +95,14 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
     return res
 
 
-def pre_proc_img(img: np.ndarray) -> np.ndarray:
+def pre_proc_img(input_img: np.ndarray) -> np.ndarray:
+    img = input_img.copy()
+    masked_red, _ = color_filter(img, Config().colors[f"unusable_red"], False)
+    contours, _ = cv2.findContours(masked_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    for contour in contours:
+        x, y, w, h = cv2.boundingRect(contour)
+        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 0), -1)
+
     # Convert the image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 

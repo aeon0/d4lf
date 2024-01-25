@@ -50,8 +50,11 @@ def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[lis
             unique_lines[ly] = (lx, i)
         curr_ly = ly
     for _, (_, i) in unique_lines.items():
-        filtered_affix_lines.append(affix_lines[i])
-        filtered_line_pos.append(line_pos[i])
+        if i < len(affix_lines) and i < len(line_pos):
+            filtered_affix_lines.append(affix_lines[i])
+            filtered_line_pos.append(line_pos[i])
+        else:
+            break
     return filtered_affix_lines, filtered_line_pos
 
 

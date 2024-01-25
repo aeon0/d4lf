@@ -18,7 +18,6 @@ Filter items and sigils in your inventory based on affixes, aspects and threshol
 ### Game Settings
 - Font size can be small or medium (better tested on small) in the Gameplay Settings
 - Game Language must be English
-- Advanced Tooltip Information (showing min and max values) is fine. But the __Advanced Tooltip Compare has to be truned off__!
 
 ### Run
 - Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases

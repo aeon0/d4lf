@@ -43,6 +43,11 @@ resolutions = {
         "black_bars": [300, -300],
         "filename": "config/res/game_3840x1080.ini",
     },
+    "1280x800": {
+        "factor": 2.0 / 2.7,
+        "width_new": 1280,
+        "filename": "config/res/game_1280x800.ini",
+    },
 }
 
 

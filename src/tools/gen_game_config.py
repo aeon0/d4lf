@@ -3,20 +3,42 @@ import numpy as np
 
 # Define the scaling factors and file names for each resolution
 resolutions = {
-    "1080p_wide": {"factor": 1, "width_org": 1920, "width_new": 2560, "filename": "config/res/game_2560x1080.ini"},
-    "1440p": {"factor": 4 / 3, "filename": "config/res/game_2560x1440.ini"},
-    "1440p_wide": {"factor": 4 / 3, "width_org": 2560, "width_new": 3440, "filename": "config/res/game_3440x1440.ini"},
-    "2160p": {"factor": 2.0, "filename": "config/res/game_3840x2160.ini"},
+    "1080p_wide": {
+        "factor": 1,
+        "width_new": 2560,
+        "filename": "config/res/game_2560x1080.ini",
+    },
+    "1440p": {
+        "factor": 4.0 / 3.0,
+        "filename": "config/res/game_2560x1440.ini",
+    },
+    "1440p_wide": {
+        "factor": 4.0 / 3.0,
+        "width_new": 3440,
+        "filename": "config/res/game_3440x1440.ini",
+    },
+    "1600p": {
+        "factor": 40.0 / 27.0,
+        "width_new": 2560,
+        "filename": "config/res/game_2560x1600.ini",
+    },
+    "1600p_wide": {
+        "factor": 40.0 / 27.0,
+        "width_new": 3840,
+        "filename": "config/res/game_3840x1600.ini",
+    },
+    "2160p": {
+        "factor": 2.0,
+        "filename": "config/res/game_3840x2160.ini",
+    },
     "1440p_ultra_wide": {
-        "factor": 4 / 3,
-        "width_org": 2560,
+        "factor": 4.0 / 3.0,
         "width_new": 5120,
         "black_bars": [400, -400],
         "filename": "config/res/game_5120x1440.ini",
     },
     "1080p_ultra_wide": {
         "factor": 1,
-        "width_org": 1920,
         "width_new": 3840,
         "black_bars": [300, -300],
         "filename": "config/res/game_3840x1080.ini",
@@ -60,10 +82,11 @@ def main():
             for option in new_config[section]:
                 if section != "colors":  # Skip the [colors] section
                     # Scale the values
-                    if "width_org" in value and "width_new" in value and not option.startswith("rel_"):
+                    if "width_new" in value and not option.startswith("rel_"):
+                        width_org = int(value["factor"] * 1920)
                         black_bars = None if "black_bars" not in value else value["black_bars"]
                         new_config[section][option] = scale_values(
-                            new_config[section][option], value["factor"], value["width_org"], value["width_new"], black_bars
+                            new_config[section][option], value["factor"], width_org, value["width_new"], black_bars
                         )
                     else:
                         new_config[section][option] = scale_values(new_config[section][option], value["factor"])

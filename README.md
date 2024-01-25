@@ -11,7 +11,7 @@ Filter items and sigils in your inventory based on affixes, aspects and threshol
 - Filter by aspects and their values
 - Filter uniques and their affix and aspect values
 - Filter sigils by blacklisting locations and affixes
-- Supported resolutions: 1920x1080, 3840x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 3840x2160
+- Supported resolutions: 1920x1080, 3840x1080, 2560x1080, 2560x1440, 3440x1440, 5120x1440, 2560x1600, 3840x1600, 3840x2160
 
 ## How to Setup
 

@@ -93,7 +93,7 @@ class Overlay:
         window_height = Config().ui_pos["window_dimensions"][1]
         if window_height == 1440:
             font_size = 9
-        elif window_height == 2160:
+        elif window_height > 1440:
             font_size = 10
         self.terminal_listbox = tk.Listbox(
             self.canvas,

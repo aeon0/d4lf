@@ -34,6 +34,8 @@ def draw_text(canvas, text, color, h, off, center) -> int:
     window_height = Config().ui_pos["window_dimensions"][1]
     if window_height == 1440:
         font_size = 15
+    elif window_height == 1600:
+        font_size = 16
     elif window_height == 2160:
         font_size = 17
     if len(text) > 27:

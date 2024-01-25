@@ -56,7 +56,7 @@
         "snoId": 941951
     },
     "skyhunter": {
-        "desc": "the first direct damage you deal to an enemy is a guaranteed critical strike. if you have maximum stacks of the precision key passive when you cast a core skill, that skill gains increased critical strike damage and you gain energy.",
+        "desc": "the first direct damage you deal to an enemy is a guaranteed critical strike. when you consume stacks of precision casting a skill, that skill gains increased critical strike damage and you gain energy.",
         "snoId": 941972
     },
     "windforce": {
@@ -64,7 +64,7 @@
         "snoId": 941973
     },
     "eaglehorn": {
-        "desc": "penetrating shot has a chance to fire an arrow that bounces off walls and scenery. damaging enemies with penetrating shot will cause the next cast to make enemies hit vulnerable for seconds.",
+        "desc": "penetrating shot makes enemies hit vulnerable for seconds. every casts of penetrating shot will fire an arrow that bounces off walls and scenery and deals more damage.",
         "snoId": 1439537
     },
     "hellhammer": {
@@ -116,7 +116,7 @@
         "snoId": 1610440
     },
     "melted_heart_of_selig": {
-        "desc": "gain maximum resource. in addition, when you take damage, drain resource for every of life you would have lost instead.",
+        "desc": "gain maximum resource. when taking damage, is drained as resource for every of maximum life you would have lost.",
         "snoId": 1275933
     },
     "banished_lords_talisman": {
@@ -151,6 +151,10 @@
         "desc": "create desecrated ground beneath your sever spectres as they travel, damaging enemies for shadow damage over seconds.",
         "snoId": 1220257
     },
+    "beastfall_boots": {
+        "desc": "when you cast an ultimate skill, your next core skill consumes all of your energy and deals increased damage per energy consumed. using a cooldown restores energy.",
+        "snoId": 1704784
+    },
     "esus_heirloom": {
         "desc": "your critical strike chance is increased by of your movement speed bonus.",
         "snoId": 1306301
@@ -175,6 +179,10 @@
         "desc": "your healing potion no longer heals instantly, instead it grants a barrier for of the healing for seconds. while you have a barrier, you gain damage reduction.",
         "snoId": 1560873
     },
+    "mutilator_plate": {
+        "desc": "you are blood lanced, and when blood lance would deal damage to you, it instead fortifies you for of your maximum life and has a chance to form a blood orb. blood lance deals increased damage.",
+        "snoId": 1224618
+    },
     "blood_artisans_cuirass": {
         "desc": "when you pick up blood orbs, a free bone spirit is spawned, dealing bonus damage based on your current life percent.",
         "snoId": 1306229
@@ -191,6 +199,10 @@
         "desc": "whirlwind explodes every seconds and after it ends, dealing of the base damage dealt to surrounding enemies as fire damage.",
         "snoId": 942555
     },
+    "unsung_ascetics_wraps": {
+        "desc": "lightning storm gains additional strike each times it grows. lightning storm critical strikes cause lightning to strike twice, dealing increased damage.",
+        "snoId": 1433954
+    },
     "fists_of_fate": {
         "desc": "your attacks randomly deal to of their normal damage.",
         "snoId": 942559
@@ -198,6 +210,10 @@
     "frostburn": {
         "desc": "lucky hit up to a chance to freeze enemies for seconds.",
         "snoId": 942560
+    },
+    "paingorgers_gauntlets": {
+        "desc": "damaging enemies with a nonbasic skill cast marks them for seconds. when a basic skill first hits a marked enemy, the basic skills damage is echoed to all marked enemies, dealing increased damage.",
+        "snoId": 1559327
     },
     "howl_from_below": {
         "desc": "instead of detonating immediately, corpse explosion summons a volatile skeleton that charges at a random enemy and explodes. corpse explosions damage is increased by .",
@@ -247,6 +263,10 @@
         "desc": "you gain increased lucky hit chance against crowd controlled enemies.",
         "snoId": 942666
     },
+    "starfall_coronet": {
+        "desc": "meteor now has charges with a second charge cooldown instead of a mana cost, and drops additional meteors around the target. meteors enchantment effect and enhanced meteor drop additional meteor.",
+        "snoId": 1713217
+    },
     "storms_companion": {
         "desc": "your wolf companions are infused with the power of the storm, dealing lightning damage and gaining the storm howl ability.",
         "snoId": 942972
@@ -280,8 +300,12 @@
         "snoId": 1306273
     },
     "ring_of_red_furor": {
-        "desc": "after spending fury within seconds, your next cast of hammer of the ancients, upheaval, or death blow is a guaranteed critical strike and deals bonus critical strike damage.",
+        "desc": "after spending fury within seconds, your next cast of hammer of the ancients, upheaval, or death blow within seconds is a guaranteed critical strike and deals bonus critical strike damage.",
         "snoId": 1706603
+    },
+    "ring_of_the_ravenous": {
+        "desc": "rends duration is increased by seconds. damaging enemies with your brawling skills applies stacks of rends bleed. this can only affect each enemy once every seconds.",
+        "snoId": 1712701
     },
     "hunters_zenith": {
         "desc": "gain a bonus when you kill with a shapeshifting skill werewolf your next nonultimate werebear skill costs no resource and has no cooldown. werebear your next werewolf skill will heal you for when damage is first dealt.",
@@ -296,7 +320,7 @@
         "snoId": 1215133
     },
     "ring_of_starless_skies": {
-        "desc": "casting a core skill cast reduces the resource cost of your core skills by , up to a maximum of . resets upon using a noncore skill.",
+        "desc": "spending your primary resource reduces the resource cost of your skills and increases your damage by for seconds, up to .",
         "snoId": 1306337
     },
     "xfals_corroded_signet": {

@@ -75,10 +75,10 @@ Aspects:
     # Filter for any umbral
     - of_the_umbral
 ```
-Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/aspect.json](assets/aspects.json). If Aspects is empty, all legendary items will be kept.
+Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/lang/enUS/aspect.json](assets/lang/enUS/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
-Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/affixes.json](assets/affixes.json). For items with inherent affixes `inherentPool` can be specified, then at least one of these has to match the inherent affixes on that item.
+Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/lang/enUS/affixes.json](assets/lang/enUS/affixes.json). For items with inherent affixes `inherentPool` can be specified, then at least one of these has to match the inherent affixes on that item.
 
 ```yaml
 Affixes:
@@ -129,7 +129,7 @@ Affixes:
 ```
 
 ### Uniques
-Uniques are identified by their aspect (see [assets/aspects_unique.json](assets/aspects_unique.json)). They also have a affixPool, but since uniques have these fixed you only need to specify the ones you want to threshold.
+Uniques are identified by their aspect (see [assets/lang/enUS/uniques.json](assets/lang/enUS/uniques.json)). They also have an affixPool, but since uniques have these fixed you only need to specify the ones you want to threshold.
 
 ```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
@@ -141,7 +141,7 @@ Uniques:
 ```
 
 ### Sigils
-Sigils are all ok unless they match any of the blacklisted locations or affixes. See all sigil locations and affixes here: [assets/sigils.json](assets/sigils.json)
+Sigils are all ok unless they match any of the blacklisted locations or affixes. See all sigil locations and affixes here: [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json)
 ```yaml
 Sigils:
   minTier: 40

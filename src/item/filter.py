@@ -121,10 +121,10 @@ class Filter:
 
                 if config is not None and "Affixes" in config:
                     info_str += "Affixes "
-                    self.affix_filters[profile_str] = config["Affixes"]
                     if config["Affixes"] is None:
                         Logger.error(f"Empty Affixes section in {profile_str}. Remove it")
                         return
+                    self.affix_filters[profile_str] = config["Affixes"]
                     # Sanity check on the item types
                     self.check_item_types(self.affix_filters[profile_str])
                     # Sanity check on the affixes
@@ -139,10 +139,10 @@ class Filter:
 
                 if config is not None and "Sigils" in config:
                     info_str += "Sigils "
-                    self.sigil_filters[profile_str] = config["Sigils"]
                     if config["Sigils"] is None:
                         Logger.error(f"Empty Sigils section in {profile_str}. Remove it")
                         return
+                    self.sigil_filters[profile_str] = config["Sigils"]
                     # Sanity check on the sigil affixes
                     if "blacklist" not in self.sigil_filters[profile_str]:
                         self.sigil_filters[profile_str]["blacklist"] = []
@@ -152,10 +152,10 @@ class Filter:
 
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "
-                    self.aspect_filters[profile_str] = config["Aspects"]
                     if config["Aspects"] is None:
                         Logger.error(f"Empty Aspects section in {profile_str}. Remove it")
                         return
+                    self.aspect_filters[profile_str] = config["Aspects"]
                     invalid_aspects = []
                     for aspect in self.aspect_filters[profile_str]:
                         aspect_name = aspect if isinstance(aspect, str) else aspect[0]
@@ -166,10 +166,10 @@ class Filter:
 
                 if config is not None and "Uniques" in config:
                     info_str += "Uniques"
-                    self.unique_filters[profile_str] = config["Uniques"]
                     if config["Uniques"] is None:
                         Logger.error(f"Empty Uniques section in {profile_str}. Remove it")
                         return
+                    self.unique_filters[profile_str] = config["Uniques"]
                     # Sanity check for unique aspects
                     invalid_uniques = []
                     for unique in self.unique_filters[profile_str]:
@@ -204,7 +204,11 @@ class Filter:
 
     def _check_power(self, filter_data: dict, item: Item) -> bool:
         filter_min_power = filter_data["minPower"] if "minPower" in filter_data else None
-        item_power_ok = item.power is None or filter_min_power is None or item.power >= filter_min_power
+        try:
+            item_power_ok = item.power is None or filter_min_power is None or item.power >= filter_min_power
+        except TypeError:
+            Logger.warning(f"minPower of {filter_min_power} is not an integer!")
+            return False
         return item_power_ok
 
     def _check_item_type(self, filter_data: dict, item: Item) -> bool:

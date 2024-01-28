@@ -29,7 +29,7 @@ class Chest(InventoryBase):
             return False
         x, y, w, h = Config().ui_roi["tab_slots_6"]
         section_length = w // 5
-        centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(5)]
+        centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(6)]
         mouse.move(*Cam().window_to_monitor(centers[tab_idx]), randomize=2)
         wait(0.5)
         mouse.click("left")

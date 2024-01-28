@@ -417,6 +417,26 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (3840, 1600),
+            f"{BASE_PATH}/read_descr_legendary_1600p.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Ring,
+                426,
+                Aspect("rapid", 19),
+                [
+                    Affix("vulnerable_damage", 8),
+                    Affix("damage_to_close_enemies", 9),
+                    Affix("damage_to_crowd_controlled_enemies", 4),
+                    Affix("barrier_generation", 5.5),
+                ],
+                [
+                    Affix("resistance_to_all_elements", 2.9),
+                    Affix("shadow_resistance", 2.9),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

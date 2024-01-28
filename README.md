@@ -31,6 +31,7 @@ Filter items and sigils in your inventory based on affixes, aspects and threshol
 
 ### Limitations
 - The tool does not play well with HDR as it makes everything super bright
+- The advanced item comparision feature sometimes causes bad classifications. Better turn it off when using d4lf
 
 ### Configs
 The config folder contains:

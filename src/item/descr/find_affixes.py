@@ -30,7 +30,9 @@ def split_into_paragraphs(
         else:
             current_paragraph += f" {text}"
 
-    if current_paragraph:
+    # Filter special errors were affix seems to wrongly detect sth like "% :" on a seperate line
+    # TODO: Is this nice? Not sure
+    if current_paragraph and len(current_paragraph) > 3:
         paragraphs.append(current_paragraph.strip())
 
     return paragraphs
@@ -68,11 +70,11 @@ def find_affixes(
     # Affix starts at first bullet point
     img_width = img_item_descr.shape[1]
     line_height = Config().ui_offsets["item_descr_line_height"]
-    affix_top_left = [affix_bullets[0].center[0] + line_height // 4, affix_bullets[0].center[1] - int(line_height * 0.7)]
+    affix_top_left = [affix_bullets[0].center[0] + int(line_height * 0.3), affix_bullets[0].center[1] - int(line_height * 0.6)]
 
     # Calc full region of all affixes
     affix_width = img_width - affix_top_left[0]
-    affix_height = bottom_limit - affix_top_left[1] - int(line_height * 0.4)
+    affix_height = bottom_limit - affix_top_left[1] - int(line_height * 0.75)
     full_affix_region = [*affix_top_left, affix_width, affix_height]
     crop_full_affix = crop(img_item_descr, full_affix_region)
     # cv2.imwrite("crop_full_affix.png", crop_full_affix)

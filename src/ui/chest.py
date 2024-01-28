@@ -24,12 +24,13 @@ class Chest(InventoryBase):
 
     @staticmethod
     def switch_to_tab(tab_idx) -> bool:
+        NUMBER_TABS = 6
         Logger.info(f"Switch Stash Tab to: {tab_idx}")
         if tab_idx > 4:
             return False
         x, y, w, h = Config().ui_roi["tab_slots_6"]
-        section_length = w // 5
-        centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(6)]
+        section_length = w // NUMBER_TABS
+        centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(NUMBER_TABS)]
         mouse.move(*Cam().window_to_monitor(centers[tab_idx]), randomize=2)
         wait(0.5)
         mouse.click("left")

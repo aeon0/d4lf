@@ -37,10 +37,14 @@ def check_items(inv: InventoryBase):
                     screenshot("failed_descr_detection", img=img)
                 break
             inv.hover_item(item)
-            wait(0.15)
+            wait(0.18)
             img = Cam().grab()
             start_detect = time.time()
             found, rarity, cropped_descr, _ = find_descr(img, item.center)
+            if found:
+                wait(0.04)
+                img = Cam().grab()
+                found, rarity, cropped_descr, _ = find_descr(img, item.center)
             Logger.debug(f"  Runtime (DetectItem): {time.time() - start_detect:.2f}s")
         if not found:
             continue

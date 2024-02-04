@@ -2,7 +2,6 @@ import numpy as np
 import json
 from config import Config
 from template_finder import TemplateMatch
-from item.descr.aspect_num_idx import ASPECT_NUMBER_AT_IDX1, ASPECT_NUMBER_AT_IDX2
 from item.data.aspect import Aspect
 from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
@@ -29,20 +28,19 @@ def find_aspect(
 
     if rarity == ItemRarity.Legendary:
         found_key = closest_match(cleaned_str, Dataloader().aspect_dict)
-        snoids = Dataloader().aspect_snoids
+        num_idx = Dataloader().aspect_num_idx
     else:
         found_key = closest_match(cleaned_str, Dataloader().aspect_unique_dict)
-        snoids = Dataloader().aspect_unique_snoids
+        num_idx = Dataloader().aspect_unique_num_idx
 
     if found_key is None:
         return None, cleaned_str
 
-    if snoids[found_key] in ASPECT_NUMBER_AT_IDX1:
-        idx = 1
-    elif snoids[found_key] in ASPECT_NUMBER_AT_IDX2:
-        idx = 2
-    else:
-        idx = 0
+    idx = 0
+    if len(num_idx[found_key]) > 0:
+        # TODO: Some aspects have two values that do not scale with each other
+        #       Save both such values
+        idx = num_idx[found_key][0]
     found_value = find_number(concatenated_str, idx)
 
     # Scale the aspect down to the canonical range if found on an item that scales it up

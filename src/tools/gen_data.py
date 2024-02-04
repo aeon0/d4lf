@@ -22,6 +22,15 @@ def remove_content_in_braces(input_string) -> str:
     return result
 
 
+def get_random_number_idx(s: str) -> list[int]:
+    filtered_string = re.findall(r"\{c_random\}|\{c_number\}", s)
+    res = []
+    for i, val in enumerate(filtered_string):
+        if val == "{c_random}":
+            res.append(i)
+    return res
+
+
 def check_ms(input_string) -> str:
     start_index = input_string.find("[ms]")
     end_index = input_string.find("[fs]")
@@ -75,7 +84,8 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 aspect_name_clean = check_ms(aspect_name_clean)
                 aspect_desc = data["arStrings"][desc_idx]["szText"]
                 aspect_descr_clean = remove_content_in_braces(aspect_desc.lower().replace("’", ""))
-                aspects_dict[aspect_name_clean] = {"desc": aspect_descr_clean, "snoId": snoId}
+                num_idx = get_random_number_idx(aspect_desc)
+                aspects_dict[aspect_name_clean] = {"desc": aspect_descr_clean, "snoId": snoId, "full": aspect_desc, "num_idx": num_idx}
 
         with open(f"assets/lang/{language}/aspects.json", "w", encoding="utf-8") as json_file:
             json.dump(aspects_dict, json_file, indent=4, ensure_ascii=False)
@@ -104,7 +114,8 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     data = json.load(affix_file)
                     desc = data["arStrings"][0]["szText"]
                     desc_clean = remove_content_in_braces(desc.lower().replace("’", ""))
-                    unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId}
+                    num_idx = get_random_number_idx(desc)
+                    unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
 
         with open(f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
             json.dump(unique_dict, json_file, indent=4, ensure_ascii=False)
@@ -118,6 +129,14 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "major": {},
             "positive": {},
         }
+
+        # Add season specific ones
+        if language == "enUS":
+            sigil_dict["dungeons"]["vault_of_copper"] = "vault of copper"
+            sigil_dict["dungeons"]["vault_of_cinder"] = "vault of cinder"
+            sigil_dict["dungeons"]["vault_of_ink"] = "vault of ink"
+            sigil_dict["dungeons"]["vault_of_stone"] = "vault of stone"
+        # Add others automatically
         pattern = f"json/{language}_Text/meta/StringList/world_DGN_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
         for json_file in json_files:

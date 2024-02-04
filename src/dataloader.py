@@ -13,9 +13,9 @@ class Dataloader:
     affix_dict = dict()
     affix_sigil_dict = dict()
     aspect_dict = dict()
-    aspect_snoids = dict()
+    aspect_num_idx = dict()
     aspect_unique_dict = dict()
-    aspect_unique_snoids = dict()
+    aspect_unique_num_idx = dict()
     tooltips = dict()
 
     _instance = None
@@ -57,13 +57,13 @@ class Dataloader:
             data = json.load(f)
             for key, d in data.items():
                 self.aspect_dict[key] = d["desc"]
-                self.aspect_snoids[key] = d["snoId"]
+                self.aspect_num_idx[key] = d["num_idx"]
 
         with open(f"assets/lang/{Config().general['language']}/uniques.json", "r") as f:
             data = json.load(f)
             for key, d in data.items():
                 self.aspect_unique_dict[key] = d["desc"]
-                self.aspect_unique_snoids[key] = d["snoId"]
+                self.aspect_unique_num_idx[key] = d["num_idx"]
 
         with open(f"assets/lang/{Config().general['language']}/affixes.json", "r", encoding="utf-8") as f:
             self.affix_dict: dict = json.load(f)

@@ -437,6 +437,17 @@ BASE_PATH = "test/assets/item"
                 ],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_unique_1080p_3.png",
+            Item(
+                ItemRarity.Unique,
+                ItemType.ChestArmor,
+                804,
+                Aspect("razorplate", 11197),
+                [],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

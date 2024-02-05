@@ -29,13 +29,14 @@ def find_number(s: str, idx: int = 0) -> float:
 
 
 def remove_text_after_first_keyword(text: str, keywords: list[str]) -> str:
+    start_pos = None
     for keyword in keywords:
         match = re.search(re.escape(keyword), text)
         start_pos = None
         if match and (start_pos is None or start_pos > match.start()):
-            start_pos = match.start()
-        if start_pos is not None:
-            return text[:start_pos]
+            start_pos = match.start() if start_pos is None or start_pos > match.start() else start_pos
+    if start_pos is not None:
+        return text[:start_pos]
     return text
 
 

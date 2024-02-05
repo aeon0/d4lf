@@ -71,7 +71,7 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
 
     if img is None or len(img) == 0:
         Logger.warning("img provided to image_to_text() is empty!")
-        return OcrResult(), [] if line_boxes else ""
+        return OcrResult("", "", word_confidences=0, mean_confidence=0), [] if line_boxes else ""
 
     if do_pre_proc:
         pre_proced_img = pre_proc_img(img)

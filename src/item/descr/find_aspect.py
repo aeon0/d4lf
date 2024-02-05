@@ -24,7 +24,8 @@ def find_aspect(
     img_full_aspect = crop(img_item_descr, roi_aspect)
     # cv2.imwrite("img_full_aspect.png", img_full_aspect)
     concatenated_str = image_to_text(img_full_aspect).text.lower().replace("\n", " ")
-    cleaned_str = clean_str(concatenated_str)[:40]
+    # Note: If you adjust the [45:] it also needs to be adapted in the dataloader
+    cleaned_str = clean_str(concatenated_str)[:45]
 
     if rarity == ItemRarity.Legendary:
         found_key = closest_match(cleaned_str, Dataloader().aspect_dict)

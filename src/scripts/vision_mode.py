@@ -173,17 +173,24 @@ def vision_mode():
                     last_top_left_corner = None
                     continue
 
+                ignored_item = False
                 if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
                     Logger.info(f"Matched: Material")
-                    continue
+                    ignored_item = True
                 elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
                     Logger.info(f"Matched: Extracted Aspect")
-                    continue
+                    ignored_item = True
                 elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
                     Logger.info(f"Matched: Elixir")
-                    continue
+                    ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
                     match = False
+
+                if ignored_item:
+                    create_signal_rect(canvas, w, thick, "#00b3b3")
+                    root.update_idletasks()
+                    root.update()
+                    continue
 
                 if item_descr is not None:
                     res = Filter().should_keep(item_descr)

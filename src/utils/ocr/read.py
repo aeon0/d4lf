@@ -106,7 +106,7 @@ def pre_proc_img(input_img: np.ndarray) -> np.ndarray:
     # Convert the image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    gamma = 1.5
+    gamma = 1.8
     gamma_corrected = np.power(gray / 255.0, gamma) * 255.0
     gamma_corrected = gamma_corrected.astype(np.uint8)
 

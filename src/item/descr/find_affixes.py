@@ -61,7 +61,11 @@ def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[lis
 
 
 def find_affixes(
-    img_item_descr: np.ndarray, affix_bullets: list[TemplateMatch], bottom_limit: int, is_sigil: bool = False
+    img_item_descr: np.ndarray,
+    affix_bullets: list[TemplateMatch],
+    bottom_limit: int,
+    is_sigil: bool = False,
+    is_inherent: bool = False,
 ) -> tuple[list[Affix] | None, str]:
     affixes: list[Affix] = []
     if len(affix_bullets) == 0:
@@ -88,9 +92,9 @@ def find_affixes(
     affix_lines, line_pos = filter_affix_lines(affix_lines, line_pos)
     paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
 
-    if is_sigil and len(paragraphs) == 2:
-        # A bit of a hack to remove the "revives allowed" affix as it is not part of the generated affix list...
-        paragraphs = paragraphs[:-1]
+    if is_sigil and is_inherent:
+        # A bit of a hack to remove the "revives allowed" and monster level affix as it is not part of the generated affix list...
+        paragraphs = paragraphs[:1]
 
     for combined_lines in paragraphs:
         for error, correction in Dataloader().error_map.items():
@@ -99,7 +103,7 @@ def find_affixes(
 
         if is_sigil:
             # A bit of a hack to match the locations...
-            if len(affix_bullets) == 2:
+            if is_inherent:
                 cleaned_str = remove_text_after_first_keyword(cleaned_str, [" in "])
             found_key = closest_match(cleaned_str, Dataloader().affix_sigil_dict)
         else:

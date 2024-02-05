@@ -109,95 +109,17 @@ BASE_PATH = "test/assets/item"
             Item(
                 ItemRarity.Common,
                 ItemType.Sigil,
-                100,
+                89,
                 None,
                 [
                     Affix("lightning_damage", 15),
-                    Affix("death_pulse"),
-                    Affix("monster_lightning_damage", 20),
-                    Affix("monster_life", 30),
+                    Affix("blood_blister"),
+                    Affix("monster_poison_damage", 30),
+                    Affix("monster_critical_resist", 3),
                     Affix("potion_breakers", 0.75),
                 ],
                 [
-                    Affix("tormented_ruins"),
-                ],
-            ),
-        ),
-        (
-            (1920, 1080),
-            f"{BASE_PATH}/read_descr_sigil_1080p_2.png",
-            Item(
-                ItemRarity.Common,
-                ItemType.Sigil,
-                100,
-                None,
-                [
-                    Affix("lightning_damage", 15),
-                    Affix("drifting_shade"),
-                    Affix("monster_lightning_damage", 20),
-                    Affix("monster_critical_resist", 3),
-                    Affix("unstoppable_monsters", 30),
-                ],
-                [
-                    Affix("crusaders_cathedral"),
-                ],
-            ),
-        ),
-        (
-            (1920, 1080),
-            f"{BASE_PATH}/read_descr_sigil_1080p_3.png",
-            Item(
-                ItemRarity.Common,
-                ItemType.Sigil,
-                45,
-                None,
-                [
-                    Affix("quick_killer", 2),
-                    Affix("empowered_elites_poison_enchanted"),
-                    Affix("monster_cold_damage", 20),
-                    Affix("ranged_defenders", 60),
-                    Affix("barrier_breakers", 100),
-                ],
-                [
-                    Affix("ghoa_ruins"),
-                ],
-            ),
-        ),
-        (
-            (1920, 1080),
-            f"{BASE_PATH}/read_descr_sigil_1080p_4.png",
-            Item(
-                ItemRarity.Common,
-                ItemType.Sigil,
-                45,
-                None,
-                [
-                    Affix("fire_damage", 15),
-                    Affix("nightmare_portal"),
-                    Affix("monster_burning_damage", 30),
-                    Affix("monsters_lightning_resist", 40),
-                    Affix("backstabbers", 35),
-                ],
-                [
-                    Affix("steadfast_barracks"),
-                ],
-            ),
-        ),
-        (
-            (1920, 1080),
-            f"{BASE_PATH}/read_descr_sigil_1080p_5.png",
-            Item(
-                ItemRarity.Common,
-                ItemType.Sigil,
-                9,
-                None,
-                [
-                    Affix("increased_critical_strike", 6),
-                    Affix("empowered_elites_poison_enchanted"),
-                    Affix("monster_shadow_damage", 15),
-                ],
-                [
-                    Affix("belfry_zakara"),
+                    Affix("wretched_delve"),
                 ],
             ),
         ),

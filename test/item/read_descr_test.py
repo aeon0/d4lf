@@ -70,6 +70,25 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_legendary_1440p_2.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Mace2H,
+                600,
+                Aspect("of_the_stampede", 26),
+                [
+                    Affix("damage_over_time", 14),
+                    Affix("basic_skill_damage", 39),
+                    Affix("damage_to_crowd_controlled_enemies", 13),
+                    Affix("damage_to_poisoned_enemies", 9),
+                ],
+                [
+                    Affix("overpower_damage", 62),
+                ],
+            ),
+        ),
+        (
             (1920, 1080),
             f"{BASE_PATH}/read_descr_rare_1080p_2.png",
             Item(
@@ -263,7 +282,7 @@ BASE_PATH = "test/assets/item"
                 [
                     Affix("lightning_resistance", 31),
                     Affix("damage_reduction_while_injured", 18.5),
-                    Affix("dodge_chance", 48),  # Note: Wrongly detected...
+                    Affix("dodge_chance", 4.8),
                     Affix("control_impaired_duration_reduction", 10.5),
                 ],
                 [

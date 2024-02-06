@@ -199,6 +199,6 @@
         "shadow_damage": "shadow damage you deal more shadow damage.",
         "control_impaired_explosions": "control impaired explosions being hit by control impairing effects creates an explosion around you.",
         "thorns": "thorns after attacking an enemy, your thorns are increased by for seconds, up to at max stacks.",
-		"ancestors_favour": "extra lunar shrines and more glyph experience earned at the end of this dungeon."
+	"ancestors_favour": "extra lunar shrines and more glyph experience earned at the end of this dungeon."
     }
 }

@@ -1,10 +1,7 @@
 import cv2
 import template_finder
 
-from utils.window import find_and_set_window_position
 from utils.misc import is_in_roi
-
-find_and_set_window_position()
 
 
 def test_search():

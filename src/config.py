@@ -36,6 +36,12 @@ class Config:
                     cls._instance.load_data()
         return cls._instance
 
+    @classmethod
+    def reset(cls):
+        with config_lock:
+            cls._instance.data_loaded = False
+            cls._instance = None
+
     def _select_optional(self, section: string, key: string, default=None, condition=None):
         try:
             return self._select_val(section=section, key=key)
@@ -100,14 +106,15 @@ class Config:
         for key in self.configs["game"]["parser"]["colors"]:
             self.colors[key] = np.split(np.array([int(x) for x in self._select_val("colors", key).split(",")]), 2)
 
-        for key in self.configs["game_res"]["parser"]["ui_pos"]:
-            self.ui_pos[key] = tuple(int(val) for val in self._select_val("ui_pos", key).split(","))
+        if "ui_pos" in self.configs["game_res"]["parser"]:
+            for key in self.configs["game_res"]["parser"]["ui_pos"]:
+                self.ui_pos[key] = tuple(int(val) for val in self._select_val("ui_pos", key).split(","))
 
-        for key in self.configs["game_res"]["parser"]["ui_offsets"]:
-            self.ui_offsets[key] = int(self._select_val("ui_offsets", key))
+            for key in self.configs["game_res"]["parser"]["ui_offsets"]:
+                self.ui_offsets[key] = int(self._select_val("ui_offsets", key))
 
-        for key in self.configs["game_res"]["parser"]["ui_roi"]:
-            self.ui_roi[key] = np.array([int(x) for x in self._select_val("ui_roi", key).split(",")])
+            for key in self.configs["game_res"]["parser"]["ui_roi"]:
+                self.ui_roi[key] = np.array([int(x) for x in self._select_val("ui_roi", key).split(",")])
 
 
 if __name__ == "__main__":

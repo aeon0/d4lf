@@ -1,5 +1,5 @@
 import os
-from utils.window import start_detecting_window
+from utils.window import start_detecting_window, WindowSpec
 from beautifultable import BeautifulTable
 import logging
 import os
@@ -29,7 +29,9 @@ def main():
         os.makedirs(dir_name, exist_ok=True)
 
     Logger.init(logging.INFO)
-    start_detecting_window()
+    win_spec = WindowSpec(Config().advanced_options["window_name"], Config().advanced_options["process_name"])
+    Config().reset()
+    start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         wait(0.2)
 

@@ -280,24 +280,3 @@ class mouse:
     @staticmethod
     def is_pressed(button):
         return _mouse.is_pressed(button)
-
-
-if __name__ == "__main__":
-    import os
-    import keyboard
-    from utils.window import find_and_set_window_position
-
-    keyboard.add_hotkey("f12", lambda: os._exit(1))
-    keyboard.wait("f11")
-    find_and_set_window_position()
-    move_to_ok = Cam().window_to_monitor((400, 420))
-    move_to_bad_equiped = Cam().window_to_monitor((900, 170))
-    move_to_bad_inventory = Cam().window_to_monitor((1200, 400))
-    mouse.move(*move_to_ok)
-    mouse.click("left")
-    time.sleep(1)
-    mouse.move(*move_to_bad_equiped)
-    mouse.click("left")
-    time.sleep(1)
-    mouse.move(*move_to_bad_inventory)
-    mouse.click("left")

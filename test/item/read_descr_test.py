@@ -389,6 +389,25 @@ BASE_PATH = "test/assets/item"
                 [],
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Legs,
+                858,
+                Aspect("protecting", 3),
+                [
+                    Affix("lightning_resistance", 31),
+                    Affix("damage_reduction_while_injured", 18.5),
+                    Affix("dodge_chance", 4.8),
+                    Affix("control_impaired_duration_reduction", 10.5),
+                ],
+                [
+                    Affix("while_injured_your_potion_also_grants_movement_speed_for_seconds", 30),
+                ],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

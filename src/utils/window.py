@@ -35,16 +35,13 @@ class WindowSpec:
         return _get_window_name_from_id(hwnd) == self.window_name and _get_process_from_window_name(hwnd) == self.process_name
 
 
-D4_WINDOW = WindowSpec("Diablo IV", "Diablo IV.exe")
-
-
 def _list_active_window_ids() -> list[int]:
     window_list = []
     EnumWindows(lambda w, l: l.append(w), window_list)
     return window_list
 
 
-def get_window_spec_id(window_spec: WindowSpec = D4_WINDOW) -> int | None:
+def get_window_spec_id(window_spec: WindowSpec) -> int | None:
     for hwnd in _list_active_window_ids():
         if window_spec.match(hwnd):
             return hwnd
@@ -59,23 +56,23 @@ def _get_process_from_window_name(hwnd: int) -> str:
     return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name()
 
 
-def start_detecting_window(window_spec: WindowSpec = D4_WINDOW):
+def start_detecting_window(window_spec: WindowSpec):
     global detecting_window_flag, detect_window_thread
     if detect_window_thread is None:
         Logger.info(f"Using WinAPI to search for window: {window_spec.process_name}")
         detecting_window_flag = True
-        detect_window_thread = threading.Thread(target=detect_window)
+        detect_window_thread = threading.Thread(target=detect_window, args=(window_spec,))
         detect_window_thread.start()
 
 
-def detect_window(window_spec: WindowSpec = D4_WINDOW):
+def detect_window(window_spec: WindowSpec):
     global detecting_window_flag
     while detecting_window_flag:
         find_and_set_window_position(window_spec)
     Logger.debug("Detect window thread stopped")
 
 
-def find_and_set_window_position(window_spec: WindowSpec = D4_WINDOW):
+def find_and_set_window_position(window_spec: WindowSpec):
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
         pos = GetClientRect(hwnd)
@@ -92,14 +89,14 @@ def stop_detecting_window():
     detect_window_thread = None
 
 
-def move_window_to_foreground(window_spec: WindowSpec = D4_WINDOW):
+def move_window_to_foreground(window_spec: WindowSpec):
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
         ctypes.windll.user32.ShowWindow(hwnd, 5)
         ctypes.windll.user32.SetForegroundWindow(hwnd)
 
 
-def is_window_foreground(window_spec: WindowSpec = D4_WINDOW) -> bool:
+def is_window_foreground(window_spec: WindowSpec) -> bool:
     hwnd = get_window_spec_id(window_spec)
     if hwnd is not None:
         active_window_handle = ctypes.windll.user32.GetForegroundWindow()

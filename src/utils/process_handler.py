@@ -1,7 +1,6 @@
 import os
 import ctypes
-from utils.misc import wait
-from utils.window import get_window_spec_id, D4_WINDOW
+from utils.window import get_window_spec_id
 from logger import Logger
 
 
@@ -18,7 +17,7 @@ def safe_exit(error_code=0):
     os._exit(error_code)
 
 
-def set_process_name(name, window_spec=D4_WINDOW):
+def set_process_name(name, window_spec):
     try:
         hwnd = get_window_spec_id(window_spec)
         kernel32 = ctypes.WinDLL("kernel32")

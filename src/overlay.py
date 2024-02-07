@@ -1,6 +1,6 @@
 import tkinter as tk
 import threading
-from utils.window import move_window_to_foreground
+from utils.window import move_window_to_foreground, WindowSpec
 from loot_filter import run_loot_filter
 from version import __version__
 from utils.process_handler import kill_thread
@@ -155,7 +155,8 @@ class Overlay:
         else:
             self.show_canvas(None)
             self.toggle_button.config(text="min")
-        move_window_to_foreground()
+        win_spec = WindowSpec(Config().advanced_options["window_name"], Config().advanced_options["process_name"])
+        move_window_to_foreground(win_spec)
 
     def filter_items(self):
         if lock.acquire(blocking=False):

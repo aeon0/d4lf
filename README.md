@@ -59,6 +59,8 @@ The config folder contains:
 | exit_key | Hotkey to exit d4lf.exe |
 | log_level | Logging level. Can be any of [debug, info, warning, error] |
 | scripts | Running different scripts |
+| window_name | Name of the D4 window. Defaults to "Diablo IV". In case of using some remote play this might need to be adapted |
+| process_name | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
 
 ## How to filter
 

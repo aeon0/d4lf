@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
@@ -18,7 +18,7 @@
         },
         {
             "name": "Loot Filter",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "src/main.py",
             "console": "integratedTerminal",
@@ -30,7 +30,7 @@
         },
         {
             "name": "Gen ini Files",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "src/tools/gen_game_config.py",
             "console": "integratedTerminal",
@@ -42,7 +42,7 @@
         },
         {
             "name": "Gen assets",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "src/tools/gen_data.py",
             "args": ["../d4data", "../Diablo4Companion"],
@@ -52,6 +52,19 @@
             "env": {
                 "PYDEVD_DISABLE_FILE_VALIDATION": "1"
             }
-        }
+        },
+        {
+            "name": "Build .exe",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "build.py",
+            "args": [],
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYDEVD_DISABLE_FILE_VALIDATION": "1"
+            }
+        },
     ]
 }

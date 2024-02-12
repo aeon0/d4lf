@@ -1,16 +1,17 @@
-from item.models import Item
-from dataclasses import dataclass, field
-import yaml
-import json
 import os
 import time
+from dataclasses import dataclass, field
 from pathlib import Path
-from logger import Logger
+
+import yaml
+
 from config import Config
 from dataloader import Dataloader
+from item.data.affix import Affix
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
-from item.data.affix import Affix
+from item.models import Item
+from logger import Logger
 
 
 @dataclass
@@ -228,28 +229,27 @@ class Filter:
 
         for affix in filter_affix_pool:
             if isinstance(affix, dict) and "any_of" in affix:
+                filter_min_affix_count = affix["minAffixCount"] if "minAffixCount" in affix and affix["minAffixCount"] is not None else 1
                 any_of_matched = self._match_affixes(affix["any_of"], item_affix_pool)
-                if len(any_of_matched) > 0:
-                    name = any_of_matched[0]
-                    item_affix_pool = [a for a in item_affix_pool if a.type != name]
-                    matched_affixes.append(name)
+                if len(any_of_matched) >= filter_min_affix_count:
+                    matched_affixes.extend(any_of_matched)
             else:
                 name, *rest = affix if isinstance(affix, list) else [affix]
                 threshold = rest[0] if rest else None
                 condition = rest[1] if len(rest) > 1 else "larger"
 
-                item_affix_value = next((a.value for a in item_affix_pool if a.type == name), None)
-                if item_affix_value is not None:
-                    if (
-                        threshold is None
-                        or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
-                        or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
-                    ):
-                        item_affix_pool = [a for a in item_affix_pool if a.type != name]
-                        matched_affixes.append(name)
-                elif any(a.type == name for a in item_affix_pool):
-                    item_affix_pool = [a for a in item_affix_pool if a.type != name]
-                    matched_affixes.append(name)
+                item_affix = next((a for a in item_affix_pool if a.type == name), None)
+                if item_affix is None:  # affix not found
+                    continue
+                # affix has no value or value isn't as desired
+                if item_affix.value is not None and not (
+                    threshold is None
+                    or (isinstance(condition, str) and condition == "larger" and item_affix.value >= threshold)
+                    or (isinstance(condition, str) and condition == "smaller" and item_affix.value <= threshold)
+                ):
+                    continue
+                # all other cases are good
+                matched_affixes.append(name)
         return matched_affixes
 
     def should_keep(self, item: Item) -> FilterResult:
@@ -284,14 +284,14 @@ class Filter:
                         filter_min_affix_count = (
                             filter_data["minAffixCount"]
                             if "minAffixCount" in filter_data and filter_data["minAffixCount"] is not None
-                            else 0
+                            else 1
                         )
                         power_ok = self._check_power(filter_data, item)
                         type_ok = self._check_item_type(filter_data, item)
                         if not power_ok or not type_ok:
                             continue
                         matched_affixes = self._match_affixes(filter_data["affixPool"], item.affixes)
-                        affixes_ok = filter_min_affix_count is None or len(matched_affixes) >= filter_min_affix_count
+                        affixes_ok = len(matched_affixes) >= filter_min_affix_count
                         inherent_ok = True
                         matched_inherent = []
                         if "inherentPool" in filter_data:

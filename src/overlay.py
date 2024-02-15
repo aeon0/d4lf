@@ -155,7 +155,7 @@ class Overlay:
         else:
             self.show_canvas(None)
             self.toggle_button.config(text="min")
-        win_spec = WindowSpec(Config().advanced_options["window_name"], Config().advanced_options["process_name"])
+        win_spec = WindowSpec(Config().advanced_options["process_name"])
         move_window_to_foreground(win_spec)
 
     def filter_items(self):

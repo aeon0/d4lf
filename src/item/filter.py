@@ -332,9 +332,7 @@ class Filter:
                     res.keep = True
                     Logger.info(f"Matched {profile_name}.{sub_filter_name}: {matched_affixes + matched_inherent}")
                     res.keep = True
-                    res.matched.append(
-                        MatchedFilter(f"{profile_name}.{sub_filter_name}", matched_affixes + matched_inherent)
-                    )
+                    res.matched.append(MatchedFilter(f"{profile_name}.{sub_filter_name}", matched_affixes + matched_inherent))
 
         return res
 

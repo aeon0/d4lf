@@ -101,6 +101,11 @@ unique = {
             ],
         },
         {
+            "aspect": ["soulbrand", 20],
+            "minPower": 900,
+            "affixPool": [["attack_speed", 8.4]],
+        },
+        {
             "aspect": ["soulbrand", 15, "smaller"],
         },
     ]

@@ -50,6 +50,19 @@ uniques = [
         ),
     ),
     (
+        "only filter one affix",
+        ["test.soulbrand"],
+        TestUnique(
+            aspect=Aspect(type="soulbrand", value=22),
+            affixes=[
+                Affix(type="attack_speed", value=9.6),
+                Affix(type="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=13.5),
+                Affix(type="maximum_life", value=638),
+                Affix(type="maximum_essence", value=8),
+            ],
+        ),
+    ),
+    (
         "ok_1",
         ["test.lidless_wall"],
         TestUnique(

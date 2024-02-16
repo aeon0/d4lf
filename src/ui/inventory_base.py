@@ -48,8 +48,6 @@ class InventoryBase(Menu):
             - Centers of the empty slots
         """
         if img is None:
-            mouse.move(*Cam().abs_window_to_monitor((0, -int(Cam().window_roi["height"] * 0.4))), randomize=5)
-            wait(0.5)
             img = Cam().grab()
         grid = to_grid(self.slots_roi, self.rows, self.columns)
         occupied_slots = []

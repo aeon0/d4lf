@@ -157,6 +157,18 @@ Sigils:
     - armor_breakers
     - resistance_breakers
 ```
+If you want to filter for a specific affix or location, you can also use the `whitelist` key. Even if `whitelist` is present, `blacklist` will be used to discard sigils that match any of the blacklisted affixes or locations.
+The following example will only keep sigils for `vault_of_the_forsaken` without the one or both of the affixes `armor_breakers` and `resistance_breakers`. All others are marked as junk.
+```yaml
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    - armor_breakers
+    - resistance_breakers
+  whitelist:
+    - vault_of_the_forsaken
+```
 
 ## Custom configs
 D4LF will look for __params.ini__ and for __profiles/*.yaml__ also in C:/Users/WINDOWS_USER/.d4lf. All values in params.ini will overwrite the value from the param.ini in the D4LF folder. In the profiles folder additional custom profiles can be added and used.

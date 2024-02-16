@@ -1,14 +1,16 @@
+import json
 from dataclasses import dataclass, field
-from item.data.aspect import Aspect
-from item.data.rarity import ItemRarity
-from item.data.item_type import ItemType
+
 from item.data.affix import Affix
+from item.data.aspect import Aspect
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
 from logger import Logger
 
 
 @dataclass
 class Item:
-    rarity: ItemRarity
+    rarity: ItemRarity | None = None
     type: ItemType | None = None
     power: int | None = None
     aspect: Aspect | None = None
@@ -53,3 +55,17 @@ class Item:
             same = False
             Logger.debug("Inherent Affixes do not match")
         return same
+
+
+class ItemJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Item):
+            return {
+                "rarity": o.rarity.value if o.rarity else None,
+                "type": o.type.value if o.type else None,
+                "power": o.power if o.power else None,
+                "aspect": o.aspect.__dict__ if o.aspect else None,
+                "affixes": [affix.__dict__ for affix in o.affixes],
+                "inherent": [affix.__dict__ for affix in o.inherent],
+            }
+        return super().default(o)

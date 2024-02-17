@@ -389,6 +389,23 @@ BASE_PATH = "test/assets/item"
                 [],
             ),
         ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p_3.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Mace2H,
+                700,
+                None,
+                [
+                    Affix("critical_strike_damage", 23),
+                    Affix("critical_strike_damage_with_werewolf_skills", 28),
+                    Affix("ultimate_skill_damage", 29),
+                    Affix("damage_to_crowd_controlled_enemies", 14),
+                ],
+                [Affix("overpower_damage", 75)],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

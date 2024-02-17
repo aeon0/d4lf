@@ -8,7 +8,12 @@ from config import Config
 from dataloader import Dataloader
 
 
-def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> tuple[Item | None, str]:
+def read_item_type(
+    item: Item,
+    img_item_descr: np.ndarray,
+    sep_short_match: TemplateMatch,
+    do_pre_proc: bool = True,
+) -> tuple[Item | None, str]:
     # Item Type and Item Power
     # =====================================
     # start_power = time.time()
@@ -16,7 +21,7 @@ def read_item_type(item: Item, img_item_descr: np.ndarray, sep_short_match: Temp
     _, img_width, _ = img_item_descr.shape
     roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
     crop_top = crop(img_item_descr, roi_top)
-    concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
+    concatenated_str = image_to_text(crop_top, do_pre_proc=do_pre_proc).text.lower().replace("\n", " ")
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
 

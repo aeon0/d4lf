@@ -425,6 +425,23 @@ BASE_PATH = "test/assets/item"
                 [Affix("overpower_damage", 75)],
             ),
         ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p_4.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Mace,
+                663,
+                None,
+                [
+                    Affix("lightning_critical_strike_damage", 10.5),
+                    Affix("critical_strike_damage_with_werewolf_skills", 11),
+                    Affix("overpower_damage_with_werebear_skills", 40.5),
+                    Affix("ultimate_skill_damage", 13),
+                ],
+                [Affix("overpower_damage", 37.5)],
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

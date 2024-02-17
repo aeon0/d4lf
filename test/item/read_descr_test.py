@@ -291,6 +291,25 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Dagger,
+                833,
+                Aspect("icy_alchemists", 2325),
+                [
+                    Affix("overpower_damage", 51),
+                    Affix("ultimate_skill_damage", 14),
+                    Affix("damage_to_slowed_enemies", 21.5),
+                    Affix("damage_to_enemies_affected_by_trap_skills", 9.5),
+                ],
+                [
+                    Affix("damage_to_close_enemies", 20),
+                ],
+            ),
+        ),
+        (
             (2560, 1440),
             f"{BASE_PATH}/read_descr_rare_1440p_2.png",
             Item(

@@ -1,11 +1,12 @@
-import keyboard
 import traceback
+
+import keyboard
+
 from cam import Cam
-from config import Config
-from ui.hud import Hud
-from ui.char_inventory import CharInventory
-from utils.misc import wait
 from logger import Logger
+from ui.char_inventory import CharInventory
+from ui.hud import Hud
+from utils.misc import wait
 
 
 def heal():

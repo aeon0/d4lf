@@ -1,9 +1,7 @@
-from typing import Optional
 from enum import Enum
+from typing import Optional
 
-import numpy as np
-
-from config import Config
+from config.ui import ResManager
 from logger import Logger
 
 
@@ -13,7 +11,7 @@ def compare_tuples(t1, t2, uncertainty):
 
 def create_roi_from_rel(point, rel_roi):
     if isinstance(rel_roi, str):
-        rel_roi = Config().ui_roi[rel_roi]
+        rel_roi = getattr(ResManager().roi, rel_roi)
     x, y = point
     rel_x, rel_y, w, h = rel_roi
     abs_x = x + rel_x

@@ -1,24 +1,22 @@
 import os
-from utils.window import start_detecting_window, WindowSpec
-from beautifultable import BeautifulTable
-import logging
-import os
-from pathlib import Path
 import traceback
-from utils.process_handler import safe_exit
-from version import __version__
-from config import Config
-from logger import Logger
-from utils.misc import wait
-from cam import Cam
-from overlay import Overlay
-import keyboard
-from utils.game_settings import is_fontsize_ok
-from item.filter import Filter
-from PIL import Image
-from utils.ocr.read import load_api
+from pathlib import Path
 
-t = Image.new("RGB", (100, 100))
+import keyboard
+from beautifultable import BeautifulTable
+
+from cam import Cam
+from config.loader import IniConfigLoader
+from config.ui import ResManager
+from item.filter import Filter
+from logger import Logger
+from overlay import Overlay
+from utils.game_settings import is_fontsize_ok
+from utils.misc import wait
+from utils.ocr.read import load_api
+from utils.process_handler import safe_exit
+from utils.window import start_detecting_window, WindowSpec
+from version import __version__
 
 
 def main():
@@ -28,21 +26,16 @@ def main():
     for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
-    Logger.init(logging.INFO)
-    win_spec = WindowSpec(Config().advanced_options["process_name"])
-    Config().reset()
+    Logger.init("info")
+    win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         wait(0.2)
 
-    if Config().advanced_options["log_lvl"] == "debug":
-        Logger.init(logging.DEBUG)
+    ResManager().set_resolution(Cam().res_key)
+    Logger.init(IniConfigLoader().advanced_options.log_lvl)
 
     load_api()
-
-    file_path = config_dir / "params.ini"
-    if not file_path.exists():
-        file_path.touch()
 
     if not is_fontsize_ok():
         Logger.warning("You do not have your font size set to small! The lootfilter might not work as intended.")
@@ -55,16 +48,16 @@ def main():
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
-    table.rows.append([Config().advanced_options["run_scripts"], "Run/Stop Vision Filter"])
-    table.rows.append([Config().advanced_options["run_filter"], "Run/Stop Auto Filter"])
-    table.rows.append([Config().advanced_options["exit_key"], "Exit"])
+    table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
+    table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
+    table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
     table.columns.header = ["hotkey", "action"]
     print(table)
     print("\n")
 
-    keyboard.add_hotkey(Config().advanced_options["run_scripts"], lambda: overlay.run_scripts() if overlay is not None else None)
-    keyboard.add_hotkey(Config().advanced_options["run_filter"], lambda: overlay.filter_items() if overlay is not None else None)
-    keyboard.add_hotkey(Config().advanced_options["exit_key"], lambda: safe_exit())
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
 
     overlay = Overlay()
     overlay.run()

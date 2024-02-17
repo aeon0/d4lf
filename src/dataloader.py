@@ -1,9 +1,9 @@
 import json
-import os
 import threading
-from logger import Logger
-from config import Config
+
+from config.loader import IniConfigLoader
 from item.data.item_type import ItemType
+from logger import Logger
 
 dataloader_lock = threading.Lock()
 
@@ -31,14 +31,10 @@ class Dataloader:
         return cls._instance
 
     def load_data(self):
-        if "language" not in Config().general:
-            Logger.error("Could not load assets. Config not initalized!")
-            os._exit(-1)
-
-        with open(f"assets/lang/{Config().general['language']}/affixes.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/affixes.json", "r", encoding="utf-8") as f:
             self.affix_dict: dict = json.load(f)
 
-        with open(f"assets/lang/{Config().general['language']}/sigils.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/sigils.json", "r", encoding="utf-8") as f:
             affix_sigil_dict_all = json.load(f)
             self.affix_sigil_dict = {
                 **affix_sigil_dict_all["dungeons"],
@@ -47,30 +43,30 @@ class Dataloader:
                 **affix_sigil_dict_all["positive"],
             }
 
-        with open(f"assets/lang/{Config().general['language']}/corrections.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/corrections.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             self.error_map = data["error_map"]
             self.filter_after_keyword = data["filter_after_keyword"]
             self.filter_words = data["filter_words"]
 
-        with open(f"assets/lang/{Config().general['language']}/aspects.json", "r") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :68, also adjust it in find_aspect.py
                 self.aspect_dict[key] = d["desc"][:68]
                 self.aspect_num_idx[key] = d["num_idx"]
 
-        with open(f"assets/lang/{Config().general['language']}/uniques.json", "r") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/uniques.json", "r") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :45, also adjust it in find_aspect.py
                 self.aspect_unique_dict[key] = d["desc"][:45]
                 self.aspect_unique_num_idx[key] = d["num_idx"]
 
-        with open(f"assets/lang/{Config().general['language']}/affixes.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/affixes.json", "r", encoding="utf-8") as f:
             self.affix_dict: dict = json.load(f)
 
-        with open(f"assets/lang/{Config().general['language']}/sigils.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/sigils.json", "r", encoding="utf-8") as f:
             affix_sigil_dict_all = json.load(f)
             self.affix_sigil_dict = {
                 **affix_sigil_dict_all["dungeons"],
@@ -79,7 +75,7 @@ class Dataloader:
                 **affix_sigil_dict_all["positive"],
             }
 
-        with open(f"assets/lang/{Config().general['language']}/item_types.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/item_types.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             for item, value in data.items():
                 if item in ItemType.__members__:
@@ -88,5 +84,5 @@ class Dataloader:
                 else:
                     Logger.warning(f"{item} type not in item_type.py")
 
-        with open(f"assets/lang/{Config().general['language']}/tooltips.json", "r", encoding="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/tooltips.json", "r", encoding="utf-8") as f:
             self.tooltips = json.load(f)

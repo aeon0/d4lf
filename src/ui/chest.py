@@ -1,11 +1,11 @@
-from config import Config
-from logger import Logger
-from ui.menu import ToggleMethod
-from ui.inventory_base import InventoryBase
 from cam import Cam
-from utils.misc import wait
+from config.ui import ResManager
+from logger import Logger
 from template_finder import SearchArgs
+from ui.inventory_base import InventoryBase
+from ui.menu import ToggleMethod
 from utils.custom_mouse import mouse
+from utils.misc import wait
 
 
 class Chest(InventoryBase):
@@ -28,7 +28,7 @@ class Chest(InventoryBase):
         Logger.info(f"Switch Stash Tab to: {tab_idx}")
         if tab_idx > 4:
             return False
-        x, y, w, h = Config().ui_roi["tab_slots_6"]
+        x, y, w, h = ResManager().roi.tab_slots_6
         section_length = w // NUMBER_TABS
         centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(NUMBER_TABS)]
         mouse.move(*Cam().window_to_monitor(centers[tab_idx]), randomize=2)

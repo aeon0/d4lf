@@ -1,11 +1,12 @@
-import numpy as np
 from copy import copy
+
+import numpy as np
+
+from config.ui import ResManager
 from item.data.rarity import ItemRarity
-from config import Config
 from template_finder import search, SearchResult
 from utils.image_operations import crop
 from utils.roi_operations import fit_roi_to_window_size
-
 
 map_template_rarity = {
     "item_unique_top_left": ItemRarity.Unique,
@@ -16,7 +17,7 @@ map_template_rarity = {
 }
 
 
-def choose_best_result(res_left: SearchResult, res_right: SearchResult) -> SearchResult:
+def _choose_best_result(res_left: SearchResult, res_right: SearchResult) -> SearchResult:
     if res_left.success and not res_right.success:
         return res_left
     elif res_right.success and not res_left.success:
@@ -24,31 +25,27 @@ def choose_best_result(res_left: SearchResult, res_right: SearchResult) -> Searc
     elif res_left.success and res_right.success:
         return res_left if res_left.matches[0].score > res_right.matches[0].score else res_right
     else:
-        return None
+        return SearchResult(success=False)
+
+
+def _template_search(img: np.ndarray, anchor: int, roi: np.ndarray):
+    roi_copy = copy(roi)
+    roi_copy[0] += anchor
+    ok, roi_left = fit_roi_to_window_size(roi_copy, ResManager().pos.window_dimensions)
+    if ok:
+        return search(ref=list(map_template_rarity.keys()), inp_img=img, roi=roi_left, threshold=0.8, mode="best")
+    return SearchResult(success=False)
 
 
 def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRarity, np.ndarray, tuple[int, int, int, int]]:
-    item_descr_width = Config().ui_offsets["item_descr_width"]
-    item_descr_pad = Config().ui_offsets["item_descr_pad"]
-    _, window_height = Config().ui_pos["window_dimensions"]
+    item_descr_width = ResManager().offsets.item_descr_width
+    item_descr_pad = ResManager().offsets.item_descr_pad
+    _, window_height = ResManager().pos.window_dimensions
 
-    refs = list(map_template_rarity.keys())
-    res_left = None
-    res_right = None
+    res_left = _template_search(img, anchor[0], ResManager().roi.rel_descr_search_left)
+    res_right = _template_search(img, anchor[0], ResManager().roi.rel_descr_search_right)
 
-    roi_left = copy(Config().ui_roi["rel_descr_search_left"])
-    roi_left[0] += anchor[0]
-    ok, roi_left = fit_roi_to_window_size(roi_left, Config().ui_pos["window_dimensions"])
-    if ok:
-        res_left = search(ref=refs, inp_img=img, roi=roi_left, threshold=0.8, mode="best")
-
-    roi_right = copy(Config().ui_roi["rel_descr_search_right"])
-    roi_right[0] += anchor[0]
-    ok, roi_right = fit_roi_to_window_size(roi_right, Config().ui_pos["window_dimensions"])
-    if ok:
-        res_right = search(ref=refs, inp_img=img, roi=roi_right, threshold=0.8, mode="best")
-
-    res = choose_best_result(res_left, res_right)
+    res = _choose_best_result(res_left, res_right)
 
     if res is not None and res.success:
         match = res.matches[0]
@@ -64,8 +61,8 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
         sep_short = search(refs, img, 0.68, roi, True, mode="first", do_multi_process=False)
 
         if sep_short.success:
-            off_bottom_of_descr = Config().ui_offsets["item_descr_off_bottom_edge"]
-            roi_height = Config().ui_pos["window_dimensions"][1] - (2 * off_bottom_of_descr) - match.region[1]
+            off_bottom_of_descr = ResManager().offsets.item_descr_off_bottom_edge
+            roi_height = ResManager().pos.window_dimensions[1] - (2 * off_bottom_of_descr) - match.region[1]
             if (res_bottom := search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.68, mode="best")).success:
                 roi_height = res_bottom.matches[0].center[1] - off_bottom_of_descr - match.region[1]
             crop_roi = [

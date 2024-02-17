@@ -1,7 +1,8 @@
-from config import Config
+from config.loader import IniConfigLoader
+from config.ui import ResManager
 from template_finder import SearchArgs
-from ui.menu import ToggleMethod
 from ui.inventory_base import InventoryBase
+from ui.menu import ToggleMethod
 
 
 class CharInventory(InventoryBase):
@@ -11,10 +12,10 @@ class CharInventory(InventoryBase):
         self.is_open_search_args: SearchArgs = SearchArgs(
             ref=["sort_icon", "sort_icon_hover"],
             threshold=0.8,
-            roi=Config().ui_roi["sort_icon"],
+            roi=ResManager().roi.sort_icon,
             use_grayscale=False,
         )
-        self.open_hotkey = Config().char["inventory"]
+        self.open_hotkey = IniConfigLoader().char.inventory
         self.open_method = ToggleMethod.HOTKEY
         self.close_hotkey = "esc"
         self.close_method = ToggleMethod.HOTKEY

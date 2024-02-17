@@ -1,11 +1,11 @@
 import numpy as np
-import json
-from item.models import Item, ItemRarity, ItemType
-from utils.ocr.read import image_to_text
-from utils.image_operations import crop, color_filter
-from template_finder import TemplateMatch
-from config import Config
+
+from config.ui import COLORS
 from dataloader import Dataloader
+from item.models import Item, ItemRarity, ItemType
+from template_finder import TemplateMatch
+from utils.image_operations import crop, color_filter
+from utils.ocr.read import image_to_text
 
 
 def read_item_type(
@@ -31,7 +31,7 @@ def read_item_type(
         item.type = ItemType.Sigil
     elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
         # We check if it is a material
-        mask, _ = color_filter(crop_top, Config().colors[f"material_color"], False)
+        mask, _ = color_filter(crop_top, COLORS.material_color, False)
         mean_val = np.mean(mask)
         if mean_val > 2.0:
             item.type = ItemType.Material
@@ -44,7 +44,7 @@ def read_item_type(
     else:
         item = _find_item_power_and_type(item, concatenated_str)
         if item.type is None:
-            masked_red, _ = color_filter(crop_top, Config().colors[f"unusable_red"], False)
+            masked_red, _ = color_filter(crop_top, COLORS.unusable_red, False)
             crop_top[masked_red == 255] = [235, 235, 235]
             concatenated_str = image_to_text(crop_top).text.lower().replace("\n", " ")
             item = _find_item_power_and_type(item, concatenated_str)

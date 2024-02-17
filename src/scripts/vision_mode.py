@@ -1,21 +1,22 @@
-import numpy as np
+import tkinter as tk
 import traceback
+
+import numpy as np
+
 from cam import Cam
+from config.ui import ResManager
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
+from item.descr.read_descr import read_descr
+from item.filter import Filter
+from item.find_descr import find_descr
+from logger import Logger
 from ui.char_inventory import CharInventory
 from ui.chest import Chest
 from utils.custom_mouse import mouse
-from utils.misc import wait
-from logger import Logger
-from item.find_descr import find_descr
-from item.descr.read_descr import read_descr
-from item.data.rarity import ItemRarity
-from item.data.item_type import ItemType
-from item.filter import Filter
-import tkinter as tk
-from config import Config
-
-from utils.ocr.read import image_to_text
 from utils.image_operations import crop
+from utils.misc import wait
+from utils.ocr.read import image_to_text
 
 
 def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
@@ -31,7 +32,7 @@ def draw_text(canvas, text, color, h, off, center) -> int:
     if text is None or text == "":
         return
     font_size = 13
-    window_height = Config().ui_pos["window_dimensions"][1]
+    window_height = ResManager().pos.window_dimensions[1]
     if window_height == 1440:
         font_size = 15
     elif window_height == 1600:
@@ -66,7 +67,7 @@ def reset_canvas(root, canvas):
 
 
 def is_vendor_open(img: np.ndarray):
-    cropped = crop(img, Config().ui_roi["vendor_text"])
+    cropped = crop(img, ResManager().roi.vendor_text)
     res = image_to_text(cropped, do_pre_proc=False)
     return res.text.strip().lower() == "vendor"
 
@@ -114,9 +115,9 @@ def vision_mode():
     possible_centers += [slot.center for slot in empty_inv]
     possible_centers += [slot.center for slot in occ_chest]
     possible_centers += [slot.center for slot in empty_chest]
-    # add possible centers of equiped items
-    for i in range(0, 13):
-        possible_centers.append(Config().ui_pos[f"possible_centers_{i}"])
+    # add possible centers of equipped items
+    for x in ResManager().pos.possible_centers:
+        possible_centers.append(x)
     possible_centers = np.array(possible_centers)
 
     screen_off_x = Cam().window_roi["left"]
@@ -135,7 +136,7 @@ def vision_mode():
         item_center = possible_centers[closest_index]
         found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
         if not found and is_vendor_open(img):
-            vendor_item_center = [Config().ui_offsets["vendor_center_item_x"], 0]
+            vendor_item_center = [ResManager().offsets.vendor_center_item_x, 0]
             found, rarity, cropped_descr, item_roi = find_descr(img, vendor_item_center)
 
         top_left_corner = None if not found else item_roi[:2]
@@ -158,7 +159,7 @@ def vision_mode():
                 canvas.config(height=h, width=w)
                 create_signal_rect(canvas, w, thick, "#888888")
 
-                root.geometry(f"{w}x{h}+{x+screen_off_x}+{y+screen_off_y}")
+                root.geometry(f"{w}x{h}+{x + screen_off_x}+{y + screen_off_y}")
                 root.update_idletasks()
                 root.update()
 
@@ -229,11 +230,15 @@ def vision_mode():
 
 if __name__ == "__main__":
     try:
-        from utils.window import start_detecting_window
+        from config.loader import IniConfigLoader
+        from utils.window import WindowSpec, start_detecting_window
 
-        start_detecting_window()
+        Logger.init("debug")
+        win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
+        start_detecting_window(win_spec)
         while not Cam().is_offset_set():
             wait(0.2)
+        ResManager().set_resolution(Cam().res_key)
         Filter().load_files()
         vision_mode()
     except:

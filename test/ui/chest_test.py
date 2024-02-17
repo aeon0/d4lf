@@ -1,10 +1,10 @@
-import pytest
 import cv2
-from ui.chest import Chest
-from cam import Cam
-from config import Config
-from template_finder import stored_templates
+import pytest
 
+from cam import Cam
+from config.ui import ResManager
+from template_finder import stored_templates
+from ui.chest import Chest
 
 BASE_PATH = "test/assets/ui"
 
@@ -17,7 +17,7 @@ BASE_PATH = "test/assets/ui"
 )
 def test_chest(img_res, input_img):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    Config().load_data()
+    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread(input_img)
     inv = Chest()

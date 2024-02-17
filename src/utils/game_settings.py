@@ -1,10 +1,11 @@
 import os
-from config import Config
+
+from config.loader import IniConfigLoader
 from logger import Logger
 
 
 def is_fontsize_ok() -> bool:
-    custom_path = Config().general["local_prefs_path"]
+    custom_path = IniConfigLoader().general.local_prefs_path
     user_dir = os.path.expanduser("~")
     default_path = f"{user_dir}\\Documents\\Diablo IV/LocalPrefs.txt"
     file_path = custom_path if custom_path != "" else default_path

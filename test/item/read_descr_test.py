@@ -291,6 +291,25 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
+            Item(
+                ItemRarity.Legendary,
+                ItemType.Dagger,
+                833,
+                Aspect("icy_alchemists", 2325),
+                [
+                    Affix("overpower_damage", 51),
+                    Affix("ultimate_skill_damage", 14),
+                    Affix("damage_to_slowed_enemies", 21.5),
+                    Affix("damage_to_enemies_affected_by_trap_skills", 9.5),
+                ],
+                [
+                    Affix("damage_to_close_enemies", 20),
+                ],
+            ),
+        ),
+        (
             (2560, 1440),
             f"{BASE_PATH}/read_descr_rare_1440p_2.png",
             Item(
@@ -387,6 +406,40 @@ BASE_PATH = "test/assets/item"
                 804,
                 Aspect("razorplate", 11197),
                 [],
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p_3.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Mace2H,
+                700,
+                None,
+                [
+                    Affix("critical_strike_damage", 23),
+                    Affix("critical_strike_damage_with_werewolf_skills", 28),
+                    Affix("ultimate_skill_damage", 29),
+                    Affix("damage_to_crowd_controlled_enemies", 14),
+                ],
+                [Affix("overpower_damage", 75)],
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_rare_1440p_4.png",
+            Item(
+                ItemRarity.Rare,
+                ItemType.Mace,
+                663,
+                None,
+                [
+                    Affix("lightning_critical_strike_damage", 10.5),
+                    Affix("critical_strike_damage_with_werewolf_skills", 11),
+                    Affix("overpower_damage_with_werebear_skills", 40.5),
+                    Affix("ultimate_skill_damage", 13),
+                ],
+                [Affix("overpower_damage", 37.5)],
             ),
         ),
     ],

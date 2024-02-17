@@ -3,33 +3,33 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.11
+  - python=3.12
   - pywin32
   - pip
   - pkg-config
   - pip:
-    - pyinstaller
-    - opencv-python==4.8.1.78
-    - pytesseract==0.3.10
-    - rapidfuzz
-    - mss
-    - tk
-    - numpy
-    - mouse
-    - coverage
-    - keyboard
+    - Pillow
     - beautifultable
-    - pytweening
+    - black
+    - colorama
+    - coverage
+    - cryptography
+    - dependencies/tesserocr-2.6.2-cp312-cp312-win_amd64.whl
+    - keyboard
+    - mouse
+    - mss
+    - numpy
+    - opencv-python==4.8.1.78
+    - natsort
+    - parse
+    - pre-commit
+    - psutil
+    - pyinstaller
     - pytest
     - pytest-env
-    - pytest-pythonpath
     - pytest-mock
-    - psutil
-    - cryptography
-    - parse
-    - Pillow
+    - pytest-pythonpath
+    - pytweening
+    - rapidfuzz
+    - tk
     - typing_extensions
-    - colorama
-    - black
-    - pre-commit
-    - dependencies/tesserocr-2.6.0-cp311-cp311-win_amd64.whl

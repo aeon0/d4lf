@@ -29,7 +29,7 @@ def main():
         os.makedirs(dir_name, exist_ok=True)
 
     Logger.init(logging.INFO)
-    win_spec = WindowSpec(Config().advanced_options["window_name"], Config().advanced_options["process_name"])
+    win_spec = WindowSpec(Config().advanced_options["process_name"])
     Config().reset()
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():

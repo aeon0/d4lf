@@ -104,8 +104,7 @@ class Config:
                 self.advanced_options[key] = self._select_val("advanced_options", key)
 
         # NOTE: To make it backwards compatiable we need to fill these if not available
-        if "window_name" not in self.advanced_options.keys():
-            self.advanced_options["window_name"] = "Diablo IV"
+        if "process_name" not in self.advanced_options.keys():
             self.advanced_options["process_name"] = "Diablo IV.exe"
 
         for key in self.configs["game"]["parser"]["colors"]:

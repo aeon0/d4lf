@@ -14,7 +14,7 @@ from item.descr.find_aspect import find_aspect
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
-    item = Item(rarity)
+    base_item = Item(rarity)
 
     # Find textures for seperator short on top
     # =========================
@@ -27,7 +27,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Find item type and item power / tier list
     # =========================
-    item, item_type_str = read_item_type(item, img_item_descr, sep_short_match)
+    item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
+    # In case it was not successfull, try without doing image pre processing
+    if item is None:
+        item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
     if item is None:
         if show_warnings:
             Logger.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")

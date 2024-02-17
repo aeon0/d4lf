@@ -56,8 +56,8 @@ class Dataloader:
         with open(f"assets/lang/{Config().general['language']}/aspects.json", "r") as f:
             data = json.load(f)
             for key, d in data.items():
-                # Note: If you adjust the :45, also adjust it in find_aspect.py
-                self.aspect_dict[key] = d["desc"][:45]
+                # Note: If you adjust the :68, also adjust it in find_aspect.py
+                self.aspect_dict[key] = d["desc"][:68]
                 self.aspect_num_idx[key] = d["num_idx"]
 
         with open(f"assets/lang/{Config().general['language']}/uniques.json", "r") as f:

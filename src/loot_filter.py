@@ -1,19 +1,21 @@
 import time
-from utils.misc import wait
-from logger import Logger
-from cam import Cam
-from ui.char_inventory import CharInventory
-from ui.inventory_base import InventoryBase
-from ui.chest import Chest
-from item.find_descr import find_descr
-from item.descr.read_descr import read_descr
-from item.data.rarity import ItemRarity
-from item.data.item_type import ItemType
-from item.filter import Filter
+
 import keyboard
-from utils.custom_mouse import mouse
-from utils.window import screenshot
+
+from cam import Cam
 from config import Config
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
+from item.descr.read_descr import read_descr
+from item.filter import Filter
+from item.find_descr import find_descr
+from logger import Logger
+from ui.char_inventory import CharInventory
+from ui.chest import Chest
+from ui.inventory_base import InventoryBase
+from utils.custom_mouse import mouse
+from utils.misc import wait
+from utils.window import screenshot
 
 
 def check_items(inv: InventoryBase):
@@ -82,11 +84,13 @@ def check_items(inv: InventoryBase):
         res = Filter().should_keep(item_descr)
         matched_any_affixes = len(res.matched) > 0 and len(res.matched[0].matched_affixes) > 0
         Logger.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
-        # mark everything as junk
-        keyboard.send("space")
-        wait(0.13, 0.14)
-        if res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
+        if not res.keep:
+            keyboard.send("space")
+            wait(0.13, 0.14)
+        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
             Logger.info("Mark as favorite")
+            keyboard.send("space")
+            wait(0.13, 0.14)
             keyboard.send("space")
             wait(0.13, 0.14)
 

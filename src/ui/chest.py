@@ -34,5 +34,5 @@ class Chest(InventoryBase):
         mouse.move(*Cam().window_to_monitor(centers[tab_idx]), randomize=2)
         wait(0.5)
         mouse.click("left")
-        wait(1)
+        wait(0.5)
         return True

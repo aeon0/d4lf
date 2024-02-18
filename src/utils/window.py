@@ -57,7 +57,10 @@ def _get_window_name_from_id(hwnd: int) -> str:
 
 
 def _get_process_from_window_name(hwnd: int) -> str:
-    return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name()
+    try:
+        return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name()
+    except (psutil.NoSuchProcess, ProcessLookupError) as e:
+        return ""
 
 
 def start_detecting_window(window_spec: WindowSpec):

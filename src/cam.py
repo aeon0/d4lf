@@ -52,6 +52,7 @@ class Cam:
             "3840x1600",
             "3840x2160",
             "3840x1080",
+            "1280x800",
         ]:
             Logger.error(f"The resoltuion: {self.res_key} is not supported.")
             os._exit(0)

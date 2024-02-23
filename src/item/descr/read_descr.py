@@ -14,7 +14,7 @@ from item.descr.find_aspect import find_aspect
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
-    item = Item(rarity)
+    base_item = Item(rarity)
 
     # Find textures for seperator short on top
     # =========================
@@ -27,7 +27,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Find item type and item power / tier list
     # =========================
-    item, item_type_str = read_item_type(item, img_item_descr, sep_short_match)
+    item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
+    # In case it was not successfull, try without doing image pre processing
+    if item is None:
+        item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
     if item is None:
         if show_warnings:
             Logger.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")
@@ -69,6 +72,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
         item.inherent, debug_str = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil, True)
         if item.inherent is None:
+            item.inherent, debug_str = find_affixes(img_item_descr, inhernet_affixe_bullets, bottom_limit, is_sigil, True, False)
+        if item.inherent is None:
             if show_warnings:
                 Logger.warning(f"Could not find inherent: {debug_str}")
                 screenshot("failed_inherent", img=img_item_descr)
@@ -84,6 +89,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         bottom_limit = img_item_descr.shape[0]
     item.affixes, debug_str = find_affixes(img_item_descr, affix_bullets, bottom_limit, is_sigil)
     if item.affixes is None:
+        item.affixes, debug_str = find_affixes(img_item_descr, affix_bullets, bottom_limit, is_sigil, False, False)
+    if item.affixes is None:
         if show_warnings:
             Logger.warning(f"Could not find affix: {debug_str}")
             screenshot("failed_affixes", img=img_item_descr)
@@ -93,6 +100,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # =========================
     if rarity in [ItemRarity.Legendary, ItemRarity.Unique]:
         item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.type, item.rarity)
+        if item.aspect is None:
+            item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.type, item.rarity, False)
         if item.aspect is None:
             if show_warnings:
                 Logger.warning(f"Could not find aspect/unique: {debug_str}")

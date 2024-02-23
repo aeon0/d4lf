@@ -28,11 +28,11 @@ except Exception as e:
 
 @dataclass
 class WindowSpec:
-    window_name: str
     process_name: str
 
-    def match(self, hwnd: int) -> bool:
-        return _get_window_name_from_id(hwnd) == self.window_name and _get_process_from_window_name(hwnd) == self.process_name
+    def match(self, hwnd: int, check_window_name: bool = True) -> bool:
+        window_name_ok = not check_window_name or "diablo" in _get_window_name_from_id(hwnd).lower()
+        return _get_process_from_window_name(hwnd) == self.process_name and window_name_ok
 
 
 def _list_active_window_ids() -> list[int]:
@@ -44,6 +44,10 @@ def _list_active_window_ids() -> list[int]:
 def get_window_spec_id(window_spec: WindowSpec) -> int | None:
     for hwnd in _list_active_window_ids():
         if window_spec.match(hwnd):
+            return hwnd
+    # If no process was found with "diablo" in the window name, search without that restriction
+    for hwnd in _list_active_window_ids():
+        if window_spec.match(hwnd, check_window_name=False):
             return hwnd
     return None
 
@@ -123,4 +127,4 @@ def screenshot(name: str = None, path: str = "log/screenshots", img: np.ndarray 
 
 
 if __name__ == "__main__":
-    find_and_set_window_position(WindowSpec("Diablo IV", "Diablo IV.exe"))
+    find_and_set_window_position(WindowSpec("Diablo IV.exe"))

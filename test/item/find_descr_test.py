@@ -1,12 +1,13 @@
 import time
-import pytest
-import cv2
-from item.find_descr import find_descr
-from item.data.rarity import ItemRarity
-from cam import Cam
-from config import Config
-from template_finder import stored_templates
 
+import cv2
+import pytest
+
+from cam import Cam
+from config.ui import ResManager
+from item.data.rarity import ItemRarity
+from item.find_descr import find_descr
+from template_finder import stored_templates
 
 BASE_PATH = "test/assets/item"
 
@@ -23,7 +24,7 @@ BASE_PATH = "test/assets/item"
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    Config().load_data()
+    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread(input_img)
     start = time.time()

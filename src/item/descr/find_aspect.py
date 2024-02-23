@@ -1,17 +1,15 @@
 import numpy as np
-import json
-from config import Config
-from template_finder import TemplateMatch
+
+from dataloader import Dataloader
 from item.data.aspect import Aspect
-from item.data.rarity import ItemRarity
 from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
 from item.descr.text import clean_str, closest_match, find_number
-from utils.image_operations import crop
-from template_finder import TemplateMatch
-from utils.ocr.read import image_to_text
 from item.descr.texture import find_aspect_search_area
 from logger import Logger
-from dataloader import Dataloader
+from template_finder import TemplateMatch
+from utils.image_operations import crop
+from utils.ocr.read import image_to_text
 
 
 def find_aspect(

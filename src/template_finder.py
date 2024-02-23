@@ -1,19 +1,19 @@
+import concurrent.futures
 import os
 import threading
 import time
+from dataclasses import dataclass
 from functools import lru_cache
 
 import cv2
 import numpy as np
-import concurrent.futures
-from dataclasses import dataclass
 
 from cam import Cam
+from config.ui import COLORS, ResManager
 from logger import Logger
-from config import Config
 from utils.image_operations import alpha_to_mask, color_filter, crop
-from utils.roi_operations import get_center
 from utils.misc import load_img, list_files_in_folder, run_until_condition
+from utils.roi_operations import get_center
 
 templates_lock = threading.Lock()
 executor = concurrent.futures.ThreadPoolExecutor()
@@ -218,13 +218,13 @@ def search(
     future_list = []
     if isinstance(roi, str):
         try:
-            roi = Config().ui_roi[roi]
+            roi = getattr(ResManager().roi, roi)
         except KeyError as e:
             Logger.error(f"Invalid roi key: {roi}")
             Logger.error(e)
     if isinstance(color_match, str):
         try:
-            color_match = Config().colors[color_match]
+            color_match = getattr(COLORS, color_match)
         except KeyError as e:
             Logger.error(f"Invalid color_match key: {color_match}")
             Logger.error(e)

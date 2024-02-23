@@ -1,17 +1,18 @@
-import threading
 import ctypes
-from dataclasses import dataclass
-import time
-import psutil
-from win32gui import GetWindowText, EnumWindows, GetClientRect, GetWindowRect, ClientToScreen
-from win32process import GetWindowThreadProcessId
-from logger import Logger
-from utils.misc import wait
-from cam import Cam
 import os
+import threading
+import time
+from dataclasses import dataclass
+
 import cv2
 import numpy as np
+import psutil
+from win32gui import GetWindowText, EnumWindows, GetClientRect, ClientToScreen
+from win32process import GetWindowThreadProcessId
 
+from cam import Cam
+from logger import Logger
+from utils.misc import wait
 
 detecting_window_flag = True
 detect_window_thread = None
@@ -57,7 +58,10 @@ def _get_window_name_from_id(hwnd: int) -> str:
 
 
 def _get_process_from_window_name(hwnd: int) -> str:
-    return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name()
+    try:
+        return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name().lower()
+    except (psutil.NoSuchProcess, ProcessLookupError) as e:
+        return ""
 
 
 def start_detecting_window(window_spec: WindowSpec):
@@ -65,7 +69,7 @@ def start_detecting_window(window_spec: WindowSpec):
     if detect_window_thread is None:
         Logger.info(f"Using WinAPI to search for window: {window_spec.process_name}")
         detecting_window_flag = True
-        detect_window_thread = threading.Thread(target=detect_window, args=(window_spec,))
+        detect_window_thread = threading.Thread(target=detect_window, args=(window_spec,), daemon=True)
         detect_window_thread.start()
 
 

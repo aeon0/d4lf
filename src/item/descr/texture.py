@@ -1,13 +1,14 @@
 import numpy as np
-from config import Config
+
+from config.ui import COLORS, ResManager
 from item.data.rarity import ItemRarity
-from utils.image_operations import crop, color_filter
 from template_finder import search, TemplateMatch
+from utils.image_operations import crop, color_filter
 
 
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
-    roi = [0, 0, img_item_descr.shape[1], Config().ui_offsets["find_seperator_short_offset_top"]]
+    roi = [0, 0, img_item_descr.shape[1], ResManager().offsets.find_seperator_short_offset_top]
     if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
         return None
     sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
@@ -16,7 +17,7 @@ def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
 
 
 def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
-    roi_bullets = [0, sep_short_match.center[1], Config().ui_offsets["find_bullet_points_width"] + 20, img_height]
+    roi_bullets = [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
     return roi_bullets
 
 
@@ -55,16 +56,16 @@ def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 
 
 def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, rarity: ItemRarity) -> list[int]:
-    line_height = Config().ui_offsets["item_descr_line_height"]
+    line_height = ResManager().offsets.item_descr_line_height
     img_height, img_width = img_item_descr.shape[:2]
     offset_x = aspect_bullet.center[0] + int(line_height // 5)
     top = aspect_bullet.center[1] - int(line_height * 0.8)
     roi_aspect = [offset_x, top, int(img_width * 0.99) - offset_x, int(img_height * 0.95) - top]
     cropped_bottom = crop(img_item_descr, roi_aspect)
     if rarity == ItemRarity.Unique:
-        filtered, _ = color_filter(cropped_bottom, Config().colors["unique_gold"], False)
+        filtered, _ = color_filter(cropped_bottom, COLORS.unique_gold, False)
     else:
-        filtered, _ = color_filter(cropped_bottom, Config().colors["legendary_orange"], False)
+        filtered, _ = color_filter(cropped_bottom, COLORS.legendary_orange, False)
     bounding_values = np.nonzero(filtered)
     if len(bounding_values[0]) > 0:
         roi_aspect[3] = bounding_values[0].max() + int(line_height * 0.4)

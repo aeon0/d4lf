@@ -1,17 +1,17 @@
-import tkinter as tk
-import threading
-from utils.window import move_window_to_foreground, WindowSpec
-from loot_filter import run_loot_filter
-from version import __version__
-from utils.process_handler import kill_thread
-from logger import Logger
 import logging
-from scripts.rogue_tb import run_rogue_tb
-from scripts.heal import heal
-from scripts.vision_mode import vision_mode
-from config import Config
-from cam import Cam
+import threading
+import tkinter as tk
 
+from cam import Cam
+from config.loader import IniConfigLoader
+from config.ui import ResManager
+from logger import Logger
+from loot_filter import run_loot_filter
+from scripts.heal import heal
+from scripts.rogue_tb import run_rogue_tb
+from scripts.vision_mode import vision_mode
+from utils.process_handler import kill_thread
+from utils.window import move_window_to_foreground, WindowSpec
 
 # Usage
 lock = threading.Lock()
@@ -37,7 +37,7 @@ class Overlay:
         self.root = tk.Tk()
         self.root.title("LootFilter Overlay")
         self.root.attributes("-alpha", 0.94)
-        self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
+        self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
         self.root.overrideredirect(True)
         # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)
@@ -53,7 +53,7 @@ class Overlay:
         self.screen_off_y = Cam().window_roi["top"]
         self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
         self.root.geometry(
-            f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
+            f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
         )
         self.canvas.pack()
         self.root.bind("<Enter>", self.show_canvas)
@@ -90,7 +90,7 @@ class Overlay:
         self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
 
         font_size = 8
-        window_height = Config().ui_pos["window_dimensions"][1]
+        window_height = ResManager().pos.window_dimensions[1]
         if window_height == 1440:
             font_size = 9
         elif window_height > 1440:
@@ -119,7 +119,7 @@ class Overlay:
         listbox_handler.setLevel(Logger._logger_level)
         Logger.logger.addHandler(listbox_handler)
 
-        if Config().general["run_vision_mode_on_startup"]:
+        if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
 
     def show_canvas(self, event):
@@ -135,18 +135,18 @@ class Overlay:
         if self.is_minimized:
             if self.hide_id is not None:
                 self.root.after_cancel(self.hide_id)
-            self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", Config().general["hidden_transparency"]))
+            self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
 
     def toggle_size(self):
         if not self.is_minimized:
             self.canvas.config(height=self.initial_height, width=self.initial_width)
             self.root.geometry(
-                f"{self.initial_width}x{self.initial_height}+{self.screen_width//2 - self.initial_width//2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
             )
         else:
             self.canvas.config(height=self.maximized_height, width=self.maximized_width)
             self.root.geometry(
-                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width//2 - self.maximized_width//2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width // 2 - self.maximized_width // 2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
             )
         self.is_minimized = not self.is_minimized
         if self.is_minimized:
@@ -155,7 +155,7 @@ class Overlay:
         else:
             self.show_canvas(None)
             self.toggle_button.config(text="min")
-        win_spec = WindowSpec(Config().advanced_options["process_name"])
+        win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
     def filter_items(self):
@@ -207,10 +207,10 @@ class Overlay:
                         kill_thread(script_thread)
                     self.script_threads = []
                 else:
-                    if len(Config().advanced_options["scripts"]) == 0:
+                    if not IniConfigLoader().advanced_options.scripts:
                         Logger.info("No scripts configured")
                         return
-                    for name in Config().advanced_options["scripts"]:
+                    for name in IniConfigLoader().advanced_options.scripts:
                         if name == "rogue_tb":
                             rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
                             rogue_tb_thread.start()

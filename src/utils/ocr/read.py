@@ -1,15 +1,16 @@
 import time
+
 import cv2
 import numpy as np
-from PIL import Image
 from tesserocr import OEM, PyTessBaseAPI, RIL
-from config import Config
+
+from config.loader import IniConfigLoader
+from config.ui import COLORS
 from logger import Logger
 from utils.image_operations import color_filter
 from utils.ocr.models import OcrResult
 
 TESSDATA_PATH = "assets/tessdata"
-
 
 #   0    Orientation and script detection (OSD) only.
 #   1    Automatic page segmentation with OSD.
@@ -28,13 +29,15 @@ TESSDATA_PATH = "assets/tessdata"
 #           bypassing hacks that are Tesseract-specif
 
 API = None
+
+
 # supposed to give fruther runtime improvements, but reading performance really goes down...
 # API.SetVariable("tessedit_do_invert", "0")
 
 
 def load_api():
     global API
-    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=Config().general["language"])
+    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=IniConfigLoader().general.language)
 
 
 def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
@@ -97,7 +100,7 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
 
 def pre_proc_img(input_img: np.ndarray) -> np.ndarray:
     img = input_img.copy()
-    masked_red, _ = color_filter(img, Config().colors[f"unusable_red"], False)
+    masked_red, _ = color_filter(img, COLORS.unusable_red, False)
     contours, _ = cv2.findContours(masked_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for contour in contours:
         x, y, w, h = cv2.boundingRect(contour)

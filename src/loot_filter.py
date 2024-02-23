@@ -1,19 +1,21 @@
 import time
-from utils.misc import wait
-from logger import Logger
-from cam import Cam
-from ui.char_inventory import CharInventory
-from ui.inventory_base import InventoryBase
-from ui.chest import Chest
-from item.find_descr import find_descr
-from item.descr.read_descr import read_descr
-from item.data.rarity import ItemRarity
-from item.data.item_type import ItemType
-from item.filter import Filter
+
 import keyboard
+
+from cam import Cam
+from config.loader import IniConfigLoader
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
+from item.descr.read_descr import read_descr
+from item.filter import Filter
+from item.find_descr import find_descr
+from logger import Logger
+from ui.char_inventory import CharInventory
+from ui.chest import Chest
+from ui.inventory_base import InventoryBase
 from utils.custom_mouse import mouse
+from utils.misc import wait
 from utils.window import screenshot
-from config import Config
 
 
 def check_items(inv: InventoryBase):
@@ -88,7 +90,7 @@ def check_items(inv: InventoryBase):
         elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
             Logger.info("Mark as favorite")
             keyboard.send("space")
-            wait(0.26, 0.3)
+            wait(0.13, 0.14)
             keyboard.send("space")
             wait(0.13, 0.14)
 
@@ -98,9 +100,8 @@ def run_loot_filter():
     inv = CharInventory()
     chest = Chest()
 
-    check_tabs = Config().general["check_chest_tabs"]
     if chest.is_open():
-        for i in range(check_tabs):
+        for i in range(IniConfigLoader().general.check_chest_tabs):
             chest.switch_to_tab(i)
             check_items(chest)
         check_items(inv)

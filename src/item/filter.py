@@ -6,7 +6,7 @@ from typing import Any
 
 import yaml
 
-from config import Config
+from config.loader import IniConfigLoader
 from dataloader import Dataloader
 from item.data.affix import Affix
 from item.data.aspect import Aspect
@@ -87,7 +87,7 @@ class Filter:
         self.affix_filters = dict()
         self.aspect_filters = dict()
         self.unique_filters = dict()
-        profiles: list[str] = Config().general["profiles"]
+        profiles: list[str] = IniConfigLoader().general.profiles
 
         user_dir = os.path.expanduser("~")
         custom_profile_path = Path(f"{user_dir}/.d4lf/profiles")

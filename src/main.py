@@ -7,7 +7,6 @@ from beautifultable import BeautifulTable
 
 from cam import Cam
 from config.loader import IniConfigLoader
-from config.ui import ResManager
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
@@ -20,6 +19,7 @@ from version import __version__
 
 
 def main():
+    Logger.init(IniConfigLoader().advanced_options.log_lvl)
     # Create folders for logging stuff
     user_dir = os.path.expanduser("~")
     config_dir = Path(f"{user_dir}/.d4lf")
@@ -31,9 +31,6 @@ def main():
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         wait(0.2)
-
-    ResManager().set_resolution(Cam().res_key)
-    Logger.init(IniConfigLoader().advanced_options.log_lvl)
 
     load_api()
 

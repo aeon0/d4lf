@@ -3,7 +3,6 @@ import time
 import cv2
 
 from cam import Cam
-from config.ui import ResManager
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
 from item.filter import Filter
@@ -15,7 +14,6 @@ def test_smoke():
     res = (2560, 1440)
     anchor = (1723, 1012)
     Cam().update_window_pos(0, 0, *res)
-    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread("test/assets/item/find_descr_legendary_1440p.png")
     start = time.time()

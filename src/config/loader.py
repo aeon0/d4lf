@@ -24,7 +24,7 @@ class IniConfigLoader:
 
     def __load_params(self):
         parser = configparser.ConfigParser()
-        if (p := (Path(USER_DIR) / CONFIG_IN_USER_DIR / PARAMS_INI)).exists():
+        if (p := (Path(USER_DIR) / CONFIG_IN_USER_DIR / PARAMS_INI)).exists() and p.stat().st_size:
             parser.read(p)
         else:
             parser.read(self._config_path / PARAMS_INI)

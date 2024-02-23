@@ -18,12 +18,14 @@ dependencies:
     - keyboard
     - mouse
     - mss
+    - natsort
     - numpy
     - opencv-python==4.8.1.78
-    - natsort
     - parse
     - pre-commit
     - psutil
+    - pydantic
+    - pydantic-numpy
     - pyinstaller
     - pytest
     - pytest-env

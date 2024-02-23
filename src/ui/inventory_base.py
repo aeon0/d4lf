@@ -1,15 +1,16 @@
-from typing import Optional
-import numpy as np
-import cv2
 from dataclasses import dataclass
+from typing import Optional
+
+import cv2
+import numpy as np
+
 from cam import Cam
-from config import Config
-from ui.menu import Menu
-from utils.image_operations import crop, threshold
-from utils.roi_operations import get_center, to_grid
-from utils.custom_mouse import mouse
-from utils.misc import wait
+from config.ui import ResManager
 from template_finder import search
+from ui.menu import Menu
+from utils.custom_mouse import mouse
+from utils.image_operations import crop
+from utils.roi_operations import get_center, to_grid
 
 
 @dataclass
@@ -30,7 +31,7 @@ class InventoryBase(Menu):
         super().__init__()
         self.rows = rows
         self.columns = columns
-        self.slots_roi = Config().ui_roi[f"slots_{self.rows}x{self.columns}"]
+        self.slots_roi = getattr(ResManager().roi, f"slots_{self.rows}x{self.columns}")
         if is_stash:
             self.junk_template = "junk_stash"
         else:
@@ -59,7 +60,7 @@ class InventoryBase(Menu):
 
             hsv_img = cv2.cvtColor(slot_img, cv2.COLOR_BGR2HSV)
             mean_value_overall = np.mean(hsv_img[:, :, 2])
-            fav_flag_crop = crop(hsv_img, Config().ui_roi["rel_fav_flag"])
+            fav_flag_crop = crop(hsv_img, ResManager().roi.rel_fav_flag)
             mean_value_fav = cv2.mean(fav_flag_crop)[2]
 
             res_junk = search(self.junk_template, slot_img, threshold=0.7)

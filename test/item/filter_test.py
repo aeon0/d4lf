@@ -1,12 +1,11 @@
 import pytest
-from item.filter import Filter
-from item.data.rarity import ItemRarity
-from item.data.item_type import ItemType
-from item.data.affix import Affix
-from item.data.aspect import Aspect
-from item.models import Item
+
 from cam import Cam
-from config import Config
+from item.data.affix import Affix
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
+from item.filter import Filter
+from item.models import Item
 from template_finder import stored_templates
 
 
@@ -46,9 +45,7 @@ from template_finder import stored_templates
 )
 def test_should_keep(item_descr: Item):
     Cam().update_window_pos(0, 0, 1920, 1080)
-    Config().load_data()
     stored_templates.cache_clear()
-
     filter = Filter()
     res = filter.should_keep(item_descr)
     print(res.keep)

@@ -3,7 +3,7 @@ import time
 import keyboard
 
 from cam import Cam
-from config import Config
+from config.loader import IniConfigLoader
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
@@ -100,9 +100,8 @@ def run_loot_filter():
     inv = CharInventory()
     chest = Chest()
 
-    check_tabs = Config().general["check_chest_tabs"]
     if chest.is_open():
-        for i in range(check_tabs):
+        for i in range(IniConfigLoader().general.check_chest_tabs):
             chest.switch_to_tab(i)
             check_items(chest)
         check_items(inv)

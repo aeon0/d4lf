@@ -1,10 +1,12 @@
+import math
+
 import cv2
 import numpy as np
-import math
+
 from cam import Cam
-from config import Config
-from utils.image_operations import color_filter, crop
+from config.ui import COLORS, ResManager
 from template_finder import SearchArgs
+from utils.image_operations import color_filter, crop
 
 
 class Hud(SearchArgs):
@@ -17,23 +19,23 @@ class Hud(SearchArgs):
 
     def is_ingame(self, img: np.ndarray = None) -> bool:
         img = img if img is not None else Cam().grab()
-        cropped_img = cv2.cvtColor(crop(img, Config().ui_roi["mini_map_visible"]), cv2.COLOR_BGR2GRAY)
+        cropped_img = cv2.cvtColor(crop(img, ResManager().roi.mini_map_visible), cv2.COLOR_BGR2GRAY)
         _, binary_mask = cv2.threshold(cropped_img, 145, 255, cv2.THRESH_BINARY)
-        mini_map_visible = True  #  cv2.countNonZero(binary_mask) > 5
+        mini_map_visible = True  # cv2.countNonZero(binary_mask) > 5
         return self.is_visible(img=img) and mini_map_visible
 
     @staticmethod
     def is_skill_ready(img: np.ndarray = None, roi_name: str = "skill4") -> bool:
         img = Cam().grab() if img is None else img
         # Check avg saturation
-        roi = Config().ui_roi[roi_name]
+        roi = getattr(ResManager().roi, roi_name)
         cropped = crop(img, roi)
         hsv_image = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
         _, saturation, _ = cv2.split(hsv_image)
         avg_saturation = np.mean(saturation)
         # Check if on cd
-        cropped = crop(cropped, Config().ui_roi["rel_skill_cd"])
-        mask, _ = color_filter(cropped, Config().colors[f"skill_cd"], False)
+        cropped = crop(cropped, ResManager().roi.rel_skill_cd)
+        mask, _ = color_filter(cropped, COLORS.skill_cd, False)
         # at least half of the row must be filled
         target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.85
         cd_sum = np.sum(mask)
@@ -46,9 +48,9 @@ class Hud(SearchArgs):
         for color in colors:
             img = Cam().grab() if img is None else img
             # Check avg saturation
-            roi = Config().ui_roi[roi_name]
+            roi = getattr(ResManager().roi, roi_name)
             cropped = crop(img, roi)
-            mask, _ = color_filter(cropped, Config().colors[color], False)
+            mask, _ = color_filter(cropped, getattr(COLORS, color), False)
             # at least half of the row must be filled
             target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.35
             cd_sum = np.sum(mask)
@@ -59,7 +61,7 @@ class Hud(SearchArgs):
     @staticmethod
     def get_health(img: np.ndarray = None) -> float:
         img = Cam().grab() if img is None else img
-        cut_img = crop(img, Config().ui_roi["health_slice"])
+        cut_img = crop(img, ResManager().roi.health_slice)
         sobel_y = cv2.Sobel(cut_img, cv2.CV_64F, 0, 1, ksize=3)
         _, binary = cv2.threshold(np.abs(sobel_y), 100, 255, cv2.THRESH_BINARY)
         blue, green, red = cv2.split(binary)

@@ -53,7 +53,7 @@ class Logger:
     """Manage logging"""
 
     os.makedirs("log", exist_ok=True)
-    _logger_level = None
+    _logger_level = "DEBUG"
     _log_contents = io.StringIO()
     _current_log_file_path = "log/log.txt"
     _output = ""  # intercepted output from stdout and stderr
@@ -87,11 +87,11 @@ class Logger:
         Logger.logger.error(data)
 
     @staticmethod
-    def init(lvl=logging.DEBUG):
+    def init(lvl: str = "DEBUG"):
         """
         Setup logger for StringIO, console and file handler
         """
-        Logger._logger_level = lvl
+        Logger._logger_level = lvl.upper()
 
         if Logger.logger is not None:
             for hdlr in Logger.logger.handlers[:]:  # remove all old handlers

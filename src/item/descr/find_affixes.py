@@ -1,12 +1,11 @@
 import numpy as np
-import json
-from template_finder import TemplateMatch
+
+from config.ui import ResManager
+from dataloader import Dataloader
 from item.data.affix import Affix
 from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
-from config import Config
-from dataloader import Dataloader
-from utils.image_operations import crop
 from template_finder import TemplateMatch
+from utils.image_operations import crop
 from utils.ocr.read import image_to_text
 
 
@@ -74,7 +73,7 @@ def find_affixes(
 
     # Affix starts at first bullet point
     img_width = img_item_descr.shape[1]
-    line_height = Config().ui_offsets["item_descr_line_height"]
+    line_height = ResManager().offsets.item_descr_line_height
     affix_top_left = [affix_bullets[0].center[0] + int(line_height * 0.3), affix_bullets[0].center[1] - int(line_height * 0.6)]
 
     # Calc full region of all affixes

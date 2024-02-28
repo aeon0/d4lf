@@ -40,7 +40,7 @@ class IniConfigLoader:
         self._parsers["params"].read(self._config_path / PARAMS_INI)
         if (p := (Path(USER_DIR) / CONFIG_IN_USER_DIR / PARAMS_INI)).exists() and p.stat().st_size:
             self._parsers["custom"].read(p)
-  
+
         self._advanced_options = AdvancedOptions(
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             run_filter=self._select_val("advanced_options", "run_filter"),

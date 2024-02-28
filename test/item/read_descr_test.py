@@ -4,7 +4,6 @@ import cv2
 import pytest
 
 from cam import Cam
-from config.ui import ResManager
 from item.data.affix import Affix
 from item.data.aspect import Aspect
 from item.data.item_type import ItemType
@@ -448,7 +447,6 @@ BASE_PATH = "test/assets/item"
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread(input_img)
     start = time.time()

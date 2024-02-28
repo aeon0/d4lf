@@ -1,15 +1,15 @@
 import mss.windows
 
+from config.ui import ResManager
+
 mss.windows.CAPTUREBLT = 0
 
 import numpy as np
-import sys
 import threading
 from mss import mss
 import time
 from utils.misc import wait, convert_args_to_numpy
 from logger import Logger
-from config.ui import ResManager
 
 cached_img_lock = threading.Lock()
 
@@ -43,9 +43,6 @@ class Cam:
         self.res_key = f"{width}x{height}"
         self.res_p = f"{height}p"
         Logger.info(f"Found Window Res: {self.res_key}")
-        if self.res_key not in ResManager().transformers.keys():
-            Logger.error(f"The resolution: {self.res_key} is not supported.")
-            sys.exit(0)
 
         self.window_roi["top"] = offset_y
         self.window_roi["left"] = offset_x
@@ -60,6 +57,9 @@ class Cam:
             self.window_roi["top"] + self.window_roi["height"] - 10,
         )
         self.window_offset_set = True
+        ResManager().set_resolution(self.res_key)
+        if self.window_roi["width"] / self.window_roi["height"] < 16 / 10:
+            Logger.warning("Aspect ratio is too narrow, please use a wider window. At least 16/10")
 
     def is_offset_set(self):
         return self.window_offset_set

@@ -68,7 +68,8 @@ All items are whitelist filters. If a filter for an unique or a certain item typ
 ### Aspects
 In your profile .yaml files any aspects can be added in the format of `[ASPECT_KEY, THRESHOLD, CONDITION]`. The condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given. Smaller has to be used when the aspect go from high value to a lower value (eg. ‍Blood-bathed Aspect)
 
-For example:
+<details><summary>Config Examples</summary>
+
 ```yaml
 Aspects:
     # Filter for a perfect umbral
@@ -76,10 +77,13 @@ Aspects:
     # Filter for any umbral
     - of_the_umbral
 ```
+</details>
+
 Aspect keys are lower case and spaces are replaced by underscore. You can find the full list of keys in [assets/lang/enUS/aspect.json](assets/lang/enUS/aspects.json). If Aspects is empty, all legendary items will be kept.
 
 ### Affixes
 Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as described above. Additionally, it can be filtered by `itemType`, `minPower` and `minAffixCount`. See the list of affix keys in [assets/lang/enUS/affixes.json](assets/lang/enUS/affixes.json). For items with inherent affixes `inherentPool` can be specified, then at least one of these has to match the inherent affixes on that item.
+<details><summary>Config Examples</summary>
 
 ```yaml
 Affixes:
@@ -128,10 +132,38 @@ Affixes:
       minAffixCount: 3
 
 ```
+</details>
 
 ### Uniques
-Uniques are identified by their aspect (see [assets/lang/enUS/uniques.json](assets/lang/enUS/uniques.json)). They also have an affixPool, but since uniques have these fixed you only need to specify the ones you want to threshold.
+Uniques are identified by their `item power`, [item type](assets/lang/enUS/item_types.json) and [aspect](assets/lang/enUS/uniques.json). They also have [affixes](assets/lang/enUS/affixes.json), but since uniques have these fixed you only need to specify the ones you want to threshold.
+<details><summary>Config Examples</summary>
 
+```yaml
+# Take all uniques with item power > 800 
+Uniques:
+  - minPower: 900
+```
+```yaml
+# Take all unique pants 
+Uniques:
+  - itemType: pants
+```
+```yaml
+# Take all unique armor and pants
+Uniques:
+  - itemType: [armor, pants]
+```
+```yaml
+# Take all unique armor and pants with min item power > 900
+Uniques:
+  - itemType: [armor, pants]
+    minPower: 900
+```
+```yaml
+# Take all Tibault's Will pants 
+Uniques:
+  - aspect: [tibaults_will]
+```
 ```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
 Uniques:
@@ -140,9 +172,12 @@ Uniques:
     affixPool:
       - [damage_reduction_from_close_enemies, 12]
 ```
+</details>
 
 ### Sigils
 Sigils are all ok unless they match any of the blacklisted locations or affixes. See all sigil locations and affixes here: [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json)
+<details><summary>Config Examples</summary>
+
 ```yaml
 Sigils:
   minTier: 40
@@ -156,6 +191,19 @@ Sigils:
     - armor_breakers
     - resistance_breakers
 ```
+If you want to filter for a specific affix or location, you can also use the `whitelist` key. Even if `whitelist` is present, `blacklist` will be used to discard sigils that match any of the blacklisted affixes or locations.
+```yaml
+# Only keep sigils for vault_of_the_forsaken without the one or both of the affixes armor_breakers and resistance_breakers
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    - armor_breakers
+    - resistance_breakers
+  whitelist:
+    - vault_of_the_forsaken
+```
+</details>
 
 ## Custom configs
 D4LF will look for __params.ini__ and for __profiles/*.yaml__ also in C:/Users/WINDOWS_USER/.d4lf. All values in params.ini will overwrite the value from the param.ini in the D4LF folder. In the profiles folder additional custom profiles can be added and used.

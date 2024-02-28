@@ -86,7 +86,7 @@ def find_and_set_window_position(window_spec: WindowSpec):
         pos = GetClientRect(hwnd)
         top_left = ClientToScreen(hwnd, (pos[0], pos[1]))
         Cam().update_window_pos(top_left[0], top_left[1], pos[2], pos[3])
-    wait(0.5)
+    wait(1)
 
 
 def stop_detecting_window():

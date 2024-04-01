@@ -260,7 +260,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Path Argument Parser")
     parser.add_argument("d4data_dir", type=str, help="Provide a path to d4data repo")
-    parser.add_argument("companion_app_dir", type=str, help="Provide a path to d4data repo")
+    parser.add_argument("companion_app_dir", type=str, help="Provide a path to companion_app_dir repo")
     args = parser.parse_args()
 
     input_path = Path(args.d4data_dir)

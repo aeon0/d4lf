@@ -59,8 +59,9 @@ def _get_window_name_from_id(hwnd: int) -> str:
 
 def _get_process_from_window_name(hwnd: int) -> str:
     try:
-        return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name().lower()
-    except (psutil.NoSuchProcess, ProcessLookupError) as e:
+        pid = GetWindowThreadProcessId(hwnd)[1]
+        return psutil.Process(pid).name().lower()
+    except Exception as e:
         return ""
 
 

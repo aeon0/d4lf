@@ -1,6 +1,7 @@
 import os
 import traceback
 from pathlib import Path
+from PIL import Image  # Somehow needed, otherwise the binary has an issue with tesserocr
 
 import keyboard
 from beautifultable import BeautifulTable

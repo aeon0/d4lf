@@ -16,7 +16,7 @@ USER_DIR = os.path.expanduser("~")
 @singleton
 class IniConfigLoader:
     def __init__(self):
-        self._config_path = Path(__file__) / "../../../config"
+        self._config_path = Path("./config")
         self._parsers = {}
         self._advanced_options = None
         self._char = None

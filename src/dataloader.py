@@ -49,7 +49,7 @@ class Dataloader:
             self.filter_after_keyword = data["filter_after_keyword"]
             self.filter_words = data["filter_words"]
 
-        with open(f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r", encdoing="utf-8") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :68, also adjust it in find_aspect.py

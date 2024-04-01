@@ -412,11 +412,12 @@
         ]
     },
     "seismicshift": {
-        "desc": "earth spike launches spikes in a line and has a second cooldown.",
+        "desc": "earth spike deals increased damage, launches spikes in a line, and has a second cooldown.",
         "snoId": 1106138,
-        "full": "{c_important}Earth Spike{/c} launches spikes in a line and has a {c_random}[Affix_Value_1|1|]{/c} second Cooldown.",
+        "full": "{c_important}Earth Spike{/c} deals {c_random}[Affix_Value_1 * 100|%x|]{/c} increased damage, launches spikes in a line, and has a {c_random}[Affix_Value_2||]{/c}second Cooldown.",
         "num_idx": [
-            0
+            0,
+            1
         ]
     },
     "of_the_trampled_earth": {
@@ -894,6 +895,55 @@
             0
         ]
     },
+    "hectic": {
+        "desc": "after casting basic skills, one of your active cooldowns is reduced by seconds.",
+        "snoId": 1859770,
+        "full": "After casting {c_number}[Affix.\"Static Value 0\"]{/c} {c_important}Basic{/c} Skills, one of your active Cooldowns is reduced by {c_random}[Affix_Value_1|1|]{/c} seconds.",
+        "num_idx": [
+            1
+        ]
+    },
+    "undying": {
+        "desc": "when you cast a skill, you heal for life. double this bonus while below life.",
+        "snoId": 1859814,
+        "full": "When you cast a Skill, you heal for {c_random}[Affix_Value_1|%1|]{/c} Life. Double this bonus while below {c_number}[Affix.\"Static Value 0\"|%|]{/c} Life.",
+        "num_idx": [
+            0
+        ]
+    },
+    "of_the_moonrise": {
+        "desc": "damaging an enemy with a basic skill grants you attack speed for seconds, stacking up to times. upon reaching maximum stacks, you enter a vampiric bloodrage, gaining basic skill damage and movement speed for seconds.",
+        "snoId": 1860794,
+        "full": "Damaging an enemy with a {c_important}Basic{/c} Skill grants you {c_number}[Affix.\"Static Value 0\"|%|]{/c} Attack Speed for {c_number}[Affix.\"Static Value 3\"]{/c} seconds, stacking up to {c_number}[Affix.\"Static Value 1\"]{/c} times. Upon reaching maximum stacks, you enter a Vampiric Bloodrage, gaining {c_random}[Affix_Value_1|x%|]{/c} {c_important}Basic{/c} Skill damage and {c_number}[Affix.\"Static Value 2\"|%|]{/c} Movement Speed for {c_number}[Affix.\"Static Value 4\"]{/c} seconds.\r\n",
+        "num_idx": [
+            3
+        ]
+    },
+    "of_metamorphosis": {
+        "desc": "when you evade you turn into a cloud of bats, becoming unstoppable for seconds. enemies along your path take physical damage and are inflicted with vampiric curse. evades cooldown is increased by seconds.",
+        "snoId": 1865131,
+        "full": "When you {c_important}Evade{/c} you turn into a cloud of bats, becoming {c_important}{u}Unstoppable{/u}{/c} for {c_number}[Affix.\"Static Value 0\"|1|]{/c} seconds. Enemies along your path take {c_number}[Affix_Flat_Value_1]{/c}  Physical damage and are inflicted with {c_important}{u}Vampiric Curse.{/u}{/c}  {c_important}Evade's{/c} Cooldown is increased by {c_random}[Affix_Value_1|1|]{/c} seconds.",
+        "num_idx": [
+            2
+        ]
+    },
+    "of_accursed_touch": {
+        "desc": "lucky hit up to a chance for your skills to inflict vampiric curse on enemies. enemies afflicted with vampiric curse are also vulnerable. vampiric curses stored souls deal increased damage.",
+        "snoId": 1867839,
+        "full": "{icon:bullet} {c_label}Lucky Hit:{/c} Up to a {c_random}[Affix_Value_1|1%|]{/c} chance for your Skills to inflict {c_important}{u}Vampiric Curse{/u}{/c} on enemies. Enemies afflicted with {c_important}{u}Vampiric Curse{/u}{/c} are also {c_important}{u}Vulnerable{/u}{/c}.\r\n\r\n{icon:bullet} {c_important}{u}Vampiric Curse's{/u}{/c} stored souls deal {c_random}[Affix_Value_2|1%|]{/c} increased damage.",
+        "num_idx": [
+            0,
+            1
+        ]
+    },
+    "blood_boiling": {
+        "desc": "when your core skills overpower an enemy, you spawn volatile blood drops. collecting a volatile blood drop causes it to explode, dealing physical damage around you. every seconds, your next skill is guaranteed to overpower.",
+        "snoId": 1868256,
+        "full": "{icon:bullet} When your {c_important}Core{/c} Skills {c_important}{u}Overpower{/u}{/c} an enemy, you spawn {c_number}[Affix.\"Static Value 0\"]{/c} Volatile Blood Drops. Collecting a Volatile Blood Drop causes it to explode, dealing {c_random}[Affix_Flat_Value_1]{/c} Physical damage around you.\r\n\r\n{icon:bullet} Every {c_number}[Affix.\"Static Value 1\"]{/c} seconds, your next Skill is guaranteed to {c_important}{u}Overpower{/u}{/c}.\r\n",
+        "num_idx": [
+            1
+        ]
+    },
     "of_frenzied_dead": {
         "desc": "each time one of your summoning minions damages an enemy, they gain attack speed for seconds, up to .",
         "snoId": 1106475,
@@ -1161,9 +1211,9 @@
         ]
     },
     "of_hardened_bones": {
-        "desc": "your minions gain increased damage reduction.",
+        "desc": "you and your minions gain increased damage reduction.",
         "snoId": 1222591,
-        "full": "Your Minions gain {c_random}[Affix_Value_1|%|]{/c} increased Damage Reduction.",
+        "full": "You and your Minions gain {c_random}[Affix_Value_1|%|]{/c} increased Damage Reduction.",
         "num_idx": [
             0
         ]
@@ -1379,11 +1429,12 @@
         ]
     },
     "of_branching_volleys": {
-        "desc": "barrages arrows have a chance to split into arrows whenever they ricochet.",
+        "desc": "increase the damage of arrows that ricochet from barrage from to . barrages arrows have a chance to split into arrows whenever they ricochet.",
         "snoId": 1208170,
-        "full": "{c_important}Barrage's{/c} arrows have a {c_random}[Affix_Value_1|%|]{/c} chance to split into {c_number}2{/c} arrows whenever they ricochet.",
+        "full": "Increase the damage of arrows that ricochet from {c_important}Barrage{/c} from {c_number}40%{/c} to {c_random}[Affix_Value_2|%|]{/c}. {c_important}Barrage's{/c} arrows have a {c_random}[Affix_Value_1|%|]{/c} chance to split into {c_number}2{/c} arrows whenever they ricochet.",
         "num_idx": [
-            0
+            1,
+            2
         ]
     },
     "blasttrappers": {

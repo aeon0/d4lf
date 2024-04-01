@@ -188,6 +188,7 @@
         "extra_shrines": "extra shrines extra shrines will appear in the dungeon.",
         "fire_damage": "fire damage you deal more fire damage.",
         "frost_damage": "frost damage you deal more frost damage.",
+        "ancestors_favor": "ancestors favor extra lunar shrines and more glyph experience earned at the end of this dungeon.",
         "gold_find": "gold find you find more gold.",
         "increased_critical_strike": "increased critical strike your critical strike chance is increased by .",
         "increased_healing": "increased healing your healing received is increased by .",
@@ -198,7 +199,6 @@
         "poison_damage": "poison damage you deal more poison damage",
         "shadow_damage": "shadow damage you deal more shadow damage.",
         "control_impaired_explosions": "control impaired explosions being hit by control impairing effects creates an explosion around you.",
-        "thorns": "thorns after attacking an enemy, your thorns are increased by for seconds, up to at max stacks.",
-	"ancestors_favour": "extra lunar shrines and more glyph experience earned at the end of this dungeon."
+        "thorns": "thorns after attacking an enemy, your thorns are increased by for seconds, up to at max stacks."
     }
 }

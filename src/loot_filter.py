@@ -90,7 +90,7 @@ def check_items(inv: InventoryBase):
         elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
             Logger.info("Mark as favorite")
             keyboard.send("space")
-            wait(0.13, 0.14)
+            wait(0.17, 0.2)
             keyboard.send("space")
             wait(0.13, 0.14)
 
@@ -103,7 +103,9 @@ def run_loot_filter():
     if chest.is_open():
         for i in range(IniConfigLoader().general.check_chest_tabs):
             chest.switch_to_tab(i)
+            wait(0.5)
             check_items(chest)
+        wait(0.5)
         check_items(inv)
     else:
         if not inv.open():

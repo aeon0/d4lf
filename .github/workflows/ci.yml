@@ -16,7 +16,7 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: latest
           activate-environment: d4lf
-          python-version: '3.11'
+          python-version: '3.12'
           use-mamba: true
 
       - name: Cache Conda env

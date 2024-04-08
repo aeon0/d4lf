@@ -48,7 +48,7 @@ class Filter:
         return cls._instance
 
     @staticmethod
-    def __check_item_types(filters):
+    def _check_item_types(filters):
         for filter_dict in filters:
             for filter_name, filter_data in filter_dict.items():
                 user_item_types = [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
@@ -65,7 +65,7 @@ class Filter:
                     Logger.warning(f"Warning: Invalid ItemTypes in filter {filter_name}: {', '.join(invalid_types)}")
 
     @staticmethod
-    def __check_affix_pool(affix_pool, affix_dict, filter_name):
+    def _check_affix_pool(affix_pool, affix_dict, filter_name):
         user_affix_pool = affix_pool
         invalid_affixes = []
         if user_affix_pool is None:
@@ -129,16 +129,16 @@ class Filter:
                         return
                     self.affix_filters[profile_str] = config["Affixes"]
                     # Sanity check on the item types
-                    self.__check_item_types(self.affix_filters[profile_str])
+                    self._check_item_types(self.affix_filters[profile_str])
                     # Sanity check on the affixes
                     for filter_dict in self.affix_filters[profile_str]:
                         for filter_name, filter_data in filter_dict.items():
                             if "affixPool" in filter_data:
-                                self.__check_affix_pool(filter_data["affixPool"], Dataloader().affix_dict, filter_name)
+                                self._check_affix_pool(filter_data["affixPool"], Dataloader().affix_dict, filter_name)
                             else:
                                 filter_data["affixPool"] = []
                             if "inherentPool" in filter_data:
-                                self.__check_affix_pool(filter_data["inherentPool"], Dataloader().affix_dict, filter_name)
+                                self._check_affix_pool(filter_data["inherentPool"], Dataloader().affix_dict, filter_name)
 
                 if config is not None and "Sigils" in config:
                     info_str += "Sigils "
@@ -151,10 +151,10 @@ class Filter:
                         self.sigil_filters[profile_str]["blacklist"] = []
                     if "whitelist" not in self.sigil_filters[profile_str]:
                         self.sigil_filters[profile_str]["whitelist"] = []
-                    self.__check_affix_pool(
+                    self._check_affix_pool(
                         self.sigil_filters[profile_str]["blacklist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
                     )
-                    self.__check_affix_pool(
+                    self._check_affix_pool(
                         self.sigil_filters[profile_str]["whitelist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
                     )
                     if items_in_both := set(self.sigil_filters[profile_str]["blacklist"]).intersection(
@@ -193,7 +193,7 @@ class Filter:
                         if unique_name not in Dataloader().aspect_unique_dict:
                             invalid_uniques.append(unique_name)
                         elif "affixPool" in unique:
-                            self.__check_affix_pool(unique["affixPool"], Dataloader().affix_dict, unique_name)
+                            self._check_affix_pool(unique["affixPool"], Dataloader().affix_dict, unique_name)
                     if invalid_uniques:
                         Logger.warning(f"Warning: Invalid Unique: {', '.join(invalid_uniques)}")
 
@@ -201,7 +201,7 @@ class Filter:
 
         self.last_loaded = time.time()
 
-    def __did_files_change(self) -> bool:
+    def _did_files_change(self) -> bool:
         if self.last_loaded is None:
             return True
         return any(os.path.getmtime(file_path) > self.last_loaded for file_path in self.all_file_pathes)
@@ -379,7 +379,7 @@ class Filter:
         return res
 
     def should_keep(self, item: Item) -> FilterResult:
-        if not self.files_loaded or self.__did_files_change():
+        if not self.files_loaded or self._did_files_change():
             self.load_files()
 
         res = FilterResult(False, [])

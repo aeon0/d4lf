@@ -64,10 +64,10 @@ class _ResTransformer:
         self._scale_y = self._target_height / _FHD[0][1]
         self._highest_ratio = 27 / 9
 
-    def __transform(self, value: int) -> int:
+    def _transform(self, value: int) -> int:
         return int(value * self._scale_y)
 
-    def __transform_array(self, value: np.ndarray, scale_only=False) -> np.ndarray:
+    def _transform_array(self, value: np.ndarray, scale_only=False) -> np.ndarray:
         new_value = value * self._scale_y
         if scale_only:
             return new_value.astype(int)
@@ -87,47 +87,47 @@ class _ResTransformer:
 
         return new_value.astype(int)
 
-    def __transform_list_of_tuples(self, value: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    def _transform_list_of_tuples(self, value: list[tuple[int, int]]) -> list[tuple[int, int]]:
         res = []
         for v in value:
-            res.append(self.__transform_tuples(value=v))
+            res.append(self._transform_tuples(value=v))
         return res
 
-    def __transform_tuples(self, value: tuple[int, int]) -> tuple[int, int]:
-        values = self.__transform_array(value=np.array(value, dtype=int))
+    def _transform_tuples(self, value: tuple[int, int]) -> tuple[int, int]:
+        values = self._transform_array(value=np.array(value, dtype=int))
         return int(values[0]), int(values[1])
 
     def from_fhd(self) -> tuple[UiOffsets, UiPos, UiRoi]:
         offsets = UiOffsets(
-            find_bullet_points_width=self.__transform(value=_FHD[1].find_bullet_points_width),
-            find_seperator_short_offset_top=self.__transform(value=_FHD[1].find_seperator_short_offset_top),
-            item_descr_line_height=self.__transform(value=_FHD[1].item_descr_line_height),
-            item_descr_off_bottom_edge=self.__transform(value=_FHD[1].item_descr_off_bottom_edge),
-            item_descr_pad=self.__transform(value=_FHD[1].item_descr_pad),
-            item_descr_width=self.__transform(value=_FHD[1].item_descr_width),
-            vendor_center_item_x=self.__transform(value=_FHD[1].vendor_center_item_x),
+            find_bullet_points_width=self._transform(value=_FHD[1].find_bullet_points_width),
+            find_seperator_short_offset_top=self._transform(value=_FHD[1].find_seperator_short_offset_top),
+            item_descr_line_height=self._transform(value=_FHD[1].item_descr_line_height),
+            item_descr_off_bottom_edge=self._transform(value=_FHD[1].item_descr_off_bottom_edge),
+            item_descr_pad=self._transform(value=_FHD[1].item_descr_pad),
+            item_descr_width=self._transform(value=_FHD[1].item_descr_width),
+            vendor_center_item_x=self._transform(value=_FHD[1].vendor_center_item_x),
         )
         pos = UiPos(
-            possible_centers=self.__transform_list_of_tuples(value=_FHD[2].possible_centers),
-            window_dimensions=self.__transform_tuples(value=_FHD[2].window_dimensions),
+            possible_centers=self._transform_list_of_tuples(value=_FHD[2].possible_centers),
+            window_dimensions=self._transform_tuples(value=_FHD[2].window_dimensions),
         )
         roi = UiRoi(
-            core_skill=self.__transform_array(value=_FHD[3].core_skill),
-            health_slice=self.__transform_array(value=_FHD[3].health_slice),
-            hud_detection=self.__transform_array(value=_FHD[3].hud_detection),
-            mini_map_visible=self.__transform_array(value=_FHD[3].mini_map_visible),
-            rel_descr_search_left=self.__transform_array(value=_FHD[3].rel_descr_search_left, scale_only=True),
-            rel_descr_search_right=self.__transform_array(value=_FHD[3].rel_descr_search_right, scale_only=True),
-            rel_fav_flag=self.__transform_array(value=_FHD[3].rel_fav_flag, scale_only=True),
-            rel_skill_cd=self.__transform_array(value=_FHD[3].rel_skill_cd, scale_only=True),
-            skill3=self.__transform_array(value=_FHD[3].skill3),
-            skill4=self.__transform_array(value=_FHD[3].skill4),
-            slots_3x11=self.__transform_array(value=_FHD[3].slots_3x11),
-            slots_5x10=self.__transform_array(value=_FHD[3].slots_5x10),
-            sort_icon=self.__transform_array(value=_FHD[3].sort_icon),
-            stash_menu_icon=self.__transform_array(value=_FHD[3].stash_menu_icon),
-            tab_slots_6=self.__transform_array(value=_FHD[3].tab_slots_6),
-            vendor_text=self.__transform_array(value=_FHD[3].vendor_text),
+            core_skill=self._transform_array(value=_FHD[3].core_skill),
+            health_slice=self._transform_array(value=_FHD[3].health_slice),
+            hud_detection=self._transform_array(value=_FHD[3].hud_detection),
+            mini_map_visible=self._transform_array(value=_FHD[3].mini_map_visible),
+            rel_descr_search_left=self._transform_array(value=_FHD[3].rel_descr_search_left, scale_only=True),
+            rel_descr_search_right=self._transform_array(value=_FHD[3].rel_descr_search_right, scale_only=True),
+            rel_fav_flag=self._transform_array(value=_FHD[3].rel_fav_flag, scale_only=True),
+            rel_skill_cd=self._transform_array(value=_FHD[3].rel_skill_cd, scale_only=True),
+            skill3=self._transform_array(value=_FHD[3].skill3),
+            skill4=self._transform_array(value=_FHD[3].skill4),
+            slots_3x11=self._transform_array(value=_FHD[3].slots_3x11),
+            slots_5x10=self._transform_array(value=_FHD[3].slots_5x10),
+            sort_icon=self._transform_array(value=_FHD[3].sort_icon),
+            stash_menu_icon=self._transform_array(value=_FHD[3].stash_menu_icon),
+            tab_slots_6=self._transform_array(value=_FHD[3].tab_slots_6),
+            vendor_text=self._transform_array(value=_FHD[3].vendor_text),
         )
         return offsets, pos, roi
 

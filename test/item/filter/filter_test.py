@@ -14,7 +14,7 @@ from test.item.filter.data.uniques import uniques
 def _create_mocked_filter(mocker: MockerFixture) -> Filter:
     filter_obj = Filter()
     filter_obj.files_loaded = True
-    mocker.patch.object(filter_obj, "_Filter__did_files_change", return_value=False)
+    mocker.patch.object(filter_obj, "_did_files_change", return_value=False)
     return filter_obj
 
 

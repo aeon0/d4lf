@@ -16,6 +16,7 @@ BASE_PATH = "test/assets/ui"
         ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide.png"),
         ((5120, 1440), f"{BASE_PATH}/char_inv_open_1440p_ultra_wide.png"),
         ((3840, 2160), f"{BASE_PATH}/char_inv_open_2160p.png"),
+        ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide2.png"),
     ],
 )
 def test_char_inventory(img_res, input_img):
@@ -32,6 +33,7 @@ def test_char_inventory(img_res, input_img):
     [
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p.png", 13, 2, 7),
         ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide.png", 12, 0, 0),
+        ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide2.png", 19, 4, 3),
     ],
 )
 def test_get_item_slots(img_res, input_img, occupied, junk, fav):
@@ -54,6 +56,7 @@ def test_get_item_slots(img_res, input_img, occupied, junk, fav):
     for slot in open:
         cv2.circle(img, slot.center, 5, (255, 255, 0), 4)
     if False:
+        img = cv2.resize(img, dsize=None, fx=0.6, fy=0.6)
         cv2.imshow("char_inv", img)
         cv2.waitKey(0)
     assert occupied == len(occupied_slots)

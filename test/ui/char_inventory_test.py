@@ -2,7 +2,6 @@ import cv2
 import pytest
 
 from cam import Cam
-from config.ui import ResManager
 from template_finder import stored_templates
 from ui.char_inventory import CharInventory
 
@@ -21,7 +20,6 @@ BASE_PATH = "test/assets/ui"
 )
 def test_char_inventory(img_res, input_img):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread(input_img)
     inv = CharInventory()
@@ -38,7 +36,6 @@ def test_char_inventory(img_res, input_img):
 )
 def test_get_item_slots(img_res, input_img, occupied, junk, fav):
     Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    ResManager().set_resolution(res=Cam().res_key)
     stored_templates.cache_clear()
     img = cv2.imread(input_img)
     inv = CharInventory()

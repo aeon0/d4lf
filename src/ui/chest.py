@@ -26,7 +26,7 @@ class Chest(InventoryBase):
     def switch_to_tab(tab_idx) -> bool:
         NUMBER_TABS = 6
         Logger.info(f"Switch Stash Tab to: {tab_idx}")
-        if tab_idx > 4:
+        if tab_idx > (NUMBER_TABS - 1):
             return False
         x, y, w, h = ResManager().roi.tab_slots_6
         section_length = w // NUMBER_TABS

@@ -59,8 +59,9 @@ def _get_window_name_from_id(hwnd: int) -> str:
 
 def _get_process_from_window_name(hwnd: int) -> str:
     try:
-        return psutil.Process(GetWindowThreadProcessId(hwnd)[1]).name().lower()
-    except (psutil.NoSuchProcess, ProcessLookupError) as e:
+        pid = GetWindowThreadProcessId(hwnd)[1]
+        return psutil.Process(pid).name().lower()
+    except Exception as e:
         return ""
 
 
@@ -86,7 +87,7 @@ def find_and_set_window_position(window_spec: WindowSpec):
         pos = GetClientRect(hwnd)
         top_left = ClientToScreen(hwnd, (pos[0], pos[1]))
         Cam().update_window_pos(top_left[0], top_left[1], pos[2], pos[3])
-    wait(0.5)
+    wait(1)
 
 
 def stop_detecting_window():

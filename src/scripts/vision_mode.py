@@ -238,7 +238,6 @@ if __name__ == "__main__":
         start_detecting_window(win_spec)
         while not Cam().is_offset_set():
             wait(0.2)
-        ResManager().set_resolution(Cam().res_key)
         Filter().load_files()
         vision_mode()
     except:

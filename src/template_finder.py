@@ -106,7 +106,9 @@ class SearchArgs:
 def stored_templates() -> dict[Template]:
     paths = []
     templates = {}
-    for path in [f"assets\\templates_{Cam().res_p}"]:
+    # TODO check if it works for higher res
+    closest = min([1080, 1440, 1600, 2160], key=lambda x: abs(x - int(Cam().res_p[:-1])))
+    for path in [f"assets\\templates_{closest}p"]:
         paths += list_files_in_folder(path)
     for file_path in paths:
         file_name: str = os.path.basename(file_path)

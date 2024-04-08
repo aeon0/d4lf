@@ -49,14 +49,14 @@ class Dataloader:
             self.filter_after_keyword = data["filter_after_keyword"]
             self.filter_words = data["filter_words"]
 
-        with open(f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :68, also adjust it in find_aspect.py
                 self.aspect_dict[key] = d["desc"][:68]
                 self.aspect_num_idx[key] = d["num_idx"]
 
-        with open(f"assets/lang/{IniConfigLoader().general.language}/uniques.json", "r") as f:
+        with open(f"assets/lang/{IniConfigLoader().general.language}/uniques.json", "r", encoding="utf-8") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :45, also adjust it in find_aspect.py

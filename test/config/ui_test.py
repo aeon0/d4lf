@@ -29,7 +29,7 @@ def test_set_resolution(res):
 @pytest.mark.parametrize("pixel", _PIXELS, ids=[f"({x[0]},{x[1]})" for x in _PIXELS])
 @pytest.mark.parametrize("result", _TESTS, ids=[x[0] for x in _TESTS])
 def test_transformation(pixel, result):
-    new_pixel = _ResTransformer(result[0])._ResTransformer__transform_array(pixel)
+    new_pixel = _ResTransformer(result[0])._transform_array(pixel)
     expected = next(result[1])
     assert new_pixel[0] == expected[0]
     assert new_pixel[1] == expected[1]

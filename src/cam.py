@@ -1,15 +1,15 @@
+import threading
+import time
+
 import mss.windows
 
-from config.ui import ResManager
-
 mss.windows.CAPTUREBLT = 0
-
 import numpy as np
-import threading
 from mss import mss
-import time
-from utils.misc import wait, convert_args_to_numpy
+
+from config.ui import ResManager
 from logger import Logger
+from utils.misc import wait, convert_args_to_numpy
 
 cached_img_lock = threading.Lock()
 

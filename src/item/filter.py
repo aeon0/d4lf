@@ -1,12 +1,13 @@
 import os
+import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
 
 import yaml
 
 from config.loader import IniConfigLoader
+from config.models import ProfileModel, UniqueModel, SigilModel, AffixAspectFilterModel, ComparisonType
 from dataloader import Dataloader
 from item.data.affix import Affix
 from item.data.aspect import Aspect
@@ -86,7 +87,8 @@ class Filter:
         self.files_loaded = True
         self.affix_filters = dict()
         self.aspect_filters = dict()
-        self.unique_filters = dict()
+        self.sigil_filters: dict[str, SigilModel] = dict()
+        self.unique_filters: dict[str, list[UniqueModel]] = dict()
         profiles: list[str] = IniConfigLoader().general.profiles
 
         user_dir = os.path.expanduser("~")
@@ -142,26 +144,11 @@ class Filter:
 
                 if config is not None and "Sigils" in config:
                     info_str += "Sigils "
-                    if config["Sigils"] is None:
+                    data = ProfileModel(name=profile_str, **config)
+                    if data.Sigils is None:
                         Logger.error(f"Empty Sigils section in {profile_str}. Remove it")
                         return
-                    self.sigil_filters[profile_str] = config["Sigils"]
-                    # Sanity check on the sigil affixes
-                    if "blacklist" not in self.sigil_filters[profile_str]:
-                        self.sigil_filters[profile_str]["blacklist"] = []
-                    if "whitelist" not in self.sigil_filters[profile_str]:
-                        self.sigil_filters[profile_str]["whitelist"] = []
-                    self._check_affix_pool(
-                        self.sigil_filters[profile_str]["blacklist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
-                    )
-                    self._check_affix_pool(
-                        self.sigil_filters[profile_str]["whitelist"], Dataloader().affix_sigil_dict, f"{profile_str}.Sigils"
-                    )
-                    if items_in_both := set(self.sigil_filters[profile_str]["blacklist"]).intersection(
-                        set(self.sigil_filters[profile_str]["whitelist"])
-                    ):
-                        Logger.error(f"Sigil blacklist and whitelist have overlapping items: {items_in_both}")
-                        return
+                    self.sigil_filters[data.name] = data.Sigils
 
                 if config is not None and "Aspects" in config:
                     info_str += "Aspects "
@@ -179,23 +166,11 @@ class Filter:
 
                 if config is not None and "Uniques" in config:
                     info_str += "Uniques"
-                    if config["Uniques"] is None:
+                    data = ProfileModel(name=profile_str, **config)
+                    if not data.Uniques:
                         Logger.error(f"Empty Uniques section in {profile_str}. Remove it")
                         return
-                    self.unique_filters[profile_str] = config["Uniques"]
-                    # Sanity check for unique aspects
-                    invalid_uniques = []
-                    for unique in self.unique_filters[profile_str]:
-                        if "aspect" not in unique:
-                            Logger.warning(f"Warning: Unique missing mandatory 'aspect' field in {profile_str} profile")
-                            continue
-                        unique_name = unique["aspect"] if isinstance(unique["aspect"], str) else unique["aspect"][0]
-                        if unique_name not in Dataloader().aspect_unique_dict:
-                            invalid_uniques.append(unique_name)
-                        elif "affixPool" in unique:
-                            self._check_affix_pool(unique["affixPool"], Dataloader().affix_dict, unique_name)
-                    if invalid_uniques:
-                        Logger.warning(f"Warning: Invalid Unique: {', '.join(invalid_uniques)}")
+                    self.unique_filters[data.name] = data.Uniques
 
                 Logger.info(info_str)
 
@@ -207,51 +182,25 @@ class Filter:
         return any(os.path.getmtime(file_path) > self.last_loaded for file_path in self.all_file_pathes)
 
     @staticmethod
-    def _check_item_aspect(filter_data: dict[str, Any], aspect: Aspect) -> bool:
-        # TODO: really should add configuration schema and validate it once on load so all of these checks in code are not necessary
-        if "aspect" not in filter_data:
-            return True
-        if isinstance(filter_data["aspect"], str):
-            filter_data["aspect"] = [filter_data["aspect"]]
-        # check type
-        if aspect.type != filter_data["aspect"][0]:
+    def _check_item_aspect(expected_aspect: AffixAspectFilterModel, item_aspect: Aspect) -> bool:
+        if expected_aspect.name != item_aspect.type:
             return False
-        # check value
-        if len(filter_data["aspect"]) > 1:
-            if aspect.value is None:
+        if expected_aspect.value is not None:
+            if item_aspect.value is None:
                 return False
-            threshold = filter_data["aspect"][1]
-            condition = filter_data["aspect"][2] if len(filter_data["aspect"]) > 2 else "larger"
-            if not (
-                threshold is None
-                or (isinstance(condition, str) and condition == "larger" and aspect.value >= threshold)
-                or (isinstance(condition, str) and condition == "smaller" and aspect.value <= threshold)
+            if not (expected_aspect.comparison == ComparisonType.larger and item_aspect.value >= expected_aspect.value) or (
+                    expected_aspect.comparison == ComparisonType.smaller and item_aspect.value <= expected_aspect.value
             ):
                 return False
         return True
 
     @staticmethod
-    def _check_item_power(filter_data: dict[str, Any], power: int, min_key: str = "minPower", max_key: str = "maxPower") -> bool:
-        # TODO: really should add configuration schema and validate it once on load so all of these checks in code are not necessary
-        min_power = filter_data[min_key] if min_key in filter_data and filter_data[min_key] is not None else 1
-        if not isinstance(min_power, int):
-            Logger.warning(f"{min_key} ({min_power}) is not an integer!")
-            return False
-        max_power = filter_data[max_key] if max_key in filter_data and filter_data[max_key] is not None else 9999
-        if not isinstance(max_power, int):
-            Logger.warning(f"{max_key} ({max_power}) is not an integer!")
-            return False
-        return min_power <= power <= max_power
+    def _check_item_power(min_power: int, item_power: int, max_power: int = sys.maxsize) -> bool:
+        return min_power <= item_power <= max_power
 
     @staticmethod
-    def _check_item_type(filter_data: dict[str, Any], item_type: ItemType) -> bool:
-        # TODO: really should add configuration schema and validate it once on load so all of these checks in code are not necessary
-        if "itemType" not in filter_data:
-            return True
-        filter_item_type_list = [
-            ItemType(val) for val in ([filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"])
-        ]
-        return item_type in filter_item_type_list
+    def _check_item_type(expected_item_types: list[ItemType], item_type: ItemType) -> bool:
+        return item_type in expected_item_types
 
     def _match_affixes(self, filter_affix_pool: list, item_affix_pool: list[Affix]) -> list:
         item_affix_pool = item_affix_pool[:]
@@ -275,9 +224,9 @@ class Filter:
                 item_affix_value = next((a.value for a in item_affix_pool if a.type == name), None)
                 if item_affix_value is not None:
                     if (
-                        threshold is None
-                        or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
-                        or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
+                            threshold is None
+                            or (isinstance(condition, str) and condition == "larger" and item_affix_value >= threshold)
+                            or (isinstance(condition, str) and condition == "smaller" and item_affix_value <= threshold)
                     ):
                         item_affix_pool = [a for a in item_affix_pool if a.type != name]
                         matched_affixes.append(name)
@@ -298,8 +247,19 @@ class Filter:
                             if "minAffixCount" in filter_data and filter_data["minAffixCount"] is not None
                             else 0
                         )
-                        power_ok = self._check_item_power(filter_data, item.power)
-                        type_ok = self._check_item_type(filter_data, item.type)
+                        max_power = filter_data["maxPower"] if "maxPower" in filter_data and filter_data["maxPower"] is not None else 9999
+                        min_power = filter_data["minPower"] if "minPower" in filter_data and filter_data["minPower"] is not None else 1
+                        power_ok = self._check_item_power(max_power=max_power, min_power=min_power, item_power=item.power)
+                        if "itemType" not in filter_data:
+                            type_ok = True
+                        else:
+                            filter_item_type_list = [
+                                ItemType(val)
+                                for val in (
+                                    [filter_data["itemType"]] if isinstance(filter_data["itemType"], str) else filter_data["itemType"]
+                                )
+                            ]
+                            type_ok = self._check_item_type(filter_item_type_list, item.type)
                         if not power_ok or not type_ok:
                             continue
                         matched_affixes = self._match_affixes(filter_data["affixPool"], item.affixes)
@@ -325,10 +285,10 @@ class Filter:
 
                         if item.aspect.type == aspect_name:
                             if (
-                                threshold is None
-                                or item.aspect.value is None
-                                or (isinstance(condition, str) and condition == "larger" and item.aspect.value >= threshold)
-                                or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
+                                    threshold is None
+                                    or item.aspect.value is None
+                                    or (isinstance(condition, str) and condition == "larger" and item.aspect.value >= threshold)
+                                    or (isinstance(condition, str) and condition == "smaller" and item.aspect.value <= threshold)
                             ):
                                 Logger.info(f"Matched {profile_str}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
                                 res.keep = True
@@ -337,17 +297,19 @@ class Filter:
 
     def _check_sigil(self, item: Item) -> FilterResult:
         res = FilterResult(False, [])
-        if len(self.sigil_filters.items()) == 0:
+        if (
+                len(self.sigil_filters.items()) == 0
+        ):  # in this intermedia version there are no profiles with Sigils = None since they would have been filtered on load
             res.keep = True
             res.matched.append(MatchedFilter(""))
         for profile_name, profile_filter in self.sigil_filters.items():
             # check item power
-            if not self._check_item_power(profile_filter, item.power, min_key="minTier", max_key="maxTier"):
+            if not self._check_item_power(max_power=profile_filter.maxTier, min_power=profile_filter.minTier, item_power=item.power):
                 continue
-            # check affix
-            if "blacklist" in profile_filter and self._match_affixes(profile_filter["blacklist"], item.affixes + item.inherent):
+            # check affix TODO
+            if profile_filter.blacklist and self._match_affixes(profile_filter["blacklist"], item.affixes + item.inherent):
                 continue
-            if "whitelist" in profile_filter and not self._match_affixes(profile_filter["whitelist"], item.affixes + item.inherent):
+            if profile_filter.whitelist and not self._match_affixes(profile_filter["whitelist"], item.affixes + item.inherent):
                 continue
             Logger.info(f"Matched {profile_name}.Sigils")
             res.keep = True
@@ -355,20 +317,23 @@ class Filter:
         return res
 
     def _check_unique_item(self, item: Item) -> FilterResult:
-        # TODO: really should add configuration schema and validate it once on load so all of these checks in code are not necessary
         res = FilterResult(False, [])
         for profile_name, profile_filter in self.unique_filters.items():
             for filter_item in profile_filter:
                 # check item type
-                if not self._check_item_type(filter_item, item.type):
+                if not self._check_item_type(expected_item_types=filter_item.itemType, item_type=item.type):
                     continue
                 # check item power
-                if not self._check_item_power(filter_item, item.power):
+                if not self._check_item_power(min_power=filter_item.minPower, item_power=item.power):
                     continue
                 # check aspect
-                if item.aspect is None or not self._check_item_aspect(filter_item, item.aspect):
+                if (
+                        item.aspect is None
+                        or filter_item.aspect is None
+                        or not self._check_item_aspect(expected_aspect=filter_item.aspect, item_aspect=item.aspect)
+                ):
                     continue
-                # check affixes
+                # check affixes TODO
                 filter_item.setdefault("affixPool", [])
                 matched_affixes = self._match_affixes([] if "affixPool" not in filter_item else filter_item["affixPool"], item.affixes)
                 if len(matched_affixes) != len(filter_item["affixPool"]):

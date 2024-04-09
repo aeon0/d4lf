@@ -37,12 +37,12 @@ def test_aspects(name: str, result: list[str], item: Item, mocker: MockerFixture
 @pytest.mark.parametrize("name, result, item", natsorted(sigils), ids=[name for name, _, _ in natsorted(sigils)])
 def test_sigils(name: str, result: list[str], item: Item, mocker: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
-    test_filter.sigil_filters = filters.sigil
+    test_filter.sigil_filters = {filters.sigil.name: filters.sigil.Sigils}
     assert natsorted([match.profile.split(".")[0] for match in test_filter.should_keep(item).matched]) == natsorted(result)
 
 
 @pytest.mark.parametrize("name, result, item", natsorted(uniques), ids=[name for name, _, _ in natsorted(uniques)])
 def test_uniques(name: str, result: list[str], item: Item, mocker: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
-    test_filter.unique_filters = filters.unique
+    test_filter.unique_filters = {filters.unique.name: filters.unique.Uniques}
     assert natsorted([match.profile for match in test_filter.should_keep(item).matched]) == natsorted(result)

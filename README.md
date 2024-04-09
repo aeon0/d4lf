@@ -87,9 +87,9 @@ Affixes have the same structure of `[AFFIX_KEY, THRESHOLD, CONDITION]` as descri
 
 ```yaml
 Affixes:
-  # Search for armor and pants that have at least 3 affixes of the affixPool
+  # Search for chest armor and pants that have at least 3 affixes of the affixPool
   - NiceArmor:
-      itemType: [armor, pants]
+      itemType: [chest armor, pants]
       minPower: 725
       affixPool:
         - [damage_reduction_from_close_enemies, 10]
@@ -149,14 +149,14 @@ Uniques:
   - itemType: pants
 ```
 ```yaml
-# Take all unique armor and pants
+# Take all unique chest armors and pants
 Uniques:
-  - itemType: [armor, pants]
+  - itemType: [chest armor, pants]
 ```
 ```yaml
-# Take all unique armor and pants with min item power > 900
+# Take all unique chest armors and pants with min item power > 900
 Uniques:
-  - itemType: [armor, pants]
+  - itemType: [chest armor, pants]
     minPower: 900
 ```
 ```yaml

@@ -1,3 +1,6 @@
+from config.models import UniqueModel, AffixAspectFilterModel, ComparisonType, ProfileModel, SigilModel
+from item.data.item_type import ItemType
+
 affix = {
     "test": [
         {
@@ -77,36 +80,31 @@ aspect = {
         ["of_might", 6.0, "smaller"],
     ]
 }
-sigil = {
-    "test": {
-        "blacklist": ["reduce_cooldowns_on_kill", "vault_of_copper"],
-        "whitelist": ["jalals_vigil"],
-        "maxTier": 80,
-        "minTier": 40,
-    }
-}
+sigil = ProfileModel(
+    name="test",
+    Sigils=SigilModel(blacklist=["reduce_cooldowns_on_kill", "vault_of_copper"], whitelist=["jalals_vigil"], maxTier=80, minTier=40),
+)
 
-unique = {
-    "test": [
-        {"itemType": ["scythe", "sword"], "minPower": 900},
-        {"itemType": "scythe", "minPower": 900},
-        {
-            "aspect": ["lidless_wall", 20],
-            "minPower": 900,
-            "affixPool": [
-                ["attack_speed", 8.4],
-                ["lucky_hit_up_to_a_chance_to_restore_primary_resource", 12],
-                ["maximum_life", 700],
-                ["maximum_essence", 9],
+unique = ProfileModel(
+    name="test",
+    Uniques=[
+        UniqueModel(itemType=[ItemType.Scythe, ItemType.Sword], minPower=900),
+        UniqueModel(itemType=[ItemType.Scythe], minPower=900),
+        UniqueModel(
+            affix=[
+                AffixAspectFilterModel(name="attack_speed", value=8.4),
+                AffixAspectFilterModel(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=12),
+                AffixAspectFilterModel(name="maximum_life", value=700),
+                AffixAspectFilterModel(name="maximum_essence", value=9),
             ],
-        },
-        {
-            "aspect": ["soulbrand", 20],
-            "minPower": 900,
-            "affixPool": [["attack_speed", 8.4]],
-        },
-        {
-            "aspect": ["soulbrand", 15, "smaller"],
-        },
-    ]
-}
+            aspect=AffixAspectFilterModel(name="lidless_wall", value=20),
+            minPower=900,
+        ),
+        UniqueModel(
+            affix=[AffixAspectFilterModel(name="attack_speed", value=8.4)],
+            aspect=AffixAspectFilterModel(name="soulbrand", value=20),
+            minPower=900,
+        ),
+        UniqueModel(aspect=AffixAspectFilterModel(name="soulbrand", value=15, comparison=ComparisonType.smaller)),
+    ],
+)

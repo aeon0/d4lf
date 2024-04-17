@@ -101,7 +101,7 @@ def run_loot_filter():
     chest = Chest()
 
     if chest.is_open():
-        for i in range(IniConfigLoader().general.check_chest_tabs):
+        for i in IniConfigLoader().general.check_chest_tabs:
             chest.switch_to_tab(i)
             wait(0.5)
             check_items(chest)

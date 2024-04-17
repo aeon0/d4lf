@@ -44,7 +44,7 @@ The config folder contains:
 | ----------------------- | --------------------------------------|
 | profiles | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles. |
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey. |
-| check_chest_tabs | How many chest tabs will be checked and fitlered for items in case chest is open when starting the filter. E.g. 2 will check first two chest tabs |
+| check_chest_tabs | Which chest tabs will be checked and fitlered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4. |
 | hidden_transparency | The overlay will go more transparent after not hovering it for a while. This can be any value between [0, 1] with 0 being completely invisible and 1 completely visible. Note the default "visible" transparancy is 0.89 |
 | local_prefs_path | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file |
 

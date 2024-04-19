@@ -5,8 +5,8 @@ from item.models import Item
 
 
 class TestSigil(Item):
-    def __init__(self, rarity=ItemRarity.Common, type=ItemType.Sigil, power=60, **kwargs):
-        super().__init__(rarity=rarity, type=type, power=power, **kwargs)
+    def __init__(self, rarity=ItemRarity.Common, item_type=ItemType.Sigil, power=60, **kwargs):
+        super().__init__(rarity=rarity, item_type=item_type, power=power, **kwargs)
 
 
 sigils = [

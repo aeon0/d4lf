@@ -5,14 +5,16 @@ from pathlib import Path
 import keyboard
 from beautifultable import BeautifulTable
 
+from cam import Cam
 from config.loader import IniConfigLoader
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
 from utils.game_settings import is_fontsize_ok
+from utils.misc import wait
 from utils.ocr.read import load_api
 from utils.process_handler import safe_exit
-from utils.window import WindowSpec
+from utils.window import start_detecting_window, WindowSpec
 from version import __version__
 
 
@@ -26,6 +28,9 @@ def main():
 
     Logger.init("info")
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
+    start_detecting_window(win_spec)
+    while not Cam().is_offset_set():
+        wait(0.2)
 
     load_api()
 

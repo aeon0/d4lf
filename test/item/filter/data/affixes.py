@@ -10,13 +10,13 @@ class TestItem(Item):
 
 
 affixes = [
-    ("wrong type", [], TestItem(type=ItemType.Amulet)),
-    ("power too low", [], TestItem(type=ItemType.Helm, power=724)),
+    ("wrong type", [], TestItem(item_type=ItemType.Amulet)),
+    ("power too low", [], TestItem(item_type=ItemType.Helm, power=724)),
     (
         "res boots 4 res",
         [],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="cold_resistance", value=5),
                 Affix(type="fire_resistance", value=5),
@@ -29,7 +29,7 @@ affixes = [
         "res boots 3 res",
         [],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="cold_resistance", value=5),
                 Affix(type="fire_resistance", value=5),
@@ -41,7 +41,7 @@ affixes = [
         "res boots 3 res+ms",
         ["test.ResBoots"],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="cold_resistance", value=5),
                 Affix(type="movement_speed", value=5),
@@ -54,7 +54,7 @@ affixes = [
         "res boots 2 res",
         [],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="cold_resistance", value=5),
                 Affix(type="shadow_resistance", value=5),
@@ -65,7 +65,7 @@ affixes = [
         "res boots 2 res+ms",
         ["test.ResBoots"],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="cold_resistance", value=5),
                 Affix(type="movement_speed", value=5),
@@ -77,22 +77,9 @@ affixes = [
         "helm life",
         [],
         TestItem(
-            type=ItemType.Helm,
+            item_type=ItemType.Helm,
             affixes=[
                 Affix(type="maximum_life", value=5),
-                Affix(type="movement_speed", value=5),
-                Affix(type="fire_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
-            ],
-        ),
-    ),
-    (
-        "helm no life",
-        ["test.HelmNoLife"],
-        TestItem(
-            type=ItemType.Helm,
-            affixes=[
-                Affix(type="cold_resistance", value=5),
                 Affix(type="movement_speed", value=5),
                 Affix(type="fire_resistance", value=5),
                 Affix(type="shadow_resistance", value=5),
@@ -103,7 +90,7 @@ affixes = [
         "boots inherent",
         ["test.GreatBoots", "test.ResBoots"],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="movement_speed", value=5),
                 Affix(type="cold_resistance", value=5),
@@ -116,7 +103,7 @@ affixes = [
         "boots no inherent",
         ["test.ResBoots"],
         TestItem(
-            type=ItemType.Boots,
+            item_type=ItemType.Boots,
             affixes=[
                 Affix(type="movement_speed", value=5),
                 Affix(type="cold_resistance", value=5),
@@ -126,6 +113,3 @@ affixes = [
         ),
     ),
 ]
-
-# wrong everything
-# with affix

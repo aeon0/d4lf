@@ -6,20 +6,20 @@ from item.models import Item
 
 
 class TestUnique(Item):
-    def __init__(self, rarity=ItemRarity.Unique, type=ItemType.Shield, power=910, **kwargs):
-        super().__init__(rarity=rarity, type=type, power=power, **kwargs)
+    def __init__(self, rarity=ItemRarity.Unique, item_type=ItemType.Shield, power=910, **kwargs):
+        super().__init__(rarity=rarity, item_type=item_type, power=power, **kwargs)
 
 
 uniques = [
     (
-        "power too low",
+        "item power too low",
         [],
         TestUnique(power=800),
     ),
     (
         "wrong type",
         [],
-        TestUnique(type=ItemType.Helm, aspect=Aspect(type="deathless_visage", value=1862)),
+        TestUnique(item_type=ItemType.Helm, aspect=Aspect(type="deathless_visage", value=1862)),
     ),
     (
         "wrong aspect",
@@ -79,7 +79,7 @@ uniques = [
         "ok_2",
         ["test.black_river", "test.black_river"],
         TestUnique(
-            type=ItemType.Scythe,
+            item_type=ItemType.Scythe,
             aspect=Aspect(type="black_river", value=128),
         ),
     ),

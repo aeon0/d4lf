@@ -1,12 +1,12 @@
 # Mostly copied from: https://github.com/patrikoss/pyclick
-import mouse as _mouse
-from mouse import _winmouse
-import pytweening
-import numpy as np
-import random
 import math
+import random
 import time
-from cam import Cam
+
+import mouse as _mouse
+import numpy as np
+import pytweening
+from mouse import _winmouse
 
 
 def isNumeric(val):
@@ -19,7 +19,7 @@ def isListOfPoints(l):
     try:
         isPoint = lambda p: ((len(p) == 2) and isNumeric(p[0]) and isNumeric(p[1]))
         return all(map(isPoint, l))
-    except (KeyError, TypeError) as e:
+    except (KeyError, TypeError):
         return False
 
 

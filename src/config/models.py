@@ -1,11 +1,11 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
 import enum
+import sys
 from pathlib import Path
-from typing import List
 
 import numpy
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator, RootModel
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
@@ -22,18 +22,16 @@ class _IniBaseModel(BaseModel):
     model_config = ConfigDict(frozen=True, str_strip_whitespace=True, str_to_lower=True)
 
 
+def _parse_item_type(data: str | list[str]) -> list[str]:
+    if isinstance(data, str):
+        return [data]
+    return data
+
+
 class AffixAspectFilterModel(BaseModel):
     name: str
     value: float | None = None
     comparison: ComparisonType = ComparisonType.larger
-
-    @field_validator("name")
-    def name_must_exist(cls, name: str) -> str:
-        import dataloader  # This on module level would be a circular import, so we do it lazy for now
-
-        if name not in dataloader.Dataloader().affix_dict.keys() and name not in dataloader.Dataloader().aspect_unique_dict.keys():
-            raise ValueError(f"affix {name} does not exist")
-        return name
 
     @model_validator(mode="before")
     def parse_data(cls, data: str | list[str] | list[str | float] | dict[str, str | float]) -> dict[str, str | float]:
@@ -53,6 +51,50 @@ class AffixAspectFilterModel(BaseModel):
                 result["comparison"] = data[2]
             return result
         raise ValueError("must be str or list")
+
+
+class AffixFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().affix_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
+
+
+class AffixFilterCountModel(BaseModel):
+    count: list[AffixFilterModel] = []
+    maxCount: int = 5
+    minCount: int = 1
+
+    @model_validator(mode="before")
+    def set_defaults(cls, data: "AffixFilterCountModel") -> "AffixFilterCountModel":
+        if "minCount" not in data and "count" in data and isinstance(data["count"], list):
+            data["minCount"] = len(data["count"])
+        if "maxCount" not in data and "count" in data and isinstance(data["count"], list):
+            data["maxCount"] = len(data["count"])
+        return data
+
+
+class AspectFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().aspect_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
+
+
+class AspectUniqueFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().aspect_unique_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
 
 
 class AdvancedOptionsModel(_IniBaseModel):
@@ -101,7 +143,7 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
-class General(_IniBaseModel):
+class GeneralModel(_IniBaseModel):
     check_chest_tabs: list[int]
     hidden_transparency: float
     language: str = "enUS"
@@ -166,9 +208,23 @@ class HSVRangeModel(_IniBaseModel):
         return v
 
 
+class ItemFilterModel(BaseModel):
+    affixPool: list[AffixFilterCountModel] = []
+    inherentPool: list[AffixFilterCountModel] = []
+    itemType: list[ItemType] = []
+    minPower: int = 0
+
+    @field_validator("itemType", mode="before")
+    def parse_item_type(cls, data: str | list[str]) -> list[str]:
+        return _parse_item_type(data)
+
+
+DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
+
+
 class SigilModel(BaseModel):
     minTier: int = 0
-    maxTier: int = 100
+    maxTier: int = sys.maxsize
     blacklist: list[str] = []
     whitelist: list[str] = []
 
@@ -205,22 +261,22 @@ class SigilModel(BaseModel):
 
 
 class UniqueModel(BaseModel):
-    affix: list[AffixAspectFilterModel] = []
-    aspect: AffixAspectFilterModel = None
+    affix: list[AffixFilterModel] = []
+    aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []
     minPower: int = 0
 
     @field_validator("itemType", mode="before")
     def parse_item_type(cls, data: str | list[str]) -> list[str]:
-        if isinstance(data, str):
-            return [data]
-        return data
+        return _parse_item_type(data)
 
 
 class ProfileModel(BaseModel):
     name: str
+    Affixes: list[DynamicItemFilterModel] = []
+    Aspects: list[AspectFilterModel] = []
     Sigils: SigilModel | None = None
-    Uniques: List[UniqueModel] = []
+    Uniques: list[UniqueModel] = []
 
 
 class UiOffsetsModel(_IniBaseModel):

@@ -1,85 +1,125 @@
-from config.models import UniqueModel, AffixAspectFilterModel, ComparisonType, ProfileModel, SigilModel
+from config.models import (
+    UniqueModel,
+    ComparisonType,
+    ProfileModel,
+    SigilModel,
+    AffixFilterModel,
+    AspectUniqueFilterModel,
+    AspectFilterModel,
+    AffixFilterCountModel,
+    ItemFilterModel,
+)
 from item.data.item_type import ItemType
 
-affix = {
-    "test": [
+# noinspection PyTypeChecker
+affix = ProfileModel(
+    name="test",
+    Affixes=[
         {
-            "Helm": {
-                "itemType": "helm",
-                "minPower": 725,
-                "affixPool": [["basic_skill_attack_speed", 6], ["cooldown_reduction", 5], ["maximum_life", 640], ["total_armor", 9]],
-            }
+            "Helm": ItemFilterModel(
+                itemType=[ItemType.Helm],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="basic_skill_attack_speed", value=6),
+                            AffixFilterModel(name="cooldown_reduction", value=5),
+                            AffixFilterModel(name="maximum_life", value=640),
+                            AffixFilterModel(name="total_armor", value=9),
+                        ]
+                    )
+                ],
+            )
         },
         {
-            "ResBoots": {
-                "itemType": "boots",
-                "minPower": 725,
-                "affixPool": [
-                    ["movement_speed"],
-                    {
-                        "any_of": [
-                            ["shadow_resistance"],
-                            ["cold_resistance"],
-                            ["lightning_resistance"],
-                            ["poison_resistance"],
-                            ["fire_resistance"],
+            "ResBoots": ItemFilterModel(
+                itemType=[ItemType.Boots],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(count=[AffixFilterModel(name="movement_speed")]),
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="shadow_resistance"),
+                            AffixFilterModel(name="cold_resistance"),
+                            AffixFilterModel(name="lightning_resistance"),
+                            AffixFilterModel(name="poison_resistance"),
+                            AffixFilterModel(name="fire_resistance"),
                         ],
-                        "minCount": 2,
-                    },
+                        minCount=2,
+                    ),
                 ],
-            }
+            )
         },
         {
-            "GreatBoots": {
-                "affixPool": [["movement_speed"], ["cold_resistance"], ["lightning_resistance"]],
-                "inherentPool": ["maximum_evade_charges", "attacks_reduce_evades_cooldown"],
-                "itemType": "boots",
-                "minPower": 800,
-            }
+            "GreatBoots": ItemFilterModel(
+                itemType=[ItemType.Boots],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="movement_speed"),
+                            AffixFilterModel(name="cold_resistance"),
+                            AffixFilterModel(name="lightning_resistance"),
+                        ],
+                    ),
+                ],
+                inherentPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="maximum_evade_charges"),
+                            AffixFilterModel(name="attacks_reduce_evades_cooldown_by_seconds"),
+                        ],
+                        minCount=1,
+                    ),
+                ],
+            )
         },
         {
-            "HelmNoLife": {
-                "itemType": "helm",
-                "minPower": 725,
-                "affixPool": [
-                    {"blacklist": ["maximum_life"]},
+            "Armor": ItemFilterModel(
+                itemType=[ItemType.ChestArmor, ItemType.Legs],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="damage_reduction_from_close_enemies", value=10),
+                            AffixFilterModel(name="maximum_life", value=700),
+                            AffixFilterModel(name="dodge_chance_against_close_enemies", value=6.5),
+                            AffixFilterModel(name="dodge_chance", value=5),
+                        ],
+                    ),
                 ],
-            }
+            )
         },
         {
-            "Armor": {
-                "itemType": ["chest armor", "pants"],
-                "minPower": 725,
-                "affixPool": [
-                    ["damage_reduction_from_close_enemies", 10],
-                    ["maximum_life", 700],
-                    ["dodge_chance_against_close_enemies", 6.5],
-                    ["dodge_chance", 5.0],
+            "Boots": ItemFilterModel(
+                itemType=[ItemType.Boots],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="movement_speed", value=10),
+                            AffixFilterModel(name="maximum_life", value=700),
+                            AffixFilterModel(name="cold_resistance", value=6.5),
+                            AffixFilterModel(name="fire_resistance", value=5),
+                            AffixFilterModel(name="poison_resistance", value=5),
+                            AffixFilterModel(name="shadow_resistance", value=5),
+                        ],
+                        minCount=4,
+                    ),
                 ],
-            }
+            )
         },
-        {
-            "Boots": {
-                "itemType": "boots",
-                "minPower": 725,
-                "affixPool": [
-                    ["movement_speed", 10],
-                    ["maximum_life", 700],
-                    ["cold_resistance", 6.5],
-                    ["fire_resistance", 5.0],
-                    ["poison_resistance", 5.0],
-                    ["shadow_resistance", 5.0],
-                ],
-            }
-        },
-    ]
-}
-aspect = {
-    "test": [
-        ["accelerating", 25],
-        ["of_might", 6.0, "smaller"],
-    ]
-}
+    ],
+)
+
+aspect = ProfileModel(
+    name="test",
+    Aspects=[
+        AspectFilterModel(name="accelerating", value=25),
+        AspectFilterModel(name="of_might", value=6.0, comparison=ComparisonType.smaller),
+    ],
+)
+
 sigil = ProfileModel(
     name="test",
     Sigils=SigilModel(blacklist=["reduce_cooldowns_on_kill", "vault_of_copper"], whitelist=["jalals_vigil"], maxTier=80, minTier=40),
@@ -92,19 +132,19 @@ unique = ProfileModel(
         UniqueModel(itemType=[ItemType.Scythe], minPower=900),
         UniqueModel(
             affix=[
-                AffixAspectFilterModel(name="attack_speed", value=8.4),
-                AffixAspectFilterModel(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=12),
-                AffixAspectFilterModel(name="maximum_life", value=700),
-                AffixAspectFilterModel(name="maximum_essence", value=9),
+                AffixFilterModel(name="attack_speed", value=8.4),
+                AffixFilterModel(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=12),
+                AffixFilterModel(name="maximum_life", value=700),
+                AffixFilterModel(name="maximum_essence", value=9),
             ],
-            aspect=AffixAspectFilterModel(name="lidless_wall", value=20),
+            aspect=AspectUniqueFilterModel(name="lidless_wall", value=20),
             minPower=900,
         ),
         UniqueModel(
-            affix=[AffixAspectFilterModel(name="attack_speed", value=8.4)],
-            aspect=AffixAspectFilterModel(name="soulbrand", value=20),
+            affix=[AffixFilterModel(name="attack_speed", value=8.4)],
+            aspect=AspectUniqueFilterModel(name="soulbrand", value=20),
             minPower=900,
         ),
-        UniqueModel(aspect=AffixAspectFilterModel(name="soulbrand", value=15, comparison=ComparisonType.smaller)),
+        UniqueModel(aspect=AspectUniqueFilterModel(name="soulbrand", value=15, comparison=ComparisonType.smaller), minPower=900),
     ],
 )

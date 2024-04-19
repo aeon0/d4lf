@@ -73,7 +73,7 @@ class SearchArgs:
         if img is not None:
             self.inp_img = img
         else:
-            img = Cam().grab() if self.inp_img is None else self.inp_img
+            Cam().grab() if self.inp_img is None else self.inp_img
         return search(**self.as_dict())
 
     def is_visible(self, img: np.ndarray = None) -> bool:
@@ -303,7 +303,7 @@ def search(
             if len(matches) > 1 and mode == "all":
                 Logger.debug(
                     "Found the following matches:\n"
-                    + ", ".join(["  {template_match.name} ({template_match.score*100:.1f}% confidence)" for template_match in matches])
+                    + ", ".join(["  {template_match.name} ({template_match.score*100:.1f}% confidence)" for _ in matches])
                 )
             else:
                 Logger.debug("Found {mode} match: {template_match.name} ({template_match.score*100:.1f}% confidence)")

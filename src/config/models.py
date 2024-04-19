@@ -101,13 +101,17 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
-class GeneralModel(_IniBaseModel):
-    check_chest_tabs: int
+class General(_IniBaseModel):
+    check_chest_tabs: list[int]
     hidden_transparency: float
     language: str = "enUS"
     local_prefs_path: Path | None
     profiles: list[str]
     run_vision_mode_on_startup: bool
+
+    @field_validator("check_chest_tabs", mode="after")
+    def check_chest_tabs_index(cls, v: list[int]) -> list[int]:
+        return sorted([int(x) - 1 for x in v])
 
     @field_validator("language")
     def language_must_exist(cls, v: str) -> str:

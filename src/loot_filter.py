@@ -1,7 +1,6 @@
 import time
 
 import keyboard
-from PIL import Image  # noqa Somehow needed, otherwise the binary has an issue with tesserocr
 
 from cam import Cam
 from config.loader import IniConfigLoader

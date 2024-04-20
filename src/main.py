@@ -3,6 +3,7 @@ import traceback
 from pathlib import Path
 
 import keyboard
+from PIL import Image  # noqa Somehow needed, otherwise the binary has an issue with tesserocr
 from beautifultable import BeautifulTable
 
 from cam import Cam

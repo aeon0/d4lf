@@ -2,7 +2,6 @@ import cv2
 import pytest
 
 from cam import Cam
-from template_finder import stored_templates
 from ui.chest import Chest
 
 BASE_PATH = "test/assets/ui"
@@ -15,8 +14,7 @@ BASE_PATH = "test/assets/ui"
     ],
 )
 def test_chest(img_res, input_img):
-    Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    stored_templates.cache_clear()
+    Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
     inv = Chest()
     flag = inv.is_open(img)

@@ -1,31 +1,21 @@
 import concurrent.futures
-import os
 import threading
 import time
 from dataclasses import dataclass
-from functools import lru_cache
 
 import cv2
 import numpy as np
 
 from cam import Cam
-from config.ui import COLORS, ResManager
+from config.data import COLORS, Template
+from config.ui import ResManager
 from logger import Logger
 from utils.image_operations import alpha_to_mask, color_filter, crop
-from utils.misc import load_img, list_files_in_folder, run_until_condition
+from utils.misc import run_until_condition
 from utils.roi_operations import get_center
 
 templates_lock = threading.Lock()
 executor = concurrent.futures.ThreadPoolExecutor()
-
-
-@dataclass
-class Template:
-    name: str = None
-    img_bgra: np.ndarray = None
-    img_bgr: np.ndarray = None
-    img_gray: np.ndarray = None
-    alpha_mask: np.ndarray = None
 
 
 @dataclass
@@ -102,47 +92,19 @@ class SearchArgs:
         return change
 
 
-@lru_cache(maxsize=None)
-def stored_templates() -> dict[Template]:
-    paths = []
-    templates = {}
-    # TODO check if it works for higher res
-    closest = min([1080, 1440, 1600, 2160], key=lambda x: abs(x - int(Cam().res_p[:-1])))
-    for path in [f"assets\\templates_{closest}p"]:
-        paths += list_files_in_folder(path)
-    for file_path in paths:
-        file_name: str = os.path.basename(file_path)
-        if file_name.lower().endswith(".png"):
-            key = file_name[:-4].upper()
-            template_img = load_img(file_path)
-            templates[key] = Template(
-                name=key,
-                img_bgra=template_img,
-                img_bgr=cv2.cvtColor(template_img, cv2.COLOR_BGRA2BGR),
-                img_gray=cv2.cvtColor(template_img, cv2.COLOR_BGRA2GRAY),
-                alpha_mask=alpha_to_mask(template_img),
-            )
-    return templates
-
-
-def get_template(key: str) -> np.ndarray:
-    with templates_lock:
-        return stored_templates()[key].img_bgr
-
-
 def _process_template_refs(ref: str | np.ndarray | list[str]) -> list[Template]:
     templates = []
-    if type(ref) != list:
+    if not isinstance(ref, list):
         ref = [ref]
     for i in ref:
         # if the reference is a string, then it's a reference to a named template asset
-        if type(i) == str:
+        if isinstance(i, str):
             try:
-                templates.append(stored_templates()[i.upper()])
+                templates.append(ResManager().templates[i.lower()])
             except KeyError:
                 Logger.warning(f"Template not defined: {i}")
         # if the reference is an image, append new Template class object
-        elif type(i) == np.ndarray:
+        elif isinstance(i, np.ndarray):
             templates.append(
                 Template(
                     img_bgr=i,

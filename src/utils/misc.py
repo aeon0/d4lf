@@ -1,19 +1,15 @@
 import ast
-import os
+import math
 import random
 import re
 import string
 import time
-import math
-import unicodedata
 from functools import wraps
 from typing import Callable, TypeVar
 
 import cv2
 import numpy as np
-from parse import search
-
-from logger import Logger
+import unicodedata
 
 T = TypeVar("T")
 
@@ -31,28 +27,6 @@ def hms(seconds: int):
     m = seconds % 3600 // 60
     s = seconds % 3600 % 60
     return "{:02d}:{:02d}:{:02d}".format(h, m, s)
-
-
-def load_img(path):
-    if os.path.isfile(path):
-        try:
-            # print(f"Loading image: {path}")
-            template_img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
-            return template_img
-        except Exception as e:
-            print(e)
-            raise ValueError(f"Could not load image: {path}")
-    else:
-        Logger.error(f"Image does not exist: {path}")
-    return None
-
-
-def list_files_in_folder(path: str):
-    r = []
-    for root, _, files in os.walk(path):
-        for name in files:
-            r.append(os.path.join(root, name))
-    return r
 
 
 def set_cv2_window(name, x, y, size):

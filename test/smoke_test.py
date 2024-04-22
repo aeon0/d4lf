@@ -7,14 +7,12 @@ from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
 from item.filter import Filter
 from item.find_descr import find_descr
-from template_finder import stored_templates
 
 
 def test_smoke():
     res = (2560, 1440)
     anchor = (1723, 1012)
     Cam().update_window_pos(0, 0, *res)
-    stored_templates.cache_clear()
     img = cv2.imread("test/assets/item/find_descr_legendary_1440p.png")
     start = time.time()
     found, rarity, cropped_descr, _ = find_descr(img, anchor)

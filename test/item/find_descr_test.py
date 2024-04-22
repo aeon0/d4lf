@@ -6,7 +6,6 @@ import pytest
 from cam import Cam
 from item.data.rarity import ItemRarity
 from item.find_descr import find_descr
-from template_finder import stored_templates
 
 BASE_PATH = "test/assets/item"
 
@@ -22,8 +21,7 @@ BASE_PATH = "test/assets/item"
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):
-    Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    stored_templates.cache_clear()
+    Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
     start = time.time()
     success, item_rarity, cropped_img, roi = find_descr(img, anchor)

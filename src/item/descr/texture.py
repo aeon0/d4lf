@@ -1,6 +1,7 @@
 import numpy as np
 
-from config.ui import COLORS, ResManager
+from config.data import COLORS
+from config.ui import ResManager
 from item.data.rarity import ItemRarity
 from template_finder import search, TemplateMatch
 from utils.image_operations import crop, color_filter
@@ -25,12 +26,12 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
     if not (
-        affix_bullets := search(["affix_bullet_point", "rerolled_bullet_point"], img_item_descr, 0.89, roi_bullets, True, mode="all")
+        affix_bullets := search(
+            ["affix_bullet_point_medium", "rerolled_bullet_point_medium"], img_item_descr, 0.85, roi_bullets, True, mode="all"
+        )
     ).success:
         if not (
-            affix_bullets := search(
-                ["affix_bullet_point_medium", "rerolled_bullet_point_medium"], img_item_descr, 0.85, roi_bullets, True, mode="all"
-            )
+            affix_bullets := search(["affix_bullet_point", "rerolled_bullet_point"], img_item_descr, 0.85, roi_bullets, True, mode="all")
         ).success:
             return []
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
@@ -40,7 +41,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    empty_sockets = search("empty_socket", img_item_descr, 0.87, roi_bullets, True, mode="all")
+    empty_sockets = search("empty_socket", img_item_descr, 0.85, roi_bullets, True, mode="all")
     empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
     return empty_sockets.matches
 
@@ -48,11 +49,16 @@ def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    refs = ["aspect_bullet_point", "aspect_bullet_point_medium", "unique_bullet_point", "unique_bullet_point_medium"]
-    search_res = search(refs, img_item_descr, 0.87, roi_bullets, True, mode="first")
-    if not search_res.success:
-        return None
-    return search_res.matches[0]
+    if not (
+        aspect_bullets := search(
+            ["aspect_bullet_point_medium", "unique_bullet_point_medium"], img_item_descr, 0.8, roi_bullets, True, mode="first"
+        )
+    ).success:
+        if not (
+            aspect_bullets := search(["aspect_bullet_point", "unique_bullet_point"], img_item_descr, 0.8, roi_bullets, True, mode="first")
+        ).success:
+            return None
+    return aspect_bullets.matches[0]
 
 
 def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, rarity: ItemRarity) -> list[int]:

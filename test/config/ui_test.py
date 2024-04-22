@@ -2,9 +2,10 @@ import numpy as np
 import pytest
 from natsort import natsorted
 
-from config.ui import ResManager, COLORS, _ResTransformer
+from config.data import COLORS
+from config.ui import ResManager, _ResTransformer
 
-_PIXELS = [np.array([0, 0]), np.array([1920, 0]), np.array([0, 1080]), np.array([1920, 1080])]
+_PIXELS = [np.array([0, 0]), np.array([3840, 0]), np.array([0, 2160]), np.array([3840, 2160])]
 _TESTS = [
     ("1920x1080", (np.array(coord) for coord in [(0, 0), (1920, 0), (0, 1080), (1920, 1080)])),
     ("1920x540", (np.array(coord) for coord in [(150, 0), (1770, 0), (150, 540), (1770, 540)])),
@@ -37,3 +38,7 @@ def test_transformation(pixel, result):
 
 def test_colors():
     assert COLORS is not None
+
+
+def test_templates():
+    assert len(ResManager().templates) == 24

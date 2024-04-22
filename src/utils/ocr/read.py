@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 from tesserocr import OEM, PyTessBaseAPI, RIL
 
+from config.data import COLORS
 from config.loader import IniConfigLoader
-from config.ui import COLORS
 from logger import Logger
 from utils.image_operations import color_filter
 from utils.ocr.models import OcrResult

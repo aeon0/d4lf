@@ -4,7 +4,8 @@ import cv2
 import numpy as np
 
 from cam import Cam
-from config.ui import COLORS, ResManager
+from config.data import COLORS
+from config.ui import ResManager
 from template_finder import SearchArgs
 from utils.image_operations import color_filter, crop
 

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Aspect:
-    type: str | None
+    type: str
     value: float = None
     text: str = ""
     loc: tuple[int, int] = None

@@ -1,9 +1,9 @@
 import os
 import traceback
 from pathlib import Path
-from PIL import Image  # Somehow needed, otherwise the binary has an issue with tesserocr
 
 import keyboard
+from PIL import Image  # noqa Somehow needed, otherwise the binary has an issue with tesserocr
 from beautifultable import BeautifulTable
 
 from cam import Cam

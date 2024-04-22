@@ -1,0 +1,88 @@
+Aspects:
+  - [ accelerating, 25 ]
+  - [ of_disobedience, 1.1 ]
+  - of_might
+
+Affixes:
+  - AwesomeHelm:
+      itemType: helm
+      minPower: 725
+      affixPool:
+        - count:
+            - [ basic_skill_attack_speed, 6 ]
+            - [ cooldown_reduction, 5 ]
+            - [ maximum_life, 640 ]
+            - [ total_armor, 9 ]
+          minCount: 3
+
+  - AwesomeGloves:
+      itemType: gloves
+      minPower: 725
+      affixPool:
+        - count:
+            - [ attack_speed, 7 ]
+            - [ lucky_hit_chance, 7.8 ]
+            - [ critical_strike_chance, 5.5 ]
+
+  - AwesomeArmor:
+      itemType: [ chest armor, pants ]
+      minPower: 725
+      affixPool:
+        - count:
+            - [ damage_reduction_from_close_enemies, 10 ]
+            - [ damage_reduction_from_distant_enemies, 12 ]
+            - [ damage_reduction, 5 ]
+            - [ total_armor, 9 ]
+            - [ maximum_life, 700 ]
+            - [ dodge_chance_against_close_enemies, 6.5 ]
+            - [ dodge_chance, 5.0 ]
+          minCount: 3
+
+  - AwesomeBoots:
+      itemType: boots
+      minPower: 725
+      affixPool:
+        - count:
+            - [ movement_speed, 16 ]
+            - [ dodge_chance, 5 ]
+            - [ dodge_chance_against_distant_enemies, 7 ]
+            - [ energy_cost_reduction, 6 ]
+          minCount: 3
+
+  - AwesomeAmulet:
+      itemType: amulet
+      minPower: 725
+      affixPool:
+        - count:
+            - [ cooldown_reduction, 6 ]
+            - [ damage_reduction, 6 ]
+            - [ damage_reduction_from_close_enemies, 10 ]
+            - [ damage_reduction_from_distant_enemies, 12 ]
+            - [ total_armor, 9 ]
+            - [ energy_cost_reduction, 6 ]
+            - [ movement_speed ]
+          minCount: 3
+
+  - AwesomeRing:
+      itemType: ring
+      minPower: 725
+      affixPool:
+        - count:
+            - [ critical_strike_chance, 4 ]
+            - [ lucky_hit_chance, 5 ]
+            - [ resource_generation, 8 ]
+            - [ maximum_life, 680 ]
+          minCount: 3
+
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    - endless_gates
+    - armor_breakers
+    - resistance_breakers
+
+Uniques:
+  - aspect: [ banished_lords_talisman ]
+  - aspect: [ fists_of_fate ]
+  - aspect: [ ring_of_the_ravenous ]

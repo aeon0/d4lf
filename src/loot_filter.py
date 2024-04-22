@@ -65,16 +65,16 @@ def check_items(inv: InventoryBase):
         Logger.debug(f"  Runtime (ReadItem): {time.time() - start_time_read:.2f}s")
 
         # Hardcoded filters
-        if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
+        if rarity == ItemRarity.Common and item_descr.item_type == ItemType.Material:
             Logger.info(f"Matched: Material")
             continue
-        if rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
+        if rarity == ItemRarity.Legendary and item_descr.item_type == ItemType.Material:
             Logger.info(f"Matched: Extracted Aspect")
             continue
-        elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
+        elif rarity == ItemRarity.Magic and item_descr.item_type == ItemType.Elixir:
             Logger.info(f"Matched: Elixir")
             continue
-        elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
+        elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
             keyboard.send("space")
             wait(0.13, 0.14)
             continue

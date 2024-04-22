@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 
 from config.helper import singleton
-from config.models import Char, General, AdvancedOptions
+from config.models import CharModel, GeneralModel, AdvancedOptionsModel
 from logger import Logger
 
 CONFIG_IN_USER_DIR = ".d4lf"
@@ -41,7 +41,7 @@ class IniConfigLoader:
         if (p := (Path(USER_DIR) / CONFIG_IN_USER_DIR / PARAMS_INI)).exists() and p.stat().st_size:
             self._parsers["custom"].read(p)
 
-        self._advanced_options = AdvancedOptions(
+        self._advanced_options = AdvancedOptionsModel(
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             run_filter=self._select_val("advanced_options", "run_filter"),
             exit_key=self._select_val("advanced_options", "exit_key"),
@@ -49,8 +49,8 @@ class IniConfigLoader:
             scripts=self._select_val("advanced_options", "scripts").split(","),
             process_name=self._select_val("advanced_options", "process_name"),
         )
-        self._char = Char(inventory=self._select_val("char", "inventory"))
-        self._general = General(
+        self._char = CharModel(inventory=self._select_val("char", "inventory"))
+        self._general = GeneralModel(
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
             check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
@@ -59,19 +59,19 @@ class IniConfigLoader:
         )
 
     @property
-    def advanced_options(self) -> AdvancedOptions:
+    def advanced_options(self) -> AdvancedOptionsModel:
         if not self._loaded:
             self.load()
         return self._advanced_options
 
     @property
-    def char(self) -> Char:
+    def char(self) -> CharModel:
         if not self._loaded:
             self.load()
         return self._char
 
     @property
-    def general(self) -> General:
+    def general(self) -> GeneralModel:
         if not self._loaded:
             self.load()
         return self._general

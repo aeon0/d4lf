@@ -36,7 +36,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
-    if item.type == ItemType.Material or (item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.type != ItemType.Sigil):
+    if item.item_type == ItemType.Material or (item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.item_type != ItemType.Sigil):
         return item
 
     # Find textures for bullets and sockets
@@ -47,15 +47,15 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Split affix bullets into inherent and others
     # =========================
-    if item.type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves]:
+    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves]:
         inhernet_affixe_bullets = []
-    elif item.type in [ItemType.Ring]:
+    elif item.item_type in [ItemType.Ring]:
         inhernet_affixe_bullets = affix_bullets[:2]
         affix_bullets = affix_bullets[2:]
-    elif item.type in [ItemType.Sigil]:
+    elif item.item_type in [ItemType.Sigil]:
         inhernet_affixe_bullets = affix_bullets[:3]
         affix_bullets = affix_bullets[3:]
-    elif item.type in [ItemType.Shield]:
+    elif item.item_type in [ItemType.Shield]:
         inhernet_affixe_bullets = affix_bullets[:4]
         affix_bullets = affix_bullets[4:]
     else:
@@ -65,7 +65,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Find inherent affixes
     # =========================
-    is_sigil = item.type == ItemType.Sigil
+    is_sigil = item.item_type == ItemType.Sigil
     line_height = ResManager().offsets.item_descr_line_height
     if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
         bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
@@ -98,9 +98,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find aspects & uniques
     # =========================
     if rarity in [ItemRarity.Legendary, ItemRarity.Unique]:
-        item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.type, item.rarity)
+        item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.item_type, item.rarity)
         if item.aspect is None:
-            item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.type, item.rarity, False)
+            item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.item_type, item.rarity, False)
         if item.aspect is None:
             if show_warnings:
                 Logger.warning(f"Could not find aspect/unique: {debug_str}")

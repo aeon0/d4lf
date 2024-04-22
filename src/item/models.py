@@ -11,7 +11,7 @@ from logger import Logger
 @dataclass
 class Item:
     rarity: ItemRarity | None = None
-    type: ItemType | None = None
+    item_type: ItemType | None = None
     power: int | None = None
     aspect: Aspect | None = None
     affixes: list[Affix] = field(default_factory=list)
@@ -30,7 +30,7 @@ class Item:
         if self.power != other.power:
             Logger.debug("Power not the same")
             res = False
-        if self.type != other.type:
+        if self.item_type != other.item_type:
             Logger.debug("Type not the same")
             res = False
         if self.affixes != other.affixes:
@@ -47,7 +47,7 @@ class ItemJSONEncoder(json.JSONEncoder):
         if isinstance(o, Item):
             return {
                 "rarity": o.rarity.value if o.rarity else None,
-                "type": o.type.value if o.type else None,
+                "item_type": o.item_type.value if o.item_type else None,
                 "power": o.power if o.power else None,
                 "aspect": o.aspect.__dict__ if o.aspect else None,
                 "affixes": [affix.__dict__ for affix in o.affixes],

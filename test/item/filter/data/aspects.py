@@ -5,8 +5,8 @@ from item.models import Item
 
 
 class TestLegendary(Item):
-    def __init__(self, rarity=ItemRarity.Legendary, type=ItemType.Shield, power=910, **kwargs):
-        super().__init__(rarity=rarity, type=type, power=power, **kwargs)
+    def __init__(self, rarity=ItemRarity.Legendary, item_type=ItemType.Shield, power=910, **kwargs):
+        super().__init__(rarity=rarity, item_type=item_type, power=power, **kwargs)
 
 
 aspects = [

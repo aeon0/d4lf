@@ -165,7 +165,6 @@ def vision_mode():
 
                 # Check if the item is a match based on our filters
                 match = True
-                item_descr = None
                 last_top_left_corner = top_left_corner
                 last_center = item_center
                 item_descr = read_descr(rarity, cropped_descr, False)
@@ -175,16 +174,16 @@ def vision_mode():
                     continue
 
                 ignored_item = False
-                if rarity == ItemRarity.Common and item_descr.type == ItemType.Material:
+                if rarity == ItemRarity.Common and item_descr.item_type == ItemType.Material:
                     Logger.info(f"Matched: Material")
                     ignored_item = True
-                elif rarity == ItemRarity.Legendary and item_descr.type == ItemType.Material:
+                elif rarity == ItemRarity.Legendary and item_descr.item_type == ItemType.Material:
                     Logger.info(f"Matched: Extracted Aspect")
                     ignored_item = True
-                elif rarity == ItemRarity.Magic and item_descr.type == ItemType.Elixir:
+                elif rarity == ItemRarity.Magic and item_descr.item_type == ItemType.Elixir:
                     Logger.info(f"Matched: Elixir")
                     ignored_item = True
-                elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.type != ItemType.Sigil:
+                elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
 
                 if ignored_item:

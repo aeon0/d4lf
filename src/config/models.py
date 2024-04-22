@@ -1,20 +1,103 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
+import enum
+import sys
 from pathlib import Path
 
 import numpy
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator, RootModel
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
 from config.helper import key_must_exist
+from item.data.item_type import ItemType
 
 
-class _IniBase(BaseModel):
+class ComparisonType(enum.StrEnum):
+    larger = enum.auto()
+    smaller = enum.auto()
+
+
+class _IniBaseModel(BaseModel):
     model_config = ConfigDict(frozen=True, str_strip_whitespace=True, str_to_lower=True)
 
 
-class AdvancedOptions(_IniBase):
+def _parse_item_type(data: str | list[str]) -> list[str]:
+    if isinstance(data, str):
+        return [data]
+    return data
+
+
+class AffixAspectFilterModel(BaseModel):
+    name: str
+    value: float | None = None
+    comparison: ComparisonType = ComparisonType.larger
+
+    @model_validator(mode="before")
+    def parse_data(cls, data: str | list[str] | list[str | float] | dict[str, str | float]) -> dict[str, str | float]:
+        if isinstance(data, dict):
+            return data
+        if isinstance(data, str):
+            return {"name": data}
+        if isinstance(data, list):
+            if not data or len(data) > 3:
+                raise ValueError("list, cannot be empty or larger than 3 items")
+            result = {}
+            if len(data) >= 1:
+                result["name"] = data[0]
+            if len(data) >= 2:
+                result["value"] = data[1]
+            if len(data) == 3:
+                result["comparison"] = data[2]
+            return result
+        raise ValueError("must be str or list")
+
+
+class AffixFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().affix_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
+
+
+class AffixFilterCountModel(BaseModel):
+    count: list[AffixFilterModel] = []
+    maxCount: int = 5
+    minCount: int = 1
+
+    @model_validator(mode="before")
+    def set_defaults(cls, data: "AffixFilterCountModel") -> "AffixFilterCountModel":
+        if "minCount" not in data and "count" in data and isinstance(data["count"], list):
+            data["minCount"] = len(data["count"])
+        if "maxCount" not in data and "count" in data and isinstance(data["count"], list):
+            data["maxCount"] = len(data["count"])
+        return data
+
+
+class AspectFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().aspect_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
+
+
+class AspectUniqueFilterModel(AffixAspectFilterModel):
+    @field_validator("name")
+    def name_must_exist(cls, name: str) -> str:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        if name not in dataloader.Dataloader().aspect_unique_dict.keys():
+            raise ValueError(f"affix {name} does not exist")
+        return name
+
+
+class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
     log_lvl: str = "info"
     process_name: str = "Diablo IV.exe"
@@ -23,7 +106,7 @@ class AdvancedOptions(_IniBase):
     scripts: list[str]
 
     @model_validator(mode="after")
-    def key_must_be_unique(self) -> "AdvancedOptions":
+    def key_must_be_unique(self) -> "AdvancedOptionsModel":
         keys = [self.exit_key, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError(f"hotkeys must be unique")
@@ -40,7 +123,7 @@ class AdvancedOptions(_IniBase):
         return k
 
 
-class Char(_IniBase):
+class CharModel(_IniBaseModel):
     inventory: str
 
     @field_validator("inventory")
@@ -48,19 +131,19 @@ class Char(_IniBase):
         return key_must_exist(k)
 
 
-class Colors(_IniBase):
-    aspect_number: "HSVRange"
-    cold_imbued: "HSVRange"
-    legendary_orange: "HSVRange"
-    material_color: "HSVRange"
-    poison_imbued: "HSVRange"
-    shadow_imbued: "HSVRange"
-    skill_cd: "HSVRange"
-    unique_gold: "HSVRange"
-    unusable_red: "HSVRange"
+class ColorsModel(_IniBaseModel):
+    aspect_number: "HSVRangeModel"
+    cold_imbued: "HSVRangeModel"
+    legendary_orange: "HSVRangeModel"
+    material_color: "HSVRangeModel"
+    poison_imbued: "HSVRangeModel"
+    shadow_imbued: "HSVRangeModel"
+    skill_cd: "HSVRangeModel"
+    unique_gold: "HSVRangeModel"
+    unusable_red: "HSVRangeModel"
 
 
-class General(_IniBase):
+class GeneralModel(_IniBaseModel):
     check_chest_tabs: list[int]
     hidden_transparency: float
     language: str = "enUS"
@@ -91,7 +174,7 @@ class General(_IniBase):
         return v
 
 
-class HSVRange(_IniBase):
+class HSVRangeModel(_IniBaseModel):
     h_s_v_min: np_array_pydantic_annotated_typing(dimensions=1)
     h_s_v_max: np_array_pydantic_annotated_typing(dimensions=1)
 
@@ -105,7 +188,7 @@ class HSVRange(_IniBase):
             raise IndexError("Index out of range")
 
     @model_validator(mode="after")
-    def check_interval_sanity(self) -> "HSVRange":
+    def check_interval_sanity(self) -> "HSVRangeModel":
         if self.h_s_v_min[0] > self.h_s_v_max[0]:
             raise ValueError(f"invalid hue range [{self.h_s_v_min[0]}, {self.h_s_v_max[0]}]")
         if self.h_s_v_min[1] > self.h_s_v_max[1]:
@@ -125,7 +208,78 @@ class HSVRange(_IniBase):
         return v
 
 
-class UiOffsets(_IniBase):
+class ItemFilterModel(BaseModel):
+    affixPool: list[AffixFilterCountModel] = []
+    inherentPool: list[AffixFilterCountModel] = []
+    itemType: list[ItemType] = []
+    minPower: int = 0
+
+    @field_validator("itemType", mode="before")
+    def parse_item_type(cls, data: str | list[str]) -> list[str]:
+        return _parse_item_type(data)
+
+
+DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
+
+
+class SigilModel(BaseModel):
+    minTier: int = 0
+    maxTier: int = sys.maxsize
+    blacklist: list[str] = []
+    whitelist: list[str] = []
+
+    @model_validator(mode="after")
+    def blacklist_whitelist_must_be_unique(self) -> "SigilModel":
+        errors = [item for item in self.blacklist if item in self.whitelist]
+        if errors:
+            raise ValueError(f"blacklist and whitelist must not overlap: {errors}")
+        return self
+
+    @field_validator("maxTier")
+    def max_tier_in_range(cls, v: int) -> int:
+        if not 0 <= v <= 100:
+            raise ValueError("must be in [0, 100]")
+        return v
+
+    @field_validator("minTier")
+    def min_tier_in_range(cls, v: int) -> int:
+        if not 0 <= v <= 100:
+            raise ValueError("must be in [0, 100]")
+        return v
+
+    @field_validator("blacklist", "whitelist")
+    def name_must_exist(cls, names: list[str]) -> list[str]:
+        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        errors = []
+        for name in names:
+            if name not in dataloader.Dataloader().affix_sigil_dict.keys():
+                errors.append(name)
+        if errors:
+            raise ValueError(f"The following affixes/dungeons do not exist: {errors}")
+        return names
+
+
+class UniqueModel(BaseModel):
+    affix: list[AffixFilterModel] = []
+    aspect: AspectUniqueFilterModel = None
+    itemType: list[ItemType] = []
+    minPower: int = 0
+
+    @field_validator("itemType", mode="before")
+    def parse_item_type(cls, data: str | list[str]) -> list[str]:
+        return _parse_item_type(data)
+
+
+class ProfileModel(BaseModel):
+    name: str
+    Affixes: list[DynamicItemFilterModel] = []
+    Aspects: list[AspectFilterModel] = []
+    Sigils: SigilModel | None = None
+    Uniques: list[UniqueModel] = []
+
+
+class UiOffsetsModel(_IniBaseModel):
     find_bullet_points_width: int
     find_seperator_short_offset_top: int
     item_descr_line_height: int
@@ -135,12 +289,12 @@ class UiOffsets(_IniBase):
     vendor_center_item_x: int
 
 
-class UiPos(_IniBase):
+class UiPosModel(_IniBaseModel):
     possible_centers: list[tuple[int, int]]
     window_dimensions: tuple[int, int]
 
 
-class UiRoi(NumpyModel):
+class UiRoiModel(NumpyModel):
     core_skill: np_array_pydantic_annotated_typing(dimensions=1)
     health_slice: np_array_pydantic_annotated_typing(dimensions=1)
     hud_detection: np_array_pydantic_annotated_typing(dimensions=1)

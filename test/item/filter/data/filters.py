@@ -51,6 +51,25 @@ affix = ProfileModel(
             )
         },
         {
+            "ResBootsExact": ItemFilterModel(
+                itemType=[ItemType.Boots],
+                minPower=725,
+                affixPool=[
+                    AffixFilterCountModel(count=[AffixFilterModel(name="movement_speed")]),
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="shadow_resistance", value=4, comparison=ComparisonType.smaller),
+                            AffixFilterModel(name="cold_resistance", value=4, comparison=ComparisonType.smaller),
+                            AffixFilterModel(name="lightning_resistance", value=4, comparison=ComparisonType.smaller),
+                            AffixFilterModel(name="poison_resistance", value=4, comparison=ComparisonType.smaller),
+                            AffixFilterModel(name="fire_resistance", value=4, comparison=ComparisonType.smaller),
+                        ],
+                        minCount=2,
+                    ),
+                ],
+            )
+        },
+        {
             "GreatBoots": ItemFilterModel(
                 itemType=[ItemType.Boots],
                 minPower=725,

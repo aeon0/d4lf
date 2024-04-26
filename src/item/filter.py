@@ -188,8 +188,8 @@ class Filter:
         if expected_aspect.value is not None:
             if item_aspect.value is None:
                 return False
-            if (expected_aspect.comparison == ComparisonType.larger and item_aspect.value <= expected_aspect.value) or (
-                expected_aspect.comparison == ComparisonType.smaller and item_aspect.value >= expected_aspect.value
+            if (expected_aspect.comparison == ComparisonType.larger and item_aspect.value < expected_aspect.value) or (
+                expected_aspect.comparison == ComparisonType.smaller and item_aspect.value > expected_aspect.value
             ):
                 return False
         return True

@@ -112,4 +112,17 @@ affixes = [
             inherent=[Affix(type="maximum_fury", value=5)],
         ),
     ),
+    (
+        "boots exact values",
+        ["test.ResBoots", "test.ResBootsExact"],
+        TestItem(
+            item_type=ItemType.Boots,
+            affixes=[
+                Affix(type="movement_speed", value=4),
+                Affix(type="cold_resistance", value=4),
+                Affix(type="lightning_resistance", value=4),
+            ],
+            inherent=[Affix(type="maximum_fury", value=5)],
+        ),
+    ),
 ]

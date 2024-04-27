@@ -255,21 +255,18 @@ class Filter:
                     Logger.error(f"Validation errors in {profile_path}")
                     Logger.error(e)
                     continue
-                self.affix_filters[data.name] = data.Affixes
-                self.aspect_filters[data.name] = data.Aspects
-                self.sigil_filters[data.name] = data.Sigils
-                self.unique_filters[data.name] = data.Uniques
 
                 if data.Affixes:
+                    self.affix_filters[data.name] = data.Affixes
                     info_str += "Affixes "
-
                 if data.Aspects:
+                    self.aspect_filters[data.name] = data.Aspects
                     info_str += "Aspects "
-
                 if data.Sigils:
+                    self.sigil_filters[data.name] = data.Sigils
                     info_str += "Sigils "
-
                 if data.Uniques:
+                    self.unique_filters[data.name] = data.Uniques
                     info_str += "Uniques"
 
                 Logger.info(info_str)

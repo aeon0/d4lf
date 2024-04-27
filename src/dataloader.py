@@ -11,13 +11,15 @@ dataloader_lock = threading.Lock()
 
 
 class Dataloader:
-    error_map = dict()
     affix_dict = dict()
     affix_sigil_dict = dict()
     aspect_dict = dict()
     aspect_num_idx = dict()
     aspect_unique_dict = dict()
     aspect_unique_num_idx = dict()
+    error_map = dict()
+    filter_after_keyword = []
+    filter_words = []
     tooltips = dict()
 
     _instance = None

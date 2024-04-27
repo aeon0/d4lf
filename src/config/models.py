@@ -19,7 +19,7 @@ class ComparisonType(enum.StrEnum):
 
 
 class _IniBaseModel(BaseModel):
-    model_config = ConfigDict(frozen=True, str_strip_whitespace=True, str_to_lower=True)
+    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True, str_to_lower=True)
 
 
 def _parse_item_type(data: str | list[str]) -> list[str]:
@@ -272,6 +272,7 @@ class UniqueModel(BaseModel):
 
 
 class ProfileModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     name: str
     Affixes: list[DynamicItemFilterModel] = []
     Aspects: list[AspectFilterModel] = []

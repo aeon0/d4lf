@@ -78,7 +78,7 @@ The following sections will explain each type of filter that you can specify in 
 your YAML files is up to you; you can put all of these into just one file or have a dedicated file for each type of
 filter, or even split the same type of filter over multiple files. Ultimately, all profiles specified in
 your `params.ini` will be used to determine if an item should be kept. If one of the profiles wants to keep the item, it
-will be kept regardless of the other profiles.
+will be kept regardless of the other profiles. Similarly, if a filter is missing in all profiles (e.g., there is no `Sigils` section in any profile), all corresponding items (in this case, sigils) will be kept.
 
 ### Aspects
 

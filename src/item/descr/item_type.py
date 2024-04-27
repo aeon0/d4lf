@@ -1,6 +1,6 @@
 import numpy as np
 
-from config.ui import COLORS
+from config.data import COLORS
 from dataloader import Dataloader
 from item.models import Item, ItemRarity, ItemType
 from template_finder import TemplateMatch

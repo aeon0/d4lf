@@ -10,7 +10,6 @@ from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
 from item.models import Item
-from template_finder import stored_templates
 
 # def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 BASE_PATH = "test/assets/item"
@@ -446,8 +445,7 @@ BASE_PATH = "test/assets/item"
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):
-    Cam().update_window_pos(0, 0, img_res[0], img_res[1])
-    stored_templates.cache_clear()
+    Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
     start = time.time()
     item = read_descr(expected_item.rarity, img)

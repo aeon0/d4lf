@@ -13,7 +13,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 - Filter by aspects and their values
 - Filter uniques by their affix and aspect values
 - Filter sigils by blacklisting and whitelisting locations and affixes
-- Supported resolutions: 1080p, 1440p, 1600p, 2160p - others might work as well, but untested
+- Supported resolutions include all aspect ratios between 16:10 and 21:9
 
 ## How to Setup
 

@@ -27,7 +27,17 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
     if not (
         affix_bullets := search(
-            ["affix_bullet_point_medium", "rerolled_bullet_point_medium"], img_item_descr, 0.85, roi_bullets, True, mode="all"
+            [
+                "affix_bullet_point_medium",
+                "greater_affix_bullet_point_medium",
+                "tempered_affix_bullet_point_medium",
+                "rerolled_bullet_point_medium",
+            ],
+            img_item_descr,
+            0.85,
+            roi_bullets,
+            True,
+            mode="all",
         )
     ).success:
         if not (

@@ -1,8 +1,3 @@
-Aspects:
-  - [ accelerating, 25 ]
-  - [ of_disobedience, 1.1 ]
-  - of_might
-
 Affixes:
   - AwesomeHelm:
       itemType: helm

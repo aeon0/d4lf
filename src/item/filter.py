@@ -9,15 +9,15 @@ from pydantic import ValidationError
 
 from config.loader import IniConfigLoader
 from config.models import (
-    ProfileModel,
-    UniqueModel,
-    SigilModel,
     AffixAspectFilterModel,
-    ComparisonType,
-    AffixFilterModel,
-    AspectFilterModel,
-    DynamicItemFilterModel,
     AffixFilterCountModel,
+    AffixFilterModel,
+    AspectFilterType,
+    ComparisonType,
+    DynamicItemFilterModel,
+    ProfileModel,
+    SigilFilterModel,
+    UniqueModel,
 )
 from item.data.affix import Affix
 from item.data.aspect import Aspect
@@ -90,23 +90,20 @@ class Filter:
                 res.matched.append(MatchedFilter(f"{profile_name}.{filter_name}", all_matches))
         return res
 
-    def _check_aspect(self, item: Item) -> FilterResult:
+    @staticmethod
+    def _check_aspect(item: Item) -> FilterResult:
         res = FilterResult(False, [])
-        if not self.aspect_filters:
-            return FilterResult(True, [])
-        for profile_name, profile_filter in self.aspect_filters.items():
-            for filter_item in profile_filter:
-                if not self._match_item_aspect_or_affix(expected_aspect=filter_item, item_aspect=item.aspect):
-                    continue
-                Logger.info(f"Matched {profile_name}.Aspects: [{item.aspect.type}, {item.aspect.value}]")
-                res.keep = True
-                res.matched.append(MatchedFilter(f"{profile_name}.Aspects", did_match_aspect=True))
+        if IniConfigLoader().general.keep_aspects == AspectFilterType.none or (
+            IniConfigLoader().general.keep_aspects == AspectFilterType.upgrade and not item.codex_upgrade
+        ):
+            return res
+        Logger.info(f"Matched Aspects: [{item.aspect.type}, {item.aspect.value}]")
+        res.keep = True
+        res.matched.append(MatchedFilter("Aspects", did_match_aspect=True))
         return res
 
     def _check_sigil(self, item: Item) -> FilterResult:
         res = FilterResult(False, [])
-        if not self.sigil_filters:
-            return FilterResult(True, [])
         for profile_name, profile_filter in self.sigil_filters.items():
             # check item power
             if not self._match_item_power(max_power=profile_filter.maxTier, min_power=profile_filter.minTier, item_power=item.power):
@@ -207,8 +204,7 @@ class Filter:
     def load_files(self):
         self.files_loaded = True
         self.affix_filters: dict[str, list[DynamicItemFilterModel]] = dict()
-        self.aspect_filters: dict[str, list[AspectFilterModel]] = dict()
-        self.sigil_filters: dict[str, SigilModel] = dict()
+        self.sigil_filters: dict[str, SigilFilterModel] = dict()
         self.unique_filters: dict[str, list[UniqueModel]] = dict()
         profiles: list[str] = IniConfigLoader().general.profiles
 
@@ -259,9 +255,6 @@ class Filter:
                 if data.Affixes:
                     self.affix_filters[data.name] = data.Affixes
                     info_str += "Affixes "
-                if data.Aspects:
-                    self.aspect_filters[data.name] = data.Aspects
-                    info_str += "Aspects "
                 if data.Sigils:
                     self.sigil_filters[data.name] = data.Sigils
                     info_str += "Sigils "

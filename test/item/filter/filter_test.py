@@ -3,8 +3,10 @@ from natsort import natsorted
 from pytest_mock import MockerFixture
 
 import test.item.filter.data.filters as filters
+from config.models import AspectFilterType
 from item.filter import Filter, FilterResult
 from item.models import Item
+from test.custom_fixtures import mock_ini_loader
 from test.item.filter.data.affixes import affixes
 from test.item.filter.data.aspects import aspects
 from test.item.filter.data.sigils import sigils
@@ -27,11 +29,27 @@ def test_affixes(name: str, result: list[str], item: Item, mocker: MockerFixture
 
 
 @pytest.mark.parametrize("name, result, item", natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
-def test_aspects(name: str, result: list[str], item: Item, mocker: MockerFixture):
+def test_aspects_all(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
-    mocker.patch("item.filter.Filter._check_affixes", return_value=FilterResult(keep=False, matched=[]))
-    test_filter.aspect_filters = {filters.aspect.name: filters.aspect.Aspects}
-    assert natsorted([match.profile.split(".")[0] for match in test_filter.should_keep(item).matched]) == natsorted(result)
+    mock_ini_loader._general.keep_aspects = AspectFilterType.all
+    filter_res = test_filter.should_keep(item).matched
+    assert len(filter_res) == 1 if AspectFilterType.all in result else len(filter_res) == 0
+
+
+@pytest.mark.parametrize("name, result, item", natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
+def test_aspects_none(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    mock_ini_loader._general.keep_aspects = AspectFilterType.none
+    filter_res = test_filter.should_keep(item).matched
+    assert len(filter_res) == 0
+
+
+@pytest.mark.parametrize("name, result, item", natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
+def test_aspects_upgrade(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    mock_ini_loader._general.keep_aspects = AspectFilterType.upgrade
+    filter_res = test_filter.should_keep(item).matched
+    assert len(filter_res) == 1 if AspectFilterType.upgrade in result else len(filter_res) == 0
 
 
 @pytest.mark.parametrize("name, result, item", natsorted(sigils), ids=[name for name, _, _ in natsorted(sigils)])

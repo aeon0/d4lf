@@ -6,14 +6,14 @@ from item.data.rarity import ItemRarity
 from item.descr.find_affixes import find_affixes
 from item.descr.find_aspect import find_aspect
 from item.descr.item_type import read_item_type
-from item.descr.texture import find_seperator_short, find_affix_bullets, find_aspect_bullet, find_empty_sockets
+from item.descr.texture import find_seperator_short, find_affix_bullets, find_aspect_bullet, find_empty_sockets, find_codex_upgrade_icon
 from item.models import Item
 from logger import Logger
 from utils.window import screenshot
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
-    base_item = Item(rarity)
+    base_item = Item(rarity=rarity)
 
     # Find textures for seperator short on top
     # =========================
@@ -27,7 +27,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find item type and item power / tier list
     # =========================
     item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
-    # In case it was not successfull, try without doing image pre processing
+    # In case it was not successful, try without doing image pre-processing
     if item is None:
         item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
     if item is None:
@@ -43,6 +43,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # =========================
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
     aspect_bullet = find_aspect_bullet(img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
+    item.codex_upgrade = find_codex_upgrade_icon(img_item_descr)
     empty_sockets = find_empty_sockets(img_item_descr, sep_short_match)
 
     # Split affix bullets into inherent and others

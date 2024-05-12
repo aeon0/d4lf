@@ -14,13 +14,13 @@ dependencies:
     - colorama
     - coverage
     - cryptography
-    - dependencies/tesserocr-2.6.2-cp312-cp312-win_amd64.whl
+    - dependencies/tesserocr-2.7.0-cp312-cp312-win_amd64.whl
     - keyboard
     - mouse
     - mss
     - natsort
     - numpy
-    - opencv-python==4.8.1.78
+    - opencv-python==4.9.0.80
     - parse
     - pre-commit
     - psutil

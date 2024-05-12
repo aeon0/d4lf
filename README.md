@@ -10,10 +10,10 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 - Filter items in inventory and stash
 - Filter by item type and item power
 - Filter by affix and their values
-- Filter by aspects and their values
 - Filter uniques by their affix and aspect values
+- Filter by aspects
 - Filter sigils by blacklisting and whitelisting locations and affixes
-- Supported resolutions include all aspect ratios between 16:10 and 21:9
+- Supported resolutions are all aspect ratios between 16:10 and 21:9
 
 ## How to Setup
 
@@ -49,6 +49,7 @@ The config folder contains:
 | [general]                  | Description                                                                                                                                                                                  |
 |----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                     |
+| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items                                                      |
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                  |
 | check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4            |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible |
@@ -78,34 +79,29 @@ The following sections will explain each type of filter that you can specify in 
 your YAML files is up to you; you can put all of these into just one file or have a dedicated file for each type of
 filter, or even split the same type of filter over multiple files. Ultimately, all profiles specified in
 your `params.ini` will be used to determine if an item should be kept. If one of the profiles wants to keep the item, it
-will be kept regardless of the other profiles. Similarly, if a filter is missing in all profiles (e.g., there is no `Sigils` section in any profile), all corresponding items (in this case, sigils) will be kept.
+will be kept regardless of the other profiles. Similarly, if a filter is missing in all profiles (e.g., there is
+no `Sigils` section in any profile), all corresponding items (in this case, sigils) will be kept.
 
-### Aspects
+### Affix / Aspects Filter Syntax
 
-Aspects are defined by the top-level key `Aspects`. It contains a list of aspects that you want to filter for. If no
-Aspect filter is provided, all legendary items will be kept. You have two choices on how to specify an item:
+You have two choices on how to specify aspects or affixes of an item:
 
 - You can use the shorthand and just specify the aspect name
-- For more sophisticated filtering, you can use the following syntax: `[ASPECT_NAME, THRESHOLD, CONDITION]`. The
-  condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given. "Smaller" must be used
-  when the aspect goes from a high value to a lower value (e.g., `Blood-bathed` Aspect)
+- For more sophisticated filtering, you can use the following syntax: `[NAME, THRESHOLD, CONDITION]`. The
+  condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
 
-<details><summary>Config Examples</summary>
+<details><summary>Examples</summary>
 
 ```yaml
-Aspects:
-  # Filter for any umbral
-  - of_the_umbral
-  # Filter for a perfect umbral
-  - [ of_the_umbral, 4 ]
-  # Filter for all but perfect umbral
-  - [ of_the_umbral, 3.5, smaller ]
+  # Filter for attack speed
+  - attack_speed
+  # Filter for attack speed larger than 4
+  - [ attack_speed, 4 ]
+  # Filter for attack speed smaller than 4
+  - [ attack_speed, 4, smaller ]
 ```
 
 </details>
-
-Aspect names are lower case and spaces are replaced by underscore. You can find the full list of names
-in [assets/lang/enUS/aspect.json](assets/lang/enUS/aspects.json).
 
 ### Affixes
 
@@ -117,7 +113,7 @@ has a name and can filter for any combination of the following:
 - `minPower`: Minimum item power
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
-    - `count`: Define a list of affixes (same syntax as for [Aspects](#Aspects)) and optionally `minCount`
+    - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and optionally `minCount`
       and `maxCount`. `minCount` specifies the minimum number of affixes that must match the item, `maxCount` the
       maximum number. If neither `minCount` nor `maxCount` is provided, all defined affixes must match
 - `inherentPool`: The same rules as for `affixPool` apply, but this is evaluated against the inherent affixes of the
@@ -222,7 +218,7 @@ names in [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json).
 
 Uniques are defined by the top-level key `Uniques`. It contains a list of parameters that you want to filter for. If no
 Unique filter is provided, all unique items will be kept.
-Uniques can be filtered similar to [Affixes](#Affixes) and [Aspects](#Aspects), but due to their nature of fixed
+Uniques can be filtered similar to [Affixes](#Affixes) but due to their nature of fixed
 effects, you only have to specify the thresholds that you want to apply.
 
 <details><summary>Config Examples</summary>

@@ -1,13 +1,12 @@
 from config.models import (
-    UniqueModel,
-    ComparisonType,
-    ProfileModel,
-    SigilModel,
+    AffixFilterCountModel,
     AffixFilterModel,
     AspectUniqueFilterModel,
-    AspectFilterModel,
-    AffixFilterCountModel,
+    ComparisonType,
     ItemFilterModel,
+    ProfileModel,
+    SigilFilterModel,
+    UniqueModel,
 )
 from item.data.item_type import ItemType
 
@@ -131,17 +130,9 @@ affix = ProfileModel(
     ],
 )
 
-aspect = ProfileModel(
-    name="test",
-    Aspects=[
-        AspectFilterModel(name="accelerating", value=25),
-        AspectFilterModel(name="of_might", value=6.0, comparison=ComparisonType.smaller),
-    ],
-)
-
 sigil = ProfileModel(
     name="test",
-    Sigils=SigilModel(blacklist=["reduce_cooldowns_on_kill", "vault_of_copper"], whitelist=["jalals_vigil"], maxTier=80, minTier=40),
+    Sigils=SigilFilterModel(blacklist=["reduce_cooldowns_on_kill", "vault_of_copper"], whitelist=["jalals_vigil"], maxTier=80, minTier=40),
 )
 
 unique = ProfileModel(

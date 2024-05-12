@@ -12,3 +12,4 @@ def mock_ini_loader(mocker: MockerFixture):
         "_general",
     )
     general_mock.language = "enUS"
+    return IniConfigLoader()

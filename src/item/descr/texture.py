@@ -23,6 +23,7 @@ def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+    # TODO small font greater/tempered affix bullet template fallback
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
     if not (
@@ -86,3 +87,8 @@ def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateM
     if len(bounding_values[0]) > 0:
         roi_aspect[3] = bounding_values[0].max() + int(line_height * 0.4)
     return roi_aspect
+
+
+def find_codex_upgrade_icon(img_item_descr: np.ndarray) -> bool:
+    # TODO small font template fallback
+    return search(["codex_upgrade_icon_medium"], img_item_descr, 0.8, use_grayscale=True, mode="first").success

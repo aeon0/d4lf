@@ -13,6 +13,12 @@ from config.helper import key_must_exist
 from item.data.item_type import ItemType
 
 
+class AspectFilterType(enum.StrEnum):
+    all = enum.auto()
+    none = enum.auto()
+    upgrade = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -77,16 +83,6 @@ class AffixFilterCountModel(BaseModel):
         return data
 
 
-class AspectFilterModel(AffixAspectFilterModel):
-    @field_validator("name")
-    def name_must_exist(cls, name: str) -> str:
-        import dataloader  # This on module level would be a circular import, so we do it lazy for now
-
-        if name not in dataloader.Dataloader().aspect_dict.keys():
-            raise ValueError(f"affix {name} does not exist")
-        return name
-
-
 class AspectUniqueFilterModel(AffixAspectFilterModel):
     @field_validator("name")
     def name_must_exist(cls, name: str) -> str:
@@ -146,6 +142,7 @@ class ColorsModel(_IniBaseModel):
 class GeneralModel(_IniBaseModel):
     check_chest_tabs: list[int]
     hidden_transparency: float
+    keep_aspects: AspectFilterType = AspectFilterType.upgrade
     language: str = "enUS"
     local_prefs_path: Path | None
     profiles: list[str]
@@ -222,14 +219,14 @@ class ItemFilterModel(BaseModel):
 DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
 
 
-class SigilModel(BaseModel):
+class SigilFilterModel(BaseModel):
     minTier: int = 0
     maxTier: int = sys.maxsize
     blacklist: list[str] = []
     whitelist: list[str] = []
 
     @model_validator(mode="after")
-    def blacklist_whitelist_must_be_unique(self) -> "SigilModel":
+    def blacklist_whitelist_must_be_unique(self) -> "SigilFilterModel":
         errors = [item for item in self.blacklist if item in self.whitelist]
         if errors:
             raise ValueError(f"blacklist and whitelist must not overlap: {errors}")
@@ -275,8 +272,7 @@ class ProfileModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: str
     Affixes: list[DynamicItemFilterModel] = []
-    Aspects: list[AspectFilterModel] = []
-    Sigils: SigilModel | None = None
+    Sigils: SigilFilterModel = SigilFilterModel()
     Uniques: list[UniqueModel] = []
 
 

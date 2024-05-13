@@ -69,28 +69,6 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         os.makedirs(f"assets/lang/{l}", exist_ok=True)
 
     for language in lang_arr:
-        # Create Aspects
-        print(f"Gen Aspects for {language}")
-        aspects_dict = {}
-        pattern = f"json/{language}_Text/meta/StringList/Affix_legendary*.stl.json"
-        json_files = list(d4data_dir.glob(pattern))
-        for json_file in json_files:
-            with open(json_file, "r", encoding="utf-8") as file:
-                data = json.load(file)
-                snoId = data["__snoID__"]
-                name_idx, desc_idx = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
-                aspect_name = data["arStrings"][name_idx]["szText"]
-                aspect_name_clean = aspect_name.strip().replace(" ", "_").lower().replace("’", "").replace("'", "").replace("-", "")
-                aspect_name_clean = check_ms(aspect_name_clean)
-                aspect_desc = data["arStrings"][desc_idx]["szText"]
-                aspect_descr_clean = remove_content_in_braces(aspect_desc.lower().replace("’", ""))
-                num_idx = get_random_number_idx(aspect_desc)
-                aspects_dict[aspect_name_clean] = {"desc": aspect_descr_clean, "snoId": snoId, "full": aspect_desc, "num_idx": num_idx}
-
-        with open(f"assets/lang/{language}/aspects.json", "w", encoding="utf-8") as json_file:
-            json.dump(aspects_dict, json_file, indent=4, ensure_ascii=False)
-            json_file.write("\n")
-
         # Create Uniques
         print(f"Gen Uniques for {language}")
         unique_dict = {}
@@ -270,3 +248,17 @@ if __name__ == "__main__":
         main(input_path, input_path2)
     else:
         print(f"The provided path '{input_path}' or '{input_path2}' does not exist or is not a directory.")
+
+
+# TODO: Generate the affixes directly for d4data
+# # Get all affix keys and names
+# json_file = d4data_dir / "json/base/CoreTOC.dat.json"
+# affix_meta_dict = {}  # key: IdSno, value: IdName
+# with open(json_file, "r", encoding="utf-8") as file:
+#     data = json.load(file)
+#     affix_meta_dict = data["104"]
+
+# Then check in each json/base/meta/Affix/IdName.aff.json
+# It contains ptItemAffixAttributes as a list
+# Each entry contains __eAttribute_name__ (localizationId) which can be found in json/enUS_Text/meta/StringList/SkillTagNames.stl.json
+# the {value} needs to be replaced by a mapped value from ptItemAffixAttributes[i].nParam...

@@ -13,7 +13,6 @@ dataloader_lock = threading.Lock()
 class Dataloader:
     affix_dict = dict()
     affix_sigil_dict = dict()
-    aspect_dict = dict()
     aspect_num_idx = dict()
     aspect_unique_dict = dict()
     aspect_unique_num_idx = dict()
@@ -37,13 +36,6 @@ class Dataloader:
     def load_data(self):
         with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/affixes.json", "r", encoding="utf-8") as f:
             self.affix_dict: dict = json.load(f)
-
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/aspects.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            for key, d in data.items():
-                # Note: If you adjust the :68, also adjust it in find_aspect.py
-                self.aspect_dict[key] = d["desc"][:68]
-                self.aspect_num_idx[key] = d["num_idx"]
 
         with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/corrections.json", "r", encoding="utf-8") as f:
             data = json.load(f)

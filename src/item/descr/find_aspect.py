@@ -29,10 +29,8 @@ def find_aspect(
     cleaned_str = clean_str(concatenated_str)
 
     if rarity == ItemRarity.Legendary:
-        # Note: If you adjust the [:68] it also needs to be adapted in the dataloader
-        cleaned_str = cleaned_str[:68]
-        found_key = closest_match(cleaned_str, Dataloader().aspect_dict)
-        num_idx = Dataloader().aspect_num_idx
+        # We dont filter specifically for legendary aspects anymore
+        pass
     else:
         # Note: If you adjust the [:45] it also needs to be adapted in the dataloader
         cleaned_str = cleaned_str[:45]

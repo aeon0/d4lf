@@ -19,3 +19,4 @@ class CharInventory(InventoryBase):
         self.open_method = ToggleMethod.HOTKEY
         self.close_hotkey = "esc"
         self.close_method = ToggleMethod.HOTKEY
+        self.delay = 1  # Needed as they added a "fad-in" for the items

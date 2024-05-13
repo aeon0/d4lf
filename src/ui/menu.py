@@ -5,7 +5,7 @@ import numpy as np
 
 from logger import Logger
 from template_finder import SearchArgs, TemplateMatch, SearchResult
-from utils.misc import run_until_condition
+from utils.misc import run_until_condition, wait
 from utils.mouse_selector import select_search_result
 
 
@@ -25,6 +25,7 @@ class Menu:
         self.close_hotkey: str = "esc"
         self.open_method: ToggleMethod = ToggleMethod.BUTTON
         self.close_method: ToggleMethod = ToggleMethod.HOTKEY
+        self.delay = 0
 
     @staticmethod
     def select_button(search: SearchArgs | TemplateMatch) -> bool:
@@ -114,6 +115,7 @@ class Menu:
         _, success = run_until_condition(self.is_open, lambda res: res, timeout)
         if not success:
             Logger.warning(f"Could not find {self.menu_name} after {timeout} seconds")
+        wait(self.delay)
         return success
 
     def wait_until_closed(self, timeout: float = 10, mode: str = "all") -> bool:

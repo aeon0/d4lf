@@ -20,8 +20,9 @@ from utils.window import screenshot
 
 def check_items(inv: InventoryBase):
     occupied, _ = inv.get_item_slots()
-
-    Logger.info(f"Items: {len(occupied)} in {inv.menu_name}")
+    num_fav = sum(1 for slot in occupied if slot.is_fav)
+    num_junk = sum(1 for slot in occupied if slot.is_junk)
+    Logger.info(f"Items: {len(occupied)} (favorite: {num_fav}, junk: {num_junk}) in {inv.menu_name}")
     start_time = None
     for item in occupied:
         if item.is_junk or item.is_fav:

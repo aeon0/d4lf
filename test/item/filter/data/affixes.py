@@ -96,7 +96,6 @@ affixes = [
                 Affix(type="cold_resistance", value=5),
                 Affix(type="lightning_resistance", value=5),
             ],
-            inherent=[Affix(type="maximum_evade_charges", value=5)],
         ),
     ),
     (
@@ -109,7 +108,6 @@ affixes = [
                 Affix(type="cold_resistance", value=5),
                 Affix(type="lightning_resistance", value=5),
             ],
-            inherent=[Affix(type="maximum_fury", value=5)],
         ),
     ),
     (
@@ -122,7 +120,6 @@ affixes = [
                 Affix(type="cold_resistance", value=4),
                 Affix(type="lightning_resistance", value=4),
             ],
-            inherent=[Affix(type="maximum_fury", value=5)],
         ),
     ),
 ]

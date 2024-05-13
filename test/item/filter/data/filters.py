@@ -21,7 +21,6 @@ affix = ProfileModel(
                 affixPool=[
                     AffixFilterCountModel(
                         count=[
-                            AffixFilterModel(name="basic_skill_attack_speed", value=6),
                             AffixFilterModel(name="cooldown_reduction", value=5),
                             AffixFilterModel(name="maximum_life", value=640),
                             AffixFilterModel(name="total_armor", value=9),
@@ -83,10 +82,7 @@ affix = ProfileModel(
                 ],
                 inherentPool=[
                     AffixFilterCountModel(
-                        count=[
-                            AffixFilterModel(name="maximum_evade_charges"),
-                            AffixFilterModel(name="attacks_reduce_evades_cooldown_by_seconds"),
-                        ],
+                        count=[],
                         minCount=1,
                     ),
                 ],
@@ -99,9 +95,7 @@ affix = ProfileModel(
                 affixPool=[
                     AffixFilterCountModel(
                         count=[
-                            AffixFilterModel(name="damage_reduction_from_close_enemies", value=10),
                             AffixFilterModel(name="maximum_life", value=700),
-                            AffixFilterModel(name="dodge_chance_against_close_enemies", value=6.5),
                             AffixFilterModel(name="dodge_chance", value=5),
                         ],
                     ),
@@ -145,7 +139,6 @@ unique = ProfileModel(
                 AffixFilterModel(name="attack_speed", value=8.4),
                 AffixFilterModel(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=12),
                 AffixFilterModel(name="maximum_life", value=700),
-                AffixFilterModel(name="maximum_essence", value=9),
             ],
             aspect=AspectUniqueFilterModel(name="lidless_wall", value=20),
             minPower=900,

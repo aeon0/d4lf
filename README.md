@@ -129,8 +129,6 @@ Affixes:
       minPower: 725
       affixPool:
         - count:
-            - [ damage_reduction_from_close_enemies, 10 ]
-            - [ damage_reduction_from_distant_enemies, 12 ]
             - [ damage_reduction, 5 ]
             - [ total_armor, 9 ]
             - [ maximum_life, 700 ]
@@ -141,11 +139,6 @@ Affixes:
   - GreatBoots:
       itemType: boots
       minPower: 800
-      inherentPool:
-        - count:
-            - maximum_evade_charges
-            - attacks_reduce_evades_cooldown
-          minCount: 1
       affixPool:
         - count:
             - [ movement_speed, 16 ]

@@ -1,8 +1,8 @@
 # generate data from d4data repo
-from pathlib import Path
 import json
-import re
 import os
+import re
+from pathlib import Path
 
 
 def remove_content_in_braces(input_string) -> str:
@@ -96,7 +96,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
 
         with open(f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
-            json.dump(unique_dict, json_file, indent=4, ensure_ascii=False)
+            json.dump(unique_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
         # Create Dungeons
@@ -142,7 +142,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                         sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {remove_content_in_braces(desc)}"
 
         with open(f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
-            json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False)
+            json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
         print(f"Gen ItemTypes for {language}")
@@ -189,7 +189,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 if item_type in whitelist_types:
                     item_typ_dict[item_type] = name_str
         with open(f"assets/lang/{language}/item_types.json", "w", encoding="utf-8") as json_file:
-            json.dump(item_typ_dict, json_file, indent=4, ensure_ascii=False)
+            json.dump(item_typ_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
         print(f"Gen Tooltips for {language}")
@@ -203,7 +203,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 if arString["szLabel"] == "ItemTier":
                     tooltip_dict["ItemTier"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
         with open(f"assets/lang/{language}/tooltips.json", "w", encoding="utf-8") as json_file:
-            json.dump(tooltip_dict, json_file, indent=4, ensure_ascii=False)
+            json.dump(tooltip_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
         # Create Affixes
@@ -227,7 +227,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 data = json.load(file)
                 affix_dict.update(data)
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
-            json.dump(affix_dict, json_file, indent=4, ensure_ascii=False)
+            json.dump(affix_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
         print("=============================")
@@ -248,7 +248,6 @@ if __name__ == "__main__":
         main(input_path, input_path2)
     else:
         print(f"The provided path '{input_path}' or '{input_path2}' does not exist or is not a directory.")
-
 
 # TODO: Generate the affixes directly for d4data
 # from dataclasses import dataclass
@@ -295,7 +294,7 @@ if __name__ == "__main__":
 #     affix_dict[name] = desc
 # # write to file
 # with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
-#     json.dump(affix_dict, json_file, indent=4, ensure_ascii=False)
+#     json.dump(affix_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
 #     json_file.write("\n")
 
 # Then check in each json/base/meta/Affix/IdName.aff.json

@@ -21,6 +21,7 @@ affix = ProfileModel(
                 affixPool=[
                     AffixFilterCountModel(
                         count=[
+                            AffixFilterModel(name="intelligence", value=5),
                             AffixFilterModel(name="cooldown_reduction", value=5),
                             AffixFilterModel(name="maximum_life", value=640),
                             AffixFilterModel(name="total_armor", value=9),
@@ -99,6 +100,8 @@ affix = ProfileModel(
                     AffixFilterCountModel(
                         count=[
                             AffixFilterModel(name="maximum_life", value=700),
+                            AffixFilterModel(name="dexterity", value=5),
+                            AffixFilterModel(name="intelligence", value=5),
                             AffixFilterModel(name="dodge_chance", value=5),
                         ],
                     ),

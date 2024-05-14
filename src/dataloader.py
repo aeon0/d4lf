@@ -13,7 +13,6 @@ dataloader_lock = threading.Lock()
 class Dataloader:
     affix_dict = dict()
     affix_sigil_dict = dict()
-    aspect_num_idx = dict()
     aspect_unique_dict = dict()
     aspect_unique_num_idx = dict()
     error_map = dict()

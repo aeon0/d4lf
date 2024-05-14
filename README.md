@@ -129,7 +129,9 @@ Affixes:
       minPower: 725
       affixPool:
         - count:
+            - [ dexterity, 33 ]
             - [ damage_reduction, 5 ]
+            - [ lucky_hit_chance, 3 ]
             - [ total_armor, 9 ]
             - [ maximum_life, 700 ]
           minCount: 3

@@ -2,7 +2,6 @@ import numpy as np
 
 from config.data import COLORS
 from config.ui import ResManager
-from item.data.rarity import ItemRarity
 from template_finder import search, TemplateMatch
 from utils.image_operations import crop, color_filter
 
@@ -72,17 +71,14 @@ def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     return aspect_bullets.matches[0]
 
 
-def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, rarity: ItemRarity) -> list[int]:
+def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> list[int]:
     line_height = ResManager().offsets.item_descr_line_height
     img_height, img_width = img_item_descr.shape[:2]
     offset_x = aspect_bullet.center[0] + int(line_height // 5)
     top = aspect_bullet.center[1] - int(line_height * 0.8)
     roi_aspect = [offset_x, top, int(img_width * 0.99) - offset_x, int(img_height * 0.95) - top]
     cropped_bottom = crop(img_item_descr, roi_aspect)
-    if rarity == ItemRarity.Unique:
-        filtered, _ = color_filter(cropped_bottom, COLORS.unique_gold, False)
-    else:
-        filtered, _ = color_filter(cropped_bottom, COLORS.legendary_orange, False)
+    filtered, _ = color_filter(cropped_bottom, COLORS.unique_gold, False)
     bounding_values = np.nonzero(filtered)
     if len(bounding_values[0]) > 0:
         roi_aspect[3] = bounding_values[0].max() + int(line_height * 0.4)

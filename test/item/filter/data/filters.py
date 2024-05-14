@@ -82,7 +82,10 @@ affix = ProfileModel(
                 ],
                 inherentPool=[
                     AffixFilterCountModel(
-                        count=[],
+                        count=[
+                            AffixFilterModel(name="maximum_evade_charges"),
+                            AffixFilterModel(name="attacks_reduce_evades_cooldown_by_seconds"),
+                        ],
                         minCount=1,
                     ),
                 ],
@@ -139,6 +142,7 @@ unique = ProfileModel(
                 AffixFilterModel(name="attack_speed", value=8.4),
                 AffixFilterModel(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=12),
                 AffixFilterModel(name="maximum_life", value=700),
+                AffixFilterModel(name="maximum_essence", value=9),
             ],
             aspect=AspectUniqueFilterModel(name="lidless_wall", value=20),
             minPower=900,

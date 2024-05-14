@@ -139,6 +139,11 @@ Affixes:
   - GreatBoots:
       itemType: boots
       minPower: 800
+      inherentPool:
+        - count:
+            - maximum_evade_charges
+            - attacks_reduce_evades_cooldown
+          minCount: 1
       affixPool:
         - count:
             - [ movement_speed, 16 ]

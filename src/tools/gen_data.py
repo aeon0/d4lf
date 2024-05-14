@@ -251,12 +251,52 @@ if __name__ == "__main__":
 
 
 # TODO: Generate the affixes directly for d4data
+# from dataclasses import dataclass
+# @dataclass
+# class AffixInfo:
+#     snoId: int
+#     snoName: str
+#     attributes: list[dict]
+
+# # Get affix meta data (independent of language)
 # # Get all affix keys and names
 # json_file = d4data_dir / "json/base/CoreTOC.dat.json"
 # affix_meta_dict = {}  # key: IdSno, value: IdName
 # with open(json_file, "r", encoding="utf-8") as file:
 #     data = json.load(file)
 #     affix_meta_dict = data["104"]
+# # Get all affix meta data
+# affix_meta_info: list[AffixInfo] = []
+# for key, value in affix_meta_dict.items():
+#     ai = AffixInfo(key, value, [])
+#     json_file = d4data_dir / f"json/base/meta/Affix/{value}.aff.json"
+#     with open(json_file, "r", encoding="utf-8") as file:
+#         data = json.load(file)
+#         for attrib in data["ptItemAffixAttributes"]:
+#             ai.attributes.append(attrib)
+#         affix_meta_info.append(ai)
+# # Get all affix keys and names
+# print(f"Gen Affixes for {language}")
+# attrib_desc_list = []
+# json_file = d4data_dir / f"json/{language}_Text/meta/StringList/AttributeDescriptions.stl.json"
+# with open(json_file, "r", encoding="utf-8") as file:
+#     attrib_desc_list = json.load(file)["arStrings"]
+# affix_dict = {}
+# for affix_meta in affix_meta_info:
+#     name = affix_meta.snoName
+#     desc = ""
+#     for attrib_dict in affix_meta.attributes:
+#         label = attrib_dict["tAttribute"]["__eAttribute_name__"]
+#         param_idx = attrib_dict["tAttribute"]["nParam"]
+#         for attrib_desc in attrib_desc_list:
+#             if attrib_desc["szLabel"] == label:
+#                 desc += attrib_desc["szText"]
+#                 break
+#     affix_dict[name] = desc
+# # write to file
+# with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
+#     json.dump(affix_dict, json_file, indent=4, ensure_ascii=False)
+#     json_file.write("\n")
 
 # Then check in each json/base/meta/Affix/IdName.aff.json
 # It contains ptItemAffixAttributes as a list

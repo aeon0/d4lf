@@ -84,6 +84,14 @@ def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateM
     return roi_aspect
 
 
-def find_codex_upgrade_icon(img_item_descr: np.ndarray) -> bool:
+def find_codex_upgrade_icon(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> bool:
+    top_limit = img_item_descr.shape[0] // 2
+    right_limit = img_item_descr.shape[1] // 2
+    if aspect_bullet is not None:
+        top_limit = aspect_bullet.center[1]
+    cut_item_descr = img_item_descr[top_limit:, :right_limit]
     # TODO small font template fallback
-    return search(["codex_upgrade_icon_medium"], img_item_descr, 0.8, use_grayscale=True, mode="first").success
+    result = search(["codex_upgrade_icon_small"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+    if not result.success:
+        result = search(["codex_upgrade_icon_medium"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+    return result.success

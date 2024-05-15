@@ -167,6 +167,53 @@ BASE_PATH = "test/assets/item"
                 power=920,
             ),
         ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/upgrade_aspect_codex_1440p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 90),
+                    Affix("life_per_second", 87),
+                    Affix("fire_resistance", 38),
+                ],
+                item_type=ItemType.ChestArmor,
+                power=823,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/upgrade_aspect_codex_1440p_2.png",
+            Item(
+                affixes=[
+                    Affix("strength", 86),
+                    Affix("maximum_life", 394),
+                    Affix("damage_over_time", 57),
+                ],
+                inherent=[Affix("critical_strike_damage", 17.5)],
+                item_type=ItemType.Sword,
+                power=804,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/upgrade_aspect_codex_1080p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 46),
+                    Affix("maximum_life", 25),
+                    Affix("essence_on_kill", 2),
+                ],
+                inherent=[Affix("critical_strike_damage", 9)],
+                item_type=ItemType.Sword2H,
+                power=254,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

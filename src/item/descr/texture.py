@@ -22,28 +22,35 @@ def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
-    # TODO small font greater/tempered affix bullet template fallback
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    if not (
-        affix_bullets := search(
-            [
-                "affix_bullet_point_medium",
-                "greater_affix_bullet_point_medium",
-                "tempered_affix_bullet_point_medium",
-                "rerolled_bullet_point_medium",
-            ],
-            img_item_descr,
-            0.85,
-            roi_bullets,
-            True,
-            mode="all",
-        )
-    ).success:
-        if not (
-            affix_bullets := search(["affix_bullet_point", "rerolled_bullet_point"], img_item_descr, 0.85, roi_bullets, True, mode="all")
-        ).success:
-            return []
+    affix_bullets_medium = search(
+        [
+            "affix_bullet_point_medium",
+            "greater_affix_bullet_point_medium",
+            "rerolled_bullet_point_medium",
+        ],
+        img_item_descr,
+        0.83,
+        roi_bullets,
+        True,
+        mode="all",
+    )
+    affix_bullets_small = search(
+        [
+            "affix_bullet_point",
+            "greater_affix_bullet_point",
+            "rerolled_bullet_point",
+        ],
+        img_item_descr,
+        0.83,
+        roi_bullets,
+        True,
+        mode="all",
+    )
+    if not affix_bullets_small.success and not affix_bullets_medium.success:
+        return []
+    affix_bullets = affix_bullets_small if len(affix_bullets_small.matches) > len(affix_bullets_medium.matches) else affix_bullets_medium
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     return affix_bullets.matches
 
@@ -85,6 +92,14 @@ def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateM
     return roi_aspect
 
 
-def find_codex_upgrade_icon(img_item_descr: np.ndarray) -> bool:
+def find_codex_upgrade_icon(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> bool:
+    top_limit = img_item_descr.shape[0] // 2
+    right_limit = img_item_descr.shape[1] // 2
+    if aspect_bullet is not None:
+        top_limit = aspect_bullet.center[1]
+    cut_item_descr = img_item_descr[top_limit:, :right_limit]
     # TODO small font template fallback
-    return search(["codex_upgrade_icon_medium"], img_item_descr, 0.8, use_grayscale=True, mode="first").success
+    result = search(["codex_upgrade_icon_medium"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+    if not result.success:
+        result = search(["codex_upgrade_icon"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+    return result.success

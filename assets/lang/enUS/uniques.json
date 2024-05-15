@@ -60,6 +60,14 @@
         ],
         "snoId": 941731
     },
+    "azurewrath": {
+        "desc": "lucky hit your core skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
+        "full": "",
+        "num_idx": [
+            1
+        ],
+        "snoId": 0
+    },
     "banished_lords_talisman": {
         "desc": "after you spend of your primary resource, your next core skill is guaranteed to overpower. your critical strikes that overpower deal increased damage.",
         "full": "After you spend {c_number}[Affix.\"Static Value 0\"]{/c} of your Primary Resource, your next {c_important}Core{/c} Skill is guaranteed to {c_important}{u}Overpower{/u}{/c}. Your Critical Strikes that {c_important}{u}Overpower{/u}{/c} deal {c_random}[Affix_Value_1|%x|]{/c} increased damage.",

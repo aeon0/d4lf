@@ -97,7 +97,7 @@ class Filter:
             IniConfigLoader().general.keep_aspects == AspectFilterType.upgrade and not item.codex_upgrade
         ):
             return res
-        Logger.info(f"Matched Aspects: [{item.aspect.type}, {item.aspect.value}]")
+        Logger.info(f"Matched Aspects that updates codex")
         res.keep = True
         res.matched.append(MatchedFilter("Aspects", did_match_aspect=True))
         return res

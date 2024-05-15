@@ -67,6 +67,21 @@ BASE_PATH = "test/assets/item"
         ),
         (
             (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 88),
+                    Affix("maximum_life", 828),
+                    Affix("damage", 25),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=925,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
+            (1920, 1080),
             f"{BASE_PATH}/read_descr_legendary_1080p_2.png",
             Item(
                 affixes=[
@@ -98,6 +113,36 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_4.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 83),
+                    Affix("maximum_life", 728),
+                    Affix("damage", 20),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=910,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
+            Item(
+                affixes=[
+                    Affix("maximum_life", 666),
+                    Affix("damage", 45),
+                    Affix("vulnerable_damage", 31),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=925,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
             (3840, 1600),
             f"{BASE_PATH}/read_descr_legendary_1600p.png",
             Item(
@@ -120,6 +165,53 @@ BASE_PATH = "test/assets/item"
                 codex_upgrade=True,
                 item_type=ItemType.Helm,
                 power=920,
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/upgrade_aspect_codex_1440p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 90),
+                    Affix("life_per_second", 87),
+                    Affix("fire_resistance", 38),
+                ],
+                item_type=ItemType.ChestArmor,
+                power=823,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
+        (
+            (2560, 1440),
+            f"{BASE_PATH}/upgrade_aspect_codex_1440p_2.png",
+            Item(
+                affixes=[
+                    Affix("strength", 86),
+                    Affix("maximum_life", 394),
+                    Affix("damage_over_time", 57),
+                ],
+                inherent=[Affix("critical_strike_damage", 17.5)],
+                item_type=ItemType.Sword,
+                power=804,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/upgrade_aspect_codex_1080p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 46),
+                    Affix("maximum_life", 25),
+                    Affix("essence_on_kill", 2),
+                ],
+                inherent=[Affix("critical_strike_damage", 9)],
+                item_type=ItemType.Sword2H,
+                power=254,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
             ),
         ),
     ],

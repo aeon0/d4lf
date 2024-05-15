@@ -48,7 +48,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Split affix bullets into inherent and others
     # =========================
-    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves]:
+    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
         inhernet_affixe_bullets = []
     elif item.item_type in [ItemType.Ring]:
         inhernet_affixe_bullets = affix_bullets[:2]
@@ -60,7 +60,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         inhernet_affixe_bullets = affix_bullets[:4]
         affix_bullets = affix_bullets[4:]
     else:
-        # default for: Pants, Amulets, Boots, All Weapons
+        # default for: Amulets, Boots, All Weapons
         inhernet_affixe_bullets = affix_bullets[:1]
         affix_bullets = affix_bullets[1:]
 

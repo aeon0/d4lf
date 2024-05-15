@@ -37,7 +37,11 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         mode="all",
     )
     affix_bullets_small = search(
-        ["affix_bullet_point", "greater_affix_bullet_point", "rerolled_bullet_point"],
+        [
+            "affix_bullet_point",
+            "greater_affix_bullet_point",
+            "rerolled_bullet_point",
+        ],
         img_item_descr,
         0.85,
         roi_bullets,
@@ -95,7 +99,7 @@ def find_codex_upgrade_icon(img_item_descr: np.ndarray, aspect_bullet: TemplateM
         top_limit = aspect_bullet.center[1]
     cut_item_descr = img_item_descr[top_limit:, :right_limit]
     # TODO small font template fallback
-    result = search(["codex_upgrade_icon_small"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+    result = search(["codex_upgrade_icon_medium"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
     if not result.success:
-        result = search(["codex_upgrade_icon_medium"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
+        result = search(["codex_upgrade_icon"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
     return result.success

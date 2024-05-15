@@ -88,6 +88,12 @@ class AffixFilterCountModel(BaseModel):
             raise ValueError("minCount must be at least 1")
         return minCount
 
+    @field_validator("maxCount")
+    def min_count_validator(cls, maxCount: int) -> int:
+        if maxCount < 1:
+            raise ValueError("maxCount must be at least 1")
+        return maxCount
+
 
 class AspectUniqueFilterModel(AffixAspectFilterModel):
     @field_validator("name")

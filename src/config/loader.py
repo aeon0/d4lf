@@ -42,20 +42,21 @@ class IniConfigLoader:
             self._parsers["custom"].read(p)
 
         self._advanced_options = AdvancedOptionsModel(
-            run_scripts=self._select_val("advanced_options", "run_scripts"),
-            run_filter=self._select_val("advanced_options", "run_filter"),
             exit_key=self._select_val("advanced_options", "exit_key"),
             log_lvl=self._select_val("advanced_options", "log_lvl"),
-            scripts=self._select_val("advanced_options", "scripts").split(","),
             process_name=self._select_val("advanced_options", "process_name"),
+            run_filter=self._select_val("advanced_options", "run_filter"),
+            run_scripts=self._select_val("advanced_options", "run_scripts"),
+            scripts=self._select_val("advanced_options", "scripts").split(","),
         )
         self._char = CharModel(inventory=self._select_val("char", "inventory"))
         self._general = GeneralModel(
-            profiles=self._select_val("general", "profiles").split(","),
-            run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
             check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
             hidden_transparency=self._select_val("general", "hidden_transparency"),
+            keep_aspects=self._select_val("general", "keep_aspects"),
             local_prefs_path=self._select_val("general", "local_prefs_path"),
+            profiles=self._select_val("general", "profiles").split(","),
+            run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
         )
 
     @property

@@ -22,7 +22,7 @@ def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
-    # TODO small font greater/tempered affix bullet template fallback
+    # TODO small font greater affix bullet template fallback
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
     if not (
@@ -30,7 +30,6 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
             [
                 "affix_bullet_point_medium",
                 "greater_affix_bullet_point_medium",
-                "tempered_affix_bullet_point_medium",
                 "rerolled_bullet_point_medium",
             ],
             img_item_descr,

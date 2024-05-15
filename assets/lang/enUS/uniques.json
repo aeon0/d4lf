@@ -7,6 +7,12 @@
         ],
         "snoId": 1210595
     },
+    "[wip]_eye_of_the_depths": {
+        "desc": "tbd",
+        "full": "TBD",
+        "num_idx": [],
+        "snoId": 1719159
+    },
     "ahavarion_spear_of_lycander": {
         "desc": "gain a random shrine effect for seconds after killing an elite enemy. can only occur once every seconds.",
         "full": "Gain a random Shrine effect for {c_number}[Affix_Value_1]{/c} seconds after killing an Elite enemy. Can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
@@ -14,8 +20,8 @@
         "snoId": 942108
     },
     "airidahs_inexorable_will": {
-        "desc": "when casting an ultimate skill and again seconds after, you pull in distant enemies and deal physical damage to them. this damage is increased by per point of willpower you have.",
-        "full": "When casting an {c_important}Ultimate{/c} Skill and again {c_number}[Affix.\"Static Value 0\"]{/c} seconds after, you Pull in Distant enemies and deal {c_random}[Affix_Flat_Value_1]{/c} Physical damage to them. This damage is increased by {c_number}[(Affix_Value_2 * 100)|1%x|]{/c} per {c_number}[Affix.\"Static Value 2\"]{/c} point of Willpower you have.",
+        "desc": "when casting an ultimate skill and again seconds after, you pull in distant enemies and deal physical damage to them. this damage is increased by per point of willpower you have. current bonus",
+        "full": "When casting an {c_important}Ultimate{/c} Skill and again {c_number}[Affix.\"Static Value 0\"]{/c} seconds after, you Pull in Distant enemies and deal {c_random}[Affix_Flat_Value_1]{/c} Physical damage to them. This damage is increased by {c_number}[(Affix_Value_2 * 100)|1%x|]{/c} per {c_number}[Affix.\"Static Value 2\"]{/c} point of Willpower you have.\r\n\r\nCurrent Bonus: {c_number}[Floor(Owner.Willpower_Total) * (Affix_Value_2 * 100) / Affix.\"Static Value 2\"|x%|]{/c}",
         "num_idx": [
             1
         ],
@@ -31,9 +37,19 @@
     },
     "andariels_visage": {
         "desc": "lucky hit up to a chance to trigger a poison nova that applies poisoning damage over seconds to enemies in the area.",
-        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to trigger a poison nova that applies {c_number}[Affix_Flat_Value_1]{/c} Poisoning damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds to enemies in the area.",
+        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to trigger a poison nova that applies {c_number}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_2]{/c} Poisoning damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds to enemies in the area.",
         "num_idx": [],
         "snoId": 942663
+    },
+    "arreats_bearing": {
+        "desc": "ancients you summon are empowered. korlic creates an earthquake that deals physical damage over seconds when he leaps. talic leaves behind dust devils that deal damage while he whirlwinds. mawdac ignites the ground burning enemies for an additional damage over seconds when he upheaves the ground.",
+        "full": "Ancients you summon are empowered.\r\n\r\n{icon:bullet}Korlic creates an {c_important}Earthquake{/c} that deals {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage over {c_number}[PowerTag.Barbarian_Earthquake.\"Script Formula 1\"]{/c} seconds when he leaps.\r\n{icon:bullet}Talic leaves behind {c_important}Dust Devils{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (Affix_Value_1 * 2)]{/c} damage while he whirlwinds.\r\n{icon:bullet}Mawdac ignites the ground Burning enemies for an additional {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (Affix_Value_1)]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds when he upheaves the ground.",
+        "num_idx": [
+            0,
+            2,
+            3
+        ],
+        "snoId": 1901739
     },
     "ashearas_khanjar": {
         "desc": "hits with this weapon increase your attack speed by for seconds, up to .",
@@ -43,14 +59,6 @@
             2
         ],
         "snoId": 941731
-    },
-    "azurewrath": {
-        "desc": "lucky hit your core skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
-        "full": "{c_label}Lucky Hit:{/c} Your Core Skills have up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to {c_important}{u}Freeze{/c}{/u} enemies for {c_number}[Affix.\"Static Value 1\"]{/c} seconds and deal {c_random}[Affix_Flat_Value_1]{/c} Cold damage to them.",
-        "num_idx": [
-            2
-        ],
-        "snoId": 1439438
     },
     "banished_lords_talisman": {
         "desc": "after you spend of your primary resource, your next core skill is guaranteed to overpower. your critical strikes that overpower deal increased damage.",
@@ -70,7 +78,7 @@
     },
     "beastfall_boots": {
         "desc": "when you cast an ultimate skill, your next core skill consumes all of your energy and deals increased damage per energy consumed. using a cooldown restores energy.",
-        "full": "When you cast an {c_important}Ultimate{/c} Skill, your next {c_important}Core{/c} Skill consumes all of your Energy and deals {c_random}[Affix_Value_1|1%x|]{/c} increased damage per Energy consumed.\r\n\r\nUsing a Cooldown restores {c_number}[Affix.\"Static Value 0\"]{/c} Energy.",
+        "full": "When you cast an {c_important}Ultimate{/c} Skill, your next {c_important}Core{/c} Skill consumes all of your Energy and deals {c_random}[Affix_Value_1|2%x|]{/c} increased damage per Energy consumed.\r\n\r\nUsing a Cooldown restores {c_number}[Affix.\"Static Value 0\"]{/c} Energy.",
         "num_idx": [
             0
         ],
@@ -112,7 +120,7 @@
     },
     "blue_rose": {
         "desc": "lucky hit damaging an enemy has up to a chance to form an exploding ice spike, dealing cold damage. triple this chance if the enemy is frozen.",
-        "full": "{c_label}Lucky Hit:{/c} Damaging an enemy has up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to form an exploding {c_important}Ice Spike{/c}, dealing {c_random}[Affix_Flat_Value_1]{/c} Cold damage.  Triple this chance if the enemy is {c_important}{u}Frozen{/u}{/c}.",
+        "full": "{c_label}Lucky Hit:{/c} Damaging an enemy has up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to form an exploding {c_important}Ice Spike{/c}, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Cold damage.  Triple this chance if the enemy is {c_important}{u}Frozen{/u}{/c}.",
         "num_idx": [
             1
         ],
@@ -158,9 +166,17 @@
         ],
         "snoId": 942666
     },
+    "cruors_embrace": {
+        "desc": "blood surge consumes corpses to cause mini novas, dealing damage. damage is increased by per target drained by the initial cast, up to . damage is also increased by for each corpse consumed.",
+        "full": "{c_important}Blood Surge{/c} consumes Corpses to cause mini novas, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage. Damage is increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} per target drained by the initial cast, up to {c_number}[Affix.\"Static Value 1\"|%x|]{/c}. Damage is also increased by {c_number}[Affix.\"Static Value 2\"|%x|]{/c} for each Corpse consumed.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1902154
+    },
     "deathless_visage": {
-        "desc": "bone spear leaves behind echoes as it travels that explode, dealing damage, increased by for every of your critical strike damage bonus.",
-        "full": "{c_important}Bone Spear{/c} leaves behind echoes as it travels that explode, dealing {c_random}[Affix_Flat_Value_1]{/c} damage, increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 1\"|%|]{/c} of your Critical Strike Damage Bonus.",
+        "desc": "bone spear leaves behind echoes as it travels that explode, dealing damage, increased by for every of your critical strike damage bonus. current bonus",
+        "full": "{c_important}Bone Spear{/c} leaves behind echoes as it travels that explode, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} damage, increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 1\"|%|]{/c} of your Critical Strike Damage Bonus.\r\n\r\nCurrent Bonus: {c_number}[Floor((Owner.(ComputeCritDamageScalar() + (-1)) + Owner.Crit_Damage_Percent) / (Affix.\"Static Value 1\" / 100)) * Affix.\"Static Value 0\"|x%||1|]{/c}",
         "num_idx": [
             0
         ],
@@ -168,7 +184,7 @@
     },
     "deathspeakers_pendant": {
         "desc": "blood surge casts a mini nova on your minions, dealing damage. damage is increased by per target drained by the initial cast, up to .",
-        "full": "{c_important}Blood Surge{/c} casts a mini nova on your Minions, dealing {c_random}[Affix_Flat_Value_1]{/c} damage. Damage is increased by {c_number}[Affix.\"Static Value 0\"|%|]{/c} per target drained by the initial cast, up to {c_number}[Affix.\"Static Value 1\"|%|]{/c}.",
+        "full": "{c_important}Blood Surge{/c} casts a mini nova on your Minions, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} damage. Damage is increased by {c_number}[Affix.\"Static Value 0\"|%|]{/c} per target drained by the initial cast, up to {c_number}[Affix.\"Static Value 1\"|%|]{/c}.",
         "num_idx": [
             0
         ],
@@ -182,7 +198,7 @@
     },
     "doombringer": {
         "desc": "lucky hit up to a chance to deal shadow damage to surrounding enemies and reduce their damage done by for seconds.",
-        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to deal {c_number}[Affix_Flat_Value_1]{/c} Shadow damage to surrounding enemies and reduce their damage done by {c_number}[Affix.\"Static Value 0\"|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to deal {c_number}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_2]{/c} Shadow damage to surrounding enemies and reduce their damage done by {c_number}[Affix.\"Static Value 0\"|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
         "num_idx": [],
         "snoId": 941869
     },
@@ -194,17 +210,34 @@
         ],
         "snoId": 1439537
     },
+    "earthbreaker": {
+        "desc": "casting landslide causes tectonic spikes to continue to deal damage over seconds. summoning landslide pillars in tectonic spikes has a chance to causes extra landslide pillars to spawn in the spikes.",
+        "full": "{icon:bullet}Casting {c_important}Landslide{/c} causes tectonic spikes to continue to deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.\r\n\r\n{icon:bullet}Summoning {c_important}Landslide{/c} pillars in tectonic spikes has a {c_random}[Affix_Value_2 * 100|%|]{/c} chance to causes extra {c_important}Landslide{/c} pillars to spawn in the spikes. ",
+        "num_idx": [
+            0,
+            2
+        ],
+        "snoId": 1881283
+    },
+    "ebonpiercer": {
+        "desc": "blight also shoots smaller projectiles that pierce enemies and deal shadow damage over seconds.",
+        "full": "{c_important}Blight{/c} also shoots {c_number}[Affix.\"Static Value 1\"]{/c} smaller projectiles that pierce enemies and deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Shadow damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "num_idx": [
+            1
+        ],
+        "snoId": 1902468
+    },
     "esadoras_overflowing_cameo": {
-        "desc": "upon collecting crackling energy, theres a chance to release a lightning nova, dealing lightning damage, increased by for every intelligence you have.",
-        "full": "Upon collecting {c_important}{u}Crackling Energy{/u}{/c}, there's a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to release a lightning nova, dealing {c_random}[Affix_Flat_Value_1]{/c} Lightning damage, increased by {c_number}[Affix.\"Static Value 1\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 2\"]{/c} Intelligence you have.",
+        "desc": "upon collecting crackling energy, theres a chance to release a lightning nova, dealing lightning damage, increased by for every intelligence you have. current bonus",
+        "full": "Upon collecting {c_important}{u}Crackling Energy{/u}{/c}, there's a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to release a lightning nova, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Lightning damage, increased by {c_number}[Affix.\"Static Value 1\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 2\"]{/c} Intelligence you have.\r\n\r\nCurrent Bonus: {c_number}[Floor(Owner.Intelligence_Total / Affix.\"Static Value 2\") * Affix.\"Static Value 1\"|x%|]{/c}",
         "num_idx": [
             1
         ],
         "snoId": 1225299
     },
     "esus_heirloom": {
-        "desc": "your critical strike chance is increased by of your movement speed bonus.",
-        "full": "Your Critical Strike Chance is increased by {c_random}[Affix_Value_1|%|]{/c} of your Movement Speed bonus.",
+        "desc": "your critical strike chance is increased by of your movement speed bonus. current bonus",
+        "full": "Your Critical Strike Chance is increased by {c_random}[Affix_Value_1|%|]{/c} of your Movement Speed bonus.\r\n\r\nCurrent Bonus: {c_number}[(Min(Owner.Movement_Scalar_Capped_Total,2)-1) * (Affix_Value_1)|1%|]{/c}",
         "num_idx": [
             0
         ],
@@ -219,8 +252,8 @@
         "snoId": 942977
     },
     "fields_of_crimson": {
-        "desc": "while using this weapon, damaging at least one enemy with rupture creates a blood pool that inflicts bleeding damage over seconds. enemies standing in the pool take increased bleeding damage.",
-        "full": "While using this weapon, damaging at least one enemy with {c_important}Rupture{/c} creates a blood pool that inflicts {c_random}[Affix_Flat_Value_1]{/c} Bleeding damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Enemies standing in the pool take {c_number}[Affix_Value_1|%x|]{/c} increased Bleeding damage.",
+        "desc": "while using this weapon, damaging at least one enemy with rupture creates a blood pool that inflicts bleeding damage over seconds. enemies standing in the pool take increased damage.",
+        "full": "While using this weapon, damaging at least one enemy with {c_important}Rupture{/c} creates a blood pool that inflicts {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_2]{/c} Bleeding damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Enemies standing in the pool take {c_number}[Affix_Value_1|%x|]{/c} increased damage.",
         "num_idx": [
             0
         ],
@@ -236,15 +269,23 @@
     },
     "flamescar": {
         "desc": "while channeling incinerate, you periodically shoot embers that are attracted to enemies, each dealing fire damage.",
-        "full": "While Channeling {c_important}Incinerate{/c}, you periodically shoot embers that are attracted to enemies, each dealing {c_random}[Affix_Flat_Value_1]{/c} Fire damage.",
+        "full": "While Channeling {c_important}Incinerate{/c}, you periodically shoot embers that are attracted to enemies, each dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Fire damage.",
         "num_idx": [
             0
         ],
         "snoId": 1214791
     },
+    "flameweaver": {
+        "desc": "casting fire bolt through your firewall causes it to split into bolts, each dealing more damage.",
+        "full": "Casting {c_important}Fire Bolt{/c} through your {c_important}Firewall{/c} causes it to split into {c_number}[Affix.\"Static Value 0\"]{/c} bolts, each dealing {c_random}[Affix_Value_1|%x|]{/c} more damage.",
+        "num_idx": [
+            1
+        ],
+        "snoId": 1895710
+    },
     "fleshrender": {
-        "desc": "debilitating roar and blood howl deal damage to nearby poisoned enemies, increased by for every willpower you have.",
-        "full": "{c_important}Debilitating Roar{/c} and {c_important}Blood Howl{/c} deal {c_random}[Affix_Flat_Value_1]{/c} damage to Nearby Poisoned enemies, increased by {c_number}[Affix.\"Static Value 1\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 0\"]{/c} Willpower you have.",
+        "desc": "casting a defensive skill deals damage to nearby poisoned enemies, increased by for every willpower you have. current bonus",
+        "full": "Casting a {c_important}Defensive{/c} Skill deals {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage to Nearby Poisoned enemies, increased by {c_number}[Affix.\"Static Value 1\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 0\"]{/c} Willpower you have.\r\n\r\nCurrent Bonus: {c_number}[Floor(Owner.Willpower_Total / Affix.\"Static Value 0\") * Affix.\"Static Value 1\"|x%|]{/c}",
         "num_idx": [
             0
         ],
@@ -257,6 +298,15 @@
             0
         ],
         "snoId": 942253
+    },
+    "fractured_winterglass": {
+        "desc": "casting frozen orb has a chance to spawn a random conjuration when it explodes. lucky hit your conjurations have up to a chance to launch a frozen orb at nearby enemies.",
+        "full": "Casting {c_important}Frozen Orb{/c} has a {c_random}[Affix_Value_1|%|]{/c} chance to spawn a random {c_important}Conjuration{/c} when it explodes.\r\n\r\n{c_label}Lucky Hit:{/c} Your {c_important}Conjurations{/c} have up to a {c_random}[Affix_Value_2|%|]{/c} chance to launch a {c_important}Frozen Orb{/c} at Nearby enemies.",
+        "num_idx": [
+            0,
+            1
+        ],
+        "snoId": 1862756
     },
     "frostburn": {
         "desc": "lucky hit up to a chance to freeze enemies for seconds.",
@@ -308,7 +358,7 @@
     },
     "greaves_of_the_empty_tomb": {
         "desc": "create desecrated ground beneath your sever spectres as they travel, damaging enemies for shadow damage over seconds.",
-        "full": "Create {c_important}Desecrated Ground{/c} beneath your {c_important}Sever{/c} spectres as they travel, damaging enemies for {c_random}[Affix_Flat_Value_1]{/c} Shadow damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "full": "Create {c_important}Desecrated Ground{/c} beneath your {c_important}Sever{/c} spectres as they travel, damaging enemies for {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Shadow damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             0
         ],
@@ -322,7 +372,7 @@
     },
     "hellhammer": {
         "desc": "upheaval ignites the ground burning enemies for an additional damage over seconds.",
-        "full": "{c_important}Upheaval{/c} ignites the ground Burning enemies for an additional {c_random}[Affix_Flat_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "full": "{c_important}Upheaval{/c} ignites the ground Burning enemies for an additional {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             0
         ],
@@ -420,8 +470,8 @@
         "snoId": 942251
     },
     "rage_of_harrogath": {
-        "desc": "lucky hit up to a chance to reduce the cooldowns of your nonultimate skills by seconds when you inflict bleeding on elites.",
-        "full": "{c_label}Lucky Hit:{/c} Up to a {c_random}[Affix_Value_1|%|]{/c} chance to reduce the Cooldowns of your Non-{c_important}Ultimate{/c} Skills by {c_number}[Affix_Value_2|1|]{/c} seconds when you inflict Bleeding on Elites.",
+        "desc": "lucky hit inflicting bleeding on an enemy has up to a chance to reduce the cooldowns of your skills by second.",
+        "full": "{c_label}Lucky Hit:{/c} Inflicting Bleeding on an enemy has up to a {c_random}[Affix_Value_1|%|]{/c} chance to reduce the Cooldowns of your Skills by {c_number}[Affix_Value_2|1|]{/c} second.",
         "num_idx": [
             0
         ],
@@ -444,16 +494,16 @@
         "snoId": 1304455
     },
     "razorplate": {
-        "desc": "gain thorns.",
-        "full": "Gain {c_random}[Affix_Flat_Value_1]{/c} Thorns.",
+        "desc": "thorns has a chance to deal increased damage.",
+        "full": "Thorns has a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to deal {c_random}[Affix_Value_1|%x|]{/c} increased damage. ",
         "num_idx": [
-            0
+            1
         ],
         "snoId": 1215064
     },
     "ring_of_mendeln": {
-        "desc": "lucky hit up to a chance to empower all of your minions, causing the next attack from each to explode for physical damage.",
-        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to empower all of your Minions, causing the next attack from each to explode for {c_random}[Affix_Flat_Value_1]{/c} Physical damage.",
+        "desc": "every th attack from each minion is empowered, exploding for physical damage.",
+        "full": "Every {c_number}6th{/c} attack from each Minion is empowered, exploding for {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Physical damage.",
         "num_idx": [
             1
         ],
@@ -469,10 +519,8 @@
     },
     "ring_of_starless_skies": {
         "desc": "spending your primary resource reduces the resource cost of your skills and increases your damage by for seconds, up to .",
-        "full": "Spending your Primary Resource reduces the Resource cost of your Skills and increases your damage by {c_random}[Affix_Value_1|%x|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds, up to {c_number}[Affix_Value_1 * Affix.\"Static Value 2\"|%x|]{/c}. ",
-        "num_idx": [
-            0
-        ],
+        "full": "Spending your Primary Resource reduces the Resource cost of your Skills and increases your damage by {c_number}[Affix_Value_1|%x|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds, up to {c_number}[Affix_Value_1 * Affix.\"Static Value 2\"|%x|]{/c}. ",
+        "num_idx": [],
         "snoId": 1306337
     },
     "ring_of_the_ravenous": {
@@ -492,6 +540,23 @@
             2
         ],
         "snoId": 1706659
+    },
+    "saboteurs_signet": {
+        "desc": "casting flurry has a chance to release stun grenades that deal physical damage and stun enemies for second. your grenade skills have a lucky hit chance.",
+        "full": "Casting {c_important}Flurry{/c} has a {c_random}[Affix_Value_2|%|]{/c} chance to release {c_important}Stun Grenades{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage and Stun enemies for {c_number}[PowerTag.Rogue_Grenades.\"Script Formula 2\"|2|]{/c} second.\r\n\r\nYour {c_important}Grenade{/c} Skills have a {c_number}[Affix.\"Static Value 0\"|%|]{/c} {c_label}Lucky Hit{/c} Chance.",
+        "num_idx": [
+            0,
+            1
+        ],
+        "snoId": 1903127
+    },
+    "scoundrels_kiss": {
+        "desc": "rapid fire now lobs exploding arrows that deal increased damage.",
+        "full": "{c_important}Rapid Fire{/c} now lobs exploding arrows that deal {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1902312
     },
     "scoundrels_leathers": {
         "desc": "while you have unlimited energy from inner sight, casting a core skill has a chance to spawn caltrops, poison trap, or death trap.",
@@ -535,8 +600,8 @@
         "snoId": 1306310
     },
     "starfall_coronet": {
-        "desc": "meteor now has charges with a second charge cooldown instead of a mana cost, and drops additional meteors around the target. meteors enchantment effect and enhanced meteor drop additional meteor.",
-        "full": "{c_important}Meteor{/c} now has {c_number}[Affix.\"Static Value 0\"]{/c} charges with a {c_random}[Affix_Value_1|1|]{/c} second Charge Cooldown instead of a Mana cost, and drops {c_number}[Affix.\"Static Value 1\"]{/c} additional meteors around the target.\r\n\r\n{c_important}Meteor's{/c} Enchantment Effect and Enhanced {c_important}Meteor{/c} drop {c_number}[Affix.\"Static Value 3\"]{/c} additional meteor.",
+        "desc": "meteor now has additional charge with a second charge cooldown instead of a mana cost, and drops additional meteors around the target. meteors enchantment effect and enhanced meteor drop additional meteor.",
+        "full": "{c_important}Meteor{/c} now has {c_number}[Affix.\"Static Value 0\"]{/c} additional charge with a {c_random}[Affix_Value_1|1|]{/c} second Charge Cooldown instead of a Mana cost, and drops {c_number}[Affix.\"Static Value 1\"]{/c} additional meteors around the target.\r\n\r\n{c_important}Meteor's{/c} Enchantment Effect and Enhanced {c_important}Meteor{/c} drop {c_number}[Affix.\"Static Value 3\"]{/c} additional meteor.",
         "num_idx": [
             1
         ],
@@ -549,10 +614,11 @@
         "snoId": 942972
     },
     "tal_rashas_iridescent_loop": {
-        "desc": "for each type of elemental damage you deal, gain increased damage for seconds. dealing elemental damage refreshes all bonuses.",
-        "full": "For each type of Elemental damage you deal, gain {c_random}[Affix_Value_1|1%x|]{/c} increased damage for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Dealing Elemental damage refreshes all bonuses.",
+        "desc": "for each type of elemental damage you deal, gain increased damage for seconds, up to . dealing elemental damage refreshes all bonuses.",
+        "full": "For each type of Elemental damage you deal, gain {c_random}[Affix_Value_1|1%x|]{/c} increased damage for {c_number}[Affix.\"Static Value 0\"]{/c} seconds, up to {c_random}[Affix_Value_1*4|1%x|]{/c} . Dealing Elemental damage refreshes all bonuses.",
         "num_idx": [
-            0
+            0,
+            2
         ],
         "snoId": 1225567
     },
@@ -616,6 +682,22 @@
         ],
         "snoId": 1489567
     },
+    "twin_strikes": {
+        "desc": "after casting double swing times, your next double swing will hit additional times, each dealing increased damage.",
+        "full": "After casting {c_important}Double Swing{/c} {c_number}[Affix.\"Static Value 0\" - 1]{/c} times, your next {c_important}Double Swing{/c} will hit {c_number}[Affix.\"Static Value 1\"]{/c} additional times, each dealing {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
+        "num_idx": [
+            2
+        ],
+        "snoId": 1901745
+    },
+    "tyraels_might": {
+        "desc": "while at full life, your skills unleash a divine barrage dealing damage.",
+        "full": "While at full Life, your Skills unleash a divine barrage dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1901483
+    },
     "unsung_ascetics_wraps": {
         "desc": "lightning storm gains additional strike each times it grows. lightning storm critical strikes cause lightning to strike twice, dealing increased damage.",
         "full": "{c_important}Lightning Storm{/c} gains {c_number}[Affix.\"Static Value 0\"]{/c} additional strike each times it grows.\r\n\r\n{c_important}Lightning Storm{/c} Critical Strikes cause lightning to strike twice, dealing {c_random}[Affix_Value_1|x%|]{/c} increased damage.",
@@ -640,6 +722,14 @@
         ],
         "snoId": 1306218
     },
+    "wildheart_hunger": {
+        "desc": "when you shapeshift into a werewolf or a werebear, you gain wildheart for seconds. wildheart grants you increased damage every seconds, stacking times.",
+        "full": "When you Shapeshift into a Werewolf or a Werebear, you gain Wildheart for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Wildheart grants you {c_random}[Affix_Value_1|1%x|]{/c} increased damage every {c_number}[Affix.\"Static Value 1|1|\"]{/c} seconds, stacking {c_number}[Affix.\"Static Value 2\"]{/c} times.  ",
+        "num_idx": [
+            1
+        ],
+        "snoId": 1902138
+    },
     "windforce": {
         "desc": "lucky hit hits with this weapon have up to a chance to deal double damage and knock back the target.",
         "full": "{c_label}Lucky Hit:{/c} Hits with this weapon have up to a {c_random}[Affix_Value_1|%|]{/c} chance to deal double damage and Knock Back the target.",
@@ -663,11 +753,19 @@
         "snoId": 1706657
     },
     "xfals_corroded_signet": {
-        "desc": "lucky hit your damage over time effects have up to a chance to erupt, dealing damage of the same type to nearby enemies.",
-        "full": "{c_label}Lucky Hit:{/c} Your damage over time effects have up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to erupt, dealing {c_random}[Affix_Flat_Value_1]{/c} damage of the same type to Nearby enemies.",
+        "desc": "lucky hit your damage over time effects have up to a chance to erupt, dealing damage of the same type to surrounding enemies.",
+        "full": "{c_label}Lucky Hit:{/c} Your damage over time effects have up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to erupt, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} damage of the same type to surrounding enemies.",
         "num_idx": [
             1
         ],
         "snoId": 1559923
+    },
+    "yens_blessing": {
+        "desc": "casting a skill has a chance to cast a nonmobility, nonultimate skill that is currently on cooldown. this effect can only occur once every seconds.",
+        "full": "Casting a Skill has a {c_random}[Affix_Value_1|%|]{/c} chance to cast a Non-{c_important}Mobility{/c}, Non-{c_important}Ultimate{/c} Skill that is currently on Cooldown. This effect can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1858739
     }
 }

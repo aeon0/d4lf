@@ -132,9 +132,9 @@ BASE_PATH = "test/assets/item"
             f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
             Item(
                 affixes=[
-                    Affix("vulnerable_damage", 31),
                     Affix("maximum_life", 666),
                     Affix("damage", 45),
+                    Affix("vulnerable_damage", 31),
                 ],
                 inherent=[Affix("lucky_hit_chance", 10.0)],
                 item_type=ItemType.Wand,

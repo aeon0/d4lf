@@ -76,7 +76,7 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
     for item_type in ItemType:
         if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
             tmp_idx = found_idx + len(item_type.value)
-            if tmp_idx >= last_char_idx and len(item_type.value) > max_length:
+            if tmp_idx >= last_char_idx and ("two-handed" not in item_type.value or len(item_type.value) > max_length):
                 item.item_type = item_type
                 last_char_idx = tmp_idx
                 max_length = len(item_type.value)

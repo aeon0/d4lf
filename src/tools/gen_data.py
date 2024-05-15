@@ -1,8 +1,8 @@
 # generate data from d4data repo
-from pathlib import Path
 import json
-import re
 import os
+import re
+from pathlib import Path
 
 
 def remove_content_in_braces(input_string) -> str:
@@ -69,28 +69,6 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         os.makedirs(f"assets/lang/{l}", exist_ok=True)
 
     for language in lang_arr:
-        # Create Aspects
-        print(f"Gen Aspects for {language}")
-        aspects_dict = {}
-        pattern = f"json/{language}_Text/meta/StringList/Affix_legendary*.stl.json"
-        json_files = list(d4data_dir.glob(pattern))
-        for json_file in json_files:
-            with open(json_file, "r", encoding="utf-8") as file:
-                data = json.load(file)
-                snoId = data["__snoID__"]
-                name_idx, desc_idx = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
-                aspect_name = data["arStrings"][name_idx]["szText"]
-                aspect_name_clean = aspect_name.strip().replace(" ", "_").lower().replace("’", "").replace("'", "").replace("-", "")
-                aspect_name_clean = check_ms(aspect_name_clean)
-                aspect_desc = data["arStrings"][desc_idx]["szText"]
-                aspect_descr_clean = remove_content_in_braces(aspect_desc.lower().replace("’", ""))
-                num_idx = get_random_number_idx(aspect_desc)
-                aspects_dict[aspect_name_clean] = {"desc": aspect_descr_clean, "snoId": snoId, "full": aspect_desc, "num_idx": num_idx}
-
-        with open(f"assets/lang/{language}/aspects.json", "w", encoding="utf-8") as json_file:
-            json.dump(aspects_dict, json_file, indent=4, ensure_ascii=False)
-            json_file.write("\n")
-
         # Create Uniques
         print(f"Gen Uniques for {language}")
         unique_dict = {}
@@ -233,7 +211,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         # https://github.com/josdemmers/D4DataParser/blob/main/D4DataParser/Parsers/AffixParser.cs
         print(f"Gen Affixes for {language}")
         affix_dict = {}
-        json_file = companion_app_dir / f"D4Companion/Data/Affixes.{language}.json"
+        json_file = companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json"
         with open(json_file, "r", encoding="utf-8") as file:
             data = json.load(file)
             for affix in data:

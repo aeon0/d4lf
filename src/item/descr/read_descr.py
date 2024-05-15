@@ -48,7 +48,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Split affix bullets into inherent and others
     # =========================
-    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves]:
+    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
         inhernet_affixe_bullets = []
     elif item.item_type in [ItemType.Ring]:
         inhernet_affixe_bullets = affix_bullets[:2]
@@ -60,7 +60,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         inhernet_affixe_bullets = affix_bullets[:4]
         affix_bullets = affix_bullets[4:]
     else:
-        # default for: Pants, Amulets, Boots, All Weapons
+        # default for: Amulets, Boots, All Weapons
         inhernet_affixe_bullets = affix_bullets[:1]
         affix_bullets = affix_bullets[1:]
 
@@ -96,15 +96,15 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_affixes", img=img_item_descr)
         return None
 
-    # Find aspects & uniques
+    # Find aspects of uniques
     # =========================
-    if rarity in [ItemRarity.Legendary, ItemRarity.Unique]:
-        item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.item_type, item.rarity)
+    if rarity == ItemRarity.Unique:
+        item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet)
         if item.aspect is None:
-            item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, item.item_type, item.rarity, False)
+            item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, False)
         if item.aspect is None:
             if show_warnings:
-                Logger.warning(f"Could not find aspect/unique: {debug_str}")
+                Logger.warning(f"Could not find unique: {debug_str}")
                 screenshot("failed_aspect_or_unique", img=img_item_descr)
             return None
 

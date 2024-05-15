@@ -134,8 +134,10 @@
         "empowered_elites_suppressor": "empowered elites suppressor elites always have the \"suppressor\" affix.",
         "empowered_elites_teleporter": "empowered elites teleporter elites always have the \"teleporter\" affix.",
         "lightning_storm": "lightning storm lightning gathers above the player. get into the protection dome to avoid severe outcomes.",
+        "monster_barrier": "monster barrier monsters gain of their maximum life as a barrier.",
         "nightmare_portal": "nightmare portal while in combat, nightmare portals open randomly near players, pouring out dangerous monsters.",
         "stormbanes_wrath": "stormbanes wrath stormbanes wrath chases players around, releasing deadly pulses when reaching a player.",
+        "the_beast_in_ice": "the beast in ice face a more challenging beast in ice at the end of this frozen cave.",
         "volcanic": "volcanic while in combat, gouts of flame periodically erupt near players."
     },
     "minor": {
@@ -181,6 +183,7 @@
     },
     "positive": {
         "ancestors_favor": "ancestors favor extra lunar shrines and more glyph experience earned at the end of this dungeon.",
+        "ancestral_awakening": "ancestral awakening you earn more glyph experience at the end of this dungeon.",
         "battle_hardened": "battle hardened gain damage reduction for every health you are missing.",
         "control_impaired_explosions": "control impaired explosions being hit by control impairing effects creates an explosion around you.",
         "extra_shrines": "extra shrines extra shrines will appear in the dungeon.",

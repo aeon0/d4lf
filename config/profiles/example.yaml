@@ -4,7 +4,7 @@ Affixes:
       minPower: 725
       affixPool:
         - count:
-            - [ basic_skill_attack_speed, 6 ]
+            - [ dexterity, 13 ]
             - [ cooldown_reduction, 5 ]
             - [ maximum_life, 640 ]
             - [ total_armor, 9 ]
@@ -24,8 +24,8 @@ Affixes:
       minPower: 725
       affixPool:
         - count:
-            - [ damage_reduction_from_close_enemies, 10 ]
-            - [ damage_reduction_from_distant_enemies, 12 ]
+            - [ dexterity, 13 ]
+            - [ intelligence, 13 ]
             - [ damage_reduction, 5 ]
             - [ total_armor, 9 ]
             - [ maximum_life, 700 ]
@@ -40,8 +40,8 @@ Affixes:
         - count:
             - [ movement_speed, 16 ]
             - [ dodge_chance, 5 ]
-            - [ dodge_chance_against_distant_enemies, 7 ]
             - [ energy_cost_reduction, 6 ]
+            - [ intelligence, 13 ]
           minCount: 3
 
   - AwesomeAmulet:
@@ -51,8 +51,8 @@ Affixes:
         - count:
             - [ cooldown_reduction, 6 ]
             - [ damage_reduction, 6 ]
-            - [ damage_reduction_from_close_enemies, 10 ]
-            - [ damage_reduction_from_distant_enemies, 12 ]
+            - [ dexterity, 13 ]
+            - [ intelligence, 13 ]
             - [ total_armor, 9 ]
             - [ energy_cost_reduction, 6 ]
             - [ movement_speed ]

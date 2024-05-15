@@ -67,6 +67,21 @@ BASE_PATH = "test/assets/item"
         ),
         (
             (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 88),
+                    Affix("maximum_life", 828),
+                    Affix("damage", 25),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=925,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
+            (1920, 1080),
             f"{BASE_PATH}/read_descr_legendary_1080p_2.png",
             Item(
                 affixes=[
@@ -94,6 +109,36 @@ BASE_PATH = "test/assets/item"
                 inherent=[Affix("overpower_damage", 75)],
                 item_type=ItemType.Mace2H,
                 power=704,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_4.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 83),
+                    Affix("maximum_life", 728),
+                    Affix("damage", 20),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=910,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_legendary_1080p_5.png",
+            Item(
+                affixes=[
+                    Affix("vulnerable_damage", 31),
+                    Affix("maximum_life", 666),
+                    Affix("damage", 45),
+                ],
+                inherent=[Affix("lucky_hit_chance", 10.0)],
+                item_type=ItemType.Wand,
+                power=925,
                 rarity=ItemRarity.Legendary,
             ),
         ),

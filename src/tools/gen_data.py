@@ -1,8 +1,8 @@
 # generate data from d4data repo
-from pathlib import Path
 import json
-import re
 import os
+import re
+from pathlib import Path
 
 
 def remove_content_in_braces(input_string) -> str:

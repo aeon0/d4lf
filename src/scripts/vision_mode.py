@@ -183,6 +183,9 @@ def vision_mode():
                 elif rarity == ItemRarity.Magic and item_descr.item_type == ItemType.Elixir:
                     Logger.info(f"Matched: Elixir")
                     ignored_item = True
+                elif item_descr.item_type == ItemType.TemperManual:
+                    Logger.info(f"Matched: Temper Manual")
+                    ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
 

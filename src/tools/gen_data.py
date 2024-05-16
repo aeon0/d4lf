@@ -177,6 +177,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Tome",
             "Wand",
             "OffHandTotem",
+            "TemperManual",
         ]
         item_typ_dict = {
             "Material": "custom type material",

@@ -36,7 +36,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
-    if item.item_type == ItemType.Material or (item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.item_type != ItemType.Sigil):
+    if item.item_type in [ItemType.Material, ItemType.TemperManual] or (
+        item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.item_type != ItemType.Sigil
+    ):
         return item
 
     # Find textures for bullets and sockets

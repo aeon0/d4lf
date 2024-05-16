@@ -214,6 +214,14 @@ BASE_PATH = "test/assets/item"
                 codex_upgrade=True,
             ),
         ),
+        (
+            (3840, 2160),
+            f"{BASE_PATH}/temper_manual_2160p.png",
+            Item(
+                item_type=ItemType.TemperManual,
+                rarity=ItemRarity.Magic,
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

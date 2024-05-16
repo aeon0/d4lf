@@ -49,6 +49,20 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_legendary_1440p_3.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 60),
+                    Affix("maximum_life", 233),
+                    Affix("resistance_to_all_elements", 7),
+                ],
+                item_type=ItemType.Legs,
+                power=700,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
             (1920, 1080),
             f"{BASE_PATH}/read_descr_material_1080p.png",
             Item(item_type=ItemType.Material, rarity=ItemRarity.Common),

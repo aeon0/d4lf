@@ -9,12 +9,11 @@ from item.filter import Filter
 from item.find_descr import find_descr
 
 
-@pytest.mark.skip(reason="With season 4 the legendary item can not be read, TODO: update")
 def test_smoke():
-    res = (2560, 1440)
-    anchor = (1723, 1012)
+    res = (1920, 1080)
+    anchor = (1450, 761)
     Cam().update_window_pos(0, 0, *res)
-    img = cv2.imread("test/assets/item/find_descr_legendary_1080p_2.png")
+    img = cv2.imread("test/assets/item/find_descr_rare_1080p.png")
     start = time.time()
     found, rarity, cropped_descr, _ = find_descr(img, anchor)
     print("Runtime (detect): ", time.time() - start)

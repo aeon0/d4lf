@@ -32,19 +32,27 @@ def draw_text(canvas, text, color, h, off, center) -> int:
     if text is None or text == "":
         return
     font_size = 13
+    width_text_scale = 15.5
+    height_text_scale = 2
     window_height = ResManager().pos.window_dimensions[1]
     if window_height == 1440:
         font_size = 15
+        width_text_scale = 20
+        height_text_scale = 2.5
     elif window_height == 1600:
         font_size = 16
+        width_text_scale = 23
+        height_text_scale = 2.6
     elif window_height == 2160:
         font_size = 17
+        width_text_scale = 30
+        height_text_scale = 4
     if len(text) > 27:
         text = text[:24] + "..."
 
     # Create a white rectangle as the background
-    text_width = 1.02 * len(text) * font_size
-    text_height = 2.0 * font_size
+    text_width = int(width_text_scale * len(text))
+    text_height = int(height_text_scale * font_size)
     dark_gray_color = "#111111"
     canvas.create_rectangle(
         center - text_width // 2,  # x1

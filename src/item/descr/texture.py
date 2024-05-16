@@ -24,35 +24,36 @@ def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    if not (
-        affix_bullets := search(
-            [
-                "affix_bullet_point_medium",
-                "greater_affix_bullet_point_medium",
-                "rerolled_bullet_point_medium",
-            ],
-            img_item_descr,
-            0.85,
-            roi_bullets,
-            True,
-            mode="all",
-        )
-    ).success:
-        if not (
-            affix_bullets := search(
-                [
-                    "affix_bullet_point",
-                    "greater_affix_bullet_point",
-                    "rerolled_bullet_point",
-                ],
-                img_item_descr,
-                0.85,
-                roi_bullets,
-                True,
-                mode="all",
-            )
-        ).success:
-            return []
+    affix_bullets_medium = search(
+        [
+            "affix_bullet_point_medium",
+            "greater_affix_bullet_point_medium",
+            "rerolled_bullet_point_medium",
+        ],
+        img_item_descr,
+        0.85,
+        roi_bullets,
+        True,
+        mode="all",
+    )
+    affix_bullets_small = search(
+        [
+            "affix_bullet_point",
+            "greater_affix_bullet_point",
+            "rerolled_bullet_point",
+        ],
+        img_item_descr,
+        0.85,
+        roi_bullets,
+        True,
+        mode="all",
+    )
+    if not affix_bullets_medium.success and not affix_bullets_small.success:
+        return []
+    # Take the results that have the higher avg score
+    avg_score_medium = np.average([match.score for match in affix_bullets_medium.matches])
+    avg_score_small = np.average([match.score for match in affix_bullets_small.matches])
+    affix_bullets = affix_bullets_small if avg_score_small > avg_score_medium else affix_bullets_medium
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     return affix_bullets.matches
 

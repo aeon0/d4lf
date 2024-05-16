@@ -1,14 +1,14 @@
 Affixes:
   - AwesomeHelm:
       itemType: helm
-      minPower: 1
+      minPower: 725
       affixPool:
         - count:
             - [ dexterity, 13 ]
             - [ cooldown_reduction, 5 ]
-            - [ maximum_life, 1 ]
+            - [ maximum_life, 640 ]
             - [ total_armor, 9 ]
-          minCount: 1
+          minCount: 3
 
   - AwesomeGloves:
       itemType: gloves

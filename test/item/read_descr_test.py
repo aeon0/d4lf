@@ -34,6 +34,21 @@ BASE_PATH = "test/assets/item"
             ),
         ),
         (
+            (2560, 1440),
+            f"{BASE_PATH}/read_descr_legendary_1440p_2.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 178),
+                    Affix("life_on_hit", 38),
+                    Affix("lucky_hit_up_to_a_chance_to_restore_primary_resource", 19),
+                ],
+                inherent=[Affix("life_on_kill", 228)],
+                item_type=ItemType.Scythe2H,
+                power=925,
+                rarity=ItemRarity.Legendary,
+            ),
+        ),
+        (
             (1920, 1080),
             f"{BASE_PATH}/read_descr_material_1080p.png",
             Item(item_type=ItemType.Material, rarity=ItemRarity.Common),
@@ -165,6 +180,12 @@ BASE_PATH = "test/assets/item"
                 codex_upgrade=True,
                 item_type=ItemType.Helm,
                 power=920,
+                rarity=ItemRarity.Legendary,
+                affixes=[
+                    Affix("intelligence", 76),
+                    Affix("life_per_second", 114),
+                    Affix("cooldown_reduction", 7),
+                ],
             ),
         ),
         (

@@ -188,7 +188,7 @@ def vision_mode():
                 elif rarity == ItemRarity.Legendary and item_descr.item_type == ItemType.Material:
                     Logger.info(f"Matched: Extracted Aspect")
                     ignored_item = True
-                elif rarity == ItemRarity.Magic and item_descr.item_type == ItemType.Elixir:
+                elif item_descr.item_type == ItemType.Elixir:
                     Logger.info(f"Matched: Elixir")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.TemperManual:

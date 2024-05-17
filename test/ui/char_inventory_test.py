@@ -29,6 +29,7 @@ def test_char_inventory(img_res, input_img):
     "img_res, input_img, occupied, junk, fav",
     [
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p.png", 13, 2, 7),
+        ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p_2.png", 31, 18, 3),
         ((3440, 1440), f"{BASE_PATH}/char_inv_open_1440p_wide.png", 12, 0, 0),
     ],
 )

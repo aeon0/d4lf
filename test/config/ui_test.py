@@ -41,4 +41,4 @@ def test_colors():
 
 
 def test_templates():
-    assert len(ResManager().templates) == 29
+    assert len(ResManager().templates) == 30

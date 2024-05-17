@@ -72,7 +72,7 @@ def check_items(inv: InventoryBase):
         if rarity == ItemRarity.Legendary and item_descr.item_type == ItemType.Material:
             Logger.info(f"Matched: Extracted Aspect")
             continue
-        elif rarity == ItemRarity.Magic and item_descr.item_type == ItemType.Elixir:
+        elif item_descr.item_type == ItemType.Elixir:
             Logger.info(f"Matched: Elixir")
             continue
         elif item_descr.item_type == ItemType.TemperManual:

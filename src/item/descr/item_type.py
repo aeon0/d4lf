@@ -50,7 +50,7 @@ def read_item_type(
             item = _find_item_power_and_type(item, concatenated_str)
 
     non_magic_or_sigil = item.rarity != ItemRarity.Magic or item.item_type == ItemType.Sigil
-    power_or_type_bad = item.power is None or item.item_type is None
+    power_or_type_bad = (item.power is None and item.item_type not in [ItemType.Elixir]) or item.item_type is None
     if non_magic_or_sigil and power_or_type_bad:
         return None, concatenated_str
 

@@ -63,12 +63,12 @@ class InventoryBase(Menu):
             fav_flag_crop = crop(hsv_img, ResManager().roi.rel_fav_flag)
             mean_value_fav = cv2.mean(fav_flag_crop)[2]
 
-            res_junk = search(self.junk_template, slot_img, threshold=0.7)
+            res_junk = search(self.junk_template, slot_img, threshold=0.65, use_grayscale=True)
 
             if mean_value_fav > 205:
                 item_slot.is_fav = True
                 occupied_slots.append(item_slot)
-            elif res_junk.success:
+            elif res_junk.success and mean_value_overall < 75:
                 item_slot.is_junk = True
                 occupied_slots.append(item_slot)
             elif mean_value_overall > 37:

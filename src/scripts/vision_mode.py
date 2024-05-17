@@ -175,7 +175,7 @@ def vision_mode():
                 match = True
                 last_top_left_corner = top_left_corner
                 last_center = item_center
-                item_descr = read_descr(rarity, cropped_descr, False)
+                item_descr = read_descr(rarity, cropped_descr, True)
                 if item_descr is None:
                     last_center = None
                     last_top_left_corner = None

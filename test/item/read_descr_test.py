@@ -257,6 +257,26 @@ BASE_PATH = "test/assets/item"
                 rarity=ItemRarity.Magic,
             ),
         ),
+        (
+            (1920, 1080),
+            f"{BASE_PATH}/read_descr_tempered_1080p.png",
+            Item(
+                affixes=[
+                    Affix("intelligence", 37),
+                    Affix("life_per_second", 12),
+                    Affix("damage", 11),
+                    Affix("resource_cost_reduction", 6),
+                ],
+                inherent=[
+                    Affix("resistance_to_all_elements", 3.5),
+                    Affix("poison_resistance", 3.5),
+                ],
+                item_type=ItemType.Ring,
+                power=403,
+                rarity=ItemRarity.Legendary,
+                codex_upgrade=True,
+            ),
+        ),
     ],
 )
 def test_read_descr(img_res: tuple[int, int], input_img: str, expected_item: Item):

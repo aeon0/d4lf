@@ -249,7 +249,7 @@ class SigilFilterModel(BaseModel):
     whitelist: list[str] = []
 
     @model_validator(mode="after")
-    def blacklist_whitelist_must_be_unique(self) -> "SigilFilterModel":
+    def data_integrity(self) -> "SigilFilterModel":
         errors = [item for item in self.blacklist if item in self.whitelist]
         if errors:
             raise ValueError(f"blacklist and whitelist must not overlap: {errors}")

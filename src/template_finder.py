@@ -129,6 +129,8 @@ def _get_cv_result(
     roi = np.clip(np.array(roi), 0, None)
     rx, ry, rw, rh = roi
     img = inp_img[ry : ry + rh, rx : rx + rw]
+    if img.shape[0] == 0 or img.shape[1] == 0:
+        return None, template.img_bgr, roi
 
     # filter for desired color or make grayscale
     if color_match:

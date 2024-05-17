@@ -74,7 +74,7 @@ def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         threshold=0.8,
         mode="first",
     )
-    return aspect_bullets[0]
+    return aspect_bullets[0] if aspect_bullets else None
 
 
 def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> list[int]:

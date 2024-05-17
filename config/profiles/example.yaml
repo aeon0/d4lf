@@ -47,6 +47,7 @@ Affixes:
   - AwesomeAmulet:
       itemType: amulet
       minPower: 725
+      minGreaterAffixCount: 1
       affixPool:
         - count:
             - [ cooldown_reduction, 6 ]

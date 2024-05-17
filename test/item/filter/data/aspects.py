@@ -10,6 +10,6 @@ class TestLegendary(Item):
 
 
 aspects = [
-    ("upgrade", ["all", "upgrade"], TestLegendary(aspect=Aspect(type="of_anemia", value=30), codex_upgrade=True)),
-    ("no upgrade", ["all"], TestLegendary(aspect=Aspect(type="of_anemia", value=30))),
+    ("upgrade", ["all", "upgrade"], TestLegendary(aspect=Aspect(name="of_anemia", value=30), codex_upgrade=True)),
+    ("no upgrade", ["all"], TestLegendary(aspect=Aspect(name="of_anemia", value=30))),
 ]

@@ -1,3 +1,5 @@
+from pytest_mock import MockerFixture
+
 from utils.roi_operations import get_center, intersect, bounding_box, is_in_roi
 
 
@@ -20,7 +22,7 @@ def test_intersect():
     assert intersection is None
 
 
-def test_bounding_box():
+def test_bounding_box(mocker: MockerFixture):
     # Test with rectangles
     rects = [(2, 2, 2, 2), (4, 4, 2, 2)]
     bounding = bounding_box(rects)
@@ -42,6 +44,7 @@ def test_bounding_box():
 
     # Test with an invalid argument
     invalid_arg = [(2, 2, 2, 2, 2)]
+    mocker.patch("utils.roi_operations.Logger.error")
     bounding = bounding_box(invalid_arg)
     assert bounding is None
 

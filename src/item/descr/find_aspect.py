@@ -39,5 +39,5 @@ def find_aspect(
 
     Logger.debug(f"{found_key}: {found_value}")
 
-    loc = [aspect_bullet.center[0], aspect_bullet.center[1] - 2]
-    return Aspect(found_key, found_value, concatenated_str, loc), cleaned_str
+    loc = (aspect_bullet.center[0], aspect_bullet.center[1] - 2)
+    return Aspect(name=found_key, value=found_value, text=concatenated_str, loc=loc), cleaned_str

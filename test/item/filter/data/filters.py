@@ -127,6 +127,7 @@ affix = ProfileModel(
                 ],
             )
         },
+        {"GreaterAffixes": ItemFilterModel(minGreaterAffixCount=1)},
     ],
 )
 

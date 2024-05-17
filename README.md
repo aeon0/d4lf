@@ -111,6 +111,7 @@ has a name and can filter for any combination of the following:
 - `itemType`: Either the name of THE type or a list of multiple types.
   See [assets/lang/enUS/item_types.json](assets/lang/enUS/item_types.json)
 - `minPower`: Minimum item power
+- `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is independent of `affixPool`
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
     - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and optionally `minCount`

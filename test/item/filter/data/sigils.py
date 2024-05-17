@@ -25,8 +25,8 @@ sigils = [
         [],
         TestSigil(
             affixes=[
-                Affix(type="death_pulse"),
-                Affix(type="reduce_cooldowns_on_kill", value=0.25),
+                Affix(name="death_pulse"),
+                Affix(name="reduce_cooldowns_on_kill", value=0.25),
             ],
         ),
     ),
@@ -35,7 +35,7 @@ sigils = [
         [],
         TestSigil(
             inherent=[
-                Affix(type="vault_of_copper"),
+                Affix(name="vault_of_copper"),
             ],
         ),
     ),
@@ -44,7 +44,7 @@ sigils = [
         [],
         TestSigil(
             inherent=[
-                Affix(type="lubans_rest"),
+                Affix(name="lubans_rest"),
             ],
         ),
     ),
@@ -53,14 +53,14 @@ sigils = [
         ["test"],
         TestSigil(
             affixes=[
-                Affix(type="extra_shrines"),
-                Affix(type="empowered_elites_shock_lance"),
-                Affix(type="monster_burning_damage", value=30.0),
-                Affix(type="monster_regen", value=1.5),
-                Affix(type="slowing_projectiles", value=50.0),
+                Affix(name="extra_shrines"),
+                Affix(name="empowered_elites_shock_lance"),
+                Affix(name="monster_burning_damage", value=30.0),
+                Affix(name="monster_regen", value=1.5),
+                Affix(name="slowing_projectiles", value=50.0),
             ],
             inherent=[
-                Affix(type="jalals_vigil"),
+                Affix(name="jalals_vigil"),
             ],
         ),
     ),
@@ -69,14 +69,14 @@ sigils = [
         ["test"],
         TestSigil(
             affixes=[
-                Affix(type="increased_healing", value=15.0),
-                Affix(type="volcanic"),
-                Affix(type="monster_cold_damage", value=20.0),
-                Affix(type="monster_poison_resist", value=60),
-                Affix(type="armor_breakers", value=7.0),
+                Affix(name="increased_healing", value=15.0),
+                Affix(name="volcanic"),
+                Affix(name="monster_cold_damage", value=20.0),
+                Affix(name="monster_poison_resist", value=60),
+                Affix(name="armor_breakers", value=7.0),
             ],
             inherent=[
-                Affix(type="jalals_vigil"),
+                Affix(name="jalals_vigil"),
             ],
         ),
     ),
@@ -85,14 +85,14 @@ sigils = [
         ["test"],
         TestSigil(
             affixes=[
-                Affix(type="quick_killer", value=2.0),
-                Affix(type="nightmare_portal"),
-                Affix(type="monster_attack_speed", value=25.0),
-                Affix(type="monster_burning_resist", value=60.0),
-                Affix(type="backstabbers"),
+                Affix(name="quick_killer", value=2.0),
+                Affix(name="nightmare_portal"),
+                Affix(name="monster_attack_speed", value=25.0),
+                Affix(name="monster_burning_resist", value=60.0),
+                Affix(name="backstabbers"),
             ],
             inherent=[
-                Affix(type="jalals_vigil"),
+                Affix(name="jalals_vigil"),
             ],
         ),
     ),

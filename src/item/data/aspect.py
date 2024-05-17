@@ -3,12 +3,12 @@ from dataclasses import dataclass
 
 @dataclass
 class Aspect:
-    type: str
-    value: float = None
-    text: str = ""
+    name: str
     loc: tuple[int, int] = None
+    text: str = ""
+    value: float = None
 
     def __eq__(self, other: "Aspect") -> bool:
         if not isinstance(other, Aspect):
             return False
-        return self.type == other.type and self.value == other.value
+        return self.name == other.name and self.value == other.value

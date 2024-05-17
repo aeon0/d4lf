@@ -19,7 +19,7 @@ from config.models import (
     SigilFilterModel,
     UniqueModel,
 )
-from item.data.affix import Affix
+from item.data.affix import Affix, AffixType
 from item.data.aspect import Aspect
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
@@ -71,6 +71,9 @@ class Filter:
                     continue
                 # check item power
                 if not self._match_item_power(min_power=filter_spec.minPower, item_power=item.power):
+                    continue
+                # check greater affixes
+                if not self._match_greater_affix_count(expected_min_count=filter_spec.minGreaterAffixCount, item_affixes=item.affixes):
                     continue
                 # check affixes
                 matched_affixes = []
@@ -145,9 +148,9 @@ class Filter:
                 # check affixes
                 if not self._match_affixes_uniques(expected_affixes=filter_item.affix, item_affixes=item.affixes):
                     continue
-                Logger.info(f"Matched {profile_name}.Uniques: {item.aspect.type}")
+                Logger.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
                 res.keep = True
-                res.matched.append(MatchedFilter(f"{profile_name}.{item.aspect.type}", did_match_aspect=True))
+                res.matched.append(MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))
         return res
 
     def _did_files_change(self) -> bool:
@@ -160,7 +163,7 @@ class Filter:
         for count_group in expected_affixes:
             group_res = []
             for affix in count_group.count:
-                matched_item_affix = next((a for a in item_affixes if a.type == affix.name), None)
+                matched_item_affix = next((a for a in item_affixes if a.name == affix.name), None)
                 if matched_item_affix is not None and self._match_item_aspect_or_affix(affix, matched_item_affix):
                     group_res.append(affix.name)
             if count_group.minCount <= len(group_res) <= count_group.maxCount:
@@ -171,20 +174,23 @@ class Filter:
 
     @staticmethod
     def _match_affixes_sigils(expected_affixes: list[str], sigil_affixes: list[Affix]) -> bool:
-        return any(a.type in expected_affixes for a in sigil_affixes)
+        return any(a.name in expected_affixes for a in sigil_affixes)
 
     def _match_affixes_uniques(self, expected_affixes: list[AffixFilterModel], item_affixes: list[Affix]) -> bool:
         for expected_affix in expected_affixes:
-            matched_item_affix = next((a for a in item_affixes if a.type == expected_affix.name), None)
+            matched_item_affix = next((a for a in item_affixes if a.name == expected_affix.name), None)
             if matched_item_affix is None or not self._match_item_aspect_or_affix(expected_affix, matched_item_affix):
                 return False
         return True
+
+    def _match_greater_affix_count(self, expected_min_count: int, item_affixes: list[Affix]) -> bool:
+        return expected_min_count <= len([x for x in item_affixes if x.type == AffixType.greater])
 
     @staticmethod
     def _match_item_aspect_or_affix(expected_aspect: AffixAspectFilterModel | None, item_aspect: Aspect | Affix) -> bool:
         if expected_aspect is None:
             return True
-        if expected_aspect.name != item_aspect.type:
+        if expected_aspect.name != item_aspect.name:
             return False
         if expected_aspect.value is not None:
             if item_aspect.value is None:

@@ -9,7 +9,7 @@ from pydantic import BaseModel, ConfigDict, field_validator, model_validator, Ro
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
-from config.helper import key_must_exist
+from config.helper import key_must_exist, check_greater_than_zero
 from item.data.item_type import ItemType
 
 
@@ -74,6 +74,12 @@ class AffixFilterCountModel(BaseModel):
     maxCount: int = 5
     minCount: int = 1
 
+    @model_validator(mode="after")
+    def min_smaller_max(self) -> "AffixFilterCountModel":
+        if self.minCount > self.maxCount:
+            raise ValueError(f"minCount must be smaller than maxCount")
+        return self
+
     @model_validator(mode="before")
     def set_defaults(cls, data: "AffixFilterCountModel") -> "AffixFilterCountModel":
         if "minCount" not in data and "count" in data and isinstance(data["count"], list):
@@ -82,17 +88,11 @@ class AffixFilterCountModel(BaseModel):
             data["maxCount"] = len(data["count"])
         return data
 
-    @field_validator("minCount")
-    def min_count_validator(cls, minCount: int) -> int:
-        if minCount < 1:
-            raise ValueError("minCount must be at least 1")
-        return minCount
-
-    @field_validator("maxCount")
-    def max_count_validator(cls, maxCount: int) -> int:
-        if maxCount < 1:
-            raise ValueError("maxCount must be at least 1")
-        return maxCount
+    @field_validator("minCount", "maxCount")
+    def min_count_validator(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("must be at least 1")
+        return v
 
 
 class AspectUniqueFilterModel(AffixAspectFilterModel):
@@ -221,7 +221,18 @@ class ItemFilterModel(BaseModel):
     affixPool: list[AffixFilterCountModel] = []
     inherentPool: list[AffixFilterCountModel] = []
     itemType: list[ItemType] = []
+    minGreaterAffixCount: int = 0
     minPower: int = 0
+
+    @field_validator("minPower")
+    def check_min_power(cls, v: int) -> int:
+        return check_greater_than_zero(v)
+
+    @field_validator("minGreaterAffixCount")
+    def min_greater_affix_in_range(cls, v: int) -> int:
+        if not 0 <= v <= 3:
+            raise ValueError("must be in [0, 3]")
+        return v
 
     @field_validator("itemType", mode="before")
     def parse_item_type(cls, data: str | list[str]) -> list[str]:
@@ -242,16 +253,12 @@ class SigilFilterModel(BaseModel):
         errors = [item for item in self.blacklist if item in self.whitelist]
         if errors:
             raise ValueError(f"blacklist and whitelist must not overlap: {errors}")
+        if self.minTier > self.maxTier:
+            raise ValueError(f"minTier must be smaller than maxTier")
         return self
 
-    @field_validator("maxTier")
-    def max_tier_in_range(cls, v: int) -> int:
-        if not 0 <= v <= 100:
-            raise ValueError("must be in [0, 100]")
-        return v
-
-    @field_validator("minTier")
-    def min_tier_in_range(cls, v: int) -> int:
+    @field_validator("minTier", "maxTier")
+    def min_max_tier_in_range(cls, v: int) -> int:
         if not 0 <= v <= 100:
             raise ValueError("must be in [0, 100]")
         return v
@@ -274,6 +281,10 @@ class UniqueModel(BaseModel):
     aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []
     minPower: int = 0
+
+    @field_validator("minPower")
+    def check_min_power(cls, v: int) -> int:
+        return check_greater_than_zero(v)
 
     @field_validator("itemType", mode="before")
     def parse_item_type(cls, data: str | list[str]) -> list[str]:

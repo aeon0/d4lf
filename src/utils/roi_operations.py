@@ -16,7 +16,7 @@ def create_roi_from_rel(point, rel_roi):
     rel_x, rel_y, w, h = rel_roi
     abs_x = x + rel_x
     abs_y = y + rel_y
-    return (abs_x, abs_y, w, h)
+    return abs_x, abs_y, w, h
 
 
 def fit_roi_to_window_size(roi, size):
@@ -68,7 +68,7 @@ def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int
     min_y_max = min(rect[1] + rect[3] for rect in rects)
 
     if max_x_min < min_x_max and max_y_min < min_y_max:
-        return (max_x_min, max_y_min, min_x_max - max_x_min, min_y_max - max_y_min)
+        return max_x_min, max_y_min, min_x_max - max_x_min, min_y_max - max_y_min
     else:
         # Logger.debug(f"No intersection between {rects}.")
         return None
@@ -102,7 +102,7 @@ def bounding_box(
             Logger.error(f"Invalid argument: {arg}. Each argument should be either a coordinate (2 integers) or a rectangle (4 integers).")
             return None
 
-    return (min_x, min_y, max_x - min_x, max_y - min_y)
+    return min_x, min_y, max_x - min_x, max_y - min_y
 
 
 def to_grid(roi: tuple[int, int, int, int], rows: int, columns: int) -> set[tuple[int, int, int, int]]:

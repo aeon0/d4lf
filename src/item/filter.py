@@ -104,6 +104,10 @@ class Filter:
 
     def _check_sigil(self, item: Item) -> FilterResult:
         res = FilterResult(False, [])
+        if not self.sigil_filters.items():
+            Logger.info("Matched Sigils")
+            res.keep = True
+            res.matched.append(MatchedFilter("default"))
         for profile_name, profile_filter in self.sigil_filters.items():
             # check item power
             if not self._match_item_power(max_power=profile_filter.maxTier, min_power=profile_filter.minTier, item_power=item.power):

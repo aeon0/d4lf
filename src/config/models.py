@@ -284,7 +284,7 @@ class ProfileModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: str
     Affixes: list[DynamicItemFilterModel] = []
-    Sigils: SigilFilterModel = SigilFilterModel()
+    Sigils: SigilFilterModel | None = None
     Uniques: list[UniqueModel] = []
 
 

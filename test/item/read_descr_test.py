@@ -236,6 +236,25 @@ legendary = [
             rarity=ItemRarity.Legendary,
         ),
     ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_tempered_1080p_2.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=162),
+                Affix(name="maximum_life", value=1418),
+                Affix(name="critical_strike_damage", value=90),
+                Affix(name="marksman_critical_strike_chance", value=11, type=AffixType.tempered),
+                Affix(name="chance_for_rapid_fire_projectiles_to_cast_twice", value=30, type=AffixType.tempered),
+            ],
+            inherent=[
+                Affix(name="vulnerable_damage", value=32, type=AffixType.inherent),
+            ],
+            item_type=ItemType.Crossbow2H,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
 ]
 
 material = [

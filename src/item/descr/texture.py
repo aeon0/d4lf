@@ -34,7 +34,14 @@ def _find_bullets(
         use_grayscale=True,
         mode=mode,
     )
-    small_bullets = search(ref=template_list, inp_img=img_item_descr, threshold=threshold, roi=roi_bullets, use_grayscale=True, mode=mode)
+    small_bullets = search(
+        ref=template_list,
+        inp_img=img_item_descr,
+        threshold=threshold,
+        roi=roi_bullets,
+        use_grayscale=True,
+        mode=mode,
+    )
     if not medium_bullets.success and not small_bullets.success:
         return []
     avg_score_medium = np.average([match.score for match in medium_bullets.matches])
@@ -49,7 +56,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
         template_list=["affix_bullet_point", "greater_affix_bullet_point", "rerolled_bullet_point", "tempered_affix_bullet_point"],
-        threshold=0.85,
+        threshold=0.832,
         mode="all",
     )
 

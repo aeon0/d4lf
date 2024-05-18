@@ -241,7 +241,7 @@ def vision_mode():
                         bullet_width = thick * 3
                         all_affixes = item_descr.affixes + item_descr.inherent
                         for affix in all_affixes:
-                            if affix.loc is not None and any(a == affix.type for a in res.matched[0].matched_affixes):
+                            if affix.loc is not None and any(a == affix.name for a in res.matched[0].matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
 
                         if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):

@@ -20,18 +20,18 @@ executor = concurrent.futures.ThreadPoolExecutor()
 
 @dataclass
 class TemplateMatch:
-    name: str = None
-    score: float = -1.0
     center: tuple[int, int] = None
     center_monitor: tuple[int, int] = None
+    name: str = None
     region: list[int, int, int, int] = None
     region_monitor: list[int, int, int, int] = None
+    score: float = -1.0
 
 
 @dataclass
 class SearchResult:
-    success: bool = False
     matches: list[TemplateMatch] = None
+    success: bool = False
 
     def __post_init__(self):
         if self.matches is None:

@@ -6,6 +6,12 @@ import keyboard._winkeyboard
 keyboard._winkeyboard._setup_name_tables()
 
 
+def check_greater_than_zero(v: int) -> int:
+    if v < 0:
+        raise ValueError("must be greater than zero")
+    return v
+
+
 def key_must_exist(k: str) -> str:
     if k not in keyboard._winkeyboard.from_name:
         raise ValueError("key does not exist")

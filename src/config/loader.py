@@ -45,6 +45,7 @@ class IniConfigLoader:
             exit_key=self._select_val("advanced_options", "exit_key"),
             log_lvl=self._select_val("advanced_options", "log_lvl"),
             process_name=self._select_val("advanced_options", "process_name"),
+            import_build=self._select_val("advanced_options", "import_build"),
             run_filter=self._select_val("advanced_options", "run_filter"),
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             scripts=self._select_val("advanced_options", "scripts").split(","),

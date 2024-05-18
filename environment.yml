@@ -33,5 +33,7 @@ dependencies:
     - pytest-pythonpath
     - pytweening
     - rapidfuzz
+    - selenium
     - tk
     - typing_extensions
+    - webdriver-manager

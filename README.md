@@ -61,6 +61,7 @@ The config folder contains:
 | [advanced_options] | Description                                                                                                              |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------|
 | run_scripts        | Hotkey to start/stop vision mode                                                                                         |
+| import_build       | Hotkey to import a build from maxroll.gg planner                                                                         |
 | run_filter         | Hotkey to start/stop filtering items                                                                                     |
 | exit_key           | Hotkey to exit d4lf.exe                                                                                                  |
 | log_level          | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
@@ -224,13 +225,13 @@ effects, you only have to specify the thresholds that you want to apply.
 <details><summary>Config Examples</summary>
 
 ```yaml
-# Take all uniques with item power > 800 
+# Take all uniques with item power > 800
 Uniques:
   - minPower: 900
 ```
 
 ```yaml
-# Take all unique pants 
+# Take all unique pants
 Uniques:
   - itemType: pants
 ```
@@ -249,7 +250,7 @@ Uniques:
 ```
 
 ```yaml
-# Take all Tibault's Will pants 
+# Take all Tibault's Will pants
 Uniques:
   - aspect: [ tibaults_will ]
 ```
@@ -278,6 +279,14 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 
 **In the event of breaking changes to the configuration, there will be a major release, such as updating from 2.x.x to
 3.x.x.**
+
+## Import builds from Maxroll.gg
+**You must have Chrome installed** to import builds it uses selenium under the hood which requires Chrome to be installed.
+
+You can link either the build guide or a direct link to the specific planner you are after ie
+https://maxroll.gg/d4/build-guides/tornado-druid-guide or
+https://maxroll.gg/d4/planner/g54iz0wt#4
+it will create a file based on the label of the build in the planer in `C:/Users/WINDOWS_USER/.d4lf/profiles/`
 
 ## Develop
 

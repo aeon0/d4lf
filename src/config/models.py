@@ -109,18 +109,19 @@ class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
     log_lvl: str = "info"
     process_name: str = "Diablo IV.exe"
+    import_build: str
     run_filter: str
     run_scripts: str
     scripts: list[str]
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.import_build, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError(f"hotkeys must be unique")
         return self
 
-    @field_validator("run_scripts", "run_filter", "exit_key")
+    @field_validator("run_scripts", "import_build", "run_filter", "exit_key")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 

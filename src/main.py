@@ -11,6 +11,7 @@ from config.loader import IniConfigLoader
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
+from utils.build_importer import import_build
 from utils.game_settings import is_fontsize_ok
 from utils.misc import wait
 from utils.ocr.read import load_api
@@ -28,6 +29,9 @@ def main():
         os.makedirs(dir_name, exist_ok=True)
 
     Logger.init("info")
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.import_build, lambda: import_build())
+    Logger.info(f"Use {IniConfigLoader().advanced_options.import_build} to import a build")
+
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
@@ -46,6 +50,7 @@ def main():
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
+    table.rows.append([IniConfigLoader().advanced_options.import_build, "Import Build"])
     table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
     table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
     table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])

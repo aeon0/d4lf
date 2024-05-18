@@ -1,4 +1,4 @@
-from item.data.affix import Affix
+from item.data.affix import Affix, AffixType
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.models import Item
@@ -18,10 +18,10 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="cold_resistance", value=5),
-                Affix(type="fire_resistance", value=5),
-                Affix(type="poison_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="fire_resistance", value=5),
+                Affix(name="poison_resistance", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -31,9 +31,9 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="cold_resistance", value=5),
-                Affix(type="fire_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="fire_resistance", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -43,10 +43,10 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="cold_resistance", value=5),
-                Affix(type="movement_speed", value=5),
-                Affix(type="fire_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="movement_speed", value=5),
+                Affix(name="fire_resistance", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -56,8 +56,8 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="cold_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -67,9 +67,9 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="cold_resistance", value=5),
-                Affix(type="movement_speed", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="movement_speed", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -79,10 +79,10 @@ affixes = [
         TestItem(
             item_type=ItemType.Helm,
             affixes=[
-                Affix(type="maximum_life", value=5),
-                Affix(type="movement_speed", value=5),
-                Affix(type="fire_resistance", value=5),
-                Affix(type="shadow_resistance", value=5),
+                Affix(name="maximum_life", value=5),
+                Affix(name="movement_speed", value=5),
+                Affix(name="fire_resistance", value=5),
+                Affix(name="shadow_resistance", value=5),
             ],
         ),
     ),
@@ -92,11 +92,11 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="movement_speed", value=5),
-                Affix(type="cold_resistance", value=5),
-                Affix(type="lightning_resistance", value=5),
+                Affix(name="movement_speed", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="lightning_resistance", value=5),
             ],
-            inherent=[Affix(type="maximum_evade_charges", value=5)],
+            inherent=[Affix(name="maximum_evade_charges", value=5)],
         ),
     ),
     (
@@ -105,11 +105,11 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="movement_speed", value=5),
-                Affix(type="cold_resistance", value=5),
-                Affix(type="lightning_resistance", value=5),
+                Affix(name="movement_speed", value=5),
+                Affix(name="cold_resistance", value=5),
+                Affix(name="lightning_resistance", value=5),
             ],
-            inherent=[Affix(type="maximum_fury", value=5)],
+            inherent=[Affix(name="maximum_fury", value=5)],
         ),
     ),
     (
@@ -118,11 +118,22 @@ affixes = [
         TestItem(
             item_type=ItemType.Boots,
             affixes=[
-                Affix(type="movement_speed", value=4),
-                Affix(type="cold_resistance", value=4),
-                Affix(type="lightning_resistance", value=4),
+                Affix(name="movement_speed", value=4),
+                Affix(name="cold_resistance", value=4),
+                Affix(name="lightning_resistance", value=4),
             ],
-            inherent=[Affix(type="maximum_fury", value=5)],
+            inherent=[Affix(name="maximum_fury", value=5)],
+        ),
+    ),
+    (
+        "greater affix",
+        ["test.GreaterAffixes"],
+        TestItem(
+            item_type=ItemType.Boots,
+            affixes=[
+                Affix(name="movement_speed", value=4, type=AffixType.greater),
+            ],
+            inherent=[Affix(name="maximum_fury", value=5)],
         ),
     ),
 ]

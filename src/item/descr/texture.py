@@ -21,66 +21,60 @@ def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
     return roi_bullets
 
 
-def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+def _find_bullets(
+    img_item_descr: np.ndarray, sep_short_match: TemplateMatch, template_list: list[str], threshold: float, mode: str
+) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    affix_bullets_medium = search(
-        [
-            "affix_bullet_point_medium",
-            "greater_affix_bullet_point_medium",
-            "rerolled_bullet_point_medium",
-            "tempered_affix_bullet_point_medium",
-        ],
-        img_item_descr,
-        0.85,
-        roi_bullets,
-        True,
-        mode="all",
+    medium_bullets = search(
+        ref=[f"{x}_medium" for x in template_list],
+        inp_img=img_item_descr,
+        threshold=threshold,
+        roi=roi_bullets,
+        use_grayscale=True,
+        mode=mode,
     )
-    affix_bullets_small = search(
-        [
-            "affix_bullet_point",
-            "greater_affix_bullet_point",
-            "rerolled_bullet_point",
-            "tempered_affix_bullet_point",
-        ],
-        img_item_descr,
-        0.85,
-        roi_bullets,
-        True,
-        mode="all",
-    )
-    if not affix_bullets_medium.success and not affix_bullets_small.success:
+    small_bullets = search(ref=template_list, inp_img=img_item_descr, threshold=threshold, roi=roi_bullets, use_grayscale=True, mode=mode)
+    if not medium_bullets.success and not small_bullets.success:
         return []
-    # Take the results that have the higher avg score
-    avg_score_medium = np.average([match.score for match in affix_bullets_medium.matches])
-    avg_score_small = np.average([match.score for match in affix_bullets_small.matches])
-    affix_bullets = affix_bullets_small if avg_score_small > avg_score_medium else affix_bullets_medium
+    avg_score_medium = np.average([match.score for match in medium_bullets.matches])
+    avg_score_small = np.average([match.score for match in small_bullets.matches])
+    affix_bullets = small_bullets if avg_score_small > avg_score_medium else medium_bullets
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     return affix_bullets.matches
 
 
+def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+    return _find_bullets(
+        img_item_descr=img_item_descr,
+        sep_short_match=sep_short_match,
+        template_list=["affix_bullet_point", "greater_affix_bullet_point", "rerolled_bullet_point", "tempered_affix_bullet_point"],
+        threshold=0.85,
+        mode="all",
+    )
+
+
 def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
-    img_height = img_item_descr.shape[0]
-    roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    empty_sockets = search("empty_socket", img_item_descr, 0.85, roi_bullets, True, mode="all")
-    empty_sockets.matches = sorted(empty_sockets.matches, key=lambda match: match.center[1])
-    return empty_sockets.matches
+    empty_sockets = _find_bullets(
+        img_item_descr=img_item_descr,
+        sep_short_match=sep_short_match,
+        template_list=["empty_socket"],
+        threshold=0.80,
+        mode="all",
+    )
+    empty_sockets = sorted(empty_sockets, key=lambda match: match.center[1])
+    return empty_sockets
 
 
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
-    img_height = img_item_descr.shape[0]
-    roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    if not (
-        aspect_bullets := search(
-            ["aspect_bullet_point_medium", "unique_bullet_point_medium"], img_item_descr, 0.8, roi_bullets, True, mode="first"
-        )
-    ).success:
-        if not (
-            aspect_bullets := search(["aspect_bullet_point", "unique_bullet_point"], img_item_descr, 0.8, roi_bullets, True, mode="first")
-        ).success:
-            return None
-    return aspect_bullets.matches[0]
+    aspect_bullets = _find_bullets(
+        img_item_descr=img_item_descr,
+        sep_short_match=sep_short_match,
+        template_list=["aspect_bullet_point", "unique_bullet_point"],
+        threshold=0.8,
+        mode="first",
+    )
+    return aspect_bullets[0] if aspect_bullets else None
 
 
 def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> list[int]:

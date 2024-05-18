@@ -2,7 +2,7 @@ import numpy as np
 
 from config.ui import ResManager
 from dataloader import Dataloader
-from item.data.affix import Affix
+from item.data.affix import Affix, AffixType
 from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
 from template_finder import TemplateMatch
 from utils.image_operations import crop
@@ -10,11 +10,11 @@ from utils.ocr.read import image_to_text
 
 
 def split_into_paragraphs(
+    affix_bullets: list[TemplateMatch],
     affix_lines: list[str],
     line_pos: list[any],
-    affix_bullets: list[TemplateMatch],
-    threshold: int,
     offset_y_affix_bullets: int,
+    threshold: int,
 ) -> list[str]:
     paragraphs = []
     current_paragraph = ""
@@ -90,7 +90,13 @@ def find_affixes(
         return None, "affix_lines and line_pos not same length"
     # filter lines that have the same y-coordinate by choosing the smallest x-coordinate. Remove from affix_lines and line_pos
     affix_lines, line_pos = filter_affix_lines(affix_lines, line_pos)
-    paragraphs = split_into_paragraphs(affix_lines, line_pos, affix_bullets, int(line_height // 2), full_affix_region[1])
+    paragraphs = split_into_paragraphs(
+        affix_bullets=affix_bullets,
+        affix_lines=affix_lines,
+        line_pos=line_pos,
+        offset_y_affix_bullets=full_affix_region[1],
+        threshold=int(line_height // 2),
+    )
 
     if is_sigil and is_inherent:
         # A bit of a hack to remove the "revives allowed" and monster level affix as it is not part of the generated affix list...
@@ -109,9 +115,8 @@ def find_affixes(
         else:
             found_key = closest_match(cleaned_str, Dataloader().affix_dict)
         found_value = find_number(combined_lines)
-
         if found_key is not None:
-            affixes.append(Affix(found_key, found_value, combined_lines))
+            affixes.append(Affix(name=found_key, value=found_value, text=combined_lines))
         else:
             return None, f"[cleaned]: {cleaned_str}, [raw]: {combined_lines}"
 
@@ -120,5 +125,13 @@ def find_affixes(
     for i, affix in enumerate(affixes):
         if len(affix_bullets) > i:
             affix.loc = [affix_x, affix_bullets[i].center[1] - 2]
+            if is_inherent:
+                affix.type = AffixType.inherent
+            elif "greater_affix_bullet_point" in affix_bullets[i].name:
+                affix.type = AffixType.greater
+            elif "rerolled_bullet_point" in affix_bullets[i].name:
+                affix.type = AffixType.rerolled
+            elif "tempered_affix_bullet_point" in affix_bullets[i].name:
+                affix.type = AffixType.tempered
 
     return affixes, ""

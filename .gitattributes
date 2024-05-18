@@ -1,0 +1,4 @@
+*.jpg binary
+*.png binary
+*.traineddata binary
+*.whl binary

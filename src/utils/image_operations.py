@@ -227,3 +227,14 @@ def get_typographic_lines(img: np.ndarray, should_invert: bool = False) -> tuple
     midline, baseline = sorted(sharpest_deltas_indices)
 
     return topline, baseline, midline, beardline
+
+
+def compare_histograms(imageA, imageB):
+    histA = cv2.calcHist([imageA], [0], None, [256], [0, 256])
+    histB = cv2.calcHist([imageB], [0], None, [256], [0, 256])
+    histA = cv2.normalize(histA, histA).flatten()
+    histB = cv2.normalize(histB, histB).flatten()
+
+    # Compute correlation between histograms
+    score = cv2.compareHist(histA, histB, cv2.HISTCMP_CORREL)
+    return score

@@ -14,6 +14,7 @@ from ui.char_inventory import CharInventory
 from ui.chest import Chest
 from ui.inventory_base import InventoryBase
 from utils.custom_mouse import mouse
+from utils.image_operations import compare_histograms
 from utils.misc import wait
 from utils.window import screenshot
 
@@ -45,9 +46,13 @@ def check_items(inv: InventoryBase):
             start_detect = time.time()
             found, rarity, cropped_descr, _ = find_descr(img, item.center)
             if found:
-                wait(0.04)
-                img = Cam().grab()
-                found, rarity, cropped_descr, _ = find_descr(img, item.center)
+                # To avoid getting an image that is taken while the fade-in animation of the item is showing
+                found_check, _, cropped_descr_check, _ = find_descr(Cam().grab(), item.center)
+                if found_check:
+                    score = compare_histograms(cropped_descr, cropped_descr_check)
+                    if score < 0.99:
+                        found = False
+                        continue
             Logger.debug(f"  Runtime (DetectItem): {time.time() - start_detect:.2f}s")
         if not found:
             continue

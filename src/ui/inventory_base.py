@@ -37,6 +37,11 @@ class InventoryBase(Menu):
         else:
             self.junk_template = "junk_inv"
 
+    def get_max_slot_size(self):
+        y_size = self.slots_roi[3] // self.rows
+        x_size = self.slots_roi[2] // self.columns
+        return max(y_size, x_size)
+
     def get_item_slots(self, img: Optional[np.ndarray] = None) -> tuple[list[ItemSlot], list[ItemSlot], list[ItemSlot], list[ItemSlot]]:
         """
         Identifies occupied and empty slots in a grid of slots within a given rectangle of interest (ROI).

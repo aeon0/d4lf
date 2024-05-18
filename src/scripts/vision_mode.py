@@ -14,7 +14,7 @@ from logger import Logger
 from ui.char_inventory import CharInventory
 from ui.chest import Chest
 from utils.custom_mouse import mouse
-from utils.image_operations import crop
+from utils.image_operations import crop, compare_histograms
 from utils.misc import wait
 from utils.ocr.read import image_to_text
 
@@ -116,6 +116,7 @@ def vision_mode():
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()
+    max_slot_size = chest.get_max_slot_size()
     occ_inv, empty_inv = inv.get_item_slots(img)
     occ_chest, empty_chest = chest.get_item_slots(img)
     possible_centers = []
@@ -133,6 +134,9 @@ def vision_mode():
 
     last_top_left_corner = None
     last_center = None
+    # Each item must be detected twice and the image must match, this is to avoid
+    # getting in item while the fade-in animation and failing to read it properly
+    is_confirmed = False
     while True:
         img = Cam().grab()
         # if chest.is_open(img) or inv.is_open(img):
@@ -141,14 +145,29 @@ def vision_mode():
         delta = possible_centers - mouse_pos
         distances = np.linalg.norm(delta, axis=1)
         closest_index = np.argmin(distances)
-        item_center = possible_centers[closest_index]
-        found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
-        if not found and is_vendor_open(img):
-            vendor_item_center = [ResManager().offsets.vendor_center_item_x, 0]
-            found, rarity, cropped_descr, item_roi = find_descr(img, vendor_item_center)
+        if distances[closest_index] > (max_slot_size * 1.3):
+            # avoid randomly looking for items if we are well outside
+            found = False
+        else:
+            item_center = possible_centers[closest_index]
+            found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
+
+        # Note: We dont look for vendor items anymore as with season 4 all rares are crap
+        # if not found and is_vendor_open(img):
+        #     vendor_item_center = [ResManager().offsets.vendor_center_item_x, 0]
+        #     found, rarity, cropped_descr, item_roi = find_descr(img, vendor_item_center)
 
         top_left_corner = None if not found else item_roi[:2]
         if found:
+            if not is_confirmed:
+                found_check, _, cropped_descr_check, _ = find_descr(Cam().grab(), item_center)
+                if found_check:
+                    score = compare_histograms(cropped_descr, cropped_descr_check)
+                    if score < 0.99:
+                        continue
+                    else:
+                        is_confirmed = True
+
             if (
                 last_top_left_corner is None
                 or last_top_left_corner[0] != top_left_corner[0]
@@ -179,6 +198,7 @@ def vision_mode():
                 if item_descr is None:
                     last_center = None
                     last_top_left_corner = None
+                    is_confirmed = False
                     continue
 
                 ignored_item = False
@@ -235,6 +255,7 @@ def vision_mode():
             reset_canvas(root, canvas)
             last_center = None
             last_top_left_corner = None
+            is_confirmed = False
             wait(0.15)
 
 

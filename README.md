@@ -8,10 +8,9 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 ## Features
 
 - Filter items in inventory and stash
-- Filter by item type and item power
+- Filter by item type, item power and greater affix count
 - Filter by affix and their values
 - Filter uniques by their affix and aspect values
-- Filter by aspects
 - Filter sigils by blacklisting and whitelisting locations and affixes
 - Supported resolutions are all aspect ratios between 16:10 and 21:9
 

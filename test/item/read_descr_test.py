@@ -294,8 +294,8 @@ material = [
 
 sigil = [
     (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_sigil_1080p.png",
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_sigil_1440p.png",
         Item(
             affixes=[
                 Affix(name="lightning_damage", value=15),
@@ -307,6 +307,20 @@ sigil = [
             inherent=[Affix(name="wretched_delve", type=AffixType.inherent)],
             item_type=ItemType.Sigil,
             power=89,
+            rarity=ItemRarity.Common,
+        ),
+    ),
+    (
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_sigil_1440p_2.png",
+        Item(
+            affixes=[
+                Affix(name="extra_shrines"),
+                Affix(name="avenger"),
+            ],
+            inherent=[Affix(name="serpents_lair", type=AffixType.inherent)],
+            item_type=ItemType.Sigil,
+            power=76,
             rarity=ItemRarity.Common,
         ),
     ),

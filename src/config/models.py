@@ -19,6 +19,12 @@ class AspectFilterType(enum.StrEnum):
     upgrade = enum.auto()
 
 
+class HandleRaresType(enum.StrEnum):
+    filter = enum.auto()
+    ignore = enum.auto()
+    junk = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -155,6 +161,7 @@ class GeneralModel(_IniBaseModel):
     check_chest_tabs: list[int]
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
+    handle_rares: HandleRaresType = HandleRaresType.filter
     language: str = "enUS"
     local_prefs_path: Path | None
     profiles: list[str]

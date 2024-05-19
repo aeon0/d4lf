@@ -42,7 +42,7 @@ def import_build():
         item.click()
         driver.find_element(By.CLASS_NAME, "d4t-title").click()
         item_type = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "d4t-category-header"))).text
-        if item_type == "Weapon":
+        if item_type == "Weapon" or item_type == "Equipment":
             # if this is just "Weapon" then the planner uses different builds at different stages of the build, so we find the active weapon for this current version of the build, and grab the name of the weapon type
             item_type = (
                 driver.find_element(By.CLASS_NAME, "d4t-ItemLibrary")

@@ -17,6 +17,7 @@ def closest_to(value, choices):
 
 
 def find_number(s: str, idx: int = 0) -> float:
+    s = remove_text_after_first_keyword(s, Dataloader().filter_after_keyword)
     s = re.sub(r",", "", s)  # remove commas because of large numbers having a comma seperator
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
     if "up to a 5%" in s:

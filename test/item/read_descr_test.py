@@ -198,6 +198,20 @@ legendary = [
         ),
     ),
     (
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_legendary_1440p_4.png",
+        Item(
+            affixes=[
+                Affix(name="strength", value=87),
+                Affix(name="maximum_life", value=767),
+                Affix(name="lucky_hit_chance", value=6.5),
+            ],
+            item_type=ItemType.Gloves,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (3840, 1600),
         f"{BASE_PATH}/read_descr_legendary_1600p.png",
         Item(

@@ -122,6 +122,7 @@ def run_loot_filter():
             chest.switch_to_tab(i)
             wait(0.5)
             check_items(chest)
+        mouse.move(*Cam().abs_window_to_monitor((0, 0)))
         wait(0.5)
         check_items(inv)
     else:

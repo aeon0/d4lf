@@ -4,6 +4,7 @@ from config.ui import ResManager
 from dataloader import Dataloader
 from item.data.affix import Affix, AffixType
 from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
+from logger import Logger
 from template_finder import TemplateMatch
 from utils.image_operations import crop
 from utils.ocr.read import image_to_text
@@ -118,7 +119,7 @@ def find_affixes(
         if found_key is not None:
             affixes.append(Affix(name=found_key, value=found_value, text=combined_lines))
         else:
-            return None, f"[cleaned]: {cleaned_str}, [raw]: {combined_lines}"
+            Logger.warning(f"Affix does not exist: [cleaned]: {cleaned_str}, [raw]: {combined_lines}")
 
     # Add location to the found_values
     affix_x = affix_bullets[0].center[0]

@@ -4,6 +4,7 @@ import keyboard
 
 from cam import Cam
 from config.loader import IniConfigLoader
+from config.models import HandleRaresType
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
@@ -84,6 +85,13 @@ def check_items(inv: InventoryBase):
             Logger.info(f"Matched: Temper Manual")
             continue
         elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
+            keyboard.send("space")
+            wait(0.13, 0.14)
+            continue
+        elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
+            Logger.info(f"Matched: Rare, ignore Item")
+            continue
+        elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
             keyboard.send("space")
             wait(0.13, 0.14)
             continue

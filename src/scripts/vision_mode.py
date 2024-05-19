@@ -4,6 +4,8 @@ import traceback
 import numpy as np
 
 from cam import Cam
+from config.loader import IniConfigLoader
+from config.models import HandleRaresType
 from config.ui import ResManager
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
@@ -216,6 +218,13 @@ def vision_mode():
                     ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
+                    item_descr = None
+                elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
+                    Logger.info(f"Matched: Rare, ignore Item")
+                    ignored_item = True
+                elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
+                    match = False
+                    item_descr = None
 
                 if ignored_item:
                     create_signal_rect(canvas, w, thick, "#00b3b3")
@@ -261,7 +270,6 @@ def vision_mode():
 
 if __name__ == "__main__":
     try:
-        from config.loader import IniConfigLoader
         from utils.window import WindowSpec, start_detecting_window
 
         Logger.init("debug")

@@ -28,9 +28,23 @@ def main():
     for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
-    Logger.init("info")
     keyboard.add_hotkey(IniConfigLoader().advanced_options.import_build, lambda: import_build())
-    Logger.info(f"Use {IniConfigLoader().advanced_options.import_build} to import a build")
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
+
+    Logger.init("info")
+
+    print(f"============ D4 Loot Filter {__version__} ============")
+    table = BeautifulTable()
+    table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
+    table.rows.append([IniConfigLoader().advanced_options.import_build, "Import Build"])
+    table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
+    table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
+    table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
+    table.columns.header = ["hotkey", "action"]
+    print(table)
+    print("\n")
 
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
@@ -45,23 +59,6 @@ def main():
     Logger.info(f"Adapt your custom configs in: {config_dir}")
 
     Filter().load_files()
-    overlay = None
-
-    print(f"============ D4 Loot Filter {__version__} ============")
-    table = BeautifulTable()
-    table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
-    table.rows.append([IniConfigLoader().advanced_options.import_build, "Import Build"])
-    table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
-    table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
-    table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
-    table.columns.header = ["hotkey", "action"]
-    print(table)
-    print("\n")
-
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
-
     overlay = Overlay()
     overlay.run()
 

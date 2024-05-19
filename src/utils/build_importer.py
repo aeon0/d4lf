@@ -106,6 +106,9 @@ def import_build():
         # item_details["tempers"] = item_properties[1] if len(item_properties) > 1 else ""
         # item_details["aspect"] = item_properties[2] if len(item_properties) > 2 else ""
         # item_details["gems"] = item_properties[3] if len(item_properties) > 3 else ""
+        if item_type in item_dict:
+            #2nd ring
+            item_type += '2'
         item_dict[item_type] = item_details
 
     driver.quit()
@@ -120,7 +123,7 @@ def _translate_modifiers(mods):
     translated_mods = []
     mods = mods.find_elements(By.CLASS_NAME, "d4t-property")
     for mod in mods:
-        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%", "", mod.text).lower().strip().replace(" ", "_"))]
+        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:", "", mod.text).lower().strip().replace(" ", "_"))]
 
     return translated_mods
 
@@ -135,7 +138,8 @@ def _convert_to_filter(items):
         Affixes = [
             {
                 (f"{items['class']}{key}").replace(" ", ""): ItemFilterModel(
-                    itemType=[key.lower()],
+                    #replace that ring2 back to just ring
+                    itemType=[key.replace("2","").lower()],
                     affixPool=[
                         AffixFilterCountModel(
                         count=[

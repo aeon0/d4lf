@@ -16,6 +16,32 @@ def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     return sep_short_match
 
 
+def _euclidean_distance(pt1: tuple[int, int], pt2: tuple[int, int]) -> float:
+    return np.sqrt((pt1[0] - pt2[0]) ** 2 + (pt1[1] - pt2[1]) ** 2)
+
+
+def _nms(template_matches: list[TemplateMatch]) -> list[TemplateMatch]:
+    if not template_matches:
+        return []
+    # Sort template matches by score in descending order
+    template_matches.sort(key=lambda x: x.score, reverse=True)
+    # List to hold the final selections
+    selected_matches = []
+    while template_matches:
+        # Select the match with the highest score
+        current = template_matches.pop(0)
+        selected_matches.append(current)
+
+        def is_far_enough(match: TemplateMatch):
+            distance = _euclidean_distance(current.center, match.center)
+            threshold = max(match.region[2], match.region[3])
+            return distance > threshold
+
+        # Filter out matches that are within the distance threshold
+        template_matches = [match for match in template_matches if is_far_enough(match)]
+    return selected_matches
+
+
 def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
     roi_bullets = [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
     return roi_bullets
@@ -26,15 +52,8 @@ def _find_bullets(
 ) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    medium_bullets = search(
-        ref=[f"{x}_medium" for x in template_list],
-        inp_img=img_item_descr,
-        threshold=threshold,
-        roi=roi_bullets,
-        use_grayscale=True,
-        mode=mode,
-    )
-    small_bullets = search(
+    template_list.extend([f"{x}_medium" for x in template_list])
+    all_bullets = search(
         ref=template_list,
         inp_img=img_item_descr,
         threshold=threshold,
@@ -42,13 +61,12 @@ def _find_bullets(
         use_grayscale=True,
         mode=mode,
     )
-    if not medium_bullets.success and not small_bullets.success:
+    if not all_bullets.success:
         return []
-    avg_score_medium = np.average([match.score for match in medium_bullets.matches])
-    avg_score_small = np.average([match.score for match in small_bullets.matches])
-    affix_bullets = small_bullets if avg_score_small > avg_score_medium else medium_bullets
-    affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
-    return affix_bullets.matches
+    # To avoid having the same small and medium template match for the same occurance, do NMS
+    selected_matches = _nms(all_bullets.matches)
+    sorted_matches = sorted(selected_matches, key=lambda match: match.center[1])
+    return sorted_matches
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
@@ -104,7 +122,6 @@ def find_codex_upgrade_icon(img_item_descr: np.ndarray, aspect_bullet: TemplateM
     if aspect_bullet is not None:
         top_limit = aspect_bullet.center[1]
     cut_item_descr = img_item_descr[top_limit:, :right_limit]
-    # TODO small font template fallback
     result = search(["codex_upgrade_icon_medium"], cut_item_descr, 0.78, use_grayscale=True, mode="first")
     if not result.success:
         result = search(["codex_upgrade_icon"], cut_item_descr, 0.78, use_grayscale=True, mode="first")

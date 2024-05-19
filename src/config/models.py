@@ -107,9 +107,9 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
+    import_build: str
     log_lvl: str = "info"
     process_name: str = "Diablo IV.exe"
-    import_build: str
     run_filter: str
     run_scripts: str
     scripts: list[str]
@@ -121,7 +121,7 @@ class AdvancedOptionsModel(_IniBaseModel):
             raise ValueError(f"hotkeys must be unique")
         return self
 
-    @field_validator("run_scripts", "import_build", "run_filter", "exit_key")
+    @field_validator("import_build", "run_scripts", "run_filter", "exit_key")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 
@@ -153,6 +153,7 @@ class ColorsModel(_IniBaseModel):
 
 
 class GeneralModel(_IniBaseModel):
+    browser: str = "Edge"
     check_chest_tabs: list[int]
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
@@ -160,6 +161,12 @@ class GeneralModel(_IniBaseModel):
     local_prefs_path: Path | None
     profiles: list[str]
     run_vision_mode_on_startup: bool
+
+    @field_validator("browser")
+    def browser_must_exist(cls, v: str) -> str:
+        if v not in ["chrome", "edge", "firefox"]:
+            raise ValueError("browser not supported, please use Chrome, Edge, or Firefox")
+        return v
 
     @field_validator("check_chest_tabs", mode="after")
     def check_chest_tabs_index(cls, v: list[int]) -> list[int]:

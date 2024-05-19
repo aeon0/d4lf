@@ -26,6 +26,7 @@ dependencies:
     - psutil
     - pydantic
     - pydantic-numpy
+    - pydantic-yaml
     - pyinstaller
     - pytest
     - pytest-env

@@ -53,6 +53,7 @@ The config folder contains:
 | check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4            |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible |
 | local_prefs_path           | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file                |
+| browser                    | Which browser to use to get builds, please make sure you pick an installed browser. Chrome, Edge, or Firefox are currently supported                                                         |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -281,12 +282,12 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 3.x.x.**
 
 ## Import builds from Maxroll.gg
-**You must have Chrome installed** to import builds it uses selenium under the hood which requires Chrome to be installed.
-
 You can link either the build guide or a direct link to the specific planner you are after ie
 https://maxroll.gg/d4/build-guides/tornado-druid-guide or
 https://maxroll.gg/d4/planner/g54iz0wt#4
 it will create a file based on the label of the build in the planer in `C:/Users/WINDOWS_USER/.d4lf/profiles/`
+
+Supported browsers are Edge, Chrome, and Firefox, you can specify the browser to use in the params.ini file
 
 ## Develop
 

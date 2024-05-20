@@ -3,19 +3,19 @@ import traceback
 from pathlib import Path
 
 import keyboard
+from PIL import Image  # noqa #  Note: Somehow needed, otherwise the binary has an issue with tesserocr
 from beautifultable import BeautifulTable
+
 from cam import Cam
+from config.loader import IniConfigLoader
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
-from utils.game_settings import is_fontsize_ok
 from utils.misc import wait
 from utils.ocr.read import load_api
 from utils.process_handler import safe_exit
-from utils.window import WindowSpec, start_detecting_window
+from utils.window import start_detecting_window, WindowSpec
 from version import __version__
-
-from config.loader import IniConfigLoader
 
 
 def main():
@@ -33,9 +33,6 @@ def main():
         wait(0.2)
 
     load_api()
-
-    if not is_fontsize_ok():
-        Logger.warning("You do not have your font size set to small! The lootfilter might not work as intended.")
 
     Logger.info(f"Adapt your custom configs in: {config_dir}")
 
@@ -63,7 +60,7 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except Exception:
+    except:
         traceback.print_exc()
         print("Press Enter to exit ...")
         input()

@@ -129,6 +129,25 @@ affix = ProfileModel(
             )
         },
         {"GreaterAffixes": ItemFilterModel(minGreaterAffixCount=1)},
+        {
+            "CountBoots": ItemFilterModel(
+                itemType=[ItemType.Boots],
+                affixPool=[
+                    AffixFilterCountModel(
+                        count=[
+                            AffixFilterModel(name="intelligence"),
+                            AffixFilterModel(name="lightning_resistance"),
+                            AffixFilterModel(name="maximum_life"),
+                            AffixFilterModel(name="movement_speed"),
+                            AffixFilterModel(name="poison_resistance"),
+                            AffixFilterModel(name="shadow_resistance"),
+                        ],
+                        minCount=3,
+                        minGreaterAffixCount=2,
+                    ),
+                ],
+            )
+        },
     ],
 )
 

@@ -161,12 +161,15 @@ class Filter:
     def _match_affixes_count(self, expected_affixes: list[AffixFilterCountModel], item_affixes: list[Affix]) -> list[str]:
         result = []
         for count_group in expected_affixes:
+            greater_affix_count = 0
             group_res = []
             for affix in count_group.count:
                 matched_item_affix = next((a for a in item_affixes if a.name == affix.name), None)
                 if matched_item_affix is not None and self._match_item_aspect_or_affix(affix, matched_item_affix):
                     group_res.append(affix.name)
-            if count_group.minCount <= len(group_res) <= count_group.maxCount:
+                    if matched_item_affix.type == AffixType.greater:
+                        greater_affix_count += 1
+            if count_group.minCount <= len(group_res) <= count_group.maxCount and greater_affix_count >= count_group.minGreaterAffixCount:
                 result.extend(group_res)
             else:  # if one group fails, everything fails
                 return []

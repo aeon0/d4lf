@@ -141,7 +141,7 @@ Affixes:
       inherentPool:
         - count:
             - maximum_evade_charges
-            - attacks_reduce_evades_cooldown
+            - attacks_reduce_evades_cooldown_by_seconds
           minCount: 1
       affixPool:
         - count:

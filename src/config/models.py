@@ -113,6 +113,7 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
+    import_build: str
     log_lvl: str = "info"
     process_name: str = "Diablo IV.exe"
     run_filter: str
@@ -121,12 +122,12 @@ class AdvancedOptionsModel(_IniBaseModel):
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.import_build, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError(f"hotkeys must be unique")
         return self
 
-    @field_validator("run_scripts", "run_filter", "exit_key")
+    @field_validator("import_build", "run_scripts", "run_filter", "exit_key")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 
@@ -157,7 +158,14 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
+class Browser(enum.StrEnum):
+    edge = enum.auto()
+    chrome = enum.auto()
+    firefox = enum.auto()
+
+
 class GeneralModel(_IniBaseModel):
+    browser: Browser = Browser.chrome
     check_chest_tabs: list[int]
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade

@@ -2,7 +2,6 @@
 
 import enum
 import sys
-from pathlib import Path
 
 import numpy
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator, RootModel
@@ -163,7 +162,6 @@ class GeneralModel(_IniBaseModel):
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
     handle_rares: HandleRaresType = HandleRaresType.filter
     language: str = "enUS"
-    local_prefs_path: Path | None
     profiles: list[str]
     run_vision_mode_on_startup: bool
 
@@ -181,12 +179,6 @@ class GeneralModel(_IniBaseModel):
     def transparency_in_range(cls, v: float) -> float:
         if not 0.01 <= v <= 1:
             raise ValueError("must be in [0.01, 1]")
-        return v
-
-    @field_validator("local_prefs_path")
-    def path_must_exist(cls, v: Path | None) -> Path | None:
-        if v is not None and not v.exists():
-            raise ValueError("path does not exist")
         return v
 
 

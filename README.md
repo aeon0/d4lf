@@ -20,6 +20,8 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 - Font size can be small or medium in the Gameplay Settings
 - Game Language must be English
+- The tool does not play well with HDR as it makes everything super bright
+- The advanced item comparison feature might cause incorrect classifications
 
 ### Run
 
@@ -31,11 +33,6 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
     - vision: Turn vision mode (overlay) on/off
 - Alternative use the hotkeys. e.g. f11 for filtering
 
-### Limitations
-
-- The tool does not play well with HDR as it makes everything super bright
-- The advanced item comparison feature might cause incorrect classifications
-
 ### Configs
 
 The config folder contains:
@@ -45,15 +42,14 @@ The config folder contains:
 
 ### params.ini
 
-| [general]                  | Description                                                                                                                                                                                  |
-|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                     |
-| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items                                                      |
-| handle_rares               | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares   |
-| run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                  |
-| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4            |
-| hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible |
-| local_prefs_path           | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file                |
+| [general]                  | Description                                                                                                                                                                                                                        |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                           |
+| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items                                                                                            |
+| handle_rares               | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares |
+| run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
+| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
+| hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -167,6 +163,19 @@ Affixes:
             - [ lightning_resistance ]
           minCount: 2
 
+  # Search for boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res. At least two of all item affixes must be a greater affix
+  - ResBoots:
+      itemType: boots
+      minPower: 800
+      minGreaterAffixCount: 2
+      affixPool:
+        - count:
+            - [ movement_speed, 16 ]
+        - count:
+            - [ shadow_resistance ]
+            - [ cold_resistance ]
+            - [ lightning_resistance ]
+          minCount: 2
 ```
 
 </details>

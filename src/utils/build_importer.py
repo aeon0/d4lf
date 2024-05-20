@@ -1,5 +1,5 @@
 from config.loader import IniConfigLoader
-from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel, Browser
 from item.data.item_type import ItemType
 from logger import Logger
 from pathlib import Path
@@ -34,24 +34,21 @@ def import_build():
     Logger.info(f"Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
     url = input()
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
-        Logger.info(f"Invalid url, please use a d4 planner build on MaxRoll.gg")
+        Logger.error(f"Invalid url, please use a d4 planner build on MaxRoll.gg")
         return
     match IniConfigLoader().general.browser:
-        case "edge":
+        case Browser.edge:
             options = webdriver.EdgeOptions()
             options.add_argument("--headless=new")
             driver = webdriver.Edge(options=options)
-        case "chrome":
+        case Browser.chrome:
             options = webdriver.ChromeOptions()
             options.add_argument("--headless=new")
             driver = webdriver.Chrome(options=options)
-        case "firefox":
+        case Browser.firefox:
             options = webdriver.FirefoxOptions()
             options.add_argument("--headless=new")
             driver = webdriver.Firefox(options=options)
-        case _:
-            Logger.info(f"Invalid browser, please select Chrome, Edge, or Firefox")
-            return
     driver.get(url)
     wait = WebDriverWait(driver, 10)
     wait.until(EC.element_to_be_clickable((By.CLASS_NAME, COOKIE_ACCEPT_BUTTON)))

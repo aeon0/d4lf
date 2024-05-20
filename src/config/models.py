@@ -158,8 +158,14 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
+class Browser(enum.StrEnum):
+    edge = enum.auto()
+    chrome = enum.auto()
+    firefox = enum.auto()
+
+
 class GeneralModel(_IniBaseModel):
-    browser: str = "Edge"
+    browser: Browser = Browser.chrome
     check_chest_tabs: list[int]
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
@@ -167,12 +173,6 @@ class GeneralModel(_IniBaseModel):
     language: str = "enUS"
     profiles: list[str]
     run_vision_mode_on_startup: bool
-
-    @field_validator("browser")
-    def browser_must_exist(cls, v: str) -> str:
-        if v not in ["chrome", "edge", "firefox"]:
-            raise ValueError("browser not supported, please use Chrome, Edge, or Firefox")
-        return v
 
     @field_validator("check_chest_tabs", mode="after")
     def check_chest_tabs_index(cls, v: list[int]) -> list[int]:

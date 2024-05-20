@@ -25,6 +25,7 @@ dependencies:
     - psutil
     - pydantic
     - pydantic-numpy
+    - pydantic-yaml
     - pyinstaller
     - pytest
     - pytest-env
@@ -33,5 +34,7 @@ dependencies:
     - pytweening
     - rapidfuzz
     - ruff
+    - selenium
     - tk
     - typing_extensions
+    - webdriver-manager

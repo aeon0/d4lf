@@ -79,6 +79,13 @@ class AffixFilterCountModel(BaseModel):
     count: list[AffixFilterModel] = []
     maxCount: int = 5
     minCount: int = 1
+    minGreaterAffixCount: int = 0
+
+    @field_validator("minCount", "minGreaterAffixCount", "maxCount")
+    def count_validator(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("must be at least 1")
+        return v
 
     @model_validator(mode="after")
     def min_smaller_max(self) -> "AffixFilterCountModel":
@@ -93,12 +100,6 @@ class AffixFilterCountModel(BaseModel):
         if "maxCount" not in data and "count" in data and isinstance(data["count"], list):
             data["maxCount"] = len(data["count"])
         return data
-
-    @field_validator("minCount", "maxCount")
-    def min_count_validator(cls, v: int) -> int:
-        if v < 1:
-            raise ValueError("must be at least 1")
-        return v
 
 
 class AspectUniqueFilterModel(AffixAspectFilterModel):

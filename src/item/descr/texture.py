@@ -16,6 +16,16 @@ def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     return sep_short_match
 
 
+def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatch]:
+    # Extract center[0] values
+    centers_x = [tm.center[0] for tm in template_matches]
+    # Calculate the median
+    target_center_x = np.min(centers_x)
+    # Filter out the outliers
+    outliers = [tm for tm in template_matches if abs(tm.center[0] - target_center_x) < 1.2 * tm.region[2]]
+    return outliers
+
+
 def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
     roi_bullets = [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
     return roi_bullets
@@ -44,9 +54,14 @@ def _find_bullets(
     )
     if not medium_bullets.success and not small_bullets.success:
         return []
-    avg_score_medium = np.average([match.score for match in medium_bullets.matches])
-    avg_score_small = np.average([match.score for match in small_bullets.matches])
-    affix_bullets = small_bullets if avg_score_small > avg_score_medium else medium_bullets
+    medium_bullets.matches = _filter_outliers(medium_bullets.matches)
+    small_bullets.matches = _filter_outliers(small_bullets.matches)
+    if len(medium_bullets.matches) == len(small_bullets.matches):
+        avg_score_medium = np.average([match.score for match in medium_bullets.matches])
+        avg_score_small = np.average([match.score for match in small_bullets.matches])
+        affix_bullets = small_bullets if avg_score_small > avg_score_medium else medium_bullets
+    else:
+        affix_bullets = small_bullets if len(small_bullets.matches) > len(medium_bullets.matches) else medium_bullets
     affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
     return affix_bullets.matches
 

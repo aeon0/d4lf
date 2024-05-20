@@ -7,7 +7,7 @@ BASE_PATH = "test/assets/ui"
 
 
 @pytest.mark.parametrize(
-    "img_res, input_img",
+    ("img_res", "input_img"),
     [
         ((1920, 1080), f"{BASE_PATH}/char_inv_open_1080p.png"),
         ((2560, 1440), f"{BASE_PATH}/char_inv_open_1440p.png"),
@@ -25,7 +25,7 @@ def test_char_inventory(img_res, input_img):
 
 
 @pytest.mark.parametrize(
-    "img_res, input_img, occupied, junk, fav",
+    ("img_res", "input_img", "occupied", "junk", "fav"),
     [
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p.png", 13, 2, 7),
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p_2.png", 31, 18, 3),

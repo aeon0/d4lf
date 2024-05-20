@@ -4,7 +4,6 @@ import time
 import mss.windows
 import numpy as np
 from logger import Logger
-from mss import mss
 from utils.misc import convert_args_to_numpy, wait
 
 from config.ui import ResManager

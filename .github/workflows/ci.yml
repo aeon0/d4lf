@@ -8,10 +8,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-variant: Mambaforge
           miniforge-version: latest
@@ -20,7 +20,7 @@ jobs:
           use-mamba: true
 
       - name: Cache Conda env
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ env.CONDA }}/envs
           key:
@@ -29,8 +29,7 @@ jobs:
 
       - name: Update environment
         run:
-          mamba env update -n d4lf -f
-          environment.yml
+          mamba env update -n d4lf -f environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Powershell Core

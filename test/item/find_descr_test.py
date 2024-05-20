@@ -10,7 +10,7 @@ BASE_PATH = "test/assets/item"
 
 
 @pytest.mark.parametrize(
-    "img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity",
+    ("img_res", "input_img", "anchor", "expected_success", "expected_top_left", "expected_rarity"),
     [
         ((1920, 1080), f"{BASE_PATH}/find_descr_rare_1080p.png", (1450, 761), True, (1043, 509), ItemRarity.Rare),
         ((1920, 1080), f"{BASE_PATH}/find_descr_common_1080p.png", (75, 320), True, (127, 157), ItemRarity.Common),

@@ -27,6 +27,7 @@ select = [
     "INT",
     "LOG",
     "PERF",
+    "PT",
     "Q",
     "R",
     "RET",

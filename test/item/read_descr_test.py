@@ -312,16 +312,16 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
     assert item == expected_item
 
 
-@pytest.mark.parametrize("img_res, input_img, expected_item", legendary)
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), legendary)
 def test_legendary(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
 
 
-@pytest.mark.parametrize("img_res, input_img, expected_item", material)
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), material)
 def test_material(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
 
 
-@pytest.mark.parametrize("img_res, input_img, expected_item", sigil)
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), sigil)
 def test_sigil(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

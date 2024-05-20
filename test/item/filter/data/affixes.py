@@ -132,6 +132,23 @@ affixes = [
             item_type=ItemType.Boots,
             affixes=[
                 Affix(name="movement_speed", value=4, type=AffixType.greater),
+                Affix(name="intelligence", value=4),
+                Affix(name="maximum_life", value=4),
+                Affix(name="shadow_resistance", value=4),
+            ],
+            inherent=[Affix(name="maximum_fury", value=5)],
+        ),
+    ),
+    (
+        "greater affix 2",
+        ["test.CountBoots", "test.GreaterAffixes"],
+        TestItem(
+            item_type=ItemType.Boots,
+            affixes=[
+                Affix(name="movement_speed", value=4, type=AffixType.greater),
+                Affix(name="intelligence", value=4, type=AffixType.greater),
+                Affix(name="maximum_life", value=4),
+                Affix(name="shadow_resistance", value=4),
             ],
             inherent=[Affix(name="maximum_fury", value=5)],
         ),

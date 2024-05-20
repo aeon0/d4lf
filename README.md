@@ -104,15 +104,20 @@ You have two choices on how to specify aspects or affixes of an item:
 Affixes are defined by the top-level key `Affixes`. It contains a list of filters that you want to apply. Each filter
 has a name and can filter for any combination of the following:
 
-- `itemType`: Either the name of THE type or a list of multiple types.
+- `itemType`: The name of the type or a list of multiple types.
   See [assets/lang/enUS/item_types.json](assets/lang/enUS/item_types.json)
 - `minPower`: Minimum item power
 - `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is independent of `affixPool`
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
-    - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and optionally `minCount`
-      and `maxCount`. `minCount` specifies the minimum number of affixes that must match the item, `maxCount` the
-      maximum number. If neither `minCount` nor `maxCount` is provided, all defined affixes must match
+    - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and
+      optionally `minCount`, `maxCount` and `minGreaterAffixCount`
+        - `minCount`: specifies the minimum number of affixes that must match the item. defaults to amount of specified
+          affixes
+        - `maxCount` specifies the maximum number of affixes that must match the item. defaults to amount of specified
+          affixes
+        - `minGreaterAffixCount`: specifies the minimum number of greater affixes that must match the item. defaults
+          to `0`
 - `inherentPool`: The same rules as for `affixPool` apply, but this is evaluated against the inherent affixes of the
   item
 
@@ -132,6 +137,20 @@ Affixes:
             - [ total_armor, 9 ]
             - [ maximum_life, 700 ]
           minCount: 3
+
+  # Search for chest armor that is at least item level 925 and have at least 3 affixes of the affixPool. At least 2 of the matched affixes must be greater affixes
+  - NiceArmor:
+      itemType: chest armor
+      minPower: 925
+      affixPool:
+        - count:
+            - dexterity
+            - damage_reduction
+            - lucky_hit_chance
+            - total_armor
+            - maximum_life
+          minCount: 3
+          minGreaterAffixCount: 2
 
   # Search for boots that have at least 2 of the specified affixes and
   # either max evade charges or reduced evade cooldown as inherent affix

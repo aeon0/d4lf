@@ -144,7 +144,7 @@ affix = ProfileModel(
                         ],
                         minCount=3,
                         minGreaterAffixCount=2,
-                    ),
+                    )
                 ],
             )
         },

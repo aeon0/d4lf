@@ -1,16 +1,16 @@
-import pytest
-from natsort import natsorted
-from pytest_mock import MockerFixture
-
 import test.item.filter.data.filters as filters
-from config.models import AspectFilterType
-from item.filter import Filter, FilterResult
-from item.models import Item
-from test.custom_fixtures import mock_ini_loader
 from test.item.filter.data.affixes import affixes
 from test.item.filter.data.aspects import aspects
 from test.item.filter.data.sigils import sigils
 from test.item.filter.data.uniques import uniques
+
+import pytest
+from item.filter import Filter, FilterResult
+from item.models import Item
+from natsort import natsorted
+from pytest_mock import MockerFixture
+
+from config.models import AspectFilterType
 
 
 def _create_mocked_filter(mocker: MockerFixture) -> Filter:

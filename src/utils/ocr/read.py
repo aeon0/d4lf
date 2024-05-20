@@ -1,14 +1,12 @@
-import time
-
 import cv2
 import numpy as np
-from tesserocr import OEM, PyTessBaseAPI, RIL
+from logger import Logger
+from tesserocr import OEM, RIL, PyTessBaseAPI
+from utils.image_operations import color_filter
+from utils.ocr.models import OcrResult
 
 from config.data import COLORS
 from config.loader import IniConfigLoader
-from logger import Logger
-from utils.image_operations import color_filter
-from utils.ocr.models import OcrResult
 
 TESSDATA_PATH = "assets/tessdata"
 
@@ -82,17 +80,12 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
         API.SetImageBytes(*_img_to_bytes(pre_proced_img))
     else:
         API.SetImageBytes(*_img_to_bytes(img))
-    start = time.time()
+    # start = time.time()
     text = API.GetUTF8Text().strip()
     # print(f"Get Text: {time.time() - start}")
-    res = OcrResult(
-        original_text=text,
-        text=text,
-        word_confidences=API.AllWordConfidences(),
-        mean_confidence=API.MeanTextConf(),
-    )
+    res = OcrResult(original_text=text, text=text, word_confidences=API.AllWordConfidences(), mean_confidence=API.MeanTextConf())
     if line_boxes:
-        start = time.time()
+        # start = time.time()
         line_boxes_res = API.GetComponentImages(RIL.TEXTLINE, True)
         # print(f"Get Lines: {time.time() - start}")
         return res, line_boxes_res
@@ -120,6 +113,4 @@ def pre_proc_img(input_img: np.ndarray) -> np.ndarray:
     # Perform morphological operations to further enhance text regions
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (2, 2))
     dilated = cv2.dilate(blurred, kernel, iterations=1)
-    eroded = cv2.erode(dilated, kernel, iterations=1)
-
-    return eroded
+    return cv2.erode(dilated, kernel, iterations=1)

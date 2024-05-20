@@ -2,7 +2,6 @@ import time
 
 import cv2
 import pytest
-
 from cam import Cam
 from item.data.rarity import ItemRarity
 from item.find_descr import find_descr
@@ -27,8 +26,8 @@ def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_l
     success, item_rarity, cropped_img, roi = find_descr(img, anchor)
     top_left_corner = None if not success else roi[:2]
     print("Runtime (find_descr()): ", time.time() - start)
-    if success and False:
-        cv2.imwrite(f"item_descr.png", cropped_img)
+    if False:
+        cv2.imwrite("item_descr.png", cropped_img)
     assert success == expected_success
     tolerance = 0.01 * img_res[0]
     assert abs(top_left_corner[0] - expected_top_left[0]) <= tolerance

@@ -1,14 +1,14 @@
 import re
-from rapidfuzz import process
+
 from dataloader import Dataloader
+from rapidfuzz import process
 
 
 def closest_match(target, candidates, min_score=86):
-    keys, values = zip(*candidates.items())
+    keys, values = zip(*candidates.items(), strict=False)
     result = process.extractOne(target, values)
     if result and result[1] >= min_score:
-        matched_key = keys[values.index(result[0])]
-        return matched_key
+        return keys[values.index(result[0])]
     return None
 
 
@@ -20,10 +20,7 @@ def find_number(s: str, idx: int = 0) -> float:
     s = remove_text_after_first_keyword(s, Dataloader().filter_after_keyword)
     s = re.sub(r",", "", s)  # remove commas because of large numbers having a comma seperator
     matches = re.findall(r"[+-]?(\d+\.\d+|\.\d+|\d+\.?|\d+)\%?", s)
-    if "up to a 5%" in s:
-        number = matches[1] if len(matches) > 1 else None
-    else:
-        number = matches[idx] if matches and len(matches) > idx else None
+    number = (matches[1] if len(matches) > 1 else None) if "up to a 5%" in s else matches[idx] if matches and len(matches) > idx else None
     if number is not None:
         return float(number.replace("+", "").replace("%", ""))
     return None
@@ -50,5 +47,4 @@ def clean_str(s: str) -> str:
     for s in Dataloader().filter_words:
         cleaned_str = cleaned_str.replace(s, "")
     cleaned_str = cleaned_str.replace("(", "").replace(")", "")
-    cleaned_str = " ".join(cleaned_str.split())  # Remove extra spaces
-    return cleaned_str
+    return " ".join(cleaned_str.split())  # Remove extra spaces

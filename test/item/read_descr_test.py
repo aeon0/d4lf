@@ -2,7 +2,6 @@ import time
 
 import cv2
 import pytest
-
 from cam import Cam
 from item.data.affix import Affix, AffixType
 from item.data.item_type import ItemType
@@ -18,11 +17,7 @@ legendary = [
         (1920, 1080),
         f"{BASE_PATH}/read_descr_codex_upgrade_1080p.png",
         Item(
-            affixes=[
-                Affix(name="intelligence", value=46),
-                Affix(name="maximum_life", value=25),
-                Affix(name="essence_on_kill", value=2),
-            ],
+            affixes=[Affix(name="intelligence", value=46), Affix(name="maximum_life", value=25), Affix(name="essence_on_kill", value=2)],
             codex_upgrade=True,
             inherent=[Affix(name="critical_strike_damage", value=9, type=AffixType.inherent)],
             item_type=ItemType.Sword2H,
@@ -49,11 +44,7 @@ legendary = [
         (2560, 1440),
         f"{BASE_PATH}/read_descr_codex_upgrade_1440p_2.png",
         Item(
-            affixes=[
-                Affix(name="strength", value=86),
-                Affix(name="maximum_life", value=394),
-                Affix(name="damage_over_time", value=57),
-            ],
+            affixes=[Affix(name="strength", value=86), Affix(name="maximum_life", value=394), Affix(name="damage_over_time", value=57)],
             codex_upgrade=True,
             inherent=[Affix(name="critical_strike_damage", value=17.5, type=AffixType.inherent)],
             item_type=ItemType.Sword,
@@ -80,11 +71,7 @@ legendary = [
         (1920, 1080),
         f"{BASE_PATH}/read_descr_legendary_1080p.png",
         Item(
-            affixes=[
-                Affix(name="intelligence", value=88),
-                Affix(name="maximum_life", value=828),
-                Affix(name="damage", value=25),
-            ],
+            affixes=[Affix(name="intelligence", value=88), Affix(name="maximum_life", value=828), Affix(name="damage", value=25)],
             inherent=[Affix(name="lucky_hit_chance", value=10.0, type=AffixType.inherent)],
             item_type=ItemType.Wand,
             power=925,
@@ -127,11 +114,7 @@ legendary = [
         (1920, 1080),
         f"{BASE_PATH}/read_descr_legendary_1080p_4.png",
         Item(
-            affixes=[
-                Affix(name="intelligence", value=83),
-                Affix(name="maximum_life", value=728),
-                Affix(name="damage", value=20),
-            ],
+            affixes=[Affix(name="intelligence", value=83), Affix(name="maximum_life", value=728), Affix(name="damage", value=20)],
             inherent=[Affix(name="lucky_hit_chance", value=10.0, type=AffixType.inherent)],
             item_type=ItemType.Wand,
             power=910,
@@ -218,11 +201,7 @@ legendary = [
         (2560, 1440),
         f"{BASE_PATH}/read_descr_legendary_1440p_4.png",
         Item(
-            affixes=[
-                Affix(name="strength", value=87),
-                Affix(name="maximum_life", value=767),
-                Affix(name="lucky_hit_chance", value=6.5),
-            ],
+            affixes=[Affix(name="strength", value=87), Affix(name="maximum_life", value=767), Affix(name="lucky_hit_chance", value=6.5)],
             item_type=ItemType.Gloves,
             power=925,
             rarity=ItemRarity.Legendary,
@@ -278,9 +257,7 @@ legendary = [
                 Affix(name="marksman_critical_strike_chance", value=11, type=AffixType.tempered),
                 Affix(name="chance_for_rapid_fire_projectiles_to_cast_twice", value=30, type=AffixType.tempered),
             ],
-            inherent=[
-                Affix(name="vulnerable_damage", value=32, type=AffixType.inherent),
-            ],
+            inherent=[Affix(name="vulnerable_damage", value=32, type=AffixType.inherent)],
             item_type=ItemType.Crossbow2H,
             power=925,
             rarity=ItemRarity.Legendary,
@@ -289,24 +266,9 @@ legendary = [
 ]
 
 material = [
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_elixir_1080p.png",
-        Item(item_type=ItemType.Elixir, rarity=ItemRarity.Magic),
-    ),
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_material_1080p.png",
-        Item(item_type=ItemType.Material, rarity=ItemRarity.Common),
-    ),
-    (
-        (3840, 2160),
-        f"{BASE_PATH}/read_descr_temper_manual_2160p.png",
-        Item(
-            item_type=ItemType.TemperManual,
-            rarity=ItemRarity.Magic,
-        ),
-    ),
+    ((1920, 1080), f"{BASE_PATH}/read_descr_elixir_1080p.png", Item(item_type=ItemType.Elixir, rarity=ItemRarity.Magic)),
+    ((1920, 1080), f"{BASE_PATH}/read_descr_material_1080p.png", Item(item_type=ItemType.Material, rarity=ItemRarity.Common)),
+    ((3840, 2160), f"{BASE_PATH}/read_descr_temper_manual_2160p.png", Item(item_type=ItemType.TemperManual, rarity=ItemRarity.Magic)),
 ]
 
 sigil = [
@@ -331,10 +293,7 @@ sigil = [
         (2560, 1440),
         f"{BASE_PATH}/read_descr_sigil_1440p_2.png",
         Item(
-            affixes=[
-                Affix(name="extra_shrines"),
-                Affix(name="avenger"),
-            ],
+            affixes=[Affix(name="extra_shrines"), Affix(name="avenger")],
             inherent=[Affix(name="serpents_lair", type=AffixType.inherent)],
             item_type=ItemType.Sigil,
             power=76,

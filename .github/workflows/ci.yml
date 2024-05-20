@@ -1,5 +1,5 @@
 name: D4LF - CI
-on: [pull_request]
+on: [ pull_request ]
 env:
   # To force cache update
   CACHE_NUMBER: 1
@@ -52,6 +52,10 @@ jobs:
           C:\Miniconda\condabin\conda.bat activate d4lf
           coverage xml
 
-      - name: Lint black formatting
-        shell: powershell
-        run: black --check ./**/*.py
+      - name: ruff lint
+        uses: chartboost/ruff-action@v1
+
+      - name: ruff format
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'

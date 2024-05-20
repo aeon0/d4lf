@@ -6,7 +6,9 @@ repos:
     - id: check-yaml
     - id: end-of-file-fixer
     - id: trailing-whitespace
-- repo: https://github.com/psf/black
-  rev: 23.7.0
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.4.4
   hooks:
-    - id: black
+    - id: ruff
+      args: [ --fix ]
+    - id: ruff-format

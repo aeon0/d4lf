@@ -1,5 +1,4 @@
 import numpy as np
-
 from dataloader import Dataloader
 from item.data.aspect import Aspect
 from item.descr.text import clean_str, closest_match, find_number
@@ -10,11 +9,7 @@ from utils.image_operations import crop
 from utils.ocr.read import image_to_text
 
 
-def find_aspect(
-    img_item_descr: np.ndarray,
-    aspect_bullet: TemplateMatch,
-    do_pre_proc: bool = True,
-) -> tuple[Aspect | None, str]:
+def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre_proc: bool = True) -> tuple[Aspect | None, str]:
     if aspect_bullet is None:
         return None, ""
 

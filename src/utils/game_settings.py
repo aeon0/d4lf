@@ -1,7 +1,6 @@
 import os
 
 from config.loader import IniConfigLoader
-from logger import Logger
 
 
 def is_fontsize_ok() -> bool:
@@ -12,7 +11,7 @@ def is_fontsize_ok() -> bool:
     if not os.path.exists(file_path):
         return True
     try:
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             file_content = file.read()
             if 'FontScale "0"' not in file_content:
                 return False

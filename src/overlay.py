@@ -3,15 +3,16 @@ import threading
 import tkinter as tk
 
 from cam import Cam
-from config.loader import IniConfigLoader
-from config.ui import ResManager
 from logger import Logger
 from loot_filter import run_loot_filter
 from scripts.heal import heal
 from scripts.rogue_tb import run_rogue_tb
 from scripts.vision_mode import vision_mode
 from utils.process_handler import kill_thread
-from utils.window import move_window_to_foreground, WindowSpec
+from utils.window import WindowSpec, move_window_to_foreground
+
+from config.loader import IniConfigLoader
+from config.ui import ResManager
 
 # Usage
 lock = threading.Lock()
@@ -59,34 +60,13 @@ class Overlay:
         self.root.bind("<Enter>", self.show_canvas)
         self.root.bind("<Leave>", self.hide_canvas)
 
-        self.toggle_button = tk.Button(
-            self.root,
-            text="max",
-            bg="#222222",
-            fg="#555555",
-            borderwidth=0,
-            command=self.toggle_size,
-        )
+        self.toggle_button = tk.Button(self.root, text="max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
         self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
 
-        self.filter_button = tk.Button(
-            self.root,
-            text="filter",
-            bg="#222222",
-            fg="#555555",
-            borderwidth=0,
-            command=self.filter_items,
-        )
+        self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
         self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
 
-        self.start_scripts_button = tk.Button(
-            self.root,
-            text="vision",
-            bg="#222222",
-            fg="#555555",
-            borderwidth=0,
-            command=self.run_scripts,
-        )
+        self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
         self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
 
         font_size = 8
@@ -107,11 +87,7 @@ class Overlay:
             font=("Courier New", font_size),
         )
         self.terminal_listbox.place(
-            relx=0,
-            rely=0,
-            relwidth=1,
-            relheight=1 - (self.initial_height / self.maximized_height),
-            y=self.initial_height,
+            relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
 
         # Setup the listbox logger handler

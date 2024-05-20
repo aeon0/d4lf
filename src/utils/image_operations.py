@@ -1,10 +1,8 @@
 from copy import deepcopy
 from enum import Enum
-from typing import Optional
 
 import cv2
 import numpy as np
-
 from logger import Logger
 
 
@@ -34,10 +32,7 @@ def threshold(
                               Ignored for other methods. Default is 10.
     :return: The thresholded image
     """
-    if len(img.shape) == 3:
-        img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    else:
-        img_gray = img
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
 
     thresh_type = cv2.THRESH_BINARY_INV if inverse else cv2.THRESH_BINARY
 
@@ -75,37 +70,36 @@ def crop(img: np.ndarray, roi: tuple[int, int, int, int]) -> np.ndarray:
     return img[y : y + h, x : x + w]
 
 
-def mask_by_roi(img: np.ndarray, roi: tuple[int, int, int, int], type: str = "regular") -> Optional[np.ndarray]:
+def mask_by_roi(img: np.ndarray, roi: tuple[int, int, int, int], masking_type: str = "regular") -> np.ndarray | None:
     """
     Masks an image according to a region of interest.
     :param img: Source image.
     :param roi: Region of interest in the format (x, y, w, h).
-    :param type: Type of masking, "regular" or "inverse".
+    :param masking_type: Type of masking, "regular" or "inverse".
     :return: Masked image, or None if type is not recognized.
     """
     x, y, w, h = roi
-    if type == "regular":
+    if masking_type == "regular":
         masked = np.zeros(img.shape, dtype=np.uint8)
         masked[y : y + h, x : x + w] = img[y : y + h, x : x + w]
-    elif type == "inverse":
+    elif masking_type == "inverse":
         masked = img.copy()
         cv2.rectangle(masked, (x, y), (x + w - 1, y + h - 1), (0, 0, 0), -1)
     else:
-        Logger.error(f"Unrecognized masking type '{type}'.")
+        Logger.error(f"Unrecognized masking type '{masking_type}'.")
         return None
     return masked
 
 
-def alpha_to_mask(img: np.ndarray) -> Optional[np.ndarray]:
+def alpha_to_mask(img: np.ndarray) -> np.ndarray | None:
     """
     Creates a mask from an image where alpha == 0.
     :param img: Source image.
     :return: Mask, or None if the image has no alpha channel or the minimum alpha value is not 0.
     """
-    if img.shape[2] == 4:
-        if np.min(img[:, :, 3]) == 0:
-            _, mask = cv2.threshold(img[:, :, 3], 1, 255, cv2.THRESH_BINARY)
-            return mask
+    if img.shape[2] == 4 and np.min(img[:, :, 3]) == 0:
+        _, mask = cv2.threshold(img[:, :, 3], 1, 255, cv2.THRESH_BINARY)
+        return mask
     return None
 
 
@@ -122,7 +116,7 @@ def create_mask(size: tuple[int, int], roi: tuple[int, int, int, int]) -> np.nda
     return img
 
 
-def color_filter(img: np.ndarray, color_range: list[np.ndarray], calc_filtered_img: bool = True) -> tuple[np.ndarray, Optional[np.ndarray]]:
+def color_filter(img: np.ndarray, color_range: list[np.ndarray], calc_filtered_img: bool = True) -> tuple[np.ndarray, np.ndarray | None]:
     color_ranges = []
     # ex: [array([ -9, 201,  25]), array([ 9, 237,  61])]
     if color_range[0][0] < 0:
@@ -153,8 +147,7 @@ def color_filter(img: np.ndarray, color_range: list[np.ndarray], calc_filtered_i
     if calc_filtered_img:
         filtered_img = cv2.bitwise_and(img, img, mask=color_mask)
         return color_mask, filtered_img
-    else:
-        return color_mask, None
+    return color_mask, None
 
 
 def overlay_image(image1: np.ndarray, image2: np.ndarray, x_offset: int, y_offset: int) -> np.ndarray:
@@ -236,5 +229,4 @@ def compare_histograms(imageA, imageB):
     histB = cv2.normalize(histB, histB).flatten()
 
     # Compute correlation between histograms
-    score = cv2.compareHist(histA, histB, cv2.HISTCMP_CORREL)
-    return score
+    return cv2.compareHist(histA, histB, cv2.HISTCMP_CORREL)

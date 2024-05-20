@@ -1,3 +1,5 @@
+from item.data.item_type import ItemType
+
 from config.models import (
     AffixFilterCountModel,
     AffixFilterModel,
@@ -8,7 +10,6 @@ from config.models import (
     SigilFilterModel,
     UniqueModel,
 )
-from item.data.item_type import ItemType
 
 # noinspection PyTypeChecker
 affix = ProfileModel(
@@ -78,8 +79,8 @@ affix = ProfileModel(
                             AffixFilterModel(name="movement_speed"),
                             AffixFilterModel(name="cold_resistance"),
                             AffixFilterModel(name="lightning_resistance"),
-                        ],
-                    ),
+                        ]
+                    )
                 ],
                 inherentPool=[
                     AffixFilterCountModel(
@@ -88,7 +89,7 @@ affix = ProfileModel(
                             AffixFilterModel(name="attacks_reduce_evades_cooldown_by_seconds"),
                         ],
                         minCount=1,
-                    ),
+                    )
                 ],
             )
         },
@@ -103,8 +104,8 @@ affix = ProfileModel(
                             AffixFilterModel(name="dexterity", value=5),
                             AffixFilterModel(name="intelligence", value=5),
                             AffixFilterModel(name="dodge_chance", value=5),
-                        ],
-                    ),
+                        ]
+                    )
                 ],
             )
         },
@@ -123,7 +124,7 @@ affix = ProfileModel(
                             AffixFilterModel(name="shadow_resistance", value=5),
                         ],
                         minCount=4,
-                    ),
+                    )
                 ],
             )
         },

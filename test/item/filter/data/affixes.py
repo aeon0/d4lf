@@ -53,13 +53,7 @@ affixes = [
     (
         "res boots 2 res",
         [],
-        TestItem(
-            item_type=ItemType.Boots,
-            affixes=[
-                Affix(name="cold_resistance", value=5),
-                Affix(name="shadow_resistance", value=5),
-            ],
-        ),
+        TestItem(item_type=ItemType.Boots, affixes=[Affix(name="cold_resistance", value=5), Affix(name="shadow_resistance", value=5)]),
     ),
     (
         "res boots 2 res+ms",
@@ -130,9 +124,7 @@ affixes = [
         ["test.GreaterAffixes"],
         TestItem(
             item_type=ItemType.Boots,
-            affixes=[
-                Affix(name="movement_speed", value=4, type=AffixType.greater),
-            ],
+            affixes=[Affix(name="movement_speed", value=4, type=AffixType.greater)],
             inherent=[Affix(name="maximum_fury", value=5)],
         ),
     ),

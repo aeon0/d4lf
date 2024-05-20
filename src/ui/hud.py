@@ -2,12 +2,12 @@ import math
 
 import cv2
 import numpy as np
-
 from cam import Cam
-from config.data import COLORS
-from config.ui import ResManager
 from template_finder import SearchArgs
 from utils.image_operations import color_filter, crop
+
+from config.data import COLORS
+from config.ui import ResManager
 
 
 class Hud(SearchArgs):
@@ -40,8 +40,7 @@ class Hud(SearchArgs):
         # at least half of the row must be filled
         target_sum = (mask.shape[0] * mask.shape[1] * 255) * 0.85
         cd_sum = np.sum(mask)
-        ready = avg_saturation > 90 and cd_sum < target_sum
-        return ready
+        return avg_saturation > 90 and cd_sum < target_sum
 
     @staticmethod
     def is_imbued(img: np.ndarray = None, roi_name: str = "core_skill") -> bool:
@@ -86,5 +85,4 @@ class Hud(SearchArgs):
             max_health = 0.0
             for line in lines[0]:
                 max_health = line[1] if line[1] > max_health else max_health
-        percentage = 1.0 - (max_health / cut_img.shape[0])
-        return percentage
+        return 1.0 - (max_health / cut_img.shape[0])

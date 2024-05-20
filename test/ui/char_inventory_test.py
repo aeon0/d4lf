@@ -1,6 +1,5 @@
 import cv2
 import pytest
-
 from cam import Cam
 from ui.char_inventory import CharInventory
 
@@ -37,7 +36,7 @@ def test_get_item_slots(img_res, input_img, occupied, junk, fav):
     Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
     inv = CharInventory()
-    occupied_slots, open = inv.get_item_slots(img)
+    occupied_slots, is_open = inv.get_item_slots(img)
     num_junk = 0
     num_fav = 0
     for slot in occupied_slots:
@@ -49,7 +48,7 @@ def test_get_item_slots(img_res, input_img, occupied, junk, fav):
             cv2.circle(img, slot.center, 5, (0, 0, 255), 4)
         else:
             cv2.circle(img, slot.center, 5, (255, 0, 0), 4)
-    for slot in open:
+    for slot in is_open:
         cv2.circle(img, slot.center, 5, (255, 255, 0), 4)
     if False:
         cv2.imshow("char_inv", img)

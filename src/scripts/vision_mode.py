@@ -2,11 +2,7 @@ import tkinter as tk
 import traceback
 
 import numpy as np
-
 from cam import Cam
-from config.loader import IniConfigLoader
-from config.models import HandleRaresType
-from config.ui import ResManager
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
@@ -16,9 +12,13 @@ from logger import Logger
 from ui.char_inventory import CharInventory
 from ui.chest import Chest
 from utils.custom_mouse import mouse
-from utils.image_operations import crop, compare_histograms
+from utils.image_operations import compare_histograms, crop
 from utils.misc import wait
 from utils.ocr.read import image_to_text
+
+from config.loader import IniConfigLoader
+from config.models import HandleRaresType
+from config.ui import ResManager
 
 
 def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
@@ -32,7 +32,7 @@ def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
 
 def draw_text(canvas, text, color, h, off, center) -> int:
     if text is None or text == "":
-        return
+        return None
     font_size = 13
     width_text_scale = 15.5
     height_text_scale = 2
@@ -71,7 +71,7 @@ def draw_text(canvas, text, color, h, off, center) -> int:
 def reset_canvas(root, canvas):
     canvas.delete("all")
     canvas.config(height=0, width=0)
-    root.geometry(f"0x0+0+0")
+    root.geometry("0x0+0+0")
     root.update_idletasks()
     root.update()
 
@@ -108,7 +108,7 @@ def vision_mode():
     root.attributes("-topmost", True)
     root.attributes("-transparentcolor", "black")
     root.attributes("-alpha", 1.0)
-    root.geometry(f"0x0+0+0")
+    root.geometry("0x0+0+0")
 
     thick = int(Cam().window_roi["height"] * 0.0047)
     canvas = tk.Canvas(root, bg="black", highlightthickness=0)
@@ -167,8 +167,7 @@ def vision_mode():
                     score = compare_histograms(cropped_descr, cropped_descr_check)
                     if score < 0.99:
                         continue
-                    else:
-                        is_confirmed = True
+                    is_confirmed = True
 
             if (
                 last_top_left_corner is None
@@ -205,22 +204,22 @@ def vision_mode():
 
                 ignored_item = False
                 if rarity == ItemRarity.Common and item_descr.item_type == ItemType.Material:
-                    Logger.info(f"Matched: Material")
+                    Logger.info("Matched: Material")
                     ignored_item = True
                 elif rarity == ItemRarity.Legendary and item_descr.item_type == ItemType.Material:
-                    Logger.info(f"Matched: Extracted Aspect")
+                    Logger.info("Matched: Extracted Aspect")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.Elixir:
-                    Logger.info(f"Matched: Elixir")
+                    Logger.info("Matched: Elixir")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.TemperManual:
-                    Logger.info(f"Matched: Temper Manual")
+                    Logger.info("Matched: Temper Manual")
                     ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
                     item_descr = None
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
-                    Logger.info(f"Matched: Rare, ignore Item")
+                    Logger.info("Matched: Rare, ignore Item")
                     ignored_item = True
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
                     match = False
@@ -279,7 +278,7 @@ if __name__ == "__main__":
             wait(0.2)
         Filter().load_files()
         vision_mode()
-    except:
+    except Exception:
         traceback.print_exc()
         print("Press Enter to exit ...")
         input()

@@ -1,16 +1,6 @@
 import numpy as np
 import pytest
-
-from utils.image_operations import (
-    ThresholdTypes,
-    alpha_to_mask,
-    color_filter,
-    create_mask,
-    crop,
-    mask_by_roi,
-    threshold,
-    overlay_image,
-)
+from utils.image_operations import ThresholdTypes, alpha_to_mask, color_filter, create_mask, crop, mask_by_roi, overlay_image, threshold
 
 
 def test_binary_threshold():

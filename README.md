@@ -294,27 +294,21 @@ conda activate d4lf
 python src/main.py
 ```
 
-### Linting
+### Formatting & Linting
 
-The CI will fail if the linter would change any files. You can run linting with:
+Ruff is used for linting and auto formatting. You can run it with:
 
 ```bash
 conda activate d4lf
-black .
+ruff format
 ```
 
-To ignore certain code parts from formatting
-
-```python
-# fmt: off
-# ...
-# fmt: on
-
-# fmt: skip
-# ...
+```bash
+conda activate d4lf
+ruff check
 ```
 
-Setup VS Code by using the black formater extension. Also turn on "trim trailing whitespaces" is VS Code settings.
+Setup VS Code by using the ruff extension. Also turn on "trim trailing whitespaces" is VS Code settings.
 
 ## Credits
 

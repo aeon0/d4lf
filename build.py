@@ -1,11 +1,12 @@
+import argparse
+import getpass
 import os
 import shutil
 from pathlib import Path
-from src.version import __version__
-import argparse
-import getpass
+
 from cryptography.fernet import Fernet
 
+from src.version import __version__
 
 parser = argparse.ArgumentParser(description="Build d4lf")
 parser.add_argument(
@@ -22,10 +23,10 @@ args = parser.parse_args()
 # clean up
 def clean_up():
     # pyinstaller
-    if os.path.exists("build"):
+    if Path("build").exists():
         shutil.rmtree("build")
-    if os.path.exists("main.spec"):
-        os.remove("main.spec")
+    if (p := Path("main.spec")).exists():
+        p.unlink()
 
 
 if __name__ == "__main__":
@@ -34,7 +35,7 @@ if __name__ == "__main__":
 
     clean_up()
 
-    if os.path.exists(release_dir):
+    if Path.exists(release_dir):
         for path in Path(release_dir).glob("**/*"):
             if path.is_file():
                 os.remove(path)

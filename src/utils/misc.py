@@ -4,12 +4,13 @@ import random
 import re
 import string
 import time
+import unicodedata
+from collections.abc import Callable
 from functools import wraps
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 import cv2
 import numpy as np
-import unicodedata
 
 T = TypeVar("T")
 
@@ -26,7 +27,7 @@ def hms(seconds: int):
     h = seconds // 3600
     m = seconds % 3600 // 60
     s = seconds % 3600 % 60
-    return "{:02d}:{:02d}:{:02d}".format(h, m, s)
+    return f"{h:02d}:{m:02d}:{s:02d}"
 
 
 def set_cv2_window(name, x, y, size):
@@ -38,8 +39,7 @@ def set_cv2_window(name, x, y, size):
 def generate_random_name(length_min=8, length_max=14):
     length = random.randint(length_min, length_max)
     characters = string.ascii_letters
-    random_name = "".join(random.choice(characters) for _ in range(length))
-    return random_name
+    return "".join(random.choice(characters) for _ in range(length))
 
 
 def random_number_gaussian(min_val, max_val):
@@ -47,8 +47,7 @@ def random_number_gaussian(min_val, max_val):
     range_span = (max_val - min_val) / 2
     std_deviation = range_span / 4
     num = random.normalvariate(mean_iterations, std_deviation)
-    num = max(min_val, min(max_val, num))
-    return num
+    return max(min_val, min(max_val, num))
 
 
 def random_coordinate_around_center(x, y, radius_x, radius_y):
@@ -67,14 +66,14 @@ def convert_args_to_numpy(func):
     def wrapper(*args, **kwargs):
         converted_args = []
         for arg in args:
-            if isinstance(arg, (list, tuple)):
+            if isinstance(arg, list | tuple):
                 converted_args.append(np.array(arg))
             else:
                 converted_args.append(arg)
 
         converted_kwargs = {}
         for key, value in kwargs.items():
-            if isinstance(value, (list, tuple)):
+            if isinstance(value, list | tuple):
                 converted_kwargs[key] = np.array(value)
             else:
                 converted_kwargs[key] = value
@@ -118,8 +117,7 @@ def scale_vector_to_distance(vector, target_distance):
     current_distance = np.linalg.norm(vector)
     scaling_factor = 1.0 / current_distance
     normalized_vector = vector * scaling_factor
-    scaled_vector = normalized_vector * target_distance
-    return scaled_vector
+    return normalized_vector * target_distance
 
 
 def slugify(value, allow_unicode=False, separator="_"):

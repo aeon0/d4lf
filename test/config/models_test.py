@@ -1,12 +1,10 @@
+from test.config.data import sigils, uniques
 from typing import Any
 
 import pytest
 from pydantic import ValidationError
 
 from config.models import ProfileModel
-from test.config.data import sigils
-from test.config.data import uniques
-from test.custom_fixtures import mock_ini_loader
 
 
 class TestSigil:
@@ -27,7 +25,6 @@ class TestSigil:
 
 
 class TestUnique:
-
     @pytest.fixture(autouse=True)
     def setup(self, mock_ini_loader):
         self.mock_ini_loader = mock_ini_loader

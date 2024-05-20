@@ -1,6 +1,4 @@
 import numpy as np
-
-from config.ui import ResManager
 from dataloader import Dataloader
 from item.data.affix import Affix, AffixType
 from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
@@ -9,18 +7,16 @@ from template_finder import TemplateMatch
 from utils.image_operations import crop
 from utils.ocr.read import image_to_text
 
+from config.ui import ResManager
+
 
 def split_into_paragraphs(
-    affix_bullets: list[TemplateMatch],
-    affix_lines: list[str],
-    line_pos: list[any],
-    offset_y_affix_bullets: int,
-    threshold: int,
+    affix_bullets: list[TemplateMatch], affix_lines: list[str], line_pos: list[any], offset_y_affix_bullets: int, threshold: int
 ) -> list[str]:
     paragraphs = []
     current_paragraph = ""
 
-    for text, pos in zip(affix_lines, line_pos):
+    for text, pos in zip(affix_lines, line_pos, strict=False):
         # Check if any bullet point is close to the line
         is_bullet_close = any(abs(pos[1]["y"] - (bullet.center[1] - offset_y_affix_bullets)) < threshold for bullet in affix_bullets)
         if is_bullet_close:
@@ -51,7 +47,7 @@ def filter_affix_lines(affix_lines: list[str], line_pos: list[any]) -> tuple[lis
         if ly not in unique_lines or lx < unique_lines[ly][0]:
             unique_lines[ly] = (lx, i)
         curr_ly = ly
-    for _, (_, i) in unique_lines.items():
+    for _, i in unique_lines.values():
         if i < len(affix_lines) and i < len(line_pos):
             filtered_affix_lines.append(affix_lines[i])
             filtered_line_pos.append(line_pos[i])
@@ -83,7 +79,7 @@ def find_affixes(
     full_affix_region = [*affix_top_left, affix_width, affix_height]
     crop_full_affix = crop(img_item_descr, full_affix_region)
     # cv2.imwrite("crop_full_affix.png", crop_full_affix)
-    do_pre_proc = False if (is_sigil or not do_pre_proc_flag) else True
+    do_pre_proc = not (is_sigil or not do_pre_proc_flag)
     res, line_pos = image_to_text(crop_full_affix, line_boxes=True, do_pre_proc=do_pre_proc)
     affix_lines = res.text.lower().split("\n")
     affix_lines = [line for line in affix_lines if line]  # remove empty lines

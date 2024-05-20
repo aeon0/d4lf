@@ -1,18 +1,15 @@
 import numpy as np
-
-from config.data import COLORS
 from dataloader import Dataloader
 from item.models import Item, ItemRarity, ItemType
 from template_finder import TemplateMatch
-from utils.image_operations import crop, color_filter
+from utils.image_operations import color_filter, crop
 from utils.ocr.read import image_to_text
+
+from config.data import COLORS
 
 
 def read_item_type(
-    item: Item,
-    img_item_descr: np.ndarray,
-    sep_short_match: TemplateMatch,
-    do_pre_proc: bool = True,
+    item: Item, img_item_descr: np.ndarray, sep_short_match: TemplateMatch, do_pre_proc: bool = True
 ) -> tuple[Item | None, str]:
     # Item Type and Item Power
     # =====================================
@@ -36,7 +33,7 @@ def read_item_type(
         if mean_val > 2.0:
             item.item_type = ItemType.Material
             return item, concatenated_str
-        elif rarity == ItemRarity.Common:
+        if rarity == ItemRarity.Common:
             return item, concatenated_str
 
     if item.item_type == ItemType.Sigil:
@@ -82,9 +79,8 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
     # TODO: Language specific
-    if item.item_type is None:
-        if "chest" in concatenated_str or "armor" in concatenated_str:
-            item.item_type = ItemType.ChestArmor
+    if item.item_type is None and ("chest" in concatenated_str or "armor" in concatenated_str):
+        item.item_type = ItemType.ChestArmor
     if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
         if item.item_type == ItemType.Sword:
             item.item_type = ItemType.Sword2H

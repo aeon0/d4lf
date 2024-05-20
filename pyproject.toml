@@ -1,2 +1,50 @@
-[tool.black]
+[tool.ruff]
+indent-width = 4
 line-length = 140
+target-version = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+select = [
+    "A",
+    "ASYNC",
+    "B",
+    "C4",
+    "DTZ",
+    "E",
+    "EXE",
+    "F",
+    "FA",
+    "I",
+    "ICN",
+    "INT",
+    "LOG",
+    "PERF",
+    "Q",
+    "R",
+    "RET",
+    "RSE",
+    "SIM",
+    "SLOT",
+    "T10",
+    "TCH",
+    "TID",
+    "TRIO",
+    "UP",
+    "W",
+    "YTT",
+    # "PL",
+    # "PTH",
+    # "RUF",
+]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false

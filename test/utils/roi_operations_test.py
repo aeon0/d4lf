@@ -1,6 +1,5 @@
 from pytest_mock import MockerFixture
-
-from utils.roi_operations import get_center, intersect, bounding_box, is_in_roi
+from utils.roi_operations import bounding_box, get_center, intersect, is_in_roi
 
 
 def test_get_center():

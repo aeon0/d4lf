@@ -18,5 +18,5 @@ items = [
             rarity=ItemRarity.Rare,
         ),
         False,
-    ),
+    )
 ]

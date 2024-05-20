@@ -30,6 +30,7 @@ ITEM_MODIFIERS_CLASS = "d4t-item-mods"
 ITEM_RARITY_CLASS = "d4t-item-options"
 ITEM_NAME_CLASS = "d4t-header-title"
 
+
 def import_build():
     Logger.info(f"Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
     url = input()
@@ -70,7 +71,9 @@ def import_build():
 
     for item in item_slots:
         item.click()
-        driver.find_element(By.CLASS_NAME, TITLE_CLASS).click()# we click the d4 planner title on the page after we select an item so that the popup closes
+        driver.find_element(
+            By.CLASS_NAME, TITLE_CLASS
+        ).click()  # we click the d4 planner title on the page after we select an item so that the popup closes
         item_type = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, ITEM_TYPE_CLASS))).text
         if item_type == "Weapon" or item_type == "Equipment":
             # if this is just "Weapon" then the planner uses different builds at different stages of the build, so we find the active weapon for this current version of the build, and grab the name of the weapon type
@@ -104,14 +107,16 @@ def import_build():
         # item_details["aspect"] = item_properties[2] if len(item_properties) > 2 else ""
         # item_details["gems"] = item_properties[3] if len(item_properties) > 3 else ""
         if item_type in item_dict:
-            #2nd ring
-            item_type += '2'
+            # 2nd ring
+            item_type += "2"
         item_dict[item_type] = item_details
 
     driver.quit()
     filter = _convert_to_filter(item_dict)
     with open(f"{Path(f"{os.path.expanduser("~")}/.d4lf")}/profiles/{item_dict["class"]} {filter_label}.yaml", "w") as file:
-        file.write(to_yaml_str(filter, default_flow_style=None)[:-10])# This exports the name at the end, which causes an error when we load it back in, so just strip this for now
+        file.write(
+            to_yaml_str(filter, default_flow_style=None)[:-10]
+        )  # This exports the name at the end, which causes an error when we load it back in, so just strip this for now
 
     Logger.info(f"Created profile {Path(f"{os.path.expanduser("~")}/.d4lf")}\\profiles\\{item_dict["class"]} {filter_label}.yaml")
 
@@ -126,27 +131,26 @@ def _translate_modifiers(mods):
 
 
 def _remove_extra_underscores(string):
-    return re.sub(r'(_)\1+', r'\1', string)
+    return re.sub(r"(_)\1+", r"\1", string)
 
 
 def _convert_to_filter(items):
     filter = ProfileModel(
-        name="", #This causes an error when we export it and then try and load it back in, but also errors if we don't have it here
-        Affixes = [
+        name="",  # This causes an error when we export it and then try and load it back in, but also errors if we don't have it here
+        Affixes=[
             {
                 (f"{items['class']}{key}").replace(" ", ""): ItemFilterModel(
-                    #replace that ring2 back to just ring
-                    itemType=[key.replace("2","").lower()],
+                    # replace that ring2 back to just ring
+                    itemType=[key.replace("2", "").lower()],
                     affixPool=[
                         AffixFilterCountModel(
-                        count=[
-                            AffixFilterModel(name=i) for i in items[key]["mods"]
-                        ],
-                        minCount=2,
+                            count=[AffixFilterModel(name=i) for i in items[key]["mods"]],
+                            minCount=2,
                         )
-                    ]
+                    ],
                 )
             }
-         for key in list(items.keys())[1:]]
+            for key in list(items.keys())[1:]
+        ],
     )
     return filter

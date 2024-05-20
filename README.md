@@ -20,6 +20,8 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 - Font size can be small or medium in the Gameplay Settings
 - Game Language must be English
+- The tool does not play well with HDR as it makes everything super bright
+- The advanced item comparison feature might cause incorrect classifications
 
 ### Run
 
@@ -30,11 +32,6 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
     - filter: Auto filter inventory and stash if open (number of stash tabs configurable)
     - vision: Turn vision mode (overlay) on/off
 - Alternative use the hotkeys. e.g. f11 for filtering
-
-### Limitations
-
-- The tool does not play well with HDR as it makes everything super bright
-- The advanced item comparison feature might cause incorrect classifications
 
 ### Configs
 
@@ -53,7 +50,6 @@ The config folder contains:
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
 | check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
-| local_prefs_path           | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file                                                      |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -164,7 +160,7 @@ Affixes:
       inherentPool:
         - count:
             - maximum_evade_charges
-            - attacks_reduce_evades_cooldown
+            - attacks_reduce_evades_cooldown_by_seconds
           minCount: 1
       affixPool:
         - count:
@@ -186,6 +182,19 @@ Affixes:
             - [ lightning_resistance ]
           minCount: 2
 
+  # Search for boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res. At least two of all item affixes must be a greater affix
+  - ResBoots:
+      itemType: boots
+      minPower: 800
+      minGreaterAffixCount: 2
+      affixPool:
+        - count:
+            - [ movement_speed, 16 ]
+        - count:
+            - [ shadow_resistance ]
+            - [ cold_resistance ]
+            - [ lightning_resistance ]
+          minCount: 2
 ```
 
 </details>

@@ -154,6 +154,23 @@ legendary = [
         ),
     ),
     (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=149, type=AffixType.greater),
+                Affix(name="maximum_life", value=827),
+                Affix(name="vulnerable_damage", value=42.5, type=AffixType.rerolled),
+                Affix(name="damage_to_close_enemies", value=94.5, type=AffixType.tempered),
+                Affix(name="chance_for_barrage_projectiles_to_cast_twice", value=16.7, type=AffixType.tempered),
+            ],
+            inherent=[Affix(name="damage_to_close_enemies", value=20, type=AffixType.inherent)],
+            item_type=ItemType.Dagger,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2560, 1440),
         f"{BASE_PATH}/read_descr_legendary_1440p.png",
         Item(

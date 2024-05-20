@@ -18,7 +18,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 ### Game Settings
 
-- Font size can be small or medium (better tested on small) in the Gameplay Settings
+- Font size can be small or medium in the Gameplay Settings
 - Game Language must be English
 
 ### Run

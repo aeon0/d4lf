@@ -2,7 +2,6 @@
 
 import enum
 import sys
-from pathlib import Path
 
 import numpy
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator, RootModel
@@ -17,6 +16,12 @@ class AspectFilterType(enum.StrEnum):
     all = enum.auto()
     none = enum.auto()
     upgrade = enum.auto()
+
+
+class HandleRaresType(enum.StrEnum):
+    filter = enum.auto()
+    ignore = enum.auto()
+    junk = enum.auto()
 
 
 class ComparisonType(enum.StrEnum):
@@ -73,6 +78,13 @@ class AffixFilterCountModel(BaseModel):
     count: list[AffixFilterModel] = []
     maxCount: int = 5
     minCount: int = 1
+    minGreaterAffixCount: int = 0
+
+    @field_validator("minCount", "minGreaterAffixCount", "maxCount")
+    def count_validator(cls, v: int) -> int:
+        if v < 1:
+            raise ValueError("must be at least 1")
+        return v
 
     @model_validator(mode="after")
     def min_smaller_max(self) -> "AffixFilterCountModel":
@@ -87,12 +99,6 @@ class AffixFilterCountModel(BaseModel):
         if "maxCount" not in data and "count" in data and isinstance(data["count"], list):
             data["maxCount"] = len(data["count"])
         return data
-
-    @field_validator("minCount", "maxCount")
-    def min_count_validator(cls, v: int) -> int:
-        if v < 1:
-            raise ValueError("must be at least 1")
-        return v
 
 
 class AspectUniqueFilterModel(AffixAspectFilterModel):
@@ -157,8 +163,8 @@ class GeneralModel(_IniBaseModel):
     check_chest_tabs: list[int]
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
+    handle_rares: HandleRaresType = HandleRaresType.filter
     language: str = "enUS"
-    local_prefs_path: Path | None
     profiles: list[str]
     run_vision_mode_on_startup: bool
 
@@ -182,12 +188,6 @@ class GeneralModel(_IniBaseModel):
     def transparency_in_range(cls, v: float) -> float:
         if not 0.01 <= v <= 1:
             raise ValueError("must be in [0.01, 1]")
-        return v
-
-    @field_validator("local_prefs_path")
-    def path_must_exist(cls, v: Path | None) -> Path | None:
-        if v is not None and not v.exists():
-            raise ValueError("path does not exist")
         return v
 
 

@@ -18,8 +18,10 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 ### Game Settings
 
-- Font size can be small or medium (better tested on small) in the Gameplay Settings
+- Font size can be small or medium in the Gameplay Settings
 - Game Language must be English
+- The tool does not play well with HDR as it makes everything super bright
+- The advanced item comparison feature might cause incorrect classifications
 
 ### Run
 
@@ -31,11 +33,6 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
     - vision: Turn vision mode (overlay) on/off
 - Alternative use the hotkeys. e.g. f11 for filtering
 
-### Limitations
-
-- The tool does not play well with HDR as it makes everything super bright
-- The advanced item comparison feature might cause incorrect classifications
-
 ### Configs
 
 The config folder contains:
@@ -45,15 +42,15 @@ The config folder contains:
 
 ### params.ini
 
-| [general]                  | Description                                                                                                                                                                                  |
-|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                     |
-| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items                                                      |
-| run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                  |
-| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4            |
-| hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible |
-| local_prefs_path           | In case your prefs file is not found in the Documents there will be a warning about it. You can remove this warning by providing the correct path to your LocalPrefs.txt file                |
-| browser                    | Which browser to use to get builds, please make sure you pick an installed browser. Chrome, Edge, or Firefox are currently supported                                                         |
+| [general]                  | Description                                                                                                                                                                                                                        |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                           |
+| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items                                                                                            |
+| handle_rares               | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares |
+| run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
+| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
+| hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
+| browser                    | Which browser to use to get builds, please make sure you pick an installed browser. Chrome, Edge, or Firefox are currently supported                                                                                               |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -109,15 +106,20 @@ You have two choices on how to specify aspects or affixes of an item:
 Affixes are defined by the top-level key `Affixes`. It contains a list of filters that you want to apply. Each filter
 has a name and can filter for any combination of the following:
 
-- `itemType`: Either the name of THE type or a list of multiple types.
+- `itemType`: The name of the type or a list of multiple types.
   See [assets/lang/enUS/item_types.json](assets/lang/enUS/item_types.json)
 - `minPower`: Minimum item power
 - `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is independent of `affixPool`
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
-    - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and optionally `minCount`
-      and `maxCount`. `minCount` specifies the minimum number of affixes that must match the item, `maxCount` the
-      maximum number. If neither `minCount` nor `maxCount` is provided, all defined affixes must match
+    - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and
+      optionally `minCount`, `maxCount` and `minGreaterAffixCount`
+        - `minCount`: specifies the minimum number of affixes that must match the item. defaults to amount of specified
+          affixes
+        - `maxCount` specifies the maximum number of affixes that must match the item. defaults to amount of specified
+          affixes
+        - `minGreaterAffixCount`: specifies the minimum number of greater affixes that must match the item. defaults
+          to `0`
 - `inherentPool`: The same rules as for `affixPool` apply, but this is evaluated against the inherent affixes of the
   item
 
@@ -138,6 +140,20 @@ Affixes:
             - [ maximum_life, 700 ]
           minCount: 3
 
+  # Search for chest armor that is at least item level 925 and have at least 3 affixes of the affixPool. At least 2 of the matched affixes must be greater affixes
+  - NiceArmor:
+      itemType: chest armor
+      minPower: 925
+      affixPool:
+        - count:
+            - dexterity
+            - damage_reduction
+            - lucky_hit_chance
+            - total_armor
+            - maximum_life
+          minCount: 3
+          minGreaterAffixCount: 2
+
   # Search for boots that have at least 2 of the specified affixes and
   # either max evade charges or reduced evade cooldown as inherent affix
   - GreatBoots:
@@ -146,7 +162,7 @@ Affixes:
       inherentPool:
         - count:
             - maximum_evade_charges
-            - attacks_reduce_evades_cooldown
+            - attacks_reduce_evades_cooldown_by_seconds
           minCount: 1
       affixPool:
         - count:
@@ -168,6 +184,19 @@ Affixes:
             - [ lightning_resistance ]
           minCount: 2
 
+  # Search for boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res. At least two of all item affixes must be a greater affix
+  - ResBoots:
+      itemType: boots
+      minPower: 800
+      minGreaterAffixCount: 2
+      affixPool:
+        - count:
+            - [ movement_speed, 16 ]
+        - count:
+            - [ shadow_resistance ]
+            - [ cold_resistance ]
+            - [ lightning_resistance ]
+          minCount: 2
 ```
 
 </details>

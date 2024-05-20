@@ -38,6 +38,7 @@ API = None
 def load_api():
     global API
     API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=IniConfigLoader().general.language)
+    API.SetVariable("debug_file", "/dev/null")
 
 
 def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):

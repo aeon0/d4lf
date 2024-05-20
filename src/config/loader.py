@@ -56,7 +56,7 @@ class IniConfigLoader:
             check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
             hidden_transparency=self._select_val("general", "hidden_transparency"),
             keep_aspects=self._select_val("general", "keep_aspects"),
-            local_prefs_path=self._select_val("general", "local_prefs_path"),
+            handle_rares=self._select_val("general", "handle_rares"),
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
         )

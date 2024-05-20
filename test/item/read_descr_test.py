@@ -154,6 +154,23 @@ legendary = [
         ),
     ),
     (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=149, type=AffixType.greater),
+                Affix(name="maximum_life", value=827),
+                Affix(name="vulnerable_damage", value=42.5, type=AffixType.rerolled),
+                Affix(name="damage_to_close_enemies", value=94.5, type=AffixType.tempered),
+                Affix(name="chance_for_barrage_projectiles_to_cast_twice", value=16.7, type=AffixType.tempered),
+            ],
+            inherent=[Affix(name="damage_to_close_enemies", value=20, type=AffixType.inherent)],
+            item_type=ItemType.Dagger,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2560, 1440),
         f"{BASE_PATH}/read_descr_legendary_1440p.png",
         Item(
@@ -194,6 +211,20 @@ legendary = [
             ],
             item_type=ItemType.Legs,
             power=700,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_legendary_1440p_4.png",
+        Item(
+            affixes=[
+                Affix(name="strength", value=87),
+                Affix(name="maximum_life", value=767),
+                Affix(name="lucky_hit_chance", value=6.5),
+            ],
+            item_type=ItemType.Gloves,
+            power=925,
             rarity=ItemRarity.Legendary,
         ),
     ),
@@ -280,8 +311,8 @@ material = [
 
 sigil = [
     (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_sigil_1080p.png",
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_sigil_1440p.png",
         Item(
             affixes=[
                 Affix(name="lightning_damage", value=15),
@@ -293,6 +324,20 @@ sigil = [
             inherent=[Affix(name="wretched_delve", type=AffixType.inherent)],
             item_type=ItemType.Sigil,
             power=89,
+            rarity=ItemRarity.Common,
+        ),
+    ),
+    (
+        (2560, 1440),
+        f"{BASE_PATH}/read_descr_sigil_1440p_2.png",
+        Item(
+            affixes=[
+                Affix(name="extra_shrines"),
+                Affix(name="avenger"),
+            ],
+            inherent=[Affix(name="serpents_lair", type=AffixType.inherent)],
+            item_type=ItemType.Sigil,
+            power=76,
             rarity=ItemRarity.Common,
         ),
     ),

@@ -20,6 +20,8 @@ def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatc
     # Extract center[0] values
     centers_x = [tm.center[0] for tm in template_matches]
     # Calculate the median
+    if len(centers_x) == 0:
+        return []
     target_center_x = np.min(centers_x)
     # Filter out the outliers
     outliers = [tm for tm in template_matches if abs(tm.center[0] - target_center_x) < 1.2 * tm.region[2]]

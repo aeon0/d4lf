@@ -10,15 +10,17 @@ from mouse import _winmouse
 
 
 def isNumeric(val):
-    return isinstance(val, (float, int, np.int32, np.int64, np.float32, np.float64))
+    return isinstance(val, float | int | np.int32 | np.int64 | np.float32 | np.float64)
 
 
-def isListOfPoints(l):
-    if not isinstance(l, list):
+def is_list_of_points(value):
+    def is_point(p):
+        return len(p) == 2 and isNumeric(p[0]) and isNumeric(p[1])
+
+    if not isinstance(value, list):
         return False
     try:
-        isPoint = lambda p: ((len(p) == 2) and isNumeric(p[0]) and isNumeric(p[1]))
-        return all(map(isPoint, l))
+        return all(map(is_point, value))
     except (KeyError, TypeError):
         return False
 
@@ -99,8 +101,7 @@ class HumanCurve:
         internalKnots = self.generateInternalKnots(leftBoundary, rightBoundary, downBoundary, upBoundary, knotsCount)
         points = self.generatePoints(internalKnots)
         points = self.distortPoints(points, distortionMean, distortionStdev, distortionFrequency)
-        points = self.tweenPoints(points, tween, targetPoints)
-        return points
+        return self.tweenPoints(points, tween, targetPoints)
 
     def generateInternalKnots(self, leftBoundary, rightBoundary, downBoundary, upBoundary, knotsCount):
         """
@@ -120,19 +121,18 @@ class HumanCurve:
 
         knotsX = np.random.choice(range(leftBoundary, rightBoundary), size=knotsCount)
         knotsY = np.random.choice(range(downBoundary, upBoundary), size=knotsCount)
-        knots = list(zip(knotsX, knotsY))
-        return knots
+        return list(zip(knotsX, knotsY, strict=False))
 
     def generatePoints(self, knots):
         """
         Generates bezier curve points on a curve, according to the internal
         knots passed as parameter.
         """
-        if not isListOfPoints(knots):
+        if not is_list_of_points(knots):
             raise ValueError("knots must be valid list of points")
 
         midPtsCnt = max(abs(self.fromPoint[0] - self.toPoint[0]), abs(self.fromPoint[1] - self.toPoint[1]), 2)
-        knots = [self.fromPoint] + knots + [self.toPoint]
+        knots = [self.fromPoint, *knots, self.toPoint]
         return BezierCurve.curvePoints(midPtsCnt, knots)
 
     def distortPoints(self, points, distortionMean, distortionStdev, distortionFrequency):
@@ -144,7 +144,7 @@ class HumanCurve:
         """
         if not (isNumeric(distortionMean) and isNumeric(distortionStdev) and isNumeric(distortionFrequency)):
             raise ValueError("Distortions must be numeric")
-        if not isListOfPoints(points):
+        if not is_list_of_points(points):
             raise ValueError("points must be valid list of points")
         if not (0 <= distortionFrequency <= 1):
             raise ValueError("distortionFrequency must be in range [0,1]")
@@ -154,8 +154,7 @@ class HumanCurve:
             x, y = points[i]
             delta = np.random.normal(distortionMean, distortionStdev) if random.random() < distortionFrequency else 0
             distorted += ((x, y + delta),)
-        distorted = [points[0]] + distorted + [points[-1]]
-        return distorted
+        return [points[0], *distorted, points[-1]]
 
     def tweenPoints(self, points, tween, targetPoints):
         """
@@ -163,7 +162,7 @@ class HumanCurve:
         according to tweening function(tween).
         This function in fact controls the velocity of mouse movement
         """
-        if not isListOfPoints(points):
+        if not is_list_of_points(points):
             raise ValueError("points must be valid list of points")
         if not isinstance(targetPoints, int) or targetPoints < 2:
             raise ValueError("targetPoints must be an integer greater or equal to 2")
@@ -230,7 +229,7 @@ class mouse:
             x = from_point[0] + x
             y = from_point[1] + y
 
-        if type(randomize) is int:
+        if isinstance(randomize, int):
             randomize = int(randomize)
             if randomize > 0:
                 x = int(x) + random.randrange(-randomize, +randomize)

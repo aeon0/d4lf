@@ -1,16 +1,15 @@
 from dataclasses import dataclass
-from typing import Optional
 
 import cv2
 import numpy as np
-
 from cam import Cam
-from config.ui import ResManager
 from template_finder import search
 from ui.menu import Menu
 from utils.custom_mouse import mouse
 from utils.image_operations import crop
 from utils.roi_operations import get_center, to_grid
+
+from config.ui import ResManager
 
 
 @dataclass
@@ -42,7 +41,7 @@ class InventoryBase(Menu):
         x_size = self.slots_roi[2] // self.columns
         return max(y_size, x_size)
 
-    def get_item_slots(self, img: Optional[np.ndarray] = None) -> tuple[list[ItemSlot], list[ItemSlot], list[ItemSlot], list[ItemSlot]]:
+    def get_item_slots(self, img: np.ndarray | None = None) -> tuple[list[ItemSlot], list[ItemSlot], list[ItemSlot], list[ItemSlot]]:
         """
         Identifies occupied and empty slots in a grid of slots within a given rectangle of interest (ROI).
         :param roi: The rectangle to consider, represented as (x_min, y_min, width, height).

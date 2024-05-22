@@ -46,27 +46,25 @@ def check_ms(input_string) -> str:
             input_string = input_string[len(prefix) :]
             break
 
-    input_string = input_string.replace("{d}", "")
-
-    return input_string
+    return input_string.replace("{d}", "")
 
 
 def main(d4data_dir: Path, companion_app_dir: Path):
     lang_arr = ["enUS"]  # "deDE", "frFR", "esES", "esMX", "itIT", "jaJP", "koKR", "plPL", "ptBR", "ruRU", "trTR", "zhCN", "zhTW"]
 
-    for l in lang_arr:
+    for lang in lang_arr:
         file_names = [
-            f"assets/lang/{l}/affixes.json",
-            f"assets/lang/{l}/aspects.json",
-            f"assets/lang/{l}/uniques.json",
-            f"assets/lang/{l}/sigils.json",
-            f"assets/lang/{l}/item_types.json",
-            f"assets/lang/{l}/tooltips.json",
+            f"assets/lang/{lang}/affixes.json",
+            f"assets/lang/{lang}/aspects.json",
+            f"assets/lang/{lang}/uniques.json",
+            f"assets/lang/{lang}/sigils.json",
+            f"assets/lang/{lang}/item_types.json",
+            f"assets/lang/{lang}/tooltips.json",
         ]
         for f in file_names:
             if os.path.exists(f):
                 os.remove(f)
-        os.makedirs(f"assets/lang/{l}", exist_ok=True)
+        os.makedirs(f"assets/lang/{lang}", exist_ok=True)
 
     for language in lang_arr:
         # Create Uniques
@@ -75,7 +73,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         pattern = f"json/{language}_Text/meta/StringList/Item_*_Unique_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
         for json_file in json_files:
-            with open(json_file, "r", encoding="utf-8") as file:
+            with open(json_file, encoding="utf-8") as file:
                 data = json.load(file)
                 snoId = data["__snoID__"]
                 name_idx, _ = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
@@ -88,7 +86,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 affix_file_path = json_file.parent / affix_file_name
                 if not affix_file_path.exists():
                     continue
-                with open(affix_file_path, "r", encoding="utf-8") as affix_file:
+                with open(affix_file_path, encoding="utf-8") as affix_file:
                     data = json.load(affix_file)
                     desc = data["arStrings"][0]["szText"]
                     desc_clean = remove_content_in_braces(desc.lower().replace("’", ""))
@@ -96,7 +94,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
         # add custom uniques that seem to be missing
         json_file = f"src/tools/data/custom_uniques_{language}.json"
-        with open(json_file, "r", encoding="utf-8") as file:
+        with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
             unique_dict.update(data)
         with open(f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
@@ -105,12 +103,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
 
         # Create Dungeons
         print(f"Gen Sigils for {language}")
-        sigil_dict = {
-            "dungeons": {},
-            "minor": {},
-            "major": {},
-            "positive": {},
-        }
+        sigil_dict = {"dungeons": {}, "minor": {}, "major": {}, "positive": {}}
 
         # Add season specific ones
         if language == "enUS":
@@ -122,7 +115,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         pattern = f"json/{language}_Text/meta/StringList/world_DGN_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
         for json_file in json_files:
-            with open(json_file, "r", encoding="utf-8") as file:
+            with open(json_file, encoding="utf-8") as file:
                 data = json.load(file)
                 name_idx, _ = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
                 dungeon_name: str = data["arStrings"][name_idx]["szText"].lower().strip().replace("’", "").replace("'", "")
@@ -133,7 +126,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         for json_file in json_files:
             affix_type = json_file.stem.split("_")[1].lower().strip()
             if affix_type in sigil_dict:
-                with open(json_file, "r", encoding="utf-8") as file:
+                with open(json_file, encoding="utf-8") as file:
                     data = json.load(file)
                     name = ""
                     desc = ""
@@ -179,15 +172,12 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "OffHandTotem",
             "TemperManual",
         ]
-        item_typ_dict = {
-            "Material": "custom type material",
-            "Sigil": "custom type sigil",
-        }
+        item_typ_dict = {"Material": "custom type material", "Sigil": "custom type sigil"}
         pattern = f"json/{language}_Text/meta/StringList/ItemType_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
         for json_file in json_files:
             item_type = json_file.stem.split("_")[1].split(".")[0].strip()
-            with open(json_file, "r", encoding="utf-8") as file:
+            with open(json_file, encoding="utf-8") as file:
                 data = json.load(file)
                 name_idx = 0 if data["arStrings"][0]["szLabel"] == "Name" else 1
                 name_str: str = check_ms(data["arStrings"][name_idx]["szText"]).lower().strip()
@@ -200,7 +190,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         print(f"Gen Tooltips for {language}")
         tooltip_dict = {}
         tooltip_path = d4data_dir / f"json/{language}_Text/meta/StringList/UIToolTips.stl.json"
-        with open(tooltip_path, "r", encoding="utf-8") as file:
+        with open(tooltip_path, encoding="utf-8") as file:
             data = json.load(file)
             for arString in data["arStrings"]:
                 if arString["szLabel"] == "ItemPower":
@@ -217,7 +207,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         print(f"Gen Affixes for {language}")
         affix_dict = {}
         json_file = companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json"
-        with open(json_file, "r", encoding="utf-8") as file:
+        with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
             for affix in data:
                 desc: str = affix["Description"]
@@ -227,7 +217,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     affix_dict[name] = desc
         # Some of the unique specific affixes are missing. Add them manually
         json_file = f"src/tools/data/custom_affixes_{language}.json"
-        with open(json_file, "r", encoding="utf-8") as file:
+        with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
             affix_dict.update(data)
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:

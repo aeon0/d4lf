@@ -1,7 +1,6 @@
 import time
-import cv2
-import pytest
 
+import cv2
 from cam import Cam
 from item.data.rarity import ItemRarity
 from item.descr.read_descr import read_descr
@@ -24,6 +23,6 @@ def test_smoke():
         return
     item_descr = read_descr(rarity, cropped_descr)
     assert item_descr is not None
-    filter = Filter()
-    res = filter.should_keep(item_descr)
+    test_filter = Filter()
+    res = test_filter.should_keep(item_descr)
     print("Runtime (full): ", time.time() - start, res.keep)

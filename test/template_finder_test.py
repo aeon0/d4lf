@@ -1,6 +1,5 @@
 import cv2
 import template_finder
-
 from utils.misc import is_in_roi
 
 

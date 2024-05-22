@@ -1,16 +1,18 @@
-from config.loader import IniConfigLoader
-from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel, Browser
-from item.data.item_type import ItemType
-from logger import Logger
-from pathlib import Path
 import os
 import re
+from pathlib import Path
+
+from item.data.item_type import ItemType
+from logger import Logger
+from pydantic_yaml import to_yaml_str
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from pydantic_yaml import to_yaml_str
+from selenium.webdriver.support.ui import WebDriverWait
+
+from config.loader import IniConfigLoader
+from config.models import AffixFilterCountModel, AffixFilterModel, Browser, ItemFilterModel, ProfileModel
 
 MAXROLL_PLANNER_URL = "maxroll.gg/d4/planner"
 MAXROLL_BUILD_GUIDE_URL = "maxroll.gg/d4/build-guides/"
@@ -32,10 +34,10 @@ ITEM_NAME_CLASS = "d4t-header-title"
 
 
 def import_build():
-    Logger.info(f"Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
+    Logger.info("Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
     url = input()
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
-        Logger.error(f"Invalid url, please use a d4 planner build on MaxRoll.gg")
+        Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
         return
     match IniConfigLoader().general.browser:
         case Browser.edge:
@@ -112,10 +114,10 @@ def import_build():
         item_dict[item_type] = item_details
 
     driver.quit()
-    filter = _convert_to_filter(item_dict)
+    filter_obj = _convert_to_filter(item_dict)
     with open(f"{Path(f"{os.path.expanduser("~")}/.d4lf")}/profiles/{item_dict["class"]} {filter_label}.yaml", "w") as file:
         file.write(
-            to_yaml_str(filter, default_flow_style=None)[:-10]
+            to_yaml_str(filter_obj, default_flow_style=None)[:-10]
         )  # This exports the name at the end, which causes an error when we load it back in, so just strip this for now
 
     Logger.info(f"Created profile {Path(f"{os.path.expanduser("~")}/.d4lf")}\\profiles\\{item_dict["class"]} {filter_label}.yaml")
@@ -130,27 +132,21 @@ def _translate_modifiers(mods):
     return translated_mods
 
 
-def _remove_extra_underscores(string):
+def _remove_extra_underscores(string: str) -> str:
     return re.sub(r"(_)\1+", r"\1", string)
 
 
-def _convert_to_filter(items):
-    filter = ProfileModel(
+def _convert_to_filter(items: dict[str, str]) -> ProfileModel:
+    return ProfileModel(
         name="",  # This causes an error when we export it and then try and load it back in, but also errors if we don't have it here
         Affixes=[
             {
                 (f"{items['class']}{key}").replace(" ", ""): ItemFilterModel(
                     # replace that ring2 back to just ring
                     itemType=[key.replace("2", "").lower()],
-                    affixPool=[
-                        AffixFilterCountModel(
-                            count=[AffixFilterModel(name=i) for i in items[key]["mods"]],
-                            minCount=2,
-                        )
-                    ],
+                    affixPool=[AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in items[key]["mods"]], minCount=2)],
                 )
             }
             for key in list(items.keys())[1:]
         ],
     )
-    return filter

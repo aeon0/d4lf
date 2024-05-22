@@ -3,13 +3,13 @@
 import enum
 import sys
 
-import numpy
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator, RootModel
+import numpy as np
+from item.data.item_type import ItemType
+from pydantic import BaseModel, ConfigDict, RootModel, field_validator, model_validator
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
-from config.helper import key_must_exist, check_greater_than_zero
-from item.data.item_type import ItemType
+from config.helper import check_greater_than_zero, key_must_exist
 
 
 class AspectFilterType(enum.StrEnum):
@@ -40,6 +40,7 @@ def _parse_item_type(data: str | list[str]) -> list[str]:
 
 
 class AffixAspectFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     name: str
     value: float | None = None
     comparison: ComparisonType = ComparisonType.larger
@@ -69,12 +70,13 @@ class AffixFilterModel(AffixAspectFilterModel):
     def name_must_exist(cls, name: str) -> str:
         import dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        if name not in dataloader.Dataloader().affix_dict.keys():
+        if name not in dataloader.Dataloader().affix_dict:
             raise ValueError(f"affix {name} does not exist")
         return name
 
 
 class AffixFilterCountModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     count: list[AffixFilterModel] = []
     maxCount: int = 5
     minCount: int = 1
@@ -89,7 +91,7 @@ class AffixFilterCountModel(BaseModel):
     @model_validator(mode="after")
     def min_smaller_max(self) -> "AffixFilterCountModel":
         if self.minCount > self.maxCount:
-            raise ValueError(f"minCount must be smaller than maxCount")
+            raise ValueError("minCount must be smaller than maxCount")
         return self
 
     @model_validator(mode="before")
@@ -106,7 +108,7 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
     def name_must_exist(cls, name: str) -> str:
         import dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        if name not in dataloader.Dataloader().aspect_unique_dict.keys():
+        if name not in dataloader.Dataloader().aspect_unique_dict:
             raise ValueError(f"affix {name} does not exist")
         return name
 
@@ -124,7 +126,7 @@ class AdvancedOptionsModel(_IniBaseModel):
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
         keys = [self.exit_key, self.import_build, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
-            raise ValueError(f"hotkeys must be unique")
+            raise ValueError("hotkeys must be unique")
         return self
 
     @field_validator("import_build", "run_scripts", "run_filter", "exit_key")
@@ -199,10 +201,9 @@ class HSVRangeModel(_IniBaseModel):
         # TODO added this to not have to change much of the other code. should be fixed some time
         if index == 0:
             return self.h_s_v_min
-        elif index == 1:
+        if index == 1:
             return self.h_s_v_max
-        else:
-            raise IndexError("Index out of range")
+        raise IndexError("Index out of range")
 
     @model_validator(mode="after")
     def check_interval_sanity(self) -> "HSVRangeModel":
@@ -215,7 +216,7 @@ class HSVRangeModel(_IniBaseModel):
         return self
 
     @field_validator("h_s_v_min", "h_s_v_max")
-    def values_in_range(cls, v: numpy.ndarray) -> numpy.ndarray:
+    def values_in_range(cls, v: np.ndarray) -> np.ndarray:
         if not len(v) == 3:
             raise ValueError("must be h,s,v")
         if not -179 <= v[0] <= 179:
@@ -226,6 +227,7 @@ class HSVRangeModel(_IniBaseModel):
 
 
 class ItemFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     affixPool: list[AffixFilterCountModel] = []
     inherentPool: list[AffixFilterCountModel] = []
     itemType: list[ItemType] = []
@@ -251,6 +253,7 @@ DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
 
 
 class SigilFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     minTier: int = 0
     maxTier: int = sys.maxsize
     blacklist: list[str] = []
@@ -262,7 +265,7 @@ class SigilFilterModel(BaseModel):
         if errors:
             raise ValueError(f"blacklist and whitelist must not overlap: {errors}")
         if self.minTier > self.maxTier:
-            raise ValueError(f"minTier must be smaller than maxTier")
+            raise ValueError("minTier must be smaller than maxTier")
         return self
 
     @field_validator("minTier", "maxTier")
@@ -275,16 +278,14 @@ class SigilFilterModel(BaseModel):
     def name_must_exist(cls, names: list[str]) -> list[str]:
         import dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        errors = []
-        for name in names:
-            if name not in dataloader.Dataloader().affix_sigil_dict.keys():
-                errors.append(name)
+        errors = [name for name in names if name not in dataloader.Dataloader().affix_sigil_dict]
         if errors:
             raise ValueError(f"The following affixes/dungeons do not exist: {errors}")
         return names
 
 
 class UniqueModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     affix: list[AffixFilterModel] = []
     aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []

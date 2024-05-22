@@ -2,9 +2,8 @@ from enum import Enum
 
 import keyboard
 import numpy as np
-
 from logger import Logger
-from template_finder import SearchArgs, TemplateMatch, SearchResult
+from template_finder import SearchArgs, SearchResult, TemplateMatch
 from utils.misc import run_until_condition, wait
 from utils.mouse_selector import select_search_result
 
@@ -57,7 +56,7 @@ class Menu:
         if self.parent_menu and not self.is_open() and not self.parent_menu.open():
             Logger.error(f"Could not open parent menu {self.parent_menu.menu_name}")
             return False
-        if not (open := self.is_open()):
+        if not (is_open := self.is_open()):
             debug_string = f"Opening {self.menu_name} with"
             if self.open_method == ToggleMethod.BUTTON:
                 debug_string += f" button {self.open_button_search_args.ref}"
@@ -68,7 +67,7 @@ class Menu:
             Logger.debug(debug_string)
         else:
             Logger.debug(f"{self.menu_name} already open")
-        return open or self.wait_until_open()
+        return is_open or self.wait_until_open()
 
     def close(self) -> bool:
         """

@@ -1,6 +1,6 @@
-from utils.custom_mouse import mouse
-from template_finder import SearchResult, TemplateMatch
 from logger import Logger
+from template_finder import SearchResult, TemplateMatch
+from utils.custom_mouse import mouse
 from utils.misc import wait
 
 

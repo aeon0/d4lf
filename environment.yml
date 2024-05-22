@@ -4,13 +4,12 @@ channels:
   - defaults
 dependencies:
   - python=3.12
-  - pywin32
   - pip
   - pkg-config
+  - pywin32
   - pip:
     - Pillow
     - beautifultable
-    - black
     - colorama
     - coverage
     - cryptography
@@ -34,6 +33,7 @@ dependencies:
     - pytest-pythonpath
     - pytweening
     - rapidfuzz
+    - ruff
     - selenium
     - tk
     - typing_extensions

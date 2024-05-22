@@ -1,8 +1,8 @@
 from enum import Enum
-from typing import Optional
+
+from logger import Logger
 
 from config.ui import ResManager
-from logger import Logger
 
 
 def compare_tuples(t1, t2, uncertainty):
@@ -53,7 +53,7 @@ def get_center(roi: tuple[int, int, int, int]) -> tuple[int, int]:
     return int(round(x + w / 2)), int(round(y + h / 2))
 
 
-def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int]) -> Optional[tuple[int, int, int, int]]:
+def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int]) -> tuple[int, int, int, int] | None:
     """
     Finds the intersection of multiple rectangles.
     :param rects: The rectangles to intersect. Each rectangle is represented as a tuple of four integers (x_min, y_min, width, height).
@@ -69,14 +69,13 @@ def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int
 
     if max_x_min < min_x_max and max_y_min < min_y_max:
         return max_x_min, max_y_min, min_x_max - max_x_min, min_y_max - max_y_min
-    else:
-        # Logger.debug(f"No intersection between {rects}.")
-        return None
+    # Logger.debug(f"No intersection between {rects}.")
+    return None
 
 
 def bounding_box(
-    *args: list[tuple[int, int, int, int]] | tuple[int, int, int, int] | list[tuple[int, int]] | tuple[int, int]
-) -> Optional[tuple[int, int, int, int]]:
+    *args: list[tuple[int, int, int, int]] | tuple[int, int, int, int] | list[tuple[int, int]] | tuple[int, int],
+) -> tuple[int, int, int, int] | None:
     """
     Finds the bounding rectangle of a set of rectangles or coordinates.
     :param args: The rectangles or coordinates to bound.
@@ -87,7 +86,7 @@ def bounding_box(
     if len(args) == 1 and isinstance(args[0], list):
         args = args[0]
 
-    min_x, min_y, max_x, max_y = float("inf"), float("inf"), float("-inf"), float("-inf")
+    min_x, min_y, max_x, max_y = (float("inf"), float("inf"), float("-inf"), float("-inf"))
 
     for arg in args:
         if len(arg) == 2:  # if it's a coordinate
@@ -162,9 +161,8 @@ def is_in_roi(coor: tuple[int, int], roi: tuple[int, int, int, int], condition: 
 
     if condition == Condition.WITHIN:
         return x_min <= x <= x_max and y_min <= y <= y_max
-    elif condition == Condition.ALIGN_Y:
+    if condition == Condition.ALIGN_Y:
         return x_min <= x <= x_max and not (y_min <= y <= y_max)
-    elif condition == Condition.ALIGN_X:
+    if condition == Condition.ALIGN_X:
         return not (x_min <= x <= x_max) and y_min <= y <= y_max
-    else:
-        raise ValueError("Invalid condition specified")
+    raise ValueError("Invalid condition specified")

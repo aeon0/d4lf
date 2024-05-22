@@ -7,12 +7,11 @@ from dataclasses import dataclass
 import cv2
 import numpy as np
 import psutil
-from win32gui import GetWindowText, EnumWindows, GetClientRect, ClientToScreen
-from win32process import GetWindowThreadProcessId
-
 from cam import Cam
 from logger import Logger
 from utils.misc import wait
+from win32gui import ClientToScreen, EnumWindows, GetClientRect, GetWindowText
+from win32process import GetWindowThreadProcessId
 
 detecting_window_flag = True
 detect_window_thread = None
@@ -38,7 +37,7 @@ class WindowSpec:
 
 def _list_active_window_ids() -> list[int]:
     window_list = []
-    EnumWindows(lambda w, l: l.append(w), window_list)
+    EnumWindows(lambda win, list_of_win: list_of_win.append(win), window_list)
     return window_list
 
 
@@ -113,7 +112,9 @@ def is_window_foreground(window_spec: WindowSpec) -> bool:
     return False
 
 
-def screenshot(name: str = None, path: str = "log/screenshots", img: np.ndarray = None, overwrite: bool = True, timestamp: bool = True):
+def screenshot(
+    name: str | None = None, path: str = "log/screenshots", img: np.ndarray = None, overwrite: bool = True, timestamp: bool = True
+):
     name = name if name is not None else "screenshot"
     img = img if img is not None else Cam().grab()
 

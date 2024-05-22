@@ -1,6 +1,5 @@
 import cv2
 import pytest
-
 from cam import Cam
 from ui.char_inventory import CharInventory
 
@@ -8,7 +7,7 @@ BASE_PATH = "test/assets/ui"
 
 
 @pytest.mark.parametrize(
-    "img_res, input_img",
+    ("img_res", "input_img"),
     [
         ((1920, 1080), f"{BASE_PATH}/char_inv_open_1080p.png"),
         ((2560, 1440), f"{BASE_PATH}/char_inv_open_1440p.png"),
@@ -26,7 +25,7 @@ def test_char_inventory(img_res, input_img):
 
 
 @pytest.mark.parametrize(
-    "img_res, input_img, occupied, junk, fav",
+    ("img_res", "input_img", "occupied", "junk", "fav"),
     [
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p.png", 13, 2, 7),
         ((1920, 1080), f"{BASE_PATH}/char_inventory_fav_junk_1080p_2.png", 31, 18, 3),
@@ -37,7 +36,7 @@ def test_get_item_slots(img_res, input_img, occupied, junk, fav):
     Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
     inv = CharInventory()
-    occupied_slots, open = inv.get_item_slots(img)
+    occupied_slots, is_open = inv.get_item_slots(img)
     num_junk = 0
     num_fav = 0
     for slot in occupied_slots:
@@ -49,7 +48,7 @@ def test_get_item_slots(img_res, input_img, occupied, junk, fav):
             cv2.circle(img, slot.center, 5, (0, 0, 255), 4)
         else:
             cv2.circle(img, slot.center, 5, (255, 0, 0), 4)
-    for slot in open:
+    for slot in is_open:
         cv2.circle(img, slot.center, 5, (255, 255, 0), 4)
     if False:
         cv2.imshow("char_inv", img)

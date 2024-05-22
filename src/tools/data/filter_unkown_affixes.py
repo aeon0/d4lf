@@ -1,9 +1,9 @@
 import json
 
 # Load JSON files into dictionaries
-with open("src/tools/data/custom_affixes.json", "r") as f:
+with open("src/tools/data/custom_affixes.json") as f:
     dict1 = json.load(f)
-with open("assets/lang/enUS/affixes.json", "r") as f:
+with open("assets/lang/enUS/affixes.json") as f:
     dict2 = json.load(f)
 
 # Create a new dictionary for keys not in the second file

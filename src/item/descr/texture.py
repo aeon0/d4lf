@@ -1,9 +1,9 @@
 import numpy as np
+from template_finder import TemplateMatch, search
+from utils.image_operations import color_filter, crop
 
 from config.data import COLORS
 from config.ui import ResManager
-from template_finder import search, TemplateMatch
-from utils.image_operations import crop, color_filter
 
 
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
@@ -12,8 +12,7 @@ def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     if not (sep_short := search(refs, img_item_descr, 0.68, roi, True, mode="all", do_multi_process=False)).success:
         return None
     sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
-    sep_short_match = sorted_matches[0]
-    return sep_short_match
+    return sorted_matches[0]
 
 
 def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatch]:
@@ -22,13 +21,11 @@ def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatc
     # Calculate the median
     target_center_x = np.min(centers_x)
     # Filter out the outliers
-    outliers = [tm for tm in template_matches if abs(tm.center[0] - target_center_x) < 1.2 * tm.region[2]]
-    return outliers
+    return [tm for tm in template_matches if abs(tm.center[0] - target_center_x) < 1.2 * tm.region[2]]
 
 
 def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
-    roi_bullets = [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
-    return roi_bullets
+    return [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
 
 
 def _find_bullets(
@@ -84,8 +81,7 @@ def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         threshold=0.80,
         mode="all",
     )
-    empty_sockets = sorted(empty_sockets, key=lambda match: match.center[1])
-    return empty_sockets
+    return sorted(empty_sockets, key=lambda match: match.center[1])
 
 
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:

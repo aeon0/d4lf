@@ -41,7 +41,14 @@ def _find_bullets(
         use_grayscale=True,
         mode=mode,
     )
-    small_bullets = search(ref=template_list, inp_img=img_item_descr, threshold=threshold, roi=roi_bullets, use_grayscale=True, mode=mode)
+    small_bullets = search(
+        ref=template_list,
+        inp_img=img_item_descr,
+        threshold=threshold,
+        roi=roi_bullets,
+        use_grayscale=True,
+        mode=mode,
+    )
     if not medium_bullets.success and not small_bullets.success:
         return []
     medium_bullets.matches = _filter_outliers(medium_bullets.matches)
@@ -68,7 +75,11 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 
 def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
     empty_sockets = _find_bullets(
-        img_item_descr=img_item_descr, sep_short_match=sep_short_match, template_list=["empty_socket"], threshold=0.80, mode="all"
+        img_item_descr=img_item_descr,
+        sep_short_match=sep_short_match,
+        template_list=["empty_socket"],
+        threshold=0.80,
+        mode="all",
     )
     return sorted(empty_sockets, key=lambda match: match.center[1])
 

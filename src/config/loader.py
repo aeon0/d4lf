@@ -2,6 +2,7 @@
 
 import configparser
 import os
+import pathlib
 from pathlib import Path
 
 from logger import Logger
@@ -9,20 +10,19 @@ from logger import Logger
 from config.helper import singleton
 from config.models import AdvancedOptionsModel, CharModel, GeneralModel
 
-CONFIG_IN_USER_DIR = ".d4lf"
 PARAMS_INI = "params.ini"
-USER_DIR = os.path.expanduser("~")
 
 
 @singleton
 class IniConfigLoader:
     def __init__(self):
-        self._config_path = Path("./config")
-        self._parsers = {}
         self._advanced_options = None
         self._char = None
+        self._config_path = Path("./config")
         self._general = None
         self._loaded = False
+        self._parsers = {}
+        self._user_dir = pathlib.Path.home() / ".d4lf"
 
     def _select_val(self, section: str, key: str | None = None):
         try:
@@ -39,7 +39,7 @@ class IniConfigLoader:
         self._parsers["params"] = configparser.ConfigParser()
         self._parsers["custom"] = configparser.ConfigParser()
         self._parsers["params"].read(self._config_path / PARAMS_INI)
-        if (p := (Path(USER_DIR) / CONFIG_IN_USER_DIR / PARAMS_INI)).exists() and p.stat().st_size:
+        if (p := (self.user_dir / PARAMS_INI)).exists() and p.stat().st_size:
             self._parsers["custom"].read(p)
 
         self._advanced_options = AdvancedOptionsModel(
@@ -55,9 +55,10 @@ class IniConfigLoader:
         self._general = GeneralModel(
             browser=self._select_val("general", "browser"),
             check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
+            full_dump=self._select_val("general", "full_dump"),
+            handle_rares=self._select_val("general", "handle_rares"),
             hidden_transparency=self._select_val("general", "hidden_transparency"),
             keep_aspects=self._select_val("general", "keep_aspects"),
-            handle_rares=self._select_val("general", "handle_rares"),
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
         )
@@ -79,6 +80,10 @@ class IniConfigLoader:
         if not self._loaded:
             self.load()
         return self._general
+
+    @property
+    def user_dir(self) -> Path:
+        return self._user_dir
 
     def load(self):
         self._loaded = True

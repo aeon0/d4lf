@@ -1,6 +1,5 @@
 import os
 import traceback
-from pathlib import Path
 
 import keyboard
 from beautifultable import BeautifulTable
@@ -22,8 +21,7 @@ from config.loader import IniConfigLoader
 def main():
     Logger.init(IniConfigLoader().advanced_options.log_lvl)
     # Create folders for logging stuff
-    user_dir = os.path.expanduser("~")
-    config_dir = Path(f"{user_dir}/.d4lf")
+    config_dir = IniConfigLoader().user_dir
     for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 

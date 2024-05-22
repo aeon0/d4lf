@@ -221,8 +221,7 @@ class Filter:
         self.unique_filters: dict[str, list[UniqueModel]] = {}
         profiles: list[str] = IniConfigLoader().general.profiles
 
-        user_dir = os.path.expanduser("~")
-        custom_profile_path = Path(f"{user_dir}/.d4lf/profiles")
+        custom_profile_path = IniConfigLoader().user_dir / "profiles"
         params_profile_path = Path("config/profiles")
         self.all_file_pathes = []
 

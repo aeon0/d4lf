@@ -1,5 +1,4 @@
 import test.item.filter.data.filters as filters
-from test.custom_fixtures import mock_ini_loader  # noqa: F401
 from test.item.filter.data.affixes import affixes
 from test.item.filter.data.aspects import aspects
 from test.item.filter.data.sigils import sigils
@@ -30,7 +29,7 @@ def test_affixes(name: str, result: list[str], item: Item, mocker: MockerFixture
 
 
 @pytest.mark.parametrize(("name", "result", "item"), natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
-def test_aspects_all(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):  # noqa: F811
+def test_aspects_all(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
     mock_ini_loader._general.keep_aspects = AspectFilterType.all
     filter_res = test_filter.should_keep(item).matched
@@ -38,7 +37,7 @@ def test_aspects_all(name: str, result: list[str], item: Item, mocker: MockerFix
 
 
 @pytest.mark.parametrize(("name", "result", "item"), natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
-def test_aspects_none(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):  # noqa: F811
+def test_aspects_none(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
     mock_ini_loader._general.keep_aspects = AspectFilterType.none
     filter_res = test_filter.should_keep(item).matched
@@ -46,7 +45,7 @@ def test_aspects_none(name: str, result: list[str], item: Item, mocker: MockerFi
 
 
 @pytest.mark.parametrize(("name", "result", "item"), natsorted(aspects), ids=[name for name, _, _ in natsorted(aspects)])
-def test_aspects_upgrade(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):  # noqa: F811
+def test_aspects_upgrade(name: str, result: list[str], item: Item, mocker: MockerFixture, mock_ini_loader: MockerFixture):
     test_filter = _create_mocked_filter(mocker)
     mock_ini_loader._general.keep_aspects = AspectFilterType.upgrade
     filter_res = test_filter.should_keep(item).matched

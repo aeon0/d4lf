@@ -84,9 +84,7 @@ class AffixFilterCountModel(BaseModel):
 
     @field_validator("minCount", "minGreaterAffixCount", "maxCount")
     def count_validator(cls, v: int) -> int:
-        if v < 1:
-            raise ValueError("must be at least 1")
-        return v
+        return check_greater_than_zero(v)
 
     @model_validator(mode="after")
     def min_smaller_max(self) -> "AffixFilterCountModel":
@@ -160,18 +158,19 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
-class Browser(enum.StrEnum):
+class BrowserType(enum.StrEnum):
     edge = enum.auto()
     chrome = enum.auto()
     firefox = enum.auto()
 
 
 class GeneralModel(_IniBaseModel):
-    browser: Browser = Browser.chrome
+    browser: BrowserType = BrowserType.chrome
     check_chest_tabs: list[int]
+    full_dump: bool = False
+    handle_rares: HandleRaresType = HandleRaresType.filter
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
-    handle_rares: HandleRaresType = HandleRaresType.filter
     language: str = "enUS"
     profiles: list[str]
     run_vision_mode_on_startup: bool

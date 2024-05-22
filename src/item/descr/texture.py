@@ -20,7 +20,7 @@ def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatc
     # Extract center[0] values
     centers_x = [tm.center[0] for tm in template_matches]
     # Calculate the median
-    if len(centers_x) == 0:
+    if not centers_x:
         return []
     target_center_x = np.min(centers_x)
     # Filter out the outliers

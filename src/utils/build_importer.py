@@ -12,7 +12,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from config.loader import IniConfigLoader
-from config.models import AffixFilterCountModel, AffixFilterModel, Browser, ItemFilterModel, ProfileModel
+from config.models import (
+    AffixFilterCountModel,
+    AffixFilterModel,
+    Browser,
+    ItemFilterModel,
+    ProfileModel,
+)
 
 MAXROLL_PLANNER_URL = "maxroll.gg/d4/planner"
 MAXROLL_BUILD_GUIDE_URL = "maxroll.gg/d4/build-guides/"
@@ -34,7 +40,9 @@ ITEM_NAME_CLASS = "d4t-header-title"
 
 
 def import_build():
-    Logger.info("Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
+    Logger.info(
+        "Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide"
+    )
     url = input()
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
         Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
@@ -64,10 +72,14 @@ def import_build():
             if window_handle != original_window:
                 driver.switch_to.window(window_handle)
                 break
-    planner = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, BUILD_PLANNER_OVERVIEW_CLASS)))
+    planner = wait.until(
+        EC.element_to_be_clickable((By.CLASS_NAME, BUILD_PLANNER_OVERVIEW_CLASS))
+    )
     item_slots = planner.find_elements(By.CLASS_NAME, ITEM_SLOT_CLASS)
     item_dict = {}
-    item_dict["class"] = driver.find_element(By.CLASS_NAME, DIABLO_CLASS_NAME_CLASS).text
+    item_dict["class"] = driver.find_element(
+        By.CLASS_NAME, DIABLO_CLASS_NAME_CLASS
+    ).text
     filter_label = driver.find_element(By.CLASS_NAME, PLANNER_LABEL_CLASS).text
     Logger.info(f"Importing {item_dict["class"]} {filter_label} build")
 
@@ -76,7 +88,9 @@ def import_build():
         driver.find_element(
             By.CLASS_NAME, TITLE_CLASS
         ).click()  # we click the d4 planner title on the page after we select an item so that the popup closes
-        item_type = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, ITEM_TYPE_CLASS))).text
+        item_type = wait.until(
+            EC.element_to_be_clickable((By.CLASS_NAME, ITEM_TYPE_CLASS))
+        ).text
         if item_type == "Weapon" or item_type == "Equipment":
             # if this is just "Weapon" then the planner uses different builds at different stages of the build, so we find the active weapon for this current version of the build, and grab the name of the weapon type
             item_type = (
@@ -93,14 +107,26 @@ def import_build():
             continue
         # skip uniques for now, need to figure out a better way to grab these
         if item_options.text.startswith("Unique"):
-            Logger.warning(f"Skipping {driver.find_element(By.CLASS_NAME, ITEM_NAME_CLASS).text} unique importing currently unsupported")
+            Logger.warning(
+                f"Skipping {driver.find_element(By.CLASS_NAME, ITEM_NAME_CLASS).text} unique importing currently unsupported"
+            )
             continue
         item_details = {}
         item_details["implicits"] = ""
-        if item_type.lower() != ItemType.Helm.value and item_type.lower() != ItemType.ChestArmor.value and item_type.lower() != ItemType.Gloves.value:
-            item_details["implicits"] = _translate_modifiers(item_properties[0]) if len(item_properties) > 0 else ""
+        if (
+            item_type.lower() != ItemType.Helm.value
+            and item_type.lower() != ItemType.ChestArmor.value
+            and item_type.lower() != ItemType.Gloves.value
+        ):
+            item_details["implicits"] = (
+                _translate_modifiers(item_properties[0])
+                if len(item_properties) > 0
+                else ""
+            )
             item_properties = item_properties[1:]
-        item_details["mods"] = _translate_modifiers(item_properties[0]) if len(item_properties) > 0 else ""
+        item_details["mods"] = (
+            _translate_modifiers(item_properties[0]) if len(item_properties) > 0 else ""
+        )
         if item_details["mods"] == "":
             # normally means we've clicked the 2nd weapon slot when we've got a two-handed sword
             continue
@@ -116,19 +142,31 @@ def import_build():
     driver.quit()
     filter_obj = _convert_to_filter(item_dict)
     filter_label = filter_label.replace("/", "_").replace(" ", "_")
-    with open(f"{Path(f"{os.path.expanduser("~")}/.d4lf")}/profiles/{item_dict["class"]} {filter_label}.yaml", "w") as file:
+    with open(
+        f"{Path(f"{os.path.expanduser("~")}/.d4lf")}/profiles/{item_dict["class"]} {filter_label}.yaml",
+        "w",
+    ) as file:
         file.write(
             to_yaml_str(filter_obj, default_flow_style=None)[:-10]
         )  # This exports the name at the end, which causes an error when we load it back in, so just strip this for now
 
-    Logger.info(f"Created profile {Path(f"{os.path.expanduser("~")}/.d4lf")}\\profiles\\{item_dict["class"]} {filter_label}.yaml")
+    Logger.info(
+        f"Created profile {Path(f"{os.path.expanduser("~")}/.d4lf")}\\profiles\\{item_dict["class"]} {filter_label}.yaml"
+    )
 
 
 def _translate_modifiers(mods):
     translated_mods = []
     mods = mods.find_elements(By.CLASS_NAME, "d4t-property")
     for mod in mods:
-        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:", "", mod.text).lower().strip().replace(" ", "_"))]
+        translated_mods += [
+            _remove_extra_underscores(
+                re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:", "", mod.text)
+                .lower()
+                .strip()
+                .replace(" ", "_")
+            )
+        ]
 
     return translated_mods
 
@@ -145,7 +183,14 @@ def _convert_to_filter(items: dict[str, str]) -> ProfileModel:
                 (f"{items['class']}{key}").replace(" ", ""): ItemFilterModel(
                     # replace that ring2 back to just ring
                     itemType=[key.replace("2", "").lower()],
-                    affixPool=[AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in items[key]["mods"]], minCount=2)],
+                    affixPool=[
+                        AffixFilterCountModel(
+                            count=[
+                                AffixFilterModel(name=i) for i in items[key]["mods"]
+                            ],
+                            minCount=2,
+                        )
+                    ],
                 )
             }
             for key in list(items.keys())[1:]

@@ -290,7 +290,7 @@ Uniques:
 Uniques:
   - aspect: [ tibaults_will, 25 ]
     minPower: 900
-    affixPool:
+    affix:
       - [ damage_reduction_from_close_enemies, 12 ]
 ```
 

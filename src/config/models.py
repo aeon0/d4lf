@@ -40,6 +40,7 @@ def _parse_item_type(data: str | list[str]) -> list[str]:
 
 
 class AffixAspectFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     name: str
     value: float | None = None
     comparison: ComparisonType = ComparisonType.larger
@@ -75,6 +76,7 @@ class AffixFilterModel(AffixAspectFilterModel):
 
 
 class AffixFilterCountModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     count: list[AffixFilterModel] = []
     maxCount: int = 5
     minCount: int = 1
@@ -225,6 +227,7 @@ class HSVRangeModel(_IniBaseModel):
 
 
 class ItemFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     affixPool: list[AffixFilterCountModel] = []
     inherentPool: list[AffixFilterCountModel] = []
     itemType: list[ItemType] = []
@@ -250,6 +253,7 @@ DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
 
 
 class SigilFilterModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     minTier: int = 0
     maxTier: int = sys.maxsize
     blacklist: list[str] = []
@@ -281,6 +285,7 @@ class SigilFilterModel(BaseModel):
 
 
 class UniqueModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     affix: list[AffixFilterModel] = []
     aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []

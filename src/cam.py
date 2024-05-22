@@ -1,6 +1,7 @@
 import threading
 import time
 
+import mss
 import mss.windows
 import numpy as np
 from logger import Logger
@@ -68,7 +69,7 @@ class Cam:
             print("Found window, continue grabbing")
         with cached_img_lock:
             self.last_grab = time.perf_counter()
-        with mss() as sct:
+        with mss.mss() as sct:
             img = np.array(sct.grab(self.window_roi))
         with cached_img_lock:
             self.cached_img = img[:, :, :3]

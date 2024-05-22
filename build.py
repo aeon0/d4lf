@@ -30,7 +30,7 @@ def clean_up():
 
 
 if __name__ == "__main__":
-    release_dir = f"d4lf_v{__version__}"
+    release_dir = Path(f"d4lf_v{__version__}")
     print(f"Building version: {__version__}")
 
     clean_up()

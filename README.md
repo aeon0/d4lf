@@ -109,7 +109,7 @@ has a name and can filter for any combination of the following:
 - `itemType`: The name of the type or a list of multiple types.
   See [assets/lang/enUS/item_types.json](assets/lang/enUS/item_types.json)
 - `minPower`: Minimum item power
-- `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is independent of `affixPool`
+- `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is on item level and independent of `affixPool`
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
     - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and
@@ -118,7 +118,7 @@ has a name and can filter for any combination of the following:
           affixes
         - `maxCount` specifies the maximum number of affixes that must match the item. defaults to amount of specified
           affixes
-        - `minGreaterAffixCount`: specifies the minimum number of greater affixes that must match the item. defaults
+        - `minGreaterAffixCount`: specifies the minimum number of greater affixes inside this count group. defaults
           to `0`
 - `inherentPool`: The same rules as for `affixPool` apply, but this is evaluated against the inherent affixes of the
   item

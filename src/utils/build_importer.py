@@ -115,6 +115,7 @@ def import_build():
 
     driver.quit()
     filter_obj = _convert_to_filter(item_dict)
+    filter_label = filter_label.replace("/", "_").replace(" ", "_")
     with open(f"{Path(f"{os.path.expanduser("~")}/.d4lf")}/profiles/{item_dict["class"]} {filter_label}.yaml", "w") as file:
         file.write(
             to_yaml_str(filter_obj, default_flow_style=None)[:-10]

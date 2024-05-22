@@ -97,7 +97,7 @@ def import_build():
             continue
         item_details = {}
         item_details["implicits"] = ""
-        if item_type.lower() != ItemType.Helm and item_type.lower() != ItemType.ChestArmor and item_type.lower() != ItemType.Gloves:
+        if item_type.lower() != ItemType.Helm.value and item_type.lower() != ItemType.ChestArmor.value and item_type.lower() != ItemType.Gloves.value:
             item_details["implicits"] = _translate_modifiers(item_properties[0]) if len(item_properties) > 0 else ""
             item_properties = item_properties[1:]
         item_details["mods"] = _translate_modifiers(item_properties[0]) if len(item_properties) > 0 else ""

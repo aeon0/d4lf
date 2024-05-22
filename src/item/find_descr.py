@@ -1,12 +1,12 @@
 from copy import copy
 
 import numpy as np
-
-from config.ui import ResManager
 from item.data.rarity import ItemRarity
-from template_finder import search, SearchResult
+from template_finder import SearchResult, search
 from utils.image_operations import crop
 from utils.roi_operations import fit_roi_to_window_size
+
+from config.ui import ResManager
 
 map_template_rarity = {
     "item_unique_top_left": ItemRarity.Unique,
@@ -20,12 +20,11 @@ map_template_rarity = {
 def _choose_best_result(res_left: SearchResult, res_right: SearchResult) -> SearchResult:
     if res_left.success and not res_right.success:
         return res_left
-    elif res_right.success and not res_left.success:
+    if res_right.success and not res_left.success:
         return res_right
-    elif res_left.success and res_right.success:
+    if res_left.success and res_right.success:
         return res_left if res_left.matches[0].score > res_right.matches[0].score else res_right
-    else:
-        return SearchResult(success=False)
+    return SearchResult(success=False)
 
 
 def _template_search(img: np.ndarray, anchor: int, roi: np.ndarray):

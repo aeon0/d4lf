@@ -1,16 +1,6 @@
 import numpy as np
 import pytest
-
-from utils.image_operations import (
-    ThresholdTypes,
-    alpha_to_mask,
-    color_filter,
-    create_mask,
-    crop,
-    mask_by_roi,
-    threshold,
-    overlay_image,
-)
+from utils.image_operations import ThresholdTypes, alpha_to_mask, color_filter, create_mask, crop, mask_by_roi, overlay_image, threshold
 
 
 def test_binary_threshold():
@@ -111,12 +101,12 @@ def test_create_mask():
     assert np.count_nonzero(mask) == 100 - 36
 
 
-@pytest.fixture
+@pytest.fixture()
 def filter_img():
     return np.random.randint(0, 255, (100, 100, 3), dtype=np.uint8)
 
 
-@pytest.fixture
+@pytest.fixture()
 def color_range():
     return [np.array([0, 0, 0]), np.array([180, 255, 255])]
 

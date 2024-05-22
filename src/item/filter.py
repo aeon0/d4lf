@@ -5,6 +5,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+from item.data.affix import Affix, AffixType
+from item.data.aspect import Aspect
+from item.data.item_type import ItemType
+from item.data.rarity import ItemRarity
+from item.models import Item
+from logger import Logger
 from pydantic import ValidationError
 
 from config.loader import IniConfigLoader
@@ -19,12 +25,6 @@ from config.models import (
     SigilFilterModel,
     UniqueModel,
 )
-from item.data.affix import Affix, AffixType
-from item.data.aspect import Aspect
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.models import Item
-from logger import Logger
 
 
 @dataclass
@@ -41,10 +41,10 @@ class FilterResult:
 
 
 class Filter:
-    affix_filters = dict()
-    aspect_filters = dict()
-    unique_filters = dict()
-    sigil_filters = dict()
+    affix_filters = {}
+    aspect_filters = {}
+    unique_filters = {}
+    sigil_filters = {}
 
     files_loaded = False
     all_file_pathes = []
@@ -55,7 +55,7 @@ class Filter:
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(Filter, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def _check_affixes(self, item: Item) -> FilterResult:
@@ -100,7 +100,7 @@ class Filter:
             IniConfigLoader().general.keep_aspects == AspectFilterType.upgrade and not item.codex_upgrade
         ):
             return res
-        Logger.info(f"Matched Aspects that updates codex")
+        Logger.info("Matched Aspects that updates codex")
         res.keep = True
         res.matched.append(MatchedFilter("Aspects", did_match_aspect=True))
         return res
@@ -216,14 +216,14 @@ class Filter:
 
     def load_files(self):
         self.files_loaded = True
-        self.affix_filters: dict[str, list[DynamicItemFilterModel]] = dict()
-        self.sigil_filters: dict[str, SigilFilterModel] = dict()
-        self.unique_filters: dict[str, list[UniqueModel]] = dict()
+        self.affix_filters: dict[str, list[DynamicItemFilterModel]] = {}
+        self.sigil_filters: dict[str, SigilFilterModel] = {}
+        self.unique_filters: dict[str, list[UniqueModel]] = {}
         profiles: list[str] = IniConfigLoader().general.profiles
 
         user_dir = os.path.expanduser("~")
         custom_profile_path = Path(f"{user_dir}/.d4lf/profiles")
-        params_profile_path = Path(f"config/profiles")
+        params_profile_path = Path("config/profiles")
         self.all_file_pathes = []
 
         errors = False

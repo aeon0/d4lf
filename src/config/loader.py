@@ -4,9 +4,10 @@ import configparser
 import os
 from pathlib import Path
 
-from config.helper import singleton
-from config.models import CharModel, GeneralModel, AdvancedOptionsModel
 from logger import Logger
+
+from config.helper import singleton
+from config.models import AdvancedOptionsModel, CharModel, GeneralModel
 
 CONFIG_IN_USER_DIR = ".d4lf"
 PARAMS_INI = "params.ini"
@@ -23,7 +24,7 @@ class IniConfigLoader:
         self._general = None
         self._loaded = False
 
-    def _select_val(self, section: str, key: str = None):
+    def _select_val(self, section: str, key: str | None = None):
         try:
             if section in self._parsers["custom"] and key in self._parsers["custom"][section]:
                 return_value = self._parsers["custom"][section][key]

@@ -7,9 +7,9 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-
-from config.models import UiRoiModel, UiPosModel, UiOffsetsModel, ColorsModel, HSVRangeModel
 from utils.image_operations import alpha_to_mask
+
+from config.models import ColorsModel, HSVRangeModel, UiOffsetsModel, UiPosModel, UiRoiModel
 
 LOGGER = logging.getLogger("d4lf")
 
@@ -84,7 +84,7 @@ class Template:
     alpha_mask: np.ndarray = None
 
 
-@lru_cache()
+@lru_cache
 def load_templates() -> dict[str, Template]:
     result = {}
     template_paths = Path("assets\\templates").rglob("*.png")

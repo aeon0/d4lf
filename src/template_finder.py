@@ -5,14 +5,14 @@ from dataclasses import dataclass
 
 import cv2
 import numpy as np
-
 from cam import Cam
-from config.data import COLORS, Template
-from config.ui import ResManager
 from logger import Logger
 from utils.image_operations import alpha_to_mask, color_filter, crop
 from utils.misc import run_until_condition
 from utils.roi_operations import get_center
+
+from config.data import COLORS, Template
+from config.ui import ResManager
 
 templates_lock = threading.Lock()
 executor = concurrent.futures.ThreadPoolExecutor()
@@ -70,25 +70,30 @@ class SearchArgs:
         return self.detect(img).success
 
     def wait_until_visible(self, timeout: float = 30, suppress_debug: bool = False) -> SearchResult:
-        if not (result := run_until_condition(lambda: self.detect(), lambda match: match.success, timeout)[0]).success:
-            if not suppress_debug:
-                Logger.debug(f"{self.ref} not found after {timeout} seconds")
+        if (
+            not (result := run_until_condition(lambda: self.detect(), lambda match: match.success, timeout)[0]).success
+            and not suppress_debug
+        ):
+            Logger.debug(f"{self.ref} not found after {timeout} seconds")
         return result
 
     def wait_until_hidden(self, timeout: float = 3, suppress_debug: bool = False) -> bool:
-        if not (hidden := run_until_condition(lambda: self.detect().success, lambda res: not res, timeout)[1]):
-            if not suppress_debug:
-                Logger.debug(f"{self.ref} still found after {timeout} seconds")
+        if not (hidden := run_until_condition(lambda: self.detect().success, lambda res: not res, timeout)[1]) and not suppress_debug:
+            Logger.debug(f"{self.ref} still found after {timeout} seconds")
         return hidden
 
     @staticmethod
-    def wait_for_update(img: np.ndarray, roi: list[int] = None, timeout: float = 3, suppress_debug: bool = False) -> bool:
+    def wait_for_update(img: np.ndarray, roi: list[int] | None = None, timeout: float = 3, suppress_debug: bool = False) -> bool:
         roi = roi if roi is not None else [0, 0, img.shape[0] - 1, img.shape[1] - 1]
-        if not (
-            change := run_until_condition(lambda: crop(Cam().grab(), roi), lambda res: not np.array_equal(crop(img, roi), res), timeout)[1]
+        if (
+            not (
+                change := run_until_condition(
+                    lambda: crop(Cam().grab(), roi), lambda res: not np.array_equal(crop(img, roi), res), timeout
+                )[1]
+            )
+            and not suppress_debug
         ):
-            if not suppress_debug:
-                Logger.debug(f"ROI: '{roi}' unchanged after {timeout} seconds")
+            Logger.debug(f"ROI: '{roi}' unchanged after {timeout} seconds")
         return change
 
 
@@ -105,13 +110,7 @@ def _process_template_refs(ref: str | np.ndarray | list[str]) -> list[Template]:
                 Logger.warning(f"Template not defined: {i}")
         # if the reference is an image, append new Template class object
         elif isinstance(i, np.ndarray):
-            templates.append(
-                Template(
-                    img_bgr=i,
-                    img_gray=cv2.cvtColor(i, cv2.COLOR_BGR2GRAY),
-                    alpha_mask=alpha_to_mask(i),
-                )
-            )
+            templates.append(Template(img_bgr=i, img_gray=cv2.cvtColor(i, cv2.COLOR_BGR2GRAY), alpha_mask=alpha_to_mask(i)))
     return templates
 
 
@@ -206,18 +205,14 @@ def search(
             if max_val >= threshold:
                 new_match = True
                 # Save rectangle corresponding to the matched region
-                rec_x = int((max_pos[0] + new_roi[0]))
-                rec_y = int((max_pos[1] + new_roi[1]))
+                rec_x = int(max_pos[0] + new_roi[0])
+                rec_y = int(max_pos[1] + new_roi[1])
                 rec_w = int(template_img.shape[1])
                 rec_h = int(template_img.shape[0])
 
                 template_match = TemplateMatch()
                 template_match.region = [rec_x, rec_y, rec_w, rec_h]
-                template_match.region_monitor = [
-                    *Cam().window_to_monitor((rec_x, rec_y)),
-                    rec_w,
-                    rec_h,
-                ]
+                template_match.region_monitor = [*Cam().window_to_monitor((rec_x, rec_y)), rec_w, rec_h]
                 template_match.center = get_center(template_match.region)
                 template_match.center_monitor = Cam().window_to_monitor(template_match.center)
                 template_match.name = template.name

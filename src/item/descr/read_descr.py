@@ -1,21 +1,15 @@
 import numpy as np
-
-from config.ui import ResManager
 from item.data.item_type import ItemType
 from item.data.rarity import ItemRarity
 from item.descr.find_affixes import find_affixes
 from item.descr.find_aspect import find_aspect
 from item.descr.item_type import read_item_type
-from item.descr.texture import (
-    find_seperator_short,
-    find_affix_bullets,
-    find_aspect_bullet,
-    find_empty_sockets,
-    find_codex_upgrade_icon,
-)
+from item.descr.texture import find_affix_bullets, find_aspect_bullet, find_codex_upgrade_icon, find_empty_sockets, find_seperator_short
 from item.models import Item
 from logger import Logger
 from utils.window import screenshot
+
+from config.ui import ResManager
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:

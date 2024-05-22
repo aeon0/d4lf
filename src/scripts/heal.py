@@ -1,7 +1,6 @@
 import traceback
 
 import keyboard
-
 from cam import Cam
 from logger import Logger
 from ui.char_inventory import CharInventory
@@ -32,7 +31,7 @@ if __name__ == "__main__":
         while not Cam().is_offset_set():
             wait(0.2)
         heal()
-    except:
+    except Exception:
         traceback.print_exc()
         print("Press Enter to exit ...")
         input()

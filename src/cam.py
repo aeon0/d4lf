@@ -1,16 +1,15 @@
 import threading
 import time
 
+import mss
 import mss.windows
-
-mss.windows.CAPTUREBLT = 0
 import numpy as np
-from mss import mss
+from logger import Logger
+from utils.misc import convert_args_to_numpy, wait
 
 from config.ui import ResManager
-from logger import Logger
-from utils.misc import wait, convert_args_to_numpy
 
+mss.windows.CAPTUREBLT = 0
 cached_img_lock = threading.Lock()
 
 
@@ -28,7 +27,7 @@ class Cam:
 
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(Cam, cls).__new__(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def update_window_pos(self, offset_x: int, offset_y: int, width: int, height: int):
@@ -48,14 +47,8 @@ class Cam:
         self.window_roi["left"] = offset_x
         self.window_roi["width"] = width
         self.window_roi["height"] = height
-        self.monitor_x_range = (
-            self.window_roi["left"] + 10,
-            self.window_roi["left"] + self.window_roi["width"] - 10,
-        )
-        self.monitor_y_range = (
-            self.window_roi["top"] + 10,
-            self.window_roi["top"] + self.window_roi["height"] - 10,
-        )
+        self.monitor_x_range = (self.window_roi["left"] + 10, self.window_roi["left"] + self.window_roi["width"] - 10)
+        self.monitor_y_range = (self.window_roi["top"] + 10, self.window_roi["top"] + self.window_roi["height"] - 10)
         self.window_offset_set = True
         ResManager().set_resolution(self.res_key)
         if self.window_roi["width"] / self.window_roi["height"] < 16 / 10:
@@ -67,20 +60,20 @@ class Cam:
     def grab(self, force_new: bool = False) -> np.ndarray:
         if not force_new and self.cached_img is not None and self.last_grab is not None and time.perf_counter() - self.last_grab < 0.04:
             return self.cached_img
-        else:
-            # wait for offsets to be found
-            if not self.is_offset_set():
-                print("Wait for window detection")
-                while not self.window_offset_set:
-                    wait(0.05)
-                print("Found window, continue grabbing")
-            with cached_img_lock:
-                self.last_grab = time.perf_counter()
-            with mss() as sct:
-                img = np.array(sct.grab(self.window_roi))
-            with cached_img_lock:
-                self.cached_img = img[:, :, :3]
-            return self.cached_img
+
+        # wait for offsets to be found
+        if not self.is_offset_set():
+            print("Wait for window detection")
+            while not self.window_offset_set:
+                wait(0.05)
+            print("Found window, continue grabbing")
+        with cached_img_lock:
+            self.last_grab = time.perf_counter()
+        with mss.mss() as sct:
+            img = np.array(sct.grab(self.window_roi))
+        with cached_img_lock:
+            self.cached_img = img[:, :, :3]
+        return self.cached_img
 
     # Conversions
     # ============================================================================

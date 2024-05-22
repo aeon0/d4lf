@@ -11,31 +11,11 @@ class TestUnique(Item):
 
 
 uniques = [
-    (
-        "item power too low",
-        [],
-        TestUnique(power=800),
-    ),
-    (
-        "wrong type",
-        [],
-        TestUnique(item_type=ItemType.Helm, aspect=Aspect(name="deathless_visage", value=1862)),
-    ),
-    (
-        "wrong aspect",
-        [],
-        TestUnique(aspect=Aspect(name="bloodless_scream", value=40.0)),
-    ),
-    (
-        "aspect power too low",
-        [],
-        TestUnique(aspect=Aspect(name="lidless_wall", value=15)),
-    ),
-    (
-        "aspect power too high",
-        [],
-        TestUnique(aspect=Aspect(name="soulbrand", value=22)),
-    ),
+    ("item power too low", [], TestUnique(power=800)),
+    ("wrong type", [], TestUnique(item_type=ItemType.Helm, aspect=Aspect(name="deathless_visage", value=1862))),
+    ("wrong aspect", [], TestUnique(aspect=Aspect(name="bloodless_scream", value=40.0))),
+    ("aspect power too low", [], TestUnique(aspect=Aspect(name="lidless_wall", value=15))),
+    ("aspect power too high", [], TestUnique(aspect=Aspect(name="soulbrand", value=22))),
     (
         "affix power too low",
         [],
@@ -75,17 +55,6 @@ uniques = [
             ],
         ),
     ),
-    (
-        "ok_2",
-        ["test.black_river", "test.black_river"],
-        TestUnique(
-            item_type=ItemType.Scythe,
-            aspect=Aspect(name="black_river", value=128),
-        ),
-    ),
-    (
-        "ok_3",
-        ["test.soulbrand"],
-        TestUnique(aspect=Aspect(name="soulbrand", value=11)),
-    ),
+    ("ok_2", ["test.black_river", "test.black_river"], TestUnique(item_type=ItemType.Scythe, aspect=Aspect(name="black_river", value=128))),
+    ("ok_3", ["test.soulbrand"], TestUnique(aspect=Aspect(name="soulbrand", value=11))),
 ]

@@ -10,7 +10,7 @@ class TestKeyMustExist:
 
     def test_non_existing_key(self):
         # Test for a non-existing key
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="key does not exist"):
             key_must_exist("non_existing_key")
 
 
@@ -42,7 +42,7 @@ class TestStrToIntList:
 
     def test_invalid_input(self):
         # Test for invalid input type
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="invalid literal"):
             str_to_int_list("1,2,3,a,5")
 
     def test_negative_numbers(self):

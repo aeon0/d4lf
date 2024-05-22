@@ -6,7 +6,6 @@ import sys
 import warnings
 
 import colorama
-
 from version import __version__
 
 colorama.init()
@@ -44,9 +43,7 @@ class CustomFormatter(logging.Formatter):
         asctime = self.formatTime(record, self.datefmt)
 
         # Replace the placeholders in the format string with the actual values
-        formatted_message = log_fmt % {"asctime": asctime, "levelname": record.levelname, "message": msg}
-
-        return formatted_message
+        return log_fmt % {"asctime": asctime, "levelname": record.levelname, "message": msg}
 
 
 class Logger:
@@ -138,4 +135,4 @@ class Logger:
             try:
                 os.remove(Logger._current_log_file_path)
             except PermissionError:
-                warnings.warn(f"Could not remove {Logger._current_log_file_path}, permission denied")
+                warnings.warn(f"Could not remove {Logger._current_log_file_path}, permission denied", stacklevel=2)

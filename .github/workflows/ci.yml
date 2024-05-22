@@ -1,5 +1,5 @@
 name: D4LF - CI
-on: [pull_request]
+on: [ pull_request ]
 env:
   # To force cache update
   CACHE_NUMBER: 1
@@ -8,10 +8,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v2
+        uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-variant: Mambaforge
           miniforge-version: latest
@@ -20,7 +20,7 @@ jobs:
           use-mamba: true
 
       - name: Cache Conda env
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ env.CONDA }}/envs
           key:
@@ -29,8 +29,7 @@ jobs:
 
       - name: Update environment
         run:
-          mamba env update -n d4lf -f
-          environment.yml
+          mamba env update -n d4lf -f environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Powershell Core
@@ -52,6 +51,10 @@ jobs:
           C:\Miniconda\condabin\conda.bat activate d4lf
           coverage xml
 
-      - name: Lint black formatting
-        shell: powershell
-        run: black --check ./**/*.py
+      - name: ruff lint
+        uses: chartboost/ruff-action@v1
+
+      - name: ruff format
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'

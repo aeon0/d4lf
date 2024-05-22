@@ -3,9 +3,9 @@ import logging
 import cv2
 import numpy as np
 
-from config.data import POSITIONS, load_templates, Template
+from config.data import POSITIONS, Template, load_templates
 from config.helper import singleton
-from config.models import UiRoiModel, UiPosModel, UiOffsetsModel
+from config.models import UiOffsetsModel, UiPosModel, UiRoiModel
 
 LOGGER = logging.getLogger("d4lf")
 
@@ -45,10 +45,7 @@ class _ResTransformer:
         return new_value.astype(int)
 
     def _transform_list_of_tuples(self, value: list[tuple[int, int]]) -> list[tuple[int, int]]:
-        res = []
-        for v in value:
-            res.append(self._transform_tuples(value=v))
-        return res
+        return [self._transform_tuples(value=v) for v in value]
 
     def _transform_templates(self, templates: dict[str, Template]) -> dict[str, Template]:
         return {

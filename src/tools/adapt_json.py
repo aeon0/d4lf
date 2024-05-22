@@ -2,7 +2,7 @@ import json
 import re
 
 # Step 1: Read the JSON file
-with open("assets/aspects_unique.json", "r") as file:
+with open("assets/aspects_unique.json") as file:
     data = json.load(file)
 
 
@@ -26,13 +26,12 @@ def _clean_str(s):
         "",
         cleaned_str,
     )  # Remove new terms
-    cleaned_str = " ".join(cleaned_str.split())  # Remove extra spaces
-    return cleaned_str
+    return " ".join(cleaned_str.split())  # Remove extra spaces
 
 
 # Step 2: Process the data (example: modifying keys and values)
 # Modify this part according to your specific needs
-modified_data = dict()
+modified_data = {}
 for key, value in data.items():
     new_key = key.strip().lower().replace(" ", "_").replace("'", "")
     new_val = _clean_str(value.lower())

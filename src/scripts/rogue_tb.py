@@ -1,7 +1,6 @@
 import traceback
 
 import keyboard
-
 from cam import Cam
 from logger import Logger
 from ui.hud import Hud
@@ -17,9 +16,8 @@ def run_rogue_tb():
         if hud.is_ingame(img):
             ready4 = hud.is_skill_ready(img)
             imbued = hud.is_imbued(img)
-            if not imbued:
-                if ready4:
-                    keyboard.send("r")
+            if not imbued and ready4:
+                keyboard.send("r")
         wait(0.1, 0.15)
 
 
@@ -31,7 +29,7 @@ if __name__ == "__main__":
         while not Cam().is_offset_set():
             wait(0.2)
         run_rogue_tb()
-    except:
+    except Exception:
         traceback.print_exc()
         print("Press Enter to exit ...")
         input()

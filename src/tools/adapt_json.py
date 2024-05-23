@@ -2,7 +2,7 @@ import json
 import re
 
 # Step 1: Read the JSON file
-with open("assets/aspects_unique.json") as file:
+with open("assets/aspects_unique.json", encoding="utf-8") as file:
     data = json.load(file)
 
 
@@ -38,5 +38,5 @@ for key, value in data.items():
     modified_data[new_key] = new_val
 
 # Step 3: Write to a new JSON file
-with open("new_data.json", "w") as file:
+with open("new_data.json", "w", encoding="utf-8") as file:
     json.dump(modified_data, file, indent=4)

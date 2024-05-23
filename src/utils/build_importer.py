@@ -7,6 +7,7 @@ from logger import Logger
 from pydantic_yaml import to_yaml_str
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.chromium.webdriver import ChromiumDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -39,35 +40,22 @@ TITLE_CLASS = "d4t-title"
 
 
 def import_build(url: str = None):
+    driver = _setup_webdriver()
     for _ in range(5):
         try:
-            _import_build(url)
+            _import_build(driver=driver, url=url)
+            break
         except Exception as e:
             Logger.error(f"An error occurred importing the build {e}. retrying")
-        else:
-            return
 
 
-def _import_build(url: str = None):
+def _import_build(driver: ChromiumDriver, url: str = None):
     if not url:
         Logger.info("Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
         url = input()
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
         Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
         return
-    match IniConfigLoader().general.browser:
-        case BrowserType.edge:
-            options = webdriver.EdgeOptions()
-            options.add_argument("--headless=new")
-            driver = webdriver.Edge(options=options)
-        case BrowserType.chrome:
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless=new")
-            driver = webdriver.Chrome(options=options)
-        case BrowserType.firefox:
-            options = webdriver.FirefoxOptions()
-            options.add_argument("--headless")
-            driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 10)
     url = url.replace(" ", "")
     Logger.info(f"Loading {url}")
@@ -149,7 +137,7 @@ def _import_build(url: str = None):
     driver.quit()
     filter_obj = _convert_to_filter(filter_class, item_dict)
     save_path = IniConfigLoader().user_dir / f"profiles/{filter_name}_{filter_label}.yaml"
-    with open(save_path, "w") as file:
+    with open(save_path, "w", encoding="utf-8") as file:
         file.write(
             to_yaml_str(
                 filter_obj,
@@ -159,6 +147,20 @@ def _import_build(url: str = None):
             )
         )
     Logger.info(f"Created profile {save_path}")
+
+
+def _convert_to_filter(filter_class: str, items) -> ProfileModel:
+    items_filters = []
+    for item_type, data in items.items():
+        name = f"{filter_class}{item_type}".replace(" ", "")
+        item_filter = ItemFilterModel(itemType=[item_type.replace("2", "").lower()])
+        item_filter.affixPool = [
+            AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in data["affixes"]], minCount=2, minGreaterAffixCount=0)
+        ]
+        if data["inherents"]:
+            item_filter.inherentPool = [AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in data["inherents"]])]
+        items_filters.append({name: item_filter})
+    return ProfileModel(name="imported profile", Affixes=items_filters)
 
 
 def _handle_popups(driver):
@@ -179,37 +181,41 @@ def _handle_popups(driver):
         time.sleep(1)
 
 
+def _remove_extra_underscores(string: str) -> str:
+    return re.sub(r"(_)\1+", r"\1", string)
+
+
+def _setup_webdriver() -> ChromiumDriver:
+    match IniConfigLoader().general.browser:
+        case BrowserType.edge:
+            options = webdriver.EdgeOptions()
+            options.add_argument("--headless=new")
+            driver = webdriver.Edge(options=options)
+        case BrowserType.chrome:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--headless=new")
+            driver = webdriver.Chrome(options=options)
+        case BrowserType.firefox:
+            options = webdriver.FirefoxOptions()
+            options.add_argument("--headless")
+            driver = webdriver.Firefox(options=options)
+    return driver  # noqa # It must be one of the 3 browsers due to ini validation
+
+
 def _translate_modifiers(mods: list[WebElement]) -> list[str]:
     translated_mods = []
     if not mods:
         return []
     properties = mods[0].find_elements(By.CLASS_NAME, "d4t-property")
     for mod in properties:
-        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:", "", mod.text).lower().strip().replace(" ", "_"))]
+        translated_mods += [
+            _remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:|'", "", mod.text).lower().strip().replace(" ", "_"))
+        ]
 
     return translated_mods
 
 
-def _remove_extra_underscores(string: str) -> str:
-    return re.sub(r"(_)\1+", r"\1", string)
-
-
-def _convert_to_filter(filter_class: str, items) -> ProfileModel:
-    items_filters = []
-    for item_type, data in items.items():
-        name = f"{filter_class}{item_type}".replace(" ", "")
-        item_filter = ItemFilterModel(itemType=[item_type.replace("2", "").lower()])
-        item_filter.affixPool = [
-            AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in data["affixes"]], minCount=2, minGreaterAffixCount=0)
-        ]
-        if data["inherents"]:
-            item_filter.inherentPool = [AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in data["inherents"]])]
-        items_filters.append({name: item_filter})
-    return ProfileModel(name="imported profile", Affixes=items_filters)
-
-
 if __name__ == "__main__":
     os.curdir = pathlib.Path(__file__).parent.parent.parent
-    import_build("https://maxroll.gg/d4/planner/xu2az0w2")
-    import_build("https://maxroll.gg/d4/planner/cm6pf0xa#5")
-    import_build("https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
+    driver = _setup_webdriver()
+    import_build(url="https://maxroll.gg/d4/planner/xu2az0w2")

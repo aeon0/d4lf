@@ -38,9 +38,9 @@ class IniConfigLoader:
     def _load_params(self):
         self._parsers["params"] = configparser.ConfigParser()
         self._parsers["custom"] = configparser.ConfigParser()
-        self._parsers["params"].read(self._config_path / PARAMS_INI)
+        self._parsers["params"].read(self._config_path / PARAMS_INI, encoding="utf-8")
         if (p := (self.user_dir / PARAMS_INI)).exists() and p.stat().st_size:
-            self._parsers["custom"].read(p)
+            self._parsers["custom"].read(p, encoding="utf-8")
 
         self._advanced_options = AdvancedOptionsModel(
             exit_key=self._select_val("advanced_options", "exit_key"),

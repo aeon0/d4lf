@@ -3,7 +3,7 @@ import pytest
 from cam import Cam
 from ui.chest import Chest
 
-BASE_PATH = "test/assets/ui"
+BASE_PATH = "tests/assets/ui"
 
 
 @pytest.mark.parametrize(("img_res", "input_img"), [((3440, 1440), f"{BASE_PATH}/chest_open_1440p_wide.png")])

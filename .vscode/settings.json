@@ -4,7 +4,7 @@
 		"editor.defaultFormatter": "charliermarsh.ruff"
 	},
 	"python.testing.pytestArgs": [
-		"test",
+		"tests",
 		"-s"
 	],
 	"python.testing.unittestEnabled": false,

@@ -1,10 +1,10 @@
-from test.config.data import sigils, uniques
 from typing import Any
 
 import pytest
 from pydantic import ValidationError
 
 from config.models import ProfileModel
+from tests.config.data import sigils, uniques
 
 
 class TestSigil:

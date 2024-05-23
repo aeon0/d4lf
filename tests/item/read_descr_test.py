@@ -10,7 +10,7 @@ from item.descr.read_descr import read_descr
 from item.models import Item
 
 # def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
-BASE_PATH = "test/assets/item"
+BASE_PATH = "tests/assets/item"
 
 legendary = [
     (

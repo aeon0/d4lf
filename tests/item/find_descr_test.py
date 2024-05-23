@@ -6,7 +6,7 @@ from cam import Cam
 from item.data.rarity import ItemRarity
 from item.find_descr import find_descr
 
-BASE_PATH = "test/assets/item"
+BASE_PATH = "tests/assets/item"
 
 
 @pytest.mark.parametrize(

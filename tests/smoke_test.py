@@ -12,7 +12,7 @@ def test_smoke():
     res = (1920, 1080)
     anchor = (1450, 761)
     Cam().update_window_pos(0, 0, *res)
-    img = cv2.imread("test/assets/item/find_descr_rare_1080p.png")
+    img = cv2.imread("tests/assets/item/find_descr_rare_1080p.png")
     start = time.time()
     found, rarity, cropped_descr, _ = find_descr(img, anchor)
     print("Runtime (detect): ", time.time() - start)

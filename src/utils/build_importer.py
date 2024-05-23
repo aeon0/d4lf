@@ -42,10 +42,9 @@ def import_build(url: str = None):
     for _ in range(5):
         try:
             _import_build(url)
+            break
         except Exception as e:
             Logger.error(f"An error occurred importing the build {e}. retrying")
-        else:
-            return
 
 
 def _import_build(url: str = None):

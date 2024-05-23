@@ -1,7 +1,7 @@
 import pytest
 from dataloader import Dataloader
 from pytest_mock import MockerFixture
-from utils.build_importer import _import_build
+from utils.build_importer import import_build
 
 from config.models import BrowserType
 
@@ -25,4 +25,4 @@ def test_import(url: str, mock_ini_loader: MockerFixture, mocker: MockerFixture)
     mock_ini_loader._general.browser = BrowserType.edge
     Dataloader()  # need to load data first or the mock will make it impossible
     mocker.patch("builtins.open", new=mocker.mock_open())
-    _import_build(url)
+    import_build(url)

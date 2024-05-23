@@ -3,7 +3,7 @@ import pytest
 from cam import Cam
 from ui.char_inventory import CharInventory
 
-BASE_PATH = "test/assets/ui"
+BASE_PATH = "tests/assets/ui"
 
 
 @pytest.mark.parametrize(

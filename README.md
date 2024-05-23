@@ -45,12 +45,13 @@ The config folder contains:
 | [general]                  | Description                                                                                                                                                                                                                        |
 |----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | profiles                   | A set of profiles seperated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                           |
-| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items based on aspect (they are still filtered!)                                               |
+| keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items based on aspect (they are still filtered!)                                                 |
 | handle_rares               | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares |
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
 | check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
-| browser                    | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported, while chrome is best tested                                                              |
+| browser                    | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                |
+| full_dump                  | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                          |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -311,6 +312,7 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 3.x.x.**
 
 ## Import builds from Maxroll.gg
+
 You can link either the build guide or a direct link to the specific planner you are after ie
 https://maxroll.gg/d4/build-guides/tornado-druid-guide or
 https://maxroll.gg/d4/planner/g54iz0wt#4

@@ -1,16 +1,15 @@
-from test.config.data import sigils, uniques
-from test.custom_fixtures import mock_ini_loader  # noqa: F401
 from typing import Any
 
 import pytest
 from pydantic import ValidationError
 
 from config.models import ProfileModel
+from tests.config.data import sigils, uniques
 
 
 class TestSigil:
     @pytest.fixture(autouse=True)
-    def _setup(self, mock_ini_loader):  # noqa: F811
+    def _setup(self, mock_ini_loader):
         self.mock_ini_loader = mock_ini_loader
 
     @pytest.mark.parametrize("data", sigils.all_bad_cases)
@@ -27,7 +26,7 @@ class TestSigil:
 
 class TestUnique:
     @pytest.fixture(autouse=True)
-    def _setup(self, mock_ini_loader):  # noqa: F811
+    def _setup(self, mock_ini_loader):
         self.mock_ini_loader = mock_ini_loader
 
     @pytest.mark.parametrize("data", uniques.all_bad_cases)

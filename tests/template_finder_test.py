@@ -10,9 +10,9 @@ def test_search():
     - if cross matches above threshold as expected, then it won't bother to search for slash, which has a perfect match on the image
     - test passes if the template match score is not perfect
     """
-    image = cv2.imread("test/assets/template_finder/stash_slots.png")
-    slash = cv2.imread("test/assets/template_finder/stash_slot_slash.png")
-    cross = cv2.imread("test/assets/template_finder/stash_slot_cross.png")
+    image = cv2.imread("tests/assets/template_finder/stash_slots.png")
+    slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
+    cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     threshold = 0.6
     result = template_finder.search([cross, slash], image, threshold)
     match = result.matches[0]
@@ -26,9 +26,9 @@ def test_search_best_match():
     - searches next for slash, which perfectly matches on image
     - test passes if the center of the template match lies within the expected region of the slash
     """
-    image = cv2.imread("test/assets/template_finder/stash_slots.png")
-    slash = cv2.imread("test/assets/template_finder/stash_slot_slash.png")
-    cross = cv2.imread("test/assets/template_finder/stash_slot_cross.png")
+    image = cv2.imread("tests/assets/template_finder/stash_slots.png")
+    slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
+    cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     slash_expected_roi = [38, 0, 38, 38]
     result = template_finder.search([cross, slash], image, threshold=0.6, mode="best")
     match = result.matches[0]
@@ -41,8 +41,8 @@ def test_search_all():
     - searches for empty slots with high threshold
     - test passes if 3 matches result
     """
-    image = cv2.imread("test/assets/template_finder/stash_slots.png")
-    empty = cv2.imread("test/assets/template_finder/stash_slot_empty.png")
+    image = cv2.imread("tests/assets/template_finder/stash_slots.png")
+    empty = cv2.imread("tests/assets/template_finder/stash_slot_empty.png")
     result = template_finder.search(empty, image, threshold=0.98, mode="all")
     matches = result.matches
     assert len(matches) == 3
@@ -54,19 +54,19 @@ def test_search_all_multiple_templates():
     - searches for empty slots and slash with high threshold
     - test passes if 4 matches result
     """
-    image = cv2.imread("test/assets/template_finder/stash_slots.png")
-    empty = cv2.imread("test/assets/template_finder/stash_slot_empty.png")
-    slash = cv2.imread("test/assets/template_finder/stash_slot_slash.png")
+    image = cv2.imread("tests/assets/template_finder/stash_slots.png")
+    empty = cv2.imread("tests/assets/template_finder/stash_slot_empty.png")
+    slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
     result = template_finder.search([empty, slash], image, threshold=0.98, mode="all")
     matches = result.matches
     assert len(matches) == 4
 
 
 if __name__ == "__main__":
-    image = cv2.imread("test/assets/template_finder/stash_slots.png")
-    empty = cv2.imread("test/assets/template_finder/stash_slot_empty.png")
-    slash = cv2.imread("test/assets/template_finder/stash_slot_slash.png")
-    cross = cv2.imread("test/assets/template_finder/stash_slot_cross.png")
+    image = cv2.imread("tests/assets/template_finder/stash_slots.png")
+    empty = cv2.imread("tests/assets/template_finder/stash_slot_empty.png")
+    slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
+    cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     slash_expected_roi = [38, 0, 38, 38]
 
     result = template_finder.search([empty, slash], image, threshold=0.98, mode="all")

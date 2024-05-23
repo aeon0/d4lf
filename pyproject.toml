@@ -3,6 +3,7 @@ indent-width = 4
 line-length = 140
 target-version = "py312"
 
+
 [tool.ruff.format]
 docstring-code-format = true
 docstring-code-line-length = "dynamic"

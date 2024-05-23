@@ -32,24 +32,11 @@ jobs:
           mamba env update -n d4lf -f environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - name: Powershell Core
+      - name: Conda info
         shell: powershell
         run: |
           conda info
           conda list
-
-      - name: Pytest & Coverage
-        shell: powershell
-        run: |
-          C:\Miniconda\condabin\conda.bat activate d4lf
-          python -c "import sys; print(sys.version)"
-          coverage run --source=./src -m pytest -v -s
-
-      - name: Coverage Report Generation
-        shell: powershell
-        run: |
-          C:\Miniconda\condabin\conda.bat activate d4lf
-          coverage xml
 
       - name: ruff lint
         uses: chartboost/ruff-action@v1
@@ -58,3 +45,11 @@ jobs:
         uses: chartboost/ruff-action@v1
         with:
           args: 'format --check'
+
+      - name: Pytest
+        shell: powershell
+        run: |
+          C:\Miniconda\condabin\conda.bat activate d4lf
+          python -c "import sys; print(sys.version)"
+          pytest . -m "not webtest" -v
+          pytest . -m "webtest" -v -n auto

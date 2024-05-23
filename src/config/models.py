@@ -158,18 +158,19 @@ class ColorsModel(_IniBaseModel):
     unusable_red: "HSVRangeModel"
 
 
-class Browser(enum.StrEnum):
+class BrowserType(enum.StrEnum):
     edge = enum.auto()
     chrome = enum.auto()
     firefox = enum.auto()
 
 
 class GeneralModel(_IniBaseModel):
-    browser: Browser = Browser.chrome
+    browser: BrowserType = BrowserType.chrome
     check_chest_tabs: list[int]
+    full_dump: bool = False
+    handle_rares: HandleRaresType = HandleRaresType.filter
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
-    handle_rares: HandleRaresType = HandleRaresType.filter
     language: str = "enUS"
     profiles: list[str]
     run_vision_mode_on_startup: bool

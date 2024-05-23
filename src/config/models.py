@@ -84,9 +84,7 @@ class AffixFilterCountModel(BaseModel):
 
     @field_validator("minCount", "minGreaterAffixCount", "maxCount")
     def count_validator(cls, v: int) -> int:
-        if v < 1:
-            raise ValueError("must be at least 1")
-        return v
+        return check_greater_than_zero(v)
 
     @model_validator(mode="after")
     def min_smaller_max(self) -> "AffixFilterCountModel":

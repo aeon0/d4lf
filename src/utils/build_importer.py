@@ -185,7 +185,7 @@ def _translate_modifiers(mods: list[WebElement]) -> list[str]:
         return []
     properties = mods[0].find_elements(By.CLASS_NAME, "d4t-property")
     for mod in properties:
-        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:", "", mod.text).lower().strip().replace(" ", "_"))]
+        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:|'", "", mod.text).lower().strip().replace(" ", "_"))]
 
     return translated_mods
 

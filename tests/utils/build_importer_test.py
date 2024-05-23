@@ -10,6 +10,7 @@ URLS = [
     "https://maxroll.gg/d4/build-guides/frozen-orb-sorcerer-guide",
     "https://maxroll.gg/d4/build-guides/minion-necromancer-guide",
     "https://maxroll.gg/d4/build-guides/shadow-minion-necromancer-guide",
+    "https://maxroll.gg/d4/planner/ailu5022#4",
     "https://maxroll.gg/d4/planner/cm6pf0xa#5",
     "https://maxroll.gg/d4/planner/dqih026y#3",
     "https://maxroll.gg/d4/planner/r61bp0om#11",

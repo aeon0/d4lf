@@ -149,7 +149,7 @@ def _import_build(url: str = None):
     driver.quit()
     filter_obj = _convert_to_filter(filter_class, item_dict)
     save_path = IniConfigLoader().user_dir / f"profiles/{filter_name}_{filter_label}.yaml"
-    with open(save_path, "w") as file:
+    with open(save_path, "w", encoding="utf-8") as file:
         file.write(
             to_yaml_str(
                 filter_obj,
@@ -185,7 +185,9 @@ def _translate_modifiers(mods: list[WebElement]) -> list[str]:
         return []
     properties = mods[0].find_elements(By.CLASS_NAME, "d4t-property")
     for mod in properties:
-        translated_mods += [_remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:|'", "", mod.text).lower().strip().replace(" ", "_"))]
+        translated_mods += [
+            _remove_extra_underscores(re.sub(r"[0-9]|,|\.|\+|\[|\]|-|%|:|'", "", mod.text).lower().strip().replace(" ", "_"))
+        ]
 
     return translated_mods
 

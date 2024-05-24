@@ -1,20 +1,17 @@
-import datetime
 import os
 import pathlib
 import re
 import time
 
 from logger import Logger
-from pydantic_yaml import to_yaml_str
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from utils.importer.common import retry_importer, setup_webdriver
+from utils.importer.common import handle_popups, retry_importer, save_as_profile, setup_webdriver
 
-from config.loader import IniConfigLoader
 from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 
 MAXROLL_PLANNER_URL = "maxroll.gg/d4/planner"
@@ -52,7 +49,12 @@ def import_build(driver: ChromiumDriver = None, url: str = None):
     wait = WebDriverWait(driver, 10)
     Logger.info(f"Loading {url}")
     driver.get(url)
-    _handle_popups(driver)
+    handle_popups(
+        driver=driver,
+        method=EC.any_of(
+            EC.element_to_be_clickable((By.XPATH, ADBLOCK_BUTTON_XPATH)), EC.element_to_be_clickable((By.XPATH, COOKIE_ACCEPT_XPATH))
+        ),
+    )
     filter_name = ""
     if MAXROLL_BUILD_GUIDE_URL in url:
         filter_name = driver.title.replace(" - D4 Maxroll.gg", "").replace("/", "_").replace(" ", "_")
@@ -127,20 +129,8 @@ def import_build(driver: ChromiumDriver = None, url: str = None):
         item_dict[item_type] = item_details
 
     driver.quit()
-    filter_obj = _convert_to_filter(filter_class, item_dict)
-    save_path = IniConfigLoader().user_dir / f"profiles/{filter_name}_{filter_label}.yaml"
-    with open(save_path, "w", encoding="utf-8") as file:
-        file.write(f"# {url}\n")
-        file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")}\n")
-        file.write(
-            to_yaml_str(
-                filter_obj,
-                default_flow_style=None,
-                exclude_unset=not IniConfigLoader().general.full_dump,
-                exclude=["name", "Sigils", "Uniques"],
-            )
-        )
-    Logger.info(f"Created profile {save_path}")
+    profile = _convert_to_filter(filter_class, item_dict)
+    save_as_profile(file_name=f"{filter_name}_{filter_label}", profile=profile, url=url)
 
 
 def _convert_to_filter(filter_class: str, items) -> ProfileModel:
@@ -155,24 +145,6 @@ def _convert_to_filter(filter_class: str, items) -> ProfileModel:
             item_filter.inherentPool = [AffixFilterCountModel(count=[AffixFilterModel(name=i) for i in data["inherents"]])]
         items_filters.append({name: item_filter})
     return ProfileModel(name="imported profile", Affixes=items_filters)
-
-
-def _handle_popups(driver):
-    wait = WebDriverWait(driver, 5)
-    clicked = 0
-    while clicked < 2:
-        try:
-            elem = wait.until(
-                EC.any_of(
-                    EC.element_to_be_clickable((By.XPATH, ADBLOCK_BUTTON_XPATH)),
-                    EC.element_to_be_clickable((By.XPATH, COOKIE_ACCEPT_XPATH)),
-                )
-            )
-        except TimeoutException:
-            break
-        elem.click()
-        clicked += 1
-        time.sleep(1)
 
 
 def _remove_extra_underscores(string: str) -> str:
@@ -193,6 +165,6 @@ def _translate_modifiers(mods: list[WebElement]) -> list[str]:
 
 
 if __name__ == "__main__":
-    os.curdir = pathlib.Path(__file__).parent.parent.parent
+    os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     driver = setup_webdriver()
     import_build(url="https://maxroll.gg/d4/planner/xu2az0w2")

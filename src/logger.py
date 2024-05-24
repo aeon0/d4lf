@@ -39,6 +39,8 @@ class CustomFormatter(logging.Formatter):
         if record.levelno in (logging.WARNING, logging.ERROR):
             module_name, function_name = self._get_caller_info(stack_level)
             msg = f"{module_name}.{function_name}: {msg}"
+            if record.exc_info:
+                msg += "\n" + self.formatException(record.exc_info)
 
         asctime = self.formatTime(record, self.datefmt)
 
@@ -82,6 +84,12 @@ class Logger:
         if Logger.logger is None:
             Logger.init()
         Logger.logger.error(data)
+
+    @staticmethod
+    def exception(data: str):
+        if Logger.logger is None:
+            Logger.init()
+        Logger.logger.exception(data)
 
     @staticmethod
     def init(lvl: str = "DEBUG"):

@@ -78,8 +78,8 @@ class AffixFilterModel(AffixAspectFilterModel):
 class AffixFilterCountModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
     count: list[AffixFilterModel] = []
-    maxCount: int = 5
-    minCount: int = 1
+    maxCount: int = sys.maxsize
+    minCount: int = 0
     minGreaterAffixCount: int = 0
 
     @field_validator("minCount", "minGreaterAffixCount", "maxCount")
@@ -87,18 +87,17 @@ class AffixFilterCountModel(BaseModel):
         return check_greater_than_zero(v)
 
     @model_validator(mode="after")
-    def min_smaller_max(self) -> "AffixFilterCountModel":
+    def model_validator(self) -> "AffixFilterCountModel":
+        # If minCount and maxCount are not set, we assume that the lengths of the count list is the only thing that matters.
+        # To not show up in the model.dict() we need to remove them from the model_fields_set property
+        if "minCount" not in self.model_fields_set and "maxCount" not in self.model_fields_set:
+            self.minCount = len(self.count)
+            self.maxCount = len(self.count)
+            self.model_fields_set.remove("minCount")
+            self.model_fields_set.remove("maxCount")
         if self.minCount > self.maxCount:
             raise ValueError("minCount must be smaller than maxCount")
         return self
-
-    @model_validator(mode="before")
-    def set_defaults(cls, data: "AffixFilterCountModel") -> "AffixFilterCountModel":
-        if "minCount" not in data and "count" in data and isinstance(data["count"], list):
-            data["minCount"] = len(data["count"])
-        if "maxCount" not in data and "count" in data and isinstance(data["count"], list):
-            data["maxCount"] = len(data["count"])
-        return data
 
 
 class AspectUniqueFilterModel(AffixAspectFilterModel):

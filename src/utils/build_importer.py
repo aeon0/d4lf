@@ -1,3 +1,4 @@
+import datetime
 import os
 import pathlib
 import re
@@ -138,6 +139,8 @@ def _import_build(driver: ChromiumDriver, url: str = None):
     filter_obj = _convert_to_filter(filter_class, item_dict)
     save_path = IniConfigLoader().user_dir / f"profiles/{filter_name}_{filter_label}.yaml"
     with open(save_path, "w", encoding="utf-8") as file:
+        file.write(f"# {url}\n")
+        file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")}\n")
         file.write(
             to_yaml_str(
                 filter_obj,

@@ -5,16 +5,16 @@ import time
 
 from logger import Logger
 from pydantic_yaml import to_yaml_str
-from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from utils.importer.common import retry_importer, setup_webdriver
 
 from config.loader import IniConfigLoader
-from config.models import AffixFilterCountModel, AffixFilterModel, BrowserType, ItemFilterModel, ProfileModel
+from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 
 MAXROLL_PLANNER_URL = "maxroll.gg/d4/planner"
 MAXROLL_BUILD_GUIDE_URL = "maxroll.gg/d4/build-guides/"
@@ -39,25 +39,16 @@ PLANNER_LABEL_NAME = "d4t-name"
 TITLE_CLASS = "d4t-title"
 
 
-def import_build(url: str = None):
-    driver = _setup_webdriver()
-    for _ in range(5):
-        try:
-            _import_build(driver=driver, url=url)
-            break
-        except Exception as e:
-            Logger.error(f"An error occurred importing the build {e}. retrying")
-
-
-def _import_build(driver: ChromiumDriver, url: str = None):
+@retry_importer
+def import_build(driver: ChromiumDriver = None, url: str = None):
     if not url:
         Logger.info("Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
         url = input()
+        url = url.replace(" ", "")
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
         Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
         return
     wait = WebDriverWait(driver, 10)
-    url = url.replace(" ", "")
     Logger.info(f"Loading {url}")
     driver.get(url)
     _handle_popups(driver)
@@ -185,23 +176,6 @@ def _remove_extra_underscores(string: str) -> str:
     return re.sub(r"(_)\1+", r"\1", string)
 
 
-def _setup_webdriver() -> ChromiumDriver:
-    match IniConfigLoader().general.browser:
-        case BrowserType.edge:
-            options = webdriver.EdgeOptions()
-            options.add_argument("--headless=new")
-            driver = webdriver.Edge(options=options)
-        case BrowserType.chrome:
-            options = webdriver.ChromeOptions()
-            options.add_argument("--headless=new")
-            driver = webdriver.Chrome(options=options)
-        case BrowserType.firefox:
-            options = webdriver.FirefoxOptions()
-            options.add_argument("--headless")
-            driver = webdriver.Firefox(options=options)
-    return driver  # noqa # It must be one of the 3 browsers due to ini validation
-
-
 def _translate_modifiers(mods: list[WebElement]) -> list[str]:
     translated_mods = []
     if not mods:
@@ -217,5 +191,5 @@ def _translate_modifiers(mods: list[WebElement]) -> list[str]:
 
 if __name__ == "__main__":
     os.curdir = pathlib.Path(__file__).parent.parent.parent
-    driver = _setup_webdriver()
+    driver = setup_webdriver()
     import_build(url="https://maxroll.gg/d4/planner/xu2az0w2")

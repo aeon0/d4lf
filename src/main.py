@@ -8,7 +8,7 @@ from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
 from PIL import Image  # noqa #  Note: Somehow needed, otherwise the binary has an issue with tesserocr
-from utils.build_importer import import_build
+from utils.importer.maxroll import import_build
 from utils.misc import wait
 from utils.ocr.read import load_api
 from utils.process_handler import safe_exit

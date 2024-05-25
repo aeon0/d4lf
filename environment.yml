@@ -28,6 +28,7 @@ dependencies:
     - pydantic-numpy
     - pydantic-yaml
     - pyinstaller
+    - pyqt6
     - pytest
     - pytest-env
     - pytest-mock

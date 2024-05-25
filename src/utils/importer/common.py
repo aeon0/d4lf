@@ -36,8 +36,9 @@ def format_number_as_short_string(n: int) -> str:
 
 
 def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] | T]):
-    wait = WebDriverWait(driver, 5)
-    for _ in range(10):
+    Logger.info("Handling cookie / adblock popups")
+    wait = WebDriverWait(driver, 10)
+    for _ in range(3):
         try:
             elem = wait.until(method)
         except TimeoutException:
@@ -48,14 +49,15 @@ def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] |
 
 def retry_importer(func):
     def wrapper(*args, **kwargs):
-        if "driver" not in kwargs and not args:
-            kwargs["driver"] = setup_webdriver()
         for _ in range(5):
+            if "driver" not in kwargs and not args:
+                kwargs["driver"] = setup_webdriver()
             try:
                 func(*args, **kwargs)
                 break
             except Exception:
                 Logger.exception("An error occurred while importing. Retrying...")
+                kwargs["driver"].quit()
 
     return wrapper
 

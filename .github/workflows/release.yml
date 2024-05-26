@@ -1,9 +1,8 @@
-name: D4LF - CI
+name: Release
 on:
   push:
     tags:
       - "v*.*.*"
-  workflow_dispatch:
 jobs:
   release:
     runs-on: windows-latest
@@ -36,7 +35,9 @@ jobs:
           python build.py
           $version = python -c "from src.version import __version__; print(__version__)"
           $folderName = "d4lf_v" + $version
+          dir
           7z a $folderName.zip $folderName
+          dir
 
       - name: Release
         uses: softprops/action-gh-release@v2

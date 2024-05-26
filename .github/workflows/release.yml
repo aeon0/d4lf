@@ -20,9 +20,7 @@ jobs:
           python build.py
           $version = python -c "from src.version import __version__; print(__version__)"
           $folderName = "d4lf_v" + $version
-          dir
-          7z a $folderName.zip $folderName
-          dir
+          Compress-Archive -Path $folderName -DestinationPath "$folderName.zip"
 
       - name: Release
         uses: softprops/action-gh-release@v2

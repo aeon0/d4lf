@@ -1,0 +1,28 @@
+name: Setup env
+
+description: This action sets up a conda environment with Mambaforge and installs dependencies from an environment.yml file.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Mambaforge
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        miniforge-variant: Mambaforge
+        miniforge-version: latest
+        activate-environment: d4lf
+        python-version: '3.12'
+        use-mamba: true
+
+    - name: Update environment
+      shell: powershell
+      run: mamba env update -n d4lf -f environment.yml
+
+    - name: Conda info
+      shell: powershell
+      run: |
+        conda info
+        conda list

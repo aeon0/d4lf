@@ -60,12 +60,14 @@ The config folder contains:
 | [advanced_options] | Description                                                                                                              |
 |--------------------|--------------------------------------------------------------------------------------------------------------------------|
 | run_scripts        | Hotkey to start/stop vision mode                                                                                         |
-| import_build       | Hotkey to import a build from maxroll.gg planner                                                                         |
 | run_filter         | Hotkey to start/stop filtering items                                                                                     |
 | exit_key           | Hotkey to exit d4lf.exe                                                                                                  |
 | log_level          | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
 | scripts            | Running different scripts                                                                                                |
 | process_name       | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
+
+### GUI
+TODO, explain everything
 
 ## How to filter / Profiles
 
@@ -110,7 +112,8 @@ has a name and can filter for any combination of the following:
 - `itemType`: The name of the type or a list of multiple types.
   See [assets/lang/enUS/item_types.json](assets/lang/enUS/item_types.json)
 - `minPower`: Minimum item power
-- `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is on the overall item and independent of `affixPool`
+- `minGreaterAffixCount`: Minimum number of greater affixes. Note that this is on the overall item and independent
+  of `affixPool`
 - `affixPool`: A list of multiple different rulesets to filter for. Each ruleset must be fulfilled or the item is
   discarded
     - `count`: Define a list of affixes (see [syntax](#affix--aspects-filter-syntax)) and
@@ -310,15 +313,6 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 
 **In the event of breaking changes to the configuration, there will be a major release, such as updating from 2.x.x to
 3.x.x.**
-
-## Import builds from Maxroll.gg
-
-You can link either the build guide or a direct link to the specific planner you are after ie
-https://maxroll.gg/d4/build-guides/tornado-druid-guide or
-https://maxroll.gg/d4/planner/g54iz0wt#4
-it will create a file based on the label of the build in the planer in `C:/Users/WINDOWS_USER/.d4lf/profiles/`
-
-Supported browsers are Edge, Chrome, and Firefox, you can specify the browser to use in the params.ini file
 
 ## Develop
 

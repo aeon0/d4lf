@@ -138,6 +138,10 @@ class Logger:
         Logger.logger.addHandler(handler)
 
     @staticmethod
+    def removeHandler(handler: logging.Handler):
+        Logger.logger.removeHandler(handler)
+
+    @staticmethod
     def remove_file_logger(delete_current_log: bool = False):
         """
         Remove the file logger to not write output to a log file

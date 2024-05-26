@@ -38,11 +38,8 @@ TITLE_CLASS = "d4t-title"
 
 
 @retry_importer
-def import_build(driver: ChromiumDriver = None, url: str = None):
-    if not url:
-        Logger.info("Paste maxroll.gg build guide or planner build here ie https://maxroll.gg/d4/build-guides/minion-necromancer-guide")
-        url = input()
-        url = url.replace(" ", "")
+def import_build(url: str, driver: ChromiumDriver = None):
+    url = url.strip().replace("\n", "")
     if MAXROLL_PLANNER_URL not in url and MAXROLL_BUILD_GUIDE_URL not in url:
         Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
         return

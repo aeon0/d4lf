@@ -10,6 +10,7 @@ from src.version import __version__
 
 EXE_NAME = "d4lf.exe"
 
+
 def build(use_key: bool, release_dir: Path):
     clean_up()
     if release_dir.exists():
@@ -42,8 +43,8 @@ def create_shortcut_with_relative_paths(release_dir: Path, exe_name: str):
     batch_file_path = release_dir / "gui.bat"
     with open(batch_file_path, "w") as f:
         f.write("@echo off\n")
-        f.write(f"cd /d \"%~dp0\"\n")
-        f.write(f"start \"\" {exe_name} --gui")
+        f.write('cd /d "%~dp0"\n')
+        f.write(f'start "" {exe_name} --gui')
 
 
 if __name__ == "__main__":

@@ -2,7 +2,6 @@ import dataclasses
 import datetime
 import os
 import pathlib
-import sys
 
 import lxml.html
 from dataloader import Dataloader
@@ -59,11 +58,8 @@ class _Listing:
 
 
 @retry_importer
-def import_diablo_trade(driver: ChromiumDriver = None, url: str = None, max_listings: int = sys.maxsize):
-    if not url:
-        Logger.info("Paste diablo.trade filter here ie https://diablo.trade/listings/items?rarity=legendary")
-        url = input()
-        url = url.replace(" ", "")
+def import_diablo_trade(url: str, max_listings: int, driver: ChromiumDriver = None):
+    url = url.strip().replace("\n", "")
     if BASE_URL not in url:
         Logger.error("Invalid url, please use a diablo.trade filter")
         return
@@ -103,7 +99,7 @@ def import_diablo_trade(driver: ChromiumDriver = None, url: str = None, max_list
             listing_obj.affixes = res[0]
             listing_obj.inherents = res[1]
             all_listings.append(listing_obj)
-        Logger.debug(f"Fetched {len(all_listings)} listings")
+        Logger.info(f"Fetched {len(all_listings)} listings")
         if len(all_listings) >= max_listings:
             finished = True
         for _ in range(5):

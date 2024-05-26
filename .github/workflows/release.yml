@@ -1,0 +1,46 @@
+name: D4LF - CI
+on:
+  workflow_run:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Mambaforge
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          activate-environment: d4lf
+          python-version: '3.12'
+          use-mamba: true
+
+      - name: Update environment
+        run: mamba env update -n d4lf -f environment.yml
+
+      - name: Conda info
+        shell: powershell
+        run: |
+          conda info
+          conda list
+
+      - name: Build & Zip exe
+        shell: powershell
+        run: |
+          python -c "import sys; print(sys.version)"
+          python build.py
+          $version = python -c "from src.version import __version__; print(__version__)"
+          $folderName = "d4lf_v" + $version
+          7z a $folderName.zip $folderName
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: d4lf_v*.zip
+          generate_release_notes: true
+          draft: true

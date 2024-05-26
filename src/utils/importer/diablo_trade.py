@@ -39,6 +39,8 @@ PRICE_BUTTON_TEXT_XPATH = ".//h6"
 PRICE_BUTTON_VALUE_XPATH = ".//h4"
 RARITY_TYPE_POWER_XPATH = ".//div[@data-rarity]//span[contains(@class, 'text-shadow')]"
 
+# TODO: second version with API https://diablo.trade/api/items/search?exactPrice=true&rarity=legendary&sort=newest&cursor=1
+# same search parameters as in the normal filter but different endpoint. needs to cursor through pages
 
 @dataclasses.dataclass
 class _AnnotatedFilter:

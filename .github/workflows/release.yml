@@ -1,9 +1,9 @@
 name: D4LF - CI
 on:
-  workflow_run:
   push:
     tags:
       - "v*.*.*"
+  workflow_dispatch:
 jobs:
   release:
     runs-on: windows-latest

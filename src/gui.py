@@ -102,14 +102,15 @@ class Gui(QMainWindow):
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
 
+        hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
         generate_button.setEnabled(False)
         generate_button.clicked.connect(generate_button_click)
-        layout.addWidget(generate_button)
-
+        hbox2.addWidget(generate_button)
         profiles_button = QPushButton("Open Userconfig Directory")
         profiles_button.clicked.connect(self._open_userconfig_directory)
-        layout.addWidget(profiles_button)
+        hbox2.addWidget(profiles_button)
+        layout.addLayout(hbox2)
 
         log_label = QLabel("Log")
         layout.addWidget(log_label)
@@ -177,14 +178,15 @@ class Gui(QMainWindow):
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
 
+        hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
         generate_button.setEnabled(False)
         generate_button.clicked.connect(generate_button_click)
-        layout.addWidget(generate_button)
-
+        hbox2.addWidget(generate_button)
         profiles_button = QPushButton("Open Userconfig Directory")
         profiles_button.clicked.connect(self._open_userconfig_directory)
-        layout.addWidget(profiles_button)
+        hbox2.addWidget(profiles_button)
+        layout.addLayout(hbox2)
 
         log_label = QLabel("Log")
         layout.addWidget(log_label)

@@ -28,3 +28,4 @@ jobs:
           files: d4lf_v*.zip
           generate_release_notes: true
           draft: true
+          token: ${{ secrets.XXX }}

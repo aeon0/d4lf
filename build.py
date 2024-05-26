@@ -11,7 +11,7 @@ from src.version import __version__
 EXE_NAME = "d4lf.exe"
 
 
-def build(use_key: bool, release_dir: Path):
+def build(use_key: bool, release_dir: Path, conda_path: str):
     clean_up()
     if release_dir.exists():
         shutil.rmtree(release_dir)
@@ -19,7 +19,7 @@ def build(use_key: bool, release_dir: Path):
     if use_key:
         key = Fernet.generate_key().decode("utf-8")
         key_cmd = " --key " + key
-    installer_cmd = f"pyinstaller --clean --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {ARGS.conda_path}\\envs\\d4lf\\Lib\\site-packages src\\main.py"
+    installer_cmd = f"pyinstaller --clean --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {conda_path}\\envs\\d4lf\\Lib\\site-packages src\\main.py"
     os.system(installer_cmd)
     (release_dir / "main.exe").rename(release_dir / EXE_NAME)
 
@@ -54,5 +54,5 @@ if __name__ == "__main__":
     print(f"Building version: {__version__}")
     RELEASE_DIR = Path(f"d4lf_v{__version__}")
 
-    build(use_key=ARGS.use_key, release_dir=RELEASE_DIR)
+    build(use_key=ARGS.use_key, release_dir=RELEASE_DIR, conda_path=ARGS.conda_path)
     copy_additional_resources(RELEASE_DIR)

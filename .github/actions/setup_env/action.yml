@@ -5,21 +5,33 @@ description: This action sets up a conda environment with Mambaforge and install
 runs:
   using: "composite"
   steps:
-    - name: Setup Mambaforge
-      uses: conda-incubator/setup-miniconda@v3
+#    - name: Setup Mambaforge
+#      uses: conda-incubator/setup-miniconda@v3
+#      with:
+#        miniforge-variant: Mambaforge
+#        miniforge-version: latest
+#        activate-environment: d4lf
+#        python-version: '3.12'
+#        use-mamba: true
+#
+#    - name: Update environment
+#      shell: powershell
+#      run: mamba env update -n d4lf -f environment.yml
+#
+#    - name: Conda info
+#      shell: powershell
+#      run: |
+#        conda info
+#        conda list
+    - name: Setup Python
+      uses: actions/setup-python@v5
       with:
-        miniforge-variant: Mambaforge
-        miniforge-version: latest
-        activate-environment: d4lf
         python-version: '3.12'
-        use-mamba: true
+        cache: 'pip'
 
-    - name: Update environment
+    - name: Install dependencies
       shell: powershell
-      run: mamba env update -n d4lf -f environment.yml
+      run: pip install -r requirements.txt
 
-    - name: Conda info
+    - run: python -c "import sys; print(sys.version)"
       shell: powershell
-      run: |
-        conda info
-        conda list

@@ -26,9 +26,7 @@ jobs:
 
       - name: Pytest non web
         shell: powershell
-        run: |
-          python -c "import sys; print(sys.version)"
-          pytest . -m "not webtest" -v
+        run: pytest . -m "not webtest" -v
 
       # for some reason, these take forever on ci. need to investigate. for now, disable
       # - name: Pytest web

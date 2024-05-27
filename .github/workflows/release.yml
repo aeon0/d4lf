@@ -1,8 +1,12 @@
 name: Release
+
 on:
   push:
     tags:
       - "v*.*.*"
+
+concurrency: release
+
 jobs:
   release:
     runs-on: windows-latest
@@ -27,4 +31,3 @@ jobs:
         with:
           files: d4lf_v*.zip
           generate_release_notes: true
-          draft: true

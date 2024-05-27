@@ -16,13 +16,13 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup_env
 
-      - name: ruff lint
-        uses: chartboost/ruff-action@v1
-
       - name: ruff format
-        uses: chartboost/ruff-action@v1
-        with:
-          args: 'format --check'
+        shell: powershell
+        run: ruff format --check
+
+      - name: ruff lint
+        shell: powershell
+        run: ruff check
 
       - name: Pytest non web
         shell: powershell

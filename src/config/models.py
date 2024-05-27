@@ -163,6 +163,7 @@ class BrowserType(enum.StrEnum):
 
 
 class GeneralModel(_IniBaseModel):
+    browser: BrowserType = BrowserType.chrome
     check_chest_tabs: list[int]
     full_dump: bool = False
     handle_rares: HandleRaresType = HandleRaresType.filter

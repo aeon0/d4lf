@@ -50,6 +50,7 @@ The config folder contains:
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
 | check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
+| browser                    | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                |
 | full_dump                  | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                          |
 
 | [char]    | Description                       |
@@ -66,6 +67,7 @@ The config folder contains:
 | process_name       | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
 
 ### GUI
+
 TODO, explain everything
 
 ## How to filter / Profiles

@@ -84,6 +84,7 @@ def retry_importer(func=None, inject_webdriver: bool = False):
 
 
 def save_as_profile(file_name: str, profile: ProfileModel, url: str):
+    file_name = file_name.replace("/", "_").replace(" ", "_").replace("'", "").replace("-", "_")
     save_path = IniConfigLoader().user_dir / f"profiles/{file_name}.yaml"
     with open(save_path, "w", encoding="utf-8") as file:
         file.write(f"# {url}\n")
@@ -99,8 +100,8 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
     Logger.info(f"Created profile {save_path}")
 
 
-def setup_webdriver(browser: BrowserType) -> ChromiumDriver:
-    match browser:
+def setup_webdriver() -> ChromiumDriver:
+    match IniConfigLoader().general.browser:
         case BrowserType.edge:
             options = webdriver.EdgeOptions()
             options.add_argument("--headless=new")

@@ -36,7 +36,7 @@ def import_maxroll(url: str):
         Logger.error("Couldn't get planner")
         return
     all_data = r.json()
-    build_name = r.json()["name"].replace("/", "_").replace(" ", "_")
+    build_name = all_data["name"]
     build_data = json.loads(all_data["data"])
     items = build_data["items"]
     try:
@@ -71,6 +71,10 @@ def import_maxroll(url: str):
 
         finished_filters.append({filter_name: item_filter})
     profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
+    if not build_name:
+        build_name = all_data["class"]
+        if active_profile["name"]:
+            build_name += f"_{active_profile["name"]}"
     save_as_profile(file_name=build_name, profile=profile, url=url)
     Logger.info("Finished")
 

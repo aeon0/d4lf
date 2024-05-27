@@ -26,10 +26,11 @@ def extract_digits(text: str) -> int:
 
 
 def find_enum_member(enum_class, target_string: str, check_keys: bool = False):
+    target_string = target_string.casefold().replace(" ", "").replace("-", "")
     for enum_member in enum_class:
-        if enum_member.value.casefold().replace(" ", "") in target_string.casefold().replace(" ", ""):
+        if enum_member.value.casefold().replace(" ", "").replace("-", "") == target_string:
             return enum_member
-        if check_keys and enum_member.name.casefold().replace(" ", "") in target_string.casefold().replace(" ", ""):
+        if check_keys and enum_member.name.casefold().replace(" ", "").replace("-", "") == target_string:
             return enum_member
     return None
 

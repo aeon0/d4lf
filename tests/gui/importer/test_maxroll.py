@@ -21,5 +21,5 @@ URLS = [
 @pytest.mark.webtest()
 def test_import(url: str, mock_ini_loader: MockerFixture, mocker: MockerFixture):
     Dataloader()  # need to load data first or the mock will make it impossible
-    mocker.patch("builtins.open", new=mocker.mock_open())
+    # mocker.patch("builtins.open", new=mocker.mock_open())
     import_maxroll(url=url)

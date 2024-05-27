@@ -46,13 +46,13 @@ def import_maxroll(url: str):
         return
     active_profile = build_data["profiles"][build_id]
     finished_filters = []
-    for body_slot, item_id in active_profile["items"].items():
+    for item_id in active_profile["items"].values():
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
         if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] == 2:
             Logger.error(f"Uniques are not supported. Skipping '{mapping_data["items"][resolved_item["id"]]["name"]}'")
             continue
-        if (item_type := _find_item_type(mapping_data=mapping_data["itemTypes"], value=body_slot)) is None:
+        if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
             Logger.error("Couldn't find item type")
             return
         item_filter.itemType = [item_type]
@@ -70,9 +70,16 @@ def import_maxroll(url: str):
             i += 1
 
         finished_filters.append({filter_name: item_filter})
-    profile = ProfileModel(name="imported profile", Affixes=finished_filters)
+    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
     save_as_profile(file_name=build_name, profile=profile, url=url)
     Logger.info("Finished")
+
+
+def _corrections(input_str: str) -> str:
+    match input_str:
+        case "On_Hit_Vulnerable_Proc_Chance":
+            return "On_Hit_Vulnerable_Proc"
+    return input_str
 
 
 def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
@@ -81,16 +88,22 @@ def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
         for affix in mapping_data["affixes"].values():
             if affix["id"] != affix_id["nid"]:
                 continue
-            if "param" not in affix["attributes"][0] or affix["attributes"][0]["formula"] in ["AffixSingleResist"]:
+            attr_desc = ""
+            if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["AffixSingleResist", "AffixFlatResourceUpto4"]:
+                if affix["attributes"][0]["formula"] in ["AffixSingleResist"]:
+                    attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
+                elif affix["attributes"][0]["formula"] in ["AffixFlatResourceUpto4"]:
+                    attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " per Second"
+            elif "param" not in affix["attributes"][0]:
                 attr_id = affix["attributes"][0]["id"]
                 attr_obj = mapping_data["attributes"][str(attr_id)]
-                attr_desc = mapping_data["attributeDescriptions"][attr_obj["name"]]
+                attr_desc = mapping_data["attributeDescriptions"][_corrections(attr_obj["name"])]
             else:  # must be + to talent or skill
                 attr_param = affix["attributes"][0]["param"]
-                attr_desc = ""
                 for skill_data in mapping_data["skills"].values():
                     if skill_data["id"] == attr_param:
                         attr_desc = f"to {skill_data["name"]}"
+                        break
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
             affix_obj = Affix(name=closest_match(clean_str(clean_desc).strip().lower(), Dataloader().affix_dict))
             if affix_obj.name is not None:
@@ -102,10 +115,9 @@ def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
 
 
 def _find_item_type(mapping_data: dict, value: str) -> ItemType | None:
-    key = "bodySlots"
     for d_key, d_value in mapping_data.items():
-        if key in d_value and int(value) in d_value[key]:
-            if (res := find_enum_member(enum_class=ItemType, target_string=d_key, check_keys=True)) is None:
+        if d_key == value:
+            if (res := find_enum_member(enum_class=ItemType, target_string=d_value["type"], check_keys=True)) is None:
                 Logger.error("Couldn't match item type to enum")
                 return None
             return res
@@ -154,4 +166,4 @@ class MaxrollException(Exception):
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
-    import_maxroll(url="https://maxroll.gg/d4/planner/r61bp0om#11")
+    import_maxroll(url="https://maxroll.gg/d4/planner/ubaoz02q#1")

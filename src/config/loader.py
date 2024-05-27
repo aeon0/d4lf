@@ -52,7 +52,6 @@ class IniConfigLoader:
         )
         self._char = CharModel(inventory=self._select_val("char", "inventory"))
         self._general = GeneralModel(
-            browser=self._select_val("general", "browser"),
             check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
             full_dump=self._select_val("general", "full_dump"),
             handle_rares=self._select_val("general", "handle_rares"),

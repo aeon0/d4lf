@@ -1,8 +1,10 @@
 import datetime
+import functools
 import time
 from collections.abc import Callable
 from typing import Literal, TypeVar
 
+import requests
 from logger import Logger
 from pydantic_yaml import to_yaml_str
 from selenium import webdriver
@@ -23,9 +25,11 @@ def extract_digits(text: str) -> int:
     return int("".join([char for char in text if char.isdigit()]))
 
 
-def find_enum_key(enum_class, target_string: str):
+def find_enum_member(enum_class, target_string: str, check_keys: bool = False):
     for enum_member in enum_class:
-        if enum_member.value.casefold() in target_string.casefold():
+        if enum_member.value.casefold().replace(" ", "") in target_string.casefold().replace(" ", ""):
+            return enum_member
+        if check_keys and enum_member.name.casefold().replace(" ", "") in target_string.casefold().replace(" ", ""):
             return enum_member
     return None
 
@@ -33,6 +37,17 @@ def find_enum_key(enum_class, target_string: str):
 def format_number_as_short_string(n: int) -> str:
     result = n / 1_000_000
     return f"{int(result)}M" if result.is_integer() else f"{result:.2f}M"
+
+
+def get_with_retry(url: str) -> requests.Response:
+    for _ in range(5):
+        r = requests.get(url)
+        if r.status_code == 200:
+            return r
+        Logger.debug(f"Request {url} failed with status code {r.status_code}, retrying...")
+    else:
+        Logger.error(msg := f"Failed to get a successful response after 5 attempts: {url=}")
+        raise ConnectionError(msg)
 
 
 def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] | T]):
@@ -47,19 +62,24 @@ def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] |
         time.sleep(1)
 
 
-def retry_importer(func):
-    def wrapper(*args, **kwargs):
-        for _ in range(5):
-            if "driver" not in kwargs and not args:
-                kwargs["driver"] = setup_webdriver()
-            try:
-                func(*args, **kwargs)
-                break
-            except Exception:
-                Logger.exception("An error occurred while importing. Retrying...")
-                kwargs["driver"].quit()
+def retry_importer(func=None, inject_webdriver: bool = False):
+    def decorator_retry_importer(wrap_function):
+        @functools.wraps(wrap_function)
+        def wrapper(*args, **kwargs):
+            for _ in range(5):
+                if inject_webdriver and "driver" not in kwargs and not args:
+                    kwargs["driver"] = setup_webdriver()
+                try:
+                    return wrap_function(*args, **kwargs)
+                except Exception:
+                    Logger.exception("An error occurred while importing. Retrying...")
+                    if inject_webdriver:
+                        kwargs["driver"].quit()
+            return None
 
-    return wrapper
+        return wrapper
+
+    return decorator_retry_importer if func is None else decorator_retry_importer(func)
 
 
 def save_as_profile(file_name: str, profile: ProfileModel, url: str):
@@ -78,8 +98,8 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
     Logger.info(f"Created profile {save_path}")
 
 
-def setup_webdriver() -> ChromiumDriver:
-    match IniConfigLoader().general.browser:
+def setup_webdriver(browser: BrowserType) -> ChromiumDriver:
+    match browser:
         case BrowserType.edge:
             options = webdriver.EdgeOptions()
             options.add_argument("--headless=new")

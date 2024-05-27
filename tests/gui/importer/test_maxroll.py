@@ -1,9 +1,7 @@
 import pytest
 from dataloader import Dataloader
+from gui.importer.maxroll import import_maxroll
 from pytest_mock import MockerFixture
-from utils.importer.maxroll import import_build
-
-from config.models import BrowserType
 
 URLS = [
     "https://maxroll.gg/d4/build-guides/double-swing-barbarian-guide",
@@ -22,7 +20,6 @@ URLS = [
 @pytest.mark.parametrize("url", URLS)
 @pytest.mark.webtest()
 def test_import(url: str, mock_ini_loader: MockerFixture, mocker: MockerFixture):
-    mock_ini_loader._general.browser = BrowserType.edge
     Dataloader()  # need to load data first or the mock will make it impossible
     mocker.patch("builtins.open", new=mocker.mock_open())
-    import_build(url=url)
+    import_maxroll(url=url)

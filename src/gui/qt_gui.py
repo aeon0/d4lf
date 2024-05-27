@@ -3,6 +3,8 @@ import os
 import pathlib
 import sys
 
+from gui.importer.diablo_trade import import_diablo_trade
+from gui.importer.maxroll import import_maxroll
 from logger import Logger
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
@@ -19,8 +21,6 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
-from utils.importer.diablo_trade import import_diablo_trade
-from utils.importer.maxroll import import_build
 
 from config.helper import singleton
 from config.loader import IniConfigLoader
@@ -166,7 +166,7 @@ class Gui(QMainWindow):
         layout.addLayout(hbox)
 
         def generate_button_click():
-            worker = _Worker(import_build, url=input_box.text())
+            worker = _Worker(import_maxroll, url=input_box.text())
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")

@@ -36,6 +36,7 @@ dependencies:
     - pytest-xdist
     - pytweening
     - rapidfuzz
+    - requests
     - ruff
     - selenium
     - tk

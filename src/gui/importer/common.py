@@ -25,16 +25,6 @@ def extract_digits(text: str) -> int:
     return int("".join([char for char in text if char.isdigit()]))
 
 
-def find_enum_member(enum_class, target_string: str, check_keys: bool = False):
-    target_string = target_string.casefold().replace(" ", "").replace("-", "")
-    for enum_member in enum_class:
-        if enum_member.value.casefold().replace(" ", "").replace("-", "") == target_string:
-            return enum_member
-        if check_keys and enum_member.name.casefold().replace(" ", "").replace("-", "") == target_string:
-            return enum_member
-    return None
-
-
 def format_number_as_short_string(n: int) -> str:
     result = n / 1_000_000
     return f"{int(result)}M" if result.is_integer() else f"{result:.2f}M"
@@ -51,9 +41,9 @@ def get_with_retry(url: str) -> requests.Response:
         raise ConnectionError(msg)
 
 
-def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] | T]):
+def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] | T], timeout=10):
     Logger.info("Handling cookie / adblock popups")
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, timeout)
     for _ in range(3):
         try:
             elem = wait.until(method)
@@ -63,19 +53,30 @@ def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] |
         time.sleep(1)
 
 
+def match_to_enum(enum_class, target_string: str, check_keys: bool = False):
+    target_string = target_string.casefold().replace(" ", "").replace("-", "")
+    for enum_member in enum_class:
+        if enum_member.value.casefold().replace(" ", "").replace("-", "") == target_string:
+            return enum_member
+        if check_keys and enum_member.name.casefold().replace(" ", "").replace("-", "") == target_string:
+            return enum_member
+    return None
+
+
 def retry_importer(func=None, inject_webdriver: bool = False):
     def decorator_retry_importer(wrap_function):
         @functools.wraps(wrap_function)
         def wrapper(*args, **kwargs):
+            if inject_webdriver and "driver" not in kwargs and not args:
+                kwargs["driver"] = setup_webdriver()
             for _ in range(5):
-                if inject_webdriver and "driver" not in kwargs and not args:
-                    kwargs["driver"] = setup_webdriver()
                 try:
-                    return wrap_function(*args, **kwargs)
-                except Exception:
-                    Logger.exception("An error occurred while importing. Retrying...")
+                    res = wrap_function(*args, **kwargs)
                     if inject_webdriver:
                         kwargs["driver"].quit()
+                    return res
+                except Exception:
+                    Logger.exception("An error occurred while importing. Retrying...")
             return None
 
         return wrapper

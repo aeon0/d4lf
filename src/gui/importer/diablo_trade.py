@@ -7,9 +7,9 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from dataloader import Dataloader
 from gui.importer.common import (
-    find_enum_member,
     format_number_as_short_string,
     get_with_retry,
+    match_to_enum,
     retry_importer,
     save_as_profile,
 )
@@ -45,7 +45,7 @@ class _Listing:
 def import_diablo_trade(url: str, max_listings: int):
     url = url.strip().replace("\n", "")
     if BASE_URL not in url:
-        Logger.error("Invalid url, please use a diablo.trade filter")
+        Logger.error("Invalid url, please use a diablo.trade filter url")
         return
     all_listings = []
     cursor = 1
@@ -65,8 +65,8 @@ def import_diablo_trade(url: str, max_listings: int):
                 affixes=_create_affixes_from_api_dict(listing["affixes"]),
                 inherents=_create_affixes_from_api_dict(listing["implicits"]),
                 item_power=listing["itemPower"],
-                item_rarity=find_enum_member(enum_class=ItemRarity, target_string=listing["rarity"]),
-                item_type=find_enum_member(enum_class=ItemType, target_string=listing["itemType"]),
+                item_rarity=match_to_enum(enum_class=ItemRarity, target_string=listing["rarity"]),
+                item_type=match_to_enum(enum_class=ItemType, target_string=listing["itemType"]),
                 price=listing["price"],
             )
             try:

@@ -3,6 +3,7 @@ import os
 import pathlib
 import sys
 
+from gui.importer.d4_builds import import_d4_builds
 from gui.importer.diablo_trade import import_diablo_trade
 from gui.importer.maxroll import import_maxroll
 from logger import Logger
@@ -26,6 +27,8 @@ from config.helper import singleton
 from config.loader import IniConfigLoader
 
 THREADPOOL = QThreadPool()
+D4TRADE_TABNAME = "diablo.trade"
+MAXROLL_D4B_TABNAME = "maxroll / d4builds"
 
 
 def start_gui():
@@ -53,7 +56,7 @@ class Gui(QMainWindow):
         self.tab_widget.setTabBar(_CustomTabBar())
         self.setCentralWidget(self.tab_widget)
 
-        self._maxroll_tab()
+        self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
 
         Logger.addHandler(self.maxroll_log_handler)
@@ -141,16 +144,16 @@ class Gui(QMainWindow):
         tab_diablo_trade.setLayout(layout)
 
     def _handle_tab_changed(self, index):
-        if self.tab_widget.tabText(index) == "maxroll.gg":
+        if self.tab_widget.tabText(index) == MAXROLL_D4B_TABNAME:
             Logger.addHandler(self.maxroll_log_handler)
             Logger.removeHandler(self.diablo_trade_log_handler)
-        elif self.tab_widget.tabText(index) == "diablo.trade":
+        elif self.tab_widget.tabText(index) == D4TRADE_TABNAME:
             Logger.addHandler(self.diablo_trade_log_handler)
             Logger.removeHandler(self.maxroll_log_handler)
 
-    def _maxroll_tab(self):
+    def _maxroll_or_d4builds_tab(self):
         tab_maxroll = QWidget(self)
-        self.tab_widget.addTab(tab_maxroll, "maxroll.gg")
+        self.tab_widget.addTab(tab_maxroll, MAXROLL_D4B_TABNAME)
 
         layout = QVBoxLayout(tab_maxroll)
 
@@ -166,7 +169,8 @@ class Gui(QMainWindow):
         layout.addLayout(hbox)
 
         def generate_button_click():
-            worker = _Worker(import_maxroll, url=input_box.text())
+            url = input_box.text().strip()
+            worker = _Worker(import_maxroll, url=url) if "maxroll" in url else _Worker(import_d4_builds, url=url)
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -205,9 +209,11 @@ class Gui(QMainWindow):
             "You can link either the build guide or a direct link to the specific planner.\n\n"
             "https://maxroll.gg/d4/build-guides/tornado-druid-guide\n"
             "or\n"
-            "https://maxroll.gg/d4/planner/cm6pf0xa#5\n\n"
+            "https://maxroll.gg/d4/planner/cm6pf0xa#5\n"
+            "or\n"
+            "https://d4builds.gg/builds/ef414fbd-81cd-49d1-9c8d-4938b278e2ee\n\n"
             f"It will create a file based on the label of the build in the planer in: {IniConfigLoader().user_dir / "profiles"}\n\n"
-            "Supported browsers are Edge, Chrome, and Firefox, you can specify the browser to use in the params.ini file"
+            "For d4builds you need to specify your in the params.ini file"
         )
         instructions_text.setReadOnly(True)
         font_metrics = instructions_text.fontMetrics()

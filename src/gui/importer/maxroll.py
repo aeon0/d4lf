@@ -5,7 +5,7 @@ import re
 
 import lxml.html
 from dataloader import Dataloader
-from gui.importer.common import find_enum_member, get_with_retry, retry_importer, save_as_profile
+from gui.importer.common import get_with_retry, match_to_enum, retry_importer, save_as_profile
 from item.data.affix import Affix
 from item.data.item_type import ItemType
 from item.descr.text import clean_str, closest_match
@@ -24,7 +24,7 @@ PLANNER_BASE_URL = "https://maxroll.gg/d4/planner/"
 def import_maxroll(url: str):
     url = url.strip().replace("\n", "")
     if PLANNER_BASE_URL not in url and BUILD_GUIDE_BASE_URL not in url:
-        Logger.error("Invalid url, please use a d4 planner build on MaxRoll.gg")
+        Logger.error("Invalid url, please use a maxroll build guide or maxroll planner url")
         return
     Logger.info(f"Loading {url}")
     api_url, build_id = (
@@ -121,7 +121,7 @@ def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
 def _find_item_type(mapping_data: dict, value: str) -> ItemType | None:
     for d_key, d_value in mapping_data.items():
         if d_key == value:
-            if (res := find_enum_member(enum_class=ItemType, target_string=d_value["type"], check_keys=True)) is None:
+            if (res := match_to_enum(enum_class=ItemType, target_string=d_value["type"], check_keys=True)) is None:
                 Logger.error("Couldn't match item type to enum")
                 return None
             return res

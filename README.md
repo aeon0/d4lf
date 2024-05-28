@@ -68,7 +68,7 @@ The config folder contains:
 
 ### GUI
 
-TODO, explain everything
+Not yet finished. For now, it should be self-explanatory. Just start `gui.bat` in the archive.
 
 ## How to filter / Profiles
 

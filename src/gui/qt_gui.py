@@ -32,6 +32,7 @@ MAXROLL_D4B_TABNAME = "maxroll / d4builds"
 
 
 def start_gui():
+    os.environ["QT_LOGGING_RULES"] = "qt.qpa.window=false"
     app = QApplication([])
     app.setWindowIcon(QIcon(str(pathlib.Path("assets/logo.png"))))
     window = Gui()

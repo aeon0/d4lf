@@ -5,7 +5,7 @@ import traceback
 import keyboard
 from beautifultable import BeautifulTable
 from cam import Cam
-from gui import start_gui
+from gui.qt_gui import start_gui
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay

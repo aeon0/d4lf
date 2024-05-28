@@ -26,15 +26,12 @@ jobs:
 
       - name: Pytest non web
         shell: powershell
-        run: pytest . -m "not webtest" -v
+        run: pytest . -v
 
       - name: Pytest requests
         shell: powershell
         run: pytest . -m "requests" -v -n auto
 
-# for some reason it doesn't like selenium. skip for now
-#      - name: Pytest selenium
-#        shell: powershell
-#        run: pytest . -m "requests" -v -n auto
-#        continue-on-error: true
-#        timeout-minutes: 10
+      - name: Pytest selenium
+        shell: powershell
+        run: pytest . -m "selenium" -v -n auto

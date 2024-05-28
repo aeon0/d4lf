@@ -112,7 +112,6 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
-    import_build: str
     log_lvl: str = "info"
     process_name: str = "Diablo IV.exe"
     run_filter: str
@@ -121,12 +120,12 @@ class AdvancedOptionsModel(_IniBaseModel):
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.import_build, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("import_build", "run_scripts", "run_filter", "exit_key")
+    @field_validator("exit_key", "run_scripts", "run_filter")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 

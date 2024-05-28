@@ -6,7 +6,7 @@ from pathlib import Path
 
 from cryptography.fernet import Fernet
 
-from src.version import __version__
+from src import __version__
 
 EXE_NAME = "d4lf.exe"
 
@@ -41,6 +41,14 @@ def copy_additional_resources(release_dir: Path):
     shutil.copytree("config", release_dir / "config")
 
 
+def create_batch_for_gui(release_dir: Path, exe_name: str):
+    batch_file_path = release_dir / "gui.bat"
+    with open(batch_file_path, "w") as f:
+        f.write("@echo off\n")
+        f.write('cd /d "%~dp0"\n')
+        f.write(f'start "" {exe_name} --gui')
+
+
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(description="Build d4lf")
     PARSER.add_argument("-k", "--use_key", action="store_true", help="Will build with encryption key")
@@ -51,3 +59,4 @@ if __name__ == "__main__":
 
     build(use_key=ARGS.use_key, release_dir=RELEASE_DIR)
     copy_additional_resources(RELEASE_DIR)
+    create_batch_for_gui(release_dir=RELEASE_DIR, exe_name=EXE_NAME)

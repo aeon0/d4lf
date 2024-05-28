@@ -1,36 +1,34 @@
 import os
+import sys
 import traceback
 
 import keyboard
 from beautifultable import BeautifulTable
 from cam import Cam
+from gui.qt_gui import start_gui
 from item.filter import Filter
 from logger import Logger
 from overlay import Overlay
 from PIL import Image  # noqa #  Note: Somehow needed, otherwise the binary has an issue with tesserocr
-from utils.importer.maxroll import import_build
 from utils.misc import wait
 from utils.ocr.read import load_api
 from utils.process_handler import safe_exit
 from utils.window import WindowSpec, start_detecting_window
-from version import __version__
 
 from config.loader import IniConfigLoader
+from src import __version__
 
 
 def main():
-    Logger.init(IniConfigLoader().advanced_options.log_lvl)
     # Create folders for logging stuff
-    config_dir = IniConfigLoader().user_dir
-    for dir_name in ["log/screenshots", config_dir, config_dir / "profiles"]:
+    for dir_name in ["log/screenshots", IniConfigLoader().user_dir, IniConfigLoader().user_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
-    Logger.init("info")
+    Logger.info(f"Adapt your custom configs in: {IniConfigLoader().user_dir}")
 
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
-    table.rows.append([IniConfigLoader().advanced_options.import_build, "Import Build"])
     table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
     table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
     table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
@@ -38,16 +36,12 @@ def main():
     print(table)
     print("\n")
 
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.import_build, lambda: import_build())
-
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         wait(0.2)
 
     load_api()
-
-    Logger.info(f"Adapt your custom configs in: {config_dir}")
 
     Filter().load_files()
     overlay = None
@@ -61,6 +55,10 @@ def main():
 
 
 if __name__ == "__main__":
+    Logger.init("debug")  # We need this to have the logger initialized before we start doing other stuff
+    Logger.init(IniConfigLoader().advanced_options.log_lvl)
+    if len(sys.argv) > 1 and sys.argv[1] == "--gui":
+        start_gui()
     try:
         main()
     except Exception:

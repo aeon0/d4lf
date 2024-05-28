@@ -6,7 +6,8 @@ import sys
 import warnings
 
 import colorama
-from version import __version__
+
+from src import __version__
 
 colorama.init()
 
@@ -132,6 +133,14 @@ class Logger:
         Logger.logger.addHandler(Logger.string_handler)
         Logger.logger.addHandler(Logger.console_handler)
         Logger.logger.addHandler(Logger.file_handler)
+
+    @staticmethod
+    def addHandler(handler: logging.Handler):
+        Logger.logger.addHandler(handler)
+
+    @staticmethod
+    def removeHandler(handler: logging.Handler):
+        Logger.logger.removeHandler(handler)
 
     @staticmethod
     def remove_file_logger(delete_current_log: bool = False):

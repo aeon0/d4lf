@@ -5,7 +5,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 ![sample](assets/thumbnail.jpg)]
 
-## Features
+## Features asdf
 
 - Filter items in inventory and stash
 - Filter by item type, item power and greater affix count

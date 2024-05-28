@@ -20,7 +20,7 @@
             "name": "Loot Filter",
             "type": "debugpy",
             "request": "launch",
-            "program": "src/main.py",
+            "module": "src.main",
             "console": "integratedTerminal",
             "justMyCode": true,
             "cwd": "${workspaceFolder}",

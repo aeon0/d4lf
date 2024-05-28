@@ -41,7 +41,7 @@ def copy_additional_resources(release_dir: Path):
     shutil.copytree("config", release_dir / "config")
 
 
-def create_shortcut_with_relative_paths(release_dir: Path, exe_name: str):
+def create_batch_for_gui(release_dir: Path, exe_name: str):
     batch_file_path = release_dir / "gui.bat"
     with open(batch_file_path, "w") as f:
         f.write("@echo off\n")
@@ -59,4 +59,4 @@ if __name__ == "__main__":
 
     build(use_key=ARGS.use_key, release_dir=RELEASE_DIR)
     copy_additional_resources(RELEASE_DIR)
-    create_shortcut_with_relative_paths(release_dir=RELEASE_DIR, exe_name=EXE_NAME)
+    create_batch_for_gui(release_dir=RELEASE_DIR, exe_name=EXE_NAME)

@@ -105,6 +105,7 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
+            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
@@ -182,6 +183,7 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
+            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")

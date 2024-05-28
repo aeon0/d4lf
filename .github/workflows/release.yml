@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+concurrency: release
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup env
+        uses: ./.github/actions/setup_env
+
+      - name: Build & Zip exe
+        shell: powershell
+        run: |          
+          python build.py
+          $version = python -c "from src.version import __version__; print(__version__)"
+          $folderName = "d4lf_v" + $version
+          Compress-Archive -Path $folderName -DestinationPath "$folderName.zip"
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: d4lf_v*.zip
+          generate_release_notes: true

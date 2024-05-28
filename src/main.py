@@ -14,9 +14,9 @@ from utils.misc import wait
 from utils.ocr.read import load_api
 from utils.process_handler import safe_exit
 from utils.window import WindowSpec, start_detecting_window
-from version import __version__
 
 from config.loader import IniConfigLoader
+from src import __version__
 
 
 def main():

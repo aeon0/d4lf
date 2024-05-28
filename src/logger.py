@@ -6,7 +6,8 @@ import sys
 import warnings
 
 import colorama
-from version import __version__
+
+from src import __version__
 
 colorama.init()
 

@@ -6,7 +6,7 @@ from pathlib import Path
 
 from cryptography.fernet import Fernet
 
-from src.version import __version__
+from src import __version__
 
 EXE_NAME = "d4lf.exe"
 

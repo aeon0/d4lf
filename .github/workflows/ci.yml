@@ -24,9 +24,9 @@ jobs:
         shell: powershell
         run: ruff check
 
-      - name: Pytest non web
+      - name: Pytest
         shell: powershell
-        run: pytest . -v
+        run: pytest . -m "not requests and not selenium" -v
 
       - name: Pytest requests
         shell: powershell

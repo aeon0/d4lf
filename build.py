@@ -1,7 +1,7 @@
 import argparse
-import getpass
 import os
 import shutil
+import site
 from pathlib import Path
 
 from cryptography.fernet import Fernet
@@ -19,7 +19,9 @@ def build(use_key: bool, release_dir: Path):
     if use_key:
         key = Fernet.generate_key().decode("utf-8")
         key_cmd = " --key " + key
-    installer_cmd = f"pyinstaller --clean --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {ARGS.conda_path}\\envs\\d4lf\\Lib\\site-packages src\\main.py"
+    installer_cmd = (
+        f"pyinstaller --clean --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {site.getsitepackages()[1]} src\\main.py"
+    )
     os.system(installer_cmd)
     (release_dir / "main.exe").rename(release_dir / EXE_NAME)
 
@@ -49,13 +51,6 @@ def create_shortcut_with_relative_paths(release_dir: Path, exe_name: str):
 
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(description="Build d4lf")
-    PARSER.add_argument(
-        "-c",
-        "--conda_path",
-        type=str,
-        help="Path to local conda e.g. C:\\Users\\USER\\miniconda3",
-        default=f"C:\\Users\\{getpass.getuser()}\\miniconda3",
-    )
     PARSER.add_argument("-k", "--use_key", action="store_true", help="Will build with encryption key")
     ARGS = PARSER.parse_args()
 

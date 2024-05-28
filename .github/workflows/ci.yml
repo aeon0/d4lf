@@ -1,5 +1,11 @@
-name: D4LF - CI
+name: CI
+
 on: [ pull_request ]
+
+concurrency:
+  group: '${{github.workflow}}-${{github.ref}}'
+  cancel-in-progress: true
+
 jobs:
   tests:
     runs-on: windows-latest
@@ -7,37 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-variant: Mambaforge
-          miniforge-version: latest
-          activate-environment: d4lf
-          python-version: '3.12'
-          use-mamba: true
-
-      - name: Update environment
-        run: mamba env update -n d4lf -f environment.yml
-
-      - name: Conda info
-        shell: powershell
-        run: |
-          conda info
-          conda list
-
-      - name: ruff lint
-        uses: chartboost/ruff-action@v1
+      - name: Setup env
+        uses: ./.github/actions/setup_env
 
       - name: ruff format
-        uses: chartboost/ruff-action@v1
-        with:
-          args: 'format --check'
+        shell: powershell
+        run: ruff format --check
+
+      - name: ruff lint
+        shell: powershell
+        run: ruff check
 
       - name: Pytest non web
         shell: powershell
-        run: |
-          python -c "import sys; print(sys.version)"
-          pytest . -m "not webtest" -v
+        run: pytest . -m "not webtest" -v
 
       # for some reason, these take forever on ci. need to investigate. for now, disable
       # - name: Pytest web

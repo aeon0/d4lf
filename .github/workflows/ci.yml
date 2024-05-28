@@ -34,4 +34,4 @@ jobs:
 
       - name: Pytest selenium
         shell: powershell
-        run: pytest . -m "selenium" -v -n auto
+        run: pytest . -m "selenium" -v

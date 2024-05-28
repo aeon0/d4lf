@@ -154,7 +154,8 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
-    import_diablo_trade(
-        url="https://diablo.trade/listings/items?exactPrice=true&itemType=equipment&price=10000000,9999999999&rarity=legendary",
-        max_listings=200,
-    )
+    URLS = [
+        "https://diablo.trade/listings/items?exactPrice=true&itemType=equipment&price=10000000,9999999999&rarity=legendary",
+    ]
+    for x in URLS:
+        import_diablo_trade(url=x, max_listings=200)

@@ -3,7 +3,7 @@ import os
 import pathlib
 import sys
 
-from gui.importer.d4_builds import import_d4_builds
+from gui.importer.d4builds import import_d4builds
 from gui.importer.diablo_trade import import_diablo_trade
 from gui.importer.maxroll import import_maxroll
 from logger import Logger
@@ -170,7 +170,7 @@ class Gui(QMainWindow):
 
         def generate_button_click():
             url = input_box.text().strip()
-            worker = _Worker(import_maxroll, url=url) if "maxroll" in url else _Worker(import_d4_builds, url=url)
+            worker = _Worker(import_maxroll, url=url) if "maxroll" in url else _Worker(import_d4builds, url=url)
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")

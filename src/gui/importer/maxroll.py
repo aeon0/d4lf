@@ -50,7 +50,7 @@ def import_maxroll(url: str):
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
         if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] == 2:
-            Logger.error(f"Uniques are not supported. Skipping '{mapping_data["items"][resolved_item["id"]]["name"]}'")
+            Logger.warning(f"Uniques are not supported. Skipping '{mapping_data["items"][resolved_item["id"]]["name"]}'")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
             Logger.error("Couldn't find item type")
@@ -170,4 +170,8 @@ class MaxrollException(Exception):
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
-    import_maxroll(url="https://maxroll.gg/d4/planner/ubaoz02q#1")
+    URLS = [
+        "https://maxroll.gg/d4/planner/ubaoz02q#1",
+    ]
+    for x in URLS:
+        import_maxroll(url=x)

@@ -28,11 +28,13 @@ jobs:
         shell: powershell
         run: pytest . -m "not webtest" -v
 
-      # for some reason, these take forever on ci. need to investigate. for now, disable
-      # - name: Pytest web
-      #   shell: powershell
-      #   run: |
-      #     python -c "import sys; print(sys.version)"
-      #     pytest . -m "webtest" -v -n auto
-      #   continue-on-error: true
-      #   timeout-minutes: 10
+      - name: Pytest requests
+        shell: powershell
+        run: pytest . -m "requests" -v -n auto
+
+# for some reason it doesn't like selenium. skip for now
+#      - name: Pytest selenium
+#        shell: powershell
+#        run: pytest . -m "requests" -v -n auto
+#        continue-on-error: true
+#        timeout-minutes: 10

@@ -1,5 +1,6 @@
 import cv2
-from utils.ocr.read import image_to_text
+
+from src.utils.ocr.read import image_to_text
 
 
 def test_tesserocr():

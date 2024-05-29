@@ -1,8 +1,8 @@
 import pytest
 from pytest_mock import MockerFixture
 
-from config.loader import IniConfigLoader
-from config.models import BrowserType
+from src.config.loader import IniConfigLoader
+from src.config.models import BrowserType
 
 
 @pytest.fixture()

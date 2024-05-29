@@ -2,9 +2,10 @@ import time
 
 import cv2
 import pytest
-from cam import Cam
-from item.data.rarity import ItemRarity
-from item.find_descr import find_descr
+
+from src.cam import Cam
+from src.item.data.rarity import ItemRarity
+from src.item.find_descr import find_descr
 
 BASE_PATH = "tests/assets/item"
 

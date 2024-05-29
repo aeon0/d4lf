@@ -1,6 +1,7 @@
 import cv2
-import template_finder
-from utils.misc import is_in_roi
+
+import src.template_finder
+from src.utils.misc import is_in_roi
 
 
 def test_search():
@@ -14,7 +15,7 @@ def test_search():
     slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
     cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     threshold = 0.6
-    result = template_finder.search([cross, slash], image, threshold)
+    result = src.template_finder.search([cross, slash], image, threshold)
     match = result.matches[0]
     assert threshold <= match.score < 1
 
@@ -30,7 +31,7 @@ def test_search_best_match():
     slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
     cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     slash_expected_roi = [38, 0, 38, 38]
-    result = template_finder.search([cross, slash], image, threshold=0.6, mode="best")
+    result = src.template_finder.search([cross, slash], image, threshold=0.6, mode="best")
     match = result.matches[0]
     assert is_in_roi(slash_expected_roi, match.center)
 
@@ -43,7 +44,7 @@ def test_search_all():
     """
     image = cv2.imread("tests/assets/template_finder/stash_slots.png")
     empty = cv2.imread("tests/assets/template_finder/stash_slot_empty.png")
-    result = template_finder.search(empty, image, threshold=0.98, mode="all")
+    result = src.template_finder.search(empty, image, threshold=0.98, mode="all")
     matches = result.matches
     assert len(matches) == 3
 
@@ -57,7 +58,7 @@ def test_search_all_multiple_templates():
     image = cv2.imread("tests/assets/template_finder/stash_slots.png")
     empty = cv2.imread("tests/assets/template_finder/stash_slot_empty.png")
     slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
-    result = template_finder.search([empty, slash], image, threshold=0.98, mode="all")
+    result = src.template_finder.search([empty, slash], image, threshold=0.98, mode="all")
     matches = result.matches
     assert len(matches) == 4
 
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     slash_expected_roi = [38, 0, 38, 38]
 
-    result = template_finder.search([empty, slash], image, threshold=0.98, mode="all")
+    result = src.template_finder.search([empty, slash], image, threshold=0.98, mode="all")
     matches = result.matches
     print(len(matches))
     print(matches)

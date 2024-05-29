@@ -1,6 +1,6 @@
 import pytest
 
-from config.helper import key_must_exist, singleton, str_to_int_list
+from src.config.helper import key_must_exist, singleton, str_to_int_list
 
 
 class TestKeyMustExist:

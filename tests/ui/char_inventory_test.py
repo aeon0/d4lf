@@ -1,7 +1,8 @@
 import cv2
 import pytest
-from cam import Cam
-from ui.char_inventory import CharInventory
+
+from src.cam import Cam
+from src.ui.char_inventory import CharInventory
 
 BASE_PATH = "tests/assets/ui"
 

@@ -1,23 +1,23 @@
 import time
 
 import keyboard
-from cam import Cam
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.descr.read_descr import read_descr
-from item.filter import Filter
-from item.find_descr import find_descr
-from logger import Logger
-from ui.char_inventory import CharInventory
-from ui.chest import Chest
-from ui.inventory_base import InventoryBase
-from utils.custom_mouse import mouse
-from utils.image_operations import compare_histograms
-from utils.misc import wait
-from utils.window import screenshot
 
-from config.loader import IniConfigLoader
-from config.models import HandleRaresType
+from src.cam import Cam
+from src.config.loader import IniConfigLoader
+from src.config.models import HandleRaresType
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.item.descr.read_descr import read_descr
+from src.item.filter import Filter
+from src.item.find_descr import find_descr
+from src.logger import Logger
+from src.ui.char_inventory import CharInventory
+from src.ui.chest import Chest
+from src.ui.inventory_base import InventoryBase
+from src.utils.custom_mouse import mouse
+from src.utils.image_operations import compare_histograms
+from src.utils.misc import wait
+from src.utils.window import screenshot
 
 
 def check_items(inv: InventoryBase):

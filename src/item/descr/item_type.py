@@ -1,11 +1,11 @@
 import numpy as np
-from dataloader import Dataloader
-from item.models import Item, ItemRarity, ItemType
-from template_finder import TemplateMatch
-from utils.image_operations import color_filter, crop
-from utils.ocr.read import image_to_text
 
-from config.data import COLORS
+from src.config.data import COLORS
+from src.dataloader import Dataloader
+from src.item.models import Item, ItemRarity, ItemType
+from src.template_finder import TemplateMatch
+from src.utils.image_operations import color_filter, crop
+from src.utils.ocr.read import image_to_text
 
 
 def read_item_type(

@@ -1,13 +1,13 @@
 import numpy as np
-from dataloader import Dataloader
-from item.data.affix import Affix, AffixType
-from item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
-from logger import Logger
-from template_finder import TemplateMatch
-from utils.image_operations import crop
-from utils.ocr.read import image_to_text
 
-from config.ui import ResManager
+from src.config.ui import ResManager
+from src.dataloader import Dataloader
+from src.item.data.affix import Affix, AffixType
+from src.item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
+from src.logger import Logger
+from src.template_finder import TemplateMatch
+from src.utils.image_operations import crop
+from src.utils.ocr.read import image_to_text
 
 
 def split_into_paragraphs(

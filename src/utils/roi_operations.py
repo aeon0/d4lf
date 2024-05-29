@@ -1,8 +1,7 @@
 from enum import Enum
 
-from logger import Logger
-
-from config.ui import ResManager
+from src.config.ui import ResManager
+from src.logger import Logger
 
 
 def compare_tuples(t1, t2, uncertainty):

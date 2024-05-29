@@ -1,8 +1,8 @@
 import ctypes
 import os
 
-from logger import Logger
-from utils.window import get_window_spec_id
+from src.logger import Logger
+from src.utils.window import get_window_spec_id
 
 
 def kill_thread(thread):

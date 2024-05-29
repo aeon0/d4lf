@@ -3,10 +3,6 @@ import os
 import pathlib
 import sys
 
-from gui.importer.d4builds import import_d4builds
-from gui.importer.diablo_trade import import_diablo_trade
-from gui.importer.maxroll import import_maxroll
-from logger import Logger
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
 from PyQt6.QtWidgets import (
@@ -23,8 +19,12 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from config.helper import singleton
-from config.loader import IniConfigLoader
+from src.config.helper import singleton
+from src.config.loader import IniConfigLoader
+from src.gui.importer.d4builds import import_d4builds
+from src.gui.importer.diablo_trade import import_diablo_trade
+from src.gui.importer.maxroll import import_maxroll
+from src.logger import Logger
 
 THREADPOOL = QThreadPool()
 D4TRADE_TABNAME = "diablo.trade"

@@ -5,22 +5,22 @@ import re
 import time
 
 import lxml.html
-from dataloader import Dataloader
-from gui.importer.common import (
-    match_to_enum,
-    retry_importer,
-    save_as_profile,
-)
-from item.data.affix import Affix
-from item.data.item_type import ItemType
-from item.descr.text import clean_str, closest_match
-from logger import Logger
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.dataloader import Dataloader
+from src.gui.importer.common import (
+    match_to_enum,
+    retry_importer,
+    save_as_profile,
+)
+from src.item.data.affix import Affix
+from src.item.data.item_type import ItemType
+from src.item.descr.text import clean_str, closest_match
+from src.logger import Logger
 
 BASE_URL = "https://d4builds.gg/builds"
 BUILD_OVERVIEW_XPATH = "//*[@class='builder__stats__list']"
@@ -66,7 +66,7 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
             Logger.error("No item_type found")
             continue
         if slot not in non_unique_slots:
-            Logger.warning(f"Uniques or empty are not supported. Skipping {slot=}'")
+            Logger.warning(f"Uniques or empty are not supported. Skipping {slot=}")
             continue
         item_type = None
         stats = item.xpath(ITEM_STATS_XPATH)

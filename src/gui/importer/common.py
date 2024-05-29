@@ -5,7 +5,6 @@ from collections.abc import Callable
 from typing import Literal, TypeVar
 
 import requests
-from logger import Logger
 from pydantic_yaml import to_yaml_str
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -14,8 +13,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
-from config.loader import IniConfigLoader
-from config.models import BrowserType, ProfileModel
+from src.config.loader import IniConfigLoader
+from src.config.models import BrowserType, ProfileModel
+from src.logger import Logger
 
 D = TypeVar("D", bound=WebDriver | WebElement)
 T = TypeVar("T")
@@ -106,13 +106,16 @@ def setup_webdriver() -> ChromiumDriver:
         case BrowserType.edge:
             options = webdriver.EdgeOptions()
             options.add_argument("--headless=new")
+            options.add_argument("log-level=3")
             driver = webdriver.Edge(options=options)
         case BrowserType.chrome:
             options = webdriver.ChromeOptions()
             options.add_argument("--headless=new")
+            options.add_argument("log-level=3")
             driver = webdriver.Chrome(options=options)
         case BrowserType.firefox:
             options = webdriver.FirefoxOptions()
             options.add_argument("--headless")
+            options.add_argument("log-level=3")
             driver = webdriver.Firefox(options=options)
     return driver  # noqa # It must be one of the 3 browsers due to ini validation

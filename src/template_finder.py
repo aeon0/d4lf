@@ -5,14 +5,14 @@ from dataclasses import dataclass
 
 import cv2
 import numpy as np
-from cam import Cam
-from logger import Logger
-from utils.image_operations import alpha_to_mask, color_filter, crop
-from utils.misc import run_until_condition
-from utils.roi_operations import get_center
 
-from config.data import COLORS, Template
-from config.ui import ResManager
+from src.cam import Cam
+from src.config.data import COLORS, Template
+from src.config.ui import ResManager
+from src.logger import Logger
+from src.utils.image_operations import alpha_to_mask, color_filter, crop
+from src.utils.misc import run_until_condition
+from src.utils.roi_operations import get_center
 
 templates_lock = threading.Lock()
 executor = concurrent.futures.ThreadPoolExecutor()

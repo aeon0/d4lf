@@ -4,12 +4,12 @@ import enum
 import sys
 
 import numpy as np
-from item.data.item_type import ItemType
 from pydantic import BaseModel, ConfigDict, RootModel, field_validator, model_validator
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
-from config.helper import check_greater_than_zero, key_must_exist
+from src.config.helper import check_greater_than_zero, key_must_exist
+from src.item.data.item_type import ItemType
 
 
 class AspectFilterType(enum.StrEnum):
@@ -68,9 +68,9 @@ class AffixAspectFilterModel(BaseModel):
 class AffixFilterModel(AffixAspectFilterModel):
     @field_validator("name")
     def name_must_exist(cls, name: str) -> str:
-        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+        from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        if name not in dataloader.Dataloader().affix_dict:
+        if name not in Dataloader().affix_dict:
             raise ValueError(f"affix {name} does not exist")
         return name
 
@@ -103,9 +103,9 @@ class AffixFilterCountModel(BaseModel):
 class AspectUniqueFilterModel(AffixAspectFilterModel):
     @field_validator("name")
     def name_must_exist(cls, name: str) -> str:
-        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+        from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        if name not in dataloader.Dataloader().aspect_unique_dict:
+        if name not in Dataloader().aspect_unique_dict:
             raise ValueError(f"affix {name} does not exist")
         return name
 
@@ -273,9 +273,9 @@ class SigilFilterModel(BaseModel):
 
     @field_validator("blacklist", "whitelist")
     def name_must_exist(cls, names: list[str]) -> list[str]:
-        import dataloader  # This on module level would be a circular import, so we do it lazy for now
+        from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
 
-        errors = [name for name in names if name not in dataloader.Dataloader().affix_sigil_dict]
+        errors = [name for name in names if name not in Dataloader().affix_sigil_dict]
         if errors:
             raise ValueError(f"The following affixes/dungeons do not exist: {errors}")
         return names

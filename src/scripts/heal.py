@@ -1,11 +1,12 @@
 import traceback
 
 import keyboard
-from cam import Cam
-from logger import Logger
-from ui.char_inventory import CharInventory
-from ui.hud import Hud
-from utils.misc import wait
+
+from src.cam import Cam
+from src.logger import Logger
+from src.ui.char_inventory import CharInventory
+from src.ui.hud import Hud
+from src.utils.misc import wait
 
 
 def heal():
@@ -25,7 +26,7 @@ def heal():
 
 if __name__ == "__main__":
     try:
-        from utils.window import start_detecting_window
+        from src.utils.window import start_detecting_window
 
         start_detecting_window()
         while not Cam().is_offset_set():

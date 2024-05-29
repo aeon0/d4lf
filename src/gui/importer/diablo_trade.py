@@ -5,21 +5,20 @@ import pathlib
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from dataloader import Dataloader
-from gui.importer.common import (
+from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.dataloader import Dataloader
+from src.gui.importer.common import (
     format_number_as_short_string,
     get_with_retry,
     match_to_enum,
     retry_importer,
     save_as_profile,
 )
-from item.data.affix import Affix
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.descr.text import clean_str, closest_match
-from logger import Logger
-
-from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.item.data.affix import Affix
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.item.descr.text import clean_str, closest_match
+from src.logger import Logger
 
 BASE_URL = "diablo.trade/listings/"
 
@@ -54,11 +53,11 @@ def import_diablo_trade(url: str, max_listings: int):
         try:
             r = get_with_retry(url=api_url)
         except ConnectionError:
-            Logger.error("Saving current listings")
+            Logger.error("Can't fetch listings, saving current data")
             break
         data = r.json()
         if not (listings := data["data"]):
-            Logger.error("No listings found, reached end.")
+            Logger.debug("Reached end")
             break
         for listing in listings:
             listing_obj = _Listing(
@@ -74,7 +73,7 @@ def import_diablo_trade(url: str, max_listings: int):
                 assert len(listing["affixes"]) == len(listing_obj.affixes)
                 assert len(listing["implicits"]) == len(listing_obj.inherents)
             except AssertionError:
-                print("what")
+                Logger.error("If you see this create a bug ticket!")
             all_listings.append(listing_obj)
         Logger.info(f"Fetched {len(all_listings)} listings")
         if len(all_listings) >= max_listings:

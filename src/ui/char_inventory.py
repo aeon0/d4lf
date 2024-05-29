@@ -1,9 +1,8 @@
-from template_finder import SearchArgs
-from ui.inventory_base import InventoryBase
-from ui.menu import ToggleMethod
-
-from config.loader import IniConfigLoader
-from config.ui import ResManager
+from src.config.loader import IniConfigLoader
+from src.config.ui import ResManager
+from src.template_finder import SearchArgs
+from src.ui.inventory_base import InventoryBase
+from src.ui.menu import ToggleMethod
 
 
 class CharInventory(InventoryBase):

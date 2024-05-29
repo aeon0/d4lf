@@ -3,7 +3,8 @@ from enum import Enum
 
 import cv2
 import numpy as np
-from logger import Logger
+
+from src.logger import Logger
 
 
 class ThresholdTypes(Enum):

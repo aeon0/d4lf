@@ -2,17 +2,16 @@ import logging
 import threading
 import tkinter as tk
 
-from cam import Cam
-from logger import Logger
-from loot_filter import run_loot_filter
-from scripts.heal import heal
-from scripts.rogue_tb import run_rogue_tb
-from scripts.vision_mode import vision_mode
-from utils.process_handler import kill_thread
-from utils.window import WindowSpec, move_window_to_foreground
-
-from config.loader import IniConfigLoader
-from config.ui import ResManager
+from src.cam import Cam
+from src.config.loader import IniConfigLoader
+from src.config.ui import ResManager
+from src.logger import Logger
+from src.loot_filter import run_loot_filter
+from src.scripts.heal import heal
+from src.scripts.rogue_tb import run_rogue_tb
+from src.scripts.vision_mode import vision_mode
+from src.utils.process_handler import kill_thread
+from src.utils.window import WindowSpec, move_window_to_foreground
 
 # Usage
 lock = threading.Lock()

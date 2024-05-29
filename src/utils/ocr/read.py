@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-from logger import Logger
 from tesserocr import OEM, RIL, PyTessBaseAPI
-from utils.image_operations import color_filter
-from utils.ocr.models import OcrResult
 
-from config.data import COLORS
-from config.loader import IniConfigLoader
+from src.config.data import COLORS
+from src.config.loader import IniConfigLoader
+from src.logger import Logger
+from src.utils.image_operations import color_filter
+from src.utils.ocr.models import OcrResult
 
 TESSDATA_PATH = "assets/tessdata"
 

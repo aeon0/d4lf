@@ -4,14 +4,14 @@ import pathlib
 import re
 
 import lxml.html
-from dataloader import Dataloader
-from gui.importer.common import get_with_retry, match_to_enum, retry_importer, save_as_profile
-from item.data.affix import Affix
-from item.data.item_type import ItemType
-from item.descr.text import clean_str, closest_match
-from logger import Logger
 
-from config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.dataloader import Dataloader
+from src.gui.importer.common import get_with_retry, match_to_enum, retry_importer, save_as_profile
+from src.item.data.affix import Affix
+from src.item.data.item_type import ItemType
+from src.item.descr.text import clean_str, closest_match
+from src.logger import Logger
 
 BUILD_GUIDE_BASE_URL = "https://maxroll.gg/d4/build-guides/"
 BUILD_GUIDE_PLANNER_EMBED_XPATH = "//*[contains(@class, 'd4-embed')]"

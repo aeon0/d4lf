@@ -7,11 +7,12 @@ from dataclasses import dataclass
 import cv2
 import numpy as np
 import psutil
-from cam import Cam
-from logger import Logger
-from utils.misc import wait
 from win32gui import ClientToScreen, EnumWindows, GetClientRect, GetWindowText
 from win32process import GetWindowThreadProcessId
+
+from src.cam import Cam
+from src.logger import Logger
+from src.utils.misc import wait
 
 detecting_window_flag = True
 detect_window_thread = None

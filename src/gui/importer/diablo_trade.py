@@ -154,7 +154,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://diablo.trade/listings/items?exactPrice=true&itemType=equipment&price=10000000,9999999999&rarity=legendary",
+        "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest",
     ]
     for x in URLS:
         import_diablo_trade(url=x, max_listings=200)

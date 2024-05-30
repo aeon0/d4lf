@@ -1,12 +1,13 @@
 import numpy as np
-from dataloader import Dataloader
-from item.data.aspect import Aspect
-from item.descr.text import clean_str, closest_match, find_number
-from item.descr.texture import find_aspect_search_area
-from logger import Logger
-from template_finder import TemplateMatch
-from utils.image_operations import crop
-from utils.ocr.read import image_to_text
+
+from src.dataloader import Dataloader
+from src.item.data.aspect import Aspect
+from src.item.descr.text import clean_str, closest_match, find_number
+from src.item.descr.texture import find_aspect_search_area
+from src.logger import Logger
+from src.template_finder import TemplateMatch
+from src.utils.image_operations import crop
+from src.utils.ocr.read import image_to_text
 
 
 def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre_proc: bool = True) -> tuple[Aspect | None, str]:

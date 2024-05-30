@@ -1,11 +1,12 @@
 import time
 
 import cv2
-from cam import Cam
-from item.data.rarity import ItemRarity
-from item.descr.read_descr import read_descr
-from item.filter import Filter
-from item.find_descr import find_descr
+
+from src.cam import Cam
+from src.item.data.rarity import ItemRarity
+from src.item.descr.read_descr import read_descr
+from src.item.filter import Filter
+from src.item.find_descr import find_descr
 
 
 def test_smoke():

@@ -1,12 +1,12 @@
 from copy import copy
 
 import numpy as np
-from item.data.rarity import ItemRarity
-from template_finder import SearchResult, search
-from utils.image_operations import crop
-from utils.roi_operations import fit_roi_to_window_size
 
-from config.ui import ResManager
+from src.config.ui import ResManager
+from src.item.data.rarity import ItemRarity
+from src.template_finder import SearchResult, search
+from src.utils.image_operations import crop
+from src.utils.roi_operations import fit_roi_to_window_size
 
 map_template_rarity = {
     "item_unique_top_left": ItemRarity.Unique,

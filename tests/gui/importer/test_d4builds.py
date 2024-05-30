@@ -1,7 +1,8 @@
 import pytest
-from dataloader import Dataloader
-from gui.importer.d4builds import import_d4builds
 from pytest_mock import MockerFixture
+
+from src.dataloader import Dataloader
+from src.gui.importer.d4builds import import_d4builds
 
 URLS = [
     "https://d4builds.gg/builds/01953e1c-6ba5-4f3a-8ebe-73273beda61b",

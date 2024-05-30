@@ -1,9 +1,9 @@
 import numpy as np
-from template_finder import TemplateMatch, search
-from utils.image_operations import color_filter, crop
 
-from config.data import COLORS
-from config.ui import ResManager
+from src.config.data import COLORS
+from src.config.ui import ResManager
+from src.template_finder import TemplateMatch, search
+from src.utils.image_operations import color_filter, crop
 
 
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:

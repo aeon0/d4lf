@@ -1,11 +1,11 @@
 import pytest
-from item.filter import Filter, FilterResult
-from item.models import Item
 from natsort import natsorted
 from pytest_mock import MockerFixture
 
 import tests.item.filter.data.filters as filters
-from config.models import AspectFilterType
+from src.config.models import AspectFilterType
+from src.item.filter import Filter, FilterResult
+from src.item.models import Item
 from tests.item.filter.data.affixes import affixes
 from tests.item.filter.data.aspects import aspects
 from tests.item.filter.data.sigils import sigils

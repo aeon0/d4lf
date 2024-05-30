@@ -1,11 +1,11 @@
 import json
 from dataclasses import dataclass, field
 
-from item.data.affix import Affix
-from item.data.aspect import Aspect
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from logger import Logger
+from src.item.data.affix import Affix
+from src.item.data.aspect import Aspect
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.logger import Logger
 
 
 @dataclass

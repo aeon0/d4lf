@@ -2,10 +2,11 @@ from enum import Enum
 
 import keyboard
 import numpy as np
-from logger import Logger
-from template_finder import SearchArgs, SearchResult, TemplateMatch
-from utils.misc import run_until_condition, wait
-from utils.mouse_selector import select_search_result
+
+from src.logger import Logger
+from src.template_finder import SearchArgs, SearchResult, TemplateMatch
+from src.utils.misc import run_until_condition, wait
+from src.utils.mouse_selector import select_search_result
 
 
 class ToggleMethod(Enum):

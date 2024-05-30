@@ -2,12 +2,12 @@ import math
 
 import cv2
 import numpy as np
-from cam import Cam
-from template_finder import SearchArgs
-from utils.image_operations import color_filter, crop
 
-from config.data import COLORS
-from config.ui import ResManager
+from src.cam import Cam
+from src.config.data import COLORS
+from src.config.ui import ResManager
+from src.template_finder import SearchArgs
+from src.utils.image_operations import color_filter, crop
 
 
 class Hud(SearchArgs):

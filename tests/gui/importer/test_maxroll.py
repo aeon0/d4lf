@@ -1,7 +1,8 @@
 import pytest
-from dataloader import Dataloader
-from gui.importer.maxroll import import_maxroll
 from pytest_mock import MockerFixture
+
+from src.dataloader import Dataloader
+from src.gui.importer.maxroll import import_maxroll
 
 URLS = [
     "https://maxroll.gg/d4/build-guides/double-swing-barbarian-guide",

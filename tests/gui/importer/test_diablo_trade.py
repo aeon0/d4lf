@@ -1,7 +1,8 @@
 import pytest
-from dataloader import Dataloader
-from gui.importer.diablo_trade import import_diablo_trade
 from pytest_mock import MockerFixture
+
+from src.dataloader import Dataloader
+from src.gui.importer.diablo_trade import import_diablo_trade
 
 URLS = [
     "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sort=newest",

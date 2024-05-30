@@ -1,7 +1,7 @@
-from logger import Logger
-from template_finder import SearchResult, TemplateMatch
-from utils.custom_mouse import mouse
-from utils.misc import wait
+from src.logger import Logger
+from src.template_finder import SearchResult, TemplateMatch
+from src.utils.custom_mouse import mouse
+from src.utils.misc import wait
 
 
 def select_search_result(result: SearchResult | TemplateMatch, delay_factor: tuple[float, float] = (0.9, 1.1), click: str = "left") -> None:

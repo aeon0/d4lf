@@ -4,19 +4,19 @@ import traceback
 
 import keyboard
 from beautifultable import BeautifulTable
-from cam import Cam
-from gui.qt_gui import start_gui
-from item.filter import Filter
-from logger import Logger
-from overlay import Overlay
 from PIL import Image  # noqa #  Note: Somehow needed, otherwise the binary has an issue with tesserocr
-from utils.misc import wait
-from utils.ocr.read import load_api
-from utils.process_handler import safe_exit
-from utils.window import WindowSpec, start_detecting_window
 
-from config.loader import IniConfigLoader
 from src import __version__
+from src.cam import Cam
+from src.config.loader import IniConfigLoader
+from src.gui.qt_gui import start_gui
+from src.item.filter import Filter
+from src.logger import Logger
+from src.overlay import Overlay
+from src.utils.misc import wait
+from src.utils.ocr.read import load_api
+from src.utils.process_handler import safe_exit
+from src.utils.window import WindowSpec, start_detecting_window
 
 
 def main():
@@ -25,6 +25,8 @@ def main():
         os.makedirs(dir_name, exist_ok=True)
 
     Logger.info(f"Adapt your custom configs in: {IniConfigLoader().user_dir}")
+
+    Filter().load_files()
 
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
@@ -43,7 +45,6 @@ def main():
 
     load_api()
 
-    Filter().load_files()
     overlay = None
 
     keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)

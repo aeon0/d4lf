@@ -2,12 +2,13 @@ import time
 
 import cv2
 import pytest
-from cam import Cam
-from item.data.affix import Affix, AffixType
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.descr.read_descr import read_descr
-from item.models import Item
+
+from src.cam import Cam
+from src.item.data.affix import Affix, AffixType
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.item.descr.read_descr import read_descr
+from src.item.models import Item
 
 # def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
 BASE_PATH = "tests/assets/item"

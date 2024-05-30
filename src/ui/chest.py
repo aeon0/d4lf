@@ -1,12 +1,11 @@
-from cam import Cam
-from logger import Logger
-from template_finder import SearchArgs
-from ui.inventory_base import InventoryBase
-from ui.menu import ToggleMethod
-from utils.custom_mouse import mouse
-from utils.misc import wait
-
-from config.ui import ResManager
+from src.cam import Cam
+from src.config.ui import ResManager
+from src.logger import Logger
+from src.template_finder import SearchArgs
+from src.ui.inventory_base import InventoryBase
+from src.ui.menu import ToggleMethod
+from src.utils.custom_mouse import mouse
+from src.utils.misc import wait
 
 
 class Chest(InventoryBase):

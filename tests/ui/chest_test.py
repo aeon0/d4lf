@@ -1,7 +1,8 @@
 import cv2
 import pytest
-from cam import Cam
-from ui.chest import Chest
+
+from src.cam import Cam
+from src.ui.chest import Chest
 
 BASE_PATH = "tests/assets/ui"
 

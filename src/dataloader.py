@@ -3,10 +3,9 @@ import os
 import threading
 from pathlib import Path
 
-from item.data.item_type import ItemType
-from logger import Logger
-
-from config.loader import IniConfigLoader
+from src.config.loader import IniConfigLoader
+from src.item.data.item_type import ItemType
+from src.logger import Logger
 
 dataloader_lock = threading.Lock()
 

@@ -7,9 +7,9 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from utils.image_operations import alpha_to_mask
 
-from config.models import ColorsModel, HSVRangeModel, UiOffsetsModel, UiPosModel, UiRoiModel
+from src.config.models import ColorsModel, HSVRangeModel, UiOffsetsModel, UiPosModel, UiRoiModel
+from src.utils.image_operations import alpha_to_mask
 
 LOGGER = logging.getLogger("d4lf")
 

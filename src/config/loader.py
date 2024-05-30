@@ -5,10 +5,9 @@ import os
 import pathlib
 from pathlib import Path
 
-from logger import Logger
-
-from config.helper import singleton
-from config.models import AdvancedOptionsModel, CharModel, GeneralModel
+from src.config.helper import singleton
+from src.config.models import AdvancedOptionsModel, CharModel, GeneralModel
+from src.logger import Logger
 
 PARAMS_INI = "params.ini"
 

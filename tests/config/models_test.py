@@ -3,7 +3,7 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
-from config.models import ProfileModel
+from src.config.models import ProfileModel
 from tests.config.data import sigils, uniques
 
 

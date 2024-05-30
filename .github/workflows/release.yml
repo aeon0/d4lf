@@ -21,7 +21,7 @@ jobs:
         shell: powershell
         run: |
           python build.py
-          $version = python -c "from src.version import __version__; print(__version__)"
+          $version = python -c "from src import __version__; print(__version__)"
           $folderName = "d4lf_v" + $version
           Compress-Archive -Path $folderName -DestinationPath "$folderName.zip"
 

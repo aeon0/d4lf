@@ -1,7 +1,7 @@
-from item.data.affix import Affix
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.models import Item
+from src.item.data.affix import Affix
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.item.models import Item
 
 items = [
     (

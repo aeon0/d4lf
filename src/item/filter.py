@@ -5,16 +5,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
-from item.data.affix import Affix, AffixType
-from item.data.aspect import Aspect
-from item.data.item_type import ItemType
-from item.data.rarity import ItemRarity
-from item.models import Item
-from logger import Logger
 from pydantic import ValidationError
 
-from config.loader import IniConfigLoader
-from config.models import (
+from src.config.loader import IniConfigLoader
+from src.config.models import (
     AffixAspectFilterModel,
     AffixFilterCountModel,
     AffixFilterModel,
@@ -25,6 +19,12 @@ from config.models import (
     SigilFilterModel,
     UniqueModel,
 )
+from src.item.data.affix import Affix, AffixType
+from src.item.data.aspect import Aspect
+from src.item.data.item_type import ItemType
+from src.item.data.rarity import ItemRarity
+from src.item.models import Item
+from src.logger import Logger
 
 
 @dataclass

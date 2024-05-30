@@ -1,7 +1,8 @@
 import re
 
-from dataloader import Dataloader
 from rapidfuzz import process
+
+from src.dataloader import Dataloader
 
 
 def closest_match(target, candidates, min_score=86):

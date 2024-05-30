@@ -2,14 +2,14 @@ from dataclasses import dataclass
 
 import cv2
 import numpy as np
-from cam import Cam
-from template_finder import search
-from ui.menu import Menu
-from utils.custom_mouse import mouse
-from utils.image_operations import crop
-from utils.roi_operations import get_center, to_grid
 
-from config.ui import ResManager
+from src.cam import Cam
+from src.config.ui import ResManager
+from src.template_finder import search
+from src.ui.menu import Menu
+from src.utils.custom_mouse import mouse
+from src.utils.image_operations import crop
+from src.utils.roi_operations import get_center, to_grid
 
 
 @dataclass

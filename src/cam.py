@@ -4,10 +4,10 @@ import time
 import mss
 import mss.windows
 import numpy as np
-from logger import Logger
-from utils.misc import convert_args_to_numpy, wait
 
-from config.ui import ResManager
+from src.config.ui import ResManager
+from src.logger import Logger
+from src.utils.misc import convert_args_to_numpy, wait
 
 mss.windows.CAPTUREBLT = 0
 cached_img_lock = threading.Lock()

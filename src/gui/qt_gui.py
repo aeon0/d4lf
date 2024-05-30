@@ -216,7 +216,7 @@ class Gui(QMainWindow):
             "or\n"
             "https://d4builds.gg/builds/ef414fbd-81cd-49d1-9c8d-4938b278e2ee\n\n"
             f"It will create a file based on the label of the build in the planer in: {IniConfigLoader().user_dir / "profiles"}\n\n"
-            "For d4builds you need to specify your in the params.ini file"
+            "For d4builds you need to specify your browser in the params.ini file"
         )
         instructions_text.setReadOnly(True)
         font_metrics = instructions_text.fontMetrics()

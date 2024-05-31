@@ -25,6 +25,7 @@ pytest-pythonpath
 pytest-xdist
 pytweening
 pywin32
+pyyaml
 rapidfuzz
 requests
 ruff

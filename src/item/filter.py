@@ -6,6 +6,7 @@ from pathlib import Path
 
 import yaml
 from pydantic import ValidationError
+from yaml import MappingNode, MarkedYAMLError
 
 from src.config.loader import IniConfigLoader
 from src.config.models import (
@@ -28,16 +29,29 @@ from src.logger import Logger
 
 
 @dataclass
-class MatchedFilter:
+class _MatchedFilter:
     profile: str
     matched_affixes: list[str] = field(default_factory=list)
     did_match_aspect: bool = False
 
 
 @dataclass
-class FilterResult:
+class _FilterResult:
     keep: bool
-    matched: list[MatchedFilter]
+    matched: list[_MatchedFilter]
+
+
+class _UniqueKeyLoader(yaml.SafeLoader):
+    def construct_mapping(self, node: MappingNode, deep=False):
+        mapping = set()
+        for key_node, _ in node.value:
+            if ":merge" in key_node.tag:
+                continue
+            key = self.construct_object(key_node, deep=deep)
+            if key in mapping:
+                raise MarkedYAMLError(problem=f"Duplicate {key!r} key found in YAML", problem_mark=key_node.start_mark)
+            mapping.add(key)
+        return super().construct_mapping(node, deep)
 
 
 class Filter:
@@ -58,10 +72,10 @@ class Filter:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def _check_affixes(self, item: Item) -> FilterResult:
-        res = FilterResult(False, [])
+    def _check_affixes(self, item: Item) -> _FilterResult:
+        res = _FilterResult(False, [])
         if not self.affix_filters:
-            return FilterResult(True, [])
+            return _FilterResult(True, [])
         for profile_name, profile_filter in self.affix_filters.items():
             for filter_item in profile_filter:
                 filter_name = next(iter(filter_item.root.keys()))
@@ -90,27 +104,27 @@ class Filter:
                 all_matches = matched_affixes + matched_inherents
                 Logger.info(f"Matched {profile_name}.Affixes.{filter_name}: {all_matches}")
                 res.keep = True
-                res.matched.append(MatchedFilter(f"{profile_name}.{filter_name}", all_matches))
+                res.matched.append(_MatchedFilter(f"{profile_name}.{filter_name}", all_matches))
         return res
 
     @staticmethod
-    def _check_aspect(item: Item) -> FilterResult:
-        res = FilterResult(False, [])
+    def _check_aspect(item: Item) -> _FilterResult:
+        res = _FilterResult(False, [])
         if IniConfigLoader().general.keep_aspects == AspectFilterType.none or (
             IniConfigLoader().general.keep_aspects == AspectFilterType.upgrade and not item.codex_upgrade
         ):
             return res
         Logger.info("Matched Aspects that updates codex")
         res.keep = True
-        res.matched.append(MatchedFilter("Aspects", did_match_aspect=True))
+        res.matched.append(_MatchedFilter("Aspects", did_match_aspect=True))
         return res
 
-    def _check_sigil(self, item: Item) -> FilterResult:
-        res = FilterResult(False, [])
+    def _check_sigil(self, item: Item) -> _FilterResult:
+        res = _FilterResult(False, [])
         if not self.sigil_filters.items():
             Logger.info("Matched Sigils")
             res.keep = True
-            res.matched.append(MatchedFilter("default"))
+            res.matched.append(_MatchedFilter("default"))
         for profile_name, profile_filter in self.sigil_filters.items():
             # check item power
             if not self._match_item_power(max_power=profile_filter.maxTier, min_power=profile_filter.minTier, item_power=item.power):
@@ -127,13 +141,13 @@ class Filter:
                 continue
             Logger.info(f"Matched {profile_name}.Sigils")
             res.keep = True
-            res.matched.append(MatchedFilter(f"{profile_name}"))
+            res.matched.append(_MatchedFilter(f"{profile_name}"))
         return res
 
-    def _check_unique_item(self, item: Item) -> FilterResult:
-        res = FilterResult(False, [])
+    def _check_unique_item(self, item: Item) -> _FilterResult:
+        res = _FilterResult(False, [])
         if not self.unique_filters:
-            return FilterResult(True, [])
+            return _FilterResult(True, [])
         for profile_name, profile_filter in self.unique_filters.items():
             for filter_item in profile_filter:
                 # check item type
@@ -150,7 +164,7 @@ class Filter:
                     continue
                 Logger.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
                 res.keep = True
-                res.matched.append(MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))
+                res.matched.append(_MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))
         return res
 
     def _did_files_change(self) -> bool:
@@ -240,16 +254,10 @@ class Filter:
             self.all_file_pathes.append(profile_path)
             with open(profile_path, encoding="utf-8") as f:
                 try:
-                    config = yaml.safe_load(f)
-                except yaml.YAMLError as e:
-                    if hasattr(e, "problem_mark"):
-                        mark = e.problem_mark
-                        Logger.error(f"Error in the YAML file {profile_path} at position: (line {mark.line + 1}, column {mark.column + 1})")
-                    else:
-                        Logger.error(f"Error in the YAML file {profile_path}: {e}")
-                    continue
+                    config = yaml.load(stream=f, Loader=_UniqueKeyLoader)
                 except Exception as e:
-                    Logger.error(f"An unexpected error occurred loading YAML file {profile_path}: {e}")
+                    Logger.error(f"Error in the YAML file {profile_path}: {e}")
+                    errors = True
                     continue
                 if config is None:
                     Logger.error(f"Empty YAML file {profile_path}, please remove it")
@@ -280,11 +288,11 @@ class Filter:
             sys.exit(1)
         self.last_loaded = time.time()
 
-    def should_keep(self, item: Item) -> FilterResult:
+    def should_keep(self, item: Item) -> _FilterResult:
         if not self.files_loaded or self._did_files_change():
             self.load_files()
 
-        res = FilterResult(False, [])
+        res = _FilterResult(False, [])
 
         if item.item_type is None or item.power is None:
             return res

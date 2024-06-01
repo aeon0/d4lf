@@ -20,6 +20,10 @@ PLANNER_API_DATA_URL = "https://assets-ng.maxroll.gg/d4-tools/game/data.min.json
 PLANNER_BASE_URL = "https://maxroll.gg/d4/planner/"
 
 
+
+class MaxrollException(Exception):
+    pass
+
 @retry_importer
 def import_maxroll(url: str):
     url = url.strip().replace("\n", "")
@@ -163,8 +167,6 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
     return PLANNER_API_BASE_URL + planner_id, data_id
 
 
-class MaxrollException(Exception):
-    pass
 
 
 if __name__ == "__main__":

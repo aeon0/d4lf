@@ -24,6 +24,12 @@ class HandleRaresType(enum.StrEnum):
     junk = enum.auto()
 
 
+class MoveItemsType(enum.StrEnum):
+    junk = enum.auto()
+    non_favorites = enum.auto()
+    everything = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -116,16 +122,18 @@ class AdvancedOptionsModel(_IniBaseModel):
     process_name: str = "Diablo IV.exe"
     run_filter: str
     run_scripts: str
+    move_to_inv: str
+    move_to_chest: str
     scripts: list[str]
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.run_filter, self.run_scripts, self.move_to_chest, self.move_to_inv]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "run_scripts", "run_filter")
+    @field_validator("exit_key", "run_scripts", "run_filter", "move_to_chest", "move_to_inv")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 
@@ -172,6 +180,7 @@ class GeneralModel(_IniBaseModel):
     language: str = "enUS"
     profiles: list[str]
     run_vision_mode_on_startup: bool
+    move_item_type: MoveItemsType = MoveItemsType.non_favorites
 
     @field_validator("check_chest_tabs", mode="after")
     def check_chest_tabs_index(cls, v: list[int]) -> list[int]:

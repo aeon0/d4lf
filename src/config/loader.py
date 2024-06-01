@@ -48,6 +48,8 @@ class IniConfigLoader:
             run_filter=self._select_val("advanced_options", "run_filter"),
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             scripts=self._select_val("advanced_options", "scripts").split(","),
+            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
+            move_to_chest=self._select_val("advanced_options", "move_to_chest"),
         )
         self._char = CharModel(inventory=self._select_val("char", "inventory"))
         self._general = GeneralModel(
@@ -59,6 +61,7 @@ class IniConfigLoader:
             keep_aspects=self._select_val("general", "keep_aspects"),
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
+            move_item_type=self._select_val("general", "move_item_type"),
         )
 
     @property

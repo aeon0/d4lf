@@ -1,3 +1,4 @@
+import enum
 import logging
 import threading
 import tkinter as tk
@@ -7,6 +8,7 @@ from src.config.loader import IniConfigLoader
 from src.config.ui import ResManager
 from src.logger import Logger
 from src.loot_filter import run_loot_filter
+from src.loot_mover import move_items_to_inventory, move_items_to_stash
 from src.scripts.heal import heal
 from src.scripts.rogue_tb import run_rogue_tb
 from src.scripts.vision_mode import vision_mode
@@ -15,6 +17,12 @@ from src.utils.window import WindowSpec, move_window_to_foreground
 
 # Usage
 lock = threading.Lock()
+
+
+class FilterOrMoveOption(enum.StrEnum):
+    filter = enum.auto()
+    move_to_stash = enum.auto()
+    move_to_inv = enum.auto()
 
 
 class ListboxHandler(logging.Handler):
@@ -133,18 +141,18 @@ class Overlay:
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
-    def filter_items(self):
+    def filter_items(self, filter_or_move: FilterOrMoveOption = FilterOrMoveOption.filter):
         if lock.acquire(blocking=False):
             try:
                 if self.loot_filter_thread is not None:
-                    Logger.info("Stoping Filter process")
+                    Logger.info("Stopping filter or move process")
                     kill_thread(self.loot_filter_thread)
                     self.loot_filter_thread = None
                     self.filter_button.config(fg="#555555")
                 else:
                     if self.is_minimized:
                         self.toggle_size()
-                    self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, daemon=True)
+                    self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, args=(filter_or_move,), daemon=True)
                     self.loot_filter_thread.start()
                     self.filter_button.config(fg="#006600")
             finally:
@@ -152,18 +160,25 @@ class Overlay:
         else:
             return
 
-    def _wrapper_run_loot_filter(self):
+    def _wrapper_run_loot_filter(self, filter_or_move: FilterOrMoveOption = FilterOrMoveOption.filter):
         try:
             # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False
             if len(self.script_threads) > 0:
-                Logger.info("Stoping Scripts")
+                Logger.info("Stopping Scripts")
                 self.start_scripts_button.config(fg="#555555")
                 for script_thread in self.script_threads:
                     kill_thread(script_thread)
                 self.script_threads = []
                 did_stop_scripts = True
-            run_loot_filter()
+
+            if filter_or_move == FilterOrMoveOption.move_to_stash:
+                move_items_to_stash()
+            elif filter_or_move == FilterOrMoveOption.move_to_inv:
+                move_items_to_inventory()
+            else:
+                run_loot_filter()
+
             if did_stop_scripts:
                 self.run_scripts()
         finally:

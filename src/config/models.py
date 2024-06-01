@@ -25,9 +25,9 @@ class HandleRaresType(enum.StrEnum):
 
 
 class MoveItemsType(enum.StrEnum):
+    everything = enum.auto()
     junk = enum.auto()
     non_favorites = enum.auto()
-    everything = enum.auto()
 
 
 class ComparisonType(enum.StrEnum):
@@ -119,21 +119,21 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
     log_lvl: str = "info"
+    move_to_chest: str
+    move_to_inv: str
     process_name: str = "Diablo IV.exe"
     run_filter: str
     run_scripts: str
-    move_to_inv: str
-    move_to_chest: str
     scripts: list[str]
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.run_filter, self.run_scripts, self.move_to_chest, self.move_to_inv]
+        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "run_scripts", "run_filter", "move_to_chest", "move_to_inv")
+    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_scripts", "run_filter")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 
@@ -178,9 +178,9 @@ class GeneralModel(_IniBaseModel):
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
     language: str = "enUS"
+    move_item_type: MoveItemsType = MoveItemsType.non_favorites
     profiles: list[str]
     run_vision_mode_on_startup: bool
-    move_item_type: MoveItemsType = MoveItemsType.non_favorites
 
     @field_validator("check_chest_tabs", mode="after")
     def check_chest_tabs_index(cls, v: list[int]) -> list[int]:

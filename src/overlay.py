@@ -21,8 +21,8 @@ lock = threading.Lock()
 
 class FilterOrMoveOption(enum.StrEnum):
     filter = enum.auto()
-    move_to_stash = enum.auto()
     move_to_inv = enum.auto()
+    move_to_stash = enum.auto()
 
 
 class ListboxHandler(logging.Handler):

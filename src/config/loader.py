@@ -44,12 +44,12 @@ class IniConfigLoader:
         self._advanced_options = AdvancedOptionsModel(
             exit_key=self._select_val("advanced_options", "exit_key"),
             log_lvl=self._select_val("advanced_options", "log_lvl"),
+            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
+            move_to_chest=self._select_val("advanced_options", "move_to_chest"),
             process_name=self._select_val("advanced_options", "process_name"),
             run_filter=self._select_val("advanced_options", "run_filter"),
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             scripts=self._select_val("advanced_options", "scripts").split(","),
-            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
-            move_to_chest=self._select_val("advanced_options", "move_to_chest"),
         )
         self._char = CharModel(inventory=self._select_val("char", "inventory"))
         self._general = GeneralModel(
@@ -59,9 +59,9 @@ class IniConfigLoader:
             handle_rares=self._select_val("general", "handle_rares"),
             hidden_transparency=self._select_val("general", "hidden_transparency"),
             keep_aspects=self._select_val("general", "keep_aspects"),
+            move_item_type=self._select_val("general", "move_item_type"),
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
-            move_item_type=self._select_val("general", "move_item_type"),
         )
 
     @property

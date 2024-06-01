@@ -44,8 +44,8 @@ class IniConfigLoader:
         self._advanced_options = AdvancedOptionsModel(
             exit_key=self._select_val("advanced_options", "exit_key"),
             log_lvl=self._select_val("advanced_options", "log_lvl"),
-            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
             move_to_chest=self._select_val("advanced_options", "move_to_chest"),
+            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
             process_name=self._select_val("advanced_options", "process_name"),
             run_filter=self._select_val("advanced_options", "run_filter"),
             run_scripts=self._select_val("advanced_options", "run_scripts"),

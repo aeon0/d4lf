@@ -12,14 +12,14 @@ from src.item.data.item_type import ItemType
 from src.item.descr.text import clean_str, closest_match
 from src.logger import Logger
 
+BUILD_GUIDE_ACTIVE_LOADOUT_XPATH = "//*[@class='m-fsuco1']"
 BUILD_GUIDE_BASE_URL = "https://mobalytics.gg/diablo-4/"
 BUILD_GUIDE_NAME_XPATH = "//*[@class='m-1p1r4r3']"
-BUILD_GUIDE_ACTIVE_LOADOUT_XPATH = "//*[@class='m-fsuco1']"
 CLASS_XPATH = "(//*[@class='m-47xh8o'])[4]"
 IMAGE_XPATH = ".//img"
-ITEM_NAME_XPATH = ".//*[@class='m-ndz0o2']"
-ITEM_EMPTY_XPATH = ".//*[@class='m-16arb5z']"
 ITEM_AFFIXES_EMPTY_XPATH = ".//*[@class='m-19epikr']"
+ITEM_EMPTY_XPATH = ".//*[@class='m-16arb5z']"
+ITEM_NAME_XPATH = ".//*[@class='m-ndz0o2']"
 STATS_GRID_OCCUPIED_XPATH = ".//*[@class='m-0']"
 STATS_GRID_XPATH = "//*[@class='m-4tf4x5']"
 STATS_LIST_XPATH = ".//*[@class='m-qodgh2']"

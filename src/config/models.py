@@ -249,12 +249,45 @@ class ItemFilterModel(BaseModel):
 DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
 
 
+class SigilConditionModel(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: str
+    condition: list[str] = []
+
+    @model_validator(mode="before")
+    def parse_data(cls, data: str | list[str] | list[str | float] | dict[str, str | float]) -> dict[str, str | float]:
+        if isinstance(data, dict):
+            return data
+        if isinstance(data, str):
+            return {"name": data}
+        if isinstance(data, list):
+            if not data:
+                raise ValueError("list cannot be empty")
+            result = {}
+            if len(data) >= 1:
+                result["name"] = data[0]
+            if len(data) >= 2:
+                result["condition"] = data[1:]
+            return result
+        raise ValueError("must be str or list")
+
+    @field_validator("condition", "name")
+    def name_must_exist(cls, names_in: str | list[str]) -> str | list[str]:
+        from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        names = [names_in] if isinstance(names_in, str) else names_in
+        errors = [name for name in names if name not in Dataloader().affix_sigil_dict]
+        if errors:
+            raise ValueError(f"The following affixes/dungeons do not exist: {errors}")
+        return names_in
+
+
 class SigilFilterModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    minTier: int = 0
+    blacklist: list[SigilConditionModel] = []
     maxTier: int = sys.maxsize
-    blacklist: list[str] = []
-    whitelist: list[str] = []
+    minTier: int = 0
+    whitelist: list[SigilConditionModel] = []
 
     @model_validator(mode="after")
     def data_integrity(self) -> "SigilFilterModel":
@@ -270,15 +303,6 @@ class SigilFilterModel(BaseModel):
         if not 0 <= v <= 100:
             raise ValueError("must be in [0, 100]")
         return v
-
-    @field_validator("blacklist", "whitelist")
-    def name_must_exist(cls, names: list[str]) -> list[str]:
-        from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
-
-        errors = [name for name in names if name not in Dataloader().affix_sigil_dict]
-        if errors:
-            raise ValueError(f"The following affixes/dungeons do not exist: {errors}")
-        return names
 
 
 class UniqueModel(BaseModel):

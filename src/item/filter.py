@@ -17,6 +17,7 @@ from src.config.models import (
     ComparisonType,
     DynamicItemFilterModel,
     ProfileModel,
+    SigilConditionModel,
     SigilFilterModel,
     UniqueModel,
 )
@@ -193,8 +194,14 @@ class Filter:
         return result
 
     @staticmethod
-    def _match_affixes_sigils(expected_affixes: list[str], sigil_affixes: list[Affix]) -> bool:
-        return any(a.name in expected_affixes for a in sigil_affixes)
+    def _match_affixes_sigils(expected_affixes: list[SigilConditionModel], sigil_affixes: list[Affix]) -> bool:
+        for expected_affix in expected_affixes:
+            if not [affix for affix in sigil_affixes if affix.name == expected_affix.name]:
+                continue
+            if expected_affix.condition and not any(affix.name in expected_affix.condition for affix in sigil_affixes):
+                continue
+            return True
+        return False
 
     def _match_affixes_uniques(self, expected_affixes: list[AffixFilterModel], item_affixes: list[Affix]) -> bool:
         for expected_affix in expected_affixes:

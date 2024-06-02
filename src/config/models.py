@@ -295,10 +295,15 @@ class UniqueModel(BaseModel):
     affix: list[AffixFilterModel] = []
     aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []
+    minGreaterAffixCount: int = 0
     minPower: int = 0
 
     @field_validator("minPower")
     def check_min_power(cls, v: int) -> int:
+        return check_greater_than_zero(v)
+
+    @field_validator("minGreaterAffixCount")
+    def count_validator(cls, v: int) -> int:
         return check_greater_than_zero(v)
 
     @field_validator("itemType", mode="before")

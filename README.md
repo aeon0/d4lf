@@ -326,14 +326,27 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 
 ### Python Setup
 
-- Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/)
+- You can use [miniconda](https://docs.conda.io/projects/miniconda/en/latest/) or just plain python.
+
+Conda setup:
 
 ```bash
 git clone https://github.com/aeon0/d4lf
 cd d4lf
 conda env create -f environment.yml
 conda activate d4lf
-python src/main.py
+python -m src.main
+```
+
+Python setup (windows, linux venv activation differs):
+
+```bash
+git clone https://github.com/aeon0/d4lf
+cd d4lf
+python -m venv venv
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+python -m src.main
 ```
 
 ### Formatting & Linting
@@ -341,12 +354,10 @@ python src/main.py
 Ruff is used for linting and auto formatting. You can run it with:
 
 ```bash
-conda activate d4lf
 ruff format
 ```
 
 ```bash
-conda activate d4lf
 ruff check
 ```
 

@@ -48,7 +48,7 @@ The config folder contains:
 | keep_aspects               | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items based on aspect (they are still filtered!)                                                 |
 | handle_rares               | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares |
 | run_vision_mode_on_startup | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
-| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                  |
+| check_chest_tabs           | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. You need to buy all slots. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                       |
 | hidden_transparency        | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
 | browser                    | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                |
 | full_dump                  | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                          |
@@ -291,6 +291,13 @@ Uniques:
 ```
 
 ```yaml
+# Take all Tibault's Will pants with at least 2 greater affixes
+Uniques:
+  - aspect: [ tibaults_will ]
+    minGreaterAffixCount: 2
+```
+
+```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
 Uniques:
   - aspect: [ tibaults_will, 25 ]
@@ -319,14 +326,27 @@ This setup is helpful to facilitate updating to a new version as you don't need 
 
 ### Python Setup
 
-- Install [miniconda](https://docs.conda.io/projects/miniconda/en/latest/)
+- You can use [miniconda](https://docs.conda.io/projects/miniconda/en/latest/) or just plain python.
+
+Conda setup:
 
 ```bash
 git clone https://github.com/aeon0/d4lf
 cd d4lf
 conda env create -f environment.yml
 conda activate d4lf
-python src/main.py
+python -m src.main
+```
+
+Python setup (windows, linux venv activation differs):
+
+```bash
+git clone https://github.com/aeon0/d4lf
+cd d4lf
+python -m venv venv
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+python -m src.main
 ```
 
 ### Formatting & Linting
@@ -334,12 +354,10 @@ python src/main.py
 Ruff is used for linting and auto formatting. You can run it with:
 
 ```bash
-conda activate d4lf
 ruff format
 ```
 
 ```bash
-conda activate d4lf
 ruff check
 ```
 

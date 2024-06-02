@@ -1,4 +1,3 @@
-import enum
 import logging
 import threading
 import tkinter as tk
@@ -19,12 +18,6 @@ from src.utils.window import WindowSpec, move_window_to_foreground
 lock = threading.Lock()
 
 
-class FilterOrMoveOption(enum.StrEnum):
-    filter = enum.auto()
-    move_to_inv = enum.auto()
-    move_to_stash = enum.auto()
-
-
 class ListboxHandler(logging.Handler):
     def __init__(self, listbox):
         logging.Handler.__init__(self)
@@ -39,7 +32,7 @@ class ListboxHandler(logging.Handler):
 
 class Overlay:
     def __init__(self):
-        self.loot_filter_thread = None
+        self.loot_interaction_thread = None
         self.script_threads = []
         self.is_minimized = True
         self.root = tk.Tk()
@@ -141,26 +134,36 @@ class Overlay:
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
-    def filter_items(self, filter_or_move: FilterOrMoveOption = FilterOrMoveOption.filter):
+    def filter_items(self):
+        self._start_or_stop_loot_interaction_thread(run_loot_filter)
+
+    def move_items_to_inventory(self):
+        self._start_or_stop_loot_interaction_thread(move_items_to_inventory)
+
+    def move_items_to_stash(self):
+        self._start_or_stop_loot_interaction_thread(move_items_to_stash)
+
+    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method):
         if lock.acquire(blocking=False):
             try:
-                if self.loot_filter_thread is not None:
+                if self.loot_interaction_thread is not None:
                     Logger.info("Stopping filter or move process")
-                    kill_thread(self.loot_filter_thread)
-                    self.loot_filter_thread = None
+                    kill_thread(self.loot_interaction_thread)
+                    self.loot_interaction_thread = None
                     self.filter_button.config(fg="#555555")
                 else:
                     if self.is_minimized:
                         self.toggle_size()
-                    self.loot_filter_thread = threading.Thread(target=self._wrapper_run_loot_filter, args=(filter_or_move,), daemon=True)
-                    self.loot_filter_thread.start()
+                    self.loot_interaction_thread = threading.Thread(target=self._wrapper_run_loot_interaction_method,
+                                                                    args=(loot_interaction_method,), daemon=True)
+                    self.loot_interaction_thread.start()
                     self.filter_button.config(fg="#006600")
             finally:
                 lock.release()
         else:
             return
 
-    def _wrapper_run_loot_filter(self, filter_or_move: FilterOrMoveOption = FilterOrMoveOption.filter):
+    def _wrapper_run_loot_interaction_method(self, loot_interaction_method):
         try:
             # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False
@@ -172,19 +175,14 @@ class Overlay:
                 self.script_threads = []
                 did_stop_scripts = True
 
-            if filter_or_move == FilterOrMoveOption.move_to_stash:
-                move_items_to_stash()
-            elif filter_or_move == FilterOrMoveOption.move_to_inv:
-                move_items_to_inventory()
-            else:
-                run_loot_filter()
+            loot_interaction_method()
 
             if did_stop_scripts:
                 self.run_scripts()
         finally:
             if not self.is_minimized:
                 self.toggle_size()
-            self.loot_filter_thread = None
+            self.loot_interaction_thread = None
             self.filter_button.config(fg="#555555")
 
     def run_scripts(self):

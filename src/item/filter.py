@@ -162,6 +162,9 @@ class Filter:
                 # check affixes
                 if not self._match_affixes_uniques(expected_affixes=filter_item.affix, item_affixes=item.affixes):
                     continue
+                # check greater affixes
+                if not self._match_greater_affix_count(expected_min_count=filter_item.minGreaterAffixCount, item_affixes=item.affixes):
+                    continue
                 Logger.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
                 res.keep = True
                 res.matched.append(_MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))

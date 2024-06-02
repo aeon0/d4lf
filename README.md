@@ -291,6 +291,13 @@ Uniques:
 ```
 
 ```yaml
+# Take all Tibault's Will pants with at least 2 greater affixes
+Uniques:
+  - aspect: [ tibaults_will ]
+    minGreaterAffixCount: 2
+```
+
+```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
 Uniques:
   - aspect: [ tibaults_will, 25 ]

@@ -13,6 +13,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
+    fix_offhand_type,
+    fix_weapon_type,
     match_to_enum,
     retry_importer,
     save_as_profile,
@@ -53,26 +55,23 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
     time.sleep(5)  # super hacky but I didn't find anything else. The page is not fully loaded when the above wait is done
     data = lxml.html.fromstring(driver.page_source)
     class_name = data.xpath(CLASS_XPATH)[0].tail.lower()
-    items = data.xpath(BUILD_OVERVIEW_XPATH)
-    if not items:
+    if not (items := data.xpath(BUILD_OVERVIEW_XPATH)):
         Logger.error(msg := "No items found")
         raise D4BuildsException(msg)
     non_unique_slots = _get_non_unique_slots(data=data)
     finished_filters = []
     for item in items[0]:
         item_filter = ItemFilterModel()
-        slot = item.xpath(ITEM_SLOT_XPATH)[1].tail
-        if not slot:
+        if not (slot := item.xpath(ITEM_SLOT_XPATH)[1].tail):
             Logger.error("No item_type found")
             continue
         if slot not in non_unique_slots:
-            Logger.warning(f"Uniques or empty are not supported. Skipping {slot=}")
+            Logger.warning(f"Uniques or empty are not supported. Skipping: {slot}")
             continue
-        item_type = None
-        stats = item.xpath(ITEM_STATS_XPATH)
-        if not stats:
+        if not (stats := item.xpath(ITEM_STATS_XPATH)):
             Logger.error(f"No stats found for {slot=}")
             continue
+        item_type = None
         affixes = []
         inherents = []
         for stat in stats:
@@ -81,17 +80,19 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
             if "filled" not in stat.xpath("../..")[0].attrib["class"]:
                 continue
             affix_name = stat.xpath("./span")[0].text
-            if "Weapon" in slot and (x := _fix_weapon_type(affix_name)) is not None:
+            if "weapon" in slot.lower() and (x := fix_weapon_type(input_str=affix_name)) is not None:
                 item_type = x
                 continue
-            if "Offhand" in slot and (x := _fix_offhand_type(input_str=affix_name, class_str=class_name)) is not None:
+            if "offhand" in slot.lower() and (x := fix_offhand_type(input_str=affix_name, class_str=class_name)) is not None:
                 item_type = x
                 continue
             affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)).strip().lower(), Dataloader().affix_dict))
             if affix_obj.name is None:
                 Logger.error(f"Couldn't match {affix_name=}")
                 continue
-            if (("Ring" in slot or "Amulet" in slot) and "%" in affix_name) or "Boots" in slot and "Max Evade Charges" in affix_name:
+            if ("ring" in slot.lower() and any(substring in affix_name.lower() for substring in ["resistance"])) or (
+                "boots" in slot.lower() and any(substring in affix_name.lower() for substring in ["max evade charges", "attacks reduce"])
+            ):
                 inherents.append(affix_obj)
             else:
                 affixes.append(affix_obj)
@@ -131,55 +132,12 @@ def _corrections(input_str: str) -> str:
     return input_str
 
 
-def _fix_offhand_type(input_str: str, class_str: str) -> ItemType | None:
-    input_str = input_str.lower()
-    class_str = class_str.lower()
-    if "offhand" not in input_str:
-        return None
-    if "sorc" in class_str:
-        return ItemType.Focus
-    if "druid" in class_str:
-        return ItemType.OffHandTotem
-    if "necro" in class_str:
-        if "cooldown reduction" in input_str:
-            return ItemType.Focus
-        return ItemType.Shield
-    return None
-
-
-def _fix_weapon_type(input_str: str) -> ItemType | None:
-    input_str = input_str.lower()
-    if "1h mace" in input_str:
-        return ItemType.Mace
-    if "2h mace" in input_str:
-        return ItemType.Mace2H
-    if "1h sword" in input_str:
-        return ItemType.Sword
-    if "2h sword" in input_str:
-        return ItemType.Sword2H
-    if "1h axe" in input_str:
-        return ItemType.Axe
-    if "2h axe" in input_str:
-        return ItemType.Axe2H
-    if "scythe" in input_str:
-        return ItemType.Scythe
-    if "2h scythe" in input_str:
-        return ItemType.Scythe2H
-    if "crossbow" in input_str:
-        return ItemType.Crossbow2H
-    if "wand" in input_str:
-        return ItemType.Wand
-    return None
-
-
 def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
     result = []
-    paperdoll = data.xpath(PAPERDOLL_XPATH)
-    if not paperdoll:
+    if not (paperdoll := data.xpath(PAPERDOLL_XPATH)):
         Logger.error(msg := "No paperdoll found")
         raise D4BuildsException(msg)
-    items = paperdoll[0].xpath(PAPERDOLL_ITEM_XPATH)
-    if not items:
+    if not (items := paperdoll[0].xpath(PAPERDOLL_ITEM_XPATH)):
         Logger.error(msg := "No items found")
         raise D4BuildsException(msg)
     for item in items:
@@ -193,7 +151,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://d4builds.gg/builds/f8298a54-dc67-41ab-8232-ddfd32bd80fa",
+        "https://d4builds.gg/builds/dbad6569-2e78-4c43-a831-c563d0a1e1ad/?var=3",
     ]
     for x in URLS:
         import_d4builds(url=x)

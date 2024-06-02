@@ -20,6 +20,10 @@ PLANNER_API_DATA_URL = "https://assets-ng.maxroll.gg/d4-tools/game/data.min.json
 PLANNER_BASE_URL = "https://maxroll.gg/d4/planner/"
 
 
+class MaxrollException(Exception):
+    pass
+
+
 @retry_importer
 def import_maxroll(url: str):
     url = url.strip().replace("\n", "")
@@ -50,7 +54,7 @@ def import_maxroll(url: str):
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
         if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] == 2:
-            Logger.warning(f"Uniques are not supported. Skipping '{mapping_data["items"][resolved_item["id"]]["name"]}'")
+            Logger.warning(f"Uniques are not supported. Skipping: {mapping_data["items"][resolved_item["id"]]["name"]}")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
             Logger.error("Couldn't find item type")
@@ -58,11 +62,23 @@ def import_maxroll(url: str):
         item_filter.itemType = [item_type]
         item_filter.affixPool = [
             AffixFilterCountModel(
-                count=[AffixFilterModel(name=x.name) for x in _find_item_affixes(mapping_data, resolved_item)],
+                count=[
+                    AffixFilterModel(name=x.name)
+                    for x in _find_item_affixes(mapping_data=mapping_data, item_affixes=resolved_item["explicits"])
+                ],
                 minCount=2,
                 minGreaterAffixCount=0,
             )
         ]
+        if "implicits" in resolved_item:
+            item_filter.inherentPool = [
+                AffixFilterCountModel(
+                    count=[
+                        AffixFilterModel(name=x.name)
+                        for x in _find_item_affixes(mapping_data=mapping_data, item_affixes=resolved_item["implicits"])
+                    ]
+                )
+            ]
         filter_name = item_filter.itemType[0].name
         i = 2
         while any(filter_name == next(iter(x)) for x in finished_filters):
@@ -86,17 +102,17 @@ def _corrections(input_str: str) -> str:
     return input_str
 
 
-def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
+def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
     res = []
-    for affix_id in item["explicits"]:
+    for affix_id in item_affixes:
         for affix in mapping_data["affixes"].values():
             if affix["id"] != affix_id["nid"]:
                 continue
             attr_desc = ""
             if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
-                "AffixSingleResist",
                 "AffixFlatResourceUpto4",
                 "AffixResourceOnKill",
+                "AffixSingleResist",
             ]:
                 if affix["attributes"][0]["formula"] in ["AffixSingleResist"]:
                     attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
@@ -118,6 +134,8 @@ def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
             affix_obj = Affix(name=closest_match(clean_str(clean_desc).strip().lower(), Dataloader().affix_dict))
             if affix_obj.name is not None:
                 res.append(affix_obj)
+            elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["InherentAffixAnyResist_Ring"]:
+                Logger.info("Skipping InherentAffixAnyResist_Ring")
             else:
                 Logger.error(f"Couldn't match {affix_id=}")
             break
@@ -169,15 +187,11 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
     return PLANNER_API_BASE_URL + planner_id, data_id
 
 
-class MaxrollException(Exception):
-    pass
-
-
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://maxroll.gg/d4/build-guides/double-swing-barbarian-leveling-guide",
+        "https://maxroll.gg/d4/planner/dqih026y#3",
     ]
     for x in URLS:
         import_maxroll(url=x)

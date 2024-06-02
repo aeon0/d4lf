@@ -150,6 +150,8 @@ def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
-    URLS = ["https://d4builds.gg/builds/dbad6569-2e78-4c43-a831-c563d0a1e1ad/?var=3"]
+    URLS = [
+        "https://d4builds.gg/builds/dbad6569-2e78-4c43-a831-c563d0a1e1ad/?var=3",
+    ]
     for x in URLS:
         import_d4builds(url=x)

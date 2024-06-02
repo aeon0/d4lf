@@ -93,11 +93,17 @@ def _find_item_affixes(mapping_data: dict, item: dict) -> list[Affix]:
             if affix["id"] != affix_id["nid"]:
                 continue
             attr_desc = ""
-            if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["AffixSingleResist", "AffixFlatResourceUpto4"]:
+            if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
+                "AffixSingleResist",
+                "AffixFlatResourceUpto4",
+                "AffixResourceOnKill",
+            ]:
                 if affix["attributes"][0]["formula"] in ["AffixSingleResist"]:
                     attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
                 elif affix["attributes"][0]["formula"] in ["AffixFlatResourceUpto4"]:
                     attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " per Second"
+                elif affix["attributes"][0]["formula"] in ["AffixResourceOnKill"]:
+                    attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " On Kill"
             elif "param" not in affix["attributes"][0]:
                 attr_id = affix["attributes"][0]["id"]
                 attr_obj = mapping_data["attributes"][str(attr_id)]
@@ -171,7 +177,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://maxroll.gg/d4/planner/ubaoz02q#1",
+        "https://maxroll.gg/d4/build-guides/double-swing-barbarian-leveling-guide",
     ]
     for x in URLS:
         import_maxroll(url=x)

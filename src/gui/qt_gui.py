@@ -24,11 +24,12 @@ from src.config.loader import IniConfigLoader
 from src.gui.importer.d4builds import import_d4builds
 from src.gui.importer.diablo_trade import import_diablo_trade
 from src.gui.importer.maxroll import import_maxroll
+from src.gui.importer.mobalytics import import_mobalytics
 from src.logger import Logger
 
 THREADPOOL = QThreadPool()
 D4TRADE_TABNAME = "diablo.trade"
-MAXROLL_D4B_TABNAME = "maxroll / d4builds"
+MAXROLL_D4B_MOBALYTICS_TABNAME = "maxroll / d4builds / mobalytics"
 
 
 def start_gui():
@@ -46,7 +47,7 @@ class Gui(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("D4LF")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 700, 700)
 
         # Center the window on the screen
         screen = QApplication.primaryScreen()
@@ -146,7 +147,7 @@ class Gui(QMainWindow):
         tab_diablo_trade.setLayout(layout)
 
     def _handle_tab_changed(self, index):
-        if self.tab_widget.tabText(index) == MAXROLL_D4B_TABNAME:
+        if self.tab_widget.tabText(index) == MAXROLL_D4B_MOBALYTICS_TABNAME:
             Logger.addHandler(self.maxroll_log_handler)
             Logger.removeHandler(self.diablo_trade_log_handler)
         elif self.tab_widget.tabText(index) == D4TRADE_TABNAME:
@@ -155,7 +156,7 @@ class Gui(QMainWindow):
 
     def _maxroll_or_d4builds_tab(self):
         tab_maxroll = QWidget(self)
-        self.tab_widget.addTab(tab_maxroll, MAXROLL_D4B_TABNAME)
+        self.tab_widget.addTab(tab_maxroll, MAXROLL_D4B_MOBALYTICS_TABNAME)
 
         layout = QVBoxLayout(tab_maxroll)
 
@@ -172,7 +173,12 @@ class Gui(QMainWindow):
 
         def generate_button_click():
             url = input_box.text().strip()
-            worker = _Worker(import_maxroll, url=url) if "maxroll" in url else _Worker(import_d4builds, url=url)
+            if "maxroll" in url:
+                worker = _Worker(import_maxroll, url=url)
+            elif "d4builds" in url:
+                worker = _Worker(import_d4builds, url=url)
+            else:
+                worker = _Worker(import_mobalytics, url=url)
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -214,7 +220,9 @@ class Gui(QMainWindow):
             "or\n"
             "https://maxroll.gg/d4/planner/cm6pf0xa#5\n"
             "or\n"
-            "https://d4builds.gg/builds/ef414fbd-81cd-49d1-9c8d-4938b278e2ee\n\n"
+            "https://d4builds.gg/builds/ef414fbd-81cd-49d1-9c8d-4938b278e2ee\n"
+            "or\n"
+            "https://mobalytics.gg/diablo-4/builds/barbarian/bash-bleed-barbarian-guide\n\n"
             f"It will create a file based on the label of the build in the planer in: {IniConfigLoader().user_dir / "profiles"}\n\n"
             "For d4builds you need to specify your browser in the params.ini file"
         )

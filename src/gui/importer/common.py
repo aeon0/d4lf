@@ -1,5 +1,6 @@
 import datetime
 import functools
+import re
 import time
 from collections.abc import Callable
 from typing import Literal, TypeVar
@@ -15,6 +16,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from src.config.loader import IniConfigLoader
 from src.config.models import BrowserType, ProfileModel
+from src.item.data.item_type import ItemType
 from src.logger import Logger
 
 D = TypeVar("D", bound=WebDriver | WebElement)
@@ -23,6 +25,50 @@ T = TypeVar("T")
 
 def extract_digits(text: str) -> int:
     return int("".join([char for char in text if char.isdigit()]))
+
+
+def fix_weapon_type(input_str: str) -> ItemType | None:
+    input_str = input_str.lower()
+    if "1h mace" in input_str:
+        return ItemType.Mace
+    if "2h mace" in input_str:
+        return ItemType.Mace2H
+    if "1h sword" in input_str:
+        return ItemType.Sword
+    if "2h sword" in input_str:
+        return ItemType.Sword2H
+    if "1h axe" in input_str:
+        return ItemType.Axe
+    if "2h axe" in input_str:
+        return ItemType.Axe2H
+    if "scythe" in input_str:
+        return ItemType.Scythe
+    if "2h scythe" in input_str:
+        return ItemType.Scythe2H
+    if "crossbow" in input_str:
+        return ItemType.Crossbow2H
+    if "wand" in input_str:
+        return ItemType.Wand
+    if "staff" in input_str:
+        return ItemType.Staff
+    if "staff" in input_str:
+        return ItemType.Dagger
+    return None
+
+
+def fix_offhand_type(input_str: str, class_str: str) -> ItemType | None:
+    input_str = input_str.lower()
+    class_str = class_str.lower()
+    if "sorc" in class_str:
+        return ItemType.Focus
+    if "druid" in class_str:
+        return ItemType.OffHandTotem
+    if "necro" in class_str:
+        if "offhand" in input_str and "cooldown reduction" in input_str:
+            return ItemType.Focus
+        if "shield" in input_str:
+            return ItemType.Shield
+    return None
 
 
 def format_number_as_short_string(n: int) -> str:
@@ -85,7 +131,9 @@ def retry_importer(func=None, inject_webdriver: bool = False):
 
 
 def save_as_profile(file_name: str, profile: ProfileModel, url: str):
-    file_name = file_name.replace("/", "_").replace(" ", "_").replace("'", "").replace("-", "_")
+    file_name = file_name.replace("'", "")
+    file_name = re.sub(r"[ /-]", "_", file_name)
+    file_name = re.sub(r"_+", "_", file_name)
     save_path = IniConfigLoader().user_dir / f"profiles/{file_name}.yaml"
     with open(save_path, "w", encoding="utf-8") as file:
         file.write(f"# {url}\n")

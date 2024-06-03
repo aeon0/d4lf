@@ -14,8 +14,7 @@ from src.logger import Logger
 
 BUILD_GUIDE_ACTIVE_LOADOUT_XPATH = "//*[@class='m-fsuco1']"
 BUILD_GUIDE_BASE_URL = "https://mobalytics.gg/diablo-4/"
-BUILD_GUIDE_NAME_XPATH = "//*[@class='m-1p1r4r3']"
-CLASS_XPATH = "(//*[@class='m-47xh8o'])[4]"
+BUILD_GUIDE_NAME_XPATH = "//*[@class='m-a53mf3']"
 IMAGE_XPATH = ".//img"
 ITEM_AFFIXES_EMPTY_XPATH = ".//*[@class='m-19epikr']"
 ITEM_EMPTY_XPATH = ".//*[@class='m-16arb5z']"
@@ -51,10 +50,12 @@ def import_mobalytics(url: str):
         Logger.error(msg := "Couldn't get build")
         raise MobalyticsException(msg) from ex
     data = lxml.html.fromstring(r.text)
-    build_name = data.xpath(BUILD_GUIDE_NAME_XPATH)[0].text
-    if not (class_name := data.xpath(CLASS_XPATH)[0].text.lower()):
-        Logger.error(msg := "Couldn't get class")
+    build_elem = data.xpath(BUILD_GUIDE_NAME_XPATH)
+    if not build_elem:
+        Logger.error(msg := "No build found")
         raise MobalyticsException(msg)
+    build_name = build_elem[0].tail
+    class_name = _get_class_name(input_str=build_elem[0].text)
     if not (stats_grid := data.xpath(STATS_GRID_XPATH)):
         Logger.error(msg := "No stats grid found")
         raise MobalyticsException(msg)
@@ -93,7 +94,10 @@ def import_mobalytics(url: str):
                 continue
             if "offhand" in slot.lower() and (x := fix_offhand_type(input_str=affix_name, class_str=class_name)) is not None:
                 item_type = x
-                continue
+                if any(
+                    substring in affix_name.lower() for substring in ["focus", "offhand", "shield", "totem"]
+                ):  # special line indicating the item type
+                    continue
             affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)).strip().lower(), Dataloader().affix_dict))
             if affix_obj.name is None:
                 Logger.error(f"Couldn't match {affix_name=}")
@@ -135,11 +139,27 @@ def _corrections(input_str: str) -> str:
     return input_str
 
 
+def _get_class_name(input_str: str) -> str:
+    input_str = input_str.lower()
+    if "barbarian" in input_str:
+        return "Barbarian"
+    if "druid" in input_str:
+        return "Druid"
+    if "necromancer" in input_str:
+        return "Necromancer"
+    if "rogue" in input_str:
+        return "Rogue"
+    if "sorcerer" in input_str:
+        return "Sorcerer"
+    Logger.error(f"Couldn't match class name {input_str=}")
+    return "Unknown"
+
+
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://mobalytics.gg/diablo-4/builds/druid/wind-shear",
+        "https://mobalytics.gg/diablo-4/profile/2a93597f-152e-4266-8e96-df63792e4f9c/builds/d2f8186d-b2ea-42a2-9f77-535d1881f5a0",
     ]
-    for x in URLS:
-        import_mobalytics(url=x)
+    for X in URLS:
+        import_mobalytics(url=X)

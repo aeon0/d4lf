@@ -249,6 +249,20 @@ Sigils:
     - vault_of_the_forsaken
 ```
 
+You can also create conditional filters based on a single affix or location.
+
+```yaml
+# Only keep sigils for iron_hold when it also has shadow_damage
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    - armor_breakers
+    - resistance_breakers
+  whitelist:
+    - [ iron_hold, shadow_damage ]
+```
+
 </details>
 
 Sigil affixes and location names are lower case and spaces are replaced by underscore. You can find the full list of

@@ -85,7 +85,10 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
                 continue
             if "offhand" in slot.lower() and (x := fix_offhand_type(input_str=affix_name, class_str=class_name)) is not None:
                 item_type = x
-                continue
+                if any(
+                    substring in affix_name.lower() for substring in ["focus", "offhand", "shield", "totem"]
+                ):  # special line indicating the item type
+                    continue
             affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)).strip().lower(), Dataloader().affix_dict))
             if affix_obj.name is None:
                 Logger.error(f"Couldn't match {affix_name=}")
@@ -126,9 +129,14 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
 
 
 def _corrections(input_str: str) -> str:
-    match input_str.lower():
+    input_str = input_str.lower()
+    match input_str:
         case "max life":
             return "maximum life"
+        case "total armor":
+            return "armor"
+    if "ranks to" in input_str or "ranks of" in input_str:
+        return input_str.replace("ranks to", "to").replace("ranks of", "to")
     return input_str
 
 
@@ -151,7 +159,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://d4builds.gg/builds/dbad6569-2e78-4c43-a831-c563d0a1e1ad/?var=3",
+        "https://d4builds.gg/builds/463e7337-8fa9-491f-99a0-cbd6c65fc6f4/?var=1",
     ]
-    for x in URLS:
-        import_d4builds(url=x)
+    for X in URLS:
+        import_d4builds(url=X)

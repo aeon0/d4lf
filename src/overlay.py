@@ -1,6 +1,7 @@
 import logging
 import threading
 import tkinter as tk
+import typing
 
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
@@ -98,7 +99,7 @@ class Overlay:
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
 
-    def show_canvas(self, event):
+    def show_canvas(self, _):
         # Cancel the pending hide if it exists
         if self.hide_id:
             self.root.after_cancel(self.hide_id)
@@ -106,7 +107,7 @@ class Overlay:
         # Make the window visible
         self.root.attributes("-alpha", 0.94)
 
-    def hide_canvas(self, event):
+    def hide_canvas(self, _):
         # Reset the hide timer
         if self.is_minimized:
             if self.hide_id is not None:
@@ -143,7 +144,7 @@ class Overlay:
     def move_items_to_stash(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_stash)
 
-    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method):
+    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable):
         if lock.acquire(blocking=False):
             try:
                 if self.loot_interaction_thread is not None:
@@ -154,8 +155,9 @@ class Overlay:
                 else:
                     if self.is_minimized:
                         self.toggle_size()
-                    self.loot_interaction_thread = threading.Thread(target=self._wrapper_run_loot_interaction_method,
-                                                                    args=(loot_interaction_method,), daemon=True)
+                    self.loot_interaction_thread = threading.Thread(
+                        target=self._wrapper_run_loot_interaction_method, args=(loot_interaction_method,), daemon=True
+                    )
                     self.loot_interaction_thread.start()
                     self.filter_button.config(fg="#006600")
             finally:
@@ -163,7 +165,7 @@ class Overlay:
         else:
             return
 
-    def _wrapper_run_loot_interaction_method(self, loot_interaction_method):
+    def _wrapper_run_loot_interaction_method(self, loot_interaction_method: typing.Callable):
         try:
             # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False

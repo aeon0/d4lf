@@ -56,8 +56,7 @@ def move_items_to_inventory():
         unhandled_slots, _ = chest.get_item_slots()
 
         Logger().debug(
-            f"Stash tab {i} - Number of stash items: {len(unhandled_slots)} - Number of empty inventory "
-            f"spaces: {empty_slot_count}"
+            f"Stash tab {i} - Number of stash items: {len(unhandled_slots)} - Number of empty inventory " f"spaces: {empty_slot_count}"
         )
 
         item_move_count, _ = _move_items(inv, unhandled_slots, empty_slot_count)
@@ -71,7 +70,7 @@ def move_items_to_inventory():
     Logger().info("Completed move")
 
 
-def _move_items(inv, occupied, num_to_move) -> tuple[int, list[ItemSlot]]:
+def _move_items(inv: CharInventory, occupied: list[ItemSlot], num_to_move: int) -> tuple[int, list[ItemSlot]]:
     """
     Handles actually moving items to or from the stash, based on a parameter
     :param inv: The Inventory object, used for hovering over the item

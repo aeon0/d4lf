@@ -194,8 +194,8 @@ class GeneralModel(_IniBaseModel):
 
     @field_validator("hidden_transparency")
     def transparency_in_range(cls, v: float) -> float:
-        if not 0.01 <= v <= 1:
-            raise ValueError("must be in [0.01, 1]")
+        if not 0 <= v <= 1:
+            raise ValueError("must be in [0, 1]")
         return v
 
 

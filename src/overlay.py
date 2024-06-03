@@ -1,3 +1,4 @@
+import ctypes
 import logging
 import threading
 import tkinter as tk
@@ -90,6 +91,12 @@ class Overlay:
         self.terminal_listbox.place(
             relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
+
+        if IniConfigLoader().general.hidden_transparency == 0:
+            self.root.update()
+            hwnd = self.root.winfo_id()
+            style = ctypes.windll.user32.GetWindowLongW(hwnd, -20)
+            ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
         # Setup the listbox logger handler
         listbox_handler = ListboxHandler(self.terminal_listbox)

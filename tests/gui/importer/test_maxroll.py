@@ -14,7 +14,6 @@ URLS = [
     "https://maxroll.gg/d4/planner/dqih026y#3",
     "https://maxroll.gg/d4/planner/r61bp0om#11",
     "https://maxroll.gg/d4/planner/ubaoz02q#1",
-    "https://maxroll.gg/d4/planner/xu2az0w2",
 ]
 
 

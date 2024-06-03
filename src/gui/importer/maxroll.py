@@ -70,7 +70,8 @@ def import_maxroll(url: str):
                 minGreaterAffixCount=0,
             )
         ]
-        if "implicits" in resolved_item:
+        # maxroll has some outdated data, so we need to clean it up by using item_type
+        if "implicits" in resolved_item and item_type in [ItemType.Ring, ItemType.Boots]:
             item_filter.inherentPool = [
                 AffixFilterCountModel(
                     count=[
@@ -191,7 +192,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://maxroll.gg/d4/planner/dqih026y#3",
+        "https://maxroll.gg/d4/planner/uh6pa02q#2",
     ]
-    for x in URLS:
-        import_maxroll(url=x)
+    for X in URLS:
+        import_maxroll(url=X)

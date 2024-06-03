@@ -5,6 +5,7 @@ from src.config.models import (
     ComparisonType,
     ItemFilterModel,
     ProfileModel,
+    SigilConditionModel,
     SigilFilterModel,
     UniqueModel,
 )
@@ -152,7 +153,18 @@ affix = ProfileModel(
 
 sigil = ProfileModel(
     name="test",
-    Sigils=SigilFilterModel(blacklist=["reduce_cooldowns_on_kill", "vault_of_copper"], whitelist=["jalals_vigil"], maxTier=80, minTier=40),
+    Sigils=SigilFilterModel(
+        blacklist=[
+            SigilConditionModel(name="reduce_cooldowns_on_kill"),
+            SigilConditionModel(name="underroot"),
+        ],
+        whitelist=[
+            SigilConditionModel(name="jalals_vigil"),
+            SigilConditionModel(name="iron_hold", condition=["shadow_damage"]),
+        ],
+        maxTier=80,
+        minTier=40,
+    ),
 )
 
 unique = ProfileModel(

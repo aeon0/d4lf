@@ -13,8 +13,9 @@ sigils = [
     ("power too low", [], TestSigil(power=20)),
     ("power too high", [], TestSigil(power=100)),
     ("affix in blacklist", [], TestSigil(affixes=[Affix(name="death_pulse"), Affix(name="reduce_cooldowns_on_kill", value=0.25)])),
-    ("inherent in blacklist", [], TestSigil(inherent=[Affix(name="vault_of_copper")])),
+    ("inherent in blacklist", [], TestSigil(inherent=[Affix(name="underroot")])),
     ("affix not in whitelist", [], TestSigil(inherent=[Affix(name="lubans_rest")])),
+    ("condition not met", [], TestSigil(inherent=[Affix(name="iron_hold")])),
     (
         "ok_1",
         ["test"],
@@ -55,6 +56,20 @@ sigils = [
                 Affix(name="backstabbers"),
             ],
             inherent=[Affix(name="jalals_vigil")],
+        ),
+    ),
+    (
+        "ok_4",
+        ["test"],
+        TestSigil(
+            affixes=[
+                Affix(name="shadow_damage", value=2.0),
+                Affix(name="nightmare_portal"),
+                Affix(name="monster_attack_speed", value=25.0),
+                Affix(name="monster_burning_resist", value=60.0),
+                Affix(name="backstabbers"),
+            ],
+            inherent=[Affix(name="iron_hold")],
         ),
     ),
 ]

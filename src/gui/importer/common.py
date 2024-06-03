@@ -14,6 +14,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
+from src import __version__
 from src.config.loader import IniConfigLoader
 from src.config.models import BrowserType, ProfileModel
 from src.item.data.item_type import ItemType
@@ -51,8 +52,10 @@ def fix_weapon_type(input_str: str) -> ItemType | None:
         return ItemType.Wand
     if "staff" in input_str:
         return ItemType.Staff
-    if "staff" in input_str:
+    if "dagger" in input_str:
         return ItemType.Dagger
+    if "bow" in input_str:
+        return ItemType.Bow
     return None
 
 
@@ -132,12 +135,12 @@ def retry_importer(func=None, inject_webdriver: bool = False):
 
 def save_as_profile(file_name: str, profile: ProfileModel, url: str):
     file_name = file_name.replace("'", "")
-    file_name = re.sub(r"[ /-]", "_", file_name)
-    file_name = re.sub(r"_+", "_", file_name)
+    file_name = re.sub(r"\W", "_", file_name)
+    file_name = re.sub(r"_+", "_", file_name).rstrip("_")
     save_path = IniConfigLoader().user_dir / f"profiles/{file_name}.yaml"
     with open(save_path, "w", encoding="utf-8") as file:
         file.write(f"# {url}\n")
-        file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")}\n")
+        file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")} (v{__version__})\n")
         file.write(
             to_yaml_str(
                 profile,

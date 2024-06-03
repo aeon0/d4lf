@@ -33,6 +33,8 @@ def main():
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
     table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
     table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
+    table.rows.append([IniConfigLoader().advanced_options.move_to_inv, "Move Items From Chest To Inventory"])
+    table.rows.append([IniConfigLoader().advanced_options.move_to_chest, "Move Items From Inventory To Chest"])
     table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
     table.columns.header = ["hotkey", "action"]
     print(table)
@@ -50,6 +52,8 @@ def main():
     keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
     keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
     keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_chest, lambda: overlay.move_items_to_stash())
 
     overlay = Overlay()
     overlay.run()

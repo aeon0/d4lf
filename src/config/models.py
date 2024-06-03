@@ -24,6 +24,12 @@ class HandleRaresType(enum.StrEnum):
     junk = enum.auto()
 
 
+class MoveItemsType(enum.StrEnum):
+    everything = enum.auto()
+    junk = enum.auto()
+    non_favorites = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -113,6 +119,8 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str
     log_lvl: str = "info"
+    move_to_chest: str
+    move_to_inv: str
     process_name: str = "Diablo IV.exe"
     run_filter: str
     run_scripts: str
@@ -120,12 +128,12 @@ class AdvancedOptionsModel(_IniBaseModel):
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "run_scripts", "run_filter")
+    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_scripts", "run_filter")
     def key_must_exist(cls, k: str) -> str:
         return key_must_exist(k)
 
@@ -170,6 +178,7 @@ class GeneralModel(_IniBaseModel):
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
     language: str = "enUS"
+    move_item_type: MoveItemsType = MoveItemsType.non_favorites
     profiles: list[str]
     run_vision_mode_on_startup: bool
 
@@ -185,8 +194,8 @@ class GeneralModel(_IniBaseModel):
 
     @field_validator("hidden_transparency")
     def transparency_in_range(cls, v: float) -> float:
-        if not 0.01 <= v <= 1:
-            raise ValueError("must be in [0.01, 1]")
+        if not 0 <= v <= 1:
+            raise ValueError("must be in [0, 1]")
         return v
 
 

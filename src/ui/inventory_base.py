@@ -41,7 +41,7 @@ class InventoryBase(Menu):
         x_size = self.slots_roi[2] // self.columns
         return max(y_size, x_size)
 
-    def get_item_slots(self, img: np.ndarray | None = None) -> tuple[list[ItemSlot], list[ItemSlot], list[ItemSlot], list[ItemSlot]]:
+    def get_item_slots(self, img: np.ndarray | None = None) -> tuple[list[ItemSlot], list[ItemSlot]]:
         """
         Identifies occupied and empty slots in a grid of slots within a given rectangle of interest (ROI).
         :param roi: The rectangle to consider, represented as (x_min, y_min, width, height).

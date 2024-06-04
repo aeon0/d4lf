@@ -8,9 +8,12 @@ class TestKeyMustExist:
         # Test for an existing key
         assert key_must_exist("a")
 
+    def test_modifier_key_works(self):
+        assert key_must_exist("shift+a")
+
     def test_non_existing_key(self):
         # Test for a non-existing key
-        with pytest.raises(ValueError, match="key does not exist"):
+        with pytest.raises(ValueError, match="key 'non_existing_key' does not exist"):
             key_must_exist("non_existing_key")
 
 

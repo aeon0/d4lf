@@ -1,6 +1,7 @@
 import os
 import pathlib
 import re
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import lxml.html
 
@@ -35,14 +36,7 @@ def import_mobalytics(url: str):
     if BUILD_GUIDE_BASE_URL not in url:
         Logger.error("Invalid url, please use a mobalytics build guide")
         return
-    if "equipmentTab" not in url:
-        if "?" in url:
-            url += "&"
-        else:
-            url += "?"
-        url += "equipmentTab=gear-stats"
-    elif "equipmentTab=aspects-and-uniques" in url:
-        url = url.replace("equipmentTab=aspects-and-uniques", "equipmentTab=gear-stats")
+    url = _fix_input_url(url=url)
     Logger.info(f"Loading {url}")
     try:
         r = get_with_retry(url=url)
@@ -137,6 +131,16 @@ def _corrections(input_str: str) -> str:
         case "max life":
             return "maximum life"
     return input_str
+
+
+def _fix_input_url(url: str) -> str:
+    parsed_url = urlparse(url)
+    query_dict = parse_qs(parsed_url.query)
+    new_query_dict = {"equipmentTab": ["gear-stats"]}
+    if "variantTab" in query_dict:
+        new_query_dict["variantTab"] = query_dict["variantTab"]
+    new_query_string = urlencode(new_query_dict, doseq=True)
+    return urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, parsed_url.params, new_query_string, parsed_url.fragment))
 
 
 def _get_class_name(input_str: str) -> str:

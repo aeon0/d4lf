@@ -1,20 +1,20 @@
 import pytest
 
-from src.config.helper import key_must_exist, singleton, str_to_int_list
+from src.config.helper import singleton, str_to_int_list, validate_hotkey
 
 
 class TestKeyMustExist:
     def test_existing_key(self):
         # Test for an existing key
-        assert key_must_exist("a")
+        assert validate_hotkey("a")
 
     def test_modifier_key_works(self):
-        assert key_must_exist("shift+a")
+        assert validate_hotkey("shift+a")
 
     def test_non_existing_key(self):
         # Test for a non-existing key
-        with pytest.raises(ValueError, match="key 'non_existing_key' does not exist"):
-            key_must_exist("non_existing_key")
+        with pytest.raises(ValueError, match="Key 'non_existing_key' is not mapped to any known key."):
+            validate_hotkey("non_existing_key")
 
 
 class TestSingletonDecorator:

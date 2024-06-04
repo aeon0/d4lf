@@ -1,9 +1,6 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
-import keyboard._winkeyboard
-
-# propagate the key names to the keyboard module
-keyboard._winkeyboard._setup_name_tables()
+import keyboard
 
 
 def check_greater_than_zero(v: int) -> int:
@@ -12,11 +9,8 @@ def check_greater_than_zero(v: int) -> int:
     return v
 
 
-def key_must_exist(k: str) -> str:
-    all_keys = k.split("+")  # Handles modifiers like shift
-    for key in all_keys:
-        if key not in keyboard._winkeyboard.from_name:
-            raise ValueError(f"key '{key}' does not exist")
+def validate_hotkey(k: str) -> str:
+    keyboard.parse_hotkey(k)
     return k
 
 

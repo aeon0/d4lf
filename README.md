@@ -59,16 +59,17 @@ The config folder contains:
 |-----------|-----------------------------------|
 | inventory | Your hotkey for opening inventory |
 
-| [advanced_options] | Description                                                                                                              |
-|--------------------|--------------------------------------------------------------------------------------------------------------------------|
-| move_to_inv        | Hotkey for moving items from stash to inventory                                                                          |
-| move_to_chest      | Hotkey for moving items from inventory to stash                                                                          |
-| run_scripts        | Hotkey to start/stop vision mode                                                                                         |
-| run_filter         | Hotkey to start/stop filtering items                                                                                     |
-| exit_key           | Hotkey to exit d4lf.exe                                                                                                  |
-| log_level          | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
-| scripts            | Running different scripts                                                                                                |
-| process_name       | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
+| [advanced_options]       | Description                                                                                                              |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| move_to_inv              | Hotkey for moving items from stash to inventory                                                                          |
+| move_to_chest            | Hotkey for moving items from inventory to stash                                                                          |
+| run_scripts              | Hotkey to start/stop vision mode                                                                                         |
+| run_filter               | Hotkey to start/stop filtering items                                                                                     |
+| run_filter_force_refresh | Hotkey to start/stop filtering items with a force refresh. All item statuses will be reset                               |
+| exit_key                 | Hotkey to exit d4lf.exe                                                                                                  |
+| log_level                | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
+| scripts                  | Running different scripts                                                                                                |
+| process_name             | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
 
 ### GUI
 

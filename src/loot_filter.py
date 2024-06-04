@@ -20,8 +20,13 @@ from src.utils.misc import wait
 from src.utils.window import screenshot
 
 
-def check_items(inv: InventoryBase):
+def check_items(inv: InventoryBase, force_refresh):
     occupied, _ = inv.get_item_slots()
+
+    if force_refresh:
+        reset_item_status(occupied, inv)
+        occupied, _ = inv.get_item_slots()
+
     num_fav = sum(1 for slot in occupied if slot.is_fav)
     num_junk = sum(1 for slot in occupied if slot.is_junk)
     Logger.info(f"Items: {len(occupied)} (favorite: {num_fav}, junk: {num_junk}) in {inv.menu_name}")
@@ -113,7 +118,23 @@ def check_items(inv: InventoryBase):
             wait(0.13, 0.14)
 
 
-def run_loot_filter():
+def reset_item_status(occupied, inv):
+    for item_slot in occupied:
+        if item_slot.is_fav:
+            inv.hover_item(item_slot)
+            keyboard.send("space")
+        if item_slot.is_junk:
+            inv.hover_item(item_slot)
+            keyboard.send("space")
+            wait(0.13, 0.14)
+            keyboard.send("space")
+
+    if occupied:
+        mouse.move(*Cam().abs_window_to_monitor((0, 0)))
+
+
+def run_loot_filter(force_refresh=False):
+    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Run Loot filter")
     inv = CharInventory()
     chest = Chest()
@@ -122,15 +143,15 @@ def run_loot_filter():
         for i in IniConfigLoader().general.check_chest_tabs:
             chest.switch_to_tab(i)
             wait(0.5)
-            check_items(chest)
+            check_items(chest, force_refresh)
         mouse.move(*Cam().abs_window_to_monitor((0, 0)))
         wait(0.5)
-        check_items(inv)
+        check_items(inv, force_refresh)
     else:
         if not inv.open():
             screenshot("inventory_not_open", img=Cam().grab())
             Logger.error("Inventory did not open up")
             return
-        check_items(inv)
+        check_items(inv, force_refresh)
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     Logger().info("Loot Filter done")

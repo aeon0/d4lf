@@ -13,8 +13,10 @@ def check_greater_than_zero(v: int) -> int:
 
 
 def key_must_exist(k: str) -> str:
-    if k not in keyboard._winkeyboard.from_name:
-        raise ValueError("key does not exist")
+    all_keys = k.split("+")  # Handles modifiers like shift
+    for key in all_keys:
+        if key not in keyboard._winkeyboard.from_name:
+            raise ValueError(f"key '{key}' does not exist")
     return k
 
 

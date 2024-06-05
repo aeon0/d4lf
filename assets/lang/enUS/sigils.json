@@ -45,6 +45,7 @@
         "forsaken_quarry": "forsaken quarry",
         "garan_hold": "garan hold",
         "ghoa_ruins": "ghoa ruins",
+        "glacial_fissure": "glacial fissure",
         "grinning_labyrinth": "grinning labyrinth",
         "guulrahn_canals": "guulrahn canals",
         "guulrahn_slums": "guulrahn slums",
@@ -109,10 +110,6 @@
         "twisted_hollow": "twisted hollow",
         "uldurs_cave": "uldurs cave",
         "underroot": "underroot",
-        "vault_of_cinder": "vault of cinder",
-        "vault_of_copper": "vault of copper",
-        "vault_of_ink": "vault of ink",
-        "vault_of_stone": "vault of stone",
         "vault_of_the_forsaken": "vault of the forsaken",
         "whispering_pines": "whispering pines",
         "whispering_vault": "whispering vault",
@@ -137,7 +134,7 @@
         "monster_barrier": "monster barrier monsters gain of their maximum life as a barrier.",
         "nightmare_portal": "nightmare portal while in combat, nightmare portals open randomly near players, pouring out dangerous monsters.",
         "stormbanes_wrath": "stormbanes wrath stormbanes wrath chases players around, releasing deadly pulses when reaching a player.",
-        "the_beast_in_ice": "the beast in ice face a more challenging beast in ice at the end of this frozen cave.",
+        "the_beast_in_ice": "the beast in ice imprisoned no longer, face the beast in ice in its frozen cave.",
         "volcanic": "volcanic while in combat, gouts of flame periodically erupt near players."
     },
     "minor": {

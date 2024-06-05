@@ -179,7 +179,8 @@ class GeneralModel(_IniBaseModel):
     hidden_transparency: float
     keep_aspects: AspectFilterType = AspectFilterType.upgrade
     language: str = "enUS"
-    move_item_type: MoveItemsType = MoveItemsType.non_favorites
+    move_to_inv_item_type: MoveItemsType = MoveItemsType.non_favorites
+    move_to_stash_item_type: MoveItemsType = MoveItemsType.non_favorites
     profiles: list[str]
     run_vision_mode_on_startup: bool
 

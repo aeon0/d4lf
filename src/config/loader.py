@@ -60,7 +60,8 @@ class IniConfigLoader:
             handle_rares=self._select_val("general", "handle_rares"),
             hidden_transparency=self._select_val("general", "hidden_transparency"),
             keep_aspects=self._select_val("general", "keep_aspects"),
-            move_item_type=self._select_val("general", "move_item_type"),
+            move_to_inv_item_type=self._select_val("general", "move_to_inv_item_type"),
+            move_to_stash_item_type=self._select_val("general", "move_to_stash_item_type"),
             profiles=self._select_val("general", "profiles").split(","),
             run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
         )

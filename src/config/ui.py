@@ -78,18 +78,9 @@ class _ResTransformer:
             window_dimensions=self._transform_tuples(value=POSITIONS[2].window_dimensions),
         )
         roi = UiRoiModel(
-            core_skill=self._transform_array(value=POSITIONS[3].core_skill),
-            health_slice=self._transform_array(value=POSITIONS[3].health_slice),
-            hud_detection=self._transform_array(value=POSITIONS[3].hud_detection),
-            mini_map_visible=self._transform_array(value=POSITIONS[3].mini_map_visible),
             rel_descr_search_left=self._transform_array(value=POSITIONS[3].rel_descr_search_left, scale_only=True),
             rel_descr_search_right=self._transform_array(value=POSITIONS[3].rel_descr_search_right, scale_only=True),
             rel_fav_flag=self._transform_array(value=POSITIONS[3].rel_fav_flag, scale_only=True),
-            rel_skill_cd=self._transform_array(value=POSITIONS[3].rel_skill_cd, scale_only=True),
-            skill3=self._transform_array(value=POSITIONS[3].skill3),
-            skill4=self._transform_array(value=POSITIONS[3].skill4),
-            slots_3x11=self._transform_array(value=POSITIONS[3].slots_3x11),
-            slots_5x10=self._transform_array(value=POSITIONS[3].slots_5x10),
             sort_icon=self._transform_array(value=POSITIONS[3].sort_icon),
             stash_menu_icon=self._transform_array(value=POSITIONS[3].stash_menu_icon),
             tab_slots_6=self._transform_array(value=POSITIONS[3].tab_slots_6),

@@ -101,16 +101,9 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             json.dump(unique_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
-        # Create Dungeons
         print(f"Gen Sigils for {language}")
         sigil_dict = {"dungeons": {}, "minor": {}, "major": {}, "positive": {}}
 
-        # Add season specific ones
-        if language == "enUS":
-            sigil_dict["dungeons"]["vault_of_copper"] = "vault of copper"
-            sigil_dict["dungeons"]["vault_of_cinder"] = "vault of cinder"
-            sigil_dict["dungeons"]["vault_of_ink"] = "vault of ink"
-            sigil_dict["dungeons"]["vault_of_stone"] = "vault of stone"
         # Add others automatically
         pattern = f"json/{language}_Text/meta/StringList/world_DGN_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
@@ -137,6 +130,24 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                         else:
                             desc = sigil_affix["szText"].lower().strip().replace("’", "").replace("'", "")
                         sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {remove_content_in_braces(desc)}"
+
+        # Some of the unique specific affixes are missing. Add them manually
+        json_file = f"src/tools/data/custom_sigils_{language}.json"
+        with open(json_file, encoding="utf-8") as file:
+            data = json.load(file)
+            for key, value in data.items():
+                if key in sigil_dict:
+                    for key2, value2 in value.items():
+                        if key2 in sigil_dict[key]:
+                            if sigil_dict[key][key2] == value:
+                                print(f"Sigil {key2} already exists in sigils.json. Can be deleted from custom json")
+                            else:
+                                print(f"Sigil {key2} already exists in sigils.json but with different value")
+                                sigil_dict[key][key2] = value2
+                        else:
+                            sigil_dict[key][key2] = value2
+                else:
+                    sigil_dict[key] = value
 
         with open(f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
             json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
@@ -219,7 +230,15 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         json_file = f"src/tools/data/custom_affixes_{language}.json"
         with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
-            affix_dict.update(data)
+            for key, value in data.items():
+                if key in affix_dict:
+                    if affix_dict[key] == value:
+                        print(f"Affix {key} already exists in affixes.json. Can be deleted from custom json")
+                    else:
+                        print(f"Affix {key} already exists in affixes.json but with different value")
+                        affix_dict[key] = value
+                else:
+                    affix_dict[key] = value
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
             json.dump(affix_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")

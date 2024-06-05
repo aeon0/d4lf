@@ -10,8 +10,6 @@ from src.config.ui import ResManager
 from src.logger import Logger
 from src.loot_filter import run_loot_filter
 from src.loot_mover import move_items_to_inventory, move_items_to_stash
-from src.scripts.heal import heal
-from src.scripts.rogue_tb import run_rogue_tb
 from src.scripts.vision_mode import vision_mode
 from src.utils.process_handler import kill_thread
 from src.utils.window import WindowSpec, move_window_to_foreground
@@ -208,14 +206,6 @@ class Overlay:
                         Logger.info("No scripts configured")
                         return
                     for name in IniConfigLoader().advanced_options.scripts:
-                        if name == "rogue_tb":
-                            rogue_tb_thread = threading.Thread(target=run_rogue_tb, daemon=True)
-                            rogue_tb_thread.start()
-                            self.script_threads.append(rogue_tb_thread)
-                        if name == "heal":
-                            heal_thread = threading.Thread(target=heal, daemon=True)
-                            heal_thread.start()
-                            self.script_threads.append(heal_thread)
                         if name == "vision_mode":
                             vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
                             vision_mode_thread.start()

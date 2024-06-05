@@ -361,16 +361,9 @@ class UiPosModel(_IniBaseModel):
 
 
 class UiRoiModel(NumpyModel):
-    core_skill: np_array_pydantic_annotated_typing(dimensions=1)
-    health_slice: np_array_pydantic_annotated_typing(dimensions=1)
-    hud_detection: np_array_pydantic_annotated_typing(dimensions=1)
-    mini_map_visible: np_array_pydantic_annotated_typing(dimensions=1)
     rel_descr_search_left: np_array_pydantic_annotated_typing(dimensions=1)
     rel_descr_search_right: np_array_pydantic_annotated_typing(dimensions=1)
     rel_fav_flag: np_array_pydantic_annotated_typing(dimensions=1)
-    rel_skill_cd: np_array_pydantic_annotated_typing(dimensions=1)
-    skill3: np_array_pydantic_annotated_typing(dimensions=1)
-    skill4: np_array_pydantic_annotated_typing(dimensions=1)
     slots_3x11: np_array_pydantic_annotated_typing(dimensions=1)
     slots_5x10: np_array_pydantic_annotated_typing(dimensions=1)
     sort_icon: np_array_pydantic_annotated_typing(dimensions=1)

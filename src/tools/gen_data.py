@@ -105,12 +105,9 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         print(f"Gen Sigils for {language}")
         sigil_dict = {"dungeons": {}, "minor": {}, "major": {}, "positive": {}}
 
-        # Add season specific ones
+        # Add specific dungeons
         if language == "enUS":
-            sigil_dict["dungeons"]["vault_of_copper"] = "vault of copper"
-            sigil_dict["dungeons"]["vault_of_cinder"] = "vault of cinder"
-            sigil_dict["dungeons"]["vault_of_ink"] = "vault of ink"
-            sigil_dict["dungeons"]["vault_of_stone"] = "vault of stone"
+            sigil_dict["dungeons"]["glacial_fissure"] = "glacial fissure"
         # Add others automatically
         pattern = f"json/{language}_Text/meta/StringList/world_DGN_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
@@ -219,7 +216,14 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         json_file = f"src/tools/data/custom_affixes_{language}.json"
         with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
-            affix_dict.update(data)
+            for key, value in data.items():
+                if key in affix_dict:
+                    if affix_dict[key] == value:
+                        print(f"Affix {key} already exists in affixes.json. Can be deleted from custom json")
+                    else:
+                        print(f"Affix {key} already exists in affixes.json but with different value")
+                else:
+                    affix_dict[key] = value
         with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
             json.dump(affix_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")

@@ -140,8 +140,8 @@ class Overlay:
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
-    def filter_items(self):
-        self._start_or_stop_loot_interaction_thread(run_loot_filter)
+    def filter_items(self, force_refresh=False):
+        self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
 
     def move_items_to_inventory(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_inventory)
@@ -149,7 +149,7 @@ class Overlay:
     def move_items_to_stash(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_stash)
 
-    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable):
+    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable, method_args=()):
         if lock.acquire(blocking=False):
             try:
                 if self.loot_interaction_thread is not None:
@@ -161,7 +161,7 @@ class Overlay:
                     if self.is_minimized:
                         self.toggle_size()
                     self.loot_interaction_thread = threading.Thread(
-                        target=self._wrapper_run_loot_interaction_method, args=(loot_interaction_method,), daemon=True
+                        target=self._wrapper_run_loot_interaction_method, args=(loot_interaction_method, method_args), daemon=True
                     )
                     self.loot_interaction_thread.start()
                     self.filter_button.config(fg="#006600")
@@ -170,7 +170,7 @@ class Overlay:
         else:
             return
 
-    def _wrapper_run_loot_interaction_method(self, loot_interaction_method: typing.Callable):
+    def _wrapper_run_loot_interaction_method(self, loot_interaction_method: typing.Callable, method_args=()):
         try:
             # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False
@@ -182,7 +182,7 @@ class Overlay:
                 self.script_threads = []
                 did_stop_scripts = True
 
-            loot_interaction_method()
+            loot_interaction_method(*method_args)
 
             if did_stop_scripts:
                 self.run_scripts()

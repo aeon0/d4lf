@@ -48,6 +48,7 @@ class IniConfigLoader:
             move_to_inv=self._select_val("advanced_options", "move_to_inv"),
             process_name=self._select_val("advanced_options", "process_name"),
             run_filter=self._select_val("advanced_options", "run_filter"),
+            run_filter_force_refresh=self._select_val("advanced_options", "run_filter_force_refresh"),
             run_scripts=self._select_val("advanced_options", "run_scripts"),
             scripts=self._select_val("advanced_options", "scripts").split(","),
         )

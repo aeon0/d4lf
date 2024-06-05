@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, RootModel, field_validator, model_va
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
-from src.config.helper import check_greater_than_zero, key_must_exist
+from src.config.helper import check_greater_than_zero, validate_hotkey
 from src.item.data.item_type import ItemType
 
 
@@ -123,19 +123,20 @@ class AdvancedOptionsModel(_IniBaseModel):
     move_to_inv: str
     process_name: str = "Diablo IV.exe"
     run_filter: str
+    run_filter_force_refresh: str
     run_scripts: str
     scripts: list[str]
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_scripts]
+        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_filter_force_refresh, self.run_scripts]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_scripts", "run_filter")
+    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_filter", "run_filter_force_refresh", "run_scripts")
     def key_must_exist(cls, k: str) -> str:
-        return key_must_exist(k)
+        return validate_hotkey(k)
 
     @field_validator("log_lvl")
     def log_lvl_must_exist(cls, k: str) -> str:
@@ -149,7 +150,7 @@ class CharModel(_IniBaseModel):
 
     @field_validator("inventory")
     def key_must_exist(cls, k: str) -> str:
-        return key_must_exist(k)
+        return validate_hotkey(k)
 
 
 class ColorsModel(_IniBaseModel):

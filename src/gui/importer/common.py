@@ -79,6 +79,22 @@ def format_number_as_short_string(n: int) -> str:
     return f"{int(result)}M" if result.is_integer() else f"{result:.2f}M"
 
 
+def get_class_name(input_str: str) -> str:
+    input_str = input_str.lower()
+    if "barbarian" in input_str:
+        return "Barbarian"
+    if "druid" in input_str:
+        return "Druid"
+    if "necromancer" in input_str:
+        return "Necromancer"
+    if "rogue" in input_str:
+        return "Rogue"
+    if "sorcerer" in input_str:
+        return "Sorcerer"
+    Logger.error(f"Couldn't match class name {input_str=}")
+    return "Unknown"
+
+
 def get_with_retry(url: str) -> requests.Response:
     for _ in range(5):
         r = requests.get(url)

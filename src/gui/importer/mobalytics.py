@@ -40,9 +40,9 @@ def import_mobalytics(url: str):
     Logger.info(f"Loading {url}")
     try:
         r = get_with_retry(url=url)
-    except ConnectionError as ex:
-        Logger.error(msg := "Couldn't get build")
-        raise MobalyticsException(msg) from ex
+    except ConnectionError as exc:
+        Logger.exception(msg := "Couldn't get build")
+        raise MobalyticsException(msg) from exc
     data = lxml.html.fromstring(r.text)
     build_elem = data.xpath(BUILD_GUIDE_NAME_XPATH)
     if not build_elem:

@@ -166,9 +166,9 @@ def _extract_planner_url_and_id_from_planner(url: str) -> tuple[str, int]:
 
         try:
             r = get_with_retry(url=PLANNER_API_BASE_URL + planner_id)
-        except ConnectionError as ex:
-            Logger.error(msg := "Couldn't get planner")
-            raise MaxrollException(msg) from ex
+        except ConnectionError as exc:
+            Logger.exception(msg := "Couldn't get planner")
+            raise MaxrollException(msg) from exc
         data_id = json.loads(r.json()["data"])["activeProfile"]
     return PLANNER_API_BASE_URL + planner_id, data_id
 
@@ -176,9 +176,9 @@ def _extract_planner_url_and_id_from_planner(url: str) -> tuple[str, int]:
 def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
     try:
         r = get_with_retry(url=url)
-    except ConnectionError as ex:
-        Logger.error(msg := "Couldn't get build guide")
-        raise MaxrollException(msg) from ex
+    except ConnectionError as exc:
+        Logger.exception(msg := "Couldn't get build guide")
+        raise MaxrollException(msg) from exc
     data = lxml.html.fromstring(r.text)
     if not (embed := data.xpath(BUILD_GUIDE_PLANNER_EMBED_XPATH)):
         Logger.error(msg := "Couldn't find planner url in build guide")

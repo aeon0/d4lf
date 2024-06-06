@@ -1,9 +1,12 @@
 import dataclasses
 import datetime
+import json
 import os
 import pathlib
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
+from pydantic import ValidationError
 
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
@@ -38,6 +41,11 @@ class _Listing:
     item_rarity: ItemRarity | None = None
     item_type: ItemType | None = None
     price: int = 0
+    raw_data: dict[str, Any] | None = None
+
+
+class DiabloTradeException(Exception):
+    pass
 
 
 @retry_importer
@@ -67,6 +75,7 @@ def import_diablo_trade(url: str, max_listings: int):
                 item_rarity=match_to_enum(enum_class=ItemRarity, target_string=listing["rarity"]),
                 item_type=match_to_enum(enum_class=ItemType, target_string=listing["itemType"]),
                 price=listing["price"],
+                raw_data=listing,
             )
             try:
                 assert listing_obj.item_type is not None
@@ -79,7 +88,15 @@ def import_diablo_trade(url: str, max_listings: int):
         if len(all_listings) >= max_listings:
             break
         cursor += 1
-    profile = ProfileModel(name="diablo_trade", Affixes=_create_filters_from_items(items=all_listings))
+
+    try:
+        profile = ProfileModel(name="diablo_trade", Affixes=_create_filters_from_items(items=all_listings))
+    except ValidationError as exc:
+        Logger.exception(msg := "Failed to validate profile. Dumping data for debugging.")
+        with open(f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")}.json", "w") as f:
+            json.dump(all_listings, f, indent=4, sort_keys=True)
+        raise DiabloTradeException(msg) from exc
+
     Logger.info(f"Saving profile with {len(profile.Affixes)} filters")
     save_as_profile(
         file_name=f"diablo_trade_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}", profile=profile, url=url
@@ -154,7 +171,8 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest",
+        # "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest",
+        "https://diablo.trade/listings/items?categories=ancestral&equipment=amulet,boots,chestarmor,gloves,helm,pants,ring,axe,bow,crossbow,dagger,mace,scythe,staff,sword,twohandedaxe,twohandedmace,twohandedscythe,twohandedsword,wand,focus,shield,totem&exactPrice=true&itemType=equipment&level=80,100&mode=season%20softcore&power=925,1000&price=1000000,9999999999&sold=true&sort=newest&cursor=1"
     ]
     for x in URLS:
         import_diablo_trade(url=x, max_listings=200)

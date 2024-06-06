@@ -22,6 +22,7 @@ class IniConfigLoader:
         self._loaded = False
         self._parsers = {}
         self._user_dir = pathlib.Path.home() / ".d4lf"
+        self._user_dir.mkdir(parents=True, exist_ok=True)
 
     def _select_val(self, section: str, key: str | None = None):
         try:

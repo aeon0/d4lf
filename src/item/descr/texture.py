@@ -70,7 +70,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
         template_list=["affix_bullet_point", "greater_affix_bullet_point", "rerolled_bullet_point", "tempered_affix_bullet_point"],
-        threshold=0.832,
+        threshold=0.8,
         mode="all",
     )
 
@@ -80,7 +80,7 @@ def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
         template_list=["empty_socket"],
-        threshold=0.80,
+        threshold=0.8,
         mode="all",
     )
     return sorted(empty_sockets, key=lambda match: match.center[1])

@@ -43,17 +43,17 @@ The config folder contains:
 
 ### params.ini
 
-| [general]                                         | Description                                                                                                                                                                                                                        |
-|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| profiles                                          | A set of profiles separated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                           |
-| keep_aspects                                      | `all`: Keep all legendary items - `upgrade`: Keep all legendary items that upgrade your codex of power -`none`: Keep no legendary items based on aspect (they are still filtered!)                                                 |
-| handle_rares                                      | `filter`: Filter them based on your profiles - `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them -`junk`: Vision mode shows them always as red, auto mode always junks rares |
-| run_vision_mode_on_startup                        | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                        |
-| check_chest_tabs                                  | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. You need to buy all slots. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                       |
-| move_to_inv_item_type<br/>move_to_stash_item_type | Which types of items to move when using fast move functionality. Will only affect tabs defined in check_chest_tabs. `junk`: Move junk only - `non_favorites`: Only items not marked as favorite - `everything`: Move everything    |
-| hidden_transparency                               | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                       |
-| browser                                           | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                |
-| full_dump                                         | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                          |
+| [general]                                         | Description                                                                                                                                                                                                                                   |
+|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| profiles                                          | A set of profiles separated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                                      |
+| keep_aspects                                      | - `all`: Keep all legendary items <br>- `upgrade`: Keep all legendary items that upgrade your codex of power <br>- `none`: Keep no legendary items based on aspect (they are still filtered!)                                                 |
+| handle_rares                                      | - `filter`: Filter them based on your profiles <br>- `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them <br>- `junk`: Vision mode shows them always as red, auto mode always junks rares |
+| run_vision_mode_on_startup                        | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                                   |
+| check_chest_tabs                                  | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. You need to buy all slots. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                  |
+| move_to_inv_item_type<br/>move_to_stash_item_type | Which types of items to move when using fast move functionality. Will only affect tabs defined in check_chest_tabs. <br>- `junk`: Move junk only <br>- `non_favorites`: Only items not marked as favorite <br>- `everything`: Move everything |
+| hidden_transparency                               | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                                  |
+| browser                                           | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                           |
+| full_dump                                         | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                                     |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -248,6 +248,21 @@ Sigils:
     - resistance_breakers
   whitelist:
     - vault_of_the_forsaken
+```
+
+To switch that priority, you can add the `priority` key with the value `whitelist`.
+
+```yaml
+# This will keep all vault of the forsaken sigils even if they have armor_breakers or resistance_breakers
+Sigils:
+  minTier: 40
+  maxTier: 100
+  blacklist:
+    - armor_breakers
+    - resistance_breakers
+  whitelist:
+    - vault_of_the_forsaken
+  priority: whitelist
 ```
 
 You can also create conditional filters based on a single affix or location.

@@ -73,3 +73,13 @@ sigils = [
         ),
     ),
 ]
+
+sigil_jalal = TestSigil(inherent=[Affix(name="jalals_vigil")])
+
+sigil_priority = TestSigil(
+    affixes=[
+        Affix(name="shadow_damage", value=2.0),
+        Affix(name="reduce_cooldowns_on_kill"),
+    ],
+    inherent=[Affix(name="iron_hold")],
+)

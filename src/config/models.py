@@ -260,6 +260,11 @@ class ItemFilterModel(BaseModel):
 DynamicItemFilterModel = RootModel[dict[str, ItemFilterModel]]
 
 
+class SigilPriority(enum.StrEnum):
+    blacklist = enum.auto()
+    whitelist = enum.auto()
+
+
 class SigilConditionModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: str
@@ -298,6 +303,7 @@ class SigilFilterModel(BaseModel):
     blacklist: list[SigilConditionModel] = []
     maxTier: int = sys.maxsize
     minTier: int = 0
+    priority: SigilPriority = SigilPriority.blacklist
     whitelist: list[SigilConditionModel] = []
 
     @model_validator(mode="after")

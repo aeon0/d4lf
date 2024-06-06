@@ -19,6 +19,7 @@ from src.config.models import (
     ProfileModel,
     SigilConditionModel,
     SigilFilterModel,
+    SigilPriority,
     UniqueModel,
 )
 from src.item.data.affix import Affix, AffixType
@@ -130,16 +131,30 @@ class Filter:
             # check item power
             if not self._match_item_power(max_power=profile_filter.maxTier, min_power=profile_filter.minTier, item_power=item.power):
                 continue
-            # check affix blacklist
-            if profile_filter.blacklist and self._match_affixes_sigils(
+
+            blacklist_empty = not profile_filter.blacklist
+            is_in_blacklist = self._match_affixes_sigils(
                 expected_affixes=profile_filter.blacklist, sigil_affixes=item.affixes + item.inherent
-            ):
-                continue
-            # check affix whitelist
-            if profile_filter.whitelist and not self._match_affixes_sigils(
+            )
+            blacklist_ok = True if blacklist_empty else not is_in_blacklist
+            whitelist_empty = not profile_filter.whitelist
+            is_in_whitelist = self._match_affixes_sigils(
                 expected_affixes=profile_filter.whitelist, sigil_affixes=item.affixes + item.inherent
-            ):
+            )
+            whitelist_ok = True if whitelist_empty else is_in_whitelist
+
+            if blacklist_empty and not whitelist_empty and not whitelist_ok or whitelist_empty and not blacklist_empty and not blacklist_ok:
                 continue
+            if not blacklist_empty and not whitelist_empty:
+                if not blacklist_ok and not whitelist_ok:
+                    continue
+                if is_in_blacklist and is_in_whitelist:
+                    if profile_filter.priority == SigilPriority.whitelist and not whitelist_ok:
+                        continue
+                    if profile_filter.priority == SigilPriority.blacklist and not blacklist_ok:
+                        continue
+                elif is_in_blacklist and not blacklist_ok or not is_in_whitelist and not whitelist_ok:
+                    continue
             Logger.info(f"Matched {profile_name}.Sigils")
             res.keep = True
             res.matched.append(_MatchedFilter(f"{profile_name}"))

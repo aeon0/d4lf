@@ -3,12 +3,12 @@ from natsort import natsorted
 from pytest_mock import MockerFixture
 
 import tests.item.filter.data.filters as filters
-from src.config.models import AspectFilterType
+from src.config.models import AspectFilterType, SigilPriority
 from src.item.filter import Filter, _FilterResult
 from src.item.models import Item
 from tests.item.filter.data.affixes import affixes
 from tests.item.filter.data.aspects import aspects
-from tests.item.filter.data.sigils import sigils
+from tests.item.filter.data.sigils import sigil_jalal, sigil_priority, sigils
 from tests.item.filter.data.uniques import uniques
 
 
@@ -56,6 +56,25 @@ def test_sigils(name: str, result: list[str], item: Item, mocker: MockerFixture)
     test_filter = _create_mocked_filter(mocker)
     test_filter.sigil_filters = {filters.sigil.name: filters.sigil.Sigils}
     assert natsorted([match.profile.split(".")[0] for match in test_filter.should_keep(item).matched]) == natsorted(result)
+
+
+def test_sigil_empty_lists(mocker: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.sigil_filters = {filters.sigil_whitelist_only.name: filters.sigil_whitelist_only.Sigils}
+    assert test_filter.should_keep(sigil_jalal).matched == []
+    assert test_filter.should_keep(sigil_priority).matched[0].profile == filters.sigil_whitelist_only.name
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.sigil_filters = {filters.sigil_blacklist_only.name: filters.sigil_blacklist_only.Sigils}
+    assert test_filter.should_keep(sigil_jalal).matched[0].profile == filters.sigil_blacklist_only.name
+    assert test_filter.should_keep(sigil_priority).matched == []
+
+
+def test_sigil_priority(mocker: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.sigil_filters = {filters.sigil_priority.name: filters.sigil_priority.Sigils}
+    assert test_filter.should_keep(sigil_priority).matched == []
+    test_filter.sigil_filters[next(iter(test_filter.sigil_filters))].priority = SigilPriority.whitelist
+    assert test_filter.should_keep(sigil_priority).matched[0].profile == filters.sigil_priority.name
 
 
 @pytest.mark.parametrize(("name", "result", "item"), natsorted(uniques), ids=[name for name, _, _ in natsorted(uniques)])

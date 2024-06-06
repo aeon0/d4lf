@@ -167,6 +167,36 @@ sigil = ProfileModel(
     ),
 )
 
+sigil_blacklist_only = ProfileModel(
+    name="blacklist_only",
+    Sigils=SigilFilterModel(
+        blacklist=[
+            SigilConditionModel(name="iron_hold"),
+        ],
+    ),
+)
+
+sigil_whitelist_only = ProfileModel(
+    name="whitelist_only",
+    Sigils=SigilFilterModel(
+        whitelist=[
+            SigilConditionModel(name="iron_hold"),
+        ],
+    ),
+)
+
+sigil_priority = ProfileModel(
+    name="priority",
+    Sigils=SigilFilterModel(
+        blacklist=[
+            SigilConditionModel(name="reduce_cooldowns_on_kill"),
+        ],
+        whitelist=[
+            SigilConditionModel(name="iron_hold", condition=["shadow_damage"]),
+        ],
+    ),
+)
+
 unique = ProfileModel(
     name="test",
     Uniques=[

@@ -15,6 +15,7 @@ from src.dataloader import Dataloader
 from src.gui.importer.common import (
     fix_offhand_type,
     fix_weapon_type,
+    get_class_name,
     match_to_enum,
     retry_importer,
     save_as_profile,
@@ -26,7 +27,7 @@ from src.logger import Logger
 
 BASE_URL = "https://d4builds.gg/builds"
 BUILD_OVERVIEW_XPATH = "//*[@class='builder__stats__list']"
-CLASS_XPATH = ".//*[contains(@class, 'builder__header__description')]/*"
+CLASS_XPATH = "//*[contains(@class, 'builder__header__description')]"
 ITEM_GROUP_XPATH = ".//*[contains(@class, 'builder__stats__group')]"
 ITEM_SLOT_XPATH = ".//*[contains(@class, 'builder__stats__slot')]"
 ITEM_STATS_XPATH = ".//*[contains(@class, 'dropdown__button__wrapper')]"
@@ -54,7 +55,10 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
     wait.until(EC.presence_of_element_located((By.XPATH, PAPERDOLL_XPATH)))
     time.sleep(5)  # super hacky but I didn't find anything else. The page is not fully loaded when the above wait is done
     data = lxml.html.fromstring(driver.page_source)
-    class_name = data.xpath(CLASS_XPATH)[0].tail.lower()
+    if (elem := data.xpath(CLASS_XPATH + "/*")) or (elem := data.xpath(CLASS_XPATH)):  # noqa SIM114
+        class_name = get_class_name(f"{elem[0].tail} {elem[0].text}")
+    else:
+        class_name = "Unknown"
     if not (items := data.xpath(BUILD_OVERVIEW_XPATH)):
         Logger.error(msg := "No items found")
         raise D4BuildsException(msg)
@@ -160,6 +164,7 @@ if __name__ == "__main__":
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://d4builds.gg/builds/463e7337-8fa9-491f-99a0-cbd6c65fc6f4/?var=1",
+        "https://d4builds.gg/builds/b5d603bb-4442-42e8-a84d-962e6e42344c?var=0",
     ]
     for X in URLS:
         import_d4builds(url=X)

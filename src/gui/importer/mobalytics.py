@@ -7,7 +7,15 @@ import lxml.html
 
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
-from src.gui.importer.common import fix_offhand_type, fix_weapon_type, get_with_retry, match_to_enum, retry_importer, save_as_profile
+from src.gui.importer.common import (
+    fix_offhand_type,
+    fix_weapon_type,
+    get_class_name,
+    get_with_retry,
+    match_to_enum,
+    retry_importer,
+    save_as_profile,
+)
 from src.item.data.affix import Affix
 from src.item.data.item_type import ItemType
 from src.item.descr.text import clean_str, closest_match
@@ -40,16 +48,16 @@ def import_mobalytics(url: str):
     Logger.info(f"Loading {url}")
     try:
         r = get_with_retry(url=url)
-    except ConnectionError as ex:
-        Logger.error(msg := "Couldn't get build")
-        raise MobalyticsException(msg) from ex
+    except ConnectionError as exc:
+        Logger.exception(msg := "Couldn't get build")
+        raise MobalyticsException(msg) from exc
     data = lxml.html.fromstring(r.text)
     build_elem = data.xpath(BUILD_GUIDE_NAME_XPATH)
     if not build_elem:
         Logger.error(msg := "No build found")
         raise MobalyticsException(msg)
     build_name = build_elem[0].tail
-    class_name = _get_class_name(input_str=build_elem[0].text)
+    class_name = get_class_name(input_str=build_elem[0].text)
     if not (stats_grid := data.xpath(STATS_GRID_XPATH)):
         Logger.error(msg := "No stats grid found")
         raise MobalyticsException(msg)
@@ -141,22 +149,6 @@ def _fix_input_url(url: str) -> str:
         new_query_dict["variantTab"] = query_dict["variantTab"]
     new_query_string = urlencode(new_query_dict, doseq=True)
     return urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, parsed_url.params, new_query_string, parsed_url.fragment))
-
-
-def _get_class_name(input_str: str) -> str:
-    input_str = input_str.lower()
-    if "barbarian" in input_str:
-        return "Barbarian"
-    if "druid" in input_str:
-        return "Druid"
-    if "necromancer" in input_str:
-        return "Necromancer"
-    if "rogue" in input_str:
-        return "Rogue"
-    if "sorcerer" in input_str:
-        return "Sorcerer"
-    Logger.error(f"Couldn't match class name {input_str=}")
-    return "Unknown"
 
 
 if __name__ == "__main__":

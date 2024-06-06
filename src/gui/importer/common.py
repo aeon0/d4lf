@@ -154,6 +154,7 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
     file_name = re.sub(r"\W", "_", file_name)
     file_name = re.sub(r"_+", "_", file_name).rstrip("_")
     save_path = IniConfigLoader().user_dir / f"profiles/{file_name}.yaml"
+    save_path.parent.mkdir(parents=True, exist_ok=True)
     with open(save_path, "w", encoding="utf-8") as file:
         file.write(f"# {url}\n")
         file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")} (v{__version__})\n")

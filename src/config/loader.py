@@ -22,6 +22,7 @@ class IniConfigLoader:
         self._loaded = False
         self._parsers = {}
         self._user_dir = pathlib.Path.home() / ".d4lf"
+        self._user_dir.mkdir(parents=True, exist_ok=True)
 
     def _select_val(self, section: str, key: str | None = None):
         try:
@@ -38,8 +39,12 @@ class IniConfigLoader:
         self._parsers["params"] = configparser.ConfigParser()
         self._parsers["custom"] = configparser.ConfigParser()
         self._parsers["params"].read(self._config_path / PARAMS_INI, encoding="utf-8")
-        if (p := (self.user_dir / PARAMS_INI)).exists() and p.stat().st_size:
-            self._parsers["custom"].read(p, encoding="utf-8")
+        if (p := (self.user_dir / PARAMS_INI)).exists():
+            if p.stat().st_size:
+                self._parsers["custom"].read(p, encoding="utf-8")
+        else:
+            with open(self.user_dir / PARAMS_INI, "w", encoding="utf-8"):
+                pass
 
         self._advanced_options = AdvancedOptionsModel(
             exit_key=self._select_val("advanced_options", "exit_key"),

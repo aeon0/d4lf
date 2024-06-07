@@ -131,8 +131,11 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                     if skill_data["id"] == attr_param:
                         attr_desc = f"to {skill_data["name"]}"
                         break
+                else:
+                    if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
+                        attr_desc = "to core skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
-            affix_obj = Affix(name=closest_match(clean_str(clean_desc).strip().lower(), Dataloader().affix_dict))
+            affix_obj = Affix(name=closest_match(clean_str(clean_desc), Dataloader().affix_dict))
             if affix_obj.name is not None:
                 res.append(affix_obj)
             elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["InherentAffixAnyResist_Ring"]:
@@ -192,7 +195,7 @@ if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://maxroll.gg/d4/planner/uh6pa02q#2",
+        "https://maxroll.gg/d4/planner/f5awh02y#1",
     ]
     for X in URLS:
         import_maxroll(url=X)

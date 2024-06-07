@@ -82,7 +82,7 @@ def import_diablo_trade(url: str, max_listings: int):
                 assert len(listing["affixes"]) == len(listing_obj.affixes)
                 assert len(listing["implicits"]) == len(listing_obj.inherents)
             except AssertionError:
-                Logger.error("If you see this create a bug ticket!")
+                Logger.error(f"If you see this create a bug ticket! {listing=}")
             all_listings.append(listing_obj)
         Logger.info(f"Fetched {len(all_listings)} listings")
         if len(all_listings) >= max_listings:
@@ -91,9 +91,9 @@ def import_diablo_trade(url: str, max_listings: int):
 
     try:
         profile = ProfileModel(name="diablo_trade", Affixes=_create_filters_from_items(items=all_listings))
-    except ValidationError as exc:
+    except Exception as exc:
         Logger.exception(msg := "Failed to validate profile. Dumping data for debugging.")
-        with open(f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")}.json", "w") as f:
+        with open(f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}.json", "w") as f:
             json.dump(all_listings, f, indent=4, sort_keys=True)
         raise DiabloTradeException(msg) from exc
 
@@ -113,10 +113,10 @@ def _construct_api_url(listing_url: str, cursor: int = 1) -> str:
 
 
 def _create_affixes_from_api_dict(affixes: list[dict[str, Any]]) -> list[Affix]:
-    return [
-        Affix(name=closest_match(clean_str(affix["name"]).strip().lower(), Dataloader().affix_dict), value=affix["value"])
-        for affix in affixes
-    ]
+    res = [Affix(name=closest_match(clean_str(affix["name"]), Dataloader().affix_dict), value=affix["value"]) for affix in affixes]
+    if len(affixes) != len(res) or any(x.name is None for x in res):
+        Logger.error(f"If you see this create a bug ticket! {affixes=}")
+    return res
 
 
 def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilterModel]]:
@@ -126,15 +126,19 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
         if item not in to_check:
             continue
         to_check.remove(item)
-        annotated_filter = _AnnotatedFilter(
-            max_price=item.price,
-            min_price=item.price,
-            filter=ItemFilterModel(
-                minPower=item.item_power,
-                itemType=[item.item_type],
-                affixPool=[AffixFilterCountModel(count=[AffixFilterModel(name=x.name, value=x.value) for x in item.affixes])],
-            ),
-        )
+        try:
+            annotated_filter = _AnnotatedFilter(
+                max_price=item.price,
+                min_price=item.price,
+                filter=ItemFilterModel(
+                    minPower=item.item_power,
+                    itemType=[item.item_type],
+                    affixPool=[AffixFilterCountModel(count=[AffixFilterModel(name=x.name, value=x.value) for x in item.affixes])],
+                ),
+            )
+        except ValidationError:
+            Logger.exception(f"Failed validation. Skipping {item=}")
+            continue
         to_delete = []
         for to_check_item in [x for x in to_check if x.item_type in annotated_filter.filter.itemType]:
             annotated_filter_affixes = [(x.name, x.value) for x in annotated_filter.filter.affixPool[0].count]
@@ -170,9 +174,6 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
 if __name__ == "__main__":
     Logger.init("debug")
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
-    URLS = [
-        # "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest",
-        "https://diablo.trade/listings/items?categories=ancestral&equipment=amulet,boots,chestarmor,gloves,helm,pants,ring,axe,bow,crossbow,dagger,mace,scythe,staff,sword,twohandedaxe,twohandedmace,twohandedscythe,twohandedsword,wand,focus,shield,totem&exactPrice=true&itemType=equipment&level=80,100&mode=season%20softcore&power=925,1000&price=1000000,9999999999&sold=true&sort=newest&cursor=1"
-    ]
+    URLS = ["https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest"]
     for x in URLS:
-        import_diablo_trade(url=x, max_listings=200)
+        import_diablo_trade(url=x, max_listings=400)

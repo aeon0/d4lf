@@ -43,9 +43,9 @@ def clean_str(s: str) -> str:
     cleaned_str = re.sub(r"(\+)?\d+(\.\d+)?%?", "", cleaned_str)  # Remove numbers and trailing % or preceding +
     cleaned_str = cleaned_str.replace("[x]", "")  # Remove all [x]
     cleaned_str = cleaned_str.replace("durability:", "")
-    cleaned_str = re.sub(r"[\[\]+\-:%\']", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
+    cleaned_str = re.sub(r"[\[\]+\-:%\'#]", "", cleaned_str)  # Remove [ and ] and leftover +, -, %, :, '
     cleaned_str = remove_text_after_first_keyword(cleaned_str, Dataloader().filter_after_keyword)
     for s in Dataloader().filter_words:
         cleaned_str = cleaned_str.replace(s, "")
     cleaned_str = cleaned_str.replace("(", "").replace(")", "")
-    return " ".join(cleaned_str.split())  # Remove extra spaces
+    return " ".join(cleaned_str.split()).strip().lower()  # Remove extra spaces

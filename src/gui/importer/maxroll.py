@@ -135,7 +135,7 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                     if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
                         attr_desc = "to core skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
-            affix_obj = Affix(name=closest_match(clean_str(clean_desc).strip().lower(), Dataloader().affix_dict))
+            affix_obj = Affix(name=closest_match(clean_str(clean_desc), Dataloader().affix_dict))
             if affix_obj.name is not None:
                 res.append(affix_obj)
             elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["InherentAffixAnyResist_Ring"]:

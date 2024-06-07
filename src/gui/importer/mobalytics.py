@@ -100,7 +100,7 @@ def import_mobalytics(url: str):
                     substring in affix_name.lower() for substring in ["focus", "offhand", "shield", "totem"]
                 ):  # special line indicating the item type
                     continue
-            affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)).strip().lower(), Dataloader().affix_dict))
+            affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)), Dataloader().affix_dict))
             if affix_obj.name is None:
                 Logger.error(f"Couldn't match {affix_name=}")
                 continue

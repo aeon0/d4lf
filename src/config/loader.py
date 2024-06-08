@@ -97,6 +97,11 @@ class IniConfigLoader:
         self._loaded = True
         self._load_params()
 
+    def save_value(self, section, key, value):
+        self._parsers["custom"].set(section, key, value)
+        with open(self.user_dir / PARAMS_INI, "w", encoding="utf-8") as config_file:
+            self._parsers["custom"].write(config_file)
+
 
 if __name__ == "__main__":
     a = IniConfigLoader()

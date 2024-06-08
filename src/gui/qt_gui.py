@@ -3,6 +3,7 @@ import os
 import pathlib
 import sys
 
+from gui import config_gui
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
 from PyQt6.QtWidgets import (
@@ -60,6 +61,8 @@ class Gui(QMainWindow):
 
         self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
+        config_tab = config_gui.ConfigTab()
+        self.tab_widget.addTab(config_tab, config_gui.CONFIG_TABNAME)
 
         Logger.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)

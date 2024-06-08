@@ -29,7 +29,6 @@ class ListboxHandler(logging.Handler):
         self.listbox.insert(tk.END, padded_text)
         self.listbox.yview(tk.END)  # Auto-scroll to the end
 
-
 class Overlay:
     def __init__(self):
         self.loot_interaction_thread = None
@@ -40,15 +39,15 @@ class Overlay:
         self.root.attributes("-alpha", 0.94)
         self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
         self.root.overrideredirect(True)
-        # self.root.wm_attributes("-transparentcolor", "white")
+        # self.root.wm_attributes("-transparentcolor", "white")                                                       
         self.root.wm_attributes("-topmost", True)
 
         self.screen_width = self.root.winfo_screenwidth()
         self.screen_height = self.root.winfo_screenheight()
         self.initial_height = int(self.root.winfo_screenheight() * 0.03)
-        self.initial_width = int(self.screen_width * 0.068)
-        self.maximized_height = int(self.initial_height * 3.4)
-        self.maximized_width = int(self.initial_width * 5)
+        self.initial_width = int(self.screen_width * 0.13)
+        self.maximized_height = int(self.initial_height * 5)
+        self.maximized_width = int(self.initial_width * 2.8)
 
         self.screen_off_x = Cam().window_roi["left"]
         self.screen_off_y = Cam().window_roi["top"]
@@ -56,18 +55,42 @@ class Overlay:
         self.root.geometry(
             f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
         )
-        self.canvas.pack()
+        self.canvas.pack(fill=tk.BOTH, expand=True)
         self.root.bind("<Enter>", self.show_canvas)
         self.root.bind("<Leave>", self.hide_canvas)
 
-        self.toggle_button = tk.Button(self.root, text="max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
-        self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
+        # Frame for buttons
+        button_frame = tk.Frame(self.canvas, bg="black")
+        button_frame.pack(fill=tk.X, pady=5, expand=True)
+        
+        font_size = 8
+        window_height = ResManager().pos.window_dimensions[1]
+        if window_height == 1440:
+            font_size = 9
+        elif window_height > 1440:
+            font_size = 10
+            
 
-        self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
-        self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
+        self.toggle_button = tk.Button(button_frame, text="Max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
+        self.toggle_button.grid(row=1, column=0, padx=5, sticky="ew")
 
-        self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
-        self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
+        self.filter_button = tk.Button(button_frame, text="Filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
+        self.filter_button.grid(row=1, column=1, padx=5, sticky="ew")
+
+        self.start_scripts_button = tk.Button(button_frame, text="Vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
+        self.start_scripts_button.grid(row=1, column=2, padx=5, sticky="ew")
+
+        self.move_button = tk.Button(button_frame, text="Move Items", bg="#222222", fg="#555555", borderwidth=0, command=self.move_items)
+        self.move_button.grid(row=1, column=3, padx=5, sticky="ew")
+
+        self.normalfilter_button = tk.Button(button_frame, text="Nornal", bg="#222222", fg="#555555", borderwidth=0, command=self.normal_filter_items)
+        self.forcefilter_button = tk.Button(button_frame, text="Force all", bg="#222222", fg="#555555", borderwidth=0, command=self.force_filter_items)
+        self.items_to_inventory_button = tk.Button(button_frame, text="To inventory", bg="#222222", fg="#555555", borderwidth=0, command=self.move_items_to_inventory)
+        self.items_to_stash_button = tk.Button(button_frame, text="To stash", bg="#222222", fg="#555555", borderwidth=0, command=self.move_items_to_stash)
+
+
+        for i in range(4):
+            button_frame.grid_columnconfigure(i, weight=1)
 
         font_size = 8
         window_height = ResManager().pos.window_dimensions[1]
@@ -75,6 +98,7 @@ class Overlay:
             font_size = 9
         elif window_height > 1440:
             font_size = 10
+
         self.terminal_listbox = tk.Listbox(
             self.canvas,
             bg="black",
@@ -86,9 +110,7 @@ class Overlay:
             borderwidth=0,
             font=("Courier New", font_size),
         )
-        self.terminal_listbox.place(
-            relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
-        )
+        self.terminal_listbox.pack(fill=tk.BOTH, expand=True, padx=5)
 
         if IniConfigLoader().general.hidden_transparency == 0:
             self.root.update()
@@ -96,7 +118,6 @@ class Overlay:
             style = ctypes.windll.user32.GetWindowLongW(hwnd, -20)
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
-        # Setup the listbox logger handler
         listbox_handler = ListboxHandler(self.terminal_listbox)
         listbox_handler.setLevel(Logger._logger_level)
         Logger.logger.addHandler(listbox_handler)
@@ -105,15 +126,12 @@ class Overlay:
             self.run_scripts()
 
     def show_canvas(self, _):
-        # Cancel the pending hide if it exists
         if self.hide_id:
             self.root.after_cancel(self.hide_id)
             self.hide_id = None
-        # Make the window visible
         self.root.attributes("-alpha", 0.94)
 
     def hide_canvas(self, _):
-        # Reset the hide timer
         if self.is_minimized:
             if self.hide_id is not None:
                 self.root.after_cancel(self.hide_id)
@@ -133,21 +151,58 @@ class Overlay:
         self.is_minimized = not self.is_minimized
         if self.is_minimized:
             self.hide_canvas(None)
-            self.toggle_button.config(text="max")
+            self.toggle_button.config(text="Max")
         else:
             self.show_canvas(None)
-            self.toggle_button.config(text="min")
+            self.toggle_button.config(text="Min")
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
-    def filter_items(self, force_refresh=False):
+
+    def move_items(self):
+        self.toggle_button.grid_remove()
+        self.filter_button.grid_remove()
+        self.start_scripts_button.grid_remove()
+        self.move_button.grid_remove()
+
+        self.items_to_inventory_button.grid(row=1, column=0, padx=5, sticky="e")
+        self.items_to_stash_button.grid(row=1, column=3, padx=5, sticky="w")
+        
+    def filter_items(self):
+        self.toggle_button.grid_remove()
+        self.filter_button.grid_remove()
+        self.start_scripts_button.grid_remove()
+        self.move_button.grid_remove()
+
+        self.normalfilter_button.grid(row=1, column=0, padx=5, sticky="e")
+        self.forcefilter_button.grid(row=1, column=3, padx=5, sticky="w")
+        
+    def show_buttons(self):
+        self.toggle_button.grid(row=1, column=0, padx=5, sticky="ew")
+        self.filter_button.grid(row=1, column=1, padx=5, sticky="ew")
+        self.start_scripts_button.grid(row=1, column=2, padx=5, sticky="ew")
+        self.move_button.grid(row=1, column=3, padx=5, sticky="ew")
+        
+        self.normalfilter_button.grid_remove()
+        self.forcefilter_button.grid_remove()
+        self.items_to_inventory_button.grid_remove()
+        self.items_to_stash_button.grid_remove()
+
+    def normal_filter_items(self, force_refresh=False):
         self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
+        self.show_buttons()
+
+    def force_filter_items(self, force_refresh=True):
+        self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
+        self.show_buttons()
 
     def move_items_to_inventory(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_inventory)
+        self.show_buttons()
 
     def move_items_to_stash(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_stash)
+        self.show_buttons()
 
     def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable, method_args=()):
         if lock.acquire(blocking=False):
@@ -172,7 +227,6 @@ class Overlay:
 
     def _wrapper_run_loot_interaction_method(self, loot_interaction_method: typing.Callable, method_args=()):
         try:
-            # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False
             if len(self.script_threads) > 0:
                 Logger.info("Stopping Scripts")

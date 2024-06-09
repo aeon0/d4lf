@@ -335,15 +335,12 @@ class HotkeyListenerDialog(QDialog):
                 modifiers_str.append("ctrl")
             elif modifier == Qt.KeyboardModifier.AltModifier:
                 modifiers_str.append("alt")
-        # non_mod_key = event.text()
-        # key_code = event.key()
-        # native_scan_code = event.nativeScanCode()
+
         native_virtual_key = event.nativeVirtualKey()
         non_mod_key, _ = keyboard._winkeyboard.official_virtual_keys.get(native_virtual_key)
         if non_mod_key in modifiers_str:
             non_mod_key = ""
-        # print(f"{non_mod_key} - {key_code} - {native_scan_code} - {native_virtual_key}")
-        # print(name)
+
         key_str = " + ".join(modifiers_str + [non_mod_key])
         self.hotkey = key_str
         self.hotkey_label.setText(key_str)

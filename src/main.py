@@ -51,9 +51,9 @@ def main():
     overlay = None
 
     keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
+    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.normal_filter_items() if overlay is not None else None)
     keyboard.add_hotkey(
-        IniConfigLoader().advanced_options.run_filter_force_refresh, lambda: overlay.filter_items(True) if overlay is not None else None
+        IniConfigLoader().advanced_options.run_filter_force_refresh, lambda: overlay.force_filter_items(True) if overlay is not None else None
     )
     keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
     keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())

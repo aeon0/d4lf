@@ -98,6 +98,8 @@ class IniConfigLoader:
         self._load_params()
 
     def save_value(self, section, key, value):
+        if section not in list(self._parsers["custom"]):
+            self._parsers["custom"].add_section(section)  # Ensures section exists if the file is brand new
         self._parsers["custom"].set(section, key, value)
         with open(self.user_dir / PARAMS_INI, "w", encoding="utf-8") as config_file:
             self._parsers["custom"].write(config_file)

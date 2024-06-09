@@ -24,9 +24,11 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 - The tool does not play well with HDR as it makes everything super bright
 - The advanced item comparison feature might cause incorrect classifications
 
-### Run
+### Quick start guide
 
-- Download the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
+- Download and extract the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
+- Generate a profile, either manually by looking at the examples below or by importing using the GUI in the downloaded folder.
+- Place the profile in the .d4lf/profiles folder in your Windows user directory and use the GUI Config tab to configure the profiles field to include your profile.
 - Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
     - max/min: Show or hide the console output
@@ -39,7 +41,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 The config folder contains:
 
 - __profiles/*.yaml__: These files determine what should be filtered
-- __params.ini__: Different hotkey settings and number of chest stashes that should be looked at
+- __params.ini__: Different hotkey settings and number of chest stashes that should be looked at. Management of this file should be done through the GUI.
 
 ### params.ini
 
@@ -73,7 +75,14 @@ The config folder contains:
 
 ### GUI
 
-Not yet finished. For now, it should be self-explanatory. Just start `gui.bat` in the archive.
+Not yet finished. For now, it should be self-explanatory. Just start `import_and_configure_gui.bat` in the archive.
+
+Current functionality:
+- Import builds from maxroll/d4builds/mobalytics
+- Create profiles based off of searches for diablo.trade
+- Complete management of your params.ini through the Config tab
+
+Each tab gives further instructions on how to use it and what kind of input it expects.
 
 ## How to filter / Profiles
 

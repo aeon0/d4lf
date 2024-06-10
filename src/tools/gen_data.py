@@ -170,6 +170,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Legs",
             "Mace",
             "Mace2H",
+            "OffHandTotem",
             "Polearm",
             "Ring",
             "Scythe",
@@ -178,10 +179,9 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Staff",
             "Sword",
             "Sword2H",
+            "TemperManual",
             "Tome",
             "Wand",
-            "OffHandTotem",
-            "TemperManual",
         ]
         item_typ_dict = {"Material": "custom type material", "Sigil": "custom type sigil"}
         pattern = f"json/{language}_Text/meta/StringList/ItemType_*.stl.json"

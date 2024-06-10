@@ -26,7 +26,14 @@ def read_item_type(
     if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
         # process sigil
         item.item_type = ItemType.Sigil
-    elif any(substring in concatenated_str.lower() for substring in ["grand cache", "treasure goblin cache"]):
+    elif any(
+        substring in concatenated_str.lower()
+        for substring in [
+            "grand cache",
+            "reputation cache",
+            "treasure goblin cache",
+        ]
+    ):
         item.item_type = ItemType.Material
         return item, concatenated_str
     elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:

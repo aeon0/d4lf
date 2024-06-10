@@ -20,6 +20,9 @@ def move_items_to_stash():
 
     unhandled_slots, _ = inv.get_item_slots()
     move_item_type = IniConfigLoader().general.move_to_stash_item_type
+    if not unhandled_slots:
+        Logger().info("No items to move")
+        return
 
     for i in IniConfigLoader().general.check_chest_tabs:
         chest.switch_to_tab(i)
@@ -51,6 +54,9 @@ def move_items_to_inventory():
     _, empty_inv = inv.get_item_slots()
     empty_slot_count = len(empty_inv)
     move_item_type = IniConfigLoader().general.move_to_inv_item_type
+    if not empty_slot_count:
+        Logger().info("No empty slots in inventory")
+        return
 
     for i in IniConfigLoader().general.check_chest_tabs:
         chest.switch_to_tab(i)

@@ -103,6 +103,8 @@ class AffixFilterCountModel(BaseModel):
             self.model_fields_set.remove("maxCount")
         if self.minCount > self.maxCount:
             raise ValueError("minCount must be smaller than maxCount")
+        if not self.count:
+            raise ValueError("count must not be empty")
         return self
 
 

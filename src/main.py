@@ -41,7 +41,7 @@ def main():
     print(table)
     print("\n")
 
-    win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name.lower())
+    win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         wait(0.2)

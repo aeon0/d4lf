@@ -164,6 +164,14 @@ class AdvancedOptionsModel(_IniBaseModel):
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
 
+    @field_validator("scripts", mode="before")
+    def check_scripts_is_list(cls, v: str) -> list[str]:
+        if isinstance(v, str):
+            v = v.split(",")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
+        return v
+
 
 class CharModel(_IniBaseModel):
     inventory: str = Field(default="i", description="Hotkey in Diablo IV to open inventory", json_schema_extra={IS_HOTKEY_KEY: "True"})
@@ -229,6 +237,14 @@ class GeneralModel(_IniBaseModel):
         elif not isinstance(v, list):
             raise ValueError("must be a list or a string")
         return sorted([int(x) - 1 for x in v])
+
+    @field_validator("profiles", mode="before")
+    def check_profiles_is_list(cls, v: str) -> list[str]:
+        if isinstance(v, str):
+            v = v.split(", ")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
+        return v
 
     @field_validator("language")
     def language_must_exist(cls, v: str) -> str:

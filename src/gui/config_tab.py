@@ -58,7 +58,7 @@ def _validate_and_save_changes(model, header, key, value, validation_value=None,
 class ConfigTab(QWidget):
     def __init__(self):
         super().__init__()
-        self.layout = QVBoxLayout(self)
+        layout = QVBoxLayout(self)
         scrollable_layout = QVBoxLayout()
         scroll_widget = QWidget()
         scroll_area = QScrollArea(self)
@@ -70,10 +70,10 @@ class ConfigTab(QWidget):
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().advanced_options, "Advanced", "advanced_options"))
         scroll_widget.setLayout(scrollable_layout)
         scroll_area.setWidget(scroll_widget)
-        self.layout.addWidget(scroll_area)
+        layout.addWidget(scroll_area)
 
         instructions_label = QLabel("Instructions")
-        self.layout.addWidget(instructions_label)
+        layout.addWidget(instructions_label)
 
         instructions_text = QTextBrowser()
         instructions_text.setOpenExternalLinks(True)
@@ -88,9 +88,9 @@ class ConfigTab(QWidget):
         )
 
         instructions_text.setFixedHeight(100)
-        self.layout.addWidget(instructions_text)
+        layout.addWidget(instructions_text)
 
-        self.setLayout(self.layout)
+        self.setLayout(layout)
 
     def _generate_params_section(self, model: BaseModel, section_readable_header: str, section_config_header: str):
         group_box = QGroupBox(section_readable_header)

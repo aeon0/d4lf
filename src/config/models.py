@@ -208,11 +208,11 @@ class GeneralModel(_IniBaseModel):
     )
     move_to_inv_item_type: MoveItemsType = Field(
         default=MoveItemsType.non_favorites,
-        description="When doing stash/inventory transfer",
+        description="When doing stash/inventory transfer, what types of items should be moved",
     )
     move_to_stash_item_type: MoveItemsType = Field(
         default=MoveItemsType.non_favorites,
-        description="When doing stash/inventory transfer",
+        description="When doing stash/inventory transfer, what types of items should be moved",
     )
     profiles: list[str] = Field(
         default=[],

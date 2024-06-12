@@ -140,7 +140,7 @@ class AdvancedOptionsModel(_IniBaseModel):
     )
     process_name: str = Field(
         default="Diablo IV.exe",
-        description="The process that is running Diablo 4. Untested, but could help usage when playing through a streaming service like GeForce Now",
+        description="The process that is running Diablo 4. Could help usage when playing through a streaming service like GeForce Now",
     )
     run_filter: str = Field(default="f11", description="Hotkey to run the filter process", json_schema_extra={IS_HOTKEY_KEY: "True"})
     run_filter_force_refresh: str = Field(
@@ -164,15 +164,9 @@ class AdvancedOptionsModel(_IniBaseModel):
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
 
-    @field_validator("log_lvl")
-    def log_lvl_must_exist(cls, k: str) -> str:
-        if k not in ["debug", "info", "warning", "error", "critical"]:
-            raise ValueError("log level does not exist")
-        return k
-
 
 class CharModel(_IniBaseModel):
-    inventory: str = Field(default="i", description="Hotkey to open inventory", json_schema_extra={IS_HOTKEY_KEY: "True"})
+    inventory: str = Field(default="i", description="Hotkey in Diablo IV to open inventory", json_schema_extra={IS_HOTKEY_KEY: "True"})
 
     @field_validator("inventory")
     def key_must_exist(cls, k: str) -> str:
@@ -198,10 +192,8 @@ class BrowserType(enum.StrEnum):
 
 
 class GeneralModel(_IniBaseModel):
-    browser: BrowserType = Field(
-        default=BrowserType.chrome, description="Which browser to use to get builds, chrome, edge, or firefox are currently supported"
-    )
-    check_chest_tabs: list[int] = Field(default=[1, 2], description="Which tabs to check. Note: All 6 Tabs must be unlocked!")
+    browser: BrowserType = Field(default=BrowserType.chrome, description="Which browser to use to get builds")
+    check_chest_tabs: list[int] = Field(default=[0, 1], description="Which tabs to check. Note: All 6 Tabs must be unlocked!")
     full_dump: bool = Field(
         default=False,
         description="When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not",
@@ -210,30 +202,32 @@ class GeneralModel(_IniBaseModel):
     hidden_transparency: float = Field(
         default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
     )
-    keep_aspects: AspectFilterType = Field(
-        default=AspectFilterType.upgrade, description="Whether to keep aspects. Can be all, upgrade, none"
-    )
+    keep_aspects: AspectFilterType = Field(default=AspectFilterType.upgrade, description="Whether to keep aspects")
     language: str = Field(
         default="enUS", description="Do not change. Only English is supported at this time", json_schema_extra={HIDE_FROM_GUI_KEY: "True"}
     )
     move_to_inv_item_type: MoveItemsType = Field(
         default=MoveItemsType.non_favorites,
-        description="When doing stash/inventory transfer, move junk only, everything unfavorited, or everything.",
+        description="When doing stash/inventory transfer, what types of items should be moved",
     )
     move_to_stash_item_type: MoveItemsType = Field(
         default=MoveItemsType.non_favorites,
-        description="When doing stash/inventory transfer, move junk only, everything unfavorited, or everything.",
+        description="When doing stash/inventory transfer, what types of items should be moved",
     )
     profiles: list[str] = Field(
-        default=["example"],
+        default=[],
         description='Which filter profiles should be run. All .yaml files with "Aspects" and '
         '"Affixes" sections will be used from '
         "C:/Users/USERNAME/.d4lf/profiles/*.yaml",
     )
     run_vision_mode_on_startup: bool = Field(default=True, description="Whether to run vision mode on startup or not")
 
-    @field_validator("check_chest_tabs", mode="after")
-    def check_chest_tabs_index(cls, v: list[int]) -> list[int]:
+    @field_validator("check_chest_tabs", mode="before")
+    def check_chest_tabs_index(cls, v: str) -> list[int]:
+        if isinstance(v, str):
+            v = v.split(",")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
         return sorted([int(x) - 1 for x in v])
 
     @field_validator("language")

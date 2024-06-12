@@ -2,7 +2,6 @@ import os
 import sys
 import time
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import yaml
 from pydantic import ValidationError
@@ -261,19 +260,15 @@ class Filter:
         profiles: list[str] = IniConfigLoader().general.profiles
 
         custom_profile_path = IniConfigLoader().user_dir / "profiles"
-        params_profile_path = Path("config/profiles")
         self.all_file_pathes = []
 
         errors = False
         for profile_str in profiles:
             custom_file_path = custom_profile_path / f"{profile_str}.yaml"
-            params_file_path = params_profile_path / f"{profile_str}.yaml"
             if custom_file_path.is_file():
                 profile_path = custom_file_path
-            elif params_file_path.is_file():
-                profile_path = params_file_path
             else:
-                Logger.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}, {params_file_path}")
+                Logger.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}")
                 continue
 
             self.all_file_pathes.append(profile_path)

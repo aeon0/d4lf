@@ -33,7 +33,7 @@ class WindowSpec:
 
     def match(self, hwnd: int, check_window_name: bool = True) -> bool:
         window_name_ok = not check_window_name or "diablo" in _get_window_name_from_id(hwnd).lower()
-        return _get_process_from_window_name(hwnd) == self.process_name and window_name_ok
+        return _get_process_from_window_name(hwnd).casefold() == self.process_name.casefold() and window_name_ok
 
 
 def _list_active_window_ids() -> list[int]:

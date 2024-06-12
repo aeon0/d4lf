@@ -43,7 +43,7 @@ def _validate_and_save_changes(model, header, key, value, validation_value=None,
     except ValidationError as e:
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Icon.Critical)
-        message = "There was an error setting your value. See error below.\n\n"
+        message = f"There was an error setting {key} to {value}. See error below.\n\n"
         if method_to_reset_value:
             message = message + "Your value has been reset to its previous version.\n\n"
             method_to_reset_value(str(getattr(model, key)))
@@ -64,6 +64,7 @@ class ConfigTab(QWidget):
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
 
+        scrollable_layout.addWidget(self._setup_reset_button())
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().general, "General", "general"))
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().char, "Character", "char"))
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().advanced_options, "Advanced", "advanced_options"))
@@ -155,6 +156,15 @@ class ConfigTab(QWidget):
             )
 
         return parameter_value_widget
+
+    def reset_button_click(self):
+        IniConfigLoader().load(clear=True)
+        print("clicked")
+
+    def _setup_reset_button(self) -> QPushButton:
+        reset_button = QPushButton("Reset to defaults")
+        reset_button.clicked.connect(self.reset_button_click)
+        return reset_button
 
 
 class IgnoreScrollWheelComboBox(QComboBox):

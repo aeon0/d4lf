@@ -75,7 +75,7 @@ The config folder contains:
 
 ### GUI
 
-Not yet finished. For now, it should be self-explanatory. Just start `import_and_configure_gui.bat` in the archive.
+Documentation is not yet finished. For now, it should be self-explanatory. Just start `gui.bat` in the archive.
 
 Current functionality:
 - Import builds from maxroll/d4builds/mobalytics

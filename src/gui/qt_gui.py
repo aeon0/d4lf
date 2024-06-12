@@ -3,7 +3,7 @@ import os
 import pathlib
 import sys
 
-from gui import config_gui
+from gui import config_tab
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
 from PyQt6.QtWidgets import (
@@ -48,12 +48,12 @@ class Gui(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("D4LF")
-        self.setGeometry(100, 100, 700, 700)
+        self.setGeometry(0, 0, 650, 800)
 
         # Center the window on the screen
         screen = QApplication.primaryScreen()
         rect = screen.geometry()
-        self.move(rect.width() // 2 - self.width() // 2, rect.height() // 2 - self.height() // 2)
+        self.move(rect.width() // 2 - self.width() // 2, (rect.height() // 2 - self.height() // 2) - 30)
 
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setTabBar(_CustomTabBar())
@@ -61,8 +61,7 @@ class Gui(QMainWindow):
 
         self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
-        config_tab = config_gui.ConfigTab()
-        self.tab_widget.addTab(config_tab, config_gui.CONFIG_TABNAME)
+        self.tab_widget.addTab(config_tab.ConfigTab(), config_tab.CONFIG_TABNAME)
 
         Logger.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)

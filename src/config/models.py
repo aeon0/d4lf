@@ -153,7 +153,7 @@ class AdvancedOptionsModel(_IniBaseModel):
     run_scripts: str = Field(
         default="f9", description="Hotkey to enable/disable the vision filter", json_schema_extra={IS_HOTKEY_KEY: "True"}
     )
-    scripts: list[str] = Field(default="vision_mode", json_schema_extra={HIDE_FROM_GUI_KEY: "True"})
+    scripts: list[str] = Field(default=["vision_mode"], json_schema_extra={HIDE_FROM_GUI_KEY: "True"})
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":

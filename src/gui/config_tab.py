@@ -28,8 +28,8 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from config.loader import IniConfigLoader
-from config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
+from src.config.loader import IniConfigLoader
+from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
 
 CONFIG_TABNAME = "Config"
 

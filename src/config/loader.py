@@ -5,7 +5,8 @@ import pathlib
 from pathlib import Path
 
 from src.config.helper import singleton
-from src.config.models import AdvancedOptionsModel, CharModel, GeneralModel
+from src.config.models import DEPRECATED_INI_KEYS, AdvancedOptionsModel, CharModel, GeneralModel
+from src.logger import Logger
 
 PARAMS_INI = "params.ini"
 
@@ -28,6 +29,15 @@ class IniConfigLoader:
 
         self._parser = configparser.ConfigParser()
         self._parser.read(self.user_dir / PARAMS_INI, encoding="utf-8")
+
+        all_keys = [key for section in self._parser.sections() for key in self._parser[section]]
+        deprecated_keys = [key for key in DEPRECATED_INI_KEYS if key in all_keys]
+        for key in deprecated_keys:
+            Logger.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please update your config file.")
+            # remove key from parser
+            for section in self._parser.sections():
+                if key in self._parser[section]:
+                    self._parser.remove_option(section, key)
 
         if "advanced_options" in self._parser:
             self._advanced_options = AdvancedOptionsModel(**self._parser["advanced_options"])

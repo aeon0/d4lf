@@ -14,6 +14,8 @@ from src.item.data.item_type import ItemType
 HIDE_FROM_GUI_KEY = "hide_from_gui"
 IS_HOTKEY_KEY = "is_hotkey"
 
+DEPRECATED_INI_KEYS = []
+
 
 class AspectFilterType(enum.StrEnum):
     all = enum.auto()

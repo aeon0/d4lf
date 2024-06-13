@@ -210,7 +210,9 @@ class GeneralModel(_IniBaseModel):
     hidden_transparency: float = Field(
         default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
     )
-    keep_aspects: AspectFilterType = Field(default=AspectFilterType.upgrade, description="Whether to keep aspects")
+    keep_aspects: AspectFilterType = Field(
+        default=AspectFilterType.upgrade, description="Whether to keep aspects that didn't match a filter"
+    )
     language: str = Field(
         default="enUS", description="Do not change. Only English is supported at this time", json_schema_extra={HIDE_FROM_GUI_KEY: "True"}
     )

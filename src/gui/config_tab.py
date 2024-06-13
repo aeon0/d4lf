@@ -57,6 +57,7 @@ def _validate_and_save_changes(model, header, key, value, method_to_reset_value:
 class ConfigTab(QWidget):
     def __init__(self):
         super().__init__()
+        self.model_to_parameter_value_map = {}
         layout = QVBoxLayout(self)
         scrollable_layout = QVBoxLayout()
         scroll_widget = QWidget()
@@ -109,6 +110,7 @@ class ConfigTab(QWidget):
             parameter_value_widget = self._generate_parameter_value_widget(
                 model, section_config_header, config_key, config_value, is_hotkey
             )
+            self.model_to_parameter_value_map[section_config_header + "." + config_key] = parameter_value_widget
             config_with_desc = QLabel(config_key)
             if description_text:
                 # The span is a hack to make the tooltip wordwrap
@@ -156,8 +158,34 @@ class ConfigTab(QWidget):
         return parameter_value_widget
 
     def reset_button_click(self):
-        IniConfigLoader().load(clear=True)
-        print("clicked")
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Icon.Warning)
+        message = "This will reset all custom values in your params.ini to their default value. Are you sure you want to continue?"
+        msg.setText(message)
+        msg.setWindowTitle("Reset to default values?")
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        if msg.exec():
+            IniConfigLoader().load(clear=True)
+            self._reset_values_for_model(IniConfigLoader().general, "general")
+            self._reset_values_for_model(IniConfigLoader().char, "char")
+            self._reset_values_for_model(IniConfigLoader().advanced_options, "advanced_options")
+
+    def _reset_values_for_model(self, model, section_config_header):
+        for parameter in model:
+            config_key, config_value = parameter
+            parameter_value_widget = self.model_to_parameter_value_map.get(section_config_header + "." + config_key)
+            # Should always exist but just being safe
+            if parameter_value_widget is None:
+                continue
+
+            if isinstance(parameter_value_widget, QChestTabWidget | QProfilesWidget | QHotkeyWidget):
+                parameter_value_widget.reset_values(config_value)
+            elif isinstance(parameter_value_widget, IgnoreScrollWheelComboBox):
+                parameter_value_widget.setCurrentText(config_value)
+            elif isinstance(parameter_value_widget, QCheckBox):
+                parameter_value_widget.setChecked(config_value)
+            else:
+                parameter_value_widget.setText(str(config_value))
 
     def _setup_reset_button(self) -> QPushButton:
         reset_button = QPushButton("Reset to defaults")
@@ -196,8 +224,7 @@ class QChestTabWidget(QWidget):
 
     def reset_values(self, chest_tab_config: list[int]):
         for check_box in self.all_checkboxes:
-            if int(check_box.text()) in chest_tab_config:
-                check_box.setChecked(True)
+            check_box.setChecked(int(check_box.text()) - 1 in chest_tab_config)
 
     def _save_changes_on_box_change(self, model, section_header, config_key):
         active_tabs = [check_box.text() for check_box in self.all_checkboxes if check_box.isChecked()]
@@ -212,7 +239,7 @@ class QProfilesWidget(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
 
         self.current_profile_line_edit = QLineEdit()
-        self.current_profile_line_edit.setText(", ".join(current_profiles))
+        self.reset_values(current_profiles)
         self.current_profile_line_edit.setReadOnly(True)
         layout.addWidget(self.current_profile_line_edit)
 
@@ -225,6 +252,9 @@ class QProfilesWidget(QWidget):
         layout.addWidget(open_picker_button)
 
         self.setLayout(layout)
+
+    def reset_values(self, current_profiles):
+        self.current_profile_line_edit.setText(", ".join(current_profiles))
 
     def _launch_picker(self, model, section_header, config_key, current_profiles):
         profile_picker = QProfilePicker(self, current_profiles)
@@ -310,12 +340,15 @@ class QHotkeyWidget(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
 
         self.open_picker_button = QPushButton()
-        self.open_picker_button.setText(current_value)
+        self.reset_values(current_value)
         self.open_picker_button.clicked.connect(lambda: self._launch_hotkey_dialog(model, section_header, config_key))
         self.open_picker_button.setStyleSheet("text-align:left;padding-left: 5px;")
         layout.addWidget(self.open_picker_button)
 
         self.setLayout(layout)
+
+    def reset_values(self, current_value):
+        self.open_picker_button.setText(current_value)
 
     def _launch_hotkey_dialog(self, model, section_header, config_key):
         hotkey_dialog = HotkeyListenerDialog(self)

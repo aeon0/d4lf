@@ -44,7 +44,6 @@ def test_bounding_box(mocker: MockerFixture):
 
     # Test with an invalid argument
     invalid_arg = [(2, 2, 2, 2, 2)]
-    mocker.patch("utils.roi_operations.Logger.error")
     bounding = bounding_box(invalid_arg)
     assert bounding is None
 

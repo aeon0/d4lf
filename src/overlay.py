@@ -97,8 +97,8 @@ class Overlay:
 
         # Setup the listbox logger handler
         listbox_handler = ListboxHandler(self.terminal_listbox)
-        listbox_handler.setLevel(LOGGER._logger_level)
-        LOGGER.logger.addHandler(listbox_handler)
+        listbox_handler.setLevel(LOGGER.level)
+        LOGGER.root.addHandler(listbox_handler)
 
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()

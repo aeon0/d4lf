@@ -1,13 +1,16 @@
+import logging
+
 import numpy as np
 
 from src.dataloader import Dataloader
 from src.item.data.aspect import Aspect
 from src.item.descr.text import clean_str, closest_match, find_number
 from src.item.descr.texture import find_aspect_search_area
-from src.logger import Logger
 from src.template_finder import TemplateMatch
 from src.utils.image_operations import crop
 from src.utils.ocr.read import image_to_text
+
+LOGGER = logging.getLogger(__name__)
 
 
 def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre_proc: bool = True) -> tuple[Aspect | None, str]:
@@ -33,7 +36,7 @@ def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre
         idx = num_idx[found_key][0]
     found_value = find_number(concatenated_str, idx)
 
-    Logger.debug(f"{found_key}: {found_value}")
+    LOGGER.debug(f"{found_key}: {found_value}")
 
     loc = (aspect_bullet.center[0], aspect_bullet.center[1] - 2)
     return Aspect(name=found_key, value=found_value, text=concatenated_str, loc=loc), cleaned_str

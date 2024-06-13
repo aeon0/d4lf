@@ -19,13 +19,16 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+import src.logger
+from src import __version__
 from src.config.helper import singleton
 from src.config.loader import IniConfigLoader
 from src.gui.importer.d4builds import import_d4builds
 from src.gui.importer.diablo_trade import import_diablo_trade
 from src.gui.importer.maxroll import import_maxroll
 from src.gui.importer.mobalytics import import_mobalytics
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 THREADPOOL = QThreadPool()
 D4TRADE_TABNAME = "diablo.trade"
@@ -46,7 +49,7 @@ class Gui(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("D4LF")
+        self.setWindowTitle(f"D4LF v{__version__}")
         self.setGeometry(100, 100, 700, 700)
 
         # Center the window on the screen
@@ -61,7 +64,7 @@ class Gui(QMainWindow):
         self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
 
-        Logger.addHandler(self.maxroll_log_handler)
+        LOGGER.root.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)
         self._toggle_dark_mode()
 
@@ -106,7 +109,6 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
-            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
@@ -148,11 +150,11 @@ class Gui(QMainWindow):
 
     def _handle_tab_changed(self, index):
         if self.tab_widget.tabText(index) == MAXROLL_D4B_MOBALYTICS_TABNAME:
-            Logger.addHandler(self.maxroll_log_handler)
-            Logger.removeHandler(self.diablo_trade_log_handler)
+            LOGGER.root.addHandler(self.maxroll_log_handler)
+            LOGGER.root.removeHandler(self.diablo_trade_log_handler)
         elif self.tab_widget.tabText(index) == D4TRADE_TABNAME:
-            Logger.addHandler(self.diablo_trade_log_handler)
-            Logger.removeHandler(self.maxroll_log_handler)
+            LOGGER.root.addHandler(self.diablo_trade_log_handler)
+            LOGGER.root.removeHandler(self.maxroll_log_handler)
 
     def _maxroll_or_d4builds_tab(self):
         tab_maxroll = QWidget(self)
@@ -189,7 +191,6 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
-            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
@@ -329,5 +330,5 @@ class _WorkerSignals(QObject):
 
 if __name__ == "__main__":
     os.chdir(pathlib.Path(__file__).parent.parent.parent)
-    Logger.init(lvl="DEBUG")
+    src.logger.setup()
     start_gui()

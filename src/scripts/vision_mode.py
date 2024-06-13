@@ -1,8 +1,10 @@
+import logging
 import tkinter as tk
 import traceback
 
 import numpy as np
 
+import src.logger
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.models import HandleRaresType
@@ -12,13 +14,14 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
 from src.item.filter import Filter
 from src.item.find_descr import find_descr
-from src.logger import Logger
 from src.ui.char_inventory import CharInventory
 from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
 from src.utils.image_operations import compare_histograms, crop
 from src.utils.misc import wait
 from src.utils.ocr.read import image_to_text
+
+LOGGER = logging.getLogger(__name__)
 
 
 def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
@@ -114,7 +117,7 @@ def vision_mode():
     canvas = tk.Canvas(root, bg="black", highlightthickness=0)
     canvas.pack(fill=tk.BOTH, expand=True)
 
-    Logger.info("Starting Vision Filter")
+    LOGGER.info("Starting Vision Filter")
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()
@@ -204,19 +207,19 @@ def vision_mode():
 
                 ignored_item = False
                 if item_descr.item_type == ItemType.Material:
-                    Logger.info("Matched: Material")
+                    LOGGER.info("Matched: Material")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.Elixir:
-                    Logger.info("Matched: Elixir")
+                    LOGGER.info("Matched: Elixir")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.TemperManual:
-                    Logger.info("Matched: Temper Manual")
+                    LOGGER.info("Matched: Temper Manual")
                     ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
                     item_descr = None
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
-                    Logger.info("Matched: Rare, ignore Item")
+                    LOGGER.info("Matched: Rare, ignore Item")
                     ignored_item = True
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
                     match = False
@@ -268,7 +271,7 @@ if __name__ == "__main__":
     try:
         from src.utils.window import WindowSpec, start_detecting_window
 
-        Logger.init("debug")
+        src.logger.setup()
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         start_detecting_window(win_spec)
         while not Cam().is_offset_set():

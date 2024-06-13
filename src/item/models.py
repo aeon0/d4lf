@@ -1,11 +1,13 @@
 import json
+import logging
 from dataclasses import dataclass, field
 
 from src.item.data.affix import Affix
 from src.item.data.aspect import Aspect
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass
@@ -23,25 +25,25 @@ class Item:
             return False
         res = True
         if self.affixes != other.affixes:
-            Logger.debug("Affixes do not match")
+            LOGGER.debug("Affixes do not match")
             res = False
         if self.aspect != other.aspect:
-            Logger.debug("Aspect not the same")
+            LOGGER.debug("Aspect not the same")
             res = False
         if self.codex_upgrade != other.codex_upgrade:
-            Logger.debug("Codex upgrade not the same")
+            LOGGER.debug("Codex upgrade not the same")
             res = False
         if self.inherent != other.inherent:
-            Logger.debug("Inherent affixes do not match")
+            LOGGER.debug("Inherent affixes do not match")
             res = False
         if self.item_type != other.item_type:
-            Logger.debug("Type not the same")
+            LOGGER.debug("Type not the same")
             res = False
         if self.power != other.power:
-            Logger.debug("Power not the same")
+            LOGGER.debug("Power not the same")
             res = False
         if self.rarity != other.rarity:
-            Logger.debug("Rarity not the same")
+            LOGGER.debug("Rarity not the same")
             res = False
         return res
 

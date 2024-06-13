@@ -1,11 +1,14 @@
+import logging
+
 from src.cam import Cam
 from src.config.ui import ResManager
-from src.logger import Logger
 from src.template_finder import SearchArgs
 from src.ui.inventory_base import InventoryBase
 from src.ui.menu import ToggleMethod
 from src.utils.custom_mouse import mouse
 from src.utils.misc import wait
+
+LOGGER = logging.getLogger(__name__)
 
 
 class Chest(InventoryBase):
@@ -22,7 +25,7 @@ class Chest(InventoryBase):
     @staticmethod
     def switch_to_tab(tab_idx) -> bool:
         NUMBER_TABS = 6
-        Logger.info(f"Switch Stash Tab to: {tab_idx}")
+        LOGGER.info(f"Switch Stash Tab to: {tab_idx}")
         if tab_idx > (NUMBER_TABS - 1):
             return False
         x, y, w, h = ResManager().roi.tab_slots_6

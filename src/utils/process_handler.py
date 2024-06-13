@@ -1,8 +1,10 @@
 import ctypes
+import logging
 import os
 
-from src.logger import Logger
 from src.utils.window import get_window_spec_id
+
+LOGGER = logging.getLogger(__name__)
 
 
 def kill_thread(thread):
@@ -10,11 +12,11 @@ def kill_thread(thread):
     res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
     if res > 1:
         ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0)
-        Logger.error("Exception raise failure")
+        LOGGER.error("Exception raise failure")
 
 
 def safe_exit(error_code=0):
-    Logger.info("Shutting down")
+    LOGGER.info("Shutting down")
     os._exit(error_code)
 
 
@@ -24,4 +26,4 @@ def set_process_name(name, window_spec):
         kernel32 = ctypes.WinDLL("kernel32")
         kernel32.SetConsoleTitleW(hwnd, name)
     except Exception as e:
-        Logger.error("Failed to set process name:", str(e))
+        LOGGER.error("Failed to set process name:", str(e))

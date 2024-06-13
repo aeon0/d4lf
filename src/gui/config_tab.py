@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
     QFormLayout,
+    QGridLayout,
     QGroupBox,
     QHBoxLayout,
     QLabel,
@@ -22,6 +23,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QTextBrowser,
+    QTextEdit,
     QVBoxLayout,
     QWidget,
 )
@@ -32,12 +34,9 @@ from config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
 CONFIG_TABNAME = "Config"
 
 
-def _validate_and_save_changes(model, header, key, value, validation_value=None, method_to_reset_value: typing.Callable = None):
-    if validation_value is None:
-        validation_value = value
-
+def _validate_and_save_changes(model, header, key, value, method_to_reset_value: typing.Callable = None):
     try:
-        setattr(model, key, validation_value)
+        setattr(model, key, value)
         IniConfigLoader().save_value(header, key, value)
         return True
     except ValidationError as e:
@@ -150,7 +149,6 @@ class ConfigTab(QWidget):
                     section_config_header,
                     config_key,
                     parameter_value_widget.text(),
-                    validation_value=None,
                     method_to_reset_value=parameter_value_widget.setText,
                 )
             )
@@ -203,7 +201,7 @@ class QChestTabWidget(QWidget):
 
     def _save_changes_on_box_change(self, model, section_header, config_key):
         active_tabs = [check_box.text() for check_box in self.all_checkboxes if check_box.isChecked()]
-        _validate_and_save_changes(model, section_header, config_key, ",".join(active_tabs), active_tabs, self.reset_values)
+        _validate_and_save_changes(model, section_header, config_key, ",".join(active_tabs), self.reset_values)
 
 
 class QProfilesWidget(QWidget):
@@ -237,7 +235,6 @@ class QProfilesWidget(QWidget):
                 section_header,
                 config_key,
                 selected_profiles,
-                profile_picker.get_selected_profiles(),
                 self.current_profile_line_edit.setText,
             )
             self.current_profile_line_edit.setText(selected_profiles)
@@ -248,40 +245,61 @@ class QProfilePicker(QDialog):
         super().__init__(parent)
         self.setWindowTitle("Select profiles")
 
-        layout = QVBoxLayout()
+        overall_layout = QVBoxLayout()
         self.setGeometry(100, 100, 400, 400)
 
         profile_folder = IniConfigLoader().user_dir / "profiles"
-        message = QLabel(
-            f"Below is a list of all profiles found in {profile_folder}. "
-            f"Choose as many as you'd like to use at one time by clicking on them."
-        )
-        message.setWordWrap(True)
-        layout.addWidget(message)
-
-        all_profiles_list_widget = QListWidget()
-        all_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         if not os.path.exists(profile_folder):
             os.makedirs(profile_folder)
-        all_profiles = os.listdir(profile_folder)
-        self.profile_list_items: list[QListWidgetItem] = []
-        for profile_file in all_profiles:
-            profile_name = os.path.splitext(profile_file)[0]
-            list_item = QListWidgetItem(profile_name, all_profiles_list_widget)
-            self.profile_list_items.append(list_item)
-            if profile_name in current_profiles:
-                list_item.setSelected(True)
-        layout.addWidget(all_profiles_list_widget)
+
+        all_profile_files = os.listdir(profile_folder)
+        all_profiles = [os.path.splitext(profile_file)[0] for profile_file in all_profile_files]
+
+        unactivated_profiles_list_widget = QListWidget()
+        unactivated_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        unactivated_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
+        unactivated_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
+
+        self.activated_profiles_list_widget = QListWidget()
+        self.activated_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.activated_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
+        self.activated_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
+
+        for profile_name in all_profiles:
+            if profile_name not in current_profiles:
+                QListWidgetItem(profile_name, unactivated_profiles_list_widget)
+
+        for profile_name in current_profiles:
+            # Filter out any examples or defaults that don't have a file
+            if profile_name in all_profiles:
+                QListWidgetItem(profile_name, self.activated_profiles_list_widget)
+
+        list_widget_layout = QGridLayout()
+        list_widget_layout.addWidget(QLabel("Unactivated Profiles"), 0, 0)
+        list_widget_layout.addWidget(unactivated_profiles_list_widget, 1, 0)
+        list_widget_layout.addWidget(QLabel("Activated Profiles"), 0, 1)
+        list_widget_layout.addWidget(self.activated_profiles_list_widget, 1, 1)
+
+        overall_layout.addLayout(list_widget_layout)
+
+        message = QTextEdit(
+            f"On the left are all unactivated profiles found in {profile_folder}. On the right are currently active "
+            f"profiles. Drag and drop from the left to the right to activate the profile. You can change order by"
+            f" dragging a profile up and down in the right list."
+        )
+        message.setReadOnly(True)
+        message.setFixedHeight(100)
+        overall_layout.addWidget(message)
 
         ok_cancel_buttons = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         self.buttonBox = QDialogButtonBox(ok_cancel_buttons)
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.reject)
-        layout.addWidget(self.buttonBox)
-        self.setLayout(layout)
+        overall_layout.addWidget(self.buttonBox)
+        self.setLayout(overall_layout)
 
     def get_selected_profiles(self):
-        return [list_item.text() for list_item in self.profile_list_items if list_item.isSelected()]
+        return [self.activated_profiles_list_widget.item(x).text() for x in range(self.activated_profiles_list_widget.count())]
 
 
 class QHotkeyWidget(QWidget):

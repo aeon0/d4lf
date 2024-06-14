@@ -1,12 +1,15 @@
+import logging
+
 import cv2
 import numpy as np
 from tesserocr import OEM, RIL, PyTessBaseAPI
 
 from src.config.data import COLORS
 from src.config.loader import IniConfigLoader
-from src.logger import Logger
 from src.utils.image_operations import color_filter
 from src.utils.ocr.models import OcrResult
+
+LOGGER = logging.getLogger(__name__)
 
 TESSDATA_PATH = "assets/tessdata"
 
@@ -72,7 +75,7 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
         load_api()
 
     if img is None or len(img) == 0:
-        Logger.warning("img provided to image_to_text() is empty!")
+        LOGGER.warning("img provided to image_to_text() is empty!")
         return OcrResult("", "", word_confidences=0, mean_confidence=0), [] if line_boxes else ""
 
     if do_pre_proc:

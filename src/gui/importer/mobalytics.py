@@ -1,3 +1,4 @@
+import logging
 import os
 import pathlib
 import re
@@ -5,6 +6,7 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import lxml.html
 
+import src.logger
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
@@ -19,7 +21,8 @@ from src.gui.importer.common import (
 from src.item.data.affix import Affix
 from src.item.data.item_type import ItemType
 from src.item.descr.text import clean_str, closest_match
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 BUILD_GUIDE_ACTIVE_LOADOUT_XPATH = "//*[@class='m-fsuco1']"
 BUILD_GUIDE_BASE_URL = "https://mobalytics.gg/diablo-4/"
@@ -42,27 +45,27 @@ class MobalyticsException(Exception):
 def import_mobalytics(url: str):
     url = url.strip().replace("\n", "")
     if BUILD_GUIDE_BASE_URL not in url:
-        Logger.error("Invalid url, please use a mobalytics build guide")
+        LOGGER.error("Invalid url, please use a mobalytics build guide")
         return
     url = _fix_input_url(url=url)
-    Logger.info(f"Loading {url}")
+    LOGGER.info(f"Loading {url}")
     try:
         r = get_with_retry(url=url)
     except ConnectionError as exc:
-        Logger.exception(msg := "Couldn't get build")
+        LOGGER.exception(msg := "Couldn't get build")
         raise MobalyticsException(msg) from exc
     data = lxml.html.fromstring(r.text)
     build_elem = data.xpath(BUILD_GUIDE_NAME_XPATH)
     if not build_elem:
-        Logger.error(msg := "No build found")
+        LOGGER.error(msg := "No build found")
         raise MobalyticsException(msg)
     build_name = build_elem[0].tail
     class_name = get_class_name(input_str=build_elem[0].text)
     if not (stats_grid := data.xpath(STATS_GRID_XPATH)):
-        Logger.error(msg := "No stats grid found")
+        LOGGER.error(msg := "No stats grid found")
         raise MobalyticsException(msg)
     if not (items := stats_grid[0].xpath(STATS_GRID_OCCUPIED_XPATH)):
-        Logger.error(msg := "No items found")
+        LOGGER.error(msg := "No items found")
         raise MobalyticsException(msg)
     finished_filters = []
     for item in items:
@@ -70,19 +73,19 @@ def import_mobalytics(url: str):
         if not (name := item.xpath(ITEM_NAME_XPATH)):
             if item.xpath(ITEM_EMPTY_XPATH):
                 continue
-            Logger.error(msg := "No item name found")
+            LOGGER.error(msg := "No item name found")
             raise MobalyticsException(msg)
         if "aspect" not in (x := name[0].text).lower():
-            Logger.warning(f"Uniques are not supported. Skipping: {x}")
+            LOGGER.warning(f"Uniques are not supported. Skipping: {x}")
             continue
         if not (slot_elem := item.xpath(IMAGE_XPATH)):
-            Logger.error(msg := "No item_type found")
+            LOGGER.error(msg := "No item_type found")
             raise MobalyticsException(msg)
         slot = slot_elem[0].attrib["alt"]
         if not (stats := item.xpath(STATS_LIST_XPATH)):
             if item.xpath(ITEM_AFFIXES_EMPTY_XPATH):
                 continue
-            Logger.error(msg := "No stats found")
+            LOGGER.error(msg := "No stats found")
             raise MobalyticsException(msg)
         item_type = None
         affixes = []
@@ -102,7 +105,7 @@ def import_mobalytics(url: str):
                     continue
             affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)), Dataloader().affix_dict))
             if affix_obj.name is None:
-                Logger.error(f"Couldn't match {affix_name=}")
+                LOGGER.error(f"Couldn't match {affix_name=}")
                 continue
             if (x := stat.xpath("./span/span")) and "implicit" in x[0].text.lower():
                 inherents.append(affix_obj)
@@ -110,7 +113,7 @@ def import_mobalytics(url: str):
                 affixes.append(affix_obj)
         item_type = match_to_enum(enum_class=ItemType, target_string=re.sub(r"\d+", "", slot.lower())) if item_type is None else item_type
         if item_type is None:
-            Logger.warning(f"Couldn't match item_type: {slot}. Please edit manually")
+            LOGGER.warning(f"Couldn't match item_type: {slot}. Please edit manually")
         item_filter.itemType = [item_type] if item_type is not None else []
         item_filter.affixPool = [
             AffixFilterCountModel(
@@ -131,7 +134,7 @@ def import_mobalytics(url: str):
     profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
     build_name = build_name if build_name else f"{class_name}_{data.xpath(BUILD_GUIDE_ACTIVE_LOADOUT_XPATH)[0].text()}"
     save_as_profile(file_name=build_name, profile=profile, url=url)
-    Logger.info("Finished")
+    LOGGER.info("Finished")
 
 
 def _corrections(input_str: str) -> str:
@@ -152,7 +155,7 @@ def _fix_input_url(url: str) -> str:
 
 
 if __name__ == "__main__":
-    Logger.init("debug")
+    src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://mobalytics.gg/diablo-4/profile/2a93597f-152e-4266-8e96-df63792e4f9c/builds/d2f8186d-b2ea-42a2-9f77-535d1881f5a0",

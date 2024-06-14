@@ -2,6 +2,7 @@ import logging
 import os
 import pathlib
 import sys
+import threading
 
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
@@ -19,13 +20,16 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+import src.logger
+from src import __version__
 from src.config.helper import singleton
 from src.config.loader import IniConfigLoader
 from src.gui.importer.d4builds import import_d4builds
 from src.gui.importer.diablo_trade import import_diablo_trade
 from src.gui.importer.maxroll import import_maxroll
 from src.gui.importer.mobalytics import import_mobalytics
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 THREADPOOL = QThreadPool()
 D4TRADE_TABNAME = "diablo.trade"
@@ -46,7 +50,7 @@ class Gui(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("D4LF")
+        self.setWindowTitle(f"D4LF v{__version__}")
         self.setGeometry(100, 100, 700, 700)
 
         # Center the window on the screen
@@ -61,7 +65,7 @@ class Gui(QMainWindow):
         self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
 
-        Logger.addHandler(self.maxroll_log_handler)
+        LOGGER.root.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)
         self._toggle_dark_mode()
 
@@ -95,7 +99,7 @@ class Gui(QMainWindow):
         layout.addLayout(hbox)
 
         def generate_button_click():
-            worker = _Worker(import_diablo_trade, url=input_box.text(), max_listings=int(input_box2.text()))
+            worker = _Worker(name="diablo.trade", fn=import_diablo_trade, url=input_box.text(), max_listings=int(input_box2.text()))
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -106,7 +110,6 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
-            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
@@ -148,11 +151,11 @@ class Gui(QMainWindow):
 
     def _handle_tab_changed(self, index):
         if self.tab_widget.tabText(index) == MAXROLL_D4B_MOBALYTICS_TABNAME:
-            Logger.addHandler(self.maxroll_log_handler)
-            Logger.removeHandler(self.diablo_trade_log_handler)
+            LOGGER.root.addHandler(self.maxroll_log_handler)
+            LOGGER.root.removeHandler(self.diablo_trade_log_handler)
         elif self.tab_widget.tabText(index) == D4TRADE_TABNAME:
-            Logger.addHandler(self.diablo_trade_log_handler)
-            Logger.removeHandler(self.maxroll_log_handler)
+            LOGGER.root.addHandler(self.diablo_trade_log_handler)
+            LOGGER.root.removeHandler(self.maxroll_log_handler)
 
     def _maxroll_or_d4builds_tab(self):
         tab_maxroll = QWidget(self)
@@ -174,11 +177,11 @@ class Gui(QMainWindow):
         def generate_button_click():
             url = input_box.text().strip()
             if "maxroll" in url:
-                worker = _Worker(import_maxroll, url=url)
+                worker = _Worker(name="maxroll", fn=import_maxroll, url=url)
             elif "d4builds" in url:
-                worker = _Worker(import_d4builds, url=url)
+                worker = _Worker(name="d4builds", fn=import_d4builds, url=url)
             else:
-                worker = _Worker(import_mobalytics, url=url)
+                worker = _Worker(name="mobalytics", fn=import_mobalytics, url=url)
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -189,7 +192,6 @@ class Gui(QMainWindow):
             generate_button.setEnabled(True)
             generate_button.setText("Generate")
             self.tab_widget.tabBar().enableTabSwitching(True)
-            Logger.info("\n")
 
         hbox2 = QHBoxLayout()
         generate_button = QPushButton("Generate")
@@ -310,8 +312,9 @@ class _GuiLogHandler(logging.Handler):
 
 
 class _Worker(QRunnable):
-    def __init__(self, fn, *args, **kwargs):
+    def __init__(self, name, fn, *args, **kwargs):
         super().__init__()
+        self.name = name
         self.fn = fn
         self.args = args
         self.kwargs = kwargs
@@ -319,6 +322,7 @@ class _Worker(QRunnable):
 
     @pyqtSlot()
     def run(self):
+        threading.current_thread().name = self.name
         self.fn(*self.args, **self.kwargs)
         self.signals.finished.emit()
 
@@ -329,5 +333,5 @@ class _WorkerSignals(QObject):
 
 if __name__ == "__main__":
     os.chdir(pathlib.Path(__file__).parent.parent.parent)
-    Logger.init(lvl="DEBUG")
+    src.logger.setup()
     start_gui()

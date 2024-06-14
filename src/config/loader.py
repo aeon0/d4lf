@@ -1,14 +1,15 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
 import configparser
+import logging
 import os
 import pathlib
 from pathlib import Path
 
 from src.config.helper import singleton
 from src.config.models import AdvancedOptionsModel, CharModel, GeneralModel
-from src.logger import Logger
 
+LOGGER = logging.getLogger(__name__)
 PARAMS_INI = "params.ini"
 
 
@@ -32,7 +33,7 @@ class IniConfigLoader:
                 return_value = self._parsers["params"][section][key]
             return return_value
         except KeyError:
-            Logger.error(f"Key '{key}' not found in section '{section}'")
+            LOGGER.error(f"Key '{key}' not found in section '{section}'")
             os._exit(1)
 
     def _load_params(self):

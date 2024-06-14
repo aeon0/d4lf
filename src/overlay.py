@@ -40,12 +40,11 @@ class Overlay:
         self.root.attributes("-alpha", 0.94)
         self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
         self.root.overrideredirect(True)
-        # self.root.wm_attributes("-transparentcolor", "white")
         self.root.wm_attributes("-topmost", True)
 
-        self.screen_width = self.root.winfo_screenwidth()
-        self.screen_height = self.root.winfo_screenheight()
-        self.initial_height = int(self.root.winfo_screenheight() * 0.03)
+        self.screen_width = Cam().window_roi["width"]
+        self.screen_height = Cam().window_roi["height"]
+        self.initial_height = int(Cam().window_roi["height"] * 0.03)
         self.initial_width = int(self.screen_width * 0.068)
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)

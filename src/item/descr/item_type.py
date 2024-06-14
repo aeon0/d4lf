@@ -26,6 +26,16 @@ def read_item_type(
     if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
         # process sigil
         item.item_type = ItemType.Sigil
+    elif any(
+        substring in concatenated_str.lower()
+        for substring in [
+            "grand cache",
+            "reputation cache",
+            "treasure goblin cache",
+        ]
+    ):
+        item.item_type = ItemType.Material
+        return item, concatenated_str
     elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
         # We check if it is a material
         mask, _ = color_filter(crop_top, COLORS.material_color, False)
@@ -78,10 +88,9 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
                 last_char_idx = tmp_idx
                 max_length = len(item_type.value)
     # common mistake is that "Armor" is on a seperate line and can not be detected properly
-    # TODO: Language specific
     if item.item_type is None and ("chest" in concatenated_str or "armor" in concatenated_str):
         item.item_type = ItemType.ChestArmor
-    if "two-handed" in concatenated_str or "two- handed" in concatenated_str:
+    if any(substring in concatenated_str for substring in ["two -handed", "two handed", "two- handed", "two-handed"]):
         if item.item_type == ItemType.Sword:
             item.item_type = ItemType.Sword2H
         elif item.item_type == ItemType.Mace:

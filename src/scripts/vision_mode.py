@@ -1,3 +1,4 @@
+import math
 import tkinter as tk
 import traceback
 
@@ -30,42 +31,54 @@ def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
-def draw_text(canvas, text, color, h, off, center) -> int:
+def draw_text(canvas, text, color, previous_text_y, offset, canvas_center_x) -> int:
     if text is None or text == "":
         return None
-    font_size = 13
-    width_text_scale = 15.5
-    height_text_scale = 2
+
+    font_size = 11
+    width_text_scale = 24
+    height_text_scale = 4
     window_height = ResManager().pos.window_dimensions[1]
     if window_height == 1440:
-        font_size = 15
+        font_size = 12
         width_text_scale = 20
         height_text_scale = 2.5
     elif window_height == 1600:
-        font_size = 16
+        font_size = 13
         width_text_scale = 23
         height_text_scale = 2.6
     elif window_height == 2160:
-        font_size = 17
+        font_size = 14
         width_text_scale = 30
         height_text_scale = 4
-    if len(text) > 27:
-        text = text[:24] + "..."
 
-    # Create a white rectangle as the background
+    max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+    if max_text_length_per_line < len(text):  # Use a smaller font
+        font_size = 11
+        width_text_scale = 24
+        height_text_scale = 4
+        max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+
+    # Create a gray rectangle as the background
     text_width = int(width_text_scale * len(text))
-    text_height = int(height_text_scale * font_size)
+    if text_width > canvas_center_x * 2:
+        text_width = canvas_center_x * 2
+    number_of_lines = math.ceil(len(text) / max_text_length_per_line)
+    text_height = int(height_text_scale * font_size * number_of_lines)
+
     dark_gray_color = "#111111"
     canvas.create_rectangle(
-        center - text_width // 2,  # x1
-        h - off - text_height // 2,  # y1
-        center + text_width // 2,  # x2
-        h - off + text_height // 2,  # y2
+        canvas_center_x - text_width // 2,  # x1
+        previous_text_y - offset - text_height,  # y1
+        canvas_center_x + text_width // 2,  # x2
+        previous_text_y - offset,  # y2
         fill=dark_gray_color,
         outline="",
     )
-    canvas.create_text(center, h - off, text=text, font=("Courier New", font_size), fill=color)
-    return int(h - off - text_height // 2)
+    canvas.create_text(
+        canvas_center_x, previous_text_y - offset, text=text, anchor=tk.S, font=("Courier New", font_size), fill=color, width=text_width
+    )
+    return int(previous_text_y - offset - text_height)
 
 
 def reset_canvas(root, canvas):
@@ -240,7 +253,7 @@ def vision_mode():
                     # show all info strings of the profiles
                     text_y = h
                     for match in reversed(res.matched):
-                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, off // 1.3, w // 2)
+                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, 5, w // 2)
                     # Show matched bullets
                     if item_descr is not None and len(res.matched) > 0:
                         bullet_width = thick * 3

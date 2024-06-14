@@ -133,7 +133,7 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str = Field(default="f12", description="Hotkey to exit d4lf", json_schema_extra={IS_HOTKEY_KEY: "True"})
-    log_lvl: LogLevels = Field(default=LogLevels.info, description="The level at which logs are written.")
+    log_lvl: LogLevels = Field(default=LogLevels.info, description="The level at which logs are written")
     move_to_chest: str = Field(
         default="f8", description="Hotkey to move configured items from inventory to stash", json_schema_extra={IS_HOTKEY_KEY: "True"}
     )

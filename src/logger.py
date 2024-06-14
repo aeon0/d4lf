@@ -84,11 +84,11 @@ def setup(log_level: str = "DEBUG") -> None:
         encoding="utf8",
     )
     rotating_handler.set_name("D4LF_FILE")
-    rotating_handler.setLevel(log_level)
+    rotating_handler.setLevel(log_level.upper())
     # create StreamHandler for console output
     stream_handler = logging.StreamHandler(stream=sys.stdout)
     stream_handler.set_name("D4LF_CONSOLE")
-    stream_handler.setLevel(log_level)
+    stream_handler.setLevel(log_level.upper())
     # create and set custom log formatter
     stream_handler.setFormatter(create_formatter(colored=True))
     rotating_handler.setFormatter(create_formatter(colored=False))

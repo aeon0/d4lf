@@ -2,6 +2,7 @@ import logging
 import os
 import pathlib
 import sys
+import threading
 
 from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
@@ -98,7 +99,7 @@ class Gui(QMainWindow):
         layout.addLayout(hbox)
 
         def generate_button_click():
-            worker = _Worker(import_diablo_trade, url=input_box.text(), max_listings=int(input_box2.text()))
+            worker = _Worker(name="diablo.trade", fn=import_diablo_trade, url=input_box.text(), max_listings=int(input_box2.text()))
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -176,11 +177,11 @@ class Gui(QMainWindow):
         def generate_button_click():
             url = input_box.text().strip()
             if "maxroll" in url:
-                worker = _Worker(import_maxroll, url=url)
+                worker = _Worker(name="maxroll", fn=import_maxroll, url=url)
             elif "d4builds" in url:
-                worker = _Worker(import_d4builds, url=url)
+                worker = _Worker(name="d4builds", fn=import_d4builds, url=url)
             else:
-                worker = _Worker(import_mobalytics, url=url)
+                worker = _Worker(name="mobalytics", fn=import_mobalytics, url=url)
             worker.signals.finished.connect(on_worker_finished)
             generate_button.setEnabled(False)
             generate_button.setText("Generating...")
@@ -311,8 +312,9 @@ class _GuiLogHandler(logging.Handler):
 
 
 class _Worker(QRunnable):
-    def __init__(self, fn, *args, **kwargs):
+    def __init__(self, name, fn, *args, **kwargs):
         super().__init__()
+        self.name = name
         self.fn = fn
         self.args = args
         self.kwargs = kwargs
@@ -320,6 +322,7 @@ class _Worker(QRunnable):
 
     @pyqtSlot()
     def run(self):
+        threading.current_thread().name = self.name
         self.fn(*self.args, **self.kwargs)
         self.signals.finished.emit()
 

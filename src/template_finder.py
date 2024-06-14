@@ -1,4 +1,5 @@
 import concurrent.futures
+import logging
 import threading
 import time
 from dataclasses import dataclass
@@ -9,13 +10,14 @@ import numpy as np
 from src.cam import Cam
 from src.config.data import COLORS, Template
 from src.config.ui import ResManager
-from src.logger import Logger
 from src.utils.image_operations import alpha_to_mask, color_filter, crop
 from src.utils.misc import run_until_condition
 from src.utils.roi_operations import get_center
 
-templates_lock = threading.Lock()
-executor = concurrent.futures.ThreadPoolExecutor()
+LOGGER = logging.getLogger(__name__)
+
+EXECUTOR = concurrent.futures.ThreadPoolExecutor()
+TEMPLATES_LOCK = threading.Lock()
 
 
 @dataclass
@@ -74,12 +76,12 @@ class SearchArgs:
             not (result := run_until_condition(lambda: self.detect(), lambda match: match.success, timeout)[0]).success
             and not suppress_debug
         ):
-            Logger.debug(f"{self.ref} not found after {timeout} seconds")
+            LOGGER.debug(f"{self.ref} not found after {timeout} seconds")
         return result
 
     def wait_until_hidden(self, timeout: float = 3, suppress_debug: bool = False) -> bool:
         if not (hidden := run_until_condition(lambda: self.detect().success, lambda res: not res, timeout)[1]) and not suppress_debug:
-            Logger.debug(f"{self.ref} still found after {timeout} seconds")
+            LOGGER.debug(f"{self.ref} still found after {timeout} seconds")
         return hidden
 
     @staticmethod
@@ -93,7 +95,7 @@ class SearchArgs:
             )
             and not suppress_debug
         ):
-            Logger.debug(f"ROI: '{roi}' unchanged after {timeout} seconds")
+            LOGGER.debug(f"ROI: '{roi}' unchanged after {timeout} seconds")
         return change
 
 
@@ -107,7 +109,7 @@ def _process_template_refs(ref: str | np.ndarray | list[str]) -> list[Template]:
             try:
                 templates.append(ResManager().templates[i.lower()])
             except KeyError:
-                Logger.warning(f"Template not defined: {i}")
+                LOGGER.warning(f"Template not defined: {i}")
         # if the reference is an image, append new Template class object
         elif isinstance(i, np.ndarray):
             templates.append(Template(img_bgr=i, img_gray=cv2.cvtColor(i, cv2.COLOR_BGR2GRAY), alpha_mask=alpha_to_mask(i)))
@@ -141,7 +143,7 @@ def _get_cv_result(
     else:
         template_img = template.img_bgr
     if not (img.shape[0] > template_img.shape[0] and img.shape[1] > template_img.shape[1]):
-        # Logger.error(
+        # LOGGER.error(
         #     f"Image shape and template shape are incompatible: {template.name}. Image: {img.shape}, Template: {template_img.shape}, roi: {roi}"
         # )
         res = None
@@ -185,14 +187,14 @@ def search(
         try:
             roi = getattr(ResManager().roi, roi)
         except KeyError as e:
-            Logger.error(f"Invalid roi key: {roi}")
-            Logger.error(e)
+            LOGGER.error(f"Invalid roi key: {roi}")
+            LOGGER.error(e)
     if isinstance(color_match, str):
         try:
             color_match = getattr(COLORS, color_match)
         except KeyError as e:
-            Logger.error(f"Invalid color_match key: {color_match}")
-            Logger.error(e)
+            LOGGER.error(f"Invalid color_match key: {color_match}")
+            LOGGER.error(e)
 
     def _process_cv_result(template: Template, img: np.ndarray) -> bool:
         new_match = False
@@ -242,7 +244,7 @@ def search(
         img = Cam().grab() if inp_img is None else inp_img
         if do_multi_process:
             for template in templates:
-                future = executor.submit(_process_cv_result, template, img)
+                future = EXECUTOR.submit(_process_cv_result, template, img)
                 future_list.append(future)
 
                 for i in future_list:
@@ -260,13 +262,13 @@ def search(
         result.matches = sorted(matches, key=lambda obj: obj.score, reverse=True)
         if not suppress_debug:
             if len(matches) > 1 and mode == "all":
-                Logger.debug(
+                LOGGER.debug(
                     "Found the following matches:\n"
                     + ", ".join(["  {template_match.name} ({template_match.score*100:.1f}% confidence)" for _ in matches])
                 )
             else:
-                Logger.debug("Found {mode} match: {template_match.name} ({template_match.score*100:.1f}% confidence)")
+                LOGGER.debug("Found {mode} match: {template_match.name} ({template_match.score*100:.1f}% confidence)")
     elif not suppress_debug:
-        Logger.debug(f"Could not find desired templates: {ref}")
+        LOGGER.debug(f"Could not find desired templates: {ref}")
 
     return result

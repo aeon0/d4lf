@@ -1,155 +1,106 @@
-import inspect
-import io
+from __future__ import annotations
+
+import datetime
 import logging
-import os
+import logging.handlers
+import pathlib
 import sys
-import warnings
+import threading
+import typing
 
 import colorama
 
 from src import __version__
 
-colorama.init()
+logging.getLogger("selenium").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+LOGGER = logging.getLogger(__name__)
+
+LOG_DIR = pathlib.Path() / "logs"
 
 
-class CustomFormatter(logging.Formatter):
-    _format = f"[{__version__} %(asctime)s] %(levelname)-10s %(message)s"
+class ColoredFormatter(logging.Formatter):
+    def __init__(
+        self,
+        fmt: str | None = None,
+        datefmt: str | None = None,
+        style: str = "%",
+        validate: bool = True,
+        *,
+        defaults: dict[str, typing.Any] | None = None,
+    ) -> None:
+        colorama.just_fix_windows_console()
+        super().__init__(fmt=fmt, datefmt=datefmt, style=style, validate=validate, defaults=defaults)
 
-    FORMATS = {
-        logging.DEBUG: colorama.Fore.WHITE + _format + colorama.Fore.WHITE,
-        logging.INFO: colorama.Fore.LIGHTBLUE_EX + _format + colorama.Fore.WHITE,
-        logging.WARNING: colorama.Fore.LIGHTYELLOW_EX + _format + colorama.Fore.WHITE,
-        logging.ERROR: colorama.Fore.LIGHTRED_EX + _format + colorama.Fore.WHITE,
-        logging.CRITICAL: colorama.Fore.RED + _format + colorama.Fore.WHITE,
+    COLORS = {
+        "DEBUG": colorama.Fore.BLUE,
+        "INFO": colorama.Fore.GREEN,
+        "WARNING": colorama.Fore.YELLOW,
+        "ERROR": colorama.Fore.RED,
+        "CRITICAL": colorama.Fore.MAGENTA + colorama.Back.YELLOW,
     }
 
-    def _get_caller_info(self, stack_level):
-        """Returns the module and function name of the caller at a given stack level."""
-        stack = inspect.stack()
-        frame_info = inspect.getframeinfo(stack[stack_level][0])
-        function_name = frame_info.function
-        module_name = inspect.getmodule(stack[stack_level][0]).__name__
-
-        return module_name, function_name
-
-    def format(self, record):
-        stack_level = 10  # found manually to get correct level of module.function
-        log_fmt = self.FORMATS.get(record.levelno)
-        msg = record.getMessage()
-
-        if record.levelno in (logging.WARNING, logging.ERROR):
-            module_name, function_name = self._get_caller_info(stack_level)
-            msg = f"{module_name}.{function_name}: {msg}"
-            if record.exc_info:
-                msg += "\n" + self.formatException(record.exc_info)
-
-        asctime = self.formatTime(record, self.datefmt)
-
-        # Replace the placeholders in the format string with the actual values
-        return log_fmt % {"asctime": asctime, "levelname": record.levelname, "message": msg}
+    def format(self, record: logging.LogRecord) -> str:
+        log_message = super().format(record)
+        return self.COLORS.get(record.levelname, "") + log_message + colorama.Style.RESET_ALL
 
 
-class Logger:
-    """Manage logging"""
+def _setup_log_filename(fmt: str) -> str:
+    current_datetime = datetime.datetime.now(tz=datetime.UTC)
 
-    os.makedirs("log", exist_ok=True)
-    _logger_level = "DEBUG"
-    _log_contents = io.StringIO()
-    _current_log_file_path = "log/log.txt"
-    _output = ""  # intercepted output from stdout and stderr
-    string_handler = None
-    file_handler = None
-    console_handler = None
-    logger = None
+    filename = fmt.format(date=current_datetime.strftime("%Y-%m-%d"), time=current_datetime.strftime("%H-%M-%S"))
+    if not filename.lower().endswith(".log") and filename != "":
+        filename += ".log"
+    return filename
 
-    @staticmethod
-    def debug(data: str):
-        if Logger.logger is None:
-            Logger.init()
-        Logger.logger.debug(data)
 
-    @staticmethod
-    def info(data: str):
-        if Logger.logger is None:
-            Logger.init()
-        Logger.logger.info(data)
+def create_formatter(colored: bool) -> logging.Formatter:
+    """Create a formatter for logging.
 
-    @staticmethod
-    def warning(data: str):
-        if Logger.logger is None:
-            Logger.init()
-        Logger.logger.warning(data)
+    :param colored: If true, use colors in output
+    :return: the logging formatter
+    """
+    # log_format = "%(asctime)s.%(msecs)03d | %(processName)s | %(threadName)s | %(levelname)s | %(name)s:%(lineno)d | %(message)s"
+    log_format = "%(asctime)s.%(msecs)03d | %(threadName)s | %(levelname)s | %(name)s:%(lineno)d | %(message)s"
+    date_format = "%Y-%m-%d | %H:%M:%S"
+    if colored:
+        return ColoredFormatter(fmt=log_format, datefmt=date_format)
+    return logging.Formatter(fmt=log_format, datefmt=date_format)
 
-    @staticmethod
-    def error(data: str):
-        if Logger.logger is None:
-            Logger.init()
-        Logger.logger.error(data)
 
-    @staticmethod
-    def exception(data: str):
-        if Logger.logger is None:
-            Logger.init()
-        Logger.logger.exception(data)
+def setup(log_level: str = "DEBUG") -> None:
+    LOG_DIR.mkdir(exist_ok=True)
 
-    @staticmethod
-    def init(lvl: str = "DEBUG"):
-        """
-        Setup logger for StringIO, console and file handler
-        """
-        Logger._logger_level = lvl.upper()
+    LOGGER.debug(f"LOG_PATH: {LOG_DIR}")
+    logger = logging.getLogger()
+    threading.excepthook = _log_unhandled_exceptions
+    # create rotating file handler
+    rotating_handler = logging.handlers.RotatingFileHandler(
+        LOG_DIR / f"log_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}.txt",
+        mode="w",
+        maxBytes=10 * 1024**2,
+        backupCount=1000,
+        encoding="utf8",
+    )
+    rotating_handler.set_name("D4LF_FILE")
+    rotating_handler.setLevel(log_level)
+    # create StreamHandler for console output
+    stream_handler = logging.StreamHandler(stream=sys.stdout)
+    stream_handler.set_name("D4LF_CONSOLE")
+    stream_handler.setLevel(log_level)
+    # create and set custom log formatter
+    stream_handler.setFormatter(create_formatter(colored=True))
+    rotating_handler.setFormatter(create_formatter(colored=False))
+    # add new handlers to logger
+    logger.addHandler(stream_handler)
+    logger.addHandler(rotating_handler)
+    # Set default log level for root logger. Python will pick the highest level out of root logger and handler
+    logger.setLevel("DEBUG")
+    LOGGER.info(f"Running version v{__version__}")
 
-        if Logger.logger is not None:
-            for hdlr in Logger.logger.handlers[:]:  # remove all old handlers
-                Logger.logger.removeHandler(hdlr)
 
-        # Create the logger
-        Logger.logger = logging.getLogger("d4lf")
-        for hdlr in Logger.logger.handlers:
-            Logger.logger.removeHandler(hdlr)
-        Logger.logger.setLevel(Logger._logger_level)
-        Logger.logger.propagate = False
-
-        # Setup the StringIO handler
-        Logger._log_contents = io.StringIO()
-        Logger.string_handler = logging.StreamHandler(Logger._log_contents)
-        Logger.string_handler.setLevel(Logger._logger_level)
-
-        # Setup the console handler
-        Logger.console_handler = logging.StreamHandler(sys.stdout)
-        Logger.console_handler.setLevel(Logger._logger_level)
-
-        # Setup the file handler
-        Logger.file_handler = logging.FileHandler(Logger._current_log_file_path, "a")
-        Logger.file_handler.setLevel(Logger._logger_level)
-
-        # Optionally add a formatter
-        _format = CustomFormatter()
-        Logger.string_handler.setFormatter(_format)
-        Logger.console_handler.setFormatter(_format)
-        Logger.file_handler.setFormatter(logging.Formatter(_format._format))
-
-        # Add the handler to the logger
-        Logger.logger.addHandler(Logger.string_handler)
-        Logger.logger.addHandler(Logger.console_handler)
-        Logger.logger.addHandler(Logger.file_handler)
-
-    @staticmethod
-    def addHandler(handler: logging.Handler):
-        Logger.logger.addHandler(handler)
-
-    @staticmethod
-    def removeHandler(handler: logging.Handler):
-        Logger.logger.removeHandler(handler)
-
-    @staticmethod
-    def remove_file_logger(delete_current_log: bool = False):
-        """
-        Remove the file logger to not write output to a log file
-        """
-        Logger.logger.removeHandler(Logger.file_handler)
-        if delete_current_log and os.path.exists(Logger._current_log_file_path):
-            try:
-                os.remove(Logger._current_log_file_path)
-            except PermissionError:
-                warnings.warn(f"Could not remove {Logger._current_log_file_path}, permission denied", stacklevel=2)
+def _log_unhandled_exceptions(args: typing.Any) -> None:
+    LOGGER.critical(
+        f"Unhandled exception caused by thread '{args.thread.name}'", exc_info=(args.exc_type, args.exc_value, args.exc_traceback)
+    )

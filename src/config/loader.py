@@ -1,13 +1,14 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
 import configparser
+import logging
 import pathlib
 from pathlib import Path
 
 from src.config.helper import singleton
 from src.config.models import DEPRECATED_INI_KEYS, AdvancedOptionsModel, CharModel, GeneralModel
-from src.logger import Logger
 
+LOGGER = logging.getLogger(__name__)
 PARAMS_INI = "params.ini"
 
 
@@ -33,7 +34,7 @@ class IniConfigLoader:
         all_keys = [key for section in self._parser.sections() for key in self._parser[section]]
         deprecated_keys = [key for key in DEPRECATED_INI_KEYS if key in all_keys]
         for key in deprecated_keys:
-            Logger.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please update your config file.")
+            LOGGER.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please update your config file.")
             # remove key from parser
             for section in self._parser.sections():
                 if key in self._parser[section]:

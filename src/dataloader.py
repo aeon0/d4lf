@@ -1,13 +1,15 @@
 import json
+import logging
 import os
 import threading
 from pathlib import Path
 
 from src.config.loader import IniConfigLoader
 from src.item.data.item_type import ItemType
-from src.logger import Logger
 
-dataloader_lock = threading.Lock()
+LOGGER = logging.getLogger(__name__)
+
+DATALOADER_LOCK = threading.Lock()
 
 
 class Dataloader:
@@ -26,7 +28,7 @@ class Dataloader:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            with dataloader_lock:
+            with DATALOADER_LOCK:
                 if not cls._instance.data_loaded:
                     cls._instance.data_loaded = True
                     cls._instance.load_data()
@@ -49,7 +51,7 @@ class Dataloader:
                     enum_member = ItemType[item]
                     enum_member._value_ = value
                 else:
-                    Logger.warning(f"{item} type not in item_type.py")
+                    LOGGER.warning(f"{item} type not in item_type.py")
 
         with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/sigils.json", encoding="utf-8") as f:
             affix_sigil_dict_all = json.load(f)

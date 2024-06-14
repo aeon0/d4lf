@@ -1,10 +1,11 @@
+import logging
 from copy import deepcopy
 from enum import Enum
 
 import cv2
 import numpy as np
 
-from src.logger import Logger
+LOGGER = logging.getLogger(__name__)
 
 
 class ThresholdTypes(Enum):
@@ -66,7 +67,7 @@ def crop(img: np.ndarray, roi: tuple[int, int, int, int]) -> np.ndarray:
 
     # Ensure the ROI is within the dimensions of the image
     if x < 0 or y < 0 or x + w > width or y + h > height:
-        Logger.debug(f"The region of interest {roi} is not within the dimensions of the image {img.shape[:2]}.")
+        LOGGER.debug(f"The region of interest {roi} is not within the dimensions of the image {img.shape[:2]}.")
         return img
     return img[y : y + h, x : x + w]
 
@@ -87,7 +88,7 @@ def mask_by_roi(img: np.ndarray, roi: tuple[int, int, int, int], masking_type: s
         masked = img.copy()
         cv2.rectangle(masked, (x, y), (x + w - 1, y + h - 1), (0, 0, 0), -1)
     else:
-        Logger.error(f"Unrecognized masking type '{masking_type}'.")
+        LOGGER.error(f"Unrecognized masking type '{masking_type}'.")
         return None
     return masked
 

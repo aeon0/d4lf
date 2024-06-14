@@ -1,13 +1,16 @@
+import logging
+
 import numpy as np
 
 from src.config.ui import ResManager
 from src.dataloader import Dataloader
 from src.item.data.affix import Affix, AffixType
 from src.item.descr.text import clean_str, closest_match, find_number, remove_text_after_first_keyword
-from src.logger import Logger
 from src.template_finder import TemplateMatch
 from src.utils.image_operations import crop
 from src.utils.ocr.read import image_to_text
+
+LOGGER = logging.getLogger(__name__)
 
 
 def split_into_paragraphs(
@@ -119,7 +122,7 @@ def find_affixes(
         if found_key is not None:
             affixes.append(Affix(name=found_key, value=found_value, text=combined_lines))
         else:
-            Logger.warning(f"Affix does not exist: [cleaned]: {cleaned_str}, [raw]: {combined_lines}")
+            LOGGER.warning(f"Affix does not exist: [cleaned]: {cleaned_str}, [raw]: {combined_lines}")
 
     # Add location to the found_values
     affix_x = affix_bullets[0].center[0]

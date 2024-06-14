@@ -7,7 +7,7 @@ import mss.windows
 import numpy as np
 
 from src.config.ui import ResManager
-from src.utils.misc import convert_args_to_numpy, wait
+from src.utils.misc import convert_args_to_numpy
 
 LOGGER = logging.getLogger(__name__)
 
@@ -67,7 +67,7 @@ class Cam:
         if not self.is_offset_set():
             print("Wait for window detection")
             while not self.window_offset_set:
-                wait(0.05)
+                time.sleep(0.05)
             print("Found window, continue grabbing")
         with cached_img_lock:
             self.last_grab = time.perf_counter()

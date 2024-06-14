@@ -83,13 +83,6 @@ def convert_args_to_numpy(func):
     return wrapper
 
 
-def wait(min_seconds, max_seconds=None):
-    if max_seconds is None:
-        max_seconds = min_seconds
-    time.sleep(random_number_gaussian(min_seconds, max_seconds))
-    return
-
-
 def run_until_condition(func: Callable[[], T], is_success: Callable[[T], bool], timeout: float = 3) -> tuple[T | None, bool]:
     """
     Runs the given function until the specified condition is met or the timeout is reached.
@@ -108,7 +101,7 @@ def run_until_condition(func: Callable[[], T], is_success: Callable[[T], bool], 
         success = is_success(res)
         if success:
             break
-        wait(0.05)
+        time.sleep(0.05)
 
     return res, success
 

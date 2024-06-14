@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import time
 import traceback
 
 import keyboard
@@ -15,7 +16,6 @@ from src.gui.qt_gui import start_gui
 from src.item.filter import Filter
 from src.logger import LOG_DIR
 from src.overlay import Overlay
-from src.utils.misc import wait
 from src.utils.ocr.read import load_api
 from src.utils.process_handler import safe_exit
 from src.utils.window import WindowSpec, start_detecting_window
@@ -28,7 +28,7 @@ def main():
     for dir_name in [LOG_DIR / "screenshots", IniConfigLoader().user_dir, IniConfigLoader().user_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
-    LOGGER.info(f"Adapt your custom configs in: {IniConfigLoader().user_dir}")
+    LOGGER.info(f"Adapt your configs via gui.bat or directly in: {IniConfigLoader().user_dir}")
 
     Filter().load_files()
 
@@ -48,7 +48,7 @@ def main():
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
-        wait(0.2)
+        time.sleep(0.2)
 
     load_api()
 

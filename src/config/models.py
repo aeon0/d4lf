@@ -4,12 +4,17 @@ import enum
 import sys
 
 import numpy as np
-from pydantic import BaseModel, ConfigDict, RootModel, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, model_validator
 from pydantic_numpy import np_array_pydantic_annotated_typing
 from pydantic_numpy.model import NumpyModel
 
 from src.config.helper import check_greater_than_zero, validate_hotkey
 from src.item.data.item_type import ItemType
+
+HIDE_FROM_GUI_KEY = "hide_from_gui"
+IS_HOTKEY_KEY = "is_hotkey"
+
+DEPRECATED_INI_KEYS = []
 
 
 class AspectFilterType(enum.StrEnum):
@@ -30,13 +35,21 @@ class MoveItemsType(enum.StrEnum):
     non_favorites = enum.auto()
 
 
+class LogLevels(enum.StrEnum):
+    debug = enum.auto()
+    info = enum.auto()
+    warning = enum.auto()
+    error = enum.auto()
+    critical = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
 
 
 class _IniBaseModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True, str_to_lower=True)
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, validate_assignment=True)
 
 
 def _parse_item_type(data: str | list[str]) -> list[str]:
@@ -119,15 +132,28 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 
 class AdvancedOptionsModel(_IniBaseModel):
-    exit_key: str
-    log_lvl: str = "info"
-    move_to_chest: str
-    move_to_inv: str
-    process_name: str = "Diablo IV.exe"
-    run_filter: str
-    run_filter_force_refresh: str
-    run_scripts: str
-    scripts: list[str]
+    exit_key: str = Field(default="f12", description="Hotkey to exit d4lf", json_schema_extra={IS_HOTKEY_KEY: "True"})
+    log_lvl: LogLevels = Field(default=LogLevels.info, description="The level at which logs are written.")
+    move_to_chest: str = Field(
+        default="f8", description="Hotkey to move configured items from inventory to stash", json_schema_extra={IS_HOTKEY_KEY: "True"}
+    )
+    move_to_inv: str = Field(
+        default="f7", description="Hotkey to move configured items from stash to inventory", json_schema_extra={IS_HOTKEY_KEY: "True"}
+    )
+    process_name: str = Field(
+        default="Diablo IV.exe",
+        description="The process that is running Diablo 4. Could help usage when playing through a streaming service like GeForce Now",
+    )
+    run_filter: str = Field(default="f11", description="Hotkey to run the filter process", json_schema_extra={IS_HOTKEY_KEY: "True"})
+    run_filter_force_refresh: str = Field(
+        default="shift+f11",
+        description="Hotkey to run the filter process with a force refresh. The status of all junk/favorite items will be reset",
+        json_schema_extra={IS_HOTKEY_KEY: "True"},
+    )
+    run_scripts: str = Field(
+        default="f9", description="Hotkey to enable/disable the vision filter", json_schema_extra={IS_HOTKEY_KEY: "True"}
+    )
+    scripts: list[str] = Field(default=["vision_mode"], json_schema_extra={HIDE_FROM_GUI_KEY: "True"})
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
@@ -140,15 +166,17 @@ class AdvancedOptionsModel(_IniBaseModel):
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
 
-    @field_validator("log_lvl")
-    def log_lvl_must_exist(cls, k: str) -> str:
-        if k not in ["debug", "info", "warning", "error", "critical"]:
-            raise ValueError("log level does not exist")
-        return k
+    @field_validator("scripts", mode="before")
+    def check_scripts_is_list(cls, v: str) -> list[str]:
+        if isinstance(v, str):
+            v = v.split(",")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
+        return v
 
 
 class CharModel(_IniBaseModel):
-    inventory: str
+    inventory: str = Field(default="i", description="Hotkey in Diablo IV to open inventory", json_schema_extra={IS_HOTKEY_KEY: "True"})
 
     @field_validator("inventory")
     def key_must_exist(cls, k: str) -> str:
@@ -174,21 +202,53 @@ class BrowserType(enum.StrEnum):
 
 
 class GeneralModel(_IniBaseModel):
-    browser: BrowserType = BrowserType.chrome
-    check_chest_tabs: list[int]
-    full_dump: bool = False
-    handle_rares: HandleRaresType = HandleRaresType.filter
-    hidden_transparency: float
-    keep_aspects: AspectFilterType = AspectFilterType.upgrade
-    language: str = "enUS"
-    move_to_inv_item_type: MoveItemsType = MoveItemsType.non_favorites
-    move_to_stash_item_type: MoveItemsType = MoveItemsType.non_favorites
-    profiles: list[str]
-    run_vision_mode_on_startup: bool
+    browser: BrowserType = Field(default=BrowserType.chrome, description="Which browser to use to get builds")
+    check_chest_tabs: list[int] = Field(default=[0, 1], description="Which tabs to check. Note: All 6 Tabs must be unlocked!")
+    full_dump: bool = Field(
+        default=False,
+        description="When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not",
+    )
+    handle_rares: HandleRaresType = Field(default=HandleRaresType.filter, description="How to handle rares that the filter finds.")
+    hidden_transparency: float = Field(
+        default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
+    )
+    keep_aspects: AspectFilterType = Field(
+        default=AspectFilterType.upgrade, description="Whether to keep aspects that didn't match a filter"
+    )
+    language: str = Field(
+        default="enUS", description="Do not change. Only English is supported at this time", json_schema_extra={HIDE_FROM_GUI_KEY: "True"}
+    )
+    move_to_inv_item_type: MoveItemsType = Field(
+        default=MoveItemsType.non_favorites,
+        description="When doing stash/inventory transfer, what types of items should be moved",
+    )
+    move_to_stash_item_type: MoveItemsType = Field(
+        default=MoveItemsType.non_favorites,
+        description="When doing stash/inventory transfer, what types of items should be moved",
+    )
+    profiles: list[str] = Field(
+        default=[],
+        description='Which filter profiles should be run. All .yaml files with "Aspects" and '
+        '"Affixes" sections will be used from '
+        "C:/Users/USERNAME/.d4lf/profiles/*.yaml",
+    )
+    run_vision_mode_on_startup: bool = Field(default=True, description="Whether to run vision mode on startup or not")
 
-    @field_validator("check_chest_tabs", mode="after")
-    def check_chest_tabs_index(cls, v: list[int]) -> list[int]:
+    @field_validator("check_chest_tabs", mode="before")
+    def check_chest_tabs_index(cls, v: str) -> list[int]:
+        if isinstance(v, str):
+            v = v.split(",")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
         return sorted([int(x) - 1 for x in v])
+
+    @field_validator("profiles", mode="before")
+    def check_profiles_is_list(cls, v: str) -> list[str]:
+        if isinstance(v, str):
+            v = v.split(", ")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
+        return v
 
     @field_validator("language")
     def language_must_exist(cls, v: str) -> str:

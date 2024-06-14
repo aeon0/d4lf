@@ -2,12 +2,11 @@
 
 import configparser
 import logging
-import os
 import pathlib
 from pathlib import Path
 
 from src.config.helper import singleton
-from src.config.models import AdvancedOptionsModel, CharModel, GeneralModel
+from src.config.models import DEPRECATED_INI_KEYS, AdvancedOptionsModel, CharModel, GeneralModel
 
 LOGGER = logging.getLogger(__name__)
 PARAMS_INI = "params.ini"
@@ -16,87 +15,70 @@ PARAMS_INI = "params.ini"
 @singleton
 class IniConfigLoader:
     def __init__(self):
-        self._advanced_options = None
-        self._char = None
-        self._config_path = Path("./config")
-        self._general = None
-        self._loaded = False
-        self._parsers = {}
+        self._advanced_options = AdvancedOptionsModel()
+        self._char = CharModel()
+        self._general = GeneralModel()
+        self._parser = None
         self._user_dir = pathlib.Path.home() / ".d4lf"
         self._user_dir.mkdir(parents=True, exist_ok=True)
+        self.load()
 
-    def _select_val(self, section: str, key: str | None = None):
-        try:
-            if section in self._parsers["custom"] and key in self._parsers["custom"][section]:
-                return_value = self._parsers["custom"][section][key]
-            else:
-                return_value = self._parsers["params"][section][key]
-            return return_value
-        except KeyError:
-            LOGGER.error(f"Key '{key}' not found in section '{section}'")
-            os._exit(1)
-
-    def _load_params(self):
-        self._parsers["params"] = configparser.ConfigParser()
-        self._parsers["custom"] = configparser.ConfigParser()
-        self._parsers["params"].read(self._config_path / PARAMS_INI, encoding="utf-8")
-        if (p := (self.user_dir / PARAMS_INI)).exists():
-            if p.stat().st_size:
-                self._parsers["custom"].read(p, encoding="utf-8")
-        else:
+    def load(self, clear: bool = False):
+        if not (self.user_dir / PARAMS_INI).exists() or clear:
             with open(self.user_dir / PARAMS_INI, "w", encoding="utf-8"):
                 pass
 
-        self._advanced_options = AdvancedOptionsModel(
-            exit_key=self._select_val("advanced_options", "exit_key"),
-            log_lvl=self._select_val("advanced_options", "log_lvl"),
-            move_to_chest=self._select_val("advanced_options", "move_to_chest"),
-            move_to_inv=self._select_val("advanced_options", "move_to_inv"),
-            process_name=self._select_val("advanced_options", "process_name"),
-            run_filter=self._select_val("advanced_options", "run_filter"),
-            run_filter_force_refresh=self._select_val("advanced_options", "run_filter_force_refresh"),
-            run_scripts=self._select_val("advanced_options", "run_scripts"),
-            scripts=self._select_val("advanced_options", "scripts").split(","),
-        )
-        self._char = CharModel(inventory=self._select_val("char", "inventory"))
-        self._general = GeneralModel(
-            browser=self._select_val("general", "browser"),
-            check_chest_tabs=self._select_val("general", "check_chest_tabs").split(","),
-            full_dump=self._select_val("general", "full_dump"),
-            handle_rares=self._select_val("general", "handle_rares"),
-            hidden_transparency=self._select_val("general", "hidden_transparency"),
-            keep_aspects=self._select_val("general", "keep_aspects"),
-            move_to_inv_item_type=self._select_val("general", "move_to_inv_item_type"),
-            move_to_stash_item_type=self._select_val("general", "move_to_stash_item_type"),
-            profiles=self._select_val("general", "profiles").split(","),
-            run_vision_mode_on_startup=self._select_val("general", "run_vision_mode_on_startup"),
-        )
+        self._parser = configparser.ConfigParser()
+        self._parser.read(self.user_dir / PARAMS_INI, encoding="utf-8")
+
+        all_keys = [key for section in self._parser.sections() for key in self._parser[section]]
+        deprecated_keys = [key for key in DEPRECATED_INI_KEYS if key in all_keys]
+        for key in deprecated_keys:
+            LOGGER.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please update your config file.")
+            # remove key from parser
+            for section in self._parser.sections():
+                if key in self._parser[section]:
+                    self._parser.remove_option(section, key)
+
+        if "advanced_options" in self._parser:
+            self._advanced_options = AdvancedOptionsModel(**self._parser["advanced_options"])
+        else:
+            self._advanced_options = AdvancedOptionsModel()
+
+        if "char" in self._parser:
+            self._char = CharModel(**self._parser["char"])
+        else:
+            self._char = CharModel()
+
+        if "general" in self._parser:
+            self._general = GeneralModel(**self._parser["general"])
+        else:
+            self._general = GeneralModel()
 
     @property
     def advanced_options(self) -> AdvancedOptionsModel:
-        if not self._loaded:
-            self.load()
         return self._advanced_options
 
     @property
     def char(self) -> CharModel:
-        if not self._loaded:
-            self.load()
         return self._char
 
     @property
     def general(self) -> GeneralModel:
-        if not self._loaded:
-            self.load()
         return self._general
 
     @property
     def user_dir(self) -> Path:
         return self._user_dir
 
-    def load(self):
-        self._loaded = True
-        self._load_params()
+    def save_value(self, section, key, value):
+        if self._parser is None:
+            self.load()
+        if section not in self._parser.sections():
+            self._parser.add_section(section)
+        self._parser.set(section, key, value)
+        with open(self.user_dir / PARAMS_INI, "w", encoding="utf-8") as config_file:
+            self._parser.write(config_file)
 
 
 if __name__ == "__main__":

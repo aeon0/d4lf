@@ -38,7 +38,6 @@ def clean_up():
 def copy_additional_resources(release_dir: Path):
     shutil.copy("README.md", release_dir)
     shutil.copytree("assets", release_dir / "assets")
-    shutil.copytree("config", release_dir / "config")
 
 
 def create_batch_for_gui(release_dir: Path, exe_name: str):

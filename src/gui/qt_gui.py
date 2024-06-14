@@ -24,6 +24,7 @@ import src.logger
 from src import __version__
 from src.config.helper import singleton
 from src.config.loader import IniConfigLoader
+from src.gui import config_tab
 from src.gui.importer.d4builds import import_d4builds
 from src.gui.importer.diablo_trade import import_diablo_trade
 from src.gui.importer.maxroll import import_maxroll
@@ -51,12 +52,12 @@ class Gui(QMainWindow):
         super().__init__()
 
         self.setWindowTitle(f"D4LF v{__version__}")
-        self.setGeometry(100, 100, 700, 700)
+        self.setGeometry(0, 0, 650, 800)
 
         # Center the window on the screen
         screen = QApplication.primaryScreen()
         rect = screen.geometry()
-        self.move(rect.width() // 2 - self.width() // 2, rect.height() // 2 - self.height() // 2)
+        self.move(rect.width() // 2 - self.width() // 2, (rect.height() // 2 - self.height() // 2) - 30)
 
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setTabBar(_CustomTabBar())
@@ -64,6 +65,7 @@ class Gui(QMainWindow):
 
         self._maxroll_or_d4builds_tab()
         self._diablo_trade_tab()
+        self.tab_widget.addTab(config_tab.ConfigTab(), config_tab.CONFIG_TABNAME)
 
         LOGGER.root.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)

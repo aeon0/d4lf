@@ -12,10 +12,10 @@ from src.scripts.vision_mode import vision_mode
 from src.utils.process_handler import kill_thread
 from src.utils.window import WindowSpec, move_window_to_foreground
 
-# Usage
 LOGGER = logging.getLogger(__name__)
 
 LOCK = threading.Lock()
+
 
 class ListboxHandler(logging.Handler):
     def __init__(self, listbox):
@@ -27,6 +27,7 @@ class ListboxHandler(logging.Handler):
         padded_text = " " * 1 + log_entry + " " * 1
         self.listbox.insert(tk.END, padded_text)
         self.listbox.yview(tk.END)  # Auto-scroll to the end
+
 
 class CustomButton(tk.Button):
     def __init__(self, master=None, **kwargs):
@@ -45,9 +46,9 @@ class CustomButton(tk.Button):
             pady=0,
         )
 
+
 class Overlay:
     def __init__(self, master=None):
-     # Setup the main window
         self.root = tk.Tk(master)
         self.root.configure(background="#000000", borderwidth="0")
         self.root.title("LootFilter Overlay")
@@ -55,12 +56,7 @@ class Overlay:
         self.root.overrideredirect(True)
         self.root.wm_attributes("-topmost", True)
         font_size = self.get_scaled_font_size()
-    # Main frame
-        self.mainframe = tk.Frame(
-            self.root,
-            name="mainframe",
-            background="#000000"
-        )
+        self.mainframe = tk.Frame(self.root, name="mainframe", background="#000000")
         self.mainframe.pack(
             anchor="center",
             expand=True,
@@ -71,64 +67,47 @@ class Overlay:
         )
         self.mainframe.configure(borderwidth=0)
 
-    # Listbox for logging
+        # Listbox for logging
         self.terminal_listbox = tk.Listbox(
             self.mainframe,
             activestyle="none",
             background="#050505",
-            font=("Courier New",  font_size),
+            font=("Courier New", font_size),
             foreground="#ffffff",
             highlightcolor="white",
             highlightthickness=0,
             selectbackground="#222222",
         )
-        self.terminal_listbox.grid(
-            column=0,
-            columnspan=3,
-            row=0,
-            sticky="nsew"
-        )
+        self.terminal_listbox.grid(column=0, columnspan=3, row=0, sticky="nsew")
         self.terminal_listbox.grid_remove()
 
-    # Separate frames for each button group
+        # Separate frames for each button group
         self.button_frames = []
         for _ in range(4):
-            frame = tk.Frame(
-                self.mainframe,
-                background="#000000",
-                borderwidth=0
-            )
+            frame = tk.Frame(self.mainframe, background="#000000", borderwidth=0)
             frame.grid(row=1, column=_, sticky="ew")
             self.button_frames.append(frame)
 
-    # MinMax button
+        # MinMax button
         self.toggle_button = CustomButton(
             self.button_frames[0],
             name="toggle_button",
             text="Console",
             command=self.toggle_size,
         )
-        self.toggle_button.pack(
-            side="bottom", fill="x", expand=True
-        )
+        self.toggle_button.pack(side="bottom", fill="x", expand=True)
 
-    # Vision Button
+        # Vision Button
         self.start_scripts_button = CustomButton(
             self.button_frames[1],
             name="start_scripts_button",
             text=f"Vision [{IniConfigLoader().advanced_options.run_scripts.upper()}]",
             command=self.run_scripts,
         )
-        self.start_scripts_button.pack(
-            side="bottom", fill="x", expand=True
-        )
+        self.start_scripts_button.pack(side="bottom", fill="x", expand=True)
 
-    # Filter buttons
-        self.filter_frame = tk.Frame(
-            self.button_frames[2],
-            background="#000000",
-            borderwidth=0
-        )
+        # Filter buttons
+        self.filter_frame = tk.Frame(self.button_frames[2], background="#000000", borderwidth=0)
         self.filter_frame.pack(anchor="center", expand=True, fill="both")
         self.filter_button = CustomButton(
             self.filter_frame,
@@ -141,7 +120,7 @@ class Overlay:
         self.auto_filter_button = CustomButton(
             self.filter_frame,
             name="auto_filter_button",
-            text="Auto Filter", # [{IniConfigLoader().advanced_options.run_filter.upper()}]",
+            text="Auto Filter",  # [{IniConfigLoader().advanced_options.run_filter.upper()}]",
             command=self.filter_items,
         )
         self.auto_filter_button.config(background="#303030")
@@ -152,7 +131,7 @@ class Overlay:
         self.reset_status_button = CustomButton(
             self.filter_frame,
             name="reset_status_button",
-            text="Reset Status", # [{IniConfigLoader().advanced_options.run_filter_force_refresh.upper()}]",
+            text="Reset Status",  # [{IniConfigLoader().advanced_options.run_filter_force_refresh.upper()}]",
             command=lambda: self.filter_items(True),
         )
         self.reset_status_button.config(background="#303030")
@@ -160,10 +139,8 @@ class Overlay:
         self.reset_status_button.pack_forget()  # Hide initially
         self.reset_status_button.bind("<Leave>", self.hide_filter_buttons)
 
-    # Stock buttons
-        self.stock_frame = tk.Frame(
-            self.button_frames[3], background="#000000", borderwidth=0
-        )
+        # Stock buttons
+        self.stock_frame = tk.Frame(self.button_frames[3], background="#000000", borderwidth=0)
         self.stock_frame.pack(expand=True, fill="both")
 
         self.stock_move_button = CustomButton(
@@ -185,7 +162,6 @@ class Overlay:
         self.stock_to_stash_button.pack_forget()  # Hide initially
         self.stock_to_stash_button.bind("<Leave>", self.hide_stock_buttons)
 
-
         self.stock_to_inv_button = CustomButton(
             self.stock_frame,
             name="stock_to_inv_button",
@@ -197,24 +173,24 @@ class Overlay:
         self.stock_to_inv_button.pack_forget()  # Hide initially
         self.stock_to_inv_button.bind("<Leave>", self.hide_stock_buttons)
 
-    # Configure grid weights for resizing
+        # Configure grid weights for resizing
         self.mainframe.grid_rowconfigure(0, weight=1)
         self.mainframe.grid_columnconfigure(0, weight=1)
         self.mainframe.grid_columnconfigure(1, weight=1)
         self.mainframe.grid_columnconfigure(2, weight=1)
         self.mainframe.grid_columnconfigure(3, weight=1)
 
-    # Initialize variables
+        # Initialize variables
         self.loot_interaction_thread = None
         self.script_threads = []
         self.is_minimized = True
 
-    # Setup logging handler
+        # Setup logging handler
         listbox_handler = ListboxHandler(self.terminal_listbox)
         listbox_handler.setLevel(LOGGER.level)
         LOGGER.root.addHandler(listbox_handler)
 
-    # Additional setup for transparency and positioning
+        # Additional setup for transparency and positioning
         self.screen_width = Cam().window_roi["width"]
         self.screen_height = Cam().window_roi["height"]
         self.initial_height = int(Cam().window_roi["height"] * 0.03)
@@ -234,13 +210,16 @@ class Overlay:
             style = ctypes.windll.user32.GetWindowLongW(hwnd, -20)
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
-        self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency),)
+        self.hide_id = self.root.after(
+            8000,
+            lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency),
+        )
         self.root.bind("<Enter>", self.show_canvas)
         self.root.bind("<Leave>", self.hide_canvas)
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
 
-    # Follow the Resolution and window size
+        # Follow the Resolution and window size
         self.current_roi = self.get_current_roi()
         self.update_layout()
         self.check_roi_and_update()
@@ -287,6 +266,7 @@ class Overlay:
             self.auto_filter_button.pack_forget()
             self.reset_status_button.pack_forget()
             self.filter_button.pack(expand="true", fill="x")
+
         self.root.after(3000, _hide)
 
     def handle_filter(self):
@@ -303,6 +283,7 @@ class Overlay:
             self.stock_to_stash_button.pack_forget()
             self.stock_to_inv_button.pack_forget()
             self.stock_move_button.pack(expand="true", fill="x")
+
         self.root.after(3000, _hide)
 
     def handle_stock_move(self):

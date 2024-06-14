@@ -164,8 +164,7 @@ Affixes:
           minCount: 3
           minGreaterAffixCount: 2
 
-  # Search for boots that have at least 2 of the specified affixes and
-  # either max evade charges or reduced evade cooldown as inherent affix
+  # Search for boots that have at least 2 of the specified affixes and either max evade charges or reduced evade cooldown as inherent affix
   - GreatBoots:
       itemType: boots
       minPower: 800
@@ -181,7 +180,8 @@ Affixes:
             - [ lightning_resistance ]
           minCount: 2
 
-  # Search for boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res
+  # Search for boots with movement speed and 1 resistances from a pool of shadow, cold, lightning res.
+  # No need to add maxCount to the resistance group since it isn't possible for an item to have more than one resistance affix
   - ResBoots:
       itemType: boots
       minPower: 800
@@ -192,9 +192,9 @@ Affixes:
             - [ shadow_resistance ]
             - [ cold_resistance ]
             - [ lightning_resistance ]
-          minCount: 2
+          minCount: 1
 
-  # Search for boots with movement speed and 2 resistances from a pool of shadow, cold, lightning res. At least two of all item affixes must be a greater affix
+  # Search for boots with movement speed. At least two of all item affixes must be a greater affix
   - ResBoots:
       itemType: boots
       minPower: 800
@@ -202,11 +202,6 @@ Affixes:
       affixPool:
         - count:
             - [ movement_speed, 16 ]
-        - count:
-            - [ shadow_resistance ]
-            - [ cold_resistance ]
-            - [ lightning_resistance ]
-          minCount: 2
 ```
 
 </details>

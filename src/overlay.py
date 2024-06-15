@@ -18,16 +18,17 @@ LOGGER = logging.getLogger(__name__)
 LOCK = threading.Lock()
 
 
-class ListboxHandler(logging.Handler):
-    def __init__(self, listbox):
+class TextLogHandler(logging.Handler):
+    def __init__(self, text):
         logging.Handler.__init__(self)
-        self.listbox = listbox
+        self.text = text
+        self.text.tag_configure("wrapindent", lmargin2=60)
 
     def emit(self, record):
         log_entry = self.format(record)
-        padded_text = " " * 1 + log_entry + " " * 1
-        self.listbox.insert(tk.END, padded_text)
-        self.listbox.yview(tk.END)  # Auto-scroll to the end
+        padded_text = " " * 1 + log_entry + " \n" * 1
+        self.text.insert(tk.END, padded_text, "wrapindent")
+        self.text.yview(tk.END)  # Auto-scroll to the end
 
 
 class Overlay:
@@ -74,18 +75,18 @@ class Overlay:
             font_size = 9
         elif window_height > 1440:
             font_size = 10
-        self.terminal_listbox = tk.Listbox(
+        self.terminal_text = tk.Text(
             self.canvas,
             bg="black",
             fg="white",
             highlightcolor="white",
             highlightthickness=0,
             selectbackground="#222222",
-            activestyle=tk.NONE,
             borderwidth=0,
             font=("Courier New", font_size),
+            wrap="word",
         )
-        self.terminal_listbox.place(
+        self.terminal_text.place(
             relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
 
@@ -96,9 +97,9 @@ class Overlay:
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
         # Setup the listbox logger handler
-        listbox_handler = ListboxHandler(self.terminal_listbox)
-        listbox_handler.setLevel(LOGGER.level)
-        LOGGER.root.addHandler(listbox_handler)
+        textlog_handler = TextLogHandler(self.terminal_text)
+        textlog_handler.setLevel(LOGGER.level)
+        LOGGER.root.addHandler(textlog_handler)
 
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()

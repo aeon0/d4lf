@@ -5,7 +5,7 @@ import time
 from collections.abc import Callable
 from typing import Literal, TypeVar
 
-import requests
+import httpx
 from pydantic_yaml import to_yaml_str
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -95,12 +95,12 @@ def get_class_name(input_str: str) -> str:
     return "Unknown"
 
 
-def get_with_retry(url: str) -> requests.Response:
+def get_with_retry(url: str) -> httpx.Response:
     for _ in range(5):
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
         }
-        r = requests.get(url, headers=headers)
+        r = httpx.get(url, headers=headers)
         if r.status_code == 200:
             return r
         Logger.debug(f"Request {url} failed with status code {r.status_code}, retrying...")

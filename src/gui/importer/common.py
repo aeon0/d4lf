@@ -22,6 +22,9 @@ from src.logger import Logger
 
 D = TypeVar("D", bound=WebDriver | WebElement)
 T = TypeVar("T")
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+}
 
 
 def extract_digits(text: str) -> int:
@@ -97,10 +100,7 @@ def get_class_name(input_str: str) -> str:
 
 def get_with_retry(url: str) -> httpx.Response:
     for _ in range(5):
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-        }
-        r = httpx.get(url, headers=headers)
+        r = httpx.get(url, headers=HEADERS)
         if r.status_code == 200:
             return r
         Logger.debug(f"Request {url} failed with status code {r.status_code}, retrying...")

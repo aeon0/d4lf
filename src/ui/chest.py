@@ -1,4 +1,5 @@
 import logging
+import time
 
 from src.cam import Cam
 from src.config.ui import ResManager
@@ -6,7 +7,6 @@ from src.template_finder import SearchArgs
 from src.ui.inventory_base import InventoryBase
 from src.ui.menu import ToggleMethod
 from src.utils.custom_mouse import mouse
-from src.utils.misc import wait
 
 LOGGER = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class Chest(InventoryBase):
         section_length = w // NUMBER_TABS
         centers = [(x + (i + 0.5) * section_length, y + h // 2) for i in range(NUMBER_TABS)]
         mouse.move(*Cam().window_to_monitor(centers[tab_idx]), randomize=2)
-        wait(0.5)
+        time.sleep(0.5)
         mouse.click("left")
-        wait(0.5)
+        time.sleep(0.5)
         return True

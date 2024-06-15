@@ -16,7 +16,6 @@ from src.ui.chest import Chest
 from src.ui.inventory_base import InventoryBase
 from src.utils.custom_mouse import mouse
 from src.utils.image_operations import compare_histograms
-from src.utils.misc import wait
 from src.utils.window import screenshot
 
 LOGGER = logging.getLogger(__name__)
@@ -50,7 +49,7 @@ def check_items(inv: InventoryBase, force_refresh):
                     screenshot("failed_descr_detection", img=img)
                 break
             inv.hover_item(item)
-            wait(0.18)
+            time.sleep(0.18)
             img = Cam().grab()
             start_detect = time.time()
             found, rarity, cropped_descr, _ = find_descr(img, item.center)
@@ -71,7 +70,7 @@ def check_items(inv: InventoryBase, force_refresh):
         item_descr = read_descr(rarity, cropped_descr, False)
         if item_descr is None:
             LOGGER.info("Retry item detection")
-            wait(0.3)
+            time.sleep(0.3)
             found, rarity, cropped_descr, _ = find_descr(Cam().grab(), item.center)
             if found:
                 item_descr = read_descr(rarity, cropped_descr)
@@ -94,14 +93,14 @@ def check_items(inv: InventoryBase, force_refresh):
             continue
         if rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
             keyboard.send("space")
-            wait(0.13, 0.14)
+            time.sleep(0.13)
             continue
         if rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
             LOGGER.info("Matched: Rare, ignore Item")
             continue
         if rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
             keyboard.send("space")
-            wait(0.13, 0.14)
+            time.sleep(0.13)
             continue
 
         # Check if we want to keep the item
@@ -111,13 +110,13 @@ def check_items(inv: InventoryBase, force_refresh):
         LOGGER.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
         if not res.keep:
             keyboard.send("space")
-            wait(0.13, 0.14)
+            time.sleep(0.13)
         elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
             LOGGER.info("Mark as favorite")
             keyboard.send("space")
-            wait(0.17, 0.2)
+            time.sleep(0.17)
             keyboard.send("space")
-            wait(0.13, 0.14)
+            time.sleep(0.13)
 
 
 def reset_item_status(occupied, inv):
@@ -128,7 +127,7 @@ def reset_item_status(occupied, inv):
         if item_slot.is_junk:
             inv.hover_item(item_slot)
             keyboard.send("space")
-            wait(0.13, 0.14)
+            time.sleep(0.13)
             keyboard.send("space")
 
     if occupied:
@@ -144,10 +143,10 @@ def run_loot_filter(force_refresh=False):
     if chest.is_open():
         for i in IniConfigLoader().general.check_chest_tabs:
             chest.switch_to_tab(i)
-            wait(0.5)
+            time.sleep(0.5)
             check_items(chest, force_refresh)
         mouse.move(*Cam().abs_window_to_monitor((0, 0)))
-        wait(0.5)
+        time.sleep(0.5)
         check_items(inv, force_refresh)
     else:
         if not inv.open():

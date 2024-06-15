@@ -1,5 +1,6 @@
 import logging
 import math
+import time
 import tkinter as tk
 import traceback
 
@@ -19,7 +20,6 @@ from src.ui.char_inventory import CharInventory
 from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
 from src.utils.image_operations import compare_histograms, crop
-from src.utils.misc import wait
 from src.utils.ocr.read import image_to_text
 
 LOGGER = logging.getLogger(__name__)
@@ -277,7 +277,7 @@ def vision_mode():
             last_center = None
             last_top_left_corner = None
             is_confirmed = False
-            wait(0.15)
+            time.sleep(0.15)
 
 
 if __name__ == "__main__":
@@ -288,7 +288,7 @@ if __name__ == "__main__":
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         start_detecting_window(win_spec)
         while not Cam().is_offset_set():
-            wait(0.2)
+            time.sleep(0.2)
         Filter().load_files()
         vision_mode()
     except Exception:

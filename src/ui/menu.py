@@ -1,11 +1,12 @@
 import logging
+import time
 from enum import Enum
 
 import keyboard
 import numpy as np
 
 from src.template_finder import SearchArgs, SearchResult, TemplateMatch
-from src.utils.misc import run_until_condition, wait
+from src.utils.misc import run_until_condition
 from src.utils.mouse_selector import select_search_result
 
 LOGGER = logging.getLogger(__name__)
@@ -117,7 +118,7 @@ class Menu:
         _, success = run_until_condition(self.is_open, lambda res: res, timeout)
         if not success:
             LOGGER.warning(f"Could not find {self.menu_name} after {timeout} seconds")
-        wait(self.delay)
+        time.sleep(self.delay)
         return success
 
     def wait_until_closed(self, timeout: float = 10, mode: str = "all") -> bool:

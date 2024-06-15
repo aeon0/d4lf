@@ -1,8 +1,11 @@
+import logging
+import math
 import tkinter as tk
 import traceback
 
 import numpy as np
 
+import src.logger
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.models import HandleRaresType
@@ -12,13 +15,14 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
 from src.item.filter import Filter
 from src.item.find_descr import find_descr
-from src.logger import Logger
 from src.ui.char_inventory import CharInventory
 from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
 from src.utils.image_operations import compare_histograms, crop
 from src.utils.misc import wait
 from src.utils.ocr.read import image_to_text
+
+LOGGER = logging.getLogger(__name__)
 
 
 def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
@@ -30,42 +34,54 @@ def draw_rect(canvas: tk.Canvas, bullet_width, obj, off, color):
     canvas.create_rectangle(x1, y1, x2, y2, fill=color)
 
 
-def draw_text(canvas, text, color, h, off, center) -> int:
+def draw_text(canvas, text, color, previous_text_y, offset, canvas_center_x) -> int:
     if text is None or text == "":
         return None
-    font_size = 13
-    width_text_scale = 15.5
-    height_text_scale = 2
+
+    font_size = 11
+    width_text_scale = 24
+    height_text_scale = 4
     window_height = ResManager().pos.window_dimensions[1]
     if window_height == 1440:
-        font_size = 15
+        font_size = 12
         width_text_scale = 20
         height_text_scale = 2.5
     elif window_height == 1600:
-        font_size = 16
+        font_size = 13
         width_text_scale = 23
         height_text_scale = 2.6
     elif window_height == 2160:
-        font_size = 17
+        font_size = 14
         width_text_scale = 30
         height_text_scale = 4
-    if len(text) > 27:
-        text = text[:24] + "..."
 
-    # Create a white rectangle as the background
+    max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+    if max_text_length_per_line < len(text):  # Use a smaller font
+        font_size = 11
+        width_text_scale = 24
+        height_text_scale = 4
+        max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+
+    # Create a gray rectangle as the background
     text_width = int(width_text_scale * len(text))
-    text_height = int(height_text_scale * font_size)
+    if text_width > canvas_center_x * 2:
+        text_width = canvas_center_x * 2
+    number_of_lines = math.ceil(len(text) / max_text_length_per_line)
+    text_height = int(height_text_scale * font_size * number_of_lines)
+
     dark_gray_color = "#111111"
     canvas.create_rectangle(
-        center - text_width // 2,  # x1
-        h - off - text_height // 2,  # y1
-        center + text_width // 2,  # x2
-        h - off + text_height // 2,  # y2
+        canvas_center_x - text_width // 2,  # x1
+        previous_text_y - offset - text_height,  # y1
+        canvas_center_x + text_width // 2,  # x2
+        previous_text_y - offset,  # y2
         fill=dark_gray_color,
         outline="",
     )
-    canvas.create_text(center, h - off, text=text, font=("Courier New", font_size), fill=color)
-    return int(h - off - text_height // 2)
+    canvas.create_text(
+        canvas_center_x, previous_text_y - offset, text=text, anchor=tk.S, font=("Courier New", font_size), fill=color, width=text_width
+    )
+    return int(previous_text_y - offset - text_height)
 
 
 def reset_canvas(root, canvas):
@@ -114,7 +130,7 @@ def vision_mode():
     canvas = tk.Canvas(root, bg="black", highlightthickness=0)
     canvas.pack(fill=tk.BOTH, expand=True)
 
-    Logger.info("Starting Vision Filter")
+    LOGGER.info("Starting Vision Filter")
     inv = CharInventory()
     chest = Chest()
     img = Cam().grab()
@@ -204,19 +220,19 @@ def vision_mode():
 
                 ignored_item = False
                 if item_descr.item_type == ItemType.Material:
-                    Logger.info("Matched: Material")
+                    LOGGER.info("Matched: Material")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.Elixir:
-                    Logger.info("Matched: Elixir")
+                    LOGGER.info("Matched: Elixir")
                     ignored_item = True
                 elif item_descr.item_type == ItemType.TemperManual:
-                    Logger.info("Matched: Temper Manual")
+                    LOGGER.info("Matched: Temper Manual")
                     ignored_item = True
                 elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
                     match = False
                     item_descr = None
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
-                    Logger.info("Matched: Rare, ignore Item")
+                    LOGGER.info("Matched: Rare, ignore Item")
                     ignored_item = True
                 elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
                     match = False
@@ -240,7 +256,7 @@ def vision_mode():
                     # show all info strings of the profiles
                     text_y = h
                     for match in reversed(res.matched):
-                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, off // 1.3, w // 2)
+                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, 5, w // 2)
                     # Show matched bullets
                     if item_descr is not None and len(res.matched) > 0:
                         bullet_width = thick * 3
@@ -268,7 +284,7 @@ if __name__ == "__main__":
     try:
         from src.utils.window import WindowSpec, start_detecting_window
 
-        Logger.init("debug")
+        src.logger.setup()
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         start_detecting_window(win_spec)
         while not Cam().is_offset_set():

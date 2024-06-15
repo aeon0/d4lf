@@ -1,4 +1,5 @@
 import ctypes
+import logging
 import os
 import threading
 import time
@@ -11,11 +12,13 @@ from win32gui import ClientToScreen, EnumWindows, GetClientRect, GetWindowText
 from win32process import GetWindowThreadProcessId
 
 from src.cam import Cam
-from src.logger import Logger
+from src.logger import LOG_DIR
 from src.utils.misc import wait
 
-detecting_window_flag = True
-detect_window_thread = None
+LOGGER = logging.getLogger(__name__)
+
+DETECTION_WINDOW_FLAG = True
+DETECT_WINDOW_THREAD = None
 
 # Set the process DPI aware
 try:
@@ -33,7 +36,7 @@ class WindowSpec:
 
     def match(self, hwnd: int, check_window_name: bool = True) -> bool:
         window_name_ok = not check_window_name or "diablo" in _get_window_name_from_id(hwnd).lower()
-        return _get_process_from_window_name(hwnd) == self.process_name and window_name_ok
+        return _get_process_from_window_name(hwnd).casefold() == self.process_name.casefold() and window_name_ok
 
 
 def _list_active_window_ids() -> list[int]:
@@ -66,19 +69,19 @@ def _get_process_from_window_name(hwnd: int) -> str:
 
 
 def start_detecting_window(window_spec: WindowSpec):
-    global detecting_window_flag, detect_window_thread
-    if detect_window_thread is None:
-        Logger.info(f"Using WinAPI to search for window: {window_spec.process_name}")
-        detecting_window_flag = True
-        detect_window_thread = threading.Thread(target=detect_window, args=(window_spec,), daemon=True)
-        detect_window_thread.start()
+    global DETECTION_WINDOW_FLAG, DETECT_WINDOW_THREAD
+    if DETECT_WINDOW_THREAD is None:
+        LOGGER.info(f"Using WinAPI to search for window: {window_spec.process_name}")
+        DETECTION_WINDOW_FLAG = True
+        DETECT_WINDOW_THREAD = threading.Thread(target=detect_window, args=(window_spec,), daemon=True)
+        DETECT_WINDOW_THREAD.start()
 
 
 def detect_window(window_spec: WindowSpec):
-    global detecting_window_flag
-    while detecting_window_flag:
+    global DETECTION_WINDOW_FLAG
+    while DETECTION_WINDOW_FLAG:
         find_and_set_window_position(window_spec)
-    Logger.debug("Detect window thread stopped")
+    LOGGER.debug("Detect window thread stopped")
 
 
 def find_and_set_window_position(window_spec: WindowSpec):
@@ -91,11 +94,11 @@ def find_and_set_window_position(window_spec: WindowSpec):
 
 
 def stop_detecting_window():
-    global detecting_window_flag, detect_window_thread
-    detecting_window_flag = False
-    if detect_window_thread:
-        detect_window_thread.join()
-    detect_window_thread = None
+    global DETECTION_WINDOW_FLAG, DETECT_WINDOW_THREAD
+    DETECTION_WINDOW_FLAG = False
+    if DETECT_WINDOW_THREAD:
+        DETECT_WINDOW_THREAD.join()
+    DETECT_WINDOW_THREAD = None
 
 
 def move_window_to_foreground(window_spec: WindowSpec):
@@ -114,7 +117,11 @@ def is_window_foreground(window_spec: WindowSpec) -> bool:
 
 
 def screenshot(
-    name: str | None = None, path: str = "log/screenshots", img: np.ndarray = None, overwrite: bool = True, timestamp: bool = True
+    name: str | None = None,
+    path: str = str(LOG_DIR / "screenshots"),
+    img: np.ndarray = None,
+    overwrite: bool = True,
+    timestamp: bool = True,
 ):
     name = name if name is not None else "screenshot"
     img = img if img is not None else Cam().grab()
@@ -124,13 +131,13 @@ def screenshot(
 
     if os.path.exists(file_path):
         if overwrite:
-            Logger.warning(f"{name} already exists, overwriting.")
+            LOGGER.warning(f"{name} already exists, overwriting.")
             cv2.imwrite(file_path, img)
         else:
-            Logger.warning(f"{name} already exists, not overwriting because overwrite is set to False.")
+            LOGGER.warning(f"{name} already exists, not overwriting because overwrite is set to False.")
     else:
         cv2.imwrite(file_path, img)
-        Logger.debug(f"Saved screenshot: {file_path}")
+        LOGGER.debug(f"Saved screenshot: {file_path}")
 
 
 if __name__ == "__main__":

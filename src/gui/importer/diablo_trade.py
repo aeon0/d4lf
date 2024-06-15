@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 import json
+import logging
 import os
 import pathlib
 from typing import Any
@@ -8,6 +9,7 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from pydantic import ValidationError
 
+import src.logger
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
@@ -21,7 +23,8 @@ from src.item.data.affix import Affix
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.text import clean_str, closest_match
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 BASE_URL = "diablo.trade/listings/"
 
@@ -52,8 +55,9 @@ class DiabloTradeException(Exception):
 def import_diablo_trade(url: str, max_listings: int):
     url = url.strip().replace("\n", "")
     if BASE_URL not in url:
-        Logger.error("Invalid url, please use a diablo.trade filter url")
+        LOGGER.error("Invalid url, please use a diablo.trade filter url")
         return
+    LOGGER.info("Start fetching listings")
     all_listings = []
     cursor = 1
     while True:
@@ -61,11 +65,11 @@ def import_diablo_trade(url: str, max_listings: int):
         try:
             r = get_with_retry(url=api_url)
         except ConnectionError:
-            Logger.error("Can't fetch listings, saving current data")
+            LOGGER.error("Can't fetch listings, saving current data")
             break
         data = r.json()
         if not (listings := data["data"]):
-            Logger.debug("Reached end")
+            LOGGER.debug("Reached end")
             break
         for listing in listings:
             item_rarity = match_to_enum(enum_class=ItemRarity, target_string=listing["rarity"])
@@ -87,9 +91,9 @@ def import_diablo_trade(url: str, max_listings: int):
                 assert len(listing["affixes"]) == len(listing_obj.affixes)
                 assert len(listing["implicits"]) == len(listing_obj.inherents)
             except AssertionError:
-                Logger.error(f"If you see this create a bug ticket! {listing=}")
+                LOGGER.error(f"If you see this create a bug ticket! {listing=}")
             all_listings.append(listing_obj)
-        Logger.info(f"Fetched {len(all_listings)} listings")
+        LOGGER.info(f"Fetched {len(all_listings)} listings")
         if len(all_listings) >= max_listings:
             break
         cursor += 1
@@ -97,16 +101,16 @@ def import_diablo_trade(url: str, max_listings: int):
     try:
         profile = ProfileModel(name="diablo_trade", Affixes=_create_filters_from_items(items=all_listings))
     except Exception as exc:
-        Logger.exception(msg := "Failed to validate profile. Dumping data for debugging.")
+        LOGGER.exception(msg := "Failed to validate profile. Dumping data for debugging.")
         with open(f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}.json", "w") as f:
             json.dump(all_listings, f, indent=4, sort_keys=True)
         raise DiabloTradeException(msg) from exc
 
-    Logger.info(f"Saving profile with {len(profile.Affixes)} filters")
+    LOGGER.info(f"Saving profile with {len(profile.Affixes)} filters")
     save_as_profile(
         file_name=f"diablo_trade_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}", profile=profile, url=url
     )
-    Logger.info("Finished")
+    LOGGER.info("Finished")
 
 
 def _construct_api_url(listing_url: str, cursor: int = 1) -> str:
@@ -120,7 +124,7 @@ def _construct_api_url(listing_url: str, cursor: int = 1) -> str:
 def _create_affixes_from_api_dict(affixes: list[dict[str, Any]]) -> list[Affix]:
     res = [Affix(name=closest_match(clean_str(affix["name"]), Dataloader().affix_dict), value=affix["value"]) for affix in affixes]
     if len(affixes) != len(res) or any(x.name is None for x in res):
-        Logger.error(f"If you see this create a bug ticket! {affixes=}")
+        LOGGER.error(f"If you see this create a bug ticket! {affixes=}")
     return res
 
 
@@ -142,7 +146,7 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
                 ),
             )
         except ValidationError:
-            Logger.exception(f"Failed validation. Skipping {item=}")
+            LOGGER.exception(f"Failed validation. Skipping {item=}")
             continue
         to_delete = []
         for to_check_item in [x for x in to_check if x.item_type in annotated_filter.filter.itemType]:
@@ -177,7 +181,7 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
 
 
 if __name__ == "__main__":
-    Logger.init("debug")
+    src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = ["https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest"]
     for x in URLS:

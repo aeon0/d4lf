@@ -1,3 +1,5 @@
+import logging
+
 import numpy as np
 
 from src.config.ui import ResManager
@@ -8,8 +10,9 @@ from src.item.descr.find_aspect import find_aspect
 from src.item.descr.item_type import read_item_type
 from src.item.descr.texture import find_affix_bullets, find_aspect_bullet, find_codex_upgrade_icon, find_empty_sockets, find_seperator_short
 from src.item.models import Item
-from src.logger import Logger
 from src.utils.window import screenshot
+
+LOGGER = logging.getLogger(__name__)
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
@@ -20,7 +23,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     sep_short_match = find_seperator_short(img_item_descr)
     if sep_short_match is None:
         if show_warnings:
-            Logger.warning("Could not detect item_seperator_short.")
+            LOGGER.warning("Could not detect item_seperator_short.")
             screenshot("failed_seperator_short", img=img_item_descr)
         return None
 
@@ -32,7 +35,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
     if item is None:
         if show_warnings:
-            Logger.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")
+            LOGGER.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")
             screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
@@ -90,7 +93,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             )
         if item.inherent is None:
             if show_warnings:
-                Logger.warning(f"Could not find inherent: {debug_str}")
+                LOGGER.warning(f"Could not find inherent: {debug_str}")
                 screenshot("failed_inherent", img=img_item_descr)
             return None
 
@@ -111,7 +114,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         )
     if item.affixes is None:
         if show_warnings:
-            Logger.warning(f"Could not find affix: {debug_str}")
+            LOGGER.warning(f"Could not find affix: {debug_str}")
             screenshot("failed_affixes", img=img_item_descr)
         return None
 
@@ -123,7 +126,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, False)
         if item.aspect is None:
             if show_warnings:
-                Logger.warning(f"Could not find unique: {debug_str}")
+                LOGGER.warning(f"Could not find unique: {debug_str}")
                 screenshot("failed_aspect_or_unique", img=img_item_descr)
             return None
 

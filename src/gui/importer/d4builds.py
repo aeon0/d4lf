@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import pathlib
 import re
@@ -10,6 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+import src.logger
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
@@ -23,7 +25,8 @@ from src.gui.importer.common import (
 from src.item.data.affix import Affix
 from src.item.data.item_type import ItemType
 from src.item.descr.text import clean_str, closest_match
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 BASE_URL = "https://d4builds.gg/builds"
 BUILD_OVERVIEW_XPATH = "//*[@class='builder__stats__list']"
@@ -46,9 +49,9 @@ class D4BuildsException(Exception):
 def import_d4builds(driver: ChromiumDriver = None, url: str = None):
     url = url.strip().replace("\n", "")
     if BASE_URL not in url:
-        Logger.error("Invalid url, please use a d4builds url")
+        LOGGER.error("Invalid url, please use a d4builds url")
         return
-    Logger.info(f"Loading {url}")
+    LOGGER.info(f"Loading {url}")
     driver.get(url)
     wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.XPATH, BUILD_OVERVIEW_XPATH)))
@@ -60,20 +63,20 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
     else:
         class_name = "Unknown"
     if not (items := data.xpath(BUILD_OVERVIEW_XPATH)):
-        Logger.error(msg := "No items found")
+        LOGGER.error(msg := "No items found")
         raise D4BuildsException(msg)
     non_unique_slots = _get_non_unique_slots(data=data)
     finished_filters = []
     for item in items[0]:
         item_filter = ItemFilterModel()
         if not (slot := item.xpath(ITEM_SLOT_XPATH)[1].tail):
-            Logger.error("No item_type found")
+            LOGGER.error("No item_type found")
             continue
         if slot not in non_unique_slots:
-            Logger.warning(f"Uniques or empty are not supported. Skipping: {slot}")
+            LOGGER.warning(f"Uniques or empty are not supported. Skipping: {slot}")
             continue
         if not (stats := item.xpath(ITEM_STATS_XPATH)):
-            Logger.error(f"No stats found for {slot=}")
+            LOGGER.error(f"No stats found for {slot=}")
             continue
         item_type = None
         affixes = []
@@ -95,7 +98,7 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
                     continue
             affix_obj = Affix(name=closest_match(clean_str(_corrections(input_str=affix_name)), Dataloader().affix_dict))
             if affix_obj.name is None:
-                Logger.error(f"Couldn't match {affix_name=}")
+                LOGGER.error(f"Couldn't match {affix_name=}")
                 continue
             if ("ring" in slot.lower() and any(substring in affix_name.lower() for substring in ["resistance"])) or (
                 "boots" in slot.lower() and any(substring in affix_name.lower() for substring in ["max evade charges", "attacks reduce"])
@@ -107,7 +110,7 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
             match_to_enum(enum_class=ItemType, target_string=re.sub(r"\d+", "", slot.replace(" ", ""))) if item_type is None else item_type
         )
         if item_type is None:
-            Logger.warning(f"Couldn't match item_type: {slot}. Please edit manually")
+            LOGGER.warning(f"Couldn't match item_type: {slot}. Please edit manually")
         item_filter.itemType = [item_type] if item_type is not None else []
         item_filter.affixPool = [
             AffixFilterCountModel(
@@ -129,7 +132,7 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
     save_as_profile(
         file_name=f"d4build_{class_name}_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}", profile=profile, url=url
     )
-    Logger.info("Finished")
+    LOGGER.info("Finished")
 
 
 def _corrections(input_str: str) -> str:
@@ -147,10 +150,10 @@ def _corrections(input_str: str) -> str:
 def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
     result = []
     if not (paperdoll := data.xpath(PAPERDOLL_XPATH)):
-        Logger.error(msg := "No paperdoll found")
+        LOGGER.error(msg := "No paperdoll found")
         raise D4BuildsException(msg)
     if not (items := paperdoll[0].xpath(PAPERDOLL_ITEM_XPATH)):
-        Logger.error(msg := "No items found")
+        LOGGER.error(msg := "No items found")
         raise D4BuildsException(msg)
     for item in items:
         if not item.xpath(UNIQUE_ICON_XPATH):
@@ -160,7 +163,7 @@ def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
 
 
 if __name__ == "__main__":
-    Logger.init("debug")
+    src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://d4builds.gg/builds/463e7337-8fa9-491f-99a0-cbd6c65fc6f4/?var=1",

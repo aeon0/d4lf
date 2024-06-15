@@ -1,5 +1,6 @@
 import datetime
 import functools
+import logging
 import re
 import time
 from collections.abc import Callable
@@ -18,7 +19,8 @@ from src import __version__
 from src.config.loader import IniConfigLoader
 from src.config.models import BrowserType, ProfileModel
 from src.item.data.item_type import ItemType
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 D = TypeVar("D", bound=WebDriver | WebElement)
 T = TypeVar("T")
@@ -91,7 +93,7 @@ def get_class_name(input_str: str) -> str:
         return "Rogue"
     if "sorcerer" in input_str:
         return "Sorcerer"
-    Logger.error(f"Couldn't match class name {input_str=}")
+    LOGGER.error(f"Couldn't match class name {input_str=}")
     return "Unknown"
 
 
@@ -100,14 +102,14 @@ def get_with_retry(url: str) -> requests.Response:
         r = requests.get(url)
         if r.status_code == 200:
             return r
-        Logger.debug(f"Request {url} failed with status code {r.status_code}, retrying...")
+        LOGGER.debug(f"Request {url} failed with status code {r.status_code}, retrying...")
     else:
-        Logger.error(msg := f"Failed to get a successful response after 5 attempts: {url=}")
+        LOGGER.error(msg := f"Failed to get a successful response after 5 attempts: {url=}")
         raise ConnectionError(msg)
 
 
 def handle_popups(driver: ChromiumDriver, method: Callable[[D], Literal[False] | T], timeout=10):
-    Logger.info("Handling cookie / adblock popups")
+    LOGGER.info("Handling cookie / adblock popups")
     wait = WebDriverWait(driver, timeout)
     for _ in range(3):
         try:
@@ -141,7 +143,7 @@ def retry_importer(func=None, inject_webdriver: bool = False):
                         kwargs["driver"].quit()
                     return res
                 except Exception:
-                    Logger.exception("An error occurred while importing. Retrying...")
+                    LOGGER.exception("An error occurred while importing. Retrying...")
             return None
 
         return wrapper
@@ -166,7 +168,7 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
                 exclude=["name", "Sigils", "Uniques"],
             )
         )
-    Logger.info(f"Created profile {save_path}")
+    LOGGER.info(f"Created profile {save_path}")
 
 
 def setup_webdriver() -> ChromiumDriver:

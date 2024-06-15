@@ -1,17 +1,20 @@
 import json
+import logging
 import os
 import pathlib
 import re
 
 import lxml.html
 
+import src.logger
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import get_with_retry, match_to_enum, retry_importer, save_as_profile
 from src.item.data.affix import Affix
 from src.item.data.item_type import ItemType
 from src.item.descr.text import clean_str, closest_match
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 BUILD_GUIDE_BASE_URL = "https://maxroll.gg/d4/build-guides/"
 BUILD_GUIDE_PLANNER_EMBED_XPATH = "//*[contains(@class, 'd4-embed')]"
@@ -28,16 +31,16 @@ class MaxrollException(Exception):
 def import_maxroll(url: str):
     url = url.strip().replace("\n", "")
     if PLANNER_BASE_URL not in url and BUILD_GUIDE_BASE_URL not in url:
-        Logger.error("Invalid url, please use a maxroll build guide or maxroll planner url")
+        LOGGER.error("Invalid url, please use a maxroll build guide or maxroll planner url")
         return
-    Logger.info(f"Loading {url}")
+    LOGGER.info(f"Loading {url}")
     api_url, build_id = (
         _extract_planner_url_and_id_from_guide(url) if BUILD_GUIDE_BASE_URL in url else _extract_planner_url_and_id_from_planner(url)
     )
     try:
         r = get_with_retry(url=api_url)
     except ConnectionError:
-        Logger.error("Couldn't get planner")
+        LOGGER.error("Couldn't get planner")
         return
     all_data = r.json()
     build_name = all_data["name"]
@@ -46,7 +49,7 @@ def import_maxroll(url: str):
     try:
         mapping_data = get_with_retry(url=PLANNER_API_DATA_URL).json()
     except ConnectionError:
-        Logger.error("Couldn't get planner data")
+        LOGGER.error("Couldn't get planner data")
         return
     active_profile = build_data["profiles"][build_id]
     finished_filters = []
@@ -54,10 +57,10 @@ def import_maxroll(url: str):
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
         if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] == 2:
-            Logger.warning(f"Uniques are not supported. Skipping: {mapping_data["items"][resolved_item["id"]]["name"]}")
+            LOGGER.warning(f"Uniques are not supported. Skipping: {mapping_data["items"][resolved_item["id"]]["name"]}")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
-            Logger.error("Couldn't find item type")
+            LOGGER.error("Couldn't find item type")
             return
         item_filter.itemType = [item_type]
         item_filter.affixPool = [
@@ -93,7 +96,7 @@ def import_maxroll(url: str):
         if active_profile["name"]:
             build_name += f"_{active_profile["name"]}"
     save_as_profile(file_name=build_name, profile=profile, url=url)
-    Logger.info("Finished")
+    LOGGER.info("Finished")
 
 
 def _corrections(input_str: str) -> str:
@@ -139,9 +142,9 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
             if affix_obj.name is not None:
                 res.append(affix_obj)
             elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in ["InherentAffixAnyResist_Ring"]:
-                Logger.info("Skipping InherentAffixAnyResist_Ring")
+                LOGGER.info("Skipping InherentAffixAnyResist_Ring")
             else:
-                Logger.error(f"Couldn't match {affix_id=}")
+                LOGGER.error(f"Couldn't match {affix_id=}")
             break
     return res
 
@@ -150,7 +153,7 @@ def _find_item_type(mapping_data: dict, value: str) -> ItemType | None:
     for d_key, d_value in mapping_data.items():
         if d_key == value:
             if (res := match_to_enum(enum_class=ItemType, target_string=d_value["type"], check_keys=True)) is None:
-                Logger.error("Couldn't match item type to enum")
+                LOGGER.error("Couldn't match item type to enum")
                 return None
             return res
     return None
@@ -159,7 +162,7 @@ def _find_item_type(mapping_data: dict, value: str) -> ItemType | None:
 def _extract_planner_url_and_id_from_planner(url: str) -> tuple[str, int]:
     planner_suffix = url.split(PLANNER_BASE_URL)
     if len(planner_suffix) != 2:
-        Logger.error(msg := "Invalid planner url")
+        LOGGER.error(msg := "Invalid planner url")
         raise MaxrollException(msg)
     if "#" in planner_suffix[1]:
         planner_id, data_id = planner_suffix[1].split("#")
@@ -170,7 +173,7 @@ def _extract_planner_url_and_id_from_planner(url: str) -> tuple[str, int]:
         try:
             r = get_with_retry(url=PLANNER_API_BASE_URL + planner_id)
         except ConnectionError as exc:
-            Logger.exception(msg := "Couldn't get planner")
+            LOGGER.exception(msg := "Couldn't get planner")
             raise MaxrollException(msg) from exc
         data_id = json.loads(r.json()["data"])["activeProfile"]
     return PLANNER_API_BASE_URL + planner_id, data_id
@@ -180,11 +183,11 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
     try:
         r = get_with_retry(url=url)
     except ConnectionError as exc:
-        Logger.exception(msg := "Couldn't get build guide")
+        LOGGER.exception(msg := "Couldn't get build guide")
         raise MaxrollException(msg) from exc
     data = lxml.html.fromstring(r.text)
     if not (embed := data.xpath(BUILD_GUIDE_PLANNER_EMBED_XPATH)):
-        Logger.error(msg := "Couldn't find planner url in build guide")
+        LOGGER.error(msg := "Couldn't find planner url in build guide")
         raise MaxrollException(msg)
     planner_id = embed[0].get("data-d4-profile")
     data_id = int(embed[0].get("data-d4-id")) - 1
@@ -192,7 +195,7 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
 
 
 if __name__ == "__main__":
-    Logger.init("debug")
+    src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://maxroll.gg/d4/planner/f5awh02y#1",

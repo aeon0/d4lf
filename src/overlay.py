@@ -22,11 +22,12 @@ class ListboxHandler(logging.Handler):
     def __init__(self, listbox):
         logging.Handler.__init__(self)
         self.listbox = listbox
+        self.listbox.tag_configure("wrapindent", lmargin2=60)
 
     def emit(self, record):
         log_entry = self.format(record)
-        padded_text = " " * 1 + log_entry + " " * 1
-        self.listbox.insert(tk.END, padded_text)
+        padded_text = " " * 1 + log_entry + " \n" * 1
+        self.listbox.insert(tk.END, padded_text, "wrapindent")
         self.listbox.yview(tk.END)  # Auto-scroll to the end
 
 
@@ -74,18 +75,32 @@ class Overlay:
             font_size = 9
         elif window_height > 1440:
             font_size = 10
-        self.terminal_listbox = tk.Listbox(
+        # self.terminal_listbox = tk.Listbox(
+        #     self.canvas,
+        #     bg="black",
+        #     fg="white",
+        #     highlightcolor="white",
+        #     highlightthickness=0,
+        #     selectbackground="#222222",
+        #     activestyle=tk.NONE,
+        #     borderwidth=0,
+        #     font=("Courier New", font_size),
+        # )
+        self.terminal_text = tk.Text(
             self.canvas,
             bg="black",
             fg="white",
             highlightcolor="white",
             highlightthickness=0,
             selectbackground="#222222",
-            activestyle=tk.NONE,
             borderwidth=0,
             font=("Courier New", font_size),
+            wrap="word",
         )
-        self.terminal_listbox.place(
+        # self.terminal_listbox.place(
+        #     relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
+        # )
+        self.terminal_text.place(
             relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
 
@@ -96,7 +111,7 @@ class Overlay:
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
         # Setup the listbox logger handler
-        listbox_handler = ListboxHandler(self.terminal_listbox)
+        listbox_handler = ListboxHandler(self.terminal_text)
         listbox_handler.setLevel(LOGGER.level)
         LOGGER.root.addHandler(listbox_handler)
 

@@ -17,10 +17,16 @@ LOGGER = logging.getLogger(__name__)
 LOCK = threading.Lock()
 
 
+class ListboxHandler(logging.Handler):
+    def __init__(self, listbox):
         logging.Handler.__init__(self)
+        self.listbox = listbox
 
     def emit(self, record):
         log_entry = self.format(record)
+        padded_text = " " * 1 + log_entry + " " * 1
+        self.listbox.insert(tk.END, padded_text)
+        self.listbox.yview(tk.END)  # Auto-scroll to the end
 
 
 class CustomButton(tk.Button):
@@ -196,36 +202,6 @@ class Overlay:
         self.screen_off_y = Cam().window_roi["top"]
         self.root.geometry(
             f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
-=======
-        self.toggle_button = tk.Button(self.root, text="max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
-        self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
-
-        self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
-        self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
-
-        self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
-        self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
-
-        font_size = 8
-        window_height = ResManager().pos.window_dimensions[1]
-        if window_height == 1440:
-            font_size = 9
-        elif window_height > 1440:
-            font_size = 10
-        self.terminal_text = tk.Text(
-            self.canvas,
-            bg="black",
-            fg="white",
-            highlightcolor="white",
-            highlightthickness=0,
-            selectbackground="#222222",
-            borderwidth=0,
-            font=("Courier New", font_size),
-            wrap="word",
-        )
-        self.terminal_text.place(
-            relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
->>>>>>> v5.6.0-dev
         )
 
         if IniConfigLoader().general.hidden_transparency == 0:

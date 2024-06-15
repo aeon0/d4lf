@@ -33,3 +33,4 @@ playground.py
 stats/
 utils/live-view/
 venv
+*backup*

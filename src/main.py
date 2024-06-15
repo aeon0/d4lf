@@ -68,7 +68,8 @@ def main():
 
 
 if __name__ == "__main__":
-    src.logger.setup(log_level=IniConfigLoader().advanced_options.log_lvl)
+    log_level = str(IniConfigLoader().advanced_options.log_lvl).upper()
+    src.logger.setup(log_level=log_level)
     if len(sys.argv) > 1 and sys.argv[1] == "--gui":
         start_gui()
     try:

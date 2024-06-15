@@ -6,7 +6,7 @@ import time
 from collections.abc import Callable
 from typing import Literal, TypeVar
 
-import requests
+import httpx
 from pydantic_yaml import to_yaml_str
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
@@ -24,6 +24,9 @@ LOGGER = logging.getLogger(__name__)
 
 D = TypeVar("D", bound=WebDriver | WebElement)
 T = TypeVar("T")
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+}
 
 
 def extract_digits(text: str) -> int:
@@ -97,9 +100,9 @@ def get_class_name(input_str: str) -> str:
     return "Unknown"
 
 
-def get_with_retry(url: str) -> requests.Response:
+def get_with_retry(url: str) -> httpx.Response:
     for _ in range(5):
-        r = requests.get(url)
+        r = httpx.get(url, headers=HEADERS)
         if r.status_code == 200:
             return r
         LOGGER.debug(f"Request {url} failed with status code {r.status_code}, retrying...")

@@ -3,6 +3,7 @@ import math
 import time
 import tkinter as tk
 import traceback
+from tkinter.font import Font
 
 import numpy as np
 
@@ -38,36 +39,35 @@ def draw_text(canvas, text, color, previous_text_y, offset, canvas_center_x) -> 
     if text is None or text == "":
         return None
 
-    font_size = 11
-    width_text_scale = 24
-    height_text_scale = 4
+    font_name = "Courier New"
+    minimum_font_size = 11
+
+    font_size = minimum_font_size
     window_height = ResManager().pos.window_dimensions[1]
     if window_height == 1440:
-        font_size = 12
-        width_text_scale = 20
-        height_text_scale = 2.5
+        font_size = minimum_font_size + 1
     elif window_height == 1600:
-        font_size = 13
-        width_text_scale = 23
-        height_text_scale = 2.6
+        font_size = minimum_font_size + 2
     elif window_height == 2160:
-        font_size = 14
-        width_text_scale = 30
-        height_text_scale = 4
+        font_size = minimum_font_size + 3
 
-    max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+    font = Font(family=font_name, size=font_size)
+    width_per_character = font.measure(text) / len(text)
+    height_of_character = font.metrics("linespace")
+    max_text_length_per_line = canvas_center_x * 2 // width_per_character
     if max_text_length_per_line < len(text):  # Use a smaller font
-        font_size = 11
-        width_text_scale = 24
-        height_text_scale = 4
-        max_text_length_per_line = canvas_center_x * 2 // width_text_scale
+        font_size = minimum_font_size
+        font = Font(family=font_name, size=font_size)
+        width_per_character = font.measure(text) / len(text)
+        height_of_character = font.metrics("linespace")
+        max_text_length_per_line = canvas_center_x * 2 // width_per_character
 
     # Create a gray rectangle as the background
-    text_width = int(width_text_scale * len(text))
+    text_width = int(width_per_character * len(text))
     if text_width > canvas_center_x * 2:
         text_width = canvas_center_x * 2
     number_of_lines = math.ceil(len(text) / max_text_length_per_line)
-    text_height = int(height_text_scale * font_size * number_of_lines)
+    text_height = int(height_of_character * number_of_lines)
 
     dark_gray_color = "#111111"
     canvas.create_rectangle(

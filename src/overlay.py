@@ -17,17 +17,10 @@ LOGGER = logging.getLogger(__name__)
 LOCK = threading.Lock()
 
 
-class TextLogHandler(logging.Handler):
-    def __init__(self, text):
         logging.Handler.__init__(self)
-        self.text = text
-        self.text.tag_configure("wrapindent", lmargin2=60)
 
     def emit(self, record):
         log_entry = self.format(record)
-        padded_text = " " * 1 + log_entry + " \n" * 1
-        self.text.insert(tk.END, padded_text, "wrapindent")
-        self.text.yview(tk.END)  # Auto-scroll to the end
 
 
 class CustomButton(tk.Button):
@@ -247,13 +240,6 @@ class Overlay:
         )
         self.root.bind("<Enter>", self.show_canvas)
         self.root.bind("<Leave>", self.hide_canvas)
-=======
-        # Setup the listbox logger handler
-        textlog_handler = TextLogHandler(self.terminal_text)
-        textlog_handler.setLevel(LOGGER.level)
-        LOGGER.root.addHandler(textlog_handler)
-
->>>>>>> v5.6.0-dev
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
 

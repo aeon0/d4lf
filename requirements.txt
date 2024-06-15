@@ -4,6 +4,7 @@ beautifultable
 colorama
 coverage
 cryptography
+httpx
 keyboard
 lxml
 mouse
@@ -27,7 +28,6 @@ pytweening
 pywin32
 pyyaml
 rapidfuzz
-requests
 ruff
 selenium
 tk

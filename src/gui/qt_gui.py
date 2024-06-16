@@ -226,7 +226,7 @@ class Gui(QMainWindow):
             "or\n"
             "https://d4builds.gg/builds/ef414fbd-81cd-49d1-9c8d-4938b278e2ee\n"
             "or\n"
-            "https://mobalytics.gg/diablo-4/builds/barbarian/bash-bleed-barbarian-guide\n\n"
+            "https://mobalytics.gg/diablo-4/builds/barbarian/bash\n\n"
             f"It will create a file based on the label of the build in the planer in: {IniConfigLoader().user_dir / "profiles"}\n\n"
             "For d4builds you need to specify your browser in the params.ini file"
         )

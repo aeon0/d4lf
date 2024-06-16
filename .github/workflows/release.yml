@@ -51,4 +51,6 @@ jobs:
         with:
           files: d4lf_v*.zip
           generate_release_notes: true
+          name: "v${{ env.VERSION }}"
           prerelease: ${{ env.IS_BETA == 'true' }}
+          tag_name: "v${{ env.VERSION }}"

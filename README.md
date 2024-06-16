@@ -38,7 +38,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 ### Configs
 
-The config folder in `C:/Users/WINDOWS_USER/.d4lf contains:
+The config folder in `C:/Users/WINDOWS_USER/.d4lf` contains:
 
 - __profiles/*.yaml__: These files determine what should be filtered. Profiles created by the GUI will be placed here automatically.
 - __params.ini__: Different hotkey settings and number of chest stashes that should be looked at. Management of this file should be done through the GUI.

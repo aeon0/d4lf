@@ -10,7 +10,7 @@ lxml
 mouse
 mss
 natsort
-numpy
+numpy<2
 opencv-python==4.10.0.82
 pre-commit
 psutil

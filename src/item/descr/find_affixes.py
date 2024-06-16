@@ -122,7 +122,7 @@ def find_affixes(
         if found_key is not None:
             affixes.append(Affix(name=found_key, value=found_value, text=combined_lines))
         else:
-            LOGGER.warning(f"Affix does not exist: [cleaned]: {cleaned_str}, [raw]: {combined_lines}")
+            LOGGER.warning(f"Affix does not exist: {cleaned_str=} ||| {combined_lines=}")
 
     # Add location to the found_values
     affix_x = affix_bullets[0].center[0]

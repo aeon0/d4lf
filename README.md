@@ -27,7 +27,7 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 ### Quick start guide
 
 - Download and extract the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
-- Generate a profile, either manually by looking at the examples below or by importing using the GUI in the downloaded folder.
+- Generate a profile, either manually by looking at the examples below or by importing a planner or guide using the GUI in the downloaded folder.
 - Place the profile in the .d4lf/profiles folder in your Windows user directory and use the GUI Config tab to configure the profiles field to include your profile.
 - Execute d4lf.exe and go to your D4 screen
 - There is a small overlay on the center bottom with buttons:
@@ -38,9 +38,9 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 ### Configs
 
-The config folder contains:
+The config folder in `C:/Users/WINDOWS_USER/.d4lf contains:
 
-- __profiles/*.yaml__: These files determine what should be filtered
+- __profiles/*.yaml__: These files determine what should be filtered. Profiles created by the GUI will be placed here automatically.
 - __params.ini__: Different hotkey settings and number of chest stashes that should be looked at. Management of this file should be done through the GUI.
 
 ### params.ini
@@ -348,17 +348,6 @@ Uniques:
 
 Unique names are lower case and spaces are replaced by underscore. You can find the full list of names
 in [assets/lang/enUS/uniques.json](assets/lang/enUS/uniques.json).
-
-## Custom configs
-
-D4LF will search for `params.ini` and for `profiles/*.yaml` in `C:/Users/WINDOWS_USER/.d4lf`. All values
-in `C:/Users/WINDOWS_USER/.d4lf/params.ini` will overwrite the values from the `params.ini` file in the D4LF folder. In
-the profiles folder, additional custom profiles can be added and used.
-
-This setup is helpful to facilitate updating to a new version as you don't need to copy around your config and profiles.
-
-**In the event of breaking changes to the configuration, there will be a major release, such as updating from 2.x.x to
-3.x.x.**
 
 ## Develop
 

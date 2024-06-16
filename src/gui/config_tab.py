@@ -193,14 +193,6 @@ class ConfigTab(QWidget):
         return reset_button
 
 
-class ClearSelectionListWidget(QListWidget):
-    def mousePressEvent(self, event):
-        item = self.itemAt(event.position().toPoint())
-        if item is None:
-            self.clearSelection()
-        super().mousePressEvent(event)
-
-
 class IgnoreScrollWheelComboBox(QComboBox):
     def __init__(self):
         super().__init__()
@@ -294,12 +286,12 @@ class QProfilePicker(QDialog):
         all_profiles = [os.path.splitext(profile_file)[0] for profile_file in all_profile_files]
         all_profiles.sort(key=str.lower)
 
-        self.disabled_profiles_list_widget = ClearSelectionListWidget()
+        self.disabled_profiles_list_widget = QListWidget()
         self.disabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         self.disabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
         self.disabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
 
-        self.enabled_profiles_list_widget = ClearSelectionListWidget()
+        self.enabled_profiles_list_widget = QListWidget()
         self.enabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
         self.enabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
         self.enabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)

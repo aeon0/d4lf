@@ -1,30 +1,34 @@
+import logging
 import os
 import sys
+import time
 import traceback
 
 import keyboard
 from beautifultable import BeautifulTable
 from PIL import Image  # noqa #  Note: Somehow needed, otherwise the binary has an issue with tesserocr
 
+import src.logger
 from src import __version__
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.gui.qt_gui import start_gui
 from src.item.filter import Filter
-from src.logger import Logger
+from src.logger import LOG_DIR
 from src.overlay import Overlay
-from src.utils.misc import wait
 from src.utils.ocr.read import load_api
 from src.utils.process_handler import safe_exit
 from src.utils.window import WindowSpec, start_detecting_window
 
+LOGGER = logging.getLogger(__name__)
+
 
 def main():
     # Create folders for logging stuff
-    for dir_name in ["log/screenshots", IniConfigLoader().user_dir, IniConfigLoader().user_dir / "profiles"]:
+    for dir_name in [LOG_DIR / "screenshots", IniConfigLoader().user_dir, IniConfigLoader().user_dir / "profiles"]:
         os.makedirs(dir_name, exist_ok=True)
 
-    Logger.info(f"Adapt your custom configs in: {IniConfigLoader().user_dir}")
+    LOGGER.info(f"Adapt your configs via gui.bat or directly in: {IniConfigLoader().user_dir}")
 
     Filter().load_files()
 
@@ -44,7 +48,7 @@ def main():
     win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
-        wait(0.2)
+        time.sleep(0.2)
 
     load_api()
 
@@ -64,8 +68,7 @@ def main():
 
 
 if __name__ == "__main__":
-    Logger.init("debug")  # We need this to have the logger initialized before we start doing other stuff
-    Logger.init(IniConfigLoader().advanced_options.log_lvl)
+    src.logger.setup(log_level=IniConfigLoader().advanced_options.log_lvl.value)
     if len(sys.argv) > 1 and sys.argv[1] == "--gui":
         start_gui()
     try:

@@ -1,3 +1,4 @@
+import logging
 import threading
 import time
 
@@ -6,8 +7,9 @@ import mss.windows
 import numpy as np
 
 from src.config.ui import ResManager
-from src.logger import Logger
-from src.utils.misc import convert_args_to_numpy, wait
+from src.utils.misc import convert_args_to_numpy
+
+LOGGER = logging.getLogger(__name__)
 
 mss.windows.CAPTUREBLT = 0
 cached_img_lock = threading.Lock()
@@ -41,7 +43,7 @@ class Cam:
             return
         self.res_key = f"{width}x{height}"
         self.res_p = f"{height}p"
-        Logger.info(f"Found Window Res: {self.res_key}")
+        LOGGER.info(f"Found Window Res: {self.res_key}")
 
         self.window_roi["top"] = offset_y
         self.window_roi["left"] = offset_x
@@ -52,7 +54,7 @@ class Cam:
         self.window_offset_set = True
         ResManager().set_resolution(self.res_key)
         if self.window_roi["width"] / self.window_roi["height"] < 16 / 10:
-            Logger.warning("Aspect ratio is too narrow, please use a wider window. At least 16/10")
+            LOGGER.warning("Aspect ratio is too narrow, please use a wider window. At least 16/10")
 
     def is_offset_set(self):
         return self.window_offset_set
@@ -65,7 +67,7 @@ class Cam:
         if not self.is_offset_set():
             print("Wait for window detection")
             while not self.window_offset_set:
-                wait(0.05)
+                time.sleep(0.05)
             print("Found window, continue grabbing")
         with cached_img_lock:
             self.last_grab = time.perf_counter()

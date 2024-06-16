@@ -7,27 +7,28 @@ import typing
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.ui import ResManager
-from src.logger import Logger
 from src.loot_filter import run_loot_filter
 from src.loot_mover import move_items_to_inventory, move_items_to_stash
 from src.scripts.vision_mode import vision_mode
 from src.utils.process_handler import kill_thread
 from src.utils.window import WindowSpec, move_window_to_foreground
 
-# Usage
-lock = threading.Lock()
+LOGGER = logging.getLogger(__name__)
+
+LOCK = threading.Lock()
 
 
-class ListboxHandler(logging.Handler):
-    def __init__(self, listbox):
+class TextLogHandler(logging.Handler):
+    def __init__(self, text):
         logging.Handler.__init__(self)
-        self.listbox = listbox
+        self.text = text
+        self.text.tag_configure("wrapindent", lmargin2=60)
 
     def emit(self, record):
         log_entry = self.format(record)
-        padded_text = " " * 1 + log_entry + " " * 1
-        self.listbox.insert(tk.END, padded_text)
-        self.listbox.yview(tk.END)  # Auto-scroll to the end
+        padded_text = " " * 1 + log_entry + " \n" * 1
+        self.text.insert(tk.END, padded_text, "wrapindent")
+        self.text.yview(tk.END)  # Auto-scroll to the end
 
 
 class Overlay:
@@ -74,18 +75,18 @@ class Overlay:
             font_size = 9
         elif window_height > 1440:
             font_size = 10
-        self.terminal_listbox = tk.Listbox(
+        self.terminal_text = tk.Text(
             self.canvas,
             bg="black",
             fg="white",
             highlightcolor="white",
             highlightthickness=0,
             selectbackground="#222222",
-            activestyle=tk.NONE,
             borderwidth=0,
             font=("Courier New", font_size),
+            wrap="word",
         )
-        self.terminal_listbox.place(
+        self.terminal_text.place(
             relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
 
@@ -96,9 +97,9 @@ class Overlay:
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
         # Setup the listbox logger handler
-        listbox_handler = ListboxHandler(self.terminal_listbox)
-        listbox_handler.setLevel(Logger._logger_level)
-        Logger.logger.addHandler(listbox_handler)
+        textlog_handler = TextLogHandler(self.terminal_text)
+        textlog_handler.setLevel(LOGGER.level)
+        LOGGER.root.addHandler(textlog_handler)
 
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
@@ -149,10 +150,10 @@ class Overlay:
         self._start_or_stop_loot_interaction_thread(move_items_to_stash)
 
     def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable, method_args=()):
-        if lock.acquire(blocking=False):
+        if LOCK.acquire(blocking=False):
             try:
                 if self.loot_interaction_thread is not None:
-                    Logger.info("Stopping filter or move process")
+                    LOGGER.info("Stopping filter or move process")
                     kill_thread(self.loot_interaction_thread)
                     self.loot_interaction_thread = None
                     self.filter_button.config(fg="#555555")
@@ -165,7 +166,7 @@ class Overlay:
                     self.loot_interaction_thread.start()
                     self.filter_button.config(fg="#006600")
             finally:
-                lock.release()
+                LOCK.release()
         else:
             return
 
@@ -174,7 +175,7 @@ class Overlay:
             # We will stop all scripts if they are currently running and restart them afterwards if needed
             did_stop_scripts = False
             if len(self.script_threads) > 0:
-                Logger.info("Stopping Scripts")
+                LOGGER.info("Stopping Scripts")
                 self.start_scripts_button.config(fg="#555555")
                 for script_thread in self.script_threads:
                     kill_thread(script_thread)
@@ -192,17 +193,17 @@ class Overlay:
             self.filter_button.config(fg="#555555")
 
     def run_scripts(self):
-        if lock.acquire(blocking=False):
+        if LOCK.acquire(blocking=False):
             try:
                 if len(self.script_threads) > 0:
-                    Logger.info("Stopping Vision Mode")
+                    LOGGER.info("Stopping Vision Mode")
                     self.start_scripts_button.config(fg="#555555")
                     for script_thread in self.script_threads:
                         kill_thread(script_thread)
                     self.script_threads = []
                 else:
                     if not IniConfigLoader().advanced_options.scripts:
-                        Logger.info("No scripts configured")
+                        LOGGER.info("No scripts configured")
                         return
                     for name in IniConfigLoader().advanced_options.scripts:
                         if name == "vision_mode":
@@ -211,7 +212,7 @@ class Overlay:
                             self.script_threads.append(vision_mode_thread)
                     self.start_scripts_button.config(fg="#006600")
             finally:
-                lock.release()
+                LOCK.release()
         else:
             return
 

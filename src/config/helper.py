@@ -1,5 +1,7 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
+import threading
+
 import keyboard
 
 
@@ -16,10 +18,12 @@ def validate_hotkey(k: str) -> str:
 
 def singleton(cls):
     instances = {}
+    lock = threading.Lock()
 
     def get_instance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
+        with lock:
+            if cls not in instances:
+                instances[cls] = cls(*args, **kwargs)
         return instances[cls]
 
     return get_instance

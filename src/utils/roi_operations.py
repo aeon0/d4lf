@@ -1,7 +1,9 @@
+import logging
 from enum import Enum
 
 from src.config.ui import ResManager
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 
 def compare_tuples(t1, t2, uncertainty):
@@ -68,7 +70,7 @@ def intersect(*rects: list[tuple[int, int, int, int]] | tuple[int, int, int, int
 
     if max_x_min < min_x_max and max_y_min < min_y_max:
         return max_x_min, max_y_min, min_x_max - max_x_min, min_y_max - max_y_min
-    # Logger.debug(f"No intersection between {rects}.")
+    # LOGGER.debug(f"No intersection between {rects}.")
     return None
 
 
@@ -97,7 +99,7 @@ def bounding_box(
             min_x, max_x = min(min_x, x), max(max_x, x + w)
             min_y, max_y = min(min_y, y), max(max_y, y + h)
         else:
-            Logger.error(f"Invalid argument: {arg}. Each argument should be either a coordinate (2 integers) or a rectangle (4 integers).")
+            LOGGER.error(f"Invalid argument: {arg}. Each argument should be either a coordinate (2 integers) or a rectangle (4 integers).")
             return None
 
     return min_x, min_y, max_x - min_x, max_y - min_y

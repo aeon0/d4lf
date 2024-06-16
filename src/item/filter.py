@@ -1,8 +1,8 @@
+import logging
 import os
 import sys
 import time
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import yaml
 from pydantic import ValidationError
@@ -27,7 +27,8 @@ from src.item.data.aspect import Aspect
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.models import Item
-from src.logger import Logger
+
+LOGGER = logging.getLogger(__name__)
 
 
 @dataclass
@@ -104,7 +105,7 @@ class Filter:
                     if not matched_inherents:
                         continue
                 all_matches = matched_affixes + matched_inherents
-                Logger.info(f"Matched {profile_name}.Affixes.{filter_name}: {all_matches}")
+                LOGGER.info(f"Matched {profile_name}.Affixes.{filter_name}: {all_matches}")
                 res.keep = True
                 res.matched.append(_MatchedFilter(f"{profile_name}.{filter_name}", all_matches))
         return res
@@ -116,7 +117,7 @@ class Filter:
             IniConfigLoader().general.keep_aspects == AspectFilterType.upgrade and not item.codex_upgrade
         ):
             return res
-        Logger.info("Matched Aspects that updates codex")
+        LOGGER.info("Matched Aspects that updates codex")
         res.keep = True
         res.matched.append(_MatchedFilter("Aspects", did_match_aspect=True))
         return res
@@ -124,7 +125,7 @@ class Filter:
     def _check_sigil(self, item: Item) -> _FilterResult:
         res = _FilterResult(False, [])
         if not self.sigil_filters.items():
-            Logger.info("Matched Sigils")
+            LOGGER.info("Matched Sigils")
             res.keep = True
             res.matched.append(_MatchedFilter("default"))
         for profile_name, profile_filter in self.sigil_filters.items():
@@ -155,7 +156,7 @@ class Filter:
                         continue
                 elif is_in_blacklist and not blacklist_ok or not is_in_whitelist and not whitelist_ok:
                     continue
-            Logger.info(f"Matched {profile_name}.Sigils")
+            LOGGER.info(f"Matched {profile_name}.Sigils")
             res.keep = True
             res.matched.append(_MatchedFilter(f"{profile_name}"))
         return res
@@ -181,7 +182,7 @@ class Filter:
                 # check greater affixes
                 if not self._match_greater_affix_count(expected_min_count=filter_item.minGreaterAffixCount, item_affixes=item.affixes):
                     continue
-                Logger.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
+                LOGGER.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
                 res.keep = True
                 res.matched.append(_MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))
         return res
@@ -261,19 +262,15 @@ class Filter:
         profiles: list[str] = IniConfigLoader().general.profiles
 
         custom_profile_path = IniConfigLoader().user_dir / "profiles"
-        params_profile_path = Path("config/profiles")
         self.all_file_pathes = []
 
         errors = False
         for profile_str in profiles:
             custom_file_path = custom_profile_path / f"{profile_str}.yaml"
-            params_file_path = params_profile_path / f"{profile_str}.yaml"
             if custom_file_path.is_file():
                 profile_path = custom_file_path
-            elif params_file_path.is_file():
-                profile_path = params_file_path
             else:
-                Logger.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}, {params_file_path}")
+                LOGGER.error(f"Could not load profile {profile_str}. Checked: {custom_file_path}")
                 continue
 
             self.all_file_pathes.append(profile_path)
@@ -281,11 +278,11 @@ class Filter:
                 try:
                     config = yaml.load(stream=f, Loader=_UniqueKeyLoader)
                 except Exception as e:
-                    Logger.error(f"Error in the YAML file {profile_path}: {e}")
+                    LOGGER.error(f"Error in the YAML file {profile_path}: {e}")
                     errors = True
                     continue
                 if config is None:
-                    Logger.error(f"Empty YAML file {profile_path}, please remove it")
+                    LOGGER.error(f"Empty YAML file {profile_path}, please remove it")
                     continue
 
                 info_str = f"Loading profile {profile_str}: "
@@ -293,8 +290,8 @@ class Filter:
                     data = ProfileModel(name=profile_str, **config)
                 except ValidationError as e:
                     errors = True
-                    Logger.error(f"Validation errors in {profile_path}")
-                    Logger.error(e)
+                    LOGGER.error(f"Validation errors in {profile_path}")
+                    LOGGER.error(e)
                     continue
 
                 if data.Affixes:
@@ -307,9 +304,9 @@ class Filter:
                     self.unique_filters[data.name] = data.Uniques
                     info_str += "Uniques"
 
-                Logger.info(info_str)
+                LOGGER.info(info_str)
         if errors:
-            Logger.error("Errors occurred while loading profiles, please check the log for details")
+            LOGGER.error("Errors occurred while loading profiles, please check the log for details")
             sys.exit(1)
         self.last_loaded = time.time()
 

@@ -158,7 +158,7 @@ if __name__ == "__main__":
     src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://mobalytics.gg/diablo-4/profile/2a93597f-152e-4266-8e96-df63792e4f9c/builds/d2f8186d-b2ea-42a2-9f77-535d1881f5a0",
+        "https://mobalytics.gg/diablo-4/builds/barbarian/bash",
     ]
     for X in URLS:
         import_mobalytics(url=X)

@@ -1,428 +1,220 @@
-import enum
-import os
+import ctypes
+import logging
+import threading
+import tkinter as tk
 import typing
 
-import keyboard
-from pydantic import BaseModel, ValidationError
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (
-    QAbstractItemView,
-    QCheckBox,
-    QComboBox,
-    QDialog,
-    QDialogButtonBox,
-    QFormLayout,
-    QGridLayout,
-    QGroupBox,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QListWidget,
-    QListWidgetItem,
-    QMessageBox,
-    QPushButton,
-    QScrollArea,
-    QTextBrowser,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-)
-
+from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
+from src.config.ui import ResManager
+from src.loot_filter import run_loot_filter
+from src.loot_mover import move_items_to_inventory, move_items_to_stash
+from src.scripts.vision_mode import vision_mode
+from src.utils.process_handler import kill_thread
+from src.utils.window import WindowSpec, move_window_to_foreground
 
-CONFIG_TABNAME = "config"
+LOGGER = logging.getLogger(__name__)
 
-
-def _validate_and_save_changes(model, header, key, value, method_to_reset_value: typing.Callable = None):
-    try:
-        setattr(model, key, value)
-        IniConfigLoader().save_value(header, key, value)
-        return True
-    except ValidationError as e:
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Critical)
-        message = f"There was an error setting {key} to {value}. See error below.\n\n"
-        if method_to_reset_value:
-            message = message + "Your value has been reset to its previous version.\n\n"
-            method_to_reset_value(str(getattr(model, key)))
-        message = message + str(e)
-        msg.setText(message)
-        msg.setWindowTitle("Error validating value")
-        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
-        msg.exec()
-        return False
+LOCK = threading.Lock()
 
 
-class ConfigTab(QWidget):
+class TextLogHandler(logging.Handler):
+    def __init__(self, text):
+        logging.Handler.__init__(self)
+        self.text = text
+        self.text.tag_configure("wrapindent", lmargin2=60)
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        padded_text = " " * 1 + log_entry + " \n" * 1
+        self.text.insert(tk.END, padded_text, "wrapindent")
+        self.text.yview(tk.END)  # Auto-scroll to the end
+
+
+class Overlay:
     def __init__(self):
-        super().__init__()
-        self.model_to_parameter_value_map = {}
-        layout = QVBoxLayout(self)
-        scrollable_layout = QVBoxLayout()
-        scroll_widget = QWidget()
-        scroll_area = QScrollArea(self)
-        scroll_area.setWidgetResizable(True)
+        self.loot_interaction_thread = None
+        self.script_threads = []
+        self.is_minimized = True
+        self.root = tk.Tk()
+        self.root.title("LootFilter Overlay")
+        self.root.attributes("-alpha", 0.94)
+        self.hide_id = self.root.after(8000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
+        self.root.overrideredirect(True)
+        self.root.wm_attributes("-topmost", True)
 
-        scrollable_layout.addWidget(self._setup_reset_button())
-        scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().general, "General", "general"))
-        scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().char, "Character", "char"))
-        scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().advanced_options, "Advanced", "advanced_options"))
-        scroll_widget.setLayout(scrollable_layout)
-        scroll_area.setWidget(scroll_widget)
-        layout.addWidget(scroll_area)
+        self.screen_width = Cam().window_roi["width"]
+        self.screen_height = Cam().window_roi["height"]
+        self.initial_height = int(Cam().window_roi["height"] * 0.03)
+        self.initial_width = int(self.screen_width * 0.068)
+        self.maximized_height = int(self.initial_height * 3.4)
+        self.maximized_width = int(self.initial_width * 5)
 
-        instructions_label = QLabel("Instructions")
-        layout.addWidget(instructions_label)
-
-        instructions_text = QTextBrowser()
-        instructions_text.setOpenExternalLinks(True)
-        instructions_text.append(
-            "All values are saved automatically immediately upon changing. Hover over any label/field to see a brief "
-            "description of what it is for. To read more about each parameter, please view "
-            "<a href='https://github.com/aeon0/d4lf?tab=readme-ov-file#configs'>the config portion of the readme</a>"
+        self.screen_off_x = Cam().window_roi["left"]
+        self.screen_off_y = Cam().window_roi["top"]
+        self.canvas = tk.Canvas(self.root, bg="black", height=self.initial_height, width=self.initial_width, highlightthickness=0)
+        self.root.geometry(
+            f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
         )
-        instructions_text.append("")
-        instructions_text.append(
-            "Note: You will need to restart d4lf after modifying these values. Modifying params.ini manually while this gui is running is not supported (and really not necessary)."
+        self.canvas.pack()
+        self.root.bind("<Enter>", self.show_canvas)
+        self.root.bind("<Leave>", self.hide_canvas)
+
+        self.toggle_button = tk.Button(self.root, text="max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
+        self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
+
+        self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
+        self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
+
+        self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
+        self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
+
+        font_size = 8
+        window_height = ResManager().pos.window_dimensions[1]
+        if window_height == 1440:
+            font_size = 9
+        elif window_height > 1440:
+            font_size = 10
+        self.terminal_text = tk.Text(
+            self.canvas,
+            bg="black",
+            fg="white",
+            highlightcolor="white",
+            highlightthickness=0,
+            selectbackground="#222222",
+            borderwidth=0,
+            font=("Courier New", font_size),
+            wrap="word",
+        )
+        self.terminal_text.place(
+            relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
         )
 
-        instructions_text.setFixedHeight(100)
-        layout.addWidget(instructions_text)
+        if IniConfigLoader().general.hidden_transparency == 0:
+            self.root.update()
+            hwnd = self.root.winfo_id()
+            style = ctypes.windll.user32.GetWindowLongW(hwnd, -20)
+            ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
 
-        self.setLayout(layout)
+        # Setup the listbox logger handler
+        textlog_handler = TextLogHandler(self.terminal_text)
+        textlog_handler.setLevel(LOGGER.level)
+        LOGGER.root.addHandler(textlog_handler)
 
-    def _generate_params_section(self, model: BaseModel, section_readable_header: str, section_config_header: str):
-        group_box = QGroupBox(section_readable_header)
-        form_layout = QFormLayout()
+        if IniConfigLoader().general.run_vision_mode_on_startup:
+            self.run_scripts()
 
-        all_parameter_metadata = model.model_json_schema()["properties"]
+    def show_canvas(self, _):
+        # Cancel the pending hide if it exists
+        if self.hide_id:
+            self.root.after_cancel(self.hide_id)
+            self.hide_id = None
+        # Make the window visible
+        self.root.attributes("-alpha", 0.94)
 
-        for parameter in model:
-            config_key, config_value = parameter
-            parameter_metadata = all_parameter_metadata[config_key]
+    def hide_canvas(self, _):
+        # Reset the hide timer
+        if self.is_minimized:
+            if self.hide_id is not None:
+                self.root.after_cancel(self.hide_id)
+            self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
 
-            hide_from_gui = parameter_metadata.get(HIDE_FROM_GUI_KEY)
-            if hide_from_gui:
-                continue
-            description_text = parameter_metadata.get("description")
-            is_hotkey = parameter_metadata.get(IS_HOTKEY_KEY)
-            parameter_value_widget = self._generate_parameter_value_widget(
-                model, section_config_header, config_key, config_value, is_hotkey
-            )
-            self.model_to_parameter_value_map[section_config_header + "." + config_key] = parameter_value_widget
-            config_with_desc = QLabel(config_key)
-            if description_text:
-                # The span is a hack to make the tooltip wordwrap
-                config_with_desc.setToolTip("<span>" + description_text + "</span>")
-                parameter_value_widget.setToolTip("<span>" + description_text + "</span>")
-            form_layout.addRow(config_with_desc, parameter_value_widget)
-
-        group_box.setLayout(form_layout)
-        return group_box
-
-    @staticmethod
-    def _generate_parameter_value_widget(model: BaseModel, section_config_header, config_key, config_value, is_hotkey):
-        if config_key == "check_chest_tabs":
-            parameter_value_widget = QChestTabWidget(model, section_config_header, config_key, config_value)
-        elif config_key == "profiles":
-            parameter_value_widget = QProfilesWidget(model, section_config_header, config_key, config_value)
-        elif is_hotkey:
-            parameter_value_widget = QHotkeyWidget(model, section_config_header, config_key, config_value)
-        elif isinstance(config_value, enum.StrEnum):
-            parameter_value_widget = IgnoreScrollWheelComboBox()
-            enum_type = type(config_value)
-            parameter_value_widget.addItems(list(enum_type))
-            parameter_value_widget.setCurrentText(config_value)
-            parameter_value_widget.currentTextChanged.connect(
-                lambda: _validate_and_save_changes(model, section_config_header, config_key, parameter_value_widget.currentText())
-            )
-        elif isinstance(config_value, bool):
-            parameter_value_widget = QCheckBox()
-            parameter_value_widget.setChecked(config_value)
-            parameter_value_widget.stateChanged.connect(
-                lambda: _validate_and_save_changes(model, section_config_header, config_key, str(parameter_value_widget.isChecked()))
+    def toggle_size(self):
+        if not self.is_minimized:
+            self.canvas.config(height=self.initial_height, width=self.initial_width)
+            self.root.geometry(
+                f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
             )
         else:
-            parameter_value_widget = QLineEdit(str(config_value))
-            parameter_value_widget.editingFinished.connect(
-                lambda: _validate_and_save_changes(
-                    model,
-                    section_config_header,
-                    config_key,
-                    parameter_value_widget.text(),
-                    method_to_reset_value=parameter_value_widget.setText,
-                )
+            self.canvas.config(height=self.maximized_height, width=self.maximized_width)
+            self.root.geometry(
+                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width // 2 - self.maximized_width // 2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
             )
+        self.is_minimized = not self.is_minimized
+        if self.is_minimized:
+            self.hide_canvas(None)
+            self.toggle_button.config(text="max")
+        else:
+            self.show_canvas(None)
+            self.toggle_button.config(text="min")
+        win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
+        move_window_to_foreground(win_spec)
 
-        return parameter_value_widget
+    def filter_items(self, force_refresh=False):
+        self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
 
-    def reset_button_click(self):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Warning)
-        message = "This will reset all custom values in your params.ini to their default value. Are you sure you want to continue?"
-        msg.setText(message)
-        msg.setWindowTitle("Reset to default values?")
-        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+    def move_items_to_inventory(self):
+        self._start_or_stop_loot_interaction_thread(move_items_to_inventory)
 
-        result = msg.exec()  # Store the result of msg.exec()
+    def move_items_to_stash(self):
+        self._start_or_stop_loot_interaction_thread(move_items_to_stash)
 
-        if result == QMessageBox.StandardButton.Ok:
-            IniConfigLoader().load(clear=True)
-            self._reset_values_for_model(IniConfigLoader().general, "general")
-            self._reset_values_for_model(IniConfigLoader().char, "char")
-            self._reset_values_for_model(IniConfigLoader().advanced_options, "advanced_options")
+    def _start_or_stop_loot_interaction_thread(self, loot_interaction_method: typing.Callable, method_args=()):
+        if LOCK.acquire(blocking=False):
+            try:
+                if self.loot_interaction_thread is not None:
+                    LOGGER.info("Stopping filter or move process")
+                    kill_thread(self.loot_interaction_thread)
+                    self.loot_interaction_thread = None
+                    self.filter_button.config(fg="#555555")
+                else:
+                    if self.is_minimized:
+                        self.toggle_size()
+                    self.loot_interaction_thread = threading.Thread(
+                        target=self._wrapper_run_loot_interaction_method, args=(loot_interaction_method, method_args), daemon=True
+                    )
+                    self.loot_interaction_thread.start()
+                    self.filter_button.config(fg="#006600")
+            finally:
+                LOCK.release()
+        else:
+            return
 
-    def _reset_values_for_model(self, model, section_config_header):
-        for parameter in model:
-            config_key, config_value = parameter
-            parameter_value_widget = self.model_to_parameter_value_map.get(section_config_header + "." + config_key)
-            # Should always exist but just being safe
-            if parameter_value_widget is None:
-                continue
+    def _wrapper_run_loot_interaction_method(self, loot_interaction_method: typing.Callable, method_args=()):
+        try:
+            # We will stop all scripts if they are currently running and restart them afterwards if needed
+            did_stop_scripts = False
+            if len(self.script_threads) > 0:
+                LOGGER.info("Stopping Scripts")
+                self.start_scripts_button.config(fg="#555555")
+                for script_thread in self.script_threads:
+                    kill_thread(script_thread)
+                self.script_threads = []
+                did_stop_scripts = True
 
-            if isinstance(parameter_value_widget, QChestTabWidget | QProfilesWidget | QHotkeyWidget):
-                parameter_value_widget.reset_values(config_value)
-            elif isinstance(parameter_value_widget, IgnoreScrollWheelComboBox):
-                parameter_value_widget.setCurrentText(config_value)
-            elif isinstance(parameter_value_widget, QCheckBox):
-                parameter_value_widget.setChecked(config_value)
-            else:
-                parameter_value_widget.setText(str(config_value))
+            loot_interaction_method(*method_args)
 
-    def _setup_reset_button(self) -> QPushButton:
-        reset_button = QPushButton("Reset to defaults")
-        reset_button.clicked.connect(self.reset_button_click)
-        return reset_button
+            if did_stop_scripts:
+                self.run_scripts()
+        finally:
+            if not self.is_minimized:
+                self.toggle_size()
+            self.loot_interaction_thread = None
+            self.filter_button.config(fg="#555555")
 
+    def run_scripts(self):
+        if LOCK.acquire(blocking=False):
+            try:
+                if len(self.script_threads) > 0:
+                    LOGGER.info("Stopping Vision Mode")
+                    self.start_scripts_button.config(fg="#555555")
+                    for script_thread in self.script_threads:
+                        kill_thread(script_thread)
+                    self.script_threads = []
+                else:
+                    if not IniConfigLoader().advanced_options.scripts:
+                        LOGGER.info("No scripts configured")
+                        return
+                    for name in IniConfigLoader().advanced_options.scripts:
+                        if name == "vision_mode":
+                            vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
+                            vision_mode_thread.start()
+                            self.script_threads.append(vision_mode_thread)
+                    self.start_scripts_button.config(fg="#006600")
+            finally:
+                LOCK.release()
+        else:
+            return
 
-class IgnoreScrollWheelComboBox(QComboBox):
-    def __init__(self):
-        super().__init__()
-        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-
-    def wheelEvent(self, event):
-        if self.hasFocus():
-            return QComboBox.wheelEvent(self, event)
-
-        return event.ignore()
-
-
-class QChestTabWidget(QWidget):
-    def __init__(self, model, section_header, config_key, chest_tab_config: list[int]):
-        super().__init__()
-        self.all_checkboxes: list[QCheckBox] = []
-        stash_checkbox_layout = QHBoxLayout()
-        stash_checkbox_layout.setContentsMargins(0, 0, 0, 0)
-        for x in range(6):
-            stash_checkbox = QCheckBox(self)
-            stash_checkbox.setText(str(x + 1))
-            self.all_checkboxes.append(stash_checkbox)
-            if x in chest_tab_config:
-                stash_checkbox.setChecked(True)
-            stash_checkbox.stateChanged.connect(lambda: self._save_changes_on_box_change(model, section_header, config_key))
-            stash_checkbox_layout.addWidget(stash_checkbox)
-
-        self.setLayout(stash_checkbox_layout)
-
-    def reset_values(self, chest_tab_config: list[int]):
-        for check_box in self.all_checkboxes:
-            check_box.setChecked(int(check_box.text()) - 1 in chest_tab_config)
-
-    def _save_changes_on_box_change(self, model, section_header, config_key):
-        active_tabs = [check_box.text() for check_box in self.all_checkboxes if check_box.isChecked()]
-        _validate_and_save_changes(model, section_header, config_key, ",".join(active_tabs), self.reset_values)
-
-
-class QProfilesWidget(QWidget):
-    def __init__(self, model, section_header, config_key, current_profiles):
-        super().__init__()
-
-        layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-
-        self.current_profile_line_edit = QLineEdit()
-        self.reset_values(current_profiles)
-        self.current_profile_line_edit.setReadOnly(True)
-        layout.addWidget(self.current_profile_line_edit)
-
-        open_picker_button = QPushButton()
-        open_picker_button.setText("...")
-        open_picker_button.setMinimumWidth(20)
-        open_picker_button.clicked.connect(
-            lambda: self._launch_picker(model, section_header, config_key, self.current_profile_line_edit.text().split(", "))
-        )
-        layout.addWidget(open_picker_button)
-
-        self.setLayout(layout)
-
-    def reset_values(self, current_profiles):
-        self.current_profile_line_edit.setText(", ".join(current_profiles))
-
-    def _launch_picker(self, model, section_header, config_key, current_profiles):
-        profile_picker = QProfilePicker(self, current_profiles)
-        if profile_picker.exec():
-            selected_profiles = ", ".join(profile_picker.get_selected_profiles())
-            _validate_and_save_changes(
-                model,
-                section_header,
-                config_key,
-                selected_profiles,
-                self.current_profile_line_edit.setText,
-            )
-            self.current_profile_line_edit.setText(selected_profiles)
-
-
-class QProfilePicker(QDialog):
-    def __init__(self, parent, current_profiles):
-        super().__init__(parent)
-        self.setWindowTitle("Select profiles")
-
-        overall_layout = QVBoxLayout()
-        self.setGeometry(0, 0, 700, 500)
-
-        profile_folder = IniConfigLoader().user_dir / "profiles"
-        if not os.path.exists(profile_folder):
-            os.makedirs(profile_folder)
-
-        all_profile_files = os.listdir(profile_folder)
-        all_profiles = [os.path.splitext(profile_file)[0] for profile_file in all_profile_files]
-        all_profiles.sort(key=str.lower)
-
-        self.disabled_profiles_list_widget = QListWidget()
-        self.disabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
-        self.disabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
-        self.disabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
-
-        self.enabled_profiles_list_widget = QListWidget()
-        self.enabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
-        self.enabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
-        self.enabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
-
-        for profile_name in all_profiles:
-            if profile_name not in current_profiles:
-                QListWidgetItem(profile_name, self.disabled_profiles_list_widget)
-
-        for profile_name in current_profiles:
-            if profile_name in all_profiles:
-                QListWidgetItem(profile_name, self.enabled_profiles_list_widget)
-
-        list_widget_layout = QGridLayout()
-        list_widget_layout.addWidget(QLabel("Disabled Profiles"), 0, 0)
-        list_widget_layout.addWidget(self.disabled_profiles_list_widget, 1, 0)
-
-        # Create buttons for moving profiles between lists
-        enable_button = QPushButton("Enable")
-        enable_button.clicked.connect(lambda: self.move_items(self.disabled_profiles_list_widget, self.enabled_profiles_list_widget))
-        disable_button = QPushButton("Disable")
-        disable_button.clicked.connect(lambda: self.move_items(self.enabled_profiles_list_widget, self.disabled_profiles_list_widget))
-
-        list_widget_layout.addWidget(enable_button, 2, 0)
-        list_widget_layout.addWidget(disable_button, 2, 1)
-
-        list_widget_layout.addWidget(QLabel("Enabled Profiles"), 0, 1)
-        list_widget_layout.addWidget(self.enabled_profiles_list_widget, 1, 1)
-
-        overall_layout.addLayout(list_widget_layout)
-
-        message = QTextEdit(
-            "Enable/Disable profiles by selecting and then using drag&drop or the buttons.\n"
-            "Multi select is supported.\n"
-            "You can change order by dragging a profile up and down in the right list."
-        )
-        message.setReadOnly(True)
-        message.setFixedHeight(70)
-        overall_layout.addWidget(message)
-
-        ok_cancel_buttons = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
-        self.buttonBox = QDialogButtonBox(ok_cancel_buttons)
-        self.buttonBox.accepted.connect(self.accept)
-        self.buttonBox.rejected.connect(self.reject)
-        overall_layout.addWidget(self.buttonBox)
-        self.setLayout(overall_layout)
-
-    def move_items(self, source_list, destination_list):
-        for item in source_list.selectedItems():
-            source_list.takeItem(source_list.row(item))
-            destination_list.addItem(item)
-
-    def get_selected_profiles(self):
-        return [self.enabled_profiles_list_widget.item(x).text() for x in range(self.enabled_profiles_list_widget.count())]
-
-
-class QHotkeyWidget(QWidget):
-    def __init__(self, model, section_header, config_key, current_value):
-        super().__init__()
-
-        layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-
-        self.open_picker_button = QPushButton()
-        self.reset_values(current_value)
-        self.open_picker_button.clicked.connect(lambda: self._launch_hotkey_dialog(model, section_header, config_key))
-        self.open_picker_button.setStyleSheet("text-align:left;padding-left: 5px;")
-        layout.addWidget(self.open_picker_button)
-
-        self.setLayout(layout)
-
-    def reset_values(self, current_value):
-        self.open_picker_button.setText(current_value)
-
-    def _launch_hotkey_dialog(self, model, section_header, config_key):
-        hotkey_dialog = HotkeyListenerDialog(self)
-        if hotkey_dialog.exec():
-            new_hotkey = hotkey_dialog.get_hotkey()
-            if new_hotkey and _validate_and_save_changes(model, section_header, config_key, new_hotkey):
-                self.open_picker_button.setText(new_hotkey)
-
-
-class HotkeyListenerDialog(QDialog):
-    def __init__(self, parent=None, hotkey=""):
-        super().__init__(parent)
-        self.setWindowTitle("Set Hotkey")
-        self.hotkey = hotkey
-
-        self.layout = QVBoxLayout(self)
-
-        self.label = QLabel("Press the key or combination of keys you\nwant to use as a hotkey, then click save.", self)
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.hotkey_label = QLabel(self.hotkey, self)
-        self.hotkey_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.layout.addWidget(self.label)
-        self.layout.addWidget(self.hotkey_label)
-
-        self.button_layout = QHBoxLayout()
-        self.save_button = QPushButton("Save", self)
-        self.cancel_button = QPushButton("Cancel", self)
-
-        self.save_button.clicked.connect(self.accept)
-        self.cancel_button.clicked.connect(self.reject)
-
-        self.button_layout.addWidget(self.save_button)
-        self.button_layout.addWidget(self.cancel_button)
-
-        self.layout.addLayout(self.button_layout)
-
-    def keyPressEvent(self, event):
-        modifiers_str = []
-        for modifier in event.modifiers():
-            if modifier == Qt.KeyboardModifier.ShiftModifier:
-                modifiers_str.append("shift")
-            elif modifier == Qt.KeyboardModifier.ControlModifier:
-                modifiers_str.append("ctrl")
-            elif modifier == Qt.KeyboardModifier.AltModifier:
-                modifiers_str.append("alt")
-
-        native_virtual_key = event.nativeVirtualKey()
-        non_mod_key, _ = keyboard._winkeyboard.official_virtual_keys.get(native_virtual_key)
-        if non_mod_key in modifiers_str:
-            non_mod_key = ""
-
-        key_str = " + ".join(modifiers_str + [non_mod_key])
-        self.hotkey = key_str
-        self.hotkey_label.setText(key_str)
-
-    def get_hotkey(self):
-        return self.hotkey
+    def run(self):
+        self.root.mainloop()

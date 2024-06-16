@@ -34,7 +34,7 @@ class IniConfigLoader:
         all_keys = [key for section in self._parser.sections() for key in self._parser[section]]
         deprecated_keys = [key for key in DEPRECATED_INI_KEYS if key in all_keys]
         for key in deprecated_keys:
-            LOGGER.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please update your config file.")
+            LOGGER.warning(f"Deprecated {key=} found in {PARAMS_INI}. Please remove this key from your config file.")
             # remove key from parser
             for section in self._parser.sections():
                 if key in self._parser[section]:

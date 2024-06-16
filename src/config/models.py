@@ -245,10 +245,10 @@ class GeneralModel(_IniBaseModel):
     @field_validator("profiles", mode="before")
     def check_profiles_is_list(cls, v: str) -> list[str]:
         if isinstance(v, str):
-            v = v.split(", ")
+            v = v.split(",")
         elif not isinstance(v, list):
             raise ValueError("must be a list or a string")
-        return v
+        return [v.strip() for v in v]
 
     @field_validator("language")
     def language_must_exist(cls, v: str) -> str:

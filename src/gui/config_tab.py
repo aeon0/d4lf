@@ -31,7 +31,7 @@ from PyQt6.QtWidgets import (
 from src.config.loader import IniConfigLoader
 from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
 
-CONFIG_TABNAME = "Config"
+CONFIG_TABNAME = "config"
 
 
 def _validate_and_save_changes(model, header, key, value, method_to_reset_value: typing.Callable = None):
@@ -280,7 +280,7 @@ class QProfilePicker(QDialog):
         self.setWindowTitle("Select profiles")
 
         overall_layout = QVBoxLayout()
-        self.setGeometry(100, 100, 400, 400)
+        self.setGeometry(0, 0, 700, 500)
 
         profile_folder = IniConfigLoader().user_dir / "profiles"
         if not os.path.exists(profile_folder):
@@ -288,41 +288,51 @@ class QProfilePicker(QDialog):
 
         all_profile_files = os.listdir(profile_folder)
         all_profiles = [os.path.splitext(profile_file)[0] for profile_file in all_profile_files]
+        all_profiles.sort(key=str.lower)
 
-        unactivated_profiles_list_widget = QListWidget()
-        unactivated_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
-        unactivated_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
-        unactivated_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
+        self.disabled_profiles_list_widget = QListWidget()
+        self.disabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+        self.disabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
+        self.disabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
 
-        self.activated_profiles_list_widget = QListWidget()
-        self.activated_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
-        self.activated_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
-        self.activated_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
+        self.enabled_profiles_list_widget = QListWidget()
+        self.enabled_profiles_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.MultiSelection)
+        self.enabled_profiles_list_widget.setDragDropMode(QAbstractItemView.DragDropMode.DragDrop)
+        self.enabled_profiles_list_widget.setDefaultDropAction(Qt.DropAction.MoveAction)
 
         for profile_name in all_profiles:
             if profile_name not in current_profiles:
-                QListWidgetItem(profile_name, unactivated_profiles_list_widget)
+                QListWidgetItem(profile_name, self.disabled_profiles_list_widget)
 
         for profile_name in current_profiles:
-            # Filter out any examples or defaults that don't have a file
             if profile_name in all_profiles:
-                QListWidgetItem(profile_name, self.activated_profiles_list_widget)
+                QListWidgetItem(profile_name, self.enabled_profiles_list_widget)
 
         list_widget_layout = QGridLayout()
-        list_widget_layout.addWidget(QLabel("Unactivated Profiles"), 0, 0)
-        list_widget_layout.addWidget(unactivated_profiles_list_widget, 1, 0)
-        list_widget_layout.addWidget(QLabel("Activated Profiles"), 0, 1)
-        list_widget_layout.addWidget(self.activated_profiles_list_widget, 1, 1)
+        list_widget_layout.addWidget(QLabel("Disabled Profiles"), 0, 0)
+        list_widget_layout.addWidget(self.disabled_profiles_list_widget, 1, 0)
+
+        # Create buttons for moving profiles between lists
+        enable_button = QPushButton("Enable")
+        enable_button.clicked.connect(lambda: self.move_items(self.disabled_profiles_list_widget, self.enabled_profiles_list_widget))
+        disable_button = QPushButton("Disable")
+        disable_button.clicked.connect(lambda: self.move_items(self.enabled_profiles_list_widget, self.disabled_profiles_list_widget))
+
+        list_widget_layout.addWidget(enable_button, 2, 0)
+        list_widget_layout.addWidget(disable_button, 2, 1)
+
+        list_widget_layout.addWidget(QLabel("Enabled Profiles"), 0, 1)
+        list_widget_layout.addWidget(self.enabled_profiles_list_widget, 1, 1)
 
         overall_layout.addLayout(list_widget_layout)
 
         message = QTextEdit(
-            f"On the left are all unactivated profiles found in {profile_folder}. On the right are currently active "
-            f"profiles. Drag and drop from the left to the right to activate the profile. You can change order by"
-            f" dragging a profile up and down in the right list."
+            "Enable/Disable profiles by selecting and then using drag&drop or the buttons.\n"
+            "Multi select is supported.\n"
+            "You can change order by dragging a profile up and down in the right list."
         )
         message.setReadOnly(True)
-        message.setFixedHeight(100)
+        message.setFixedHeight(70)
         overall_layout.addWidget(message)
 
         ok_cancel_buttons = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
@@ -332,8 +342,13 @@ class QProfilePicker(QDialog):
         overall_layout.addWidget(self.buttonBox)
         self.setLayout(overall_layout)
 
+    def move_items(self, source_list, destination_list):
+        for item in source_list.selectedItems():
+            source_list.takeItem(source_list.row(item))
+            destination_list.addItem(item)
+
     def get_selected_profiles(self):
-        return [self.activated_profiles_list_widget.item(x).text() for x in range(self.activated_profiles_list_widget.count())]
+        return [self.enabled_profiles_list_widget.item(x).text() for x in range(self.enabled_profiles_list_widget.count())]
 
 
 class QHotkeyWidget(QWidget):

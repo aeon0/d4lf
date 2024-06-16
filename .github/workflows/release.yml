@@ -25,8 +25,18 @@ jobs:
           $folderName = "d4lf_v" + $version
           Compress-Archive -Path $folderName -DestinationPath "$folderName.zip"
 
+      - name: Check if beta
+        shell: powershell
+        run: |
+          if ("${{ github.ref }}".Contains("beta")) {
+            echo "IS_BETA=true" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
+          } else {
+            echo "IS_BETA=false" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
+          }
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           files: d4lf_v*.zip
           generate_release_notes: true
+          prerelease: ${{ env.IS_BETA == 'true' }}

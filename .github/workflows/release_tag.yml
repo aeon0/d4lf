@@ -1,18 +1,15 @@
 name: Release
 
 on:
-  pull_request:
-    types: [closed]
-  workflow_dispatch:
+  push:
+    tags:
+      - '*'
 
 concurrency:
   group: release
 
 jobs:
   release:
-    if: |
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'release')
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -22,26 +19,17 @@ jobs:
         uses: ./.github/actions/setup_env
 
       - name: Build & Zip exe
-        id: build_zip
         shell: powershell
         run: |
           python build.py
           $version = python -c "from src import __version__; print(__version__)"
-          echo "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           $folderName = "d4lf_v" + $version
           Compress-Archive -Path $folderName -DestinationPath "$folderName.zip"
 
-      - name: Create Tag
-        shell: powershell
-        run: |
-          git tag "v${{ env.VERSION }}"
-          git push origin "v${{ env.VERSION }}"
-
       - name: Check if beta
-        id: check_beta
         shell: powershell
         run: |
-          if ("${{ env.VERSION }}".Contains("beta")) {
+          if ("${{ github.ref }}".Contains("beta")) {
             echo "IS_BETA=true" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
           } else {
             echo "IS_BETA=false" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
@@ -52,6 +40,4 @@ jobs:
         with:
           files: d4lf_v*.zip
           generate_release_notes: true
-          name: "v${{ env.VERSION }}"
           prerelease: ${{ env.IS_BETA == 'true' }}
-          tag_name: "v${{ env.VERSION }}"

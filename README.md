@@ -2,7 +2,7 @@
 
 Filter items and sigils in your inventory based on affixes, aspects and thresholds of their values. For questions,
 feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6T) or use github issues.
-aaa
+
 ![sample](assets/thumbnail.jpg)]
 
 ## Features

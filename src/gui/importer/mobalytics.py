@@ -50,7 +50,7 @@ def import_mobalytics(url: str):
     url = _fix_input_url(url=url)
     LOGGER.info(f"Loading {url}")
     try:
-        r = get_with_retry(url=url, custom_headers={"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"})
+        r = get_with_retry(url=url, custom_headers={})
     except ConnectionError as exc:
         LOGGER.exception(msg := "Couldn't get build")
         raise MobalyticsException(msg) from exc
@@ -159,6 +159,7 @@ if __name__ == "__main__":
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://mobalytics.gg/diablo-4/builds/barbarian/bash",
+        "https://mobalytics.gg/diablo-4/profile/3aeadb5c-522e-47b9-9a17-cdeaaa58909c/builds/4bb9a04e-da1e-449f-91ab-ca29e5727a20",
     ]
     for X in URLS:
         import_mobalytics(url=X)

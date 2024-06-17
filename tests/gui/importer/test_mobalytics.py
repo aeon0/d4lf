@@ -18,6 +18,8 @@ URLS = [
     "https://mobalytics.gg/diablo-4/builds/sorcerer/firewall-scorched-earth",
     "https://mobalytics.gg/diablo-4/builds/sorcerer/kripp-s-ultimate-fire-sorc",
     "https://mobalytics.gg/diablo-4/builds/sorcerer/nicktew-s4-blizzard",
+    "https://mobalytics.gg/diablo-4/profile/3aeadb5c-522e-47b9-9a17-cdeaaa58909c/builds/4bb9a04e-da1e-449f-91ab-ca29e5727a20"
+    "https://mobalytics.gg/diablo-4/profile/bd7d970b-813c-4f98-b8b5-d5ca637f7ec0/builds/9ed37972-f738-4d1e-a231-e9f0f367c848",
 ]
 
 

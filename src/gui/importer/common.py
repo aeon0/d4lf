@@ -100,10 +100,10 @@ def get_class_name(input_str: str) -> str:
     return "Unknown"
 
 
-def get_with_retry(url: str) -> httpx.Response:
+def get_with_retry(url: str, custom_headers = {}) -> httpx.Response:
     for _ in range(10):
         try:
-            r = httpx.get(url, headers=HEADERS)
+            r = httpx.get(url, headers={**HEADERS, **custom_headers})
         except httpx.ReadTimeout:
             LOGGER.debug(f"Request {url} timed out, retrying...")
             continue

@@ -50,7 +50,7 @@ def import_mobalytics(url: str):
     url = _fix_input_url(url=url)
     LOGGER.info(f"Loading {url}")
     try:
-        r = get_with_retry(url=url)
+        r = get_with_retry(url=url, custom_headers={"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"})
     except ConnectionError as exc:
         LOGGER.exception(msg := "Couldn't get build")
         raise MobalyticsException(msg) from exc

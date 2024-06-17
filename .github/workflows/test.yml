@@ -16,6 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup env
+        uses: ./.github/actions/setup_env
+
       - name: Create Tag
         shell: powershell
         run: |

@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 from src.config.data import COLORS
@@ -55,14 +57,14 @@ def _find_bullets(
         return []
     medium_bullets.matches = _filter_outliers(medium_bullets.matches)
     small_bullets.matches = _filter_outliers(small_bullets.matches)
-    if len(medium_bullets.matches) == len(small_bullets.matches):
-        avg_score_medium = np.average([match.score for match in medium_bullets.matches])
-        avg_score_small = np.average([match.score for match in small_bullets.matches])
-        affix_bullets = small_bullets if avg_score_small > avg_score_medium else medium_bullets
-    else:
-        affix_bullets = small_bullets if len(small_bullets.matches) > len(medium_bullets.matches) else medium_bullets
-    affix_bullets.matches = sorted(affix_bullets.matches, key=lambda match: match.center[1])
-    return affix_bullets.matches
+    for m_match in medium_bullets.matches.copy():
+        for s_match in small_bullets.matches.copy():
+            if math.sqrt((s_match.center[0] - m_match.center[0]) ** 2 + (s_match.center[1] - m_match.center[1]) ** 2) <= 5:
+                if s_match.score > m_match.score:
+                    medium_bullets.matches.remove(m_match)
+                else:
+                    small_bullets.matches.remove(s_match)
+    return sorted(medium_bullets.matches + small_bullets.matches, key=lambda match: match.center[1])
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:

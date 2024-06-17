@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Send message to Discord
         run: |
-          $webhookUrl = "${{ secrets.DISCORD_WEBHOOK_URL }}"
+          $webhookUrl = "${{ secrets.DISCORD_WEBHOOK }}"
           $payload = @{
               username = "GitHub Actions"
               content = "Test <https://github.com/aeon0/d4lf>"

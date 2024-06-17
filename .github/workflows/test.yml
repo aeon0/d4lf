@@ -1,0 +1,20 @@
+name: Test
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: test
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Tag
+        shell: powershell
+        run: |
+          git tag "v0.0.0"
+          git push origin "v0.0.0"

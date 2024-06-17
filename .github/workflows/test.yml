@@ -1,6 +1,9 @@
 name: Test
 
 on:
+  push:
+    branches:
+      - test-gh-action
   workflow_dispatch:
 
 concurrency:

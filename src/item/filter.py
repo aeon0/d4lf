@@ -79,6 +79,7 @@ class Filter:
         res = _FilterResult(False, [])
         if not self.affix_filters:
             return _FilterResult(True, [])
+        non_tempered_affixes = [affix for affix in item.affixes if affix.type != AffixType.tempered]
         for profile_name, profile_filter in self.affix_filters.items():
             for filter_item in profile_filter:
                 filter_name = next(iter(filter_item.root.keys()))
@@ -90,12 +91,14 @@ class Filter:
                 if not self._match_item_power(min_power=filter_spec.minPower, item_power=item.power):
                     continue
                 # check greater affixes
-                if not self._match_greater_affix_count(expected_min_count=filter_spec.minGreaterAffixCount, item_affixes=item.affixes):
+                if not self._match_greater_affix_count(
+                    expected_min_count=filter_spec.minGreaterAffixCount, item_affixes=non_tempered_affixes
+                ):
                     continue
                 # check affixes
                 matched_affixes = []
                 if filter_spec.affixPool:
-                    matched_affixes = self._match_affixes_count(expected_affixes=filter_spec.affixPool, item_affixes=item.affixes)
+                    matched_affixes = self._match_affixes_count(expected_affixes=filter_spec.affixPool, item_affixes=non_tempered_affixes)
                     if not matched_affixes:
                         continue
                 # check inherent

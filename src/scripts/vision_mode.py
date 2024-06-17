@@ -12,6 +12,7 @@ from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.models import HandleRaresType
 from src.config.ui import ResManager
+from src.item.data.affix import AffixType
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
@@ -261,7 +262,8 @@ def vision_mode():
                     if item_descr is not None and len(res.matched) > 0:
                         bullet_width = thick * 3
                         all_affixes = item_descr.affixes + item_descr.inherent
-                        for affix in all_affixes:
+                        non_tempered_affixes = [affix for affix in all_affixes if affix.type != AffixType.tempered]
+                        for affix in non_tempered_affixes:
                             if affix.loc is not None and any(a == affix.name for a in res.matched[0].matched_affixes):
                                 draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
 

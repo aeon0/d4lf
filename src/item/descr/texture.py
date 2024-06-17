@@ -37,34 +37,32 @@ def _find_bullets(
 ) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    medium_bullets = search(
-        ref=[f"{x}_medium" for x in template_list],
+    all_templates = [f"{x}_medium" for x in template_list] + template_list
+    all_bullets = search(
+        ref=all_templates,
         inp_img=img_item_descr,
         threshold=threshold,
         roi=roi_bullets,
         use_grayscale=True,
         mode=mode,
     )
-    small_bullets = search(
-        ref=template_list,
-        inp_img=img_item_descr,
-        threshold=threshold,
-        roi=roi_bullets,
-        use_grayscale=True,
-        mode=mode,
-    )
-    if not medium_bullets.success and not small_bullets.success:
+    if not all_bullets.success:
         return []
-    medium_bullets.matches = _filter_outliers(medium_bullets.matches)
-    small_bullets.matches = _filter_outliers(small_bullets.matches)
-    for m_match in medium_bullets.matches.copy():
-        for s_match in small_bullets.matches.copy():
-            if math.sqrt((s_match.center[0] - m_match.center[0]) ** 2 + (s_match.center[1] - m_match.center[1]) ** 2) <= 5:
-                if s_match.score > m_match.score:
-                    medium_bullets.matches.remove(m_match)
-                else:
-                    small_bullets.matches.remove(s_match)
-    return sorted(medium_bullets.matches + small_bullets.matches, key=lambda match: match.center[1])
+    all_bullets.matches = _filter_outliers(all_bullets.matches)
+    # go through the matches and filter out the ones that are too close to each other. only keep the one with higher probability
+    matches_dict = {}
+    for match in all_bullets.matches:
+        match_exists = False
+        for center in matches_dict:
+            if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 5:
+                if match.score > matches_dict[center].score:
+                    matches_dict[center] = match
+                match_exists = True
+                break
+        if not match_exists:
+            matches_dict[match.center] = match
+    filtered_matches = list(matches_dict.values())
+    return sorted(filtered_matches, key=lambda match: match.center[1])
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:

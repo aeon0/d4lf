@@ -29,6 +29,14 @@ class TemplateMatch:
     region_monitor: list[int, int, int, int] = None
     score: float = -1.0
 
+    def __eq__(self, other):
+        if isinstance(other, TemplateMatch):
+            return self.center == other.center and self.score == other.score
+        return False
+
+    def __hash__(self):
+        return hash((self.center, self.score))
+
 
 @dataclass
 class SearchResult:

@@ -155,6 +155,36 @@ legendary = [
         ),
     ),
     (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_legendary_1080p_7.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=1591),
+                Affix(name="energy_on_kill", value=4),
+                Affix(name="critical_strike_damage", value=150, type=AffixType.greater),
+            ],
+            inherent=[Affix(name="vulnerable_damage", value=32, type=AffixType.inherent)],
+            item_type=ItemType.Crossbow2H,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_legendary_1080p_8.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=1591),
+                Affix(name="energy_on_kill", value=4),
+                Affix(name="critical_strike_damage", value=150, type=AffixType.greater),
+            ],
+            inherent=[Affix(name="vulnerable_damage", value=32, type=AffixType.inherent)],
+            item_type=ItemType.Crossbow2H,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2560, 1440),
         f"{BASE_PATH}/read_descr_legendary_1440p.png",
         Item(

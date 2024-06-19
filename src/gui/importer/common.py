@@ -104,7 +104,7 @@ def get_with_retry(url: str, custom_headers: dict[str, str] | None = None) -> ht
     for _ in range(10):
         try:
             r = httpx.get(url, headers=custom_headers if custom_headers is not None else HEADERS)
-        except httpx.ReadTimeout:
+        except httpx.RequestError:
             LOGGER.debug(f"Request {url} timed out, retrying...")
             continue
         if r.status_code != 200:

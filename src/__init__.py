@@ -1,1 +1,1 @@
-__version__ = "5.6.0beta6"
+__version__ = "5.6.0beta7"

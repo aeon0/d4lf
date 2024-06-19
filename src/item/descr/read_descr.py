@@ -29,10 +29,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Find item type and item power / tier list
     # =========================
-    item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
-    # In case it was not successful, try without doing image pre-processing
+    item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
+    # In case it was not successful, try with doing image pre-processing
     if item is None:
-        item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
+        item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
     if item is None:
         if show_warnings:
             LOGGER.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")

@@ -61,6 +61,8 @@ def fix_weapon_type(input_str: str) -> ItemType | None:
         return ItemType.Dagger
     if "bow" in input_str:
         return ItemType.Bow
+    if "polearm" in input_str:
+        return ItemType.Polearm
     return None
 
 

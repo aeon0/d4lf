@@ -52,6 +52,11 @@ class ComparisonType(enum.StrEnum):
     smaller = enum.auto()
 
 
+class ForceRefreshType(enum.StrEnum):
+    with_filter = enum.auto()
+    without_filter = enum.auto()
+
+
 class _IniBaseModel(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, validate_assignment=True)
 
@@ -137,6 +142,11 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str = Field(default="f12", description="Hotkey to exit d4lf", json_schema_extra={IS_HOTKEY_KEY: "True"})
+    force_refresh_only: str = Field(
+        default="ctrl+shift+f11",
+        description="Hotkey to refresh the junk/favorite status of all items in your inventory/stash. A filter is not run after.",
+        json_schema_extra={IS_HOTKEY_KEY: "True"},
+    )
     log_lvl: LogLevels = Field(default=LogLevels.info, description="The level at which logs are written")
     move_to_chest: str = Field(
         default="f8", description="Hotkey to move configured items from inventory to stash", json_schema_extra={IS_HOTKEY_KEY: "True"}

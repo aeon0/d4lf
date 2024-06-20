@@ -72,10 +72,12 @@ def import_diablo_trade(url: str, max_listings: int):
             LOGGER.debug("Reached end")
             break
         for listing in listings:
+            if not (item_type := match_to_enum(enum_class=ItemType, target_string=listing["itemType"])):
+                continue
+            if item_type in [None, ItemType.Material]:
+                continue
             item_rarity = match_to_enum(enum_class=ItemRarity, target_string=listing["rarity"])
             if item_rarity != ItemRarity.Legendary:
-                continue
-            if not (item_type := match_to_enum(enum_class=ItemType, target_string=listing["itemType"])):
                 continue
             listing_obj = _Listing(
                 affixes=_create_affixes_from_api_dict(listing["affixes"]),

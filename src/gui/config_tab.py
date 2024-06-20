@@ -164,7 +164,10 @@ class ConfigTab(QWidget):
         msg.setText(message)
         msg.setWindowTitle("Reset to default values?")
         msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
-        if msg.exec():
+
+        result = msg.exec()  # Store the result of msg.exec()
+
+        if result == QMessageBox.StandardButton.Ok:
             IniConfigLoader().load(clear=True)
             self._reset_values_for_model(IniConfigLoader().general, "general")
             self._reset_values_for_model(IniConfigLoader().char, "char")

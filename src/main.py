@@ -31,17 +31,21 @@ def main():
 
     LOGGER.info(f"Adapt your configs via gui.bat or directly in: {IniConfigLoader().user_dir}")
 
+    if IniConfigLoader().advanced_options.vision_mode_only:
+        LOGGER.info("Vision mode only is enabled. All functionality that clicks the screen is disabled.")
+
     Filter().load_files()
 
     print(f"============ D4 Loot Filter {__version__} ============")
     table = BeautifulTable()
     table.set_style(BeautifulTable.STYLE_BOX_ROUNDED)
     table.rows.append([IniConfigLoader().advanced_options.run_scripts, "Run/Stop Vision Filter"])
-    table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
-    table.rows.append([IniConfigLoader().advanced_options.run_filter_force_refresh, "Force Run/Stop Filter, Resetting Item Status"])
-    table.rows.append([IniConfigLoader().advanced_options.force_refresh_only, "Reset Item Statuses Without A Filter After"])
-    table.rows.append([IniConfigLoader().advanced_options.move_to_inv, "Move Items From Chest To Inventory"])
-    table.rows.append([IniConfigLoader().advanced_options.move_to_chest, "Move Items From Inventory To Chest"])
+    if not IniConfigLoader().advanced_options.vision_mode_only:
+        table.rows.append([IniConfigLoader().advanced_options.run_filter, "Run/Stop Auto Filter"])
+        table.rows.append([IniConfigLoader().advanced_options.run_filter_force_refresh, "Force Run/Stop Filter, Resetting Item Status"])
+        table.rows.append([IniConfigLoader().advanced_options.force_refresh_only, "Reset Item Statuses Without A Filter After"])
+        table.rows.append([IniConfigLoader().advanced_options.move_to_inv, "Move Items From Chest To Inventory"])
+        table.rows.append([IniConfigLoader().advanced_options.move_to_chest, "Move Items From Inventory To Chest"])
     table.rows.append([IniConfigLoader().advanced_options.exit_key, "Exit"])
     table.columns.header = ["hotkey", "action"]
     print(table)
@@ -57,18 +61,18 @@ def main():
     overlay = None
 
     keyboard.add_hotkey(IniConfigLoader().advanced_options.run_scripts, lambda: overlay.run_scripts() if overlay is not None else None)
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
-    keyboard.add_hotkey(
-        IniConfigLoader().advanced_options.run_filter_force_refresh,
-        lambda: overlay.filter_items(ForceRefreshType.with_filter) if overlay is not None else None,
-    )
-    keyboard.add_hotkey(
-        IniConfigLoader().advanced_options.force_refresh_only,
-        lambda: overlay.filter_items(ForceRefreshType.without_filter) if overlay is not None else None,
-    )
     keyboard.add_hotkey(IniConfigLoader().advanced_options.exit_key, lambda: safe_exit())
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())
-    keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_chest, lambda: overlay.move_items_to_stash())
+    if not IniConfigLoader().advanced_options.vision_mode_only:
+        keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
+        keyboard.add_hotkey(
+            IniConfigLoader().advanced_options.run_filter_force_refresh, lambda: overlay.filter_items(True) if overlay is not None else None
+        )
+        keyboard.add_hotkey(
+            IniConfigLoader().advanced_options.force_refresh_only,
+            lambda: overlay.filter_items(ForceRefreshType.without_filter) if overlay is not None else None,
+        )
+        keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())
+        keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_chest, lambda: overlay.move_items_to_stash())
 
     overlay = Overlay()
     overlay.run()

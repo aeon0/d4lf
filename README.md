@@ -73,6 +73,7 @@ The config folder in `C:/Users/WINDOWS_USER/.d4lf` contains:
 | log_level                | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
 | scripts                  | Running different scripts                                                                                                |
 | process_name             | Process name of the D4 app. Defaults to "Diablo IV.exe". In case of using some remote play this might need to be adapted |
+| vision_mode_only         | If set to true, only the vision mode will be available. All functionality that clicks the screen is disabled.            |
 
 ### GUI
 

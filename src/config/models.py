@@ -171,12 +171,22 @@ class AdvancedOptionsModel(_IniBaseModel):
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_filter_force_refresh, self.run_scripts]
+        keys = [
+            self.exit_key,
+            self.force_refresh_only,
+            self.move_to_chest,
+            self.move_to_inv,
+            self.run_filter,
+            self.run_filter_force_refresh,
+            self.run_scripts,
+        ]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_filter", "run_filter_force_refresh", "run_scripts")
+    @field_validator(
+        "exit_key", "force_refresh_only", "move_to_chest", "move_to_inv", "run_filter", "run_filter_force_refresh", "run_scripts"
+    )
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
 

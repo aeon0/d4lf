@@ -417,7 +417,7 @@ class HotkeyListenerDialog(QDialog):
         if non_mod_key in modifiers_str:
             non_mod_key = ""
 
-        key_str = " + ".join(modifiers_str + [non_mod_key])
+        key_str = "+".join(modifiers_str + [non_mod_key])
         self.hotkey = key_str
         self.hotkey_label.setText(key_str)
 

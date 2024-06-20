@@ -33,6 +33,7 @@ class TextLogHandler(logging.Handler):
 
 class Overlay:
     def __init__(self):
+        LOGGER.setLevel(str(IniConfigLoader().advanced_options.log_lvl).upper())
         self.loot_interaction_thread = None
         self.script_threads = []
         self.is_minimized = True

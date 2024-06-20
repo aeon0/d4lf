@@ -61,6 +61,8 @@ def fix_weapon_type(input_str: str) -> ItemType | None:
         return ItemType.Dagger
     if "bow" in input_str:
         return ItemType.Bow
+    if "polearm" in input_str:
+        return ItemType.Polearm
     return None
 
 
@@ -100,11 +102,11 @@ def get_class_name(input_str: str) -> str:
     return "Unknown"
 
 
-def get_with_retry(url: str) -> httpx.Response:
+def get_with_retry(url: str, custom_headers: dict[str, str] | None = None) -> httpx.Response:
     for _ in range(10):
         try:
-            r = httpx.get(url, headers=HEADERS)
-        except httpx.ReadTimeout:
+            r = httpx.get(url, headers=custom_headers if custom_headers is not None else HEADERS)
+        except httpx.RequestError:
             LOGGER.debug(f"Request {url} timed out, retrying...")
             continue
         if r.status_code != 200:

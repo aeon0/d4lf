@@ -26,11 +26,7 @@ jobs:
 
       - name: Pytest
         shell: powershell
-        run: pytest . -m "not requests and not selenium" -v
-
-      - name: Pytest requests
-        shell: powershell
-        run: pytest . -m "requests" -v -n auto
+        run: pytest . -m "not selenium" -v -n logical
 
 #      - name: Pytest selenium
 #        shell: powershell

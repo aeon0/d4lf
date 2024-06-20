@@ -113,7 +113,9 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
             if affix["id"] != affix_id["nid"]:
                 continue
             attr_desc = ""
-            if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
+            if affix["id"] == 1014505:
+                attr_desc = "evade grants movement speed for second"
+            elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
                 "AffixFlatResourceUpto4",
                 "AffixResourceOnKill",
                 "AffixSingleResist",
@@ -198,7 +200,7 @@ if __name__ == "__main__":
     src.logger.setup()
     os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
-        "https://maxroll.gg/d4/planner/f5awh02y#1",
+        "https://maxroll.gg/d4/planner/p6c50vom",
     ]
     for X in URLS:
         import_maxroll(url=X)

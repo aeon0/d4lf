@@ -54,10 +54,7 @@ class Gui(QMainWindow):
         self.setWindowTitle(f"D4LF v{__version__}")
         self.setGeometry(0, 0, 650, 800)
 
-        # Center the window on the screen
-        screen = QApplication.primaryScreen()
-        rect = screen.geometry()
-        self.move(rect.width() // 2 - self.width() // 2, (rect.height() // 2 - self.height() // 2) - 30)
+        self.showMaximized()
 
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setTabBar(_CustomTabBar())

@@ -173,7 +173,6 @@ class ConfigTab(QWidget):
             self._reset_values_for_model(IniConfigLoader().char, "char")
             self._reset_values_for_model(IniConfigLoader().advanced_options, "advanced_options")
 
-
     def _reset_values_for_model(self, model, section_config_header):
         for parameter in model:
             config_key, config_value = parameter

@@ -12,7 +12,7 @@ import src.logger
 from src import __version__
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import ForceRefreshType
+from src.config.models import ItemRefreshType
 from src.gui.qt_gui import start_gui
 from src.item.filter import Filter
 from src.logger import LOG_DIR
@@ -65,11 +65,12 @@ def main():
     if not IniConfigLoader().advanced_options.vision_mode_only:
         keyboard.add_hotkey(IniConfigLoader().advanced_options.run_filter, lambda: overlay.filter_items() if overlay is not None else None)
         keyboard.add_hotkey(
-            IniConfigLoader().advanced_options.run_filter_force_refresh, lambda: overlay.filter_items(True) if overlay is not None else None
+            IniConfigLoader().advanced_options.run_filter_force_refresh,
+            lambda: overlay.filter_items(ItemRefreshType.force_with_filter) if overlay is not None else None,
         )
         keyboard.add_hotkey(
             IniConfigLoader().advanced_options.force_refresh_only,
-            lambda: overlay.filter_items(ForceRefreshType.without_filter) if overlay is not None else None,
+            lambda: overlay.filter_items(ItemRefreshType.force_without_filter) if overlay is not None else None,
         )
         keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())
         keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_chest, lambda: overlay.move_items_to_stash())

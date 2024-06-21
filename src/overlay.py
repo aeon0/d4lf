@@ -4,6 +4,8 @@ import threading
 import tkinter as tk
 import typing
 
+from config.models import ItemRefreshType
+
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.ui import ResManager
@@ -33,7 +35,6 @@ class TextLogHandler(logging.Handler):
 
 class Overlay:
     def __init__(self):
-        LOGGER.setLevel(str(IniConfigLoader().advanced_options.log_lvl).upper())
         self.loot_interaction_thread = None
         self.script_threads = []
         self.is_minimized = True
@@ -102,7 +103,8 @@ class Overlay:
 
         # Setup the listbox logger handler
         textlog_handler = TextLogHandler(self.terminal_text)
-        textlog_handler.setLevel(LOGGER.level)
+        log_level = LOGGER.root.handlers[0].level if LOGGER.root.handlers[0] else 0
+        textlog_handler.setLevel(log_level)
         LOGGER.root.addHandler(textlog_handler)
 
         if IniConfigLoader().general.run_vision_mode_on_startup:
@@ -144,7 +146,7 @@ class Overlay:
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
         move_window_to_foreground(win_spec)
 
-    def filter_items(self, force_refresh=False):
+    def filter_items(self, force_refresh=ItemRefreshType.no_refresh):
         self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
 
     def move_items_to_inventory(self):

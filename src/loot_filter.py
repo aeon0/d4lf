@@ -5,7 +5,7 @@ import keyboard
 
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import ForceRefreshType, HandleRaresType
+from src.config.models import HandleRaresType, ItemRefreshType
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
@@ -21,14 +21,14 @@ from src.utils.window import screenshot
 LOGGER = logging.getLogger(__name__)
 
 
-def check_items(inv: InventoryBase, force_refresh: ForceRefreshType):
+def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
     occupied, _ = inv.get_item_slots()
 
-    if force_refresh:
+    if force_refresh == ItemRefreshType.force_with_filter or force_refresh == ItemRefreshType.force_without_filter:
         reset_item_status(occupied, inv)
         occupied, _ = inv.get_item_slots()
 
-    if force_refresh == ForceRefreshType.without_filter:
+    if force_refresh == ItemRefreshType.force_without_filter:
         return
 
     num_fav = sum(1 for slot in occupied if slot.is_fav)
@@ -137,7 +137,7 @@ def reset_item_status(occupied, inv):
         mouse.move(*Cam().abs_window_to_monitor((0, 0)))
 
 
-def run_loot_filter(force_refresh: ForceRefreshType = None):
+def run_loot_filter(force_refresh: ItemRefreshType = ItemRefreshType.no_refresh):
     mouse.move(*Cam().abs_window_to_monitor((0, 0)))
     LOGGER.info("Run Loot filter")
     inv = CharInventory()

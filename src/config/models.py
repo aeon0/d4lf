@@ -52,9 +52,10 @@ class ComparisonType(enum.StrEnum):
     smaller = enum.auto()
 
 
-class ForceRefreshType(enum.StrEnum):
-    with_filter = enum.auto()
-    without_filter = enum.auto()
+class ItemRefreshType(enum.StrEnum):
+    force_with_filter = enum.auto()
+    force_without_filter = enum.auto()
+    no_refresh = enum.auto()
 
 
 class _IniBaseModel(BaseModel):

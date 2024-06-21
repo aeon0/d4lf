@@ -27,14 +27,22 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 ### Quick start guide
 
 - Download and extract the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
-- Generate a profile, either manually by looking at the examples below or by importing a planner or guide using the GUI in the downloaded folder.
-- Place the profile in the .d4lf/profiles folder in your Windows user directory and use the GUI Config tab to configure the profiles field to include your profile.
-- Execute d4lf.exe and go to your D4 screen
+- Generate a profile of what you want to filter for. To do so you have a few options:
+  - Open gui.bat and import a profile by pasting a build page from popular planner websites
+  - Take one someone else has generated from our [discord](https://discord.gg/YyzaPhAN6T)
+  - Create one yourself by looking at the [examples](#how-to-filter--profiles) below
+- If downloaded or created manually, place the profile in the .d4lf/profiles folder in your Windows user directory. This is typically C:\Users\<username>\. The GUI importer has a button to open this folder directly.
+- Run gui.bat and use the GUI config tab to configure the profiles. Select the '...' next to profiles to activate which profiles you want to use.
+- Execute d4lf.exe and launch Diablo 4.
 - There is a small overlay on the center bottom with buttons:
     - max/min: Show or hide the console output
     - filter: Auto filter inventory and stash if open (number of stash tabs configurable)
     - vision: Turn vision mode (overlay) on/off
 - Alternative use the hotkeys. e.g. f11 for filtering
+
+### Common problems
+
+- 
 
 ### Configs
 
@@ -81,7 +89,7 @@ Documentation is not yet finished. For now, it should be self-explanatory. Just 
 Current functionality:
 - Import builds from maxroll/d4builds/mobalytics
 - Create profiles based off of searches for diablo.trade
-- Complete management of your params.ini through the Config tab
+- Complete management of your params.ini through the config tab
 
 Each tab gives further instructions on how to use it and what kind of input it expects.
 

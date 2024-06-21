@@ -27,18 +27,31 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 ### Quick start guide
 
 - Download and extract the latest version (.zip) from the releases: https://github.com/aeon0/d4lf/releases
-- Generate a profile, either manually by looking at the examples below or by importing a planner or guide using the GUI in the downloaded folder.
-- Place the profile in the .d4lf/profiles folder in your Windows user directory and use the GUI Config tab to configure the profiles field to include your profile.
-- Execute d4lf.exe and go to your D4 screen
+- Generate a profile of what you want to filter for. To do so you have a few options:
+  - Open gui.bat and import a profile by pasting a build page from popular planner websites
+  - Take one someone else has generated from our [discord](https://discord.gg/YyzaPhAN6T)
+  - Create one yourself by looking at the [examples](#how-to-filter--profiles) below
+- If downloaded or created manually, place the profile in the `C:/Users/<WINDOWS_USER>/.d4lf/profiles` folder. The GUI importer has a button to open this folder directly. If imported they are placed there automatically.
+- Run gui.bat and use the GUI config tab to configure the profiles. Select the '...' next to profiles to activate which profiles you want to use.
+- Execute d4lf.exe and launch Diablo 4.
 - There is a small overlay on the center bottom with buttons:
     - max/min: Show or hide the console output
     - filter: Auto filter inventory and stash if open (number of stash tabs configurable)
     - vision: Turn vision mode (overlay) on/off
-- Alternative use the hotkeys. e.g. f11 for filtering
+- Alternatively use the hotkeys. e.g. f11 for filtering
+
+### Common problems
+
+- The GUI crashes immediately upon opening, with no error message given
+  - This almost always means there is an issue in your params.ini. Delete the file and then open the GUI and configure your params.ini through the config tab. Using the GUI for configuration will ensure the file is always accurate.
+- I'm used to my profiles being in the downloaded d4lf folder, where are they?
+  - This was never the recommended place to keep the profiles. They should now be placed in your Windows user folder so that you don't need to move them around for every update. Use the GUI to open up that folder directly.
+- My imported affix fields look different than those in the examples
+  - An example affix might look like `[ dexterity, 33 ]` whereas an imported one can look like `{name: dexterity, value: 33}`. These are identical and either format can be used interchangeably.
 
 ### Configs
 
-The config folder in `C:/Users/WINDOWS_USER/.d4lf` contains:
+The config folder in `C:/Users/<WINDOWS_USER>/.d4lf` contains:
 
 - __profiles/*.yaml__: These files determine what should be filtered. Profiles created by the GUI will be placed here automatically.
 - __params.ini__: Different hotkey settings and number of chest stashes that should be looked at. Management of this file should be done through the GUI.
@@ -82,7 +95,7 @@ Documentation is not yet finished. For now, it should be self-explanatory. Just 
 Current functionality:
 - Import builds from maxroll/d4builds/mobalytics
 - Create profiles based off of searches for diablo.trade
-- Complete management of your params.ini through the Config tab
+- Complete management of your params.ini through the config tab
 
 Each tab gives further instructions on how to use it and what kind of input it expects.
 
@@ -102,11 +115,12 @@ no `Sigils` section in any profile), all corresponding items (in this case, sigi
 
 ### Affix / Aspects Filter Syntax
 
-You have two choices on how to specify aspects or affixes of an item:
+You have three choices on how to specify aspects or affixes of an item:
 
 - You can use the shorthand and just specify the aspect name
 - For more sophisticated filtering, you can use the following syntax: `[NAME, THRESHOLD, CONDITION]`. The
   condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
+- Affixes generated through the importer have a different format but function the exact same as the ones below. An example of an imported affix is `{name: dexterity, value: 33, comparison: larger}`. Like the example affixes, populating the value and comparison fields is optional.
 
 <details><summary>Examples</summary>
 

@@ -103,7 +103,7 @@ class Overlay:
 
         # Setup the listbox logger handler
         textlog_handler = TextLogHandler(self.terminal_text)
-        log_level = LOGGER.root.handlers[0].level if LOGGER.root.handlers[0] else 0
+        log_level = LOGGER.root.handlers[0].level if LOGGER.root.handlers else 0
         textlog_handler.setLevel(log_level)
         LOGGER.root.addHandler(textlog_handler)
 

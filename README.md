@@ -82,6 +82,7 @@ The config folder in `C:/Users/<WINDOWS_USER>/.d4lf` contains:
 | run_scripts              | Hotkey to start/stop vision mode                                                                                         |
 | run_filter               | Hotkey to start/stop filtering items                                                                                     |
 | run_filter_force_refresh | Hotkey to start/stop filtering items with a force refresh. All item statuses will be reset                               |
+| force_refresh_only       | Hotkey to reset all item statuses without running a filter after                                                         |
 | exit_key                 | Hotkey to exit d4lf.exe                                                                                                  |
 | log_level                | Logging level. Can be any of [debug, info, warning, error, critical]                                                     |
 | scripts                  | Running different scripts                                                                                                |

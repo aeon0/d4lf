@@ -52,6 +52,12 @@ class ComparisonType(enum.StrEnum):
     smaller = enum.auto()
 
 
+class ItemRefreshType(enum.StrEnum):
+    force_with_filter = enum.auto()
+    force_without_filter = enum.auto()
+    no_refresh = enum.auto()
+
+
 class _IniBaseModel(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, validate_assignment=True)
 
@@ -137,6 +143,11 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
 class AdvancedOptionsModel(_IniBaseModel):
     exit_key: str = Field(default="f12", description="Hotkey to exit d4lf", json_schema_extra={IS_HOTKEY_KEY: "True"})
+    force_refresh_only: str = Field(
+        default="ctrl+shift+f11",
+        description="Hotkey to refresh the junk/favorite status of all items in your inventory/stash. A filter is not run after.",
+        json_schema_extra={IS_HOTKEY_KEY: "True"},
+    )
     log_lvl: LogLevels = Field(default=LogLevels.info, description="The level at which logs are written")
     move_to_chest: str = Field(
         default="f8", description="Hotkey to move configured items from inventory to stash", json_schema_extra={IS_HOTKEY_KEY: "True"}
@@ -164,12 +175,22 @@ class AdvancedOptionsModel(_IniBaseModel):
 
     @model_validator(mode="after")
     def key_must_be_unique(self) -> "AdvancedOptionsModel":
-        keys = [self.exit_key, self.move_to_chest, self.move_to_inv, self.run_filter, self.run_filter_force_refresh, self.run_scripts]
+        keys = [
+            self.exit_key,
+            self.force_refresh_only,
+            self.move_to_chest,
+            self.move_to_inv,
+            self.run_filter,
+            self.run_filter_force_refresh,
+            self.run_scripts,
+        ]
         if len(set(keys)) != len(keys):
             raise ValueError("hotkeys must be unique")
         return self
 
-    @field_validator("exit_key", "move_to_chest", "move_to_inv", "run_filter", "run_filter_force_refresh", "run_scripts")
+    @field_validator(
+        "exit_key", "force_refresh_only", "move_to_chest", "move_to_inv", "run_filter", "run_filter_force_refresh", "run_scripts"
+    )
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
 

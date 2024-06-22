@@ -4,10 +4,9 @@ import threading
 import tkinter as tk
 import typing
 
-from config.models import ItemRefreshType
-
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
+from src.config.models import ItemRefreshType
 from src.config.ui import ResManager
 from src.loot_filter import run_loot_filter
 from src.loot_mover import move_items_to_inventory, move_items_to_stash

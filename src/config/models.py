@@ -246,6 +246,10 @@ class GeneralModel(_IniBaseModel):
     language: str = Field(
         default="enUS", description="Do not change. Only English is supported at this time", json_schema_extra={HIDE_FROM_GUI_KEY: "True"}
     )
+    minimum_overlay_font_size: int = Field(
+        default=12,
+        description="The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching.",
+    )
     move_to_inv_item_type: MoveItemsType = Field(
         default=MoveItemsType.non_favorites,
         description="When doing stash/inventory transfer, what types of items should be moved",
@@ -288,6 +292,12 @@ class GeneralModel(_IniBaseModel):
     def transparency_in_range(cls, v: float) -> float:
         if not 0 <= v <= 1:
             raise ValueError("must be in [0, 1]")
+        return v
+
+    @field_validator("minimum_overlay_font_size")
+    def font_size_in_range(cls, v: int) -> int:
+        if not 10 <= v <= 20:
+            raise ValueError("Font size must be between 10 and 20, inclusive")
         return v
 
 

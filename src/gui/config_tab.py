@@ -30,6 +30,7 @@ from PyQt6.QtWidgets import (
 
 from src.config.loader import IniConfigLoader
 from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
+from src.gui.open_user_config_button import OpenUserConfigButton
 
 CONFIG_TABNAME = "config"
 
@@ -64,7 +65,11 @@ class ConfigTab(QWidget):
         scroll_area = QScrollArea(self)
         scroll_area.setWidgetResizable(True)
 
-        scrollable_layout.addWidget(self._setup_reset_button())
+        button_hbox = QHBoxLayout()
+        button_hbox.addWidget(self._setup_reset_button())
+        button_hbox.addWidget(OpenUserConfigButton())
+
+        scrollable_layout.addLayout(button_hbox)
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().general, "General", "general"))
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().char, "Character", "char"))
         scrollable_layout.addWidget(self._generate_params_section(IniConfigLoader().advanced_options, "Advanced", "advanced_options"))

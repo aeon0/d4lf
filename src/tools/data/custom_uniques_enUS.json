@@ -1,8 +1,18 @@
 {
-    "azurewrath": {
-        "desc": "lucky hit your skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
-        "full": "",
-        "num_idx": [1],
-        "snoId": 0
-    }
+	"azurewrath": {
+		"desc": "lucky hit your skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
+		"full": "",
+		"num_idx": [
+			1
+		],
+		"snoId": 0
+	},
+	"eyes_in_the_dark": {
+		"desc": "death trap deals increased damage and will re-arm itself a second time.",
+		"full": "{c_important}Death Trap{/c} deals {c_random}[Affix_Value_1|%x|]{/c} increased damage and will re-arm itself a second time.",
+		"num_idx": [
+			0
+		],
+		"snoId": 942977
+	}
 }

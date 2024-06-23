@@ -252,8 +252,8 @@
         "snoId": 1306301
     },
     "eyes_in_the_dark": {
-        "desc": "death trap deals increased damage. unless it hits a boss or player, death trap will continue to rearm itself until it kills an enemy.",
-        "full": "{c_important}Death Trap{/c} deals {c_random}[Affix_Value_1|%x|]{/c} increased damage. Unless it hits a Boss or Player, {c_important}Death Trap{/c} will continue to re-arm itself until it kills an enemy. ",
+        "desc": "death trap deals increased damage and will re-arm itself a second time.",
+        "full": "{c_important}Death Trap{/c} deals {c_random}[Affix_Value_1|%x|]{/c} increased damage and will re-arm itself a second time.",
         "num_idx": [
             0
         ],

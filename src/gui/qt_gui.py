@@ -4,7 +4,7 @@ import pathlib
 import sys
 import threading
 
-from PyQt6.QtCore import QObject, QRegularExpression, QRunnable, QThreadPool, pyqtSignal, pyqtSlot
+from PyQt6.QtCore import QObject, QPoint, QRegularExpression, QRunnable, QSettings, QSize, QThreadPool, pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QColor, QIcon, QRegularExpressionValidator
 from PyQt6.QtWidgets import (
     QApplication,
@@ -51,11 +51,15 @@ def start_gui():
 class Gui(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.settings = QSettings("d4lf", "gui")
 
         self.setWindowTitle(f"D4LF v{__version__}")
-        self.setGeometry(0, 0, 650, 800)
 
-        self.showMaximized()
+        self.resize(self.settings.value("size", QSize(650, 800)))
+        self.move(self.settings.value("pos", QPoint(0, 0)))
+
+        if self.settings.value("maximized", "true") == "true":
+            self.showMaximized()
 
         self.tab_widget = QTabWidget(self)
         self.tab_widget.setTabBar(_CustomTabBar())
@@ -68,6 +72,15 @@ class Gui(QMainWindow):
         LOGGER.root.addHandler(self.maxroll_log_handler)
         self.tab_widget.currentChanged.connect(self._handle_tab_changed)
         self._toggle_dark_mode()
+
+    def closeEvent(self, e):
+        # Write window size, position, and maximized status to config
+        if not self.isMaximized():  # Don't want to save the maximized positioning
+            self.settings.setValue("size", self.size())
+            self.settings.setValue("pos", self.pos())
+        self.settings.setValue("maximized", self.isMaximized())
+
+        e.accept()
 
     def _diablo_trade_tab(self):
         tab_diablo_trade = QWidget(self)

@@ -96,7 +96,7 @@ def get_pc_info():
             key = f"gpu_{i}"
         result[key] = {}
         result[key]["name"] = gpu.Name.strip()
-        result[key]["vram"] = gpu.AdapterRAM / 1024**3
+        result[key]["vram"] = max(gpu.AdapterRAM / 1024**3, 0)
         LOGGER.info(f"GPU: Name: {result[key]["name"]}, VRAM: {result[key]["vram"]} GB")
         i += 1
 
@@ -121,7 +121,7 @@ def get_pc_info():
             key = f"drive_{i}"
         result[key] = {}
         result[key]["model"] = disk_drive.Model.strip()
-        result[key]["size"] = disk_drive.Size / 1024**3
+        result[key]["size"] = int(disk_drive.Size) / 1024**3
         LOGGER.info(f"Drive: Model: {result[key]["model"]}, Size: {result[key]["size"]} GB")
         i += 1
     return result

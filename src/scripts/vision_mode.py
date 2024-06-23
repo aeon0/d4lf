@@ -41,7 +41,7 @@ def draw_text(canvas, text, color, previous_text_y, offset, canvas_center_x) -> 
         return None
 
     font_name = "Courier New"
-    minimum_font_size = 11
+    minimum_font_size = IniConfigLoader().general.minimum_overlay_font_size
 
     font_size = minimum_font_size
     window_height = ResManager().pos.window_dimensions[1]

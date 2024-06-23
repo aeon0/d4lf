@@ -75,55 +75,67 @@ def get_pc_info():
 
     i = 1
     for cpu in w.Win32_Processor():
-        key = "cpu"
-        if i > 1:
-            key = f"cpu_{i}"
-        result[key] = {}
-        result[key]["name"] = cpu.Name.strip()
-        result[key]["cores"] = cpu.NumberOfCores
-        result[key]["threads"] = cpu.NumberOfLogicalProcessors
-        result[key]["current_clock_speed"] = cpu.CurrentClockSpeed
-        result[key]["max_clock_speed"] = cpu.MaxClockSpeed
-        LOGGER.info(
-            f"CPU: Name: {result[key]["name"]}, Cores: {result[key]["cores"]}, Threads: {result[key]["threads"]}, Current Clock Speed: {result[key]["current_clock_speed"]}, Max Clock Speed: {result[key]["max_clock_speed"]}"
-        )
-        i += 1  # noqa SIM113
+        try:
+            key = "cpu"
+            if i > 1:
+                key = f"cpu_{i}"
+            result[key] = {}
+            result[key]["name"] = cpu.Name.strip()
+            result[key]["cores"] = cpu.NumberOfCores
+            result[key]["threads"] = cpu.NumberOfLogicalProcessors
+            result[key]["current_clock_speed"] = cpu.CurrentClockSpeed
+            result[key]["max_clock_speed"] = cpu.MaxClockSpeed
+            LOGGER.info(
+                f"CPU: Name: {result[key]["name"]}, Cores: {result[key]["cores"]}, Threads: {result[key]["threads"]}, Current Clock Speed: {result[key]["current_clock_speed"]}, Max Clock Speed: {result[key]["max_clock_speed"]}"
+            )
+            i += 1  # noqa SIM113
+        except Exception:
+            pass
 
     i = 1
     for gpu in w.Win32_VideoController():
-        key = "gpu"
-        if i > 1:
-            key = f"gpu_{i}"
-        result[key] = {}
-        result[key]["name"] = gpu.Name.strip()
-        result[key]["vram"] = max(gpu.AdapterRAM / 1024**3, 0)
-        LOGGER.info(f"GPU: Name: {result[key]["name"]}, VRAM: {result[key]["vram"]} GB")
-        i += 1
+        try:
+            key = "gpu"
+            if i > 1:
+                key = f"gpu_{i}"
+            result[key] = {}
+            result[key]["name"] = gpu.Name.strip()
+            result[key]["vram"] = max(gpu.AdapterRAM / 1024**3, 0) if gpu.AdapterRAM is not None else 0
+            LOGGER.info(f"GPU: Name: {result[key]["name"]}, VRAM: {result[key]["vram"]} GB")
+            i += 1
+        except Exception:
+            pass
 
     i = 1
     for memory in w.Win32_PhysicalMemory():
-        key = "ram"
-        if i > 1:
-            key = f"ram_{i}"
-        result[key] = {}
-        result[key]["manufacturer"] = memory.Manufacturer.strip()
-        result[key]["speed"] = memory.Speed
-        result[key]["capacity"] = int(memory.Capacity) / 1024**3
-        LOGGER.info(
-            f"RAM: Manufacturer: {result[key]["manufacturer"]}, Speed: {result[key]["speed"]}, Capacity: {result[key]["capacity"]} GB"
-        )
-        i += 1
+        try:
+            key = "ram"
+            if i > 1:
+                key = f"ram_{i}"
+            result[key] = {}
+            result[key]["manufacturer"] = memory.Manufacturer.strip()
+            result[key]["speed"] = memory.Speed
+            result[key]["capacity"] = int(memory.Capacity) / 1024**3 if memory.Capacity is not None else 0
+            LOGGER.info(
+                f"RAM: Manufacturer: {result[key]["manufacturer"]}, Speed: {result[key]["speed"]}, Capacity: {result[key]["capacity"]} GB"
+            )
+            i += 1
+        except Exception:
+            pass
 
     i = 1
     for disk_drive in w.Win32_DiskDrive():
-        key = "drive"
-        if i > 1:
-            key = f"drive_{i}"
-        result[key] = {}
-        result[key]["model"] = disk_drive.Model.strip()
-        result[key]["size"] = int(disk_drive.Size) / 1024**3
-        LOGGER.info(f"Drive: Model: {result[key]["model"]}, Size: {result[key]["size"]} GB")
-        i += 1
+        try:
+            key = "drive"
+            if i > 1:
+                key = f"drive_{i}"
+            result[key] = {}
+            result[key]["model"] = disk_drive.Model.strip()
+            result[key]["size"] = int(disk_drive.Size) / 1024**3 if disk_drive.Size is not None else 0
+            LOGGER.info(f"Drive: Model: {result[key]["model"]}, Size: {result[key]["size"]} GB")
+            i += 1
+        except Exception:
+            pass
     return result
 
 

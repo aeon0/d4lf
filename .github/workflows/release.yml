@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: false # change to true when building benchmarks
 
       - name: Setup env
         uses: ./.github/actions/setup_env

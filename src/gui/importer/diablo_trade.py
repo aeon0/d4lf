@@ -2,14 +2,13 @@ import dataclasses
 import datetime
 import json
 import logging
-import os
-import pathlib
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from pydantic import ValidationError
 
 import src.logger
+from src.config.loader import IniConfigLoader
 from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
@@ -104,7 +103,10 @@ def import_diablo_trade(url: str, max_listings: int):
         profile = ProfileModel(name="diablo_trade", Affixes=_create_filters_from_items(items=all_listings))
     except Exception as exc:
         LOGGER.exception(msg := "Failed to validate profile. Dumping data for debugging.")
-        with open(f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}.json", "w") as f:
+        with open(
+            IniConfigLoader().user_dir / f"diablo_trade_dump_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}.json",
+            "w",
+        ) as f:
             json.dump(all_listings, f, indent=4, sort_keys=True)
         raise DiabloTradeException(msg) from exc
 
@@ -184,7 +186,6 @@ def _create_filters_from_items(items: list[_Listing]) -> list[dict[str, ItemFilt
 
 if __name__ == "__main__":
     src.logger.setup()
-    os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = ["https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest"]
     for x in URLS:
         import_diablo_trade(url=x, max_listings=400)

@@ -3,7 +3,6 @@ from __future__ import annotations
 import datetime
 import logging
 import logging.handlers
-import pathlib
 import sys
 import threading
 import typing
@@ -11,6 +10,7 @@ import typing
 import colorama
 
 from src import __version__
+from src.config import BASE_DIR
 
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
@@ -19,7 +19,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger(__name__)
 
-LOG_DIR = pathlib.Path() / "logs"
+LOG_DIR = BASE_DIR / "logs"
 
 
 class ColoredFormatter(logging.Formatter):

@@ -1,7 +1,5 @@
 import json
 import logging
-import os
-import pathlib
 import re
 
 import lxml.html
@@ -198,7 +196,6 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
 
 if __name__ == "__main__":
     src.logger.setup()
-    os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://maxroll.gg/d4/planner/p6c50vom",
     ]

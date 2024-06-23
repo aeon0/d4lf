@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from tesserocr import OEM, RIL, PyTessBaseAPI
 
+from src.config import BASE_DIR
 from src.config.data import COLORS
 from src.config.loader import IniConfigLoader
 from src.utils.image_operations import color_filter
@@ -11,7 +12,7 @@ from src.utils.ocr.models import OcrResult
 
 LOGGER = logging.getLogger(__name__)
 
-TESSDATA_PATH = "assets/tessdata"
+TESSDATA_PATH = BASE_DIR / "assets/tessdata"
 
 #   0    Orientation and script detection (OSD) only.
 #   1    Automatic page segmentation with OSD.
@@ -38,7 +39,7 @@ API = None
 
 def load_api():
     global API
-    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=IniConfigLoader().general.language)
+    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=str(TESSDATA_PATH), lang=IniConfigLoader().general.language)
     API.SetVariable("debug_file", "/dev/null")
 
 

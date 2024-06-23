@@ -1,9 +1,8 @@
 import json
 import logging
-import os
 import threading
-from pathlib import Path
 
+from src.config import BASE_DIR
 from src.config.loader import IniConfigLoader
 from src.item.data.item_type import ItemType
 
@@ -35,16 +34,16 @@ class Dataloader:
         return cls._instance
 
     def load_data(self):
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/affixes.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/affixes.json", encoding="utf-8") as f:
             self.affix_dict: dict = json.load(f)
 
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/corrections.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/corrections.json", encoding="utf-8") as f:
             data = json.load(f)
             self.error_map = data["error_map"]
             self.filter_after_keyword = data["filter_after_keyword"]
             self.filter_words = data["filter_words"]
 
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/item_types.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/item_types.json", encoding="utf-8") as f:
             data = json.load(f)
             for item, value in data.items():
                 if item in ItemType.__members__:
@@ -53,7 +52,7 @@ class Dataloader:
                 else:
                     LOGGER.warning(f"{item} type not in item_type.py")
 
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/sigils.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/sigils.json", encoding="utf-8") as f:
             affix_sigil_dict_all = json.load(f)
             self.affix_sigil_dict = {
                 **affix_sigil_dict_all["dungeons"],
@@ -62,10 +61,10 @@ class Dataloader:
                 **affix_sigil_dict_all["positive"],
             }
 
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/tooltips.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/tooltips.json", encoding="utf-8") as f:
             self.tooltips = json.load(f)
 
-        with open(Path(os.curdir) / f"assets/lang/{IniConfigLoader().general.language}/uniques.json", encoding="utf-8") as f:
+        with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/uniques.json", encoding="utf-8") as f:
             data = json.load(f)
             for key, d in data.items():
                 # Note: If you adjust the :45, also adjust it in find_aspect.py

@@ -1,37 +1,29 @@
-import argparse
 import os
 import shutil
-import site
 from pathlib import Path
-
-from cryptography.fernet import Fernet
 
 from src import __version__
 
+BENCHMARK_EXE_NAME = "d4lf_benchmark.exe"
 EXE_NAME = "d4lf.exe"
 
 
-def build(use_key: bool, release_dir: Path):
-    clean_up()
-    if release_dir.exists():
-        shutil.rmtree(release_dir)
-    key_cmd = " "
-    if use_key:
-        key = Fernet.generate_key().decode("utf-8")
-        key_cmd = " --key " + key
-    installer_cmd = (
-        f"pyinstaller --clean --onefile --distpath {release_dir}{key_cmd} --paths .\\src --paths {site.getsitepackages()[1]} src\\main.py"
-    )
+def build(release_dir: Path):
+    installer_cmd = f"pyinstaller --clean --onefile --distpath {release_dir} --paths src src\\main.py"
     os.system(installer_cmd)
     (release_dir / "main.exe").rename(release_dir / EXE_NAME)
 
 
-# clean up
+def build_benchmark(release_dir: Path):
+    installer_cmd = f'pyinstaller --clean --onefile --distpath {release_dir} --paths .\\src --add-data "benchmarks\\assets;assets" benchmarks\\imageproc.py'
+    os.system(installer_cmd)
+    (release_dir / "imageproc.exe").rename(release_dir / BENCHMARK_EXE_NAME)
+
+
 def clean_up():
-    # pyinstaller
     if (build_dir := Path("build")).exists():
         shutil.rmtree(build_dir)
-    if (p := Path("main.spec")).exists():
+    for p in Path.cwd().glob("*.spec"):
         p.unlink()
 
 
@@ -49,13 +41,15 @@ def create_batch_for_gui(release_dir: Path, exe_name: str):
 
 
 if __name__ == "__main__":
-    PARSER = argparse.ArgumentParser(description="Build d4lf")
-    PARSER.add_argument("-k", "--use_key", action="store_true", help="Will build with encryption key")
-    ARGS = PARSER.parse_args()
-
+    os.chdir(Path(__file__).parent)
     print(f"Building version: {__version__}")
     RELEASE_DIR = Path(f"d4lf_v{__version__}")
-
-    build(use_key=ARGS.use_key, release_dir=RELEASE_DIR)
+    if RELEASE_DIR.exists():
+        shutil.rmtree(RELEASE_DIR.absolute())
+    RELEASE_DIR.mkdir(exist_ok=True, parents=True)
+    clean_up()
+    build(release_dir=RELEASE_DIR)
+    # build_benchmark(release_dir=RELEASE_DIR)
     copy_additional_resources(RELEASE_DIR)
     create_batch_for_gui(release_dir=RELEASE_DIR, exe_name=EXE_NAME)
+    clean_up()

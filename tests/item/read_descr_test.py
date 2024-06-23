@@ -1,9 +1,8 @@
-import time
-
 import cv2
 import pytest
 
 from src.cam import Cam
+from src.config import BASE_DIR
 from src.item.data.affix import Affix, AffixType
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
@@ -11,7 +10,7 @@ from src.item.descr.read_descr import read_descr
 from src.item.models import Item
 
 # def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray) -> Item:
-BASE_PATH = "tests/assets/item"
+BASE_PATH = BASE_DIR / "tests/assets/item"
 
 legendary = [
     (
@@ -337,9 +336,7 @@ sigil = [
 def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
-    start = time.time()
     item = read_descr(expected_item.rarity, img)
-    print("Runtime (read_descr()): ", time.time() - start)
     assert item == expected_item
 
 

@@ -1,4 +1,3 @@
-import concurrent.futures
 import logging
 import threading
 import time
@@ -7,6 +6,7 @@ from dataclasses import dataclass
 import cv2
 import numpy as np
 
+from src import TP
 from src.cam import Cam
 from src.config.data import COLORS, Template
 from src.config.ui import ResManager
@@ -16,7 +16,6 @@ from src.utils.roi_operations import get_center
 
 LOGGER = logging.getLogger(__name__)
 
-EXECUTOR = concurrent.futures.ThreadPoolExecutor()
 TEMPLATES_LOCK = threading.Lock()
 
 
@@ -252,7 +251,7 @@ def search(
         img = Cam().grab() if inp_img is None else inp_img
         if do_multi_process:
             for template in templates:
-                future = EXECUTOR.submit(_process_cv_result, template, img)
+                future = TP.submit(_process_cv_result, template, img)
                 future_list.append(future)
 
                 for i in future_list:

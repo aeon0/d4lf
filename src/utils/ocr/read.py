@@ -1,4 +1,6 @@
 import logging
+import threading
+import uuid
 
 import cv2
 import numpy as np
@@ -6,41 +8,60 @@ from tesserocr import OEM, RIL, PyTessBaseAPI
 
 from src.config import BASE_DIR
 from src.config.data import COLORS
+from src.config.helper import singleton
 from src.config.loader import IniConfigLoader
 from src.utils.image_operations import color_filter
 from src.utils.ocr.models import OcrResult
 
 LOGGER = logging.getLogger(__name__)
 
-TESSDATA_PATH = BASE_DIR / "assets/tessdata"
 
-#   0    Orientation and script detection (OSD) only.
-#   1    Automatic page segmentation with OSD.
-#   2    Automatic page segmentation, but no OSD, or OCR.
-#   3    Fully automatic page segmentation, but no OSD. (Default)
-#   4    Assume a single column of text of variable sizes.
-#   5    Assume a single uniform block of vertically aligned text.
-#   6    Assume a single uniform block of text.
-#   7    Treat the image as a single text line.
-#   8    Treat the image as a single word.
-#   9    Treat the image as a single word in a circle.
-#  10    Treat the image as a single character.
-#  11    Sparse text. Find as much text as possible in no particular order.
-#  12    Sparse text with OSD.
-#  13    Raw line. Treat the image as a single text line,
-#           bypassing hacks that are Tesseract-specif
+@singleton
+class _APILoader:
+    tessdata_path = BASE_DIR / "assets/tessdata"
 
-API: None | PyTessBaseAPI = None
+    def __init__(self):
+        self._apis = []
+        self._lock = threading.Lock()
+
+    def get_api(self, user: uuid.UUID) -> PyTessBaseAPI:
+        with self._lock:
+            for api in self._apis:
+                if not api["user"]:
+                    api["user"] = user
+                    return api["api"]
+            new_api = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=str(self.tessdata_path), lang=IniConfigLoader().general.language)
+            new_api.SetVariable("debug_file", "/dev/null")
+            self._apis.append({"api": new_api, "user": user})
+            return new_api
+
+    def release_api(self, user: uuid.UUID) -> None:
+        with self._lock:
+            for api in self._apis:
+                if api["user"] == user:
+                    api["user"] = ""
+                    return
+        LOGGER.warning(f"API for {user} not found!")
 
 
-# supposed to give fruther runtime improvements, but reading performance really goes down...
-# API.SetVariable("tessedit_do_invert", "0")
-
-
-def load_api():
-    global API
-    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=str(TESSDATA_PATH), lang=IniConfigLoader().general.language)
-    API.SetVariable("debug_file", "/dev/null")
+def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool = True) -> OcrResult | tuple[OcrResult, list[int]]:
+    my_id = uuid.uuid4()
+    api = _APILoader().get_api(my_id)
+    if img is None or len(img) == 0:
+        LOGGER.warning("img provided to image_to_text() is empty!")
+        return OcrResult("", "", word_confidences=0, mean_confidence=0), [] if line_boxes else ""
+    final_img = img
+    if do_pre_proc:
+        final_img = _pre_proc_img(img)
+    api.SetImageBytes(*_img_to_bytes(final_img))
+    text = api.GetUTF8Text().strip()
+    res = OcrResult(original_text=text, text=text, word_confidences=api.AllWordConfidences(), mean_confidence=api.MeanTextConf())
+    if line_boxes:
+        line_boxes_res = api.GetComponentImages(RIL.TEXTLINE, True)
+        _APILoader().release_api(my_id)
+        return res, line_boxes_res
+    _APILoader().release_api(my_id)
+    return res
 
 
 def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
@@ -63,28 +84,7 @@ def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
     return image.tobytes(), width, height, bytes_per_pixel, bytes_per_line
 
 
-def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool = True) -> OcrResult | tuple[OcrResult, list[int]]:
-    if API is None:
-        load_api()
-
-    if img is None or len(img) == 0:
-        LOGGER.warning("img provided to image_to_text() is empty!")
-        return OcrResult("", "", word_confidences=0, mean_confidence=0), [] if line_boxes else ""
-
-    if do_pre_proc:
-        pre_proced_img = pre_proc_img(img)
-        API.SetImageBytes(*_img_to_bytes(pre_proced_img))
-    else:
-        API.SetImageBytes(*_img_to_bytes(img))
-    text = API.GetUTF8Text().strip()
-    res = OcrResult(original_text=text, text=text, word_confidences=API.AllWordConfidences(), mean_confidence=API.MeanTextConf())
-    if line_boxes:
-        line_boxes_res = API.GetComponentImages(RIL.TEXTLINE, True)
-        return res, line_boxes_res
-    return res
-
-
-def pre_proc_img(input_img: np.ndarray) -> np.ndarray:
+def _pre_proc_img(input_img: np.ndarray) -> np.ndarray:
     img = input_img.copy()
     masked_red, _ = color_filter(img, COLORS.unusable_red, False)
     contours, _ = cv2.findContours(masked_red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)

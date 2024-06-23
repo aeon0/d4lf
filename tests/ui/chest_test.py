@@ -2,9 +2,10 @@ import cv2
 import pytest
 
 from src.cam import Cam
+from src.config import BASE_DIR
 from src.ui.chest import Chest
 
-BASE_PATH = "tests/assets/ui"
+BASE_PATH = BASE_DIR / "tests/assets/ui"
 
 
 @pytest.mark.parametrize(("img_res", "input_img"), [((3440, 1440), f"{BASE_PATH}/chest_open_1440p_wide.png")])

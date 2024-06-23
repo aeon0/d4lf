@@ -29,6 +29,7 @@ from src.gui.importer.d4builds import import_d4builds
 from src.gui.importer.diablo_trade import import_diablo_trade
 from src.gui.importer.maxroll import import_maxroll
 from src.gui.importer.mobalytics import import_mobalytics
+from src.gui.open_user_config_button import OpenUserConfigButton
 
 LOGGER = logging.getLogger(__name__)
 
@@ -115,8 +116,7 @@ class Gui(QMainWindow):
         generate_button.setEnabled(False)
         generate_button.clicked.connect(generate_button_click)
         hbox2.addWidget(generate_button)
-        profiles_button = QPushButton("Open Userconfig Directory")
-        profiles_button.clicked.connect(self._open_userconfig_directory)
+        profiles_button = OpenUserConfigButton()
         hbox2.addWidget(profiles_button)
         layout.addLayout(hbox2)
 
@@ -197,8 +197,7 @@ class Gui(QMainWindow):
         generate_button.setEnabled(False)
         generate_button.clicked.connect(generate_button_click)
         hbox2.addWidget(generate_button)
-        profiles_button = QPushButton("Open Userconfig Directory")
-        profiles_button.clicked.connect(self._open_userconfig_directory)
+        profiles_button = OpenUserConfigButton()
         hbox2.addWidget(profiles_button)
         layout.addLayout(hbox2)
 
@@ -234,10 +233,6 @@ class Gui(QMainWindow):
         layout.addWidget(instructions_text)
 
         tab_maxroll.setLayout(layout)
-
-    @staticmethod
-    def _open_userconfig_directory():
-        os.startfile(IniConfigLoader().user_dir)
 
     def _toggle_dark_mode(self):
         if QApplication.instance().styleSheet():
@@ -301,13 +296,15 @@ class _CustomTabBar(QTabBar):
 
 
 class _GuiLogHandler(logging.Handler):
-    def __init__(self, text_widget):
+    def __init__(self, text_widget: QTextEdit):
         super().__init__()
         self.text_widget = text_widget
 
     def emit(self, record):
         log_entry = self.format(record)
         self.text_widget.append(log_entry)
+        # Ensures log is scrolled to the bottom as it writes
+        self.text_widget.ensureCursorVisible()
 
 
 class _Worker(QRunnable):

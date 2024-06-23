@@ -1,6 +1,5 @@
 import logging
 import os
-import pathlib
 import sys
 import threading
 
@@ -22,6 +21,7 @@ from PyQt6.QtWidgets import (
 
 import src.logger
 from src import __version__
+from src.config import BASE_DIR
 from src.config.helper import singleton
 from src.config.loader import IniConfigLoader
 from src.gui import config_tab
@@ -41,7 +41,8 @@ MAXROLL_D4B_MOBALYTICS_TABNAME = "maxroll / d4builds / mobalytics"
 def start_gui():
     os.environ["QT_LOGGING_RULES"] = "qt.qpa.window=false"
     app = QApplication([])
-    app.setWindowIcon(QIcon(str(pathlib.Path("assets/logo.png"))))
+
+    app.setWindowIcon(QIcon(str(BASE_DIR / "assets/logo.png")))
     window = Gui()
     window.show()
     sys.exit(app.exec())
@@ -341,6 +342,5 @@ class _WorkerSignals(QObject):
 
 
 if __name__ == "__main__":
-    os.chdir(pathlib.Path(__file__).parent.parent.parent)
     src.logger.setup()
     start_gui()

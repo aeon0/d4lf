@@ -1,6 +1,4 @@
 import logging
-import os
-import pathlib
 import re
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
@@ -156,7 +154,6 @@ def _fix_input_url(url: str) -> str:
 
 if __name__ == "__main__":
     src.logger.setup()
-    os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://mobalytics.gg/diablo-4/builds/barbarian/bash",
         "https://mobalytics.gg/diablo-4/profile/3aeadb5c-522e-47b9-9a17-cdeaaa58909c/builds/4bb9a04e-da1e-449f-91ab-ca29e5727a20",

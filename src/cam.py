@@ -43,7 +43,7 @@ class Cam:
             return
         self.res_key = f"{width}x{height}"
         self.res_p = f"{height}p"
-        LOGGER.info(f"Found Window Res: {self.res_key}")
+        LOGGER.debug(f"Found Window Res: {self.res_key}")
 
         self.window_roi["top"] = offset_y
         self.window_roi["left"] = offset_x
@@ -65,10 +65,10 @@ class Cam:
 
         # wait for offsets to be found
         if not self.is_offset_set():
-            print("Wait for window detection")
+            LOGGER.debug("Wait for window detection")
             while not self.window_offset_set:
                 time.sleep(0.05)
-            print("Found window, continue grabbing")
+            LOGGER.debug("Found window, continue grabbing")
         with cached_img_lock:
             self.last_grab = time.perf_counter()
         with mss.mss() as sct:

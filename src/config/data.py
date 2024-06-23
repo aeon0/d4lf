@@ -8,6 +8,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from src.config import BASE_DIR
 from src.config.models import ColorsModel, HSVRangeModel, UiOffsetsModel, UiPosModel, UiRoiModel
 from src.utils.image_operations import alpha_to_mask
 
@@ -80,7 +81,7 @@ class Template:
 @lru_cache
 def load_templates() -> dict[str, Template]:
     result = {}
-    template_paths = Path("assets\\templates").rglob("*.png")
+    template_paths = Path(BASE_DIR / "assets/templates").rglob("*.png")
     for template in template_paths:
         try:
             template_img = cv2.imread(str(template), cv2.IMREAD_UNCHANGED)

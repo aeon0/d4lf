@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from tesserocr import OEM, RIL, PyTessBaseAPI
 
+from src.config import BASE_DIR
 from src.config.data import COLORS
 from src.config.loader import IniConfigLoader
 from src.utils.image_operations import color_filter
@@ -11,7 +12,7 @@ from src.utils.ocr.models import OcrResult
 
 LOGGER = logging.getLogger(__name__)
 
-TESSDATA_PATH = "assets/tessdata"
+TESSDATA_PATH = BASE_DIR / "assets/tessdata"
 
 #   0    Orientation and script detection (OSD) only.
 #   1    Automatic page segmentation with OSD.
@@ -29,7 +30,7 @@ TESSDATA_PATH = "assets/tessdata"
 #  13    Raw line. Treat the image as a single text line,
 #           bypassing hacks that are Tesseract-specif
 
-API = None
+API: None | PyTessBaseAPI = None
 
 
 # supposed to give fruther runtime improvements, but reading performance really goes down...
@@ -38,7 +39,7 @@ API = None
 
 def load_api():
     global API
-    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=TESSDATA_PATH, lang=IniConfigLoader().general.language)
+    API = PyTessBaseAPI(psm=3, oem=OEM.LSTM_ONLY, path=str(TESSDATA_PATH), lang=IniConfigLoader().general.language)
     API.SetVariable("debug_file", "/dev/null")
 
 
@@ -63,14 +64,6 @@ def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
 
 
 def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool = True) -> OcrResult | tuple[OcrResult, list[int]]:
-    """
-    Extract text from the entire image.
-    :param img: The input image.
-    :param langmodel: The language model to use.
-    :param psm: The PSM mode to use.
-    :param scale: The scaling factor for the image.
-    :return: The OCR result.
-    """
     if API is None:
         load_api()
 
@@ -83,14 +76,10 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
         API.SetImageBytes(*_img_to_bytes(pre_proced_img))
     else:
         API.SetImageBytes(*_img_to_bytes(img))
-    # start = time.time()
     text = API.GetUTF8Text().strip()
-    # print(f"Get Text: {time.time() - start}")
     res = OcrResult(original_text=text, text=text, word_confidences=API.AllWordConfidences(), mean_confidence=API.MeanTextConf())
     if line_boxes:
-        # start = time.time()
         line_boxes_res = API.GetComponentImages(RIL.TEXTLINE, True)
-        # print(f"Get Lines: {time.time() - start}")
         return res, line_boxes_res
     return res
 

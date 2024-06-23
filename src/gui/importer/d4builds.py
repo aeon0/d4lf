@@ -1,7 +1,5 @@
 import datetime
 import logging
-import os
-import pathlib
 import re
 import time
 
@@ -164,7 +162,6 @@ def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
 
 if __name__ == "__main__":
     src.logger.setup()
-    os.chdir(pathlib.Path(__file__).parent.parent.parent.parent)
     URLS = [
         "https://d4builds.gg/builds/463e7337-8fa9-491f-99a0-cbd6c65fc6f4/?var=1",
         "https://d4builds.gg/builds/b5d603bb-4442-42e8-a84d-962e6e42344c?var=0",

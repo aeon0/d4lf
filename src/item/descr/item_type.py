@@ -22,9 +22,7 @@ def read_item_type(
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
 
-    # TODO: Language specific
     if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
-        # process sigil
         item.item_type = ItemType.Sigil
     elif any(
         substring in concatenated_str.lower()
@@ -62,7 +60,6 @@ def read_item_type(
         return None, concatenated_str
 
     return item, concatenated_str
-    # print("Runtime (start_power): ", time.time() - start_power)
 
 
 def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:

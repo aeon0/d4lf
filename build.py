@@ -15,7 +15,7 @@ def build(release_dir: Path):
 
 
 def build_benchmark(release_dir: Path):
-    installer_cmd = f'pyinstaller --clean --onefile --distpath {release_dir} --paths .\\src --add-data "benchmarks\\assets;assets" benchmarks\\imageproc.py'
+    installer_cmd = f'pyinstaller --clean --onefile --distpath {release_dir} --paths src --add-data "benchmarks\\assets;benchmarks\\assets" benchmarks\\imageproc.py'
     os.system(installer_cmd)
     (release_dir / "imageproc.exe").rename(release_dir / BENCHMARK_EXE_NAME)
 

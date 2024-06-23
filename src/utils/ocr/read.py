@@ -30,7 +30,7 @@ TESSDATA_PATH = BASE_DIR / "assets/tessdata"
 #  13    Raw line. Treat the image as a single text line,
 #           bypassing hacks that are Tesseract-specif
 
-API = None
+API: None | PyTessBaseAPI = None
 
 
 # supposed to give fruther runtime improvements, but reading performance really goes down...
@@ -64,14 +64,6 @@ def _img_to_bytes(image: np.ndarray, colorspace: str = "BGR"):
 
 
 def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool = True) -> OcrResult | tuple[OcrResult, list[int]]:
-    """
-    Extract text from the entire image.
-    :param img: The input image.
-    :param langmodel: The language model to use.
-    :param psm: The PSM mode to use.
-    :param scale: The scaling factor for the image.
-    :return: The OCR result.
-    """
     if API is None:
         load_api()
 
@@ -84,14 +76,10 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
         API.SetImageBytes(*_img_to_bytes(pre_proced_img))
     else:
         API.SetImageBytes(*_img_to_bytes(img))
-    # start = time.time()
     text = API.GetUTF8Text().strip()
-    # print(f"Get Text: {time.time() - start}")
     res = OcrResult(original_text=text, text=text, word_confidences=API.AllWordConfidences(), mean_confidence=API.MeanTextConf())
     if line_boxes:
-        # start = time.time()
         line_boxes_res = API.GetComponentImages(RIL.TEXTLINE, True)
-        # print(f"Get Lines: {time.time() - start}")
         return res, line_boxes_res
     return res
 

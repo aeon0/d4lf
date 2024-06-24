@@ -49,8 +49,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find textures for bullets and sockets
     # =========================
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
-    aspect_bullet = find_aspect_bullet(img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
-    item.codex_upgrade = find_codex_upgrade_icon(img_item_descr, aspect_bullet)
+    futures["aspect_bullet"] = (
+        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
+    )
     empty_sockets = find_empty_sockets(img_item_descr, sep_short_match)
 
     # Split affix bullets into inherent and others
@@ -99,6 +100,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         return [], ""
 
     futures["inherent"] = TP.submit(_get_inherent)
+    aspect_bullet = futures["aspect_bullet"].result() if futures["aspect_bullet"] is not None else None
+    futures["codex_upgrade"] = TP.submit(find_codex_upgrade_icon, img_item_descr, aspect_bullet)
 
     # Find normal affixes
     # =========================
@@ -149,5 +152,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             LOGGER.warning(f"Could not find inherent: {debug_str}")
             screenshot("failed_inherent", img=img_item_descr)
         return None
+
+    item.codex_upgrade = futures["codex_upgrade"].result()
 
     return item

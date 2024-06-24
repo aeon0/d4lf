@@ -51,9 +51,8 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 - I'm used to my profiles being in the downloaded d4lf folder, where are they?
     - This was never the recommended place to keep the profiles. They should now be placed in your Windows user folder
       so that you don't need to move them around for every update. Use the GUI to open up that folder directly.
-- My imported affix fields look different than those in the examples
-    - An example affix might look like `[ dexterity, 33 ]` whereas an imported one can look
-      like `{name: dexterity, value: 33}`. These are identical and either format can be used interchangeably.
+- I'm used to affix fields looking like this: `[ dexterity, 33 ]`
+    - Formats like `[ dexterity, 33 ]` are still completely valid. The importer creates affix fields which look like `{name: dexterity, value: 33}`. These are identical and either format can be used interchangeably. We recommend starting all new builds through the importer, so examples show the format the importer uses.
 
 ### Configs
 
@@ -130,13 +129,23 @@ You have three choices on how to specify aspects or affixes of an item:
 - You can use the shorthand and just specify the aspect name
 - For more sophisticated filtering, you can use the following syntax: `[NAME, THRESHOLD, CONDITION]`. The
   condition can be any of `[larger, smaller]` and defaults to `larger` if no value is given.
-- Affixes generated through the importer have a different format but function the exact same as the ones below. An
-  example of an imported affix is `{name: dexterity, value: 33, comparison: larger}`. Like the example affixes,
-  populating the value and comparison fields is optional.
+- Affixes generated through the importer have a different format but function the exact same. An
+  example of an imported affix is `{name: dexterity, value: 33, comparison: larger}`. This is completely interchangeable with the shorthand notation.
+
+As we recommend using the importer for a base version of your build, even if you intend to then manually create your own build, the examples below will use the same format as the importer.
 
 <details><summary>Examples</summary>
 
 ```yaml
+
+# Filter for attack speed
+- { name: attack_speed }
+# Filter for attack speed larger than 4
+- { name: attack_speed, value: 4 }
+# Filter for attack speed smaller than 4
+- { name: attack_speed, value: 4, comparison: smaller }
+
+# Below is the older shorthand, which is still valid to use
 # Filter for attack speed
 - attack_speed
 # Filter for attack speed larger than 4
@@ -180,11 +189,11 @@ Affixes:
       minPower: 725
       affixPool:
         - count:
-            - [ dexterity, 33 ]
-            - [ damage_reduction, 5 ]
-            - [ lucky_hit_chance, 3 ]
-            - [ total_armor, 9 ]
-            - [ maximum_life, 700 ]
+            - { name: dexterity, value: 33 }
+            - { name: damage_reduction, value: 5 }
+            - { name: lucky_hit_chance, value: 3 }
+            - { name: total_armor, value: 9 }
+            - { name: maximum_life, value: 700 }
           minCount: 3
 
   # Search for chest armor that is at least item level 925 and have at least 3 affixes of the affixPool. At least 2 of the matched affixes must be greater affixes
@@ -193,11 +202,11 @@ Affixes:
       minPower: 925
       affixPool:
         - count:
-            - dexterity
-            - damage_reduction
-            - lucky_hit_chance
-            - total_armor
-            - maximum_life
+            - { name: dexterity }
+            - { name: damage_reduction }
+            - { name: lucky_hit_chance }
+            - { name: total_armor }
+            - { name: maximum_life }
           minCount: 3
           minGreaterAffixCount: 2
 
@@ -207,14 +216,14 @@ Affixes:
       minPower: 800
       inherentPool:
         - count:
-            - maximum_evade_charges
-            - attacks_reduce_evades_cooldown_by_seconds
+            - { name: maximum_evade_charges }
+            - { name: attacks_reduce_evades_cooldown_by_seconds }
           minCount: 1
       affixPool:
         - count:
-            - [ movement_speed, 16 ]
-            - [ cold_resistance ]
-            - [ lightning_resistance ]
+            - { name: movement_speed, value: 16 }
+            - { name: cold_resistance }
+            - { name: lightning_resistance }
           minCount: 2
 
   # Search for boots with movement speed and 1 resistances from a pool of shadow, cold, lightning res.
@@ -224,11 +233,11 @@ Affixes:
       minPower: 800
       affixPool:
         - count:
-            - [ movement_speed, 16 ]
+            - { name: movement_speed, value: 16 }
         - count:
-            - [ shadow_resistance ]
-            - [ cold_resistance ]
-            - [ lightning_resistance ]
+            - { name: shadow_resistance }
+            - { name: cold_resistance }
+            - { name: lightning_resistance }
           minCount: 1
 
   # Search for boots with movement speed. At least two of all item affixes must be a greater affix
@@ -238,7 +247,7 @@ Affixes:
       minGreaterAffixCount: 2
       affixPool:
         - count:
-            - [ movement_speed, 16 ]
+            - { name: movement_speed, value: 16 }
 ```
 
 </details>
@@ -369,7 +378,7 @@ Uniques:
   - aspect: [ tibaults_will, 25 ]
     minPower: 900
     affix:
-      - [ damage_reduction_from_close_enemies, 12 ]
+      - { name: damage_reduction_from_close_enemies, value: 12 }
 ```
 
 </details>

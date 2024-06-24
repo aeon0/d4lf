@@ -166,9 +166,8 @@ if __name__ == "__main__":
     try:
         save_results(
             [
-                # TODO REMOVE COMMENT
-                # BenchHelper(resolution=(1920, 1080), anchor=Anchor(icon_width=55, start_x=1240, y=760)).run(),
-                # BenchHelper(resolution=(2560, 1440), anchor=Anchor(icon_width=70, start_x=1685, y=980)).run(),
+                BenchHelper(resolution=(1920, 1080), anchor=Anchor(icon_width=55, start_x=1240, y=760)).run(),
+                BenchHelper(resolution=(2560, 1440), anchor=Anchor(icon_width=70, start_x=1685, y=980)).run(),
                 BenchHelper(resolution=(3840, 2160), anchor=Anchor(icon_width=105, start_x=2515, y=1495)).run(),
             ]
         )

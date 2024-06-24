@@ -17,7 +17,6 @@ from src.gui.qt_gui import start_gui
 from src.item.filter import Filter
 from src.logger import LOG_DIR
 from src.overlay import Overlay
-from src.utils.ocr.read import load_api
 from src.utils.process_handler import safe_exit
 from src.utils.window import WindowSpec, start_detecting_window
 
@@ -55,8 +54,6 @@ def main():
     start_detecting_window(win_spec)
     while not Cam().is_offset_set():
         time.sleep(0.2)
-
-    load_api()
 
     overlay = None
 

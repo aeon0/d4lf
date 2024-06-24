@@ -2,6 +2,7 @@ import logging
 
 import numpy as np
 
+from src import TP
 from src.config.ui import ResManager
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
@@ -16,6 +17,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
+    futures = {}
     base_item = Item(rarity=rarity)
 
     # Find textures for seperator short on top
@@ -47,8 +49,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find textures for bullets and sockets
     # =========================
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
-    aspect_bullet = find_aspect_bullet(img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
-    item.codex_upgrade = find_codex_upgrade_icon(img_item_descr, aspect_bullet)
+    futures["aspect_bullet"] = (
+        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
+    )
     empty_sockets = find_empty_sockets(img_item_descr, sep_short_match)
 
     # Split affix bullets into inherent and others
@@ -72,51 +75,57 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find inherent affixes
     # =========================
     is_sigil = item.item_type == ItemType.Sigil
-    line_height = ResManager().offsets.item_descr_line_height
-    if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
-        bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
-        item.inherent, debug_str = find_affixes(
-            img_item_descr=img_item_descr,
-            affix_bullets=inhernet_affixe_bullets,
-            bottom_limit=bottom_limit,
-            is_sigil=is_sigil,
-            is_inherent=True,
-        )
-        if item.inherent is None:
-            item.inherent, debug_str = find_affixes(
+
+    def _get_inherent():
+        line_height = ResManager().offsets.item_descr_line_height
+        if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
+            bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
+            i_inherent, debug_str = find_affixes(
                 img_item_descr=img_item_descr,
                 affix_bullets=inhernet_affixe_bullets,
                 bottom_limit=bottom_limit,
                 is_sigil=is_sigil,
                 is_inherent=True,
-                do_pre_proc_flag=False,
             )
-        if item.inherent is None:
-            if show_warnings:
-                LOGGER.warning(f"Could not find inherent: {debug_str}")
-                screenshot("failed_inherent", img=img_item_descr)
-            return None
+            if i_inherent is None:
+                i_inherent, debug_str = find_affixes(
+                    img_item_descr=img_item_descr,
+                    affix_bullets=inhernet_affixe_bullets,
+                    bottom_limit=bottom_limit,
+                    is_sigil=is_sigil,
+                    is_inherent=True,
+                    do_pre_proc_flag=False,
+                )
+            return i_inherent, debug_str
+        return [], ""
+
+    futures["inherent"] = TP.submit(_get_inherent)
+    aspect_bullet = futures["aspect_bullet"].result() if futures["aspect_bullet"] is not None else None
+    futures["codex_upgrade"] = TP.submit(find_codex_upgrade_icon, img_item_descr, aspect_bullet)
 
     # Find normal affixes
     # =========================
-    if aspect_bullet is not None:
-        bottom_limit = aspect_bullet.center[1]
-    elif len(empty_sockets) > 0:
-        bottom_limit = empty_sockets[0].center[1]
-    else:
-        bottom_limit = img_item_descr.shape[0]
-    item.affixes, debug_str = find_affixes(
-        img_item_descr=img_item_descr, affix_bullets=affix_bullets, bottom_limit=bottom_limit, is_sigil=is_sigil
-    )
-    if item.affixes is None:
-        item.affixes, debug_str = find_affixes(
-            img_item_descr=img_item_descr, affix_bullets=affix_bullets, bottom_limit=bottom_limit, is_sigil=is_sigil, do_pre_proc_flag=False
+    def _get_affixes():
+        if aspect_bullet is not None:
+            bottom_limit = aspect_bullet.center[1]
+        elif len(empty_sockets) > 0:
+            bottom_limit = empty_sockets[0].center[1]
+        else:
+            bottom_limit = img_item_descr.shape[0]
+        i_affixes, debug_str = find_affixes(
+            img_item_descr=img_item_descr, affix_bullets=affix_bullets, bottom_limit=bottom_limit, is_sigil=is_sigil
         )
-    if item.affixes is None:
-        if show_warnings:
-            LOGGER.warning(f"Could not find affix: {debug_str}")
-            screenshot("failed_affixes", img=img_item_descr)
-        return None
+        if i_affixes is None:
+            i_affixes, debug_str = find_affixes(
+                img_item_descr=img_item_descr,
+                affix_bullets=affix_bullets,
+                bottom_limit=bottom_limit,
+                is_sigil=is_sigil,
+                do_pre_proc_flag=False,
+            )
+        return i_affixes, debug_str
+
+    futures["affixes"] = TP.submit(_get_affixes)
 
     # Find aspects of uniques
     # =========================
@@ -129,5 +138,21 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
                 LOGGER.warning(f"Could not find unique: {debug_str}")
                 screenshot("failed_aspect_or_unique", img=img_item_descr)
             return None
+
+    item.affixes, debug_str = futures["affixes"].result()
+    if item.affixes is None:
+        if show_warnings:
+            LOGGER.warning(f"Could not find affix: {debug_str}")
+            screenshot("failed_affixes", img=img_item_descr)
+        return None
+
+    item.inherent, debug_str = futures["inherent"].result()
+    if item.inherent is None:
+        if show_warnings:
+            LOGGER.warning(f"Could not find inherent: {debug_str}")
+            screenshot("failed_inherent", img=img_item_descr)
+        return None
+
+    item.codex_upgrade = futures["codex_upgrade"].result()
 
     return item

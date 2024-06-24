@@ -65,7 +65,8 @@ def bench_func(func, *args):
 
 
 def bench_helper(func, *args):
-    runs = max(math.ceil(10 / bench_func(func, *args)), 10)
+    # check how long it would take to run the function. aim for 5 seconds (*2 due to overhead). min 10 runs, max 50
+    runs = max(min(math.ceil(5 / bench_func(func, *args)), 50), 10)
     return [bench_func(func, *args) for _ in range(runs)]
 
 

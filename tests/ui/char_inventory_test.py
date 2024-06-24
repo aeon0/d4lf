@@ -2,9 +2,10 @@ import cv2
 import pytest
 
 from src.cam import Cam
+from src.config import BASE_DIR
 from src.ui.char_inventory import CharInventory
 
-BASE_PATH = "tests/assets/ui"
+BASE_PATH = BASE_DIR / "tests/assets/ui"
 
 
 @pytest.mark.parametrize(

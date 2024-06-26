@@ -31,5 +31,6 @@ class ItemType(Enum):
     Wand = "wand"
     TemperManual = "temper manual"
     # Custom Types
+    Incense = "incense"
     Material = "material"
     Sigil = "sigil"

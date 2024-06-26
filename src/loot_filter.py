@@ -91,6 +91,9 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         if item_descr.item_type == ItemType.Elixir:
             LOGGER.info("Matched: Elixir")
             continue
+        if item_descr.item_type == ItemType.Incense:
+            LOGGER.info("Matched: Incense")
+            continue
         if item_descr.item_type == ItemType.TemperManual:
             LOGGER.info("Matched: Temper Manual")
             continue

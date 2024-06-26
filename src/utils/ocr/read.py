@@ -50,7 +50,19 @@ def image_to_text(img: np.ndarray, line_boxes: bool = False, do_pre_proc: bool =
     if img is None or len(img) == 0:
         LOGGER.warning("img provided to image_to_text() is empty!")
         return OcrResult("", "", word_confidences=0, mean_confidence=0), [] if line_boxes else ""
-    final_img = img
+
+    # Apply a border to the image. This weird hack prevents the "Error in boxClipToRectangle" errors.
+    # Read more here: https://github.com/tesseract-ocr/tesseract/issues/427#issuecomment-248153491
+    border_size = 10
+    final_img = cv2.copyMakeBorder(
+        img,
+        top=border_size,
+        bottom=border_size,
+        left=border_size,
+        right=border_size,
+        borderType=cv2.BORDER_CONSTANT,
+        value=[0, 0, 0],
+    )
     if do_pre_proc:
         final_img = _pre_proc_img(img)
     api.SetImageBytes(*_img_to_bytes(final_img))

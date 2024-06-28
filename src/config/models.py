@@ -37,7 +37,7 @@ class MoveItemsType(enum.StrEnum):
     everything = enum.auto()
     junk = enum.auto()
     non_favorites = enum.auto()
-
+    favorites = enum.auto()
 
 class LogLevels(enum.StrEnum):
     debug = enum.auto()

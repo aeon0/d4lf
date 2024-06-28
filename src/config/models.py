@@ -39,6 +39,7 @@ class MoveItemsType(enum.StrEnum):
     non_favorites = enum.auto()
     favorites = enum.auto()
 
+
 class LogLevels(enum.StrEnum):
     debug = enum.auto()
     info = enum.auto()

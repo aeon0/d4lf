@@ -34,8 +34,8 @@ class HandleRaresType(enum.StrEnum):
 
 
 class MoveItemsType(enum.StrEnum):
-    favorites = enum.auto()
     everything = enum.auto()
+    favorites = enum.auto()
     junk = enum.auto()
     non_favorites = enum.auto()
 

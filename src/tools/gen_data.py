@@ -183,7 +183,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Tome",
             "Wand",
         ]
-        item_typ_dict = {"Material": "custom type material", "Sigil": "custom type sigil"}
+        item_typ_dict = {"Material": "custom type material", "Sigil": "custom type sigil", "Incense": "custom type incense"}
         pattern = f"json/{language}_Text/meta/StringList/ItemType_*.stl.json"
         json_files = list(d4data_dir.glob(pattern))
         for json_file in json_files:

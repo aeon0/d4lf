@@ -96,7 +96,8 @@ def _move_items(
         remaining_unhandled_slots.remove(item)
 
         if (
-            (move_item_type == MoveItemsType.junk and item.is_junk)
+            (move_item_type == MoveItemsType.favorites and item.is_fav)
+            or (move_item_type == MoveItemsType.junk and item.is_junk)
             or (move_item_type == MoveItemsType.non_favorites and not item.is_fav)
             or move_item_type == MoveItemsType.everything
         ):

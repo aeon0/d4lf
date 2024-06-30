@@ -226,6 +226,9 @@ def vision_mode():
                 elif item_descr.item_type == ItemType.Elixir:
                     LOGGER.info("Matched: Elixir")
                     ignored_item = True
+                elif item_descr.item_type == ItemType.Incense:
+                    LOGGER.info("Matched: Incense")
+                    ignored_item = True
                 elif item_descr.item_type == ItemType.TemperManual:
                     LOGGER.info("Matched: Temper Manual")
                     ignored_item = True

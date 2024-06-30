@@ -34,7 +34,7 @@ def read_item_type(
     ):
         item.item_type = ItemType.Material
         return item, concatenated_str
-    elif rarity in [ItemRarity.Common, ItemRarity.Legendary]:
+    elif rarity in [ItemRarity.Common, ItemRarity.Legendary] and "elixir" not in concatenated_str:
         # We check if it is a material
         mask, _ = color_filter(crop_top, COLORS.material_color, False)
         mean_val = np.mean(mask)

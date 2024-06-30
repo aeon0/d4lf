@@ -264,6 +264,12 @@ class Filter:
         self.unique_filters: dict[str, list[UniqueModel]] = {}
         profiles: list[str] = IniConfigLoader().general.profiles
 
+        if not profiles:
+            LOGGER.warning(
+                "No profiles have been configured so no filtering will be done. If this is a mistake, use the profiles section of the config tab of gui.bat to activate the profiles you want to use."
+            )
+            return
+
         custom_profile_path = IniConfigLoader().user_dir / "profiles"
         self.all_file_pathes = []
 

@@ -41,7 +41,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_itempower_itemtype", img=img_item_descr)
         return None
 
-    if item.item_type in [ItemType.Material, ItemType.TemperManual, ItemType.Elixir] or (
+    if item.item_type in [ItemType.Material, ItemType.TemperManual, ItemType.Elixir, ItemType.Incense] or (
         item.rarity in [ItemRarity.Magic, ItemRarity.Common] and item.item_type != ItemType.Sigil
     ):
         return item

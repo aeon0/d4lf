@@ -259,6 +259,10 @@ class GeneralModel(_IniBaseModel):
         default=MoveItemsType.non_favorites,
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
+    mark_as_favorite: bool = Field(
+        default=True,
+        description="Whether to favorite matched items or not",
+    )
     profiles: list[str] = Field(
         default=[],
         description='Which filter profiles should be run. All .yaml files with "Aspects" and '

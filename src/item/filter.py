@@ -34,7 +34,7 @@ LOGGER = logging.getLogger(__name__)
 @dataclass
 class _MatchedFilter:
     profile: str
-    matched_affixes: list[str] = field(default_factory=list)
+    matched_affixes: list[Affix] = field(default_factory=list)
     did_match_aspect: bool = False
 
 
@@ -108,7 +108,7 @@ class Filter:
                     if not matched_inherents:
                         continue
                 all_matches = matched_affixes + matched_inherents
-                LOGGER.info(f"Matched {profile_name}.Affixes.{filter_name}: {all_matches}")
+                LOGGER.info(f"Matched {profile_name}.Affixes.{filter_name}: {[x.name for x in all_matches]}")
                 res.keep = True
                 res.matched.append(_MatchedFilter(f"{profile_name}.{filter_name}", all_matches))
         return res
@@ -195,7 +195,7 @@ class Filter:
             return True
         return any(os.path.getmtime(file_path) > self.last_loaded for file_path in self.all_file_pathes)
 
-    def _match_affixes_count(self, expected_affixes: list[AffixFilterCountModel], item_affixes: list[Affix]) -> list[str]:
+    def _match_affixes_count(self, expected_affixes: list[AffixFilterCountModel], item_affixes: list[Affix]) -> list[Affix]:
         result = []
         for count_group in expected_affixes:
             greater_affix_count = 0
@@ -203,7 +203,7 @@ class Filter:
             for affix in count_group.count:
                 matched_item_affix = next((a for a in item_affixes if a.name == affix.name), None)
                 if matched_item_affix is not None and self._match_item_aspect_or_affix(affix, matched_item_affix):
-                    group_res.append(affix.name)
+                    group_res.append(matched_item_affix)
                     if matched_item_affix.type == AffixType.greater:
                         greater_affix_count += 1
             if count_group.minCount <= len(group_res) <= count_group.maxCount and greater_affix_count >= count_group.minGreaterAffixCount:

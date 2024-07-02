@@ -98,7 +98,9 @@ def _move_items(
         if (
             (move_item_type == MoveItemsType.favorites and item.is_fav)
             or (move_item_type == MoveItemsType.junk and item.is_junk)
-            or (move_item_type == MoveItemsType.non_favorites and not item.is_fav)
+            or (move_item_type == MoveItemsType.non_favorites and (
+                (IniConfigLoader().general.mark_as_favorite and not item.is_fav) or (not IniConfigLoader().general.mark_as_favorite and not item.is_junk)
+            ))
             or move_item_type == MoveItemsType.everything
         ):
             inv.hover_item(item)

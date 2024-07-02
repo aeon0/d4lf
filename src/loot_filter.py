@@ -37,7 +37,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
     start_time = None
     img = None
     for item in occupied:
-        if item.is_junk or item.is_fav:
+        if item.is_junk or (item.is_fav and IniConfigLoader().general.mark_as_favorite):
             continue
         if start_time is not None:
             LOGGER.debug(f"Runtime (FullItemCheck): {time.time() - start_time:.2f}s")
@@ -114,15 +114,23 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         res = Filter().should_keep(item_descr)
         matched_any_affixes = len(res.matched) > 0 and len(res.matched[0].matched_affixes) > 0
         LOGGER.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
-        if not res.keep:
+        if not res.keep and not IniConfigLoader().general.mark_as_favorite and item.is_fav:
+            keyboard.send("space")
+            time.sleep(0.17)
+            keyboard.send("space") 
+            time.sleep(0.13)
+        elif not res.keep:
             keyboard.send("space")
             time.sleep(0.13)
-        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
+        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique) and IniConfigLoader().general.mark_as_favorite:
             LOGGER.info("Mark as favorite")
             keyboard.send("space")
             time.sleep(0.17)
-            keyboard.send("space")
+            keyboard.send("space") 
             time.sleep(0.13)
+        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique) and not IniConfigLoader().general.mark_as_favorite and item.is_fav:
+            keyboard.send("space")
+            time.sleep(0.17)
 
 
 def reset_item_status(occupied, inv):

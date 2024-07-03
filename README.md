@@ -55,6 +55,10 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
     - Formats like `[ dexterity, 33 ]` are still completely valid. The importer creates affix fields which look
       like `{name: dexterity, value: 33}`. These are identical and either format can be used interchangeably. We
       recommend starting all new builds through the importer, so examples show the format the importer uses.
+- Mouse control isn't possible
+    - Due to your local windows settings, the tool might not be able to control the mouse. Just run the tool as admin
+      and it should work. If you don't want to run it as admin, you can disable the mouse control in the params.ini
+      by setting `vision_mode_only` to `true`.
 
 ### Configs
 

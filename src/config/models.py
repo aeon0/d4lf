@@ -37,7 +37,7 @@ class MoveItemsType(enum.StrEnum):
     everything = enum.auto()
     favorites = enum.auto()
     junk = enum.auto()
-    non_favorites = enum.auto()
+    unmarked = enum.auto()
 
 
 class LogLevels(enum.StrEnum):
@@ -252,11 +252,11 @@ class GeneralModel(_IniBaseModel):
         description="The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching.",
     )
     move_to_inv_item_type: MoveItemsType = Field(
-        default=MoveItemsType.non_favorites,
+        default=MoveItemsType.everything,
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
     move_to_stash_item_type: MoveItemsType = Field(
-        default=MoveItemsType.non_favorites,
+        default=MoveItemsType.everything,
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
     mark_as_favorite: bool = Field(

@@ -121,7 +121,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
             LOGGER.info("Mark as favorite")
             keyboard.send("space")
             time.sleep(0.17)
-            keyboard.send("space") 
+            keyboard.send("space")
             time.sleep(0.13)
 
 

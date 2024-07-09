@@ -1,6 +1,7 @@
 """New config loading and verification using pydantic. For now, both will exist in parallel hence _new."""
 
 import enum
+import logging
 import sys
 
 import numpy as np
@@ -11,6 +12,7 @@ from pydantic_numpy.model import NumpyModel
 from src.config.helper import check_greater_than_zero, validate_hotkey
 from src.item.data.item_type import ItemType
 
+MODULE_LOGGER = logging.getLogger(__name__)
 HIDE_FROM_GUI_KEY = "hide_from_gui"
 IS_HOTKEY_KEY = "is_hotkey"
 
@@ -304,6 +306,15 @@ class GeneralModel(_IniBaseModel):
         if not 10 <= v <= 20:
             raise ValueError("Font size must be between 10 and 20, inclusive")
         return v
+
+    @model_validator(mode="before")
+    def check_deprecation(cls, data) -> dict:
+        # removed non_favorites from MoveItemsType
+        for key in ["move_to_inv_item_type", "move_to_stash_item_type"]:
+            if key in data and data[key] == "non_favorites":
+                data[key] = MoveItemsType.unmarked
+                MODULE_LOGGER.warning(f"{key}=non_favorites is deprecated. Use unmarked instead")
+        return data
 
 
 class HSVRangeModel(_IniBaseModel):

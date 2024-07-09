@@ -90,7 +90,7 @@ def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     aspect_bullets = _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
-        template_list=["aspect_bullet_point", "unique_bullet_point"],
+        template_list=["aspect_bullet_point", "unique_bullet_point", "mythic_bullet_point"],
         threshold=0.8,
         mode="first",
     )

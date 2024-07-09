@@ -170,6 +170,9 @@ class Filter:
             return _FilterResult(True, [])
         for profile_name, profile_filter in self.unique_filters.items():
             for filter_item in profile_filter:
+                # check mythic
+                if filter_item.mythic and item.rarity != ItemRarity.Mythic:
+                    continue
                 # check item type
                 if not self._match_item_type(expected_item_types=filter_item.itemType, item_type=item.item_type):
                     continue
@@ -331,10 +334,10 @@ class Filter:
         if item.item_type == ItemType.Sigil:
             return self._check_sigil(item)
 
-        if item.rarity == ItemRarity.Unique:
+        if item.rarity in [ItemRarity.Unique, ItemRarity.Mythic]:
             return self._check_unique_item(item)
 
-        if item.rarity != ItemRarity.Unique:
+        if item.rarity not in [ItemRarity.Unique, ItemRarity.Mythic]:
             keep_affixes = self._check_affixes(item)
             if keep_affixes.keep:
                 return keep_affixes

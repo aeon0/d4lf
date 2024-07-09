@@ -117,7 +117,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         if not res.keep:
             keyboard.send("space")
             time.sleep(0.13)
-        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique):
+        elif res.keep and (matched_any_affixes or item_descr.rarity == ItemRarity.Unique) and IniConfigLoader().general.mark_as_favorite:
             LOGGER.info("Mark as favorite")
             keyboard.send("space")
             time.sleep(0.17)

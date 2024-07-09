@@ -126,7 +126,15 @@ def _construct_api_url(listing_url: str, cursor: int = 1) -> str:
 
 
 def _create_affixes_from_api_dict(affixes: list[dict[str, Any]]) -> list[Affix]:
-    res = [Affix(name=closest_match(clean_str(affix["name"]), Dataloader().affix_dict), value=affix["value"]) for affix in affixes]
+    res = []
+    for affix in affixes:
+        new_affix = Affix(name=closest_match(clean_str(affix["name"]), Dataloader().affix_dict), value=affix["value"])
+        if isinstance(new_affix.value, list):
+            if new_affix.value:
+                new_affix.value = new_affix.value[0]
+            else:
+                new_affix.value = 0
+        res.append(new_affix)
     if len(affixes) != len(res) or any(x.name is None for x in res):
         LOGGER.error(f"If you see this create a bug ticket! {affixes=}")
     return res

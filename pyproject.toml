@@ -16,6 +16,7 @@ skip-magic-trailing-comma = false
 select = [
     "A",
     "ASYNC",
+    "ASYNC1",
     "B",
     "C4",
     "DTZ",
@@ -38,7 +39,6 @@ select = [
     "T10",
     "TCH",
     "TID",
-    "TRIO",
     "UP",
     "W",
     "YTT",

@@ -4,6 +4,7 @@ import os
 import re
 from pathlib import Path
 
+D4LF_BASE_DIR = Path(__file__).parent.parent.parent
 
 def remove_content_in_braces(input_string) -> str:
     pattern = r"\{.*?\}"
@@ -93,11 +94,11 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     num_idx = get_random_number_idx(desc)
                     unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
         # add custom uniques that seem to be missing
-        json_file = f"src/tools/data/custom_uniques_{language}.json"
+        json_file = D4LF_BASE_DIR / f"src/tools/data/custom_uniques_{language}.json"
         with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
             unique_dict.update(data)
-        with open(f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
+        with open(D4LF_BASE_DIR / f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
             json.dump(unique_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
@@ -132,7 +133,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                         sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {remove_content_in_braces(desc)}"
 
         # Some of the unique specific affixes are missing. Add them manually
-        json_file = f"src/tools/data/custom_sigils_{language}.json"
+        json_file = D4LF_BASE_DIR / f"src/tools/data/custom_sigils_{language}.json"
         with open(json_file, encoding="utf-8") as file:
             data = json.load(file)
             for key, value in data.items():
@@ -149,7 +150,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 else:
                     sigil_dict[key] = value
 
-        with open(f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
+        with open(D4LF_BASE_DIR / f"assets/lang/{language}/sigils.json", "w", encoding="utf-8") as json_file:
             json.dump(sigil_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
@@ -194,7 +195,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 name_str: str = check_ms(data["arStrings"][name_idx]["szText"]).lower().strip()
                 if item_type in whitelist_types:
                     item_typ_dict[item_type] = name_str
-        with open(f"assets/lang/{language}/item_types.json", "w", encoding="utf-8") as json_file:
+        with open(D4LF_BASE_DIR / f"assets/lang/{language}/item_types.json", "w", encoding="utf-8") as json_file:
             json.dump(item_typ_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
@@ -208,7 +209,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     tooltip_dict["ItemPower"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
                 if arString["szLabel"] == "ItemTier":
                     tooltip_dict["ItemTier"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
-        with open(f"assets/lang/{language}/tooltips.json", "w", encoding="utf-8") as json_file:
+        with open(D4LF_BASE_DIR / f"assets/lang/{language}/tooltips.json", "w", encoding="utf-8") as json_file:
             json.dump(tooltip_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
@@ -228,7 +229,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     affix_dict[name] = desc
         # Some of the unique specific affixes are missing. Add them manually
         json_file = f"src/tools/data/custom_affixes_{language}.json"
-        with open(json_file, encoding="utf-8") as file:
+        with open(D4LF_BASE_DIR / json_file, encoding="utf-8") as file:
             data = json.load(file)
             for key, value in data.items():
                 if key in affix_dict:
@@ -239,7 +240,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                         affix_dict[key] = value
                 else:
                     affix_dict[key] = value
-        with open(f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
+        with open(D4LF_BASE_DIR / f"assets/lang/{language}/affixes.json", "w", encoding="utf-8") as json_file:
             json.dump(affix_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")
 
@@ -250,8 +251,10 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Path Argument Parser")
-    parser.add_argument("d4data_dir", type=str, help="Provide a path to d4data repo")
-    parser.add_argument("companion_app_dir", type=str, help="Provide a path to companion_app_dir repo")
+    parser.add_argument("d4data_dir", type=str, help="Provide a path to d4data repo")  # https://github.com/DiabloTools/d4data.git
+    parser.add_argument(
+        "companion_app_dir", type=str, help="Provide a path to companion_app_dir repo"
+    )  # https://github.com/josdemmers/Diablo4Companion
     args = parser.parse_args()
 
     input_path = Path(args.d4data_dir)

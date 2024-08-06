@@ -199,8 +199,8 @@
         "snoId": 1230484
     },
     "dolmen_stone": {
-        "desc": "casting boulder while hurricane is active will cause your boulders to rotate around you.",
-        "full": "Casting {c_important}Boulder{/c} while {c_important}Hurricane{/c} is active will cause your boulders to rotate around you.",
+        "desc": "casting boulder while hurricane is active will cause your boulders to rotate around you, up to a maximum of boulders. each rotating boulder increases their damage by .",
+        "full": "Casting {c_important}Boulder{/c} while {c_important}Hurricane{/c} is active will cause your boulders to rotate around you, up to a maximum of 10 boulders. Each rotating boulder increases their damage by {c_number}[Affix.\"Static Value 0 * 100\"|%x|]{/c}.",
         "num_idx": [],
         "snoId": 1610440
     },

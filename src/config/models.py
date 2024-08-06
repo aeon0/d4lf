@@ -445,6 +445,7 @@ class UniqueModel(BaseModel):
     itemType: list[ItemType] = []
     minGreaterAffixCount: int = 0
     minPower: int = 0
+    mythic: bool = False
 
     @field_validator("minPower")
     def check_min_power(cls, v: int) -> int:

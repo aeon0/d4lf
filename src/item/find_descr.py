@@ -9,11 +9,12 @@ from src.utils.image_operations import crop
 from src.utils.roi_operations import fit_roi_to_window_size
 
 map_template_rarity = {
-    "item_unique_top_left": ItemRarity.Unique,
-    "item_rare_top_left": ItemRarity.Rare,
+    "item_common_top_left": ItemRarity.Common,
     "item_leg_top_left": ItemRarity.Legendary,
     "item_magic_top_left": ItemRarity.Magic,
-    "item_common_top_left": ItemRarity.Common,
+    "item_mythic_top_left": ItemRarity.Mythic,
+    "item_rare_top_left": ItemRarity.Rare,
+    "item_unique_top_left": ItemRarity.Unique,
 }
 
 

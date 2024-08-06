@@ -50,7 +50,9 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # =========================
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
     futures["aspect_bullet"] = (
-        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match) if rarity in [ItemRarity.Legendary, ItemRarity.Unique] else None
+        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match)
+        if rarity in [ItemRarity.Legendary, ItemRarity.Unique, ItemRarity.Mythic]
+        else None
     )
     empty_sockets = find_empty_sockets(img_item_descr, sep_short_match)
 
@@ -129,7 +131,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Find aspects of uniques
     # =========================
-    if rarity == ItemRarity.Unique:
+    if rarity in [ItemRarity.Unique, ItemRarity.Mythic]:
         item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet)
         if item.aspect is None:
             item.aspect, debug_str = find_aspect(img_item_descr, aspect_bullet, False)

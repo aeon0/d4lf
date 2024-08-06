@@ -218,5 +218,6 @@ unique = ProfileModel(
             minPower=900,
         ),
         UniqueModel(aspect=AspectUniqueFilterModel(name="soulbrand", value=15, comparison=ComparisonType.smaller), minPower=900),
+        UniqueModel(mythic=True),
     ],
 )

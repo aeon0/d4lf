@@ -344,6 +344,12 @@ effects, you only have to specify the thresholds that you want to apply.
 <details><summary>Config Examples</summary>
 
 ```yaml
+# Take only mythic uniques
+Uniques:
+  - mythic: true
+```
+
+```yaml
 # Take all uniques with item power > 800
 Uniques:
   - minPower: 900

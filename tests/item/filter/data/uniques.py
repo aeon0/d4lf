@@ -57,4 +57,5 @@ uniques = [
     ),
     ("ok_2", ["test.black_river", "test.black_river"], TestUnique(item_type=ItemType.Scythe, aspect=Aspect(name="black_river", value=128))),
     ("ok_3", ["test.soulbrand"], TestUnique(aspect=Aspect(name="soulbrand", value=11))),
+    ("mythic", ["test.black_river"], TestUnique(aspect=Aspect(name="black_river"), rarity=ItemRarity.Mythic)),
 ]

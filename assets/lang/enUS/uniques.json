@@ -1,7 +1,7 @@
 {
     "100000_steps": {
-        "desc": "after gaining the final damage bonus from the walking arsenal key passive, you automatically cast ground stomp and gain fury. this cannot happen more than once every seconds.",
-        "full": "After gaining the final damage bonus from the {c_important}Walking Arsenal{/c} Key Passive, you automatically cast {c_important}Ground Stomp{/c} and gain {c_random}[Affix_Value_1]{/c} Fury. This cannot happen more than once every {c_number}[Affix_Value_2]{/c} seconds.",
+        "desc": "when activating or refreshing the full walking arsenal key passive effect, you automatically cast ground stomp and gain fury. can only occur once every seconds.",
+        "full": "When activating or refreshing the full {c_important}Walking Arsenal{/c} Key Passive effect, you automatically cast {c_important}Ground Stomp{/c} and gain {c_random}[Affix_Value_1]{/c} Fury. Can only occur once every {c_number}[Affix_Value_2]{/c} seconds.",
         "num_idx": [
             0
         ],
@@ -85,10 +85,11 @@
         "snoId": 1561309
     },
     "battle_trance": {
-        "desc": "increase frenzys maximum stacks by . while you have maximum frenzy, your other skills gain increased attack speed.",
-        "full": "Increase {c_important}Frenzy's{/c} maximum stacks by {c_number}[Affix_Value_1]{/c}.  While you have maximum {c_important}Frenzy{/c}, your other Skills gain {c_random}[Affix_Value_2|%+|]{/c} increased Attack Speed.",
+        "desc": "increase frenzys maximum stacks by . while at maximum stacks, you deal increased damage and your other skills gain increased attack speed.",
+        "full": "Increase {c_important}Frenzy's{/c} maximum stacks by {c_number}[Affix.\"Static Value 0\"]{/c}. While at maximum stacks, you deal  {c_random}[Affix_Value_1|%x|]{/c} increased damage and your other Skills gain {c_random}[Affix_Value_2|%+|]{/c} increased Attack Speed.",
         "num_idx": [
-            1
+            1,
+            2
         ],
         "snoId": 1304468
     },
@@ -100,7 +101,7 @@
         ],
         "snoId": 1704784
     },
-    "björnfangs_tusks": {
+    "björnfangs_tusks_(not_used_we_reuse_for_future!)": {
         "desc": "cataclysms lightning strikes now prioritize enemies. while cataclysm is active, you gain unlimited spirit and deal increased damage.",
         "full": "{c_important}Cataclysm{/c}'s lightning strikes now prioritize enemies.\r\n\r\nWhile {c_important}Cataclysm{/c} is active, you gain unlimited Spirit and deal {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
         "num_idx": [
@@ -109,8 +110,8 @@
         "snoId": 1934419
     },
     "black_river": {
-        "desc": "corpse explosion consumes up to additional corpses around the initial corpse, dealing increased damage and with a larger radius per additional corpse.",
-        "full": "{c_important}Corpse Explosion{/c} consumes up to {c_number}[Affix.\"Static Value 0\"]{/c} additional Corpses around the initial Corpse, dealing {c_random}[Affix_Value_1|%x|]{/c} increased damage and with a {c_random}[Affix_Value_2|%|]{/c} larger radius per additional Corpse.",
+        "desc": "corpse explosion consumes up to additional corpses around the initial corpse, gaining damage and size per additional corpse consumed.",
+        "full": "{c_important}Corpse Explosion{/c} consumes up to {c_number}[Affix.\"Static Value 0\"]{/c} additional Corpses around the initial Corpse, gaining {c_random}[Affix_Value_1|%x|]{/c} damage and {c_random}[Affix_Value_2/2|1%|]{/c} Size per additional Corpse consumed.",
         "num_idx": [
             1,
             2
@@ -126,10 +127,11 @@
         "snoId": 1306229
     },
     "blood_moon_breeches": {
-        "desc": "your minions have a chance to curse enemies. enemies affected by at least of your curses take increased overpower damage from you.",
-        "full": "Your Minions have a {c_random}[Affix_Value_1|%|]{/c} chance to curse enemies.  \r\n\r\nEnemies affected by at least {c_number}1{/c} of your curses take {c_number}[Affix.\"Static Value 0\"|%x|]{/c} increased {c_important}Overpower{/c} damage from you.",
+        "desc": "your minions attacks have a chance to randomly inflict decrepify or iron maiden. you deal increased overpower damage to enemies affected by your curses.",
+        "full": "Your Minions' attacks have a {c_random}[Affix_Value_1|1%|]{/c} chance to randomly inflict {c_important}Decrepify{/c} or {c_important}Iron Maiden{/c}.  \r\n\r\nYou deal {c_random}[Affix_Value_2|%x|]{/c} increased {c_important}Overpower{/c} damage to enemies affected by your {c_important}Curses{/c}.",
         "num_idx": [
-            0
+            0,
+            1
         ],
         "snoId": 1217039
     },
@@ -143,8 +145,8 @@
         "snoId": 1220207
     },
     "blue_rose": {
-        "desc": "lucky hit damaging an enemy has up to a chance to form an exploding ice spike, dealing cold damage. triple this chance if the enemy is frozen.",
-        "full": "{c_label}Lucky Hit:{/c} Damaging an enemy has up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to form an exploding {c_important}Ice Spike{/c}, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Cold damage.  Triple this chance if the enemy is {c_important}{u}Frozen{/u}{/c}.",
+        "desc": "lucky hit up to a chance to form an exploding ice spike, dealing cold damage. triple this chance if the enemy is frozen.",
+        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to form an exploding {c_important}Ice Spike{/c}, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Cold damage. Triple this chance if the enemy is {c_important}{u}Frozen{/u}{/c}.",
         "num_idx": [
             1
         ],
@@ -191,16 +193,16 @@
         "snoId": 942666
     },
     "cruors_embrace": {
-        "desc": "blood surge consumes corpses to cause mini novas, dealing damage. damage is increased by per target drained by the initial cast, up to . damage is also increased by for each corpse consumed.",
-        "full": "{c_important}Blood Surge{/c} consumes Corpses to cause mini novas, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage. Damage is increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} per target drained by the initial cast, up to {c_number}[Affix.\"Static Value 1\"|%x|]{/c}. Damage is also increased by {c_number}[Affix.\"Static Value 2\"|%x|]{/c} for each Corpse consumed.",
+        "desc": "casting blood surge consumes nearby corpses to cause mini novas, dealing damage. this damage is increased by for each enemy drained by your initial cast, up to , as well as by for each corpse consumed.",
+        "full": "Casting {c_important}Blood Surge{/c} consumes nearby Corpses to cause mini novas, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage. This damage is increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for each enemy drained by your initial cast, up to {c_number}[Affix.\"Static Value 1\"|%x|]{/c}, as well as by {c_number}[Affix.\"Static Value 2\"|%x|]{/c} for each Corpse consumed.",
         "num_idx": [
             0
         ],
         "snoId": 1902154
     },
     "deathless_visage": {
-        "desc": "bone spear leaves behind echoes as it travels that explode, dealing damage, increased by for every of your critical strike damage bonus. current bonus",
-        "full": "{c_important}Bone Spear{/c} leaves behind echoes as it travels that explode, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} damage, increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 1\"|%|]{/c} of your Critical Strike Damage Bonus.\r\n\r\nCurrent Bonus: {c_number}[Floor((Owner.(ComputeCritDamageScalar() + (-1)) + Owner.Crit_Damage_Percent) / (Affix.\"Static Value 1\" / 100)) * Affix.\"Static Value 0\"|x%||1|]{/c}",
+        "desc": "bone spear leaves behind echoes that explode for physical damage, increased by for every critical strike damage you have. current bonus",
+        "full": "{c_important}Bone Spear{/c} leaves behind echoes that explode for {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Physical damage, increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for every {c_number}[Affix.\"Static Value 1\"|%|]{/c} Critical Strike Damage you have.\r\n\r\nCurrent Bonus: {c_number}[Floor((Owner.(ComputeCritDamageScalar() + (-1)) + Owner.Crit_Damage_Percent) / (Affix.\"Static Value 1\" / 100)) * Affix.\"Static Value 0\"|x%||1|]{/c}",
         "num_idx": [
             0
         ],
@@ -215,28 +217,30 @@
         "snoId": 1230484
     },
     "dolmen_stone": {
-        "desc": "casting boulder while hurricane is active will cause your boulders to rotate around you, up to a maximum of boulders. each rotating boulder increases their damage by .",
-        "full": "Casting {c_important}Boulder{/c} while {c_important}Hurricane{/c} is active will cause your boulders to rotate around you, up to a maximum of 10 boulders. Each rotating boulder increases their damage by {c_number}[Affix.\"Static Value 0 * 100\"|%x|]{/c}.",
-        "num_idx": [],
+        "desc": "casting boulder while hurricane is active causes the boulder to rotate around you instead. boulders damage is increased by for each one currently rotating. you may have up to boulders active at a time.",
+        "full": "Casting {c_important}Boulder{/c} while {c_important}Hurricane{/c} is active causes the {c_important}Boulder{/c} to rotate around you instead. {c_important}Boulder's{/c} damage is increased by {c_random}[Affix_Value_1 * 100|%x|]{/c} for each one currently rotating.\r\n\r\nYou may have up to {c_number}10{/c} {c_important}Boulders{/c} active at a time.",
+        "num_idx": [
+            0
+        ],
         "snoId": 1610440
     },
     "doombringer": {
-        "desc": "lucky hit up to a chance to deal shadow damage to surrounding enemies and reduce their damage done by for seconds.",
-        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to deal {c_number}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_2]{/c} Shadow damage to surrounding enemies and reduce their damage done by {c_number}[Affix.\"Static Value 0\"|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "desc": "lucky hit up to a chance to deal shadow damage to surrounding enemies and reduce their damage dealt by for seconds.",
+        "full": "{c_label}Lucky Hit:{/c} Up to a {c_number}[Affix_Value_1|%|]{/c} chance to deal {c_number}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_2]{/c} Shadow damage to surrounding enemies and reduce their damage dealt by {c_number}[Affix.\"Static Value 0\"|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
         "num_idx": [],
         "snoId": 941869
     },
     "eaglehorn": {
-        "desc": "penetrating shot makes enemies hit vulnerable for seconds. every cast of penetrating shot will fire an arrow that bounces off walls and scenery and deals more damage.",
-        "full": "{c_important}Penetrating Shot{/c} makes enemies hit {c_important}{u}Vulnerable{/u}{/c} for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Every {c_number}[Affix.\"Static Value 1\"]{/c} cast of {c_important}Penetrating Shot{/c} will fire an arrow that bounces off walls and scenery and deals {c_random}[Affix_Value_1|%x|]{/c} more damage.",
+        "desc": "penetrating shot makes enemies vulnerable for seconds. every th cast of penetrating shot bounces off walls and deals more damage.",
+        "full": "{c_important}Penetrating Shot{/c} makes enemies {c_important}{u}Vulnerable{/u}{/c} for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. \r\n\r\nEvery {c_number}[Affix.\"Static Value 1\"]th{/c} cast of {c_important}Penetrating Shot{/c} bounces off walls and deals {c_random}[Affix_Value_1|%x|]{/c} more damage.",
         "num_idx": [
             2
         ],
         "snoId": 1439537
     },
     "earthbreaker": {
-        "desc": "casting landslide causes tectonic spikes to continue to deal damage over seconds. summoning landslide pillars in tectonic spikes has a chance to causes extra landslide pillars to spawn in the spikes.",
-        "full": "Casting {c_important}Landslide{/c} causes tectonic spikes to continue to deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.\r\n\r\nSummoning {c_important}Landslide{/c} pillars in tectonic spikes has a {c_random}[Affix_Value_2 * 100|%|]{/c} chance to causes extra {c_important}Landslide{/c} pillars to spawn in the spikes. ",
+        "desc": "casts of landslide leave behind tectonic spikes that deal physical damage over seconds. spawning a landslide pillar within tectonic spikes has a chance to spawn two instead.",
+        "full": "Casts of {c_important}Landslide{/c} leave behind Tectonic Spikes that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.\r\n\r\nSpawning a {c_important}Landslide{/c} pillar within Tectonic Spikes has a {c_random}[Affix_Value_2 * 100|%|]{/c} chance to spawn two instead.",
         "num_idx": [
             0,
             2
@@ -349,8 +353,8 @@
         "snoId": 942564
     },
     "godslayer_crown": {
-        "desc": "when you stun, freeze, or immobilize an elite enemy, or damage a boss, it pulls in nearby enemies. you deal increased damage to them for seconds. can only occur once every seconds.",
-        "full": "When you Stun, {c_important}{u}Freeze{/u}{/c}, or Immobilize an Elite enemy, or damage a Boss, it Pulls In Nearby enemies. You deal {c_random}[Affix_Value_1|%x|]{/c} increased damage to them for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Can only occur once every {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "desc": "when you stun, freeze, or immobilize an elite, you pull in all nearby enemies and deal increased damage to them for seconds. can only occur once every seconds. against bosses, this effect triggers when dealing damage instead.",
+        "full": "When you Stun, {c_important}{u}Freeze{/u}{/c}, or Immobilize an Elite, you Pull In all Nearby enemies and deal {c_random}[Affix_Value_1|%x|]{/c} increased damage to them for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Can only occur once every {c_number}[Affix.\"Static Value 1\"]{/c} seconds.\r\n\r\nAgainst Bosses, this effect triggers when dealing damage instead.",
         "num_idx": [
             0
         ],
@@ -365,8 +369,8 @@
         "snoId": 942555
     },
     "grasp_of_shadow": {
-        "desc": "lucky hit damaging a vulnerable enemy with a marksman or cutthroat skill has up to a chance to summon a shadow clone that mimics your attack.",
-        "full": "{c_label}Lucky Hit:{/c} Damaging a {c_important}{u}Vulnerable{/u}{/c} enemy with a {c_important}Marksman{/c} or {c_important}Cutthroat{/c} Skill has up to a {c_random}[Affix_Value_1|%|]{/c} chance to summon a {c_important}Shadow Clone{/c} that mimics your attack.",
+        "desc": "lucky hit damaging an enemy with a marksman or cutthroat skill has up to a chance to summon a shadow clone that mimics that skill.",
+        "full": "{c_label}Lucky Hit:{/c} Damaging an enemy with a {c_important}Marksman{/c} or {c_important}Cutthroat{/c} Skill has up to a {c_random}[Affix_Value_1|%|]{/c} chance to summon a {c_important}Shadow Clone{/c} that mimics that Skill.",
         "num_idx": [
             0
         ],
@@ -381,8 +385,8 @@
         "snoId": 942106
     },
     "greaves_of_the_empty_tomb": {
-        "desc": "create desecrated ground beneath your sever spectres as they travel, damaging enemies for shadow damage over seconds.",
-        "full": "Create {c_important}Desecrated Ground{/c} beneath your {c_important}Sever{/c} spectres as they travel, damaging enemies for {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Shadow damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "desc": "sever leaves behind desecrated ground that deals shadow damage over seconds.",
+        "full": "{c_important}Sever{/c} leaves behind {c_important}Desecrated Ground{/c} that deals {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * (1 + Owner.Main_Hand_Damage_Percent_Bonus) * Affix_Value_1]{/c} Shadow damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             0
         ],
@@ -395,11 +399,9 @@
         "snoId": 942664
     },
     "hellhammer": {
-        "desc": "upheaval ignites the ground burning enemies for an additional damage over seconds.",
-        "full": "{c_important}Upheaval{/c} ignites the ground Burning enemies for an additional {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
-        "num_idx": [
-            0
-        ],
+        "desc": "upheaval ignites the ground burning enemies over seconds, increasing damage based on your strength.",
+        "full": "{c_important}Upheaval{/c} ignites the ground Burning enemies over {c_number}[Affix.\"Static Value 0\"]{/c} seconds, increasing damage based on your Strength.",
+        "num_idx": [],
         "snoId": 942021
     },
     "howl_from_below": {
@@ -428,13 +430,15 @@
     },
     "insatiable_fury": {
         "desc": "werebear form is now your true form, and you gain ranks to all werebear skills.",
-        "full": "Werebear form is now your true form, and you gain {c_number}+3{/c} Ranks to all {c_important}Werebear{/c} Skills.",
-        "num_idx": [],
+        "full": "Werebear form is now your true form, and you gain {c_random}[Affix_Value_1]{/c} Ranks to all {c_important}Werebear{/c} Skills.",
+        "num_idx": [
+            0
+        ],
         "snoId": 942355
     },
     "lidless_wall": {
-        "desc": "lucky hit while you have an active bone storm, hitting an enemy outside of a bone storm has up to a chance to spawn an additional bone storm at their location. each of your active sacrifice bonuses increase the chance by and the total additional bone storms you can have by .",
-        "full": "{c_label}Lucky Hit:{/c} While you have an active {c_important}Bone Storm{/c}, hitting an enemy outside of a {c_important}Bone Storm{/c} has up to a {c_random}[Affix_Value_1|%|]{/c} chance to spawn an additional {c_important}Bone Storm{/c} at their location. Each of your active Sacrifice bonuses increase the chance by {c_number}[Affix_Value_2|%|]{/c} and the total additional {c_important}Bone Storms{/c} you can have by {c_number}[Affix.\"Static Value 0\"|~|]{/c}.",
+        "desc": "lucky hit while you have an active bone storm, hitting an enemy outside of a bone storm has up to a chance to spawn an additional bone storm at their location. each of your active sacrifice bonuses increases this chance by and the maximum possible bone storms by .",
+        "full": "{c_label}Lucky Hit:{/c} While you have an active {c_important}Bone Storm{/c}, hitting an enemy outside of a {c_important}Bone Storm{/c} has up to a {c_random}[Affix_Value_1|%|]{/c} chance to spawn an additional {c_important}Bone Storm{/c} at their location. \r\n\r\nEach of your active Sacrifice bonuses increases this chance by {c_number}[Affix_Value_2|%|]{/c} and the maximum possible {c_important}Bone Storms{/c} by {c_number}[Affix.\"Static Value 0\"|~|]{/c}.",
         "num_idx": [
             0
         ],
@@ -442,8 +446,10 @@
     },
     "mad_wolfs_glee": {
         "desc": "werewolf form is now your true form, and you gain ranks to all werewolf skills.",
-        "full": "Werewolf form is now your true form, and you gain {c_number}+3{/c} Ranks to all {c_important}Werewolf{/c} Skills.",
-        "num_idx": [],
+        "full": "Werewolf form is now your true form, and you gain {c_random}[Affix_Value_1]{/c} Ranks to all {c_important}Werewolf{/c} Skills.",
+        "num_idx": [
+            0
+        ],
         "snoId": 942354
     },
     "melted_heart_of_selig": {
@@ -451,6 +457,14 @@
         "full": "Gain {c_number}[Affix.\"Static Value 0\"]{/c} Maximum Resource.\r\n\r\nWhen taking damage, {c_number}[Affix.\"Static Value 2\"|%|]{/c} is drained as {c_number}[Affix_Value_1]{/c} Resource for every {c_number}[Affix.\"Static Value 1\"|%|]{/c} of Maximum Life you would have lost.",
         "num_idx": [],
         "snoId": 1275933
+    },
+    "mjölnic_ryng": {
+        "desc": "while cataclysm is active, you gain unlimited spirit and deal increased damage.",
+        "full": "While {c_important}Cataclysm{/c} is active, you gain unlimited Spirit and deal {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 2016138
     },
     "mothers_embrace": {
         "desc": "if a core skill hits or more enemies, of the resource cost is refunded.",
@@ -519,7 +533,7 @@
     },
     "ramaladnis_magnum_opus": {
         "desc": "skills using this weapon deal increased damage per point of fury you have, but you lose fury every second.",
-        "full": "Skills using this weapon deal {c_random}[Affix_Value_1*100|1%x|]{/c} increased damage per point of Fury you have, but you lose {c_number}[Affix.\"Static Value 0\"]{/c} Fury every second.",
+        "full": "Skills using this weapon deal {c_random}[Affix_Value_1*100|2%x|]{/c} increased damage per point of Fury you have, but you lose {c_number}[Affix.\"Static Value 0\"]{/c} Fury every second.",
         "num_idx": [
             0
         ],
@@ -556,8 +570,8 @@
         "snoId": 1306337
     },
     "ring_of_the_ravenous": {
-        "desc": "rends duration is increased by seconds. damaging enemies with your brawling skills applies stacks of rends bleed. this can only affect each enemy once every seconds.",
-        "full": "{c_important}Rend's{/c} duration is increased by {c_random}[Affix_Value_1|1|]{/c} seconds. \r\n\r\nDamaging enemies with your {c_important}Brawling{/c} Skills applies {c_number}[Affix.\"Static Value 0\"]{/c} stacks of {c_important}Rend's{/c} Bleed. This can only affect each enemy once every {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "desc": "rends duration is increased by seconds. damaging enemies with your brawling skills applies stacks of rends bleed. this can only affect each enemy once every second.",
+        "full": "{c_important}Rend's{/c} duration is increased by {c_random}[Affix_Value_1|1|]{/c} seconds. \r\n\r\nDamaging enemies with your {c_important}Brawling{/c} Skills applies {c_number}[Affix.\"Static Value 0\"]{/c} stacks of {c_important}Rend's{/c} Bleed. This can only affect each enemy once every {c_number}[Affix.\"Static Value 1\"]{/c} second.",
         "num_idx": [
             0
         ],
@@ -565,7 +579,7 @@
     },
     "ring_of_the_sacrilegious_soul": {
         "desc": "you automatically activate the following equipped skills on corpses around you raise skeleton every seconds. corpse explosion every seconds. corpse tendrils every seconds.",
-        "full": "You automatically activate the following equipped Skills on Corpses around you:\r\n{icon:bullet}{c_important}Raise Skeleton{/c} every {c_random}[Affix_Value_1|1|]{/c} seconds.\r\n{icon:bullet}{c_important}Corpse Explosion{/c} every {c_random}[Affix_Value_1|1|]{/c} seconds.\r\n{icon:bullet}{c_important}Corpse Tendrils{/c} every {c_random}[Affix_Value_1 * Affix.\"Static Value 0\"]{/c} seconds.",
+        "full": "You automatically activate the following equipped Skills on Corpses around you:\r\n{icon:bullet}{c_important}Raise Skeleton{/c} every {c_random}[Affix_Value_1|1|]{/c} seconds.\r\n{icon:bullet}{c_important}Corpse Explosion{/c} every {c_random}[Affix_Value_1|1|]{/c} seconds.\r\n{icon:bullet}{c_important}Corpse Tendrils{/c} every {c_random}[Affix_Value_1 * Affix.\"Static Value 0\"|1|]{/c} seconds.",
         "num_idx": [
             0,
             1,
@@ -574,8 +588,8 @@
         "snoId": 1706659
     },
     "saboteurs_signet": {
-        "desc": "casting a core skill has a chance to throw stun grenades that deal physical damage and stun enemies for second. your stun grenades gain lucky hit chance.",
-        "full": "Casting a {c_important}Core{/c} Skill has a {c_random}[Affix_Value_2|%|]{/c} chance to throw {c_important}Stun Grenades{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage and Stun enemies for {c_number}[PowerTag.Rogue_Grenades.\"Script Formula 2\"||]{/c} second.\r\n\r\nYour {c_important}Stun Grenades{/c} gain {c_number}[Affix.\"Static Value 0\"|%|]{/c} {c_label}Lucky Hit{/c} Chance.",
+        "desc": "casting a core skill has a chance to throw stun grenades that deal physical damage and stun enemies for seconds. your stun grenades gain lucky hit chance.",
+        "full": "Casting a {c_important}Core{/c} Skill has a {c_random}[Affix_Value_2|%|]{/c} chance to throw {c_important}Stun Grenades{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage and Stun enemies for {c_number}[PowerTag.Rogue_Grenades.\"Script Formula 2\"||]{/c} |4second:seconds;.\r\n\r\nYour {c_important}Stun Grenades{/c} gain {c_number}[Affix.\"Static Value 0\"|%|]{/c} {c_label}Lucky Hit{/c} Chance.",
         "num_idx": [
             0,
             1
@@ -609,7 +623,7 @@
     },
     "skyhunter": {
         "desc": "the first direct damage you deal to an enemy is a guaranteed critical strike. when you consume stacks of precision casting a skill, that skill gains increased critical strike damage and you gain energy.",
-        "full": "The first direct damage you deal to an enemy is a guaranteed Critical Strike. When you consume stacks of {c_important}Precision{/c} casting a Skill, that Skill gains {c_random}[Affix_Value_1|%x|]{/c} increased Critical Strike Damage and you gain {c_random}[Affix_Value_1 + Affix.\"Static Value 0\"|1|]{/c} {c_important}Energy{/c}.",
+        "full": "The first direct damage you deal to an enemy is a guaranteed Critical Strike. When you consume stacks of {c_important}Precision{/c} casting a Skill, that Skill gains {c_random}[Affix_Value_1|%x|]{/c} increased Critical Strike Damage and you gain {c_random}[Affix_Value_2|1|]{/c} {c_important}Energy{/c}.",
         "num_idx": [
             0,
             1
@@ -617,8 +631,8 @@
         "snoId": 941972
     },
     "soulbrand": {
-        "desc": "your healing potion no longer heals instantly, instead it grants a barrier for of the healing for seconds. while you have a barrier, you gain damage reduction.",
-        "full": "Your Healing Potion no longer Heals instantly, instead it grants a {c_important}{u}Barrier{/u}{/c} for {c_number}[Affix.\"Static Value 1\"|%|]{/c} of the healing for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. While you have a {c_important}{u}Barrier{/u}{/c}, you gain {c_random}[Affix_Value_1|%|]{/c} Damage Reduction.",
+        "desc": "your healing potion no longer heals instantly and instead grants a barrier for of the original healing for seconds. you gain damage reduction while you have a barrier and may drink your healing potion while at full life.",
+        "full": "Your Healing Potion no longer heals instantly and instead grants a {c_important}{u}Barrier{/u}{/c} for {c_number}[Affix.\"Static Value 1\"|%|]{/c} of the original healing for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. \r\n\r\nYou gain {c_random}[Affix_Value_1|%|]{/c} Damage Reduction while you have a {c_important}{u}Barrier{/u}{/c} and may drink your Healing Potion while at full Life.",
         "num_idx": [
             2
         ],
@@ -641,10 +655,10 @@
         "snoId": 1306310
     },
     "starfall_coronet": {
-        "desc": "meteor now has additional charge with a second charge cooldown instead of a mana cost, and drops additional meteors around the target. meteors enchantment effect and enhanced meteor drop additional meteor.",
-        "full": "{c_important}Meteor{/c} now has {c_number}[Affix.\"Static Value 0\"]{/c} additional charge with a {c_random}[Affix_Value_1|1|]{/c} second Charge Cooldown instead of a Mana cost, and drops {c_number}[Affix.\"Static Value 1\"]{/c} additional meteors around the target.\r\n\r\n{c_important}Meteor's{/c} Enchantment Effect and Enhanced {c_important}Meteor{/c} drop {c_number}[Affix.\"Static Value 3\"]{/c} additional meteor.",
+        "desc": "meteors mana cost is replaced with a second cooldown and total charges. casting meteor drops additional meteors around the target. its enchantment and enhancement drop additional meteor instead.",
+        "full": "{c_important}Meteor's{/c} Mana cost is replaced with a {c_random}[Affix_Value_1|1|]{/c} second Cooldown and {c_number}[1+Affix.\"Static Value 0\"]{/c} total Charges. \r\n\r\nCasting {c_important}Meteor{/c} drops {c_number}[Affix.\"Static Value 1\"]{/c} additional {c_important}Meteors{/c} around the target. Its {c_important}Enchantment{/c} and {c_important}Enhancement{/c} drop {c_number}[Affix.\"Static Value 3\"]{/c} additional {c_important}Meteor{/c} instead.",
         "num_idx": [
-            1
+            0
         ],
         "snoId": 1713217
     },
@@ -665,31 +679,31 @@
     },
     "tassets_of_the_dawning_sky": {
         "desc": "when you take damage from a nonphysical damage type, you gain maximum resistance to that damage type for seconds. this effect can only apply to one damage type at a time.",
-        "full": "When you take damage from a Non-Physical damage type, you gain {c_random}[Affix_Value_1|+%|]{/c} Maximum Resistance to that damage type for {c_number}[Affix.\"Static_Value_0\"]{/c} seconds. This effect can only apply to one damage type at a time.",
+        "full": "When you take damage from a Non-Physical damage type, you gain {c_random}[Affix_Value_1|1+%|]{/c} Maximum Resistance to that damage type for {c_number}[Affix.\"Static_Value_0\"]{/c} seconds. This effect can only apply to one damage type at a time.",
         "num_idx": [
             0
         ],
         "snoId": 1477079
     },
     "temerity": {
-        "desc": "effects that heal you beyond life grant you a barrier up to of your maximum life that lasts for seconds. potions can be used while at full life.",
-        "full": "Effects that Heal you beyond {c_number}[Affix.\"Static Value 0\"|%|]{/c} Life grant you a {c_important}{u}Barrier{/u}{/c} up to {c_random}[Affix_Value_1|%|]{/c} of your Maximum Life that lasts for {c_number}[Affix.\"Static Value 1\"]{/c} seconds. Potions can be used while at full Life.",
+        "desc": "effects that heal you beyond life grant you a barrier up to of your maximum life that lasts for seconds. you may now drink your healing potion while at full life.",
+        "full": "Effects that Heal you beyond {c_number}[Affix.\"Static Value 0\"|%|]{/c} Life grant you a {c_important}{u}Barrier{/u}{/c} up to {c_random}[Affix_Value_1|%|]{/c} of your Maximum Life that lasts for {c_number}[Affix.\"Static Value 1\"]{/c} seconds. \r\n\r\nYou may now drink your Healing Potion while at full Life.",
         "num_idx": [
             1
         ],
         "snoId": 1306325
     },
     "tempest_roar": {
-        "desc": "lucky hit storm skills have up to a chance to grant spirit. your base storm skills are now also werewolf skills",
-        "full": "{c_label}Lucky Hit:{/c} {c_important}Storm{/c} Skills have up to a {c_random}[Affix_Value_1|%|]{/c} chance to grant {c_number}[Affix.\"Static Value 0\"]{/c} Spirit.\r\n\r\nYour base {c_important}Storm{/c} Skills are now also {c_important}Werewolf{/c} Skills ",
+        "desc": "lucky hit storm skills have up to a chance to grant spirit. your base storm skills are now also werewolf skills.",
+        "full": "{c_label}Lucky Hit:{/c} {c_important}Storm{/c} Skills have up to a {c_random}[Affix_Value_1|%|]{/c} chance to grant {c_number}[Affix.\"Static Value 0\"]{/c} Spirit.\r\n\r\nYour base {c_important}Storm{/c} Skills are now also {c_important}Werewolf{/c} Skills.",
         "num_idx": [
             0
         ],
         "snoId": 1304489
     },
     "the_butchers_cleaver": {
-        "desc": "lucky hit when you critically strike an enemy you have up to a chance to fear and slow them by for seconds.",
-        "full": "{c_label}Lucky Hit:{/c} When you Critically Strike an enemy you have up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to Fear and Slow them by {c_random}[Affix_Value_1|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "desc": "lucky hit critically striking an enemy has up to a chance to fear and slow them by for seconds.",
+        "full": "{c_label}Lucky Hit:{/c} Critically Striking an enemy has up to a {c_number}[Affix.\"Static Value 0\"|%|]{/c} chance to Fear and Slow them by {c_random}[Affix_Value_1|%|]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
         "num_idx": [
             1
         ],
@@ -757,8 +771,8 @@
         "snoId": 1433954
     },
     "vasilys_prayer": {
-        "desc": "your earth skills are now also werebear skills and fortify you for .",
-        "full": "Your {c_important}Earth{/c} Skills are now also {c_important}Werebear{/c} Skills and {c_important}{u}Fortify{/u}{/c} you for {c_random}[Affix_Flat_Value_1]{/c}.",
+        "desc": "your earth skills are now also werebear skills and fortify you for of your maximum health.",
+        "full": "Your {c_important}Earth{/c} Skills are now also {c_important}Werebear{/c} Skills and {c_important}{u}Fortify{/u}{/c} you for {c_random}[Affix_Value_1*100|1%|]{/c} of your Maximum Health.",
         "num_idx": [
             0
         ],
@@ -771,24 +785,24 @@
         "snoId": 1944512
     },
     "waxing_gibbous": {
-        "desc": "gain stealth for seconds when killing enemies with shred. breaking stealth with an attack grants ambush which guarantees critical strikes for seconds.",
-        "full": "Gain {c_important}{u}Stealth{/u}{/c} for {c_number}[Affix_Value_2]{/c} seconds when killing enemies with {c_important}Shred{/c}. Breaking {c_important}{u}Stealth{/u}{/c} with an attack grants Ambush which guarantees Critical Strikes for {c_random}[Affix_Value_1|1|]{/c} seconds.",
+        "desc": "killing an enemy with shred grants stealth for seconds. breaking stealth with an attack grants guaranteed critical strikes for seconds.",
+        "full": "Killing an enemy with {c_important}Shred{/c} grants {c_important}{u}Stealth{/u}{/c} for {c_number}[Affix_Value_2]{/c} seconds. Breaking {c_important}{u}Stealth{/u}{/c} with an attack grants guaranteed Critical Strikes for {c_random}[Affix_Value_1|1|]{/c} seconds.",
         "num_idx": [
             1
         ],
         "snoId": 1306218
     },
     "wildheart_hunger": {
-        "desc": "when you shapeshift into a werewolf or a werebear, you gain wildheart for seconds. wildheart grants you increased damage every seconds, stacking times.",
-        "full": "When you Shapeshift into a Werewolf or a Werebear, you gain Wildheart for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Wildheart grants you {c_random}[Affix_Value_1|1%x|]{/c} increased damage every {c_number}[Affix.\"Static Value 1|1|\"]{/c} seconds, stacking {c_number}[Affix.\"Static Value 2\"]{/c} times.  ",
+        "desc": "when you shapeshift into a werewolf or a werebear, you gain wildheart for seconds. wildheart grants you stacking damage every seconds, up to .",
+        "full": "When you Shapeshift into a Werewolf or a Werebear, you gain Wildheart for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Wildheart grants you {c_random}[Affix_Value_1|1%x|]{/c} stacking damage every {c_number}[Affix.\"Static Value 1|1|\"]{/c} seconds, up to {c_number}[(Affix_Value_1*Affix.\"Static Value 2\")|1%x|]{/c}.  ",
         "num_idx": [
             1
         ],
         "snoId": 1902138
     },
     "windforce": {
-        "desc": "barrage has a chance to knock back or knock down enemies with each hit and deal double damage.",
-        "full": "{c_important}Barrage{/c} has a {c_random}[Affix_Value_1|%|]{/c} chance to Knock Back or Knock Down enemies with each hit and deal double damage.",
+        "desc": "hits of barrage have a chance to deal double damage and knock down enemies.",
+        "full": "Hits of {c_important}Barrage{/c} have a {c_random}[Affix_Value_1|%|]{/c} chance to deal double damage and Knock Down enemies.",
         "num_idx": [
             0
         ],
@@ -801,8 +815,8 @@
         "snoId": 1306258
     },
     "writhing_band_of_trickery": {
-        "desc": "casting a subterfuge skill leaves behind a decoy trap that continuously taunts and lures enemies. the decoy trap explodes after seconds dealing shadow damage. can only occur once every seconds.",
-        "full": "Casting a {c_important}Subterfuge{/c} Skill leaves behind a {c_important}Decoy Trap{/c} that continuously Taunts and lures enemies. The {c_important}Decoy Trap{/c} explodes after {c_number}[Affix.\"Static Value 1\"]{/c} seconds dealing {c_random}[Affix_Flat_Value_1]{/c} Shadow damage. Can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "desc": "casting a subterfuge skill leaves behind a decoy trap that continuously taunts and lures enemies. after seconds, it explodes, dealing shadow damage. this effect is treated as a trap skill and can only spawn one decoy trap every seconds.",
+        "full": "Casting a {c_important}Subterfuge{/c} Skill leaves behind a {c_important}Decoy Trap{/c} that continuously Taunts and lures enemies. After {c_number}[Affix.\"Static Value 1\"]{/c} seconds, it explodes, dealing {c_random}[Affix_Flat_Value_1]{/c} Shadow damage. \r\n\r\nThis effect is treated as a {c_important}Trap{/c} Skill and can only spawn one {c_important}Decoy Trap{/c} every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             1
         ],

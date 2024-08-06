@@ -60,6 +60,14 @@
         ],
         "snoId": 941731
     },
+    "axial_conduit": {
+        "desc": "chain lightning alternates between orbiting you and seeking up to enemies. when it returns, it drains mana from you for each active chain lightning. after draining total mana, the bolt explodes for lightning damage. chain lightning expires if you dont have enough mana for it to drain.",
+        "full": "{c_important}Chain Lightning{/c} alternates between orbiting you and seeking up to {c_number}[Affix.\"Static Value 2\"]{/c} enemies. When it returns, it drains {c_number}[Affix.\"Static Value 0\"]{/c} Mana from you for each active {c_important}Chain Lightning{/c}. After draining {c_number}[Affix.\"Static Value 3\"]{/c} total Mana, the bolt explodes for {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1 * Affix.\"Static Value 1\"]{/c} Lightning Damage.\r\n                       \r\n{c_important}Chain Lightning{/c} expires if you don't have enough Mana for it to drain.",
+        "num_idx": [
+            3
+        ],
+        "snoId": 1934444
+    },
     "azurewrath": {
         "desc": "lucky hit your skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
         "full": "",
@@ -91,6 +99,14 @@
             0
         ],
         "snoId": 1704784
+    },
+    "björnfangs_tusks": {
+        "desc": "cataclysms lightning strikes now prioritize enemies. while cataclysm is active, you gain unlimited spirit and deal increased damage.",
+        "full": "{c_important}Cataclysm{/c}'s lightning strikes now prioritize enemies.\r\n\r\nWhile {c_important}Cataclysm{/c} is active, you gain unlimited Spirit and deal {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1934419
     },
     "black_river": {
         "desc": "corpse explosion consumes up to additional corpses around the initial corpse, dealing increased damage and with a larger radius per additional corpse.",
@@ -211,8 +227,8 @@
         "snoId": 941869
     },
     "eaglehorn": {
-        "desc": "penetrating shot makes enemies hit vulnerable for seconds. every casts of penetrating shot will fire an arrow that bounces off walls and scenery and deals more damage.",
-        "full": "{c_important}Penetrating Shot{/c} makes enemies hit {c_important}{u}Vulnerable{/u}{/c} for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Every {c_number}[Affix.\"Static Value 1\"]{/c} casts of {c_important}Penetrating Shot{/c} will fire an arrow that bounces off walls and scenery and deals {c_random}[Affix_Value_1|%x|]{/c} more damage.",
+        "desc": "penetrating shot makes enemies hit vulnerable for seconds. every cast of penetrating shot will fire an arrow that bounces off walls and scenery and deals more damage.",
+        "full": "{c_important}Penetrating Shot{/c} makes enemies hit {c_important}{u}Vulnerable{/u}{/c} for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Every {c_number}[Affix.\"Static Value 1\"]{/c} cast of {c_important}Penetrating Shot{/c} will fire an arrow that bounces off walls and scenery and deals {c_random}[Affix_Value_1|%x|]{/c} more damage.",
         "num_idx": [
             2
         ],
@@ -220,7 +236,7 @@
     },
     "earthbreaker": {
         "desc": "casting landslide causes tectonic spikes to continue to deal damage over seconds. summoning landslide pillars in tectonic spikes has a chance to causes extra landslide pillars to spawn in the spikes.",
-        "full": "{icon:bullet}Casting {c_important}Landslide{/c} causes tectonic spikes to continue to deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.\r\n\r\n{icon:bullet}Summoning {c_important}Landslide{/c} pillars in tectonic spikes has a {c_random}[Affix_Value_2 * 100|%|]{/c} chance to causes extra {c_important}Landslide{/c} pillars to spawn in the spikes. ",
+        "full": "Casting {c_important}Landslide{/c} causes tectonic spikes to continue to deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage over {c_number}[Affix.\"Static Value 0\"]{/c} seconds.\r\n\r\nSummoning {c_important}Landslide{/c} pillars in tectonic spikes has a {c_random}[Affix_Value_2 * 100|%|]{/c} chance to causes extra {c_important}Landslide{/c} pillars to spawn in the spikes. ",
         "num_idx": [
             0,
             2
@@ -284,8 +300,8 @@
         "snoId": 1214791
     },
     "flameweaver": {
-        "desc": "casting fire bolt through your firewall causes it to split into bolts, each dealing more damage.",
-        "full": "Casting {c_important}Fire Bolt{/c} through your {c_important}Firewall{/c} causes it to split into {c_number}[Affix.\"Static Value 0\"]{/c} bolts, each dealing {c_random}[Affix_Value_1|%x|]{/c} more damage.",
+        "desc": "casting fire bolt through your firewall causes it to split into bolts, each dealing increased damage.",
+        "full": "Casting {c_important}Fire Bolt{/c} through your {c_important}Firewall{/c} causes it to split into {c_number}[Affix.\"Static Value 0\"]{/c} bolts, each dealing {c_random}[Affix_Value_1|%x|]{/c} increased damage.",
         "num_idx": [
             1
         ],
@@ -333,8 +349,8 @@
         "snoId": 942564
     },
     "godslayer_crown": {
-        "desc": "when you stun, freeze, or immobilize an elite enemy, or damage a boss, it pulls in nearby enemies. you deal increased damage to them for seconds. this effect can only occur once every seconds.",
-        "full": "When you Stun, {c_important}{u}Freeze{/u}{/c}, or Immobilize an Elite enemy, or damage a Boss, it Pulls In Nearby enemies. You deal {c_random}[Affix_Value_1|%x|]{/c} increased damage to them for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. This effect can only occur once every {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
+        "desc": "when you stun, freeze, or immobilize an elite enemy, or damage a boss, it pulls in nearby enemies. you deal increased damage to them for seconds. can only occur once every seconds.",
+        "full": "When you Stun, {c_important}{u}Freeze{/u}{/c}, or Immobilize an Elite enemy, or damage a Boss, it Pulls In Nearby enemies. You deal {c_random}[Affix_Value_1|%x|]{/c} increased damage to them for {c_number}[Affix.\"Static Value 0\"]{/c} seconds. Can only occur once every {c_number}[Affix.\"Static Value 1\"]{/c} seconds.",
         "num_idx": [
             0
         ],
@@ -469,6 +485,14 @@
         ],
         "snoId": 1559327
     },
+    "path_of_tragoul": {
+        "desc": "bone prison traps a larger area and fires bone splinters at enemies trapped within. increase your maximum essence by for seconds each time these bone splinters hit an enemy.",
+        "full": "{c_important}Bone Prison{/c} traps a larger area and fires {c_random}[Affix_Value_1]{/c} {c_important}Bone Splinters{/c} at enemies trapped within. \r\n\r\nIncrease your Maximum Essence by {c_number}[Affix.\"Static Value 0\"]{/c} for {c_number}[Affix.\"Static Value 1\"]{/c} seconds each time these {c_important}Bone Splinters{/c} hit an enemy.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1934440
+    },
     "penitent_greaves": {
         "desc": "you leave behind a trail of frost that chills enemies. you deal more damage to chilled enemies.",
         "full": "You leave behind a trail of frost that {c_important}{u}Chills{/u}{/c} enemies. You deal {c_random}[Affix_Value_1|%x|]{/c} more damage to {c_important}{u}Chilled{/u}{/c} enemies.",
@@ -550,8 +574,8 @@
         "snoId": 1706659
     },
     "saboteurs_signet": {
-        "desc": "casting flurry has a chance to release stun grenades that deal physical damage and stun enemies for second. your grenade skills have a lucky hit chance.",
-        "full": "Casting {c_important}Flurry{/c} has a {c_random}[Affix_Value_2|%|]{/c} chance to release {c_important}Stun Grenades{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage and Stun enemies for {c_number}[PowerTag.Rogue_Grenades.\"Script Formula 2\"|2|]{/c} second.\r\n\r\nYour {c_important}Grenade{/c} Skills have a {c_number}[Affix.\"Static Value 0\"|%|]{/c} {c_label}Lucky Hit{/c} Chance.",
+        "desc": "casting a core skill has a chance to throw stun grenades that deal physical damage and stun enemies for second. your stun grenades gain lucky hit chance.",
+        "full": "Casting a {c_important}Core{/c} Skill has a {c_random}[Affix_Value_2|%|]{/c} chance to throw {c_important}Stun Grenades{/c} that deal {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Physical damage and Stun enemies for {c_number}[PowerTag.Rogue_Grenades.\"Script Formula 2\"||]{/c} second.\r\n\r\nYour {c_important}Stun Grenades{/c} gain {c_number}[Affix.\"Static Value 0\"|%|]{/c} {c_label}Lucky Hit{/c} Chance.",
         "num_idx": [
             0,
             1
@@ -573,6 +597,15 @@
             0
         ],
         "snoId": 1612293
+    },
+    "shroud_of_khanduras": {
+        "desc": "casting dark shroud makes you immune for seconds, but your evade cooldown is increased by seconds. evading while dark shroud is active leaves behind an explosion that deals shadow damage and pulls in enemies.",
+        "full": "Casting {c_important}Dark Shroud{/c} makes you {c_important}{u}Immune{/u}{/c} for {c_number}[Affix.\"Static Value 0\"]{/c} seconds, but your {c_important}Evade{/c} Cooldown is increased by {c_random}[Affix_Value_2|1|]{/c} seconds.\r\n\r\n{c_important}Evading{/c} while {c_important}Dark Shroud{/c} is active leaves behind an explosion that deals {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} Shadow damage and Pulls In enemies.",
+        "num_idx": [
+            1,
+            2
+        ],
+        "snoId": 1934436
     },
     "skyhunter": {
         "desc": "the first direct damage you deal to an enemy is a guaranteed critical strike. when you consume stacks of precision casting a skill, that skill gains increased critical strike damage and you gain energy.",
@@ -706,6 +739,15 @@
         ],
         "snoId": 1901483
     },
+    "unbroken_chain": {
+        "desc": "casting steel grasp reduces iron maelstroms cooldown by seconds. enemies damaged by iron maelstrom deal less damage for seconds.",
+        "full": "Casting {c_important}Steel Grasp{/c} reduces {c_important}Iron Maelstrom's{/c} Cooldown by {c_random}[Affix_Value_1/3|1|]{/c} seconds. \r\n\r\nEnemies damaged by {c_important}Iron Maelstrom{/c} deal {c_random}[Affix_Value_1|%|]{/c} less damage for {c_number}[Affix_Value_2]{/c} seconds.",
+        "num_idx": [
+            0,
+            1
+        ],
+        "snoId": 1934407
+    },
     "unsung_ascetics_wraps": {
         "desc": "lightning storm gains additional strike each times it grows. lightning storm critical strikes cause lightning to strike twice, dealing increased damage.",
         "full": "{c_important}Lightning Storm{/c} gains {c_number}[Affix.\"Static Value 0\"]{/c} additional strike each times it grows.\r\n\r\n{c_important}Lightning Storm{/c} Critical Strikes cause lightning to strike twice, dealing {c_random}[Affix_Value_1|x%|]{/c} increased damage.",
@@ -721,6 +763,12 @@
             0
         ],
         "snoId": 1306213
+    },
+    "vox_omnium": {
+        "desc": "of omnipower",
+        "full": "of Omnipower",
+        "num_idx": [],
+        "snoId": 1944512
     },
     "waxing_gibbous": {
         "desc": "gain stealth for seconds when killing enemies with shred. breaking stealth with an attack grants ambush which guarantees critical strikes for seconds.",
@@ -739,22 +787,22 @@
         "snoId": 1902138
     },
     "windforce": {
-        "desc": "lucky hit hits with this weapon have up to a chance to deal double damage and knock back the target.",
-        "full": "{c_label}Lucky Hit:{/c} Hits with this weapon have up to a {c_random}[Affix_Value_1|%|]{/c} chance to deal double damage and Knock Back the target.",
+        "desc": "barrage has a chance to knock back or knock down enemies with each hit and deal double damage.",
+        "full": "{c_important}Barrage{/c} has a {c_random}[Affix_Value_1|%|]{/c} chance to Knock Back or Knock Down enemies with each hit and deal double damage.",
         "num_idx": [
             0
         ],
         "snoId": 941973
     },
     "word_of_hakan": {
-        "desc": "your rain of arrows is always imbued with all imbuements at once.",
-        "full": "Your {c_important}Rain of Arrows{/c} is always {c_important}Imbued{/c} with all {c_important}Imbuements{/c} at once.",
+        "desc": "your rain of arrows is always imbued with all imbuements and receives your arrow storm benefits.",
+        "full": "Your {c_important}Rain of Arrows{/c} is always {c_important}Imbued{/c} with all {c_important}Imbuements{/c} and receives your {c_important}Arrow Storm{/c} benefits.",
         "num_idx": [],
         "snoId": 1306258
     },
     "writhing_band_of_trickery": {
-        "desc": "casting a subterfuge skill leaves behind a decoy trap that continuously taunts and lures enemies. the decoy trap explodes after seconds dealing shadow damage. can occur every seconds.",
-        "full": "Casting a {c_important}Subterfuge{/c} Skill leaves behind a {c_important}Decoy Trap{/c} that continuously Taunts and lures enemies. The {c_important}Decoy Trap{/c} explodes after {c_number}[Affix.\"Static Value 1\"]{/c} seconds dealing {c_random}[Affix_Flat_Value_1]{/c} Shadow damage. Can occur every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "desc": "casting a subterfuge skill leaves behind a decoy trap that continuously taunts and lures enemies. the decoy trap explodes after seconds dealing shadow damage. can only occur once every seconds.",
+        "full": "Casting a {c_important}Subterfuge{/c} Skill leaves behind a {c_important}Decoy Trap{/c} that continuously Taunts and lures enemies. The {c_important}Decoy Trap{/c} explodes after {c_number}[Affix.\"Static Value 1\"]{/c} seconds dealing {c_random}[Affix_Flat_Value_1]{/c} Shadow damage. Can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             1
         ],
@@ -769,8 +817,8 @@
         "snoId": 1559923
     },
     "yens_blessing": {
-        "desc": "casting a skill has a chance to cast a nonmobility, nonultimate skill that is currently on cooldown. this effect can only occur once every seconds.",
-        "full": "Casting a Skill has a {c_random}[Affix_Value_1|%|]{/c} chance to cast a Non-{c_important}Mobility{/c}, Non-{c_important}Ultimate{/c} Skill that is currently on Cooldown. This effect can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
+        "desc": "casting a skill has a chance to cast a nonmobility, nonultimate skill that is currently on cooldown. can only occur once every seconds.",
+        "full": "Casting a Skill has a {c_random}[Affix_Value_1|%|]{/c} chance to cast a Non-{c_important}Mobility{/c}, Non-{c_important}Ultimate{/c} Skill that is currently on Cooldown. Can only occur once every {c_number}[Affix.\"Static Value 0\"]{/c} seconds.",
         "num_idx": [
             0
         ],

@@ -6,6 +6,7 @@ from pathlib import Path
 
 D4LF_BASE_DIR = Path(__file__).parent.parent.parent
 
+
 def remove_content_in_braces(input_string) -> str:
     pattern = r"\{.*?\}"
     result = re.sub(pattern, "", input_string)
@@ -77,8 +78,10 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             with open(json_file, encoding="utf-8") as file:
                 data = json.load(file)
                 snoId = data["__snoID__"]
-                name_idx, _ = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
-                name = data["arStrings"][name_idx]["szText"]
+                name_item = [item for item in data["arStrings"] if item["szLabel"] == "Name"]
+                if not name_item:
+                    continue
+                name = name_item[0]["szText"]
                 name_clean = name.strip().replace(" ", "_").lower().replace("’", "").replace("'", "").replace(",", "")
                 name_clean = check_ms(name_clean)
                 # Open affix file for affix
@@ -94,9 +97,8 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     num_idx = get_random_number_idx(desc)
                     unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
         # add custom uniques that seem to be missing
-        json_file = D4LF_BASE_DIR / f"src/tools/data/custom_uniques_{language}.json"
-        with open(json_file, encoding="utf-8") as file:
-            data = json.load(file)
+        with open(D4LF_BASE_DIR / f"src/tools/data/custom_uniques_{language}.json", encoding="utf-8") as json_file:
+            data = json.load(json_file)
             unique_dict.update(data)
         with open(D4LF_BASE_DIR / f"assets/lang/{language}/uniques.json", "w", encoding="utf-8") as json_file:
             json.dump(unique_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
@@ -133,8 +135,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                         sigil_dict[affix_type][name.replace(" ", "_")] = f"{name} {remove_content_in_braces(desc)}"
 
         # Some of the unique specific affixes are missing. Add them manually
-        json_file = D4LF_BASE_DIR / f"src/tools/data/custom_sigils_{language}.json"
-        with open(json_file, encoding="utf-8") as file:
+        with open(D4LF_BASE_DIR / f"src/tools/data/custom_sigils_{language}.json", encoding="utf-8") as file:
             data = json.load(file)
             for key, value in data.items():
                 if key in sigil_dict:
@@ -201,8 +202,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
 
         print(f"Gen Tooltips for {language}")
         tooltip_dict = {}
-        tooltip_path = d4data_dir / f"json/{language}_Text/meta/StringList/UIToolTips.stl.json"
-        with open(tooltip_path, encoding="utf-8") as file:
+        with open(d4data_dir / f"json/{language}_Text/meta/StringList/UIToolTips.stl.json", encoding="utf-8") as file:
             data = json.load(file)
             for arString in data["arStrings"]:
                 if arString["szLabel"] == "ItemPower":
@@ -218,8 +218,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         # https://github.com/josdemmers/D4DataParser/blob/main/D4DataParser/Parsers/AffixParser.cs
         print(f"Gen Affixes for {language}")
         affix_dict = {}
-        json_file = companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json"
-        with open(json_file, encoding="utf-8") as file:
+        with open(companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json", encoding="utf-8") as file:
             data = json.load(file)
             for affix in data:
                 desc: str = affix["Description"]
@@ -228,8 +227,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                 if len(desc) > 2:
                     affix_dict[name] = desc
         # Some of the unique specific affixes are missing. Add them manually
-        json_file = f"src/tools/data/custom_affixes_{language}.json"
-        with open(D4LF_BASE_DIR / json_file, encoding="utf-8") as file:
+        with open(D4LF_BASE_DIR / f"src/tools/data/custom_affixes_{language}.json", encoding="utf-8") as file:
             data = json.load(file)
             for key, value in data.items():
                 if key in affix_dict:

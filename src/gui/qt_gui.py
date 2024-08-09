@@ -101,7 +101,7 @@ class Gui(QMainWindow):
         maxsize_label = QLabel("max listings")
         hbox.addWidget(maxsize_label)
         input_box2 = QLineEdit()
-        input_box2.setText("1000")
+        input_box2.setText("2000")
         metrics = input_box2.fontMetrics()
         width = metrics.horizontalAdvance("0") * 10
         input_box2.setFixedWidth(width)
@@ -149,7 +149,7 @@ class Gui(QMainWindow):
         instructions_text = QTextEdit()
         instructions_text.setText(
             "You can link any valid filter created by diablo.trade.\n\n"
-            "https://diablo.trade/listings/items?exactPrice=true&rarity=legendary&sold=true&sort=newest\n\n"
+            "https://diablo.trade/listings/items?exactPrice=true&itemType=equipment&price=50000000,999999999999&rarity=legendary&sold=true&sort=newest\n\n"
             "Please note that only legendary items are supported at the moment. The listing must also have an exact price.\n"
             "You can create such a filter by using the one above as a base and then add your custom data to it.\n"
             f"It will then create a file based on the listings in: {IniConfigLoader().user_dir / "profiles"}"

@@ -54,7 +54,8 @@ def import_maxroll(url: str):
     for item_id in active_profile["items"].values():
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
-        if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] == 2:
+        # magic/rare = 0, legendary = 1, unique = 2, mythic = 4
+        if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] in [2, 4]:
             LOGGER.warning(f"Uniques are not supported. Skipping: {mapping_data["items"][resolved_item["id"]]["name"]}")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
@@ -197,7 +198,7 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
 if __name__ == "__main__":
     src.logger.setup()
     URLS = [
-        "https://maxroll.gg/d4/planner/p6c50vom",
+        "https://maxroll.gg/d4/planner/1i5tt0c0#2",
     ]
     for X in URLS:
         import_maxroll(url=X)

@@ -138,23 +138,6 @@ legendary = [
     ),
     (
         (1920, 1080),
-        f"{BASE_PATH}/read_descr_legendary_1080p_6.png",
-        Item(
-            affixes=[
-                Affix(name="dexterity", value=149, type=AffixType.greater),
-                Affix(name="maximum_life", value=827),
-                Affix(name="vulnerable_damage", value=42.5, type=AffixType.rerolled),
-                Affix(name="damage_to_close_enemies", value=94.5, type=AffixType.tempered),
-                Affix(name="chance_for_barrage_projectiles_to_cast_twice", value=16.7, type=AffixType.tempered),
-            ],
-            inherent=[Affix(name="damage_to_close_enemies", value=20, type=AffixType.inherent)],
-            item_type=ItemType.Dagger,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
         f"{BASE_PATH}/read_descr_legendary_1080p_7.png",
         Item(
             affixes=[
@@ -253,43 +236,6 @@ legendary = [
             ],
             item_type=ItemType.Ring,
             power=426,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_tempered_1080p.png",
-        Item(
-            affixes=[
-                Affix(name="intelligence", value=37),
-                Affix(name="life_per_second", value=12),
-                Affix(name="damage", value=11),
-                Affix(name="resource_cost_reduction", value=6, type=AffixType.tempered),
-            ],
-            inherent=[
-                Affix(name="resistance_to_all_elements", value=3.5, type=AffixType.inherent),
-                Affix(name="poison_resistance", value=3.5, type=AffixType.inherent),
-            ],
-            codex_upgrade=True,
-            item_type=ItemType.Ring,
-            power=403,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/read_descr_tempered_1080p_2.png",
-        Item(
-            affixes=[
-                Affix(name="dexterity", value=162),
-                Affix(name="maximum_life", value=1418),
-                Affix(name="critical_strike_damage", value=90),
-                Affix(name="marksman_critical_strike_chance", value=11, type=AffixType.tempered),
-                Affix(name="chance_for_rapid_fire_projectiles_to_cast_twice", value=30, type=AffixType.tempered),
-            ],
-            inherent=[Affix(name="vulnerable_damage", value=32, type=AffixType.inherent)],
-            item_type=ItemType.Crossbow2H,
-            power=925,
             rarity=ItemRarity.Legendary,
         ),
     ),

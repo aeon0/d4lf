@@ -37,9 +37,8 @@ def _find_bullets(
 ) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
     roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
-    all_templates = [f"{x}_medium" for x in template_list] + template_list
     all_bullets = search(
-        ref=all_templates,
+        ref=template_list,
         inp_img=img_item_descr,
         threshold=threshold,
         roi=roi_bullets,
@@ -54,7 +53,7 @@ def _find_bullets(
     for match in all_bullets.matches:
         match_exists = False
         for center in matches_dict:
-            if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 5:
+            if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 10:
                 if match.score > matches_dict[center].score:
                     matches_dict[center] = match
                 match_exists = True
@@ -66,20 +65,25 @@ def _find_bullets(
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+    tempered_icons = [f"tempered_affix_bullet_point_{x}" for x in range(1, 7)]
+    template_list = ["affix_bullet_point_1", "greater_affix_bullet_point_1", "rerolled_bullet_point"] + tempered_icons
+    all_templates = [f"{x}_medium" for x in template_list] + template_list
     return _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
-        template_list=["affix_bullet_point", "greater_affix_bullet_point", "rerolled_bullet_point", "tempered_affix_bullet_point"],
+        template_list=all_templates,
         threshold=0.8,
         mode="all",
     )
 
 
 def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+    template_list = ["empty_socket"]
+    all_templates = [f"{x}_medium" for x in template_list] + template_list
     empty_sockets = _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
-        template_list=["empty_socket"],
+        template_list=all_templates,
         threshold=0.8,
         mode="all",
     )
@@ -87,10 +91,12 @@ def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 
 
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
+    template_list = ["aspect_bullet_point", "unique_bullet_point", "mythic_bullet_point"]
+    all_templates = [f"{x}_medium" for x in template_list] + template_list
     aspect_bullets = _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
-        template_list=["aspect_bullet_point", "unique_bullet_point", "mythic_bullet_point"],
+        template_list=all_templates,
         threshold=0.8,
         mode="first",
     )

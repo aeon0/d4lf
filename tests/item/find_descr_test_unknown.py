@@ -8,7 +8,7 @@ from src.config import BASE_DIR
 from src.item.data.rarity import ItemRarity
 from src.item.find_descr import find_descr
 
-BASE_PATH = BASE_DIR / "tests/assets/item"
+BASE_PATH = BASE_DIR / "tests/assets/item/unknown"
 
 
 @pytest.mark.parametrize(

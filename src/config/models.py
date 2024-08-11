@@ -253,12 +253,12 @@ class GeneralModel(_IniBaseModel):
         default=12,
         description="The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching.",
     )
-    move_to_inv_item_type: MoveItemsType = Field(
-        default=MoveItemsType.everything,
+    move_to_inv_item_type: list[MoveItemsType] = Field(
+        default=[MoveItemsType.everything],
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
-    move_to_stash_item_type: MoveItemsType = Field(
-        default=MoveItemsType.everything,
+    move_to_stash_item_type: list[MoveItemsType] = Field(
+        default=[MoveItemsType.everything],
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
     mark_as_favorite: bool = Field(
@@ -307,13 +307,23 @@ class GeneralModel(_IniBaseModel):
             raise ValueError("Font size must be between 10 and 20, inclusive")
         return v
 
+    @field_validator("move_to_inv_item_type", "move_to_stash_item_type", mode="before")
+    def convert_move_item_type(cls, v: str):
+        if isinstance(v, str):
+            v = v.split(",")
+        elif not isinstance(v, list):
+            raise ValueError("must be a list or a string")
+        return [MoveItemsType[v.strip()] for v in v]
+
     @model_validator(mode="before")
     def check_deprecation(cls, data) -> dict:
         # removed non_favorites from MoveItemsType
         for key in ["move_to_inv_item_type", "move_to_stash_item_type"]:
             if key in data and data[key] == "non_favorites":
-                data[key] = MoveItemsType.unmarked
-                MODULE_LOGGER.warning(f"{key}=non_favorites is deprecated. Use unmarked instead")
+                data[key] = [MoveItemsType.junk, MoveItemsType.unmarked]
+                MODULE_LOGGER.warning(
+                    f"{key}=non_favorites is deprecated. Changing to equivalent of junk and unmarked instead. Modify this value in the GUI to remove this message."
+                )
         return data
 
 

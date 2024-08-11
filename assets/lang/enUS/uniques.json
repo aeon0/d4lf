@@ -192,6 +192,14 @@
         ],
         "snoId": 942666
     },
+    "crown_of_lucion": {
+        "desc": "each time you use a skill with a resource Cost, gain increased damage and resource cost is increased by for seconds, stacking up to times.",
+        "full": "Each time you use a Skill with a Resource Cost, gain {c_number}[Affix.\"Static Value 0\"]{/c}%[x] increased damage and Resource Cost is increased by 30%[+] for 4 seconds, stacking up to 5 times.",
+        "num_idx": [
+            0
+        ],
+        "snoId": 1944475
+    },
     "cruors_embrace": {
         "desc": "casting blood surge consumes nearby corpses to cause mini novas, dealing damage. this damage is increased by for each enemy drained by your initial cast, up to , as well as by for each corpse consumed.",
         "full": "Casting {c_important}Blood Surge{/c} consumes nearby Corpses to cause mini novas, dealing {c_random}[(Owner.Weapon_Damage_Min_Total + Owner.Weapon_Damage_Delta_Total) * Affix_Value_1]{/c} damage. This damage is increased by {c_number}[Affix.\"Static Value 0\"|%x|]{/c} for each enemy drained by your initial cast, up to {c_number}[Affix.\"Static Value 1\"|%x|]{/c}, as well as by {c_number}[Affix.\"Static Value 2\"|%x|]{/c} for each Corpse consumed.",

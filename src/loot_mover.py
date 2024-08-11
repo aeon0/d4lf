@@ -22,7 +22,7 @@ def move_items_to_stash():
         return
 
     unhandled_slots, _ = inv.get_item_slots()
-    move_item_type = IniConfigLoader().general.move_to_stash_item_type
+    move_item_types = IniConfigLoader().general.move_to_stash_item_type
     if not unhandled_slots:
         LOGGER.info("No items to move")
         return
@@ -35,7 +35,7 @@ def move_items_to_stash():
         if not empty_chest:
             continue
 
-        _, unhandled_slots = _move_items(inv, unhandled_slots, len(empty_chest), move_item_type)
+        _, unhandled_slots = _move_items(inv, unhandled_slots, len(empty_chest), move_item_types)
 
         if not unhandled_slots:
             break
@@ -81,7 +81,7 @@ def move_items_to_inventory():
 
 
 def _move_items(
-    inv: CharInventory, occupied: list[ItemSlot], num_to_move: int, move_item_type: MoveItemsType
+    inv: CharInventory, occupied: list[ItemSlot], num_to_move: int, move_item_types: list[MoveItemsType]
 ) -> tuple[int, list[ItemSlot]]:
     """
     Handles actually moving items to or from the stash, based on a parameter
@@ -96,10 +96,10 @@ def _move_items(
         remaining_unhandled_slots.remove(item)
 
         if (
-            (move_item_type == MoveItemsType.favorites and item.is_fav)
-            or (move_item_type == MoveItemsType.junk and item.is_junk)
-            or (move_item_type == MoveItemsType.unmarked and not item.is_fav and not item.is_junk)
-            or move_item_type == MoveItemsType.everything
+            (MoveItemsType.favorites in move_item_types and item.is_fav)
+            or (MoveItemsType.junk in move_item_types and item.is_junk)
+            or (MoveItemsType.unmarked in move_item_types and not item.is_fav and not item.is_junk)
+            or MoveItemsType.everything in move_item_types
         ):
             inv.hover_item(item)
             mouse.click("right")

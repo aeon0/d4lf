@@ -29,7 +29,7 @@ from PyQt6.QtWidgets import (
 )
 
 from src.config.loader import IniConfigLoader
-from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY
+from src.config.models import HIDE_FROM_GUI_KEY, IS_HOTKEY_KEY, MoveItemsType
 from src.gui.open_user_config_button import OpenUserConfigButton
 
 CONFIG_TABNAME = "config"
@@ -132,6 +132,8 @@ class ConfigTab(QWidget):
             parameter_value_widget = QChestTabWidget(model, section_config_header, config_key, config_value)
         elif config_key == "profiles":
             parameter_value_widget = QProfilesWidget(model, section_config_header, config_key, config_value)
+        elif config_key == "move_to_inv_item_type" or config_key == "move_to_stash_item_type":
+            parameter_value_widget = QMoveItemsWidget(model, section_config_header, config_key, config_value)
         elif is_hotkey:
             parameter_value_widget = QHotkeyWidget(model, section_config_header, config_key, config_value)
         elif isinstance(config_value, enum.StrEnum):
@@ -237,6 +239,94 @@ class QChestTabWidget(QWidget):
     def _save_changes_on_box_change(self, model, section_header, config_key):
         active_tabs = [check_box.text() for check_box in self.all_checkboxes if check_box.isChecked()]
         _validate_and_save_changes(model, section_header, config_key, ",".join(active_tabs), self.reset_values)
+
+
+class QMoveItemsWidget(QWidget):
+    def __init__(self, model, section_header, config_key, move_selections: list[MoveItemsType]):
+        super().__init__()
+
+        layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.current_move_selections_line_edit = QLineEdit()
+        self.reset_values(move_selections)
+        self.current_move_selections_line_edit.setReadOnly(True)
+        layout.addWidget(self.current_move_selections_line_edit)
+
+        open_picker_button = QPushButton()
+        open_picker_button.setText("...")
+        open_picker_button.setMinimumWidth(20)
+        open_picker_button.clicked.connect(
+            lambda: self._launch_picker(model, section_header, config_key, self.current_move_selections_line_edit.text().split(", "))
+        )
+        layout.addWidget(open_picker_button)
+
+        self.setLayout(layout)
+
+    def reset_values(self, move_selections: list[MoveItemsType]):
+        self.current_move_selections_line_edit.setText(", ".join([item_type.name for item_type in move_selections]))
+
+    def _launch_picker(self, model, section_header, config_key, move_selections):
+        move_item_type_picker = QMoveItemsPicker(self, move_selections)
+        if move_item_type_picker.exec():
+            move_types = move_item_type_picker.get_selected_move_types()
+            move_types_string = ", ".join([item_type.name for item_type in move_types])
+            _validate_and_save_changes(
+                model,
+                section_header,
+                config_key,
+                move_types_string,
+                self.current_move_selections_line_edit.setText,
+            )
+            self.reset_values(move_types)
+
+
+class QMoveItemsPicker(QDialog):
+    def __init__(self, parent, move_selections):
+        super().__init__(parent)
+        self.setWindowTitle("Select item types")
+        layout = QVBoxLayout()
+
+        label = QLabel("Select which item types you would like to move when hotkey is pressed.")
+        self.move_favorite_box = QCheckBox("Favorite")
+        self.move_junk_box = QCheckBox("Junk")
+        self.move_unmarked_box = QCheckBox("Unmarked")
+
+        self.move_favorite_box.setChecked(
+            MoveItemsType.everything.name in move_selections or MoveItemsType.favorites.name in move_selections
+        )
+        self.move_junk_box.setChecked(MoveItemsType.everything.name in move_selections or MoveItemsType.junk.name in move_selections)
+        self.move_unmarked_box.setChecked(
+            MoveItemsType.everything.name in move_selections or MoveItemsType.unmarked.name in move_selections
+        )
+
+        layout.addWidget(label)
+        layout.addWidget(self.move_favorite_box)
+        layout.addWidget(self.move_junk_box)
+        layout.addWidget(self.move_unmarked_box)
+
+        ok_cancel_buttons = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        self.buttonBox = QDialogButtonBox(ok_cancel_buttons)
+        self.buttonBox.accepted.connect(self.accept)
+        self.buttonBox.rejected.connect(self.reject)
+        layout.addWidget(self.buttonBox)
+
+        self.setLayout(layout)
+
+    def get_selected_move_types(self) -> list[MoveItemsType]:
+        result = []
+
+        if self.move_favorite_box.isChecked():
+            result.append(MoveItemsType.favorites)
+        if self.move_junk_box.isChecked():
+            result.append(MoveItemsType.junk)
+        if self.move_unmarked_box.isChecked():
+            result.append(MoveItemsType.unmarked)
+
+        if not result or len(result) == 3:
+            return [MoveItemsType.everything]
+
+        return result
 
 
 class QProfilesWidget(QWidget):

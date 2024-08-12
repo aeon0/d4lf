@@ -117,6 +117,7 @@ def import_d4builds(driver: ChromiumDriver = None, url: str = None):
                 minGreaterAffixCount=0,
             )
         ]
+        item_filter.minPower = 100
         if inherents:
             item_filter.inherentPool = [AffixFilterCountModel(count=[AffixFilterModel(name=x.name) for x in inherents])]
         filter_name_template = item_filter.itemType[0].name if item_filter.itemType else slot.replace(" ", "")

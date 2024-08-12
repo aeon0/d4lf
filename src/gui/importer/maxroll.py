@@ -72,6 +72,7 @@ def import_maxroll(url: str):
                 minGreaterAffixCount=0,
             )
         ]
+        item_filter.minPower = 100
         # maxroll has some outdated data, so we need to clean it up by using item_type
         if "implicits" in resolved_item and item_type in [ItemType.Ring, ItemType.Boots]:
             item_filter.inherentPool = [

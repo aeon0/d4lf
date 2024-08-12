@@ -198,7 +198,25 @@ items = [
             rarity=ItemRarity.Unique,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_10_2160p_small.png", item10),
+    ((3840, 2160), f"{BASE_PATH}/read_descr_10_2160p_medium.png", item10),
+    (
+        (3840, 2160),
+        f"{BASE_PATH}/read_descr_11_2160p_medium.png",
+        item11 := Item(
+            affixes=[
+                Affix(name="movement_speed", value=19),
+                Affix(name="maximum_resistance_to_all_elements", value=14.3, type=AffixType.greater),
+                Affix(name="resistance_to_all_elements", value=69),
+                Affix(name="damage_reduction", value=23),
+            ],
+            aspect=Aspect(name="tyraels_might", value=4996),
+            inherent=[Affix(name="ignore_durability_loss", value=None, type=AffixType.inherent)],
+            item_type=ItemType.ChestArmor,
+            power=925,
+            rarity=ItemRarity.Mythic,
+        ),
+    ),
+    ((3840, 2160), f"{BASE_PATH}/read_descr_11_2160p_small.png", item11),
 ]
 
 

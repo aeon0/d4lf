@@ -57,7 +57,7 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
         delta_x = int(item_descr_width * 0.03)
         roi = [match.region[0] - delta_x, roi_y, item_descr_width + 2 * delta_x, search_height]
 
-        refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
+        refs = ["item_seperator_short_rare", "item_seperator_short_legendary", "item_seperator_short_mythic"]
         sep_short = search(refs, img, 0.62, roi, True, mode="first", do_multi_process=False)
 
         if sep_short.success:

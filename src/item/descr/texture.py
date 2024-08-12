@@ -9,7 +9,7 @@ from src.utils.image_operations import color_filter, crop
 
 
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
-    refs = ["item_seperator_short_rare", "item_seperator_short_legendary"]
+    refs = ["item_seperator_short_rare", "item_seperator_short_legendary", "item_seperator_short_mythic"]
     roi = [0, 0, img_item_descr.shape[1], ResManager().offsets.find_seperator_short_offset_top]
     if not (sep_short := search(refs, img_item_descr, 0.62, roi, True, mode="all", do_multi_process=False)).success:
         return None
@@ -66,7 +66,8 @@ def _find_bullets(
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
     tempered_icons = [f"tempered_affix_bullet_point_{x}" for x in range(1, 7)]
-    template_list = ["affix_bullet_point_1", "greater_affix_bullet_point_1", "rerolled_bullet_point"] + tempered_icons
+    affix_icons = [f"affix_bullet_point_{x}" for x in range(1, 3)]
+    template_list = ["greater_affix_bullet_point_1", "rerolled_bullet_point"] + tempered_icons + affix_icons
     all_templates = [f"{x}_medium" for x in template_list] + template_list
     return _find_bullets(
         img_item_descr=img_item_descr,

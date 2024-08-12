@@ -58,20 +58,24 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     # Split affix bullets into inherent and others
     # =========================
-    if item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
-        inhernet_affixe_bullets = []
+    if item.rarity == ItemRarity.Mythic:  # TODO should refactor so we either apply some logic OR we look for separator
+        # Just pick the last 4 matches as affixes
+        inherent_affix_bullets = affix_bullets[:-4]
+        affix_bullets = affix_bullets[-4:]
+    elif item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
+        inherent_affix_bullets = []
     elif item.item_type in [ItemType.Ring]:
-        inhernet_affixe_bullets = affix_bullets[:2]
+        inherent_affix_bullets = affix_bullets[:2]
         affix_bullets = affix_bullets[2:]
     elif item.item_type in [ItemType.Sigil]:
-        inhernet_affixe_bullets = affix_bullets[:3]
+        inherent_affix_bullets = affix_bullets[:3]
         affix_bullets = affix_bullets[3:]
     elif item.item_type in [ItemType.Shield]:
-        inhernet_affixe_bullets = affix_bullets[:4]
+        inherent_affix_bullets = affix_bullets[:4]
         affix_bullets = affix_bullets[4:]
     else:
         # default for: Amulets, Boots, All Weapons
-        inhernet_affixe_bullets = affix_bullets[:1]
+        inherent_affix_bullets = affix_bullets[:1]
         affix_bullets = affix_bullets[1:]
 
     # Find inherent affixes
@@ -80,11 +84,11 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
 
     def _get_inherent():
         line_height = ResManager().offsets.item_descr_line_height
-        if len(inhernet_affixe_bullets) > 0 and len(affix_bullets) > 0:
+        if len(inherent_affix_bullets) > 0 and len(affix_bullets) > 0:
             bottom_limit = affix_bullets[0].center[1] - int(line_height // 2)
             i_inherent, debug_str = find_affixes(
                 img_item_descr=img_item_descr,
-                affix_bullets=inhernet_affixe_bullets,
+                affix_bullets=inherent_affix_bullets,
                 bottom_limit=bottom_limit,
                 is_sigil=is_sigil,
                 is_inherent=True,
@@ -92,7 +96,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             if i_inherent is None:
                 i_inherent, debug_str = find_affixes(
                     img_item_descr=img_item_descr,
-                    affix_bullets=inhernet_affixe_bullets,
+                    affix_bullets=inherent_affix_bullets,
                     bottom_limit=bottom_limit,
                     is_sigil=is_sigil,
                     is_inherent=True,

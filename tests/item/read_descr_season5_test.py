@@ -24,7 +24,6 @@ items = [
                 Affix(name="lucky_hit_up_to_a_chance_to_stun_for_seconds", value=17.2, type=AffixType.tempered),
                 Affix(name="to_warmth", value=1, type=AffixType.tempered),
             ],
-            inherent=[],
             item_type=ItemType.Helm,
             power=914,
             rarity=ItemRarity.Legendary,
@@ -42,7 +41,6 @@ items = [
                 Affix(name="lucky_hit_up_to_a_chance_to_stun_for_seconds", value=15.5, type=AffixType.tempered),
                 Affix(name="to_warmth", value=2, type=AffixType.tempered),
             ],
-            inherent=[],
             item_type=ItemType.ChestArmor,
             power=925,
             rarity=ItemRarity.Legendary,
@@ -60,7 +58,6 @@ items = [
                 Affix(name="lucky_hit_up_to_a_chance_to_stun_for_seconds", value=20.1, type=AffixType.tempered),
                 Affix(name="shock_critical_strike_damage", value=97.8, type=AffixType.tempered),
             ],
-            inherent=[],
             item_type=ItemType.Gloves,
             power=854,
             rarity=ItemRarity.Legendary,
@@ -78,7 +75,6 @@ items = [
                 Affix(name="to_chain_lightning", value=4),
             ],
             aspect=Aspect(name="axial_conduit", value=0),
-            inherent=[],
             item_type=ItemType.Legs,
             power=914,
             rarity=ItemRarity.Unique,
@@ -217,6 +213,54 @@ items = [
         ),
     ),
     ((3840, 2160), f"{BASE_PATH}/read_descr_11_2160p_small.png", item11),
+    (
+        (2160, 1440),
+        f"{BASE_PATH}/read_descr_1_1440p_small.png",
+        Item(
+            affixes=[
+                Affix(name="all_stats", value=3),
+                Affix(name="maximum_resource", value=11),
+                Affix(name="critical_strike_damage", value=94),
+                Affix(name="resistance_to_all_elements", value=9),
+            ],
+            aspect=Aspect(name="locrans_talisman", value=0.19),
+            inherent=[Affix(name="resistance_to_all_elements", value=25, type=AffixType.inherent)],
+            item_type=ItemType.Amulet,
+            power=925,
+            rarity=ItemRarity.Unique,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_1_1080p_small.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=87),
+                Affix(name="essence_per_second", value=3, type=AffixType.rerolled),
+                Affix(name="movement_speed", value=14.5),
+                Affix(name="lucky_hit_up_to_a_chance_to_freeze_for_seconds", value=13, type=AffixType.tempered),
+                Affix(name="movement_speed", value=9.5, type=AffixType.tempered),
+            ],
+            inherent=[Affix(name="attacks_reduce_evades_cooldown_by_seconds", value=1.5, type=AffixType.inherent)],
+            item_type=ItemType.Boots,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/read_descr_2_1080p_medium.png",
+        Item(
+            affixes=[
+                Affix(name="strength", value=77),
+                Affix(name="armor", value=1290, type=AffixType.rerolled),
+                Affix(name="critical_strike_chance", value=8),
+            ],
+            item_type=ItemType.Gloves,
+            power=794,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
 ]
 
 

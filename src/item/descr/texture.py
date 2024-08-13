@@ -28,15 +28,11 @@ def _filter_outliers(template_matches: list[TemplateMatch]) -> list[TemplateMatc
     return [tm for tm in template_matches if abs(tm.center[0] - target_center_x) < 1.2 * tm.region[2]]
 
 
-def _gen_roi_bullets(sep_short_match: TemplateMatch, img_height: int):
-    return [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width + 20, img_height]
-
-
 def _find_bullets(
     img_item_descr: np.ndarray, sep_short_match: TemplateMatch, template_list: list[str], threshold: float, mode: str
 ) -> list[TemplateMatch]:
     img_height = img_item_descr.shape[0]
-    roi_bullets = _gen_roi_bullets(sep_short_match, img_height)
+    roi_bullets = [0, sep_short_match.center[1], ResManager().offsets.find_bullet_points_width, img_height]
     all_bullets = search(
         ref=template_list,
         inp_img=img_item_descr,
@@ -65,9 +61,10 @@ def _find_bullets(
 
 
 def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
-    tempered_icons = [f"tempered_affix_bullet_point_{x}" for x in range(1, 7)]
     affix_icons = [f"affix_bullet_point_{x}" for x in range(1, 3)]
-    template_list = ["greater_affix_bullet_point_1", "rerolled_bullet_point"] + tempered_icons + affix_icons
+    rerolled_icons = [f"rerolled_bullet_point_{x}" for x in range(1, 3)]
+    tempered_icons = [f"tempered_affix_bullet_point_{x}" for x in range(1, 7)]
+    template_list = ["greater_affix_bullet_point_1"] + affix_icons + rerolled_icons + tempered_icons
     all_templates = [f"{x}_medium" for x in template_list] + template_list
     return _find_bullets(
         img_item_descr=img_item_descr,

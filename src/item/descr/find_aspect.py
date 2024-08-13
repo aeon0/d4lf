@@ -19,7 +19,6 @@ def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre
 
     roi_aspect = find_aspect_search_area(img_item_descr, aspect_bullet)
     img_full_aspect = crop(img_item_descr, roi_aspect)
-    # cv2.imwrite("img_full_aspect.png", img_full_aspect)
     concatenated_str = image_to_text(img_full_aspect, do_pre_proc=do_pre_proc).text.lower().replace("\n", " ")
     cleaned_str = clean_str(concatenated_str)
 

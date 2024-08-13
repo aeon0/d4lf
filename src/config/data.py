@@ -15,13 +15,7 @@ from src.utils.image_operations import alpha_to_mask
 LOGGER = logging.getLogger("d4lf")
 
 COLORS = ColorsModel(
-    aspect_number=HSVRangeModel(h_s_v_min=np.array([90, 60, 200]), h_s_v_max=np.array([150, 100, 255])),
-    cold_imbued=HSVRangeModel(h_s_v_min=np.array([88, 0, 0]), h_s_v_max=np.array([112, 255, 255])),
-    legendary_orange=HSVRangeModel(h_s_v_min=np.array([4, 190, 190]), h_s_v_max=np.array([26, 255, 255])),
     material_color=HSVRangeModel(h_s_v_min=np.array([86, 110, 190]), h_s_v_max=np.array([114, 220, 255])),
-    poison_imbued=HSVRangeModel(h_s_v_min=np.array([55, 0, 0]), h_s_v_max=np.array([65, 255, 255])),
-    shadow_imbued=HSVRangeModel(h_s_v_min=np.array([120, 0, 0]), h_s_v_max=np.array([140, 255, 255])),
-    skill_cd=HSVRangeModel(h_s_v_min=np.array([5, 61, 38]), h_s_v_max=np.array([16, 191, 90])),
     unique_gold=HSVRangeModel(h_s_v_min=np.array([4, 45, 125]), h_s_v_max=np.array([26, 155, 250])),
     unusable_red=HSVRangeModel(h_s_v_min=np.array([0, 210, 110]), h_s_v_max=np.array([10, 255, 210])),
 )
@@ -29,12 +23,12 @@ COLORS = ColorsModel(
 POSITIONS = (
     (3840, 2160),
     UiOffsetsModel(
-        find_bullet_points_width=78,
+        find_bullet_points_width=150,
         find_seperator_short_offset_top=500,
         item_descr_line_height=50,
         item_descr_off_bottom_edge=104,
         item_descr_pad=30,
-        item_descr_width=774,
+        item_descr_width=780,
         vendor_center_item_x=1232,
     ),
     UiPosModel(
@@ -56,7 +50,7 @@ POSITIONS = (
         window_dimensions=(3840, 2160),
     ),
     UiRoiModel(
-        rel_descr_search_left=np.array([-910, 0, 120, 1760]),
+        rel_descr_search_left=np.array([-900, 0, 150, 1760]),
         rel_descr_search_right=np.array([60, 0, 120, 1760]),
         rel_fav_flag=np.array([8, 6, 16, 20]),
         slots_3x11=np.array([2536, 1444, 1214, 486]),

@@ -1,3 +1,5 @@
+import time
+
 import cv2
 import pytest
 
@@ -6,20 +8,25 @@ from src.config import BASE_DIR
 from src.item.data.rarity import ItemRarity
 from src.item.find_descr import find_descr
 
-BASE_PATH = BASE_DIR / "tests/assets/item/season5"
+BASE_PATH = BASE_DIR / "tests/assets/item/unknown"
 
 
 @pytest.mark.parametrize(
     ("img_res", "input_img", "anchor", "expected_success", "expected_top_left", "expected_rarity"),
     [
-        ((3840, 2160), f"{BASE_PATH}/find_descr_mythic_2160p.png", (3017, 1560), True, (2164, 109), ItemRarity.Mythic),
+        ((1920, 1080), f"{BASE_PATH}/find_descr_rare_1080p.png", (1450, 761), True, (1043, 509), ItemRarity.Rare),
+        ((1920, 1080), f"{BASE_PATH}/find_descr_common_1080p.png", (75, 320), True, (127, 157), ItemRarity.Common),
+        ((1920, 1080), f"{BASE_PATH}/find_descr_legendary_1080p.png", (1515, 761), True, (1088, 78), ItemRarity.Legendary),
+        ((2560, 1440), f"{BASE_PATH}/find_descr_legendary_1440p.png", (1723, 1012), True, (1156, 296), ItemRarity.Legendary),
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):
     Cam().update_window_pos(0, 0, *img_res)
     img = cv2.imread(input_img)
+    start = time.time()
     success, item_rarity, cropped_img, roi = find_descr(img, anchor)
     top_left_corner = None if not success else roi[:2]
+    print("Runtime (find_descr()): ", time.time() - start)
     if False:
         cv2.imwrite("item_descr.png", cropped_img)
     assert success == expected_success

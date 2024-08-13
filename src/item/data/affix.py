@@ -16,7 +16,7 @@ class Affix:
     type: AffixType = AffixType.normal
     loc: tuple[int, int] = None
     text: str = ""
-    value: float = None
+    value: float | None = None
 
     def __eq__(self, other: "Affix") -> bool:
         if not isinstance(other, Affix):

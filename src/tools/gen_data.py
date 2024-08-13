@@ -77,7 +77,6 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         for json_file in json_files:
             with open(json_file, encoding="utf-8") as file:
                 data = json.load(file)
-                snoId = data["__snoID__"]
                 name_item = [item for item in data["arStrings"] if item["szLabel"] == "Name"]
                 if not name_item:
                     continue
@@ -95,7 +94,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
                     desc = data["arStrings"][0]["szText"]
                     desc_clean = remove_content_in_braces(desc.lower().replace("’", ""))
                     num_idx = get_random_number_idx(desc)
-                    unique_dict[name_clean] = {"desc": desc_clean, "snoId": snoId, "full": desc, "num_idx": num_idx}
+                    unique_dict[name_clean] = {"desc": desc_clean, "full": desc, "num_idx": num_idx}
         # add custom uniques that seem to be missing
         with open(D4LF_BASE_DIR / f"src/tools/data/custom_uniques_{language}.json", encoding="utf-8") as json_file:
             data = json.load(json_file)

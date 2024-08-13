@@ -1,13 +1,20 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
+#      - id: check-added-large-files # Disabled because git-lfs in GH costs?!
       - id: check-ast
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-toml
       - id: check-yaml
       - id: end-of-file-fixer
+      - id: fix-byte-order-marker
       - id: trailing-whitespace
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.4
+    rev: v0.5.7
     hooks:
       - id: ruff
         args: [--fix]

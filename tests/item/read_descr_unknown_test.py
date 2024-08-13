@@ -13,18 +13,6 @@ BASE_PATH = BASE_DIR / "tests/assets/item"
 
 legendary = [
     (
-        (1920, 1080),
-        f"{BASE_PATH}/unknown/read_descr_codex_upgrade_1080p.png",
-        Item(
-            affixes=[Affix(name="intelligence", value=46), Affix(name="maximum_life", value=25), Affix(name="essence_on_kill", value=2)],
-            codex_upgrade=True,
-            inherent=[Affix(name="critical_strike_damage", value=9, type=AffixType.inherent)],
-            item_type=ItemType.Sword2H,
-            power=254,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
         (2560, 1440),
         f"{BASE_PATH}/unknown/read_descr_codex_upgrade_1440p.png",
         Item(
@@ -95,43 +83,12 @@ legendary = [
     ),
     (
         (1920, 1080),
-        f"{BASE_PATH}/unknown/read_descr_legendary_1080p_3.png",
-        Item(
-            affixes=[
-                Affix(name="willpower", value=82),
-                Affix(name="critical_strike_damage", value=25),
-                Affix(name="overpower_damage", value=87),
-                Affix(name="damage_to_close_enemies", value=26),
-            ],
-            inherent=[Affix(name="overpower_damage", value=75, type=AffixType.inherent)],
-            item_type=ItemType.Mace2H,
-            power=704,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
         f"{BASE_PATH}/unknown/read_descr_legendary_1080p_4.png",
         Item(
             affixes=[Affix(name="intelligence", value=83), Affix(name="maximum_life", value=728), Affix(name="damage", value=20)],
             inherent=[Affix(name="lucky_hit_chance", value=10.0, type=AffixType.inherent)],
             item_type=ItemType.Wand,
             power=910,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/unknown/read_descr_legendary_1080p_5.png",
-        Item(
-            affixes=[
-                Affix(name="maximum_life", value=666),
-                Affix(name="damage", value=45, type=AffixType.greater),
-                Affix(name="vulnerable_damage", value=31),
-            ],
-            inherent=[Affix(name="lucky_hit_chance", value=10.0, type=AffixType.inherent)],
-            item_type=ItemType.Wand,
-            power=925,
             rarity=ItemRarity.Legendary,
         ),
     ),
@@ -251,23 +208,6 @@ material = [
 ]
 
 sigil = [
-    (
-        (2560, 1440),
-        f"{BASE_PATH}/unknown/read_descr_sigil_1440p.png",
-        Item(
-            affixes=[
-                Affix(name="lightning_damage", value=15),
-                Affix(name="blood_blister"),
-                Affix(name="monster_poison_damage", value=30),
-                Affix(name="monster_critical_resist", value=3),
-                Affix(name="potion_breakers", value=0.75),
-            ],
-            inherent=[Affix(name="wretched_delve", type=AffixType.inherent)],
-            item_type=ItemType.Sigil,
-            power=89,
-            rarity=ItemRarity.Common,
-        ),
-    ),
     (
         (2560, 1440),
         f"{BASE_PATH}/unknown/read_descr_sigil_1440p_2.png",

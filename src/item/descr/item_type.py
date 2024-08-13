@@ -27,9 +27,11 @@ def read_item_type(
     elif any(
         substring in concatenated_str.lower()
         for substring in [
+            "consumable",
             "grand cache",
             "reputation cache",
             "treasure goblin cache",
+            "whispering key",
         ]
     ):
         item.item_type = ItemType.Material

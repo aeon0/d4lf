@@ -215,13 +215,7 @@ class CharModel(_IniBaseModel):
 
 
 class ColorsModel(_IniBaseModel):
-    aspect_number: "HSVRangeModel"
-    cold_imbued: "HSVRangeModel"
-    legendary_orange: "HSVRangeModel"
     material_color: "HSVRangeModel"
-    poison_imbued: "HSVRangeModel"
-    shadow_imbued: "HSVRangeModel"
-    skill_cd: "HSVRangeModel"
     unique_gold: "HSVRangeModel"
     unusable_red: "HSVRangeModel"
 

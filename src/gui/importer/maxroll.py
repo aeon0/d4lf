@@ -139,6 +139,10 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                 else:
                     if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
                         attr_desc = "to core skills"
+                    elif affix["attributes"][0]["param"] == -755407686 and affix["attributes"][0]["id"] == 1034:
+                        attr_desc = "to defensive skills"
+                    elif affix["attributes"][0]["param"] == 746476422 and affix["attributes"][0]["id"] == 1034:
+                        attr_desc = "to mastery skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
             affix_obj = Affix(name=closest_match(clean_str(clean_desc), Dataloader().affix_dict))
             if affix_obj.name is not None:

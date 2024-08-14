@@ -39,6 +39,10 @@
 		"desc": "your weapon mastery skills are now also core skills that have no cooldowns but",
 		"num_idx": [0]
 	},
+	"the_umbacrux": {
+		"desc": "your subterfuge skills create an attackable shade totem for seconds",
+		"num_idx": [0]
+	},
 	"vox_omnium": {
         "desc": "casting a core skill additionally fire instances of fire bolt frost bolt or spark",
         "num_idx": [2]

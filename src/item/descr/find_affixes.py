@@ -81,7 +81,6 @@ def find_affixes(
     affix_height = bottom_limit - affix_top_left[1] - int(line_height * 0.75)
     full_affix_region = [*affix_top_left, affix_width, affix_height]
     crop_full_affix = crop(img_item_descr, full_affix_region)
-    # cv2.imwrite("crop_full_affix.png", crop_full_affix)
     do_pre_proc = not (is_sigil or not do_pre_proc_flag)
     res, line_pos = image_to_text(crop_full_affix, line_boxes=True, do_pre_proc=do_pre_proc)
     affix_lines = res.text.lower().split("\n")

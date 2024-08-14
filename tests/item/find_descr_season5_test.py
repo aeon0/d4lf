@@ -12,7 +12,7 @@ BASE_PATH = BASE_DIR / "tests/assets/item/season5"
 @pytest.mark.parametrize(
     ("img_res", "input_img", "anchor", "expected_success", "expected_top_left", "expected_rarity"),
     [
-        ((3840, 2160), f"{BASE_PATH}/find_descr_mythic_2160p.png", (3017, 1560), True, (2230, 200), ItemRarity.Mythic),
+        ((3840, 2160), f"{BASE_PATH}/2160p_small_find_descr_mythic_1.png", (3017, 1560), True, (2230, 200), ItemRarity.Mythic),
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):

@@ -48,16 +48,19 @@ class _ResTransformer:
         return [self._transform_tuples(value=v) for v in value]
 
     def _transform_templates(self, templates: dict[str, Template]) -> dict[str, Template]:
-        return {
-            key: Template(
-                name=value.name,
-                img_bgra=self._resize_image(src=value.img_bgra),
-                img_bgr=self._resize_image(src=value.img_bgr),
-                img_gray=self._resize_image(src=value.img_gray),
-                alpha_mask=self._resize_image(src=value.alpha_mask) if value.alpha_mask is not None else None,
-            )
-            for key, value in templates.items()
-        }
+        result = {}
+        for key, value in templates.items():
+            if key.endswith("_special"):  # do not transform templates that end with _special
+                result[key] = value
+            else:
+                result[key] = Template(
+                    name=value.name,
+                    img_bgra=self._resize_image(src=value.img_bgra),
+                    img_bgr=self._resize_image(src=value.img_bgr),
+                    img_gray=self._resize_image(src=value.img_gray),
+                    alpha_mask=self._resize_image(src=value.alpha_mask) if value.alpha_mask is not None else None,
+                )
+        return result
 
     def _transform_tuples(self, value: tuple[int, int]) -> tuple[int, int]:
         values = self._transform_array(value=np.array(value, dtype=int))
@@ -108,6 +111,10 @@ class ResManager:
     @property
     def pos(self) -> UiPosModel:
         return self._pos
+
+    @property
+    def resolution(self) -> str:
+        return self._current_resolution
 
     @property
     def roi(self) -> UiRoiModel:

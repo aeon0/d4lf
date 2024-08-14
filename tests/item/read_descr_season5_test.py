@@ -15,7 +15,7 @@ BASE_PATH = BASE_DIR / "tests/assets/item/season5"
 items = [
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_1_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_1.png",
         item1 := Item(
             affixes=[
                 Affix(name="intelligence", value=101, type=AffixType.rerolled),
@@ -29,10 +29,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_1_2160p_small.png", item1),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_1.png", item1),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_2_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_2.png",
         item2 := Item(
             affixes=[
                 Affix(name="intelligence", value=87),
@@ -46,10 +46,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_2_2160p_small.png", item2),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_2.png", item2),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_3_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_3.png",
         item3 := Item(
             affixes=[
                 Affix(name="intelligence", value=90),
@@ -63,10 +63,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_3_2160p_small.png", item3),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_3.png", item3),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_4_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_4.png",
         item4 := Item(
             affixes=[
                 Affix(name="chance_for_chain_lightning_projectiles_to_cast_twice", value=20.9),
@@ -80,10 +80,10 @@ items = [
             rarity=ItemRarity.Unique,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_4_2160p_small.png", item4),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_4.png", item4),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_5_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_5.png",
         item5 := Item(
             affixes=[
                 Affix(name="maximum_life", value=768),
@@ -98,10 +98,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_5_2160p_small.png", item5),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_5.png", item5),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_6_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_6.png",
         item6 := Item(
             affixes=[
                 Affix(name="intelligence", value=94),
@@ -116,10 +116,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_6_2160p_small.png", item6),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_6.png", item6),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_7_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_7.png",
         item7 := Item(
             affixes=[
                 Affix(name="intelligence", value=149, type=AffixType.greater),
@@ -134,10 +134,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_7_2160p_small.png", item7),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_7.png", item7),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_8_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_8.png",
         item8 := Item(
             affixes=[
                 Affix(name="intelligence", value=92),
@@ -155,10 +155,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_8_2160p_small.png", item8),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_8.png", item8),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_9_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_9.png",
         item9 := Item(
             affixes=[
                 Affix(name="intelligence", value=6.3),
@@ -173,10 +173,10 @@ items = [
             rarity=ItemRarity.Legendary,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_9_2160p_small.png", item9),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_9.png", item9),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_10_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_10.png",
         item10 := Item(
             affixes=[
                 Affix(name="lucky_hit_chance", value=14.4, type=AffixType.greater),
@@ -194,10 +194,10 @@ items = [
             rarity=ItemRarity.Unique,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_10_2160p_medium.png", item10),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_10.png", item10),
     (
         (3840, 2160),
-        f"{BASE_PATH}/read_descr_11_2160p_medium.png",
+        f"{BASE_PATH}/2160p_medium_read_descr_11.png",
         item11 := Item(
             affixes=[
                 Affix(name="movement_speed", value=19),
@@ -212,10 +212,10 @@ items = [
             rarity=ItemRarity.Mythic,
         ),
     ),
-    ((3840, 2160), f"{BASE_PATH}/read_descr_11_2160p_small.png", item11),
+    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_11.png", item11),
     (
         (2160, 1440),
-        f"{BASE_PATH}/read_descr_1_1440p_small.png",
+        f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
             affixes=[
                 Affix(name="all_stats", value=3),
@@ -232,7 +232,7 @@ items = [
     ),
     (
         (1920, 1080),
-        f"{BASE_PATH}/read_descr_1_1080p_small.png",
+        f"{BASE_PATH}/1080p_small_read_descr_1.png",
         Item(
             affixes=[
                 Affix(name="intelligence", value=87),
@@ -249,7 +249,41 @@ items = [
     ),
     (
         (1920, 1080),
-        f"{BASE_PATH}/read_descr_2_1080p_medium.png",
+        f"{BASE_PATH}/1080p_small_read_descr_2.png",
+        Item(
+            affixes=[
+                Affix(name="movement_speed", value=23.1),
+                Affix(name="maximum_resistance_to_all_elements", value=8.6),
+                Affix(name="resistance_to_all_elements", value=69),
+                Affix(name="damage_reduction", value=23),
+            ],
+            aspect=Aspect(name="tyraels_might", value=5213),
+            inherent=[Affix(name="ignore_durability_loss", value=None, type=AffixType.inherent)],
+            item_type=ItemType.ChestArmor,
+            power=925,
+            rarity=ItemRarity.Mythic,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_medium_read_descr_2.png",
+        Item(
+            affixes=[
+                Affix(name="movement_speed", value=21.4),
+                Affix(name="maximum_resistance_to_all_elements", value=9.8),
+                Affix(name="resistance_to_all_elements", value=78),
+                Affix(name="damage_reduction", value=36),
+            ],
+            aspect=Aspect(name="tyraels_might", value=5213),
+            inherent=[Affix(name="ignore_durability_loss", value=None, type=AffixType.inherent)],
+            item_type=ItemType.ChestArmor,
+            power=925,
+            rarity=ItemRarity.Mythic,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_medium_read_descr_1.png",
         Item(
             affixes=[
                 Affix(name="strength", value=77),

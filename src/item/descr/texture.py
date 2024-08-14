@@ -75,30 +75,21 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     )
 
 
-def find_empty_sockets(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
-    template_list = ["empty_socket"]
+def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
+    template_list = ["unique_bullet_point", "mythic_bullet_point"]
     all_templates = [f"{x}_medium" for x in template_list] + template_list
-    empty_sockets = _find_bullets(
+    if ResManager().resolution == "1920x1080":
+        all_templates += ["mythic_bullet_point_1080p_special", "mythic_bullet_point_medium_1080p_special"]
+    aspect_bullets = _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
         template_list=all_templates,
         threshold=0.8,
         mode="all",
     )
-    return sorted(empty_sockets, key=lambda match: match.center[1])
-
-
-def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
-    template_list = ["aspect_bullet_point", "unique_bullet_point", "mythic_bullet_point"]
-    all_templates = [f"{x}_medium" for x in template_list] + template_list
-    aspect_bullets = _find_bullets(
-        img_item_descr=img_item_descr,
-        sep_short_match=sep_short_match,
-        template_list=all_templates,
-        threshold=0.8,
-        mode="first",
-    )
-    return aspect_bullets[0] if aspect_bullets else None
+    if aspect_bullets:
+        return [match for match in aspect_bullets if match.score == max([match.score for match in aspect_bullets])][0]
+    return None
 
 
 def find_aspect_search_area(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch) -> list[int]:

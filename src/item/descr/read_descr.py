@@ -9,7 +9,7 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.find_affixes import find_affixes
 from src.item.descr.find_aspect import find_aspect
 from src.item.descr.item_type import read_item_type
-from src.item.descr.texture import find_affix_bullets, find_aspect_bullet, find_codex_upgrade_icon, find_empty_sockets, find_seperator_short
+from src.item.descr.texture import find_affix_bullets, find_aspect_bullet, find_codex_upgrade_icon, find_seperator_short
 from src.item.models import Item
 from src.utils.window import screenshot
 
@@ -46,15 +46,12 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     ):
         return item
 
-    # Find textures for bullets and sockets
+    # Find textures for bullets
     # =========================
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
     futures["aspect_bullet"] = (
-        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match)
-        if rarity in [ItemRarity.Legendary, ItemRarity.Unique, ItemRarity.Mythic]
-        else None
+        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match) if rarity in [ItemRarity.Unique, ItemRarity.Mythic] else None
     )
-    empty_sockets = find_empty_sockets(img_item_descr, sep_short_match)
 
     # Split affix bullets into inherent and others
     # =========================
@@ -112,10 +109,8 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find normal affixes
     # =========================
     def _get_affixes():
-        if aspect_bullet is not None:
-            bottom_limit = aspect_bullet.center[1]
-        elif len(empty_sockets) > 0:
-            bottom_limit = empty_sockets[0].center[1]
+        if affix_bullets:
+            bottom_limit = affix_bullets[-1].region[1] + affix_bullets[-1].region[3] + ResManager().offsets.item_descr_line_height
         else:
             bottom_limit = img_item_descr.shape[0]
         i_affixes, debug_str = find_affixes(

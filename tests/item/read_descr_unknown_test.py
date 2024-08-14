@@ -139,21 +139,6 @@ legendary = [
     ),
     (
         (2560, 1440),
-        f"{BASE_PATH}/unknown/read_descr_legendary_1440p_2.png",
-        Item(
-            affixes=[
-                Affix(name="intelligence", value=178),
-                Affix(name="life_on_hit", value=38),
-                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=19),
-            ],
-            inherent=[Affix(name="life_on_kill", value=228, type=AffixType.inherent)],
-            item_type=ItemType.Scythe2H,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (2560, 1440),
         f"{BASE_PATH}/unknown/read_descr_legendary_1440p_3.png",
         Item(
             affixes=[

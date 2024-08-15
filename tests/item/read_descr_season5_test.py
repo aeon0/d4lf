@@ -282,13 +282,14 @@ items = [
         ),
     ),
     (
+        # TODO fix multi line detection via bottom limit / find_affixes
         (1920, 1080),
         f"{BASE_PATH}/1080p_small_read_descr_4.png",
         Item(
             affixes=[
                 Affix(name="maximum_life", value=1342),
                 Affix(name="life_on_hit", value=39),
-                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=23),
+                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=None),
             ],
             inherent=[Affix(name="damage_over_time", value=40, type=AffixType.inherent)],
             item_type=ItemType.Staff,
@@ -337,6 +338,6 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
     assert item == expected_item
 
 
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items[26:27])
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
 def test_item(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

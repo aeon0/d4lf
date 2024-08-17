@@ -266,6 +266,39 @@ items = [
     ),
     (
         (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_3.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=950),
+                Affix(name="cooldown_reduction", value=9.1, type=AffixType.rerolled),
+                Affix(name="to_conjuration_mastery", value=2),
+                Affix(name="unstable_currents_cooldown_reduction", value=16.1, type=AffixType.tempered),
+                Affix(name="overpower_damage", value=80.5, type=AffixType.tempered),
+            ],
+            inherent=[Affix(name="resistance_to_all_elements", value=25, type=AffixType.inherent)],
+            item_type=ItemType.Amulet,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        # TODO fix multi line detection via bottom limit / find_affixes
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_4.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=1342),
+                Affix(name="life_on_hit", value=39),
+                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=None),
+            ],
+            inherent=[Affix(name="damage_over_time", value=40, type=AffixType.inherent)],
+            item_type=ItemType.Staff,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
         f"{BASE_PATH}/1080p_medium_read_descr_2.png",
         Item(
             affixes=[

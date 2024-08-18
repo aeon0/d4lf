@@ -119,7 +119,9 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
             time.sleep(0.13)
         elif (
             res.keep
-            and (matched_any_affixes or item_descr.rarity in [ItemRarity.Unique, ItemRarity.Mythic])
+            and (
+                matched_any_affixes or item_descr.rarity in [ItemRarity.Unique, ItemRarity.Mythic] or item_descr.item_type == ItemType.Sigil
+            )
             and IniConfigLoader().general.mark_as_favorite
         ):
             LOGGER.info("Mark as favorite")

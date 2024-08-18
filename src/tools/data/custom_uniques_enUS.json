@@ -1,7 +1,7 @@
 {
 	"azurewrath": {
-		"desc": "lucky hit your skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
-		"num_idx": [1]
+		"desc": "lucky hit up to a chance to freeze enemies for seconds and deal cold damage to them",
+		"num_idx": [2]
 	},
 	"crown_of_lucion": {
         	"desc": "each time you use a skill with a resource Cost, gain increased damage and resource cost is increased by for seconds, stacking up to times.",

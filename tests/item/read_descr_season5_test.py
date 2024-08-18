@@ -214,6 +214,40 @@ items = [
     ),
     ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_11.png", item11),
     (
+        (3840, 2160),
+        f"{BASE_PATH}/2160p_small_read_descr_12.png",
+        Item(
+            affixes=[
+                Affix(name="all_stats", value=98, type=AffixType.greater),
+                Affix(name="attack_speed", value=8.5),
+                Affix(name="cold_resistance", value=55.5),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=40, type=AffixType.greater),
+            ],
+            aspect=Aspect(name="azurewrath", value=23825),
+            inherent=[Affix(name="cold_damage", value=85, type=AffixType.inherent)],
+            item_type=ItemType.Sword,
+            power=925,
+            rarity=ItemRarity.Unique,
+        ),
+    ),
+    (
+        (3840, 2160),
+        f"{BASE_PATH}/2160p_small_read_descr_13.png",
+        Item(
+            affixes=[
+                Affix(name="attack_speed", value=11),
+                Affix(name="fire_and_cold_damage", value=156),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_fire_damage", value=40),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=40, type=AffixType.greater),
+            ],
+            aspect=Aspect(name="frostburn", value=58),
+            inherent=[Affix(name="lucky_hit_chance", value=8, type=AffixType.inherent)],
+            item_type=ItemType.Gloves,
+            power=925,
+            rarity=ItemRarity.Unique,
+        ),
+    ),
+    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -228,6 +262,20 @@ items = [
             item_type=ItemType.Amulet,
             power=925,
             rarity=ItemRarity.Unique,
+        ),
+    ),
+    (
+        (3840, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_2.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=43),
+                Affix(name="maximum_resource", value=7),
+                Affix(name="lucky_hit_chance", value=4),
+            ],
+            item_type=ItemType.Helm,
+            power=590,
+            rarity=ItemRarity.Legendary,
         ),
     ),
     (
@@ -289,11 +337,41 @@ items = [
             affixes=[
                 Affix(name="maximum_life", value=1342),
                 Affix(name="life_on_hit", value=39),
-                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=None),
+                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=23),
             ],
             inherent=[Affix(name="damage_over_time", value=40, type=AffixType.inherent)],
             item_type=ItemType.Staff,
             power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_5.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=149, type=AffixType.greater),
+                Affix(name="maximum_life", value=1441, type=AffixType.greater),
+                Affix(name="to_flame_shield", value=3, type=AffixType.rerolled),
+                Affix(name="flame_shield_duration", value=17.2, type=AffixType.tempered),
+                Affix(name="frost_nova_size", value=47.6, type=AffixType.tempered),
+            ],
+            item_type=ItemType.ChestArmor,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_medium_read_descr_1.png",
+        Item(
+            affixes=[
+                Affix(name="strength", value=77),
+                Affix(name="armor", value=1290, type=AffixType.rerolled),
+                Affix(name="critical_strike_chance", value=8),
+            ],
+            item_type=ItemType.Gloves,
+            power=794,
             rarity=ItemRarity.Legendary,
         ),
     ),
@@ -314,18 +392,18 @@ items = [
             rarity=ItemRarity.Mythic,
         ),
     ),
+]
+
+sigil = [
     (
-        (1920, 1080),
-        f"{BASE_PATH}/1080p_medium_read_descr_1.png",
+        (2560, 1440),
+        f"{BASE_PATH}/1440p_small_sigil_1.png",
         Item(
-            affixes=[
-                Affix(name="strength", value=77),
-                Affix(name="armor", value=1290, type=AffixType.rerolled),
-                Affix(name="critical_strike_chance", value=8),
-            ],
-            item_type=ItemType.Gloves,
-            power=794,
-            rarity=ItemRarity.Legendary,
+            affixes=[Affix(name="quick_killer", value=2), Affix(name="empowered_elites_poison_enchanted")],
+            inherent=[Affix(name="sanguine_chapel", type=AffixType.inherent)],
+            item_type=ItemType.Sigil,
+            power=41,
+            rarity=ItemRarity.Common,
         ),
     ),
 ]
@@ -340,4 +418,9 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
 
 @pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
 def test_item(img_res: tuple[int, int], input_img: str, expected_item: Item):
+    _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
+
+
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), sigil)
+def test_sigil(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

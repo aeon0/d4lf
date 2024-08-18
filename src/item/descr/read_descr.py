@@ -9,7 +9,13 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.find_affixes import find_affixes
 from src.item.descr.find_aspect import find_aspect
 from src.item.descr.item_type import read_item_type
-from src.item.descr.texture import find_affix_bullets, find_aspect_bullet, find_codex_upgrade_icon, find_seperator_short
+from src.item.descr.texture import (
+    find_affix_bullets,
+    find_aspect_bullet,
+    find_codex_upgrade_icon,
+    find_seperator_short,
+    find_seperators_long,
+)
 from src.item.models import Item
 from src.utils.window import screenshot
 
@@ -19,7 +25,6 @@ LOGGER = logging.getLogger(__name__)
 def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bool = True) -> Item | None:
     futures = {}
     base_item = Item(rarity=rarity)
-
     # Find textures for seperator short on top
     # =========================
     sep_short_match = find_seperator_short(img_item_descr)
@@ -29,6 +34,7 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
             screenshot("failed_seperator_short", img=img_item_descr)
         return None
 
+    futures["sep_long"] = TP.submit(find_seperators_long, img_item_descr, sep_short_match)
     # Find item type and item power / tier list
     # =========================
     item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
@@ -46,38 +52,60 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     ):
         return item
 
-    # Find textures for bullets
-    # =========================
+    is_sigil = item.item_type == ItemType.Sigil
+
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
     futures["aspect_bullet"] = (
-        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match) if rarity in [ItemRarity.Unique, ItemRarity.Mythic] else None
+        TP.submit(find_aspect_bullet, img_item_descr, sep_short_match)
+        if rarity in [ItemRarity.Legendary, ItemRarity.Unique, ItemRarity.Mythic]
+        else None
     )
 
-    # Split affix bullets into inherent and others
-    # =========================
-    if item.rarity == ItemRarity.Mythic:  # TODO should refactor so we either apply some logic OR we look for separator
-        # Just pick the last 4 matches as affixes
-        inherent_affix_bullets = affix_bullets[:-4]
-        affix_bullets = affix_bullets[-4:]
-    elif item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
-        inherent_affix_bullets = []
-    elif item.item_type in [ItemType.Ring]:
-        inherent_affix_bullets = affix_bullets[:2]
-        affix_bullets = affix_bullets[2:]
-    elif item.item_type in [ItemType.Sigil]:
-        inherent_affix_bullets = affix_bullets[:3]
-        affix_bullets = affix_bullets[3:]
-    elif item.item_type in [ItemType.Shield]:
-        inherent_affix_bullets = affix_bullets[:4]
-        affix_bullets = affix_bullets[4:]
-    else:
-        # default for: Amulets, Boots, All Weapons
+    sep_long_bottom = None
+    sep_long_match = futures["sep_long"].result() if futures["sep_long"] is not None else None
+    if is_sigil:
         inherent_affix_bullets = affix_bullets[:1]
         affix_bullets = affix_bullets[1:]
-
-    # Find inherent affixes
-    # =========================
-    is_sigil = item.item_type == ItemType.Sigil
+    else:
+        if sep_long_match is None:
+            if show_warnings:
+                LOGGER.debug("Could not detect item_seperator_long. Fallback to old logic")
+            # Split affix bullets into inherent and others
+            # =========================
+            if item.rarity == ItemRarity.Mythic:  # TODO should refactor so we either apply some logic OR we look for separator
+                # Just pick the last 4 matches as affixes
+                inherent_affix_bullets = affix_bullets[:-4]
+                affix_bullets = affix_bullets[-4:]
+            elif item.item_type in [ItemType.ChestArmor, ItemType.Helm, ItemType.Gloves, ItemType.Legs]:
+                inherent_affix_bullets = []
+            elif item.item_type in [ItemType.Ring]:
+                inherent_affix_bullets = affix_bullets[:2]
+                affix_bullets = affix_bullets[2:]
+            elif item.item_type in [ItemType.Sigil]:
+                inherent_affix_bullets = affix_bullets[:3]
+                affix_bullets = affix_bullets[3:]
+            elif item.item_type in [ItemType.Shield]:
+                inherent_affix_bullets = affix_bullets[:4]
+                affix_bullets = affix_bullets[4:]
+            else:
+                # default for: Amulets, Boots, All Weapons
+                inherent_affix_bullets = affix_bullets[:1]
+                affix_bullets = affix_bullets[1:]
+        else:
+            # check how many affix bullets are below the long separator. if there are more below, then the long separator is the inherent separator.
+            inherent_sep = (None, 0)
+            for sep in sep_long_match:
+                candidate = (sep, len([True for bullet in affix_bullets if bullet.center[1] > sep.center[1]]))
+                if candidate[1] > inherent_sep[1]:
+                    inherent_sep = candidate
+            if inherent_sep[0] is None:
+                number_inherents = 0
+            else:
+                number_inherents = len([True for bullet in affix_bullets if bullet.center[1] < inherent_sep[0].center[1]])
+            inherent_affix_bullets = affix_bullets[:number_inherents]
+            affix_bullets = affix_bullets[number_inherents:]
+            if len(sep_long_match) == 2:
+                sep_long_bottom = sep_long_match[1]
 
     def _get_inherent():
         line_height = ResManager().offsets.item_descr_line_height
@@ -109,8 +137,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     # Find normal affixes
     # =========================
     def _get_affixes():
-        if affix_bullets:
-            bottom_limit = affix_bullets[-1].region[1] + affix_bullets[-1].region[3] + ResManager().offsets.item_descr_line_height
+        if aspect_bullet is not None:
+            bottom_limit = aspect_bullet.center[1] - int(ResManager().offsets.item_descr_line_height / 2)
+        elif sep_long_bottom is not None:
+            bottom_limit = sep_long_bottom.center[1] - ResManager().offsets.item_descr_line_height
         else:
             bottom_limit = img_item_descr.shape[0]
         i_affixes, debug_str = find_affixes(

@@ -78,7 +78,7 @@ def find_affixes(
 
     # Calc full region of all affixes
     affix_width = img_width - affix_top_left[0]
-    affix_height = bottom_limit - affix_top_left[1] - int(line_height * 0.75)
+    affix_height = bottom_limit - affix_top_left[1]
     full_affix_region = [*affix_top_left, affix_width, affix_height]
     crop_full_affix = crop(img_item_descr, full_affix_region)
     do_pre_proc = not (is_sigil or not do_pre_proc_flag)

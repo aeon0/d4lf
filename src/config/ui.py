@@ -128,5 +128,5 @@ class ResManager:
         if res == self._current_resolution:
             return
         self._current_resolution = res
-        LOGGER.debug(f"Setting ui resolution to {res}")
+        LOGGER.info(f"Setting ui resolution to {res}")
         self._offsets, self._pos, self._roi, self._templates = _ResTransformer(resolution=res).fromUHD()

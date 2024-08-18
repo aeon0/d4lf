@@ -221,7 +221,7 @@ items = [
                 Affix(name="all_stats", value=98, type=AffixType.greater),
                 Affix(name="attack_speed", value=8.5),
                 Affix(name="cold_resistance", value=55.5),
-                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=9750, type=AffixType.greater),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=40, type=AffixType.greater),
             ],
             aspect=Aspect(name="azurewrath", value=23825),
             inherent=[Affix(name="cold_damage", value=85, type=AffixType.inherent)],
@@ -237,8 +237,8 @@ items = [
             affixes=[
                 Affix(name="attack_speed", value=11),
                 Affix(name="fire_and_cold_damage", value=156),
-                Affix(name="lucky_hit_up_to_a_chance_to_deal_fire_damage", value=2000),
-                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=6000, type=AffixType.greater),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_fire_damage", value=40),
+                Affix(name="lucky_hit_up_to_a_chance_to_deal_cold_damage", value=40, type=AffixType.greater),
             ],
             aspect=Aspect(name="frostburn", value=58),
             inherent=[Affix(name="lucky_hit_chance", value=8, type=AffixType.inherent)],
@@ -394,6 +394,20 @@ items = [
     ),
 ]
 
+sigil = [
+    (
+        (2560, 1440),
+        f"{BASE_PATH}/1440p_small_sigil_1.png",
+        Item(
+            affixes=[Affix(name="quick_killer", value=2), Affix(name="empowered_elites_poison_enchanted")],
+            inherent=[Affix(name="sanguine_chapel", type=AffixType.inherent)],
+            item_type=ItemType.Sigil,
+            power=41,
+            rarity=ItemRarity.Common,
+        ),
+    ),
+]
+
 
 def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, *img_res)
@@ -402,6 +416,11 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
     assert item == expected_item
 
 
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items[22:24])
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
 def test_item(img_res: tuple[int, int], input_img: str, expected_item: Item):
+    _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
+
+
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), sigil)
+def test_sigil(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

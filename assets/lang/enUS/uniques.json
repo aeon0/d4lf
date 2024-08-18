@@ -60,9 +60,9 @@
         ]
     },
     "azurewrath": {
-        "desc": "lucky hit your skills have up to a chance to freeze enemies for seconds and deal cold damage to them.",
+        "desc": "lucky hit up to a chance to freeze enemies for seconds and deal cold damage to them",
         "num_idx": [
-            1
+            2
         ]
     },
     "banished_lords_talisman": {

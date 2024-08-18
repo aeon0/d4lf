@@ -67,6 +67,5 @@ class Dataloader:
         with open(BASE_DIR / f"assets/lang/{IniConfigLoader().general.language}/uniques.json", encoding="utf-8") as f:
             data = json.load(f)
             for key, d in data.items():
-                # Note: If you adjust the :45, also adjust it in find_aspect.py
-                self.aspect_unique_dict[key] = d["desc"][:45]
+                self.aspect_unique_dict[key] = d["desc"][:60]
                 self.aspect_unique_num_idx[key] = d["num_idx"]

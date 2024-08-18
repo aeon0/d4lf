@@ -33,7 +33,7 @@ def _template_search(img: np.ndarray, anchor: int, roi: np.ndarray):
     roi_copy[0] += anchor
     ok, roi_left = fit_roi_to_window_size(roi_copy, ResManager().pos.window_dimensions)
     if ok:
-        return search(ref=list(map_template_rarity.keys()), inp_img=img, roi=roi_left, threshold=0.8, mode="best")
+        return search(ref=list(map_template_rarity.keys()), inp_img=img, roi=roi_left, threshold=0.8, mode="all")
     return SearchResult(success=False)
 
 
@@ -64,7 +64,7 @@ def find_descr(img: np.ndarray, anchor: tuple[int, int]) -> tuple[bool, ItemRari
             off_bottom_of_descr = ResManager().offsets.item_descr_off_bottom_edge
             roi_height = ResManager().pos.window_dimensions[1] - (2 * off_bottom_of_descr) - match.region[1]
             if (
-                res_bottom := search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.54, use_grayscale=True, mode="best")
+                res_bottom := search(ref=["item_bottom_edge"], inp_img=img, roi=roi, threshold=0.54, use_grayscale=True, mode="all")
             ).success:
                 roi_height = res_bottom.matches[0].center[1] - off_bottom_of_descr - match.region[1]
             crop_roi = [

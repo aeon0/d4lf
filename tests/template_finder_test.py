@@ -31,7 +31,7 @@ def test_search_best_match():
     slash = cv2.imread("tests/assets/template_finder/stash_slot_slash.png")
     cross = cv2.imread("tests/assets/template_finder/stash_slot_cross.png")
     slash_expected_roi = [38, 0, 38, 38]
-    result = src.template_finder.search([cross, slash], image, threshold=0.6, mode="best")
+    result = src.template_finder.search([cross, slash], image, threshold=0.6, mode="all")
     match = result.matches[0]
     assert is_in_roi(slash_expected_roi, match.center)
 

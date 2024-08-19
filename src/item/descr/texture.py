@@ -8,6 +8,26 @@ from src.template_finder import TemplateMatch, search
 from src.utils.image_operations import color_filter, crop
 
 
+def find_seperators_long(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> list[TemplateMatch]:
+    refs = ["item_seperator_long_legendary", "item_seperator_long_mythic"]
+    roi = [0, sep_short_match.center[1], img_item_descr.shape[1], img_item_descr.shape[0] - sep_short_match.center[1]]
+    if not (sep_long := search(refs, img_item_descr, 0.80, roi, True, mode="all", do_multi_process=False)).success:
+        return None
+    matches_dict = {}
+    for match in sep_long.matches:
+        match_exists = False
+        for center in matches_dict:
+            if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 10:
+                if match.score > matches_dict[center].score:
+                    matches_dict[center] = match
+                match_exists = True
+                break
+        if not match_exists:
+            matches_dict[match.center] = match
+    filtered_matches = list(matches_dict.values())
+    return sorted(filtered_matches, key=lambda match: match.center[1])
+
+
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     refs = ["item_seperator_short_rare", "item_seperator_short_legendary", "item_seperator_short_mythic"]
     roi = [0, 0, img_item_descr.shape[1], ResManager().offsets.find_seperator_short_offset_top]
@@ -76,7 +96,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 
 
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
-    template_list = ["unique_bullet_point", "mythic_bullet_point"]
+    template_list = ["legendary_bullet_point", "unique_bullet_point", "mythic_bullet_point"]
     all_templates = [f"{x}_medium" for x in template_list] + template_list
     if ResManager().resolution == "1920x1080":
         all_templates += ["mythic_bullet_point_1080p_special", "mythic_bullet_point_medium_1080p_special"]

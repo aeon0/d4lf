@@ -213,8 +213,6 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             json_file.write("\n")
 
         # Create Affixes
-        # Its quite the hustle to reconstruct the displayed affixes. So using the companion app parsed json. Generated from here:
-        # https://github.com/josdemmers/D4DataParser/blob/main/D4DataParser/Parsers/AffixParser.cs
         print(f"Gen Affixes for {language}")
         affix_dict = {}
         with open(companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json", encoding="utf-8") as file:

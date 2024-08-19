@@ -180,7 +180,7 @@ def search(
     :param roi: Region of Interest of the inp_img to restrict search area. Format [left, top, width, height] or string corresponding to a key in Config().ui_roi
     :param use_grayscale: Use grayscale template matching for speed up
     :param color_match: Pass a color to be used by misc.color_filter to filter both image of interest and template image (format Config().colors["color"]) or string corresponding to a key in Config().colors
-    :param mode: search "first" match, "best" match, or "all" matches
+    :param mode: search "first" match or "all" matches
     :param timeout: wait for the specified number of seconds before stopping search
     :param do_multi_process: flag if multi process should be used in case there are multiple refs
     :return: SearchResult object containing success and matches

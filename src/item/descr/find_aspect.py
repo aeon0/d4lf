@@ -23,7 +23,7 @@ def find_aspect(img_item_descr: np.ndarray, aspect_bullet: TemplateMatch, do_pre
     cleaned_str = clean_str(concatenated_str)
 
     # Note: If you adjust the [:45] it also needs to be adapted in the dataloader
-    cleaned_str = cleaned_str[:45]
+    cleaned_str = cleaned_str[:60]
     found_key = closest_match(cleaned_str, Dataloader().aspect_unique_dict)
     num_idx = Dataloader().aspect_unique_num_idx
 

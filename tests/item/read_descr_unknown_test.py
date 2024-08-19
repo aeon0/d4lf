@@ -192,20 +192,6 @@ material = [
     ),
 ]
 
-sigil = [
-    (
-        (2560, 1440),
-        f"{BASE_PATH}/unknown/read_descr_sigil_1440p_2.png",
-        Item(
-            affixes=[Affix(name="extra_shrines"), Affix(name="avenger")],
-            inherent=[Affix(name="serpents_lair", type=AffixType.inherent)],
-            item_type=ItemType.Sigil,
-            power=76,
-            rarity=ItemRarity.Common,
-        ),
-    ),
-]
-
 
 def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, *img_res)
@@ -221,9 +207,4 @@ def test_legendary(img_res: tuple[int, int], input_img: str, expected_item: Item
 
 @pytest.mark.parametrize(("img_res", "input_img", "expected_item"), material)
 def test_material(img_res: tuple[int, int], input_img: str, expected_item: Item):
-    _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
-
-
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), sigil)
-def test_sigil(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

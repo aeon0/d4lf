@@ -21,9 +21,9 @@ feature request or issue reports join the [discord](https://discord.gg/YyzaPhAN6
 
 - Font size can be small or medium in the Gameplay Settings
 - Game Language must be English
-- The tool does not play well with HDR as it makes everything super bright
-- The advanced item comparison feature might cause incorrect classifications
-- Stuttering has been reported on some machines with V-Sync, G-Sync, Active Sync or similar enabled in the settings.
+- **The tool does not play well with HDR as it makes everything super bright**
+- **The advanced item comparison feature might cause incorrect classifications**
+- **Stuttering has been reported on some machines with V-Sync, G-Sync, Active Sync or similar enabled in the settings**
 
 ### Quick start guide
 

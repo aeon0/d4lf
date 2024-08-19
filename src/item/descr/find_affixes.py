@@ -105,6 +105,8 @@ def find_affixes(
         for error, correction in Dataloader().error_map.items():
             combined_lines = combined_lines.replace(error, correction)
         cleaned_str = clean_str(combined_lines)
+        if len(cleaned_str) < 4:
+            continue
 
         if is_sigil:
             # A bit of a hack to match the locations...
@@ -117,11 +119,14 @@ def find_affixes(
                 found_key = closest_match(cleaned_str, adapted_search_dict)
         else:
             found_key = closest_match(cleaned_str, Dataloader().affix_dict)
-        found_value = find_number(combined_lines)
         if found_key is not None:
-            affixes.append(Affix(name=found_key, value=found_value, text=combined_lines))
+            if is_sigil:
+                affixes.append(Affix(name=found_key, value=None, text=combined_lines))
+            else:
+                affixes.append(Affix(name=found_key, value=find_number(combined_lines), text=combined_lines))
         else:
-            LOGGER.warning(f"Affix does not exist: {cleaned_str=} ||| {combined_lines=}")
+            if not is_sigil:
+                LOGGER.warning(f"Affix does not exist: {cleaned_str=} ||| {combined_lines=}")
 
     # Add location to the found_values
     affix_x = affix_bullets[0].center[0]

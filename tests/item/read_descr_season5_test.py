@@ -248,6 +248,21 @@ items = [
         ),
     ),
     (
+        (3840, 2160),
+        f"{BASE_PATH}/2160p_small_read_descr_14.png",
+        Item(
+            affixes=[
+                Affix(name="attack_speed", value=8),
+                Affix(name="lightning_resistance", value=37),
+                Affix(name="to_shocking_impact", value=1),
+            ],
+            inherent=[Affix(name="resistance_to_all_elements", value=25, type=AffixType.inherent)],
+            item_type=ItemType.Amulet,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -265,7 +280,7 @@ items = [
         ),
     ),
     (
-        (3840, 1440),
+        (3440, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_2.png",
         Item(
             affixes=[
@@ -275,6 +290,62 @@ items = [
             ],
             item_type=ItemType.Helm,
             power=590,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (3440, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_3.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=80),
+                Affix(name="fire_resistance", value=34),
+                Affix(name="to_basic_skills", value=2),
+            ],
+            item_type=ItemType.Legs,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (3440, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_4.png",
+        Item(
+            affixes=[
+                Affix(name="life_per_second", value=114),
+                Affix(name="shadow_resistance", value=39),
+                Affix(name="to_curse_skills", value=1),
+            ],
+            item_type=ItemType.Helm,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (3440, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_5.png",
+        Item(
+            affixes=[
+                Affix(name="life_per_second", value=121),
+                Affix(name="healing_received", value=11.5),
+                Affix(name="to_curse_skills", value=2),
+            ],
+            item_type=ItemType.Helm,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (3440, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_6.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=77),
+                Affix(name="maximum_life", value=794),
+                Affix(name="damage_over_time", value=51),
+            ],
+            item_type=ItemType.Gloves,
+            power=925,
             rarity=ItemRarity.Legendary,
         ),
     ),
@@ -330,7 +401,6 @@ items = [
         ),
     ),
     (
-        # TODO fix multi line detection via bottom limit / find_affixes
         (1920, 1080),
         f"{BASE_PATH}/1080p_small_read_descr_4.png",
         Item(
@@ -399,10 +469,21 @@ sigil = [
         (2560, 1440),
         f"{BASE_PATH}/1440p_small_sigil_1.png",
         Item(
-            affixes=[Affix(name="quick_killer", value=2), Affix(name="empowered_elites_poison_enchanted")],
+            affixes=[Affix(name="quick_killer"), Affix(name="empowered_elites_poison_enchanted")],
             inherent=[Affix(name="sanguine_chapel", type=AffixType.inherent)],
             item_type=ItemType.Sigil,
             power=41,
+            rarity=ItemRarity.Common,
+        ),
+    ),
+    (
+        (2560, 1440),
+        f"{BASE_PATH}/1440p_small_sigil_2.png",
+        Item(
+            affixes=[Affix(name="extra_shrines"), Affix(name="stormbanes_wrath")],
+            inherent=[Affix(name="buried_halls", type=AffixType.inherent)],
+            item_type=ItemType.Sigil,
+            power=23,
             rarity=ItemRarity.Common,
         ),
     ),

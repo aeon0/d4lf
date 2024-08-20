@@ -11,12 +11,8 @@ from src.utils.ocr.read import image_to_text
 def read_item_type(
     item: Item, img_item_descr: np.ndarray, sep_short_match: TemplateMatch, do_pre_proc: bool = True
 ) -> tuple[Item | None, str]:
-    # Item Type and Item Power
-    # =====================================
-    # start_power = time.time()
-    rarity = item.rarity
     _, img_width, _ = img_item_descr.shape
-    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.center[1]]
+    roi_top = [0, 0, int(img_width * 0.74), sep_short_match.region[1]]
     crop_top = crop(img_item_descr, roi_top)
     concatenated_str = image_to_text(crop_top, do_pre_proc=do_pre_proc).text.lower().replace("\n", " ")
     for error, correction in Dataloader().error_map.items():
@@ -36,14 +32,14 @@ def read_item_type(
     ):
         item.item_type = ItemType.Material
         return item, concatenated_str
-    elif rarity in [ItemRarity.Common, ItemRarity.Legendary] and "elixir" not in concatenated_str:
+    elif item.rarity in [ItemRarity.Common, ItemRarity.Legendary] and "elixir" not in concatenated_str:
         # We check if it is a material
         mask, _ = color_filter(crop_top, COLORS.material_color, False)
         mean_val = np.mean(mask)
         if mean_val > 2.0:
             item.item_type = ItemType.Material
             return item, concatenated_str
-        if rarity == ItemRarity.Common:
+        if item.rarity == ItemRarity.Common:
             return item, concatenated_str
 
     if item.item_type == ItemType.Sigil:

@@ -432,6 +432,24 @@ items = [
         ),
     ),
     (
+        (1915, 1005),
+        f"{BASE_PATH}/1080p_small_read_descr_6.png",
+        Item(
+            affixes=[
+                Affix(name="intelligence", value=198, type=AffixType.rerolled),
+                Affix(name="maximum_life", value=2882, type=AffixType.greater),
+                Affix(name="critical_strike_damage", value=108.1),
+                Affix(name="critical_strike_damage", value=210, type=AffixType.tempered),
+                # image quality is so bad it reads 70.19 instead of 70.1
+                Affix(name="chance_for_a_second_lightning_spear_when_cast", value=70.19, type=AffixType.tempered),
+            ],
+            inherent=[Affix(name="damage_over_time", value=40, type=AffixType.inherent)],
+            item_type=ItemType.Staff,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (1920, 1080),
         f"{BASE_PATH}/1080p_medium_read_descr_1.png",
         Item(

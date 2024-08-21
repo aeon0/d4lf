@@ -30,7 +30,12 @@ def find_seperators_long(img_item_descr: np.ndarray, sep_short_match: TemplateMa
 
 def find_seperator_short(img_item_descr: np.ndarray) -> TemplateMatch:
     refs = ["item_seperator_short_rare", "item_seperator_short_legendary", "item_seperator_short_mythic"]
-    roi = [0, 0, img_item_descr.shape[1], ResManager().offsets.find_seperator_short_offset_top]
+    roi = [
+        0,
+        int(ResManager().offsets.find_seperator_short_offset_top / 5),
+        img_item_descr.shape[1],
+        ResManager().offsets.find_seperator_short_offset_top,
+    ]
     if not (sep_short := search(refs, img_item_descr, 0.62, roi, True, mode="all", do_multi_process=False)).success:
         return None
     sorted_matches = sorted(sep_short.matches, key=lambda match: match.center[1])
@@ -86,6 +91,8 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
     tempered_icons = [f"tempered_affix_bullet_point_{x}" for x in range(1, 7)]
     template_list = ["greater_affix_bullet_point_1"] + affix_icons + rerolled_icons + tempered_icons
     all_templates = [f"{x}_medium" for x in template_list] + template_list
+    if ResManager().resolution[1] <= 1080:
+        all_templates += ["greater_affix_bullet_point_1080p_special"]
     return _find_bullets(
         img_item_descr=img_item_descr,
         sep_short_match=sep_short_match,
@@ -98,7 +105,7 @@ def find_affix_bullets(img_item_descr: np.ndarray, sep_short_match: TemplateMatc
 def find_aspect_bullet(img_item_descr: np.ndarray, sep_short_match: TemplateMatch) -> TemplateMatch | None:
     template_list = ["legendary_bullet_point", "unique_bullet_point", "mythic_bullet_point"]
     all_templates = [f"{x}_medium" for x in template_list] + template_list
-    if ResManager().resolution.endswith("1080"):
+    if ResManager().resolution[1] <= 1080:
         all_templates += ["mythic_bullet_point_1080p_special", "mythic_bullet_point_medium_1080p_special"]
     aspect_bullets = _find_bullets(
         img_item_descr=img_item_descr,

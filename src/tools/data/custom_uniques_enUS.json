@@ -23,6 +23,10 @@
 		"desc": "when you cast a skill with a cooldown you explode dealing fire damage",
 		"num_idx": [0]
 	},
+	"ring_of_misfortune": {
+		"desc": "lucky hit up to a chance to lose all of your resource",
+		"num_idx": []
+	},
 	"shard_of_verathiel": {
 		"desc": "basic skills deal increased damage but additionally cost primary resource",
 		"num_idx": [0]

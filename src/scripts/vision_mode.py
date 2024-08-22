@@ -157,7 +157,6 @@ def vision_mode():
     is_confirmed = False
     while True:
         img = Cam().grab()
-        # if chest.is_open(img) or inv.is_open(img):
         mouse_pos = Cam().monitor_to_window(mouse.get_position())
         # get closest pos to a item center
         delta = possible_centers - mouse_pos
@@ -169,11 +168,6 @@ def vision_mode():
         else:
             item_center = possible_centers[closest_index]
             found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
-
-        # Note: We dont look for vendor items anymore as with season 4 all rares are crap
-        # if not found and is_vendor_open(img):
-        #     vendor_item_center = [ResManager().offsets.vendor_center_item_x, 0]
-        #     found, rarity, cropped_descr, item_roi = find_descr(img, vendor_item_center)
 
         top_left_corner = None if not found else item_roi[:2]
         if found:

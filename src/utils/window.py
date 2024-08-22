@@ -88,7 +88,8 @@ def find_and_set_window_position(window_spec: WindowSpec):
     if hwnd is not None:
         pos = GetClientRect(hwnd)
         top_left = ClientToScreen(hwnd, (pos[0], pos[1]))
-        Cam().update_window_pos(top_left[0], top_left[1], pos[2], pos[3])
+        if pos[2] > 0 and pos[3] > 0:
+            Cam().update_window_pos(top_left[0], top_left[1], pos[2], pos[3])
     time.sleep(1)
 
 

@@ -113,8 +113,8 @@ class ResManager:
         return self._pos
 
     @property
-    def resolution(self) -> str:
-        return self._current_resolution
+    def resolution(self) -> tuple[int, ...]:
+        return tuple(map(int, self._current_resolution.split("x")))
 
     @property
     def roi(self) -> UiRoiModel:

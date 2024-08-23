@@ -506,6 +506,10 @@
             1
         ]
     },
+    "ring_of_misfortune": {
+		"desc": "lucky hit up to a chance to lose all of your resource",
+		"num_idx": []
+	},
     "ring_of_red_furor": {
         "desc": "after spending fury within seconds, your next cast of hammer of the ancients, upheaval, or death blow within seconds is a guaranteed critical strike and deals bonus critical strike damage.",
         "full": "After spending {c_number}[Affix_Value_2]{/c} Fury within {c_number}[Affix.\"Static Value 0\"]{/c} seconds, your next cast of {c_important}Hammer of the Ancients{/c}, {c_important}Upheaval{/c}, or {c_important}Death Blow{/c} within {c_number}[Affix.\"Static Value 1\"]{/c} seconds is a guaranteed Critical Strike and deals {c_random}[Affix_Value_1|%x|]{/c} bonus Critical Strike Damage.",

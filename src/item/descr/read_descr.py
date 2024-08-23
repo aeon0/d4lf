@@ -144,7 +144,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
         else:
             bottom_limit = img_item_descr.shape[0]
         i_affixes, debug_str = find_affixes(
-            img_item_descr=img_item_descr, affix_bullets=affix_bullets, bottom_limit=bottom_limit, is_sigil=is_sigil
+            img_item_descr=img_item_descr,
+            affix_bullets=affix_bullets,
+            bottom_limit=bottom_limit,
+            is_sigil=is_sigil,
         )
         if i_affixes is None:
             i_affixes, debug_str = find_affixes(

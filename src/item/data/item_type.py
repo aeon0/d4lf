@@ -29,8 +29,8 @@ class ItemType(Enum):
     Sword2H = "two-handed sword"
     Tome = "tome"
     Wand = "wand"
-    TemperManual = "temper manual"
     # Custom Types
     Incense = "incense"
     Material = "material"
     Sigil = "sigil"
+    TemperManual = "temper manual"

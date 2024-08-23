@@ -116,11 +116,12 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
             if affix["id"] == 1014505:
                 attr_desc = "evade grants movement speed for second"
             elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
+                "Affix40%_SingleResist",
                 "AffixFlatResourceUpto4",
                 "AffixResourceOnKill",
                 "AffixSingleResist",
             ]:
-                if affix["attributes"][0]["formula"] in ["AffixSingleResist"]:
+                if affix["attributes"][0]["formula"] in ["Affix40%_SingleResist", "AffixSingleResist"]:
                     attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
                 elif affix["attributes"][0]["formula"] in ["AffixFlatResourceUpto4"]:
                     attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " per Second"

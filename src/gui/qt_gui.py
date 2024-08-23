@@ -156,7 +156,7 @@ class Gui(QMainWindow):
         )
         instructions_text.setReadOnly(True)
         font_metrics = instructions_text.fontMetrics()
-        text_height = font_metrics.height() * (instructions_text.document().lineCount() + 1)
+        text_height = font_metrics.height() * (instructions_text.document().lineCount() + 2)
         instructions_text.setFixedHeight(text_height)
         layout.addWidget(instructions_text)
 
@@ -242,7 +242,7 @@ class Gui(QMainWindow):
         )
         instructions_text.setReadOnly(True)
         font_metrics = instructions_text.fontMetrics()
-        text_height = font_metrics.height() * (instructions_text.document().lineCount() + 1)
+        text_height = font_metrics.height() * (instructions_text.document().lineCount() + 2)
         instructions_text.setFixedHeight(text_height)
         layout.addWidget(instructions_text)
 

@@ -5,7 +5,7 @@ import keyboard
 
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import HandleRaresType, ItemRefreshType
+from src.config.models import HandleRaresType, ItemRefreshType, UnfilteredUniquesType
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
@@ -114,21 +114,43 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         res = Filter().should_keep(item_descr)
         matched_any_affixes = len(res.matched) > 0 and len(res.matched[0].matched_affixes) > 0
         LOGGER.debug(f"  Runtime (Filter): {time.time() - start_filter:.2f}s")
-        if not res.keep:
-            keyboard.send("space")
-            time.sleep(0.13)
-        elif (
-            res.keep
-            and (
-                matched_any_affixes or item_descr.rarity in [ItemRarity.Unique, ItemRarity.Mythic] or item_descr.item_type == ItemType.Sigil
-            )
-            and IniConfigLoader().general.mark_as_favorite
-        ):
-            LOGGER.info("Mark as favorite")
-            keyboard.send("space")
-            time.sleep(0.17)
-            keyboard.send("space")
-            time.sleep(0.13)
+
+        # Uniques have special handling. If they have an aspect specifically called out by a profile they are treated
+        # like any other item. If not, and there are no non-aspect filters, then they are handled by the handle_uniques
+        # property
+        if item_descr.rarity == ItemRarity.Unique:
+            if not res.keep:
+                if res.all_unique_filters_are_aspects and not res.unique_aspect_in_profile:
+                    if IniConfigLoader().general.handle_uniques == UnfilteredUniquesType.favorite:
+                        _mark_as_favorite()
+                    elif IniConfigLoader().general.handle_uniques == UnfilteredUniquesType.junk:
+                        _mark_as_junk()
+                else:
+                    _mark_as_junk()
+            elif res.keep and IniConfigLoader().general.mark_as_favorite:
+                _mark_as_favorite()
+        else:
+            if not res.keep:
+                _mark_as_junk()
+            elif (
+                res.keep
+                and (matched_any_affixes or item_descr.rarity == ItemRarity.Mythic or item_descr.item_type == ItemType.Sigil)
+                and IniConfigLoader().general.mark_as_favorite
+            ):
+                _mark_as_favorite()
+
+
+def _mark_as_junk():
+    keyboard.send("space")
+    time.sleep(0.13)
+
+
+def _mark_as_favorite():
+    LOGGER.info("Mark as favorite")
+    keyboard.send("space")
+    time.sleep(0.17)
+    keyboard.send("space")
+    time.sleep(0.13)
 
 
 def reset_item_status(occupied, inv):

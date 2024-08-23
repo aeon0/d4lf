@@ -10,7 +10,7 @@ import numpy as np
 import src.logger
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import HandleRaresType
+from src.config.models import HandleRaresType, UnfilteredUniquesType
 from src.config.ui import ResManager
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
@@ -244,7 +244,14 @@ def vision_mode():
                 if item_descr is not None:
                     res = Filter().should_keep(item_descr)
                     if not res.keep:
-                        match = False
+                        if (
+                            item_descr.rarity == ItemRarity.Unique
+                            and res.all_unique_filters_are_aspects
+                            and not res.unique_aspect_in_profile
+                        ):
+                            match = IniConfigLoader().general.handle_uniques != UnfilteredUniquesType.junk
+                        else:
+                            match = False
 
                 # Adapt colors based on config
                 if match:

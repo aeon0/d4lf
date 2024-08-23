@@ -50,6 +50,12 @@ class LogLevels(enum.StrEnum):
     critical = enum.auto()
 
 
+class UnfilteredUniquesType(enum.StrEnum):
+    favorite = enum.auto()
+    ignore = enum.auto()
+    junk = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -234,6 +240,10 @@ class GeneralModel(_IniBaseModel):
         description="When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not",
     )
     handle_rares: HandleRaresType = Field(default=HandleRaresType.filter, description="How to handle rares that the filter finds.")
+    handle_uniques: UnfilteredUniquesType = Field(
+        default=UnfilteredUniquesType.favorite,
+        description="What should be done with uniques that do not match any profile. Mythics are always favorited. If mark_as_favorite is unchecked then uniques that match a profile will not be favorited.",
+    )
     hidden_transparency: float = Field(
         default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
     )

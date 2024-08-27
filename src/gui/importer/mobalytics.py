@@ -1,6 +1,5 @@
 import logging
 import re
-import traceback
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 import lxml.html
@@ -121,9 +120,8 @@ def import_mobalytics(url: str):
                 if affixes:
                     unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
                 unique_filters.append(unique_model)
-            except Exception as e:
-                print(traceback.format_exc())
-                LOGGER.error(f"Unexpected error importing unique {unique_name}, please report a bug: {str(e)}")
+            except:
+                LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
 
         item_type = match_to_enum(enum_class=ItemType, target_string=re.sub(r"\d+", "", slot.lower())) if item_type is None else item_type

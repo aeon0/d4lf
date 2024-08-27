@@ -1,7 +1,6 @@
 import json
 import logging
 import re
-import traceback
 
 import lxml.html
 
@@ -67,9 +66,8 @@ def import_maxroll(url: str):
                     for x in _find_item_affixes(mapping_data=mapping_data, item_affixes=resolved_item["explicits"])
                 ]
                 unique_filters.append(unique_model)
-            except Exception as e:
-                print(traceback.format_exc())
-                LOGGER.error(f"Unexpected error importing unique {unique_name}, please report a bug: {str(e)}")
+            except:
+                LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
             LOGGER.error("Couldn't find item type")

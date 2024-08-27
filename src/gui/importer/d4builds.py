@@ -2,7 +2,6 @@ import datetime
 import logging
 import re
 import time
-import traceback
 
 import lxml.html
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
@@ -115,9 +114,8 @@ def import_d4builds(url: str, driver: ChromiumDriver = None):
                 unique_model.aspect = AspectUniqueFilterModel(name=unique_name)
                 unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
                 unique_filters.append(unique_model)
-            except Exception as e:
-                print(traceback.format_exc())
-                LOGGER.error(f"Unexpected error importing unique {unique_name}, please report a bug: {str(e)}")
+            except:
+                LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
 
         item_type = (

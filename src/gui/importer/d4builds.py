@@ -114,7 +114,7 @@ def import_d4builds(url: str, driver: ChromiumDriver = None):
                 unique_model.aspect = AspectUniqueFilterModel(name=unique_name)
                 unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
                 unique_filters.append(unique_model)
-            except:
+            except Exception:
                 LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
 

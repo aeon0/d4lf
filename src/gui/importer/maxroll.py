@@ -66,7 +66,7 @@ def import_maxroll(url: str):
                     for x in _find_item_affixes(mapping_data=mapping_data, item_affixes=resolved_item["explicits"])
                 ]
                 unique_filters.append(unique_model)
-            except:
+            except Exception:
                 LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:

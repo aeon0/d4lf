@@ -120,7 +120,7 @@ def import_mobalytics(url: str):
                 if affixes:
                     unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
                 unique_filters.append(unique_model)
-            except:
+            except Exception:
                 LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
             continue
 

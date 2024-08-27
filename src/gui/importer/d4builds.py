@@ -44,7 +44,7 @@ class D4BuildsException(Exception):
 
 
 @retry_importer(inject_webdriver=True)
-def import_d4builds(driver: ChromiumDriver = None, url: str = None):
+def import_d4builds(url: str, driver: ChromiumDriver = None):
     url = url.strip().replace("\n", "")
     if BASE_URL not in url:
         LOGGER.error("Invalid url, please use a d4builds url")

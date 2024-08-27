@@ -30,6 +30,7 @@ pyyaml
 rapidfuzz
 ruff
 selenium
+seleniumbase
 tk
 typing_extensions
 webdriver-manager

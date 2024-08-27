@@ -14,6 +14,7 @@ from selenium.webdriver.chromium.webdriver import ChromiumDriver
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
+from seleniumbase import Driver
 
 from src import __version__
 from src.config.loader import IniConfigLoader
@@ -139,12 +140,12 @@ def match_to_enum(enum_class, target_string: str, check_keys: bool = False):
     return None
 
 
-def retry_importer(func=None, inject_webdriver: bool = False):
+def retry_importer(func=None, inject_webdriver: bool = False, uc=False):
     def decorator_retry_importer(wrap_function):
         @functools.wraps(wrap_function)
         def wrapper(*args, **kwargs):
             if inject_webdriver and "driver" not in kwargs and not args:
-                kwargs["driver"] = setup_webdriver()
+                kwargs["driver"] = setup_webdriver(uc=uc)
             for _ in range(5):
                 try:
                     res = wrap_function(*args, **kwargs)
@@ -180,7 +181,9 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
     LOGGER.info(f"Created profile {save_path}")
 
 
-def setup_webdriver() -> ChromiumDriver:
+def setup_webdriver(uc: bool = False) -> ChromiumDriver:
+    if uc:
+        return Driver(uc=uc, headless2=True)
     match IniConfigLoader().general.browser:
         case BrowserType.edge:
             options = webdriver.EdgeOptions()

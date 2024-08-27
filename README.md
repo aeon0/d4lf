@@ -111,7 +111,7 @@ Documentation is not yet finished. For now, it should be self-explanatory. Just 
 Current functionality:
 
 - Import builds from maxroll/d4builds/mobalytics
-- Create profiles based off of searches for diablo.trade
+- Create profiles based off of searches for diablo.trade (requires chrome)
 - Complete management of your params.ini through the config tab
 
 Each tab gives further instructions on how to use it and what kind of input it expects.

@@ -1,5 +1,6 @@
 !config/bnip/.gitkeep
 *.bak
+*.lock
 *.log
 *.pyc
 *.pyo

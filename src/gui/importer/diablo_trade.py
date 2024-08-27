@@ -5,6 +5,8 @@ import logging
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
+import lxml.html
+import seleniumbase
 from pydantic import ValidationError
 
 import src.logger
@@ -13,7 +15,6 @@ from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilte
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
     format_number_as_short_string,
-    get_with_retry,
     match_to_enum,
     retry_importer,
     save_as_profile,
@@ -50,8 +51,8 @@ class DiabloTradeException(Exception):
     pass
 
 
-@retry_importer
-def import_diablo_trade(url: str, max_listings: int):
+@retry_importer(inject_webdriver=True, uc=True)
+def import_diablo_trade(url: str, max_listings: int, driver: seleniumbase.Driver = None):
     url = url.strip().replace("\n", "")
     if BASE_URL not in url:
         LOGGER.error("Invalid url, please use a diablo.trade filter url")
@@ -62,11 +63,12 @@ def import_diablo_trade(url: str, max_listings: int):
     while True:
         api_url = _construct_api_url(listing_url=url, cursor=cursor)
         try:
-            r = get_with_retry(url=api_url)
-        except ConnectionError:
-            LOGGER.error("Can't fetch listings, saving current data")
+            driver.default_get(url=api_url)
+            source = lxml.html.fromstring(driver.get_page_source())
+            data = json.loads(source.text_content().strip())
+        except Exception:
+            LOGGER.exception("Can't fetch listings, saving current data")
             break
-        data = r.json()
         if not (listings := data["data"]):
             LOGGER.debug("Reached end")
             break

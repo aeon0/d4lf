@@ -7,7 +7,7 @@ from collections.abc import Callable
 from typing import Literal, TypeVar
 
 import httpx
-from pydantic_yaml import to_yaml_str
+from ruamel.yaml import YAML, StringIO
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chromium.webdriver import ChromiumDriver
@@ -170,14 +170,38 @@ def save_as_profile(file_name: str, profile: ProfileModel, url: str):
         file.write(f"# {url}\n")
         file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S")} (v{__version__})\n")
         file.write(
-            to_yaml_str(
+            _to_yaml_str(
                 profile,
-                default_flow_style=None,
                 exclude_unset=not IniConfigLoader().general.full_dump,
-                exclude=["name", "Sigils", "Uniques"],
+                exclude={"name", "Sigils"},
             )
         )
     LOGGER.info(f"Created profile {save_path}")
+
+
+# Built in to_yaml_str does not preserve the order of the attributes of the model, which is important for uniques
+def _to_yaml_str(profile: ProfileModel, exclude_unset: bool, exclude: set[str]) -> str:
+    str_val = profile.model_dump_json(exclude_unset=exclude_unset, exclude=exclude)
+    yaml = YAML()
+    yaml.default_flow_style = None
+    dict_val = yaml.load(str_val)
+    _rm_style_info(dict_val)
+    stream = StringIO()
+    yaml.dump(dict_val, stream)
+    stream.seek(0)
+    return stream.read()
+
+
+def _rm_style_info(d):
+    if isinstance(d, dict):
+        d.fa._flow_style = None
+        for k, v in d.items():
+            _rm_style_info(k)
+            _rm_style_info(v)
+    elif isinstance(d, list):
+        d.fa._flow_style = None
+        for elem in d:
+            _rm_style_info(elem)
 
 
 def setup_webdriver() -> ChromiumDriver:

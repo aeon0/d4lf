@@ -1,11 +1,12 @@
 import json
 import logging
 import re
+import traceback
 
 import lxml.html
 
 import src.logger
-from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.config.models import AffixFilterCountModel, AffixFilterModel, AspectUniqueFilterModel, ItemFilterModel, ProfileModel, UniqueModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import get_with_retry, match_to_enum, retry_importer, save_as_profile
 from src.item.data.affix import Affix
@@ -51,12 +52,24 @@ def import_maxroll(url: str):
         return
     active_profile = build_data["profiles"][build_id]
     finished_filters = []
+    unique_filters = []
     for item_id in active_profile["items"].values():
         item_filter = ItemFilterModel()
         resolved_item = items[str(item_id)]
         # magic/rare = 0, legendary = 1, unique = 2, mythic = 4
         if resolved_item["id"] in mapping_data["items"] and mapping_data["items"][resolved_item["id"]]["magicType"] in [2, 4]:
-            LOGGER.warning(f"Uniques are not supported. Skipping: {mapping_data["items"][resolved_item["id"]]["name"]}")
+            unique_model = UniqueModel()
+            unique_name = mapping_data["items"][resolved_item["id"]]["name"]
+            try:
+                unique_model.aspect = AspectUniqueFilterModel(name=unique_name)
+                unique_model.affix = [
+                    AffixFilterModel(name=x.name)
+                    for x in _find_item_affixes(mapping_data=mapping_data, item_affixes=resolved_item["explicits"])
+                ]
+                unique_filters.append(unique_model)
+            except Exception as e:
+                print(traceback.format_exc())
+                LOGGER.error(f"Unexpected error importing unique {unique_name}, please report a bug: {str(e)}")
             continue
         if (item_type := _find_item_type(mapping_data=mapping_data["items"], value=resolved_item["id"])) is None:
             LOGGER.error("Couldn't find item type")
@@ -90,7 +103,7 @@ def import_maxroll(url: str):
             i += 1
 
         finished_filters.append({filter_name: item_filter})
-    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
+    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))), Uniques=unique_filters)
     if not build_name:
         build_name = all_data["class"]
         if active_profile["name"]:
@@ -103,6 +116,8 @@ def _corrections(input_str: str) -> str:
     match input_str:
         case "On_Hit_Vulnerable_Proc_Chance":
             return "On_Hit_Vulnerable_Proc"
+        case "Movement_Bonus_On_Elite_Kill":
+            return "Movement_Speed_Bonus_On_Elite_Kill"
     return input_str
 
 
@@ -112,39 +127,41 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
         for affix in mapping_data["affixes"].values():
             if affix["id"] != affix_id["nid"]:
                 continue
-            attr_desc = ""
-            if affix["id"] == 1014505:
-                attr_desc = "evade grants movement speed for second"
-            elif "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
-                "Affix40%_SingleResist",
-                "AffixFlatResourceUpto4",
-                "AffixResourceOnKill",
-                "AffixSingleResist",
-            ]:
-                if affix["attributes"][0]["formula"] in ["Affix40%_SingleResist", "AffixSingleResist"]:
-                    attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
-                elif affix["attributes"][0]["formula"] in ["AffixFlatResourceUpto4"]:
-                    attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " per Second"
-                elif affix["attributes"][0]["formula"] in ["AffixResourceOnKill"]:
-                    attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " On Kill"
-            elif "param" not in affix["attributes"][0]:
-                attr_id = affix["attributes"][0]["id"]
-                attr_obj = mapping_data["attributes"][str(attr_id)]
-                attr_desc = mapping_data["attributeDescriptions"][_corrections(attr_obj["name"])]
-            else:  # must be + to talent or skill
-                attr_param = affix["attributes"][0]["param"]
-                for skill_data in mapping_data["skills"].values():
-                    if skill_data["id"] == attr_param:
-                        attr_desc = f"to {skill_data["name"]}"
-                        break
-                else:
-                    if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
-                        attr_desc = "to core skills"
-                    elif affix["attributes"][0]["param"] == -755407686 and affix["attributes"][0]["id"] == 1034:
-                        attr_desc = "to defensive skills"
-                    elif affix["attributes"][0]["param"] == 746476422 and affix["attributes"][0]["id"] == 1034:
-                        attr_desc = "to mastery skills"
+            if affix["magicType"] in [2, 4]:
+                break
+            attr_desc = _attr_desc_special_handling(affix["id"])
+            if not attr_desc:
+                if "formula" in affix["attributes"][0] and affix["attributes"][0]["formula"] in [
+                    "Affix40%_SingleResist",
+                    "AffixFlatResourceUpto4",
+                    "AffixResourceOnKill",
+                    "AffixSingleResist",
+                ]:
+                    if affix["attributes"][0]["formula"] in ["Affix40%_SingleResist", "AffixSingleResist"]:
+                        attr_desc = mapping_data["uiStrings"]["damageType"][str(affix["attributes"][0]["param"])] + " Resistance"
+                    elif affix["attributes"][0]["formula"] in ["AffixFlatResourceUpto4"]:
+                        attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " per Second"
+                    elif affix["attributes"][0]["formula"] in ["AffixResourceOnKill"]:
+                        attr_desc = mapping_data["uiStrings"]["resourceType"][str(affix["attributes"][0]["param"])] + " On Kill"
+                elif "param" not in affix["attributes"][0]:
+                    attr_id = affix["attributes"][0]["id"]
+                    attr_obj = mapping_data["attributes"][str(attr_id)]
+                    attr_desc = mapping_data["attributeDescriptions"][_corrections(attr_obj["name"])]
+                else:  # must be + to talent or skill
+                    attr_param = affix["attributes"][0]["param"]
+                    for skill_data in mapping_data["skills"].values():
+                        if skill_data["id"] == attr_param:
+                            attr_desc = f"to {skill_data["name"]}"
+                            break
+                    else:
+                        if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
+                            attr_desc = "to core skills"
+                        elif affix["attributes"][0]["param"] == -755407686 and affix["attributes"][0]["id"] == 1034:
+                            attr_desc = "to defensive skills"
+                        elif affix["attributes"][0]["param"] == 746476422 and affix["attributes"][0]["id"] == 1034:
+                            attr_desc = "to mastery skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
+            clean_desc = clean_desc.replace("SecondSeconds", "seconds")
             affix_obj = Affix(name=closest_match(clean_str(clean_desc), Dataloader().affix_dict))
             if affix_obj.name is not None:
                 res.append(affix_obj)
@@ -154,6 +171,20 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                 LOGGER.error(f"Couldn't match {affix_id=}")
             break
     return res
+
+
+def _attr_desc_special_handling(affix_id: str) -> str:
+    match affix_id:
+        case 1014505:
+            return "evade grants movement speed for second"
+        case 2057810:
+            return "damage reduction from bleeding enemies"
+        case 2067844:
+            return "maximum poison resistance"
+        case 2037914:
+            return "subterfuge cooldown reduction"
+        case _:
+            return ""
 
 
 def _find_item_type(mapping_data: dict, value: str) -> ItemType | None:

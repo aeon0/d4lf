@@ -171,13 +171,13 @@ class Filter:
         res = _FilterResult(False, [])
         all_filters_are_aspect = True
         if not self.unique_filters:
-            keep = IniConfigLoader().general.handle_uniques != UnfilteredUniquesType.junk
+            keep = IniConfigLoader().general.handle_uniques != UnfilteredUniquesType.junk or item.rarity == ItemRarity.Mythic
             return _FilterResult(keep, [])
         for profile_name, profile_filter in self.unique_filters.items():
             for filter_item in profile_filter:
                 if not filter_item.aspect:
                     all_filters_are_aspect = False
-                elif filter_item.aspect.name == item.aspect.name:
+                elif item.aspect and filter_item.aspect.name == item.aspect.name:
                     res.unique_aspect_in_profile = True
                 # check mythic
                 if filter_item.mythic and item.rarity != ItemRarity.Mythic:
@@ -199,8 +199,13 @@ class Filter:
                     continue
                 LOGGER.info(f"Matched {profile_name}.Uniques: {item.aspect.name}")
                 res.keep = True
-                res.matched.append(_MatchedFilter(f"{profile_name}.{item.aspect.name}", did_match_aspect=True))
+                matched_full_name = f"{profile_name}.{item.aspect.name}"
+                if filter_item.profileAlias:
+                    matched_full_name = f"{filter_item.profileAlias}.{item.aspect.name}"
+                res.matched.append(_MatchedFilter(matched_full_name, did_match_aspect=True))
         res.all_unique_filters_are_aspects = all_filters_are_aspect
+        if not res.keep and item.rarity == ItemRarity.Mythic:  # Always keep mythics no matter what
+            res.keep = True
         return res
 
     def _did_files_change(self) -> bool:
@@ -344,11 +349,7 @@ class Filter:
         if item.item_type == ItemType.Sigil:
             return self._check_sigil(item)
 
-        # Perform no filtering on mythics, always keep them
-        if item.rarity == ItemRarity.Mythic:
-            return _FilterResult(True, [])
-
-        if item.rarity == ItemRarity.Unique:
+        if item.rarity in [ItemRarity.Unique, ItemRarity.Mythic]:
             return self._check_unique_item(item)
 
         if item.rarity not in [ItemRarity.Unique, ItemRarity.Mythic]:

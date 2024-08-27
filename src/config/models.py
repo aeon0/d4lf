@@ -145,6 +145,9 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
     def name_must_exist(cls, name: str) -> str:
         from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
 
+        # Ensure name is in format we expect
+        name = name.lower().replace("'", "").replace(" ", "_").replace(",", "")
+
         if name not in Dataloader().aspect_unique_dict:
             raise ValueError(f"affix {name} does not exist")
         return name
@@ -454,9 +457,10 @@ class SigilFilterModel(BaseModel):
 
 class UniqueModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    affix: list[AffixFilterModel] = []
     aspect: AspectUniqueFilterModel = None
+    affix: list[AffixFilterModel] = []
     itemType: list[ItemType] = []
+    profileAlias: str = ""
     minGreaterAffixCount: int = 0
     minPower: int = 0
     mythic: bool = False

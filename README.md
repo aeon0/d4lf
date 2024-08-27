@@ -72,19 +72,20 @@ The config folder in `C:/Users/<WINDOWS_USER>/.d4lf` contains:
 
 ### params.ini
 
-| [general]                                         | Description                                                                                                                                                                                                                                                                                                                  |
-|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| profiles                                          | A set of profiles separated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                                                                                                                     |
-| keep_aspects                                      | - `all`: Keep all legendary items <br>- `upgrade`: Keep all legendary items that upgrade your codex of power <br>- `none`: Keep no legendary items based on aspect (they are still filtered!)                                                                                                                                |
-| handle_rares                                      | - `filter`: Filter them based on your profiles <br>- `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them <br>- `junk`: Vision mode shows them always as red, auto mode always junks rares                                                                                |
-| run_vision_mode_on_startup                        | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                                                                                                                  |
-| check_chest_tabs                                  | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. You need to buy all slots. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                                                                                 |
-| move_to_inv_item_type<br/>move_to_stash_item_type | Which types of items to move when using fast move functionality. Will only affect tabs defined in check_chest_tabs. You can select more than one option. <br>- `favorites`: Move favorites only <br>- `junk`: Move junk only <br>- `unmarked`: Only items not marked as favorite or junk <br>- `everything`: Move everything |
-| mark_as_favorite                                  | Whether to favorite matched items or not. Defaults to true                                                                                                                                                                                                                                                                   |
-| minimum_overlay_font_size                         | The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching. Note: For small profile names, the font may actually be larger than this size but will never go below this size.                                                                                          |
-| hidden_transparency                               | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                                                                                                                 |
-| browser                                           | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                                                                                                          |
-| full_dump                                         | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                                                                                                                    |
+| [general]                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| profiles                                          | A set of profiles separated by comma. d4lf will look for these yaml files in config/profiles and in C:/Users/WINDOWS_USER/.d4lf/profiles                                                                                                                                                                                                                                                                                                 |
+| keep_aspects                                      | - `all`: Keep all legendary items <br>- `upgrade`: Keep all legendary items that upgrade your codex of power <br>- `none`: Keep no legendary items based on aspect (they are still filtered!)                                                                                                                                                                                                                                            |
+| handle_rares                                      | - `filter`: Filter them based on your profiles <br>- `ignore`: Ignores all rares, vision mode shows them as blue and auto mode never junks or favorites them <br>- `junk`: Vision mode shows them always as red, auto mode always junks rares                                                                                                                                                                                            |
+| handle_uniques                                    | How to handle uniques that do not match any filter. This property does not apply to filtered uniques. All mythics are favorited regardless of filter. <br/>- `favorite`: Mark the unique as favorite and vision mode will show it as green (default)<br/>- `ignore`: Do nothing with the unique and vision mode will show it as green<br/>- `junk`: Mark any uniques that don't match any filters as junk and show as red in vision mode |
+| run_vision_mode_on_startup                        | If the vision mode should automatically start when starting d4lf. Otherwise has to be started manually with the vision button or the hotkey                                                                                                                                                                                                                                                                                              |
+| check_chest_tabs                                  | Which chest tabs will be checked and filtered for items in case chest is open when starting the filter. You need to buy all slots. Counting is done left to right. E.g. 1,2,4 will check tab 1, tab 2, tab 4                                                                                                                                                                                                                             |
+| move_to_inv_item_type<br/>move_to_stash_item_type | Which types of items to move when using fast move functionality. Will only affect tabs defined in check_chest_tabs. You can select more than one option. <br>- `favorites`: Move favorites only <br>- `junk`: Move junk only <br>- `unmarked`: Only items not marked as favorite or junk <br>- `everything`: Move everything                                                                                                             |
+| mark_as_favorite                                  | Whether to favorite matched items or not. Defaults to true                                                                                                                                                                                                                                                                                                                                                                               |
+| minimum_overlay_font_size                         | The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching. Note: For small profile names, the font may actually be larger than this size but will never go below this size.                                                                                                                                                                                                      |
+| hidden_transparency                               | The overlay will become transparent after not hovering it for a while. This can be changed by specifying any value between [0, 1] with 0 being completely invisible and 1 completely visible                                                                                                                                                                                                                                             |
+| browser                                           | Which browser to use to get builds, please make sure you pick an installed browser: chrome, edge or firefox are currently supported                                                                                                                                                                                                                                                                                                      |
+| full_dump                                         | When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not                                                                                                                                                                                                                                                                                                                                |
 
 | [char]    | Description                       |
 |-----------|-----------------------------------|
@@ -340,9 +341,21 @@ names in [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json).
 ### Uniques
 
 Uniques are defined by the top-level key `Uniques`. It contains a list of parameters that you want to filter for. If no
-Unique filter is provided, all unique items will be kept.
-Uniques can be filtered similar to [Affixes](#Affixes) but due to their nature of fixed
-effects, you only have to specify the thresholds that you want to apply.
+Unique filter is provided, uniques will be handled according to the handle_uniques configuration. All mythics are 
+marked as favorite regardless of any filter or configuration.
+
+Uniques can be filtered in two ways. First the aspect and affix for a specific unique can be filtered directly. 
+This is how imported profiles are configured. If only aspect filtering is applied, then all other uniques will be 
+handled according to the handle_uniques property. For aspect filtering, since uniques all have a predefined affix,
+you'll only need to specify the threshold that you want to apply (see examples below).
+
+Additionally, you can filter all uniques based on a generic property like their item power or if they have greater 
+affixes. Once a "global" filter like this is applied then all uniques will have a filter that now applies to them 
+and handle_uniques will be ignored.
+
+In vision mode, uniques show as <filename>.<aspect>. For example myuniques.yaml with fists_of_fate aspect defined 
+would show as myuniques.fists_of_fate. The label for the filename can be configured at the aspect level using the 
+profileAlias flag (see examples). 
 
 <details><summary>Config Examples</summary>
 
@@ -353,7 +366,7 @@ Uniques:
 ```
 
 ```yaml
-# Take all uniques with item power > 800
+# Take all uniques with item power > 900
 Uniques:
   - minPower: 900
 ```
@@ -380,20 +393,22 @@ Uniques:
 ```yaml
 # Take all Tibault's Will pants
 Uniques:
-  - aspect: [ tibaults_will ]
+  - aspect: { name: tibaults_will } 
 ```
 
 ```yaml
-# Take all Tibault's Will pants with at least 2 greater affixes
+# Take all Tibault's Will pants with at least 2 greater affixes.
+# Have vision mode show this as my_cool_items.tibaults_will instead of <filename>.tibaults_will
 Uniques:
-  - aspect: [ tibaults_will ]
+  - aspect: { name: tibaults_will }
     minGreaterAffixCount: 2
+    profileAlias: my_cool_items
 ```
 
 ```yaml
 # Take all Tibault's Will pants that have item power > 900 and dmg reduction from close > 12 as well as aspect value > 25
 Uniques:
-  - aspect: [ tibaults_will, 25 ]
+  - aspect: { name: tibaults_will, value: 25 }
     minPower: 900
     affix:
       - { name: damage_reduction_from_close_enemies, value: 12 }

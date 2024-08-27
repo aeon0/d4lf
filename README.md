@@ -341,7 +341,7 @@ names in [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json).
 ### Uniques
 
 Uniques are defined by the top-level key `Uniques`. It contains a list of parameters that you want to filter for. If no
-Unique filter is provided, uniques will be handled according to the handle_uniques configuration. All mythics are 
+Unique filter is provided, uniques will be handled according to the handle_uniques configuration. All mythic uniques are 
 marked as favorite regardless of any filter or configuration.
 
 Uniques can be filtered in two ways. First the aspect and affix for a specific unique can be filtered directly. 

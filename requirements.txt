@@ -17,7 +17,6 @@ psutil
 pydantic
 pydantic-numpy
 pydantic-yaml
-
 pyinstaller
 pyqt6
 pytest

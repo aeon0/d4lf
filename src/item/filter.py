@@ -204,8 +204,19 @@ class Filter:
                     matched_full_name = f"{filter_item.profileAlias}.{item.aspect.name}"
                 res.matched.append(_MatchedFilter(matched_full_name, did_match_aspect=True))
         res.all_unique_filters_are_aspects = all_filters_are_aspect
-        if not res.keep and item.rarity == ItemRarity.Mythic:  # Always keep mythics no matter what
+
+        # Always keep mythics no matter what
+        # If all filters are for aspects specifically and none apply to this item, we default to handle_uniques config
+        if not res.keep and (
+            item.rarity == ItemRarity.Mythic
+            or (
+                res.all_unique_filters_are_aspects
+                and not res.unique_aspect_in_profile
+                and IniConfigLoader().general.handle_uniques != UnfilteredUniquesType.junk
+            )
+        ):
             res.keep = True
+
         return res
 
     def _did_files_change(self) -> bool:

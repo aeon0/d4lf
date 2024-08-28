@@ -10,6 +10,18 @@ class TestUnique(Item):
         super().__init__(rarity=rarity, item_type=item_type, power=power, **kwargs)
 
 
+aspect_only_mythic_tests = [
+    ("matches filter", True, ["aspect_only.tibaults_will"], TestUnique(aspect=Aspect(name="tibaults_will"), power=925)),
+    ("does not match filter", False, [], TestUnique(aspect=Aspect(name="tibaults_will"), power=800)),
+    ("matches with alias", True, ["alias_test.black_river"], TestUnique(aspect=Aspect(name="black_river"), power=925)),
+    ("no aspect applies", True, [], TestUnique(aspect=Aspect("crown_of_lucion"))),
+]
+
+simple_mythics = [
+    ("matches filter", True, TestUnique(aspect=Aspect(name="black_river"), power=925, rarity=ItemRarity.Mythic)),
+    ("does not match but should keep", True, TestUnique(aspect=Aspect(name="black_river"), power=800, rarity=ItemRarity.Mythic)),
+]
+
 uniques = [
     ("item power too low", [], TestUnique(power=800)),
     ("wrong type", [], TestUnique(item_type=ItemType.Helm, aspect=Aspect(name="deathless_visage", value=1862))),

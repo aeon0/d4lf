@@ -457,7 +457,7 @@ class SigilFilterModel(BaseModel):
 
 class UniqueModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    aspect: AspectUniqueFilterModel = None
+    aspect: AspectUniqueFilterModel = None  # Aspect needs to stay on top so the model is written how people expect
     affix: list[AffixFilterModel] = []
     itemType: list[ItemType] = []
     profileAlias: str = ""

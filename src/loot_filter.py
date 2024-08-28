@@ -120,15 +120,13 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         # property
         if item_descr.rarity == ItemRarity.Unique:
             if not res.keep:
+                _mark_as_junk()
+            elif res.keep:
                 if res.all_unique_filters_are_aspects and not res.unique_aspect_in_profile:
                     if IniConfigLoader().general.handle_uniques == UnfilteredUniquesType.favorite:
                         _mark_as_favorite()
-                    elif IniConfigLoader().general.handle_uniques == UnfilteredUniquesType.junk:
-                        _mark_as_junk()
-                else:
-                    _mark_as_junk()
-            elif res.keep and IniConfigLoader().general.mark_as_favorite:
-                _mark_as_favorite()
+                elif IniConfigLoader().general.mark_as_favorite:
+                    _mark_as_favorite()
         else:
             if not res.keep:
                 _mark_as_junk()

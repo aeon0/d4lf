@@ -169,11 +169,12 @@ def _get_item_slots(data: lxml.html.HtmlElement) -> dict[str, str]:
         LOGGER.error(msg := "No items found")
         raise D4BuildsException(msg)
     for item in items:
-        slot = item.xpath(PAPERDOLL_ITEM_SLOT_XPATH)[0].text
-        if slot == "2H Weapon":  # This happens when a build has a weapon and no offhand
-            slot = "Weapon"
-        unique_name = item.xpath(PAPERDOLL_ITEM_UNIQUE_NAME_XPATH)
-        result[slot] = unique_name[0].text if unique_name else ""
+        if item.xpath(PAPERDOLL_ITEM_SLOT_XPATH):
+            slot = item.xpath(PAPERDOLL_ITEM_SLOT_XPATH)[0].text
+            if slot == "2H Weapon":  # This happens when a build has a weapon and no offhand
+                slot = "Weapon"
+            unique_name = item.xpath(PAPERDOLL_ITEM_UNIQUE_NAME_XPATH)
+            result[slot] = unique_name[0].text if unique_name else ""
     return result
 
 

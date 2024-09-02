@@ -13,6 +13,7 @@ BASE_PATH = BASE_DIR / "tests/assets/item/season5"
     ("img_res", "input_img", "anchor", "expected_success", "expected_top_left", "expected_rarity"),
     [
         ((3840, 2160), f"{BASE_PATH}/2160p_small_find_descr_mythic_1.png", (3017, 1560), True, (2230, 200), ItemRarity.Mythic),
+        ((1920, 1080), f"{BASE_PATH}/1080p_small_find_descr_1.png", (1739, 844), True, (1321, 225), ItemRarity.Legendary),
     ],
 )
 def test_find_descr(img_res, input_img, anchor, expected_success, expected_top_left, expected_rarity):

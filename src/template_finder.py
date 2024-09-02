@@ -267,14 +267,11 @@ def search(
     if matches:
         result.success = True
         result.matches = sorted(matches, key=lambda obj: obj.score, reverse=True)
-        if not suppress_debug:
-            if len(matches) > 1 and mode == "all":
-                LOGGER.debug(
-                    "Found the following matches:\n"
-                    + ", ".join(["  {template_match.name} ({template_match.score*100:.1f}% confidence)" for _ in matches])
-                )
-            else:
-                LOGGER.debug("Found {mode} match: {template_match.name} ({template_match.score*100:.1f}% confidence)")
+        if not suppress_debug and len(matches) > 1 and mode == "all":
+            LOGGER.debug(
+                "Found the following matches:\n"
+                + ", ".join([f"  {template_match.name} ({template_match.score*100:.1f}% confidence)" for template_match in matches])
+            )
     elif not suppress_debug:
         LOGGER.debug(f"Could not find desired templates: {ref}")
 

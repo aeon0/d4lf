@@ -151,6 +151,21 @@ affix = ProfileModel(
     ],
 )
 
+always_keep_mythics = ProfileModel(
+    name="keep_mythics",
+    Uniques=[
+        UniqueModel(minPower=900),
+    ],
+)
+
+aspect_only_unique_filters = ProfileModel(
+    name="aspect_only",
+    Uniques=[
+        UniqueModel(aspect=AspectUniqueFilterModel(name="tibaults_will"), minPower=900),
+        UniqueModel(aspect=AspectUniqueFilterModel(name="black_river"), minPower=900, profileAlias="alias_test"),
+    ],
+)
+
 sigil = ProfileModel(
     name="test",
     Sigils=SigilFilterModel(

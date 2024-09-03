@@ -243,8 +243,7 @@ def vision_mode():
 
                 if item_descr is not None:
                     res = Filter().should_keep(item_descr)
-                    if not res.keep:
-                        match = False
+                    match = res.keep
 
                 # Adapt colors based on config
                 if match:

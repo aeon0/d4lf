@@ -8,7 +8,7 @@ from src.item.filter import Filter, _FilterResult
 from src.item.models import Item
 from tests.item.filter.data.affixes import affixes
 from tests.item.filter.data.sigils import sigil_jalal, sigil_priority, sigils
-from tests.item.filter.data.uniques import uniques
+from tests.item.filter.data.uniques import aspect_only_mythic_tests, simple_mythics, uniques
 
 
 def _create_mocked_filter(mocker: MockerFixture) -> Filter:
@@ -57,3 +57,23 @@ def test_uniques(name: str, result: list[str], item: Item, mocker: MockerFixture
     test_filter = _create_mocked_filter(mocker)
     test_filter.unique_filters = {filters.unique.name: filters.unique.Uniques}
     assert natsorted([match.profile for match in test_filter.should_keep(item).matched]) == natsorted(result)
+
+
+@pytest.mark.parametrize(("name", "result", "item"), natsorted(simple_mythics), ids=[name for name, _, _ in natsorted(simple_mythics)])
+def test_mythic_always_kept(name: str, result: bool, item: Item, mocker: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.unique_filters = {filters.always_keep_mythics.name: filters.always_keep_mythics.Uniques}
+    assert test_filter.should_keep(item).keep == result
+
+
+@pytest.mark.parametrize(
+    ("name", "should_keep", "matched", "item"),
+    natsorted(aspect_only_mythic_tests),
+    ids=[name for name, _, _, _ in natsorted(aspect_only_mythic_tests)],
+)
+def test_unfiltered_unique_is_kept(name: str, should_keep: bool, matched: list[str], item: Item, mocker: MockerFixture):
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.unique_filters = {filters.aspect_only_unique_filters.name: filters.aspect_only_unique_filters.Uniques}
+    test_filter_result = test_filter.should_keep(item)
+    assert natsorted([match.profile for match in test_filter_result.matched]) == natsorted(matched)
+    assert test_filter_result.keep == should_keep

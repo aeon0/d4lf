@@ -5,7 +5,7 @@ from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 import lxml.html
 
 import src.logger
-from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.config.models import AffixFilterCountModel, AffixFilterModel, AspectUniqueFilterModel, ItemFilterModel, ProfileModel, UniqueModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
     fix_offhand_type,
@@ -66,6 +66,7 @@ def import_mobalytics(url: str):
         LOGGER.error(msg := "No items found")
         raise MobalyticsException(msg)
     finished_filters = []
+    unique_filters = []
     for item in items:
         item_filter = ItemFilterModel()
         if not (name := item.xpath(ITEM_NAME_XPATH)):
@@ -73,18 +74,20 @@ def import_mobalytics(url: str):
                 continue
             LOGGER.error(msg := "No item name found")
             raise MobalyticsException(msg)
-        if "aspect" not in (x := name[0].text).lower():
-            LOGGER.warning(f"Uniques are not supported. Skipping: {x}")
-            continue
         if not (slot_elem := item.xpath(IMAGE_XPATH)):
             LOGGER.error(msg := "No item_type found")
             raise MobalyticsException(msg)
         slot = slot_elem[0].attrib["alt"]
+        unique_name = name[0].text if "aspect" not in name[0].text.lower() else ""
         if not (stats := item.xpath(STATS_LIST_XPATH)):
             if item.xpath(ITEM_AFFIXES_EMPTY_XPATH):
-                continue
-            LOGGER.error(msg := "No stats found")
-            raise MobalyticsException(msg)
+                if unique_name:
+                    LOGGER.warning(f"Unique {unique_name} had no affixes listed for it, only the aspect will be imported.")
+                else:
+                    continue
+            else:
+                LOGGER.error(msg := "No stats found")
+                raise MobalyticsException(msg)
         item_type = None
         affixes = []
         inherents = []
@@ -109,6 +112,18 @@ def import_mobalytics(url: str):
                 inherents.append(affix_obj)
             else:
                 affixes.append(affix_obj)
+
+        if unique_name:
+            unique_model = UniqueModel()
+            try:
+                unique_model.aspect = AspectUniqueFilterModel(name=unique_name)
+                if affixes:
+                    unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
+                unique_filters.append(unique_model)
+            except Exception:
+                LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
+            continue
+
         item_type = match_to_enum(enum_class=ItemType, target_string=re.sub(r"\d+", "", slot.lower())) if item_type is None else item_type
         if item_type is None:
             LOGGER.warning(f"Couldn't match item_type: {slot}. Please edit manually")
@@ -130,7 +145,7 @@ def import_mobalytics(url: str):
             filter_name = f"{filter_name_template}{i}"
             i += 1
         finished_filters.append({filter_name: item_filter})
-    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
+    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))), Uniques=unique_filters)
     build_name = build_name if build_name else f"{class_name}_{data.xpath(BUILD_GUIDE_ACTIVE_LOADOUT_XPATH)[0].text()}"
     save_as_profile(file_name=build_name, profile=profile, url=url)
     LOGGER.info("Finished")

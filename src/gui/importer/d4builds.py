@@ -10,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 import src.logger
-from src.config.models import AffixFilterCountModel, AffixFilterModel, ItemFilterModel, ProfileModel
+from src.config.models import AffixFilterCountModel, AffixFilterModel, AspectUniqueFilterModel, ItemFilterModel, ProfileModel, UniqueModel
 from src.dataloader import Dataloader
 from src.gui.importer.common import (
     fix_offhand_type,
@@ -33,6 +33,7 @@ ITEM_GROUP_XPATH = ".//*[contains(@class, 'builder__stats__group')]"
 ITEM_SLOT_XPATH = ".//*[contains(@class, 'builder__stats__slot')]"
 ITEM_STATS_XPATH = ".//*[contains(@class, 'dropdown__button__wrapper')]"
 PAPERDOLL_ITEM_SLOT_XPATH = ".//*[contains(@class, 'builder__gear__slot')]"
+PAPERDOLL_ITEM_UNIQUE_NAME_XPATH = ".//*[contains(@class, 'builder__gear__name--')]"
 PAPERDOLL_ITEM_XPATH = ".//*[contains(@class, 'builder__gear__item') and not(contains(@class, 'disabled'))]"
 PAPERDOLL_XPATH = "//*[contains(@class, 'builder__gear__items')]"
 TEMPERING_ICON_XPATH = ".//*[contains(@src, 'tempering_02.png')]"
@@ -63,15 +64,16 @@ def import_d4builds(url: str, driver: ChromiumDriver = None):
     if not (items := data.xpath(BUILD_OVERVIEW_XPATH)):
         LOGGER.error(msg := "No items found")
         raise D4BuildsException(msg)
-    non_unique_slots = _get_non_unique_slots(data=data)
+    slot_to_unique_name_map = _get_item_slots(data=data)
     finished_filters = []
+    unique_filters = []
     for item in items[0]:
         item_filter = ItemFilterModel()
         if not (slot := item.xpath(ITEM_SLOT_XPATH)[1].tail):
             LOGGER.error("No item_type found")
             continue
-        if slot not in non_unique_slots:
-            LOGGER.warning(f"Uniques or empty are not supported. Skipping: {slot}")
+        if slot not in slot_to_unique_name_map:
+            LOGGER.warning(f"Empty slots are not supported. Skipping: {slot}")
             continue
         if not (stats := item.xpath(ITEM_STATS_XPATH)):
             LOGGER.error(f"No stats found for {slot=}")
@@ -104,6 +106,18 @@ def import_d4builds(url: str, driver: ChromiumDriver = None):
                 inherents.append(affix_obj)
             else:
                 affixes.append(affix_obj)
+
+        if slot_to_unique_name_map[slot]:
+            unique_model = UniqueModel()
+            unique_name = slot_to_unique_name_map[slot]
+            try:
+                unique_model.aspect = AspectUniqueFilterModel(name=unique_name)
+                unique_model.affix = [AffixFilterModel(name=x.name) for x in affixes]
+                unique_filters.append(unique_model)
+            except Exception:
+                LOGGER.exception(f"Unexpected error importing unique {unique_name}, please report a bug.")
+            continue
+
         item_type = (
             match_to_enum(enum_class=ItemType, target_string=re.sub(r"\d+", "", slot.replace(" ", ""))) if item_type is None else item_type
         )
@@ -127,7 +141,7 @@ def import_d4builds(url: str, driver: ChromiumDriver = None):
             filter_name = f"{filter_name_template}{i}"
             i += 1
         finished_filters.append({filter_name: item_filter})
-    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))))
+    profile = ProfileModel(name="imported profile", Affixes=sorted(finished_filters, key=lambda x: next(iter(x))), Uniques=unique_filters)
     save_as_profile(
         file_name=f"d4build_{class_name}_{datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")}", profile=profile, url=url
     )
@@ -146,8 +160,8 @@ def _corrections(input_str: str) -> str:
     return input_str
 
 
-def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
-    result = []
+def _get_item_slots(data: lxml.html.HtmlElement) -> dict[str, str]:
+    result = {}
     if not (paperdoll := data.xpath(PAPERDOLL_XPATH)):
         LOGGER.error(msg := "No paperdoll found")
         raise D4BuildsException(msg)
@@ -155,9 +169,12 @@ def _get_non_unique_slots(data: lxml.html.HtmlElement) -> list[str]:
         LOGGER.error(msg := "No items found")
         raise D4BuildsException(msg)
     for item in items:
-        if not item.xpath(UNIQUE_ICON_XPATH):
-            slot = item.xpath(PAPERDOLL_ITEM_SLOT_XPATH)
-            result.append(slot[0].text)
+        if item.xpath(PAPERDOLL_ITEM_SLOT_XPATH):
+            slot = item.xpath(PAPERDOLL_ITEM_SLOT_XPATH)[0].text
+            if slot == "2H Weapon":  # This happens when a build has a weapon and no offhand
+                slot = "Weapon"
+            unique_name = item.xpath(PAPERDOLL_ITEM_UNIQUE_NAME_XPATH)
+            result[slot] = unique_name[0].text if unique_name else ""
     return result
 
 

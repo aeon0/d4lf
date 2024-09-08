@@ -50,6 +50,12 @@ class LogLevels(enum.StrEnum):
     critical = enum.auto()
 
 
+class UnfilteredUniquesType(enum.StrEnum):
+    favorite = enum.auto()
+    ignore = enum.auto()
+    junk = enum.auto()
+
+
 class ComparisonType(enum.StrEnum):
     larger = enum.auto()
     smaller = enum.auto()
@@ -138,6 +144,9 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
     @field_validator("name")
     def name_must_exist(cls, name: str) -> str:
         from src.dataloader import Dataloader  # This on module level would be a circular import, so we do it lazy for now
+
+        # Ensure name is in format we expect
+        name = name.lower().replace("'", "").replace(" ", "_").replace(",", "")
 
         if name not in Dataloader().aspect_unique_dict:
             raise ValueError(f"affix {name} does not exist")
@@ -234,6 +243,10 @@ class GeneralModel(_IniBaseModel):
         description="When using the import build feature, whether to use the full dump (e.g. contains all filter items) or not",
     )
     handle_rares: HandleRaresType = Field(default=HandleRaresType.filter, description="How to handle rares that the filter finds.")
+    handle_uniques: UnfilteredUniquesType = Field(
+        default=UnfilteredUniquesType.favorite,
+        description="What should be done with uniques that do not match any profile. Mythics are always favorited. If mark_as_favorite is unchecked then uniques that match a profile will not be favorited.",
+    )
     hidden_transparency: float = Field(
         default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
     )
@@ -444,9 +457,10 @@ class SigilFilterModel(BaseModel):
 
 class UniqueModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
+    aspect: AspectUniqueFilterModel = None  # Aspect needs to stay on top so the model is written how people expect
     affix: list[AffixFilterModel] = []
-    aspect: AspectUniqueFilterModel = None
     itemType: list[ItemType] = []
+    profileAlias: str = ""
     minGreaterAffixCount: int = 0
     minPower: int = 0
     mythic: bool = False

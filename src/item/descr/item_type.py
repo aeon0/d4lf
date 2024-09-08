@@ -1,5 +1,4 @@
 import numpy as np
-from item.data.rarity import ItemRarity
 
 from src.config.data import COLORS
 from src.dataloader import Dataloader

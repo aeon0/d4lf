@@ -1,4 +1,5 @@
 import numpy as np
+from item.data.rarity import ItemRarity
 
 from src.config.data import COLORS
 from src.dataloader import Dataloader
@@ -8,7 +9,7 @@ from src.utils.image_operations import color_filter, crop
 from src.utils.ocr.read import image_to_text
 
 
-def read_item_type(
+def read_item_type_and_rarity(
     item: Item, img_item_descr: np.ndarray, sep_short_match: TemplateMatch, do_pre_proc: bool = True
 ) -> tuple[Item | None, str]:
     _, img_width, _ = img_item_descr.shape
@@ -17,6 +18,11 @@ def read_item_type(
     concatenated_str = image_to_text(crop_top, do_pre_proc=do_pre_proc).text.lower().replace("\n", " ")
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
+
+    # If we find a rarity string here we use it instead of the image found through find_descr, which is inconsistent
+    found_rarity = _find_item_rarity(concatenated_str)
+    if found_rarity:
+        item.rarity = found_rarity
 
     if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
         item.item_type = ItemType.Sigil
@@ -97,7 +103,7 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
     return item
 
 
-def _find_sigil_tier(concatenated_str: str) -> int:
+def _find_sigil_tier(concatenated_str: str) -> int | None:
     for error, correction in Dataloader().error_map.items():
         concatenated_str = concatenated_str.replace(error, correction)
     if Dataloader().tooltips["ItemTier"] in concatenated_str:
@@ -107,4 +113,11 @@ def _find_sigil_tier(concatenated_str: str) -> int:
             following_word = split_words[1]
             if following_word.isdigit():
                 return int(following_word)
+    return None
+
+
+def _find_item_rarity(concatenated_str: str) -> ItemRarity | None:
+    for rarity in ItemRarity:
+        if rarity.value in concatenated_str:
+            return rarity
     return None

@@ -8,7 +8,7 @@ from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.find_affixes import find_affixes
 from src.item.descr.find_aspect import find_aspect
-from src.item.descr.item_type import read_item_type
+from src.item.descr.item_type import read_item_type_and_rarity
 from src.item.descr.texture import (
     find_affix_bullets,
     find_aspect_bullet,
@@ -37,10 +37,10 @@ def read_descr(rarity: ItemRarity, img_item_descr: np.ndarray, show_warnings: bo
     futures["sep_long"] = TP.submit(find_seperators_long, img_item_descr, sep_short_match)
     # Find item type and item power / tier list
     # =========================
-    item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
+    item, item_type_str = read_item_type_and_rarity(base_item, img_item_descr, sep_short_match, do_pre_proc=False)
     # In case it was not successful, try with doing image pre-processing
     if item is None:
-        item, item_type_str = read_item_type(base_item, img_item_descr, sep_short_match)
+        item, item_type_str = read_item_type_and_rarity(base_item, img_item_descr, sep_short_match)
     if item is None:
         if show_warnings:
             LOGGER.warning(f"Could not detect ItemPower and ItemType: {item_type_str}")

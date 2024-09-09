@@ -263,6 +263,20 @@ items = [
         ),
     ),
     (
+        (3840, 2160),
+        f"{BASE_PATH}/2160p_small_read_descr_15.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=791),
+                Affix(name="life_per_second", value=148),
+                Affix(name="healing_received", value=21, type=AffixType.greater),
+            ],
+            item_type=ItemType.Helm,
+            power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -446,6 +460,21 @@ items = [
             inherent=[Affix(name="damage_over_time", value=40, type=AffixType.inherent)],
             item_type=ItemType.Staff,
             power=925,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_7.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=665),
+                Affix(name="maximum_resource", value=13),
+                Affix(name="critical_strike_chance", value=7.0),
+            ],
+            inherent=[Affix(name="lucky_hit_chance", value=10, type=AffixType.inherent)],
+            item_type=ItemType.Focus,
+            power=876,
             rarity=ItemRarity.Legendary,
         ),
     ),

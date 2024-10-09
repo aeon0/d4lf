@@ -16,12 +16,6 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup_env
 
-      - name: Setup cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
-
       - name: pre-commit
         shell: powershell
         run: pre-commit run -a

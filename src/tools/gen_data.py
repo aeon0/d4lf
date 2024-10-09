@@ -173,6 +173,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Mace2H",
             "OffHandTotem",
             "Polearm",
+            "Quarterstaff",
             "Ring",
             "Scythe",
             "Scythe2H",

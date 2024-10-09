@@ -226,18 +226,23 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
         LOGGER.exception(msg := "Couldn't get build guide")
         raise MaxrollException(msg) from exc
     data = lxml.html.fromstring(r.text)
+    msg = "Couldn't find planner url in build guide. Use planner link directly and report bug"
     if not (embed := data.xpath(BUILD_GUIDE_PLANNER_EMBED_XPATH)):
-        LOGGER.error(msg := "Couldn't find planner url in build guide")
+        LOGGER.error(msg)
         raise MaxrollException(msg)
-    planner_id = embed[0].get("data-d4-profile")
-    data_id = int(embed[0].get("data-d4-id")) - 1
+    try:
+        planner_id = embed[0].get("data-d4-profile")
+        data_id = int(embed[0].get("data-d4-data").split(",")[0])
+    except Exception as ex:
+        LOGGER.exception(msg)
+        raise MaxrollException(msg) from ex
     return PLANNER_API_BASE_URL + planner_id, data_id
 
 
 if __name__ == "__main__":
     src.logger.setup()
     URLS = [
-        "https://maxroll.gg/d4/planner/pl7lv0kv#3",
+        "https://maxroll.gg/d4/build-guides/quill-volley-spiritborn-guide",
     ]
     for X in URLS:
         import_maxroll(url=X)

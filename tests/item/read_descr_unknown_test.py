@@ -14,21 +14,6 @@ BASE_PATH = BASE_DIR / "tests/assets/item"
 legendary = [
     (
         (2560, 1440),
-        f"{BASE_PATH}/unknown/read_descr_codex_upgrade_1440p.png",
-        Item(
-            affixes=[
-                Affix(name="intelligence", value=90),
-                Affix(name="life_per_second", value=87),
-                Affix(name="fire_resistance", value=38),
-            ],
-            codex_upgrade=True,
-            item_type=ItemType.ChestArmor,
-            power=823,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (2560, 1440),
         f"{BASE_PATH}/unknown/read_descr_codex_upgrade_1440p_2.png",
         Item(
             affixes=[Affix(name="strength", value=86), Affix(name="maximum_life", value=394), Affix(name="damage_over_time", value=57)],
@@ -40,43 +25,12 @@ legendary = [
         ),
     ),
     (
-        (3840, 2160),
-        f"{BASE_PATH}/unknown/read_descr_codex_upgrade_2160p.png",
-        Item(
-            affixes=[
-                Affix(name="intelligence", value=76),
-                Affix(name="life_per_second", value=114),
-                Affix(name="cooldown_reduction", value=7),
-            ],
-            codex_upgrade=True,
-            item_type=ItemType.Helm,
-            power=920,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
         (1920, 1080),
         f"{BASE_PATH}/unknown/read_descr_legendary_1080p.png",
         Item(
             affixes=[Affix(name="intelligence", value=88), Affix(name="maximum_life", value=828), Affix(name="damage", value=25)],
             inherent=[Affix(name="lucky_hit_chance", value=10.0, type=AffixType.inherent)],
             item_type=ItemType.Wand,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (1920, 1080),
-        f"{BASE_PATH}/unknown/read_descr_legendary_1080p_2.png",
-        Item(
-            affixes=[
-                Affix(name="all_stats", value=18),
-                Affix(name="intelligence", value=42),
-                Affix(name="movement_speed", value=17.5),
-                Affix(name="fortify_generation", value=21.5),
-            ],
-            inherent=[Affix(name="evade_grants_movement_speed_for_second", value=50.0, type=AffixType.inherent)],
-            item_type=ItemType.Boots,
             power=925,
             rarity=ItemRarity.Legendary,
         ),

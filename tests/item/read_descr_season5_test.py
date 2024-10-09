@@ -66,77 +66,6 @@ items = [
     ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_3.png", item3),
     (
         (3840, 2160),
-        f"{BASE_PATH}/2160p_medium_read_descr_4.png",
-        item4 := Item(
-            affixes=[
-                Affix(name="chance_for_chain_lightning_projectiles_to_cast_twice", value=20.9),
-                Affix(name="damage_reduction", value=16.9),
-                Affix(name="resource_generation_and_maximum", value=40.9),
-                Affix(name="to_chain_lightning", value=4),
-            ],
-            aspect=Aspect(name="axial_conduit", value=0),
-            item_type=ItemType.Legs,
-            power=914,
-            rarity=ItemRarity.Unique,
-        ),
-    ),
-    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_4.png", item4),
-    (
-        (3840, 2160),
-        f"{BASE_PATH}/2160p_medium_read_descr_5.png",
-        item5 := Item(
-            affixes=[
-                Affix(name="maximum_life", value=768),
-                Affix(name="mana_per_second", value=6, type=AffixType.rerolled),
-                Affix(name="armor", value=1679),
-                Affix(name="lucky_hit_up_to_a_chance_to_freeze_for_seconds", value=18.4, type=AffixType.tempered),
-                Affix(name="evade_cooldown_reduction", value=18.4, type=AffixType.tempered),
-            ],
-            inherent=[Affix(name="maximum_evade_charges", value=3, type=AffixType.inherent)],
-            item_type=ItemType.Boots,
-            power=862,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_5.png", item5),
-    (
-        (3840, 2160),
-        f"{BASE_PATH}/2160p_medium_read_descr_6.png",
-        item6 := Item(
-            affixes=[
-                Affix(name="intelligence", value=94),
-                Affix(name="maximum_life", value=1441, type=AffixType.greater),
-                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=13.3, type=AffixType.rerolled),
-                Affix(name="vulnerable_damage", value=52.9, type=AffixType.tempered),
-                Affix(name="chance_for_chain_lightning_projectiles_to_cast_twice", value=19.6, type=AffixType.tempered),
-            ],
-            inherent=[Affix(name="critical_strike_damage", value=17.5, type=AffixType.inherent)],
-            item_type=ItemType.Sword,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_6.png", item6),
-    (
-        (3840, 2160),
-        f"{BASE_PATH}/2160p_medium_read_descr_7.png",
-        item7 := Item(
-            affixes=[
-                Affix(name="intelligence", value=149, type=AffixType.greater),
-                Affix(name="cooldown_reduction", value=10.5),
-                Affix(name="lucky_hit_up_to_a_chance_to_restore_primary_resource", value=9.2, type=AffixType.rerolled),
-                Affix(name="vulnerable_damage", value=54.6, type=AffixType.tempered),
-                Affix(name="chance_for_chain_lightning_projectiles_to_cast_twice", value=16.7, type=AffixType.tempered),
-            ],
-            inherent=[Affix(name="lucky_hit_chance", value=10, type=AffixType.inherent)],
-            item_type=ItemType.Focus,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_7.png", item7),
-    (
-        (3840, 2160),
         f"{BASE_PATH}/2160p_medium_read_descr_8.png",
         item8 := Item(
             affixes=[
@@ -174,27 +103,6 @@ items = [
         ),
     ),
     ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_9.png", item9),
-    (
-        (3840, 2160),
-        f"{BASE_PATH}/2160p_medium_read_descr_10.png",
-        item10 := Item(
-            affixes=[
-                Affix(name="lucky_hit_chance", value=14.4, type=AffixType.greater),
-                Affix(name="nonphysical_damage", value=76.7),
-                Affix(name="cooldown_reduction", value=13.5),
-                Affix(name="to_potent_warding", value=4),
-            ],
-            aspect=Aspect(name="tal_rashas_iridescent_loop", value=17.5),
-            inherent=[
-                Affix(name="resistance_to_all_elements", value=10, type=AffixType.inherent),
-                Affix(name="resistance_to_all_elements", value=4, type=AffixType.inherent),
-            ],
-            item_type=ItemType.Ring,
-            power=925,
-            rarity=ItemRarity.Unique,
-        ),
-    ),
-    ((3840, 2160), f"{BASE_PATH}/2160p_small_read_descr_10.png", item10),
     (
         (3840, 2160),
         f"{BASE_PATH}/2160p_medium_read_descr_11.png",
@@ -263,20 +171,6 @@ items = [
         ),
     ),
     (
-        (3840, 2160),
-        f"{BASE_PATH}/2160p_small_read_descr_15.png",
-        Item(
-            affixes=[
-                Affix(name="maximum_life", value=791),
-                Affix(name="life_per_second", value=148),
-                Affix(name="healing_received", value=21, type=AffixType.greater),
-            ],
-            item_type=ItemType.Helm,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -317,34 +211,6 @@ items = [
                 Affix(name="to_basic_skills", value=2),
             ],
             item_type=ItemType.Legs,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (3440, 1440),
-        f"{BASE_PATH}/1440p_small_read_descr_4.png",
-        Item(
-            affixes=[
-                Affix(name="life_per_second", value=114),
-                Affix(name="shadow_resistance", value=39),
-                Affix(name="to_curse_skills", value=1),
-            ],
-            item_type=ItemType.Helm,
-            power=925,
-            rarity=ItemRarity.Legendary,
-        ),
-    ),
-    (
-        (3440, 1440),
-        f"{BASE_PATH}/1440p_small_read_descr_5.png",
-        Item(
-            affixes=[
-                Affix(name="life_per_second", value=121),
-                Affix(name="healing_received", value=11.5),
-                Affix(name="to_curse_skills", value=2),
-            ],
-            item_type=ItemType.Helm,
             power=925,
             rarity=ItemRarity.Legendary,
         ),

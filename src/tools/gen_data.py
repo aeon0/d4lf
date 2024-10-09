@@ -215,7 +215,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
         # Create Affixes
         print(f"Gen Affixes for {language}")
         affix_dict = {}
-        with open(companion_app_dir / f"D4Companion/Data/Affixes.Full.{language}.json", encoding="utf-8") as file:
+        with open(companion_app_dir / f"D4Companion/Data/Affixes.{language}.json", encoding="utf-8") as file:
             data = json.load(file)
             for affix in data:
                 desc: str = affix["Description"]

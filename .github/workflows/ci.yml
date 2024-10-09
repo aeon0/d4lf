@@ -16,13 +16,15 @@ jobs:
       - name: Setup env
         uses: ./.github/actions/setup_env
 
-      - name: ruff format
-        shell: powershell
-        run: ruff format --check
+      - name: Setup cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-3|${{ env.pythonLocation }}|${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - name: ruff lint
+      - name: pre-commit
         shell: powershell
-        run: ruff check
+        run: pre-commit run -a
 
       - name: Pytest
         shell: powershell

@@ -341,21 +341,21 @@ names in [assets/lang/enUS/sigils.json](assets/lang/enUS/sigils.json).
 ### Uniques
 
 Uniques are defined by the top-level key `Uniques`. It contains a list of parameters that you want to filter for. If no
-Unique filter is provided, uniques will be handled according to the handle_uniques configuration. All mythics are 
+Unique filter is provided, uniques will be handled according to the handle_uniques configuration. All mythics are
 marked as favorite regardless of any filter or configuration.
 
-Uniques can be filtered in two ways. First the aspect and affix for a specific unique can be filtered directly. 
-This is how imported profiles are configured. If only aspect filtering is applied, then all other uniques will be 
+Uniques can be filtered in two ways. First the aspect and affix for a specific unique can be filtered directly.
+This is how imported profiles are configured. If only aspect filtering is applied, then all other uniques will be
 handled according to the handle_uniques property. For aspect filtering, since uniques all have a predefined affix,
 you'll only need to specify the threshold that you want to apply (see examples below).
 
-Additionally, you can filter all uniques based on a generic property like their item power or if they have greater 
-affixes. Once a "global" filter like this is applied then all uniques will have a filter that now applies to them 
+Additionally, you can filter all uniques based on a generic property like their item power or if they have greater
+affixes. Once a "global" filter like this is applied then all uniques will have a filter that now applies to them
 and handle_uniques will be ignored.
 
-In vision mode, uniques show as <filename>.<aspect>. For example myuniques.yaml with fists_of_fate aspect defined 
-would show as myuniques.fists_of_fate. The label for the filename can be configured at the aspect level using the 
-profileAlias flag (see examples). 
+In vision mode, uniques show as <filename>.<aspect>. For example myuniques.yaml with fists_of_fate aspect defined
+would show as myuniques.fists_of_fate. The label for the filename can be configured at the aspect level using the
+profileAlias flag (see examples).
 
 <details><summary>Config Examples</summary>
 
@@ -393,7 +393,7 @@ Uniques:
 ```yaml
 # Take all Tibault's Will pants
 Uniques:
-  - aspect: { name: tibaults_will } 
+  - aspect: { name: tibaults_will }
 ```
 
 ```yaml

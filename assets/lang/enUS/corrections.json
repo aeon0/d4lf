@@ -26,6 +26,22 @@
         "two-handed!": "two-handed",
         "two-handed.": "two-handed"
     },
+    "filter_after_keyword": [
+        " cts ",
+        "account",
+        "compare",
+        "dearest will",
+        "empty socket",
+        "granted",
+        "pacts",
+        "requires lev",
+        "requires level",
+        "requires world",
+        "scroll down",
+        "scroll up",
+        "sell value",
+        "when equipped"
+    ],
     "filter_words": [
         "account bound",
         "barbarian",
@@ -46,21 +62,5 @@
         "rogue",
         "sorcerer",
         "sorceress"
-    ],
-    "filter_after_keyword": [
-        " cts ",
-        "account",
-        "compare",
-        "dearest will",
-        "empty socket",
-        "granted",
-        "pacts",
-        "requires lev",
-        "requires level",
-        "requires world",
-        "scroll down",
-        "scroll up",
-        "sell value",
-        "when equipped"
     ]
 }

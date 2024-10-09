@@ -1,5 +1,4 @@
 ./dependencies/tesserocr-2.7.0-cp312-cp312-win_amd64.whl
-Pillow
 beautifultable
 colorama
 coverage
@@ -12,6 +11,7 @@ mss
 natsort
 numpy<2
 opencv-python==4.10.0.82
+Pillow
 pre-commit
 psutil
 pydantic

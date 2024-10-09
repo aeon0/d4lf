@@ -50,6 +50,8 @@ def fix_weapon_type(input_str: str) -> ItemType | None:
         return ItemType.Axe2H
     if "2h scythe" in input_str:
         return ItemType.Scythe2H
+    if "quarterstaff" in input_str:
+        return ItemType.Quarterstaff
     if "scythe" in input_str:
         return ItemType.Scythe
     if "crossbow" in input_str:

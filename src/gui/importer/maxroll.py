@@ -152,12 +152,14 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                             attr_desc = f"to {skill_data["name"]}"
                             break
                     else:
-                        if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
+                        if affix["attributes"][0]["param"] == -1460542966:
                             attr_desc = "to core skills"
-                        elif affix["attributes"][0]["param"] == -755407686 and affix["attributes"][0]["id"] == 1034:
+                        elif affix["attributes"][0]["param"] == -755407686:
                             attr_desc = "to defensive skills"
-                        elif affix["attributes"][0]["param"] == 746476422 and affix["attributes"][0]["id"] == 1034:
+                        elif affix["attributes"][0]["param"] == 746476422:
                             attr_desc = "to mastery skills"
+                        elif affix["attributes"][0]["param"] == -954965341:
+                            attr_desc = "to basic skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
             clean_desc = clean_desc.replace("SecondSeconds", "seconds")
             affix_obj = Affix(name=closest_match(clean_str(clean_desc), Dataloader().affix_dict))
@@ -181,6 +183,8 @@ def _attr_desc_special_handling(affix_id: str) -> str:
             return "maximum poison resistance"
         case 2037914:
             return "subterfuge cooldown reduction"
+        case 2123788:
+            return "chance for core skills to hit twice"
         case _:
             return ""
 
@@ -233,7 +237,7 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
 if __name__ == "__main__":
     src.logger.setup()
     URLS = [
-        "https://maxroll.gg/d4/planner/1i5tt0c0#2",
+        "https://maxroll.gg/d4/planner/pl7lv0kv#3",
     ]
     for X in URLS:
         import_maxroll(url=X)

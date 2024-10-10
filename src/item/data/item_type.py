@@ -21,6 +21,7 @@ class ItemType(Enum):
     OffHandTotem = "totem"
     Polearm = "polearm"
     Quarterstaff = "quarterstaff"
+    Glaive = "glaive"
     Ring = "ring"
     Scythe = "scythe"
     Scythe2H = "two-handed scythe"

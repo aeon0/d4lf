@@ -101,6 +101,8 @@ def get_class_name(input_str: str) -> str:
         return "Rogue"
     if "sorcerer" in input_str:
         return "Sorcerer"
+    if "spiritborn" in input_str:
+        return "Spiritborn"
     LOGGER.error(f"Couldn't match class name {input_str=}")
     return "Unknown"
 

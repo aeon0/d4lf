@@ -36,38 +36,38 @@ def extract_digits(text: str) -> int:
 
 def fix_weapon_type(input_str: str) -> ItemType | None:
     input_str = input_str.lower()
-    if "1h mace" in input_str:
-        return ItemType.Mace
-    if "2h mace" in input_str:
-        return ItemType.Mace2H
-    if "1h sword" in input_str:
-        return ItemType.Sword
-    if "2h sword" in input_str:
-        return ItemType.Sword2H
     if "1h axe" in input_str:
         return ItemType.Axe
+    if "1h mace" in input_str:
+        return ItemType.Mace
+    if "1h sword" in input_str:
+        return ItemType.Sword
     if "2h axe" in input_str:
         return ItemType.Axe2H
+    if "2h mace" in input_str:
+        return ItemType.Mace2H
     if "2h scythe" in input_str:
         return ItemType.Scythe2H
-    if "quarterstaff" in input_str:
-        return ItemType.Quarterstaff
-    if "glaive" in input_str:
-        return ItemType.Glaive
-    if "scythe" in input_str:
-        return ItemType.Scythe
-    if "crossbow" in input_str:
-        return ItemType.Crossbow2H
-    if "wand" in input_str:
-        return ItemType.Wand
-    if "staff" in input_str:
-        return ItemType.Staff
-    if "dagger" in input_str:
-        return ItemType.Dagger
+    if "2h sword" in input_str:
+        return ItemType.Sword2H
     if "bow" in input_str:
         return ItemType.Bow
+    if "crossbow" in input_str:
+        return ItemType.Crossbow2H
+    if "dagger" in input_str:
+        return ItemType.Dagger
+    if "glaive" in input_str:
+        return ItemType.Glaive
     if "polearm" in input_str:
         return ItemType.Polearm
+    if "quarterstaff" in input_str:
+        return ItemType.Quarterstaff
+    if "scythe" in input_str:
+        return ItemType.Scythe
+    if "staff" in input_str:
+        return ItemType.Staff
+    if "wand" in input_str:
+        return ItemType.Wand
     return None
 
 

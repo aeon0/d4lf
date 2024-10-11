@@ -13,6 +13,7 @@ class ItemType(Enum):
     Dagger = "dagger"
     Elixir = "elixir"
     Focus = "focus"
+    Glaive = "glaive"
     Gloves = "gloves"
     Helm = "helm"
     Legs = "pants"

@@ -166,6 +166,7 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             "Dagger",
             "Elixir",
             "Focus",
+            "Glaive",
             "Gloves",
             "Helm",
             "Legs",

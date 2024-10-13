@@ -23,7 +23,7 @@ def read_item_type_and_rarity(
     if found_rarity:
         item.rarity = found_rarity
 
-    if "sigil" in concatenated_str and Dataloader().tooltips["ItemTier"] in concatenated_str:
+    if "sigil" in concatenated_str:
         item.item_type = ItemType.Sigil
     elif any(
         substring in concatenated_str.lower()
@@ -31,7 +31,9 @@ def read_item_type_and_rarity(
             "consumable",
             "grand cache",
             "reputation cache",
+            "rune of",
             "treasure goblin cache",
+            "tribute of",
             "whispering key",
         ]
     ):
@@ -47,9 +49,7 @@ def read_item_type_and_rarity(
         if item.rarity == ItemRarity.Common:
             return item, concatenated_str
 
-    if item.item_type == ItemType.Sigil:
-        item.power = _find_sigil_tier(concatenated_str)
-    else:
+    if item.item_type != ItemType.Sigil:
         item = _find_item_power_and_type(item, concatenated_str)
         if item.item_type is None:
             masked_red, _ = color_filter(crop_top, COLORS.unusable_red, False)
@@ -58,7 +58,9 @@ def read_item_type_and_rarity(
             item = _find_item_power_and_type(item, concatenated_str)
 
     non_magic_or_sigil = item.rarity != ItemRarity.Magic or item.item_type == ItemType.Sigil
-    power_or_type_bad = (item.power is None and item.item_type not in [ItemType.Elixir, ItemType.TemperManual]) or item.item_type is None
+    power_or_type_bad = (
+        item.power is None and item.item_type not in [ItemType.Elixir, ItemType.Sigil, ItemType.TemperManual]
+    ) or item.item_type is None
     if non_magic_or_sigil and power_or_type_bad:
         return None, concatenated_str
 
@@ -100,19 +102,6 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
         elif item.item_type == ItemType.Axe:
             item.item_type = ItemType.Axe2H
     return item
-
-
-def _find_sigil_tier(concatenated_str: str) -> int | None:
-    for error, correction in Dataloader().error_map.items():
-        concatenated_str = concatenated_str.replace(error, correction)
-    if Dataloader().tooltips["ItemTier"] in concatenated_str:
-        idx = concatenated_str.index(Dataloader().tooltips["ItemTier"])
-        split_words = concatenated_str[idx:].split()
-        if len(split_words) == 2:
-            following_word = split_words[1]
-            if following_word.isdigit():
-                return int(following_word)
-    return None
 
 
 def _find_item_rarity(concatenated_str: str) -> ItemRarity | None:

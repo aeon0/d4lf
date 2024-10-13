@@ -208,8 +208,6 @@ def main(d4data_dir: Path, companion_app_dir: Path):
             for arString in data["arStrings"]:
                 if arString["szLabel"] == "ItemPower":
                     tooltip_dict["ItemPower"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
-                if arString["szLabel"] == "ItemTier":
-                    tooltip_dict["ItemTier"] = remove_content_in_braces(check_ms(arString["szText"].lower()))
         with open(D4LF_BASE_DIR / f"assets/lang/{language}/tooltips.json", "w", encoding="utf-8") as json_file:
             json.dump(tooltip_dict, json_file, indent=4, ensure_ascii=False, sort_keys=True)
             json_file.write("\n")

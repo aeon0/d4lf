@@ -377,31 +377,6 @@ items = [
     ),
 ]
 
-sigil = [
-    (
-        (2560, 1440),
-        f"{BASE_PATH}/1440p_small_sigil_1.png",
-        Item(
-            affixes=[Affix(name="quick_killer"), Affix(name="empowered_elites_poison_enchanted")],
-            inherent=[Affix(name="sanguine_chapel", type=AffixType.inherent)],
-            item_type=ItemType.Sigil,
-            power=41,
-            rarity=ItemRarity.Common,
-        ),
-    ),
-    (
-        (2560, 1440),
-        f"{BASE_PATH}/1440p_small_sigil_2.png",
-        Item(
-            affixes=[Affix(name="extra_shrines"), Affix(name="stormbanes_wrath")],
-            inherent=[Affix(name="buried_halls", type=AffixType.inherent)],
-            item_type=ItemType.Sigil,
-            power=23,
-            rarity=ItemRarity.Common,
-        ),
-    ),
-]
-
 
 def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: Item):
     Cam().update_window_pos(0, 0, *img_res)
@@ -412,9 +387,4 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
 
 @pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
 def test_item(img_res: tuple[int, int], input_img: str, expected_item: Item):
-    _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
-
-
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), sigil)
-def test_sigil(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)

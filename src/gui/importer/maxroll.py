@@ -152,13 +152,13 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
                             attr_desc = f"to {skill_data["name"]}"
                             break
                     else:
-                        if affix["attributes"][0]["param"] == -1460542966:
+                        if affix["attributes"][0]["param"] == -1460542966 and affix["attributes"][0]["id"] == 1033:
                             attr_desc = "to core skills"
-                        elif affix["attributes"][0]["param"] == -755407686:
+                        elif affix["attributes"][0]["param"] == -755407686 and affix["attributes"][0]["id"] == 1034:
                             attr_desc = "to defensive skills"
-                        elif affix["attributes"][0]["param"] == 746476422:
+                        elif affix["attributes"][0]["param"] == 746476422 and affix["attributes"][0]["id"] == 1034:
                             attr_desc = "to mastery skills"
-                        elif affix["attributes"][0]["param"] == -954965341:
+                        elif affix["attributes"][0]["param"] == -954965341 and affix["attributes"][0]["id"] == 1091:
                             attr_desc = "to basic skills"
             clean_desc = re.sub(r"\[.*?\]|[^a-zA-Z ]", "", attr_desc)
             clean_desc = clean_desc.replace("SecondSeconds", "seconds")
@@ -185,6 +185,10 @@ def _attr_desc_special_handling(affix_id: str) -> str:
             return "subterfuge cooldown reduction"
         case 2123788:
             return "chance for core skills to hit twice"
+        case 2119054:
+            return "chance for basic skills to deal double damage"
+        case 2119058:
+            return "basic lucky hit chance"
         case _:
             return ""
 

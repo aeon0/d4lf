@@ -1,3 +1,4 @@
+import Levenshtein
 import numpy as np
 
 from src.config.data import COLORS
@@ -69,10 +70,14 @@ def read_item_type_and_rarity(
 
 def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
     idx = None
+    start = 0
+    if item.rarity is not None:
+        start = concatenated_str.find(item.rarity.value) + len(item.rarity.value)
     if Dataloader().tooltips["ItemPower"] in concatenated_str:
         idx = concatenated_str.index(Dataloader().tooltips["ItemPower"])
+    preceding_word = ""
     if idx is not None:
-        preceding_word = concatenated_str[:idx].split()[-1]
+        preceding_word = concatenated_str[start:idx].split()[-1]
         if preceding_word.isdigit():
             item.power = int(preceding_word)
         elif "+" in preceding_word:
@@ -80,27 +85,15 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
             if item_power_numbers[0].isdigit() and item_power_numbers[1].isdigit():
                 item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
 
-    max_length = 0
-    last_char_idx = 0
+    best_match = (None, 100)
     for item_type in ItemType:
-        if (found_idx := concatenated_str.rfind(item_type.value)) != -1:
-            tmp_idx = found_idx + len(item_type.value)
-            if tmp_idx >= last_char_idx and ("two-handed" not in item_type.value or len(item_type.value) > max_length):
-                item.item_type = item_type
-                last_char_idx = tmp_idx
-                max_length = len(item_type.value)
-    # common mistake is that "Armor" is on a seperate line and can not be detected properly
-    if item.item_type is None and ("chest" in concatenated_str or "armor" in concatenated_str):
-        item.item_type = ItemType.ChestArmor
-    if any(substring in concatenated_str for substring in ["two -handed", "two handed", "two- handed", "two-handed"]):
-        if item.item_type == ItemType.Sword:
-            item.item_type = ItemType.Sword2H
-        elif item.item_type == ItemType.Mace:
-            item.item_type = ItemType.Mace2H
-        elif item.item_type == ItemType.Scythe:
-            item.item_type = ItemType.Scythe2H
-        elif item.item_type == ItemType.Axe:
-            item.item_type = ItemType.Axe2H
+        if (
+            distance := Levenshtein.distance(
+                concatenated_str[start : concatenated_str.rfind(preceding_word)], item_type.value, score_cutoff=100
+            )
+        ) < best_match[1]:
+            best_match = (item_type, distance)
+    item.item_type = best_match[0]
     return item
 
 

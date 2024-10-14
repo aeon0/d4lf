@@ -4,6 +4,7 @@ import pytest
 from src.cam import Cam
 from src.config import BASE_DIR
 from src.item.data.affix import Affix, AffixType
+from src.item.data.aspect import Aspect
 from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
@@ -11,7 +12,42 @@ from src.item.models import Item
 
 BASE_PATH = BASE_DIR / "tests/assets/item/season6"
 
-items = []
+items = [
+    (
+        (2160, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_1.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=194),
+                Affix(name="basic_lucky_hit_chance", value=5),
+                Affix(name="chance_for_basic_skills_to_deal_double_damage", value=27),
+                Affix(name="to_follow_through", value=2),
+            ],
+            aspect=Aspect(name="sepazontec", value=68),
+            inherent=[Affix(name="block_chance", value=40, type=AffixType.inherent)],
+            item_type=ItemType.Quarterstaff,
+            power=750,
+            rarity=ItemRarity.Unique,
+        ),
+    ),
+    (
+        (2160, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_2.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_resource", value=8),
+                Affix(name="critical_strike_damage", value=76),
+                Affix(name="chance_for_core_skills_to_hit_twice", value=24),
+                Affix(name="to_velocity", value=3),
+            ],
+            aspect=Aspect(name="rod_of_kepeleke", value=2.2),
+            inherent=[Affix(name="block_chance", value=40, type=AffixType.inherent)],
+            item_type=ItemType.Quarterstaff,
+            power=750,
+            rarity=ItemRarity.Unique,
+        ),
+    ),
+]
 
 materials = [
     (
@@ -96,7 +132,7 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
 
 
 @pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
-def test_item(img_res: tuple[int, int], input_img: str, expected_item: Item):
+def test_items(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
 
 

@@ -175,7 +175,7 @@ def _find_item_affixes(mapping_data: dict, item_affixes: dict) -> list[Affix]:
 
 def _attr_desc_special_handling(affix_id: str) -> str:
     match affix_id:
-        case 1014505:
+        case 1014505 | 2051010:
             return "evade grants movement speed for second"
         case 2057810:
             return "damage reduction from bleeding enemies"
@@ -189,6 +189,8 @@ def _attr_desc_special_handling(affix_id: str) -> str:
             return "chance for basic skills to deal double damage"
         case 2119058:
             return "basic lucky hit chance"
+        case 2052125:
+            return "non-physical damage"
         case _:
             return ""
 

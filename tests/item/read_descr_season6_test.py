@@ -47,6 +47,34 @@ items = [
             rarity=ItemRarity.Unique,
         ),
     ),
+    (
+        (2160, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_3.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=97),
+                Affix(name="maximum_life", value=255),
+                Affix(name="poison_resistance", value=38),
+            ],
+            item_type=ItemType.ChestArmor,
+            power=750,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
+        (2160, 1440),
+        f"{BASE_PATH}/1440p_small_read_descr_4.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=91),
+                Affix(name="maximum_life", value=261),
+                Affix(name="cold_resistance", value=40),
+            ],
+            item_type=ItemType.ChestArmor,
+            power=750,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
 ]
 
 materials = [

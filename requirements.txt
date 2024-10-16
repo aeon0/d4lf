@@ -5,7 +5,6 @@ coverage
 cryptography
 httpx
 keyboard
-levenshtein
 lxml
 mouse
 mss

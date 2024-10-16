@@ -1,5 +1,6 @@
-import Levenshtein
 import numpy as np
+import rapidfuzz
+import rapidfuzz.distance.Levenshtein
 
 from src.config.data import COLORS
 from src.dataloader import Dataloader
@@ -85,15 +86,12 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
             if item_power_numbers[0].isdigit() and item_power_numbers[1].isdigit():
                 item.power = int(item_power_numbers[0]) + int(item_power_numbers[1])
 
-    best_match = (None, 100)
-    for item_type in ItemType:
-        if (
-            distance := Levenshtein.distance(
-                concatenated_str[start : concatenated_str.rfind(preceding_word)], item_type.value, score_cutoff=100
-            )
-        ) < best_match[1]:
-            best_match = (item_type, distance)
-    item.item_type = best_match[0]
+    res = rapidfuzz.process.extractOne(
+        concatenated_str[start : concatenated_str.rfind(preceding_word)],
+        [it.value for it in ItemType],
+        scorer=rapidfuzz.distance.Levenshtein.distance,
+    )
+    item.item_type = ItemType(res[0]) if res else None
     return item
 
 

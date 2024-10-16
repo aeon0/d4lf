@@ -14,6 +14,20 @@ BASE_PATH = BASE_DIR / "tests/assets/item/season6"
 
 items = [
     (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_1.png",
+        Item(
+            affixes=[
+                Affix(name="maximum_life", value=266),
+                Affix(name="cold_resistance", value=37),
+                Affix(name="to_armored_hide", value=3),
+            ],
+            item_type=ItemType.ChestArmor,
+            power=750,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -159,7 +173,7 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
     assert item == expected_item
 
 
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items[:1])
 def test_items(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
 

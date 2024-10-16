@@ -28,6 +28,21 @@ items = [
         ),
     ),
     (
+        (1920, 1080),
+        f"{BASE_PATH}/1080p_small_read_descr_2.png",
+        Item(
+            affixes=[
+                Affix(name="dexterity", value=8.4),
+                Affix(name="movement_speed", value=20),
+                Affix(name="to_brilliance", value=2),
+            ],
+            inherent=[Affix(name="resistance_to_all_elements", value=25, type=AffixType.inherent)],
+            item_type=ItemType.Amulet,
+            power=750,
+            rarity=ItemRarity.Legendary,
+        ),
+    ),
+    (
         (2160, 1440),
         f"{BASE_PATH}/1440p_small_read_descr_1.png",
         Item(
@@ -173,7 +188,7 @@ def _run_test_helper(img_res: tuple[int, int], input_img: str, expected_item: It
     assert item == expected_item
 
 
-@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items[:1])
+@pytest.mark.parametrize(("img_res", "input_img", "expected_item"), items)
 def test_items(img_res: tuple[int, int], input_img: str, expected_item: Item):
     _run_test_helper(img_res=img_res, input_img=input_img, expected_item=expected_item)
 

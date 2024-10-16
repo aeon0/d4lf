@@ -1,16 +1,15 @@
 import re
 
-from rapidfuzz import process
+import rapidfuzz
+import rapidfuzz.distance.Levenshtein
 
 from src.dataloader import Dataloader
 
 
-def closest_match(target, candidates, min_score=86):
+def closest_match(target, candidates):
     keys, values = zip(*candidates.items(), strict=False)
-    result = process.extractOne(target, values)
-    if result and result[1] >= min_score:
-        return keys[values.index(result[0])]
-    return None
+    result = rapidfuzz.process.extractOne(target, values, scorer=rapidfuzz.distance.Levenshtein.distance, score_cutoff=100)
+    return keys[values.index(result[0])] if result else None
 
 
 def closest_to(value, choices):

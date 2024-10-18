@@ -156,123 +156,127 @@ def vision_mode():
     # getting in item while the fade-in animation and failing to read it properly
     is_confirmed = False
     while True:
-        img = Cam().grab()
-        mouse_pos = Cam().monitor_to_window(mouse.get_position())
-        # get closest pos to a item center
-        delta = possible_centers - mouse_pos
-        distances = np.linalg.norm(delta, axis=1)
-        closest_index = np.argmin(distances)
-        if distances[closest_index] > (max_slot_size * 1.3):
-            # avoid randomly looking for items if we are well outside
-            found = False
-        else:
-            item_center = possible_centers[closest_index]
-            found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
+        try:
+            img = Cam().grab()
+            mouse_pos = Cam().monitor_to_window(mouse.get_position())
+            # get closest pos to a item center
+            delta = possible_centers - mouse_pos
+            distances = np.linalg.norm(delta, axis=1)
+            closest_index = np.argmin(distances)
+            if distances[closest_index] > (max_slot_size * 1.3):
+                # avoid randomly looking for items if we are well outside
+                found = False
+            else:
+                item_center = possible_centers[closest_index]
+                found, rarity, cropped_descr, item_roi = find_descr(img, item_center)
 
-        top_left_corner = None if not found else item_roi[:2]
-        if found:
-            if not is_confirmed:
-                found_check, _, cropped_descr_check, _ = find_descr(Cam().grab(), item_center)
-                if found_check:
-                    score = compare_histograms(cropped_descr, cropped_descr_check)
-                    if score < 0.99:
-                        continue
-                    is_confirmed = True
+            top_left_corner = None if not found else item_roi[:2]
+            if found:
+                if not is_confirmed:
+                    found_check, _, cropped_descr_check, _ = find_descr(Cam().grab(), item_center)
+                    if found_check:
+                        score = compare_histograms(cropped_descr, cropped_descr_check)
+                        if score < 0.99:
+                            continue
+                        is_confirmed = True
 
-            if (
-                last_top_left_corner is None
-                or last_top_left_corner[0] != top_left_corner[0]
-                or last_top_left_corner[1] != top_left_corner[1]
-                or (last_center is not None and last_center[1] != item_center[1])
-            ):
-                reset_canvas(root, canvas)
+                if (
+                    last_top_left_corner is None
+                    or last_top_left_corner[0] != top_left_corner[0]
+                    or last_top_left_corner[1] != top_left_corner[1]
+                    or (last_center is not None and last_center[1] != item_center[1])
+                ):
+                    reset_canvas(root, canvas)
 
-                # Make the canvas gray for "found the item"
-                x, y, w, h = item_roi
-                off = int(w * 0.1)
-                x -= off
-                y -= off
-                w += off * 2
-                h += off * 5
-                canvas.config(height=h, width=w)
-                create_signal_rect(canvas, w, thick, "#888888")
+                    # Make the canvas gray for "found the item"
+                    x, y, w, h = item_roi
+                    off = int(w * 0.1)
+                    x -= off
+                    y -= off
+                    w += off * 2
+                    h += off * 5
+                    canvas.config(height=h, width=w)
+                    create_signal_rect(canvas, w, thick, "#888888")
 
-                root.geometry(f"{w}x{h}+{x + screen_off_x}+{y + screen_off_y}")
-                root.update_idletasks()
-                root.update()
-
-                # Check if the item is a match based on our filters
-                match = True
-                last_top_left_corner = top_left_corner
-                last_center = item_center
-                item_descr = read_descr(rarity, cropped_descr, False)
-                if item_descr is None:
-                    last_center = None
-                    last_top_left_corner = None
-                    is_confirmed = False
-                    continue
-
-                ignored_item = False
-                if item_descr.item_type == ItemType.Material:
-                    LOGGER.info("Matched: Material")
-                    ignored_item = True
-                elif item_descr.item_type == ItemType.Elixir:
-                    LOGGER.info("Matched: Elixir")
-                    ignored_item = True
-                elif item_descr.item_type == ItemType.Incense:
-                    LOGGER.info("Matched: Incense")
-                    ignored_item = True
-                elif item_descr.item_type == ItemType.TemperManual:
-                    LOGGER.info("Matched: Temper Manual")
-                    ignored_item = True
-                elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
-                    match = False
-                    item_descr = None
-                elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
-                    LOGGER.info("Matched: Rare, ignore Item")
-                    ignored_item = True
-                elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
-                    match = False
-                    item_descr = None
-
-                if ignored_item:
-                    create_signal_rect(canvas, w, thick, "#00b3b3")
+                    root.geometry(f"{w}x{h}+{x + screen_off_x}+{y + screen_off_y}")
                     root.update_idletasks()
                     root.update()
-                    continue
 
-                if item_descr is not None:
-                    res = Filter().should_keep(item_descr)
-                    match = res.keep
+                    # Check if the item is a match based on our filters
+                    match = True
+                    last_top_left_corner = top_left_corner
+                    last_center = item_center
+                    item_descr = read_descr(rarity, cropped_descr, False)
+                    if item_descr is None:
+                        last_center = None
+                        last_top_left_corner = None
+                        is_confirmed = False
+                        continue
 
-                # Adapt colors based on config
-                if match:
-                    create_signal_rect(canvas, w, thick, "#23fc5d")
+                    ignored_item = False
+                    if item_descr.item_type == ItemType.Material:
+                        LOGGER.info("Matched: Material")
+                        ignored_item = True
+                    elif item_descr.item_type == ItemType.Elixir:
+                        LOGGER.info("Matched: Elixir")
+                        ignored_item = True
+                    elif item_descr.item_type == ItemType.Incense:
+                        LOGGER.info("Matched: Incense")
+                        ignored_item = True
+                    elif item_descr.item_type == ItemType.TemperManual:
+                        LOGGER.info("Matched: Temper Manual")
+                        ignored_item = True
+                    elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
+                        match = False
+                        item_descr = None
+                    elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
+                        LOGGER.info("Matched: Rare, ignore Item")
+                        ignored_item = True
+                    elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
+                        match = False
+                        item_descr = None
 
-                    # show all info strings of the profiles
-                    text_y = h
-                    for match in reversed(res.matched):
-                        text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, 5, w // 2)
-                    # Show matched bullets
-                    if item_descr is not None and len(res.matched) > 0:
-                        bullet_width = thick * 3
-                        for affix in res.matched[0].matched_affixes:
-                            if affix.loc is not None:
-                                draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
+                    if ignored_item:
+                        create_signal_rect(canvas, w, thick, "#00b3b3")
+                        root.update_idletasks()
+                        root.update()
+                        continue
 
-                        if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):
-                            draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
-                elif not match:
-                    create_signal_rect(canvas, w, thick, "#fc2323")
+                    if item_descr is not None:
+                        res = Filter().should_keep(item_descr)
+                        match = res.keep
 
-                root.update_idletasks()
-                root.update()
-        else:
-            reset_canvas(root, canvas)
-            last_center = None
-            last_top_left_corner = None
-            is_confirmed = False
-            time.sleep(0.15)
+                    # Adapt colors based on config
+                    if match:
+                        create_signal_rect(canvas, w, thick, "#23fc5d")
+
+                        # show all info strings of the profiles
+                        text_y = h
+                        for match in reversed(res.matched):
+                            text_y = draw_text(canvas, match.profile, "#23fc5d", text_y, 5, w // 2)
+                        # Show matched bullets
+                        if item_descr is not None and len(res.matched) > 0:
+                            bullet_width = thick * 3
+                            for affix in res.matched[0].matched_affixes:
+                                if affix.loc is not None:
+                                    draw_rect(canvas, bullet_width, affix, off, "#23fc5d")
+
+                            if item_descr.aspect is not None and any(m.did_match_aspect for m in res.matched):
+                                draw_rect(canvas, bullet_width, item_descr.aspect, off, "#23fc5d")
+                    elif not match:
+                        create_signal_rect(canvas, w, thick, "#fc2323")
+
+                    root.update_idletasks()
+                    root.update()
+            else:
+                reset_canvas(root, canvas)
+                last_center = None
+                last_top_left_corner = None
+                is_confirmed = False
+                time.sleep(0.15)
+        except Exception:
+            LOGGER.exception("Error in vision mode. Please create a bug report")
+            time.sleep(1)
 
 
 if __name__ == "__main__":

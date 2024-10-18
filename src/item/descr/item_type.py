@@ -91,7 +91,10 @@ def _find_item_power_and_type(item: Item, concatenated_str: str) -> Item:
         [it.value for it in ItemType],
         scorer=rapidfuzz.distance.Levenshtein.distance,
     )
-    item.item_type = ItemType(res[0]) if res else None
+    try:
+        item.item_type = ItemType(res[0]) if res else None
+    except ValueError:
+        item.item_type = None
     return item
 
 

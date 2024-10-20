@@ -256,6 +256,10 @@ class GeneralModel(_IniBaseModel):
     language: str = Field(
         default="enUS", description="Do not change. Only English is supported at this time", json_schema_extra={HIDE_FROM_GUI_KEY: "True"}
     )
+    mark_as_favorite: bool = Field(
+        default=True,
+        description="Whether to favorite matched items or not",
+    )
     minimum_overlay_font_size: int = Field(
         default=12,
         description="The minimum font size for the vision overlay, specifically the green text that shows which filter(s) are matching.",
@@ -268,10 +272,6 @@ class GeneralModel(_IniBaseModel):
         default=[MoveItemsType.everything],
         description="When doing stash/inventory transfer, what types of items should be moved",
     )
-    mark_as_favorite: bool = Field(
-        default=True,
-        description="Whether to favorite matched items or not",
-    )
     profiles: list[str] = Field(
         default=[],
         description='Which filter profiles should be run. All .yaml files with "Aspects" and '
@@ -279,6 +279,7 @@ class GeneralModel(_IniBaseModel):
         "C:/Users/USERNAME/.d4lf/profiles/*.yaml",
     )
     run_vision_mode_on_startup: bool = Field(default=True, description="Whether to run vision mode on startup or not")
+    use_tts: bool = Field(default=False, description="Whether to use tts or not")
 
     @field_validator("check_chest_tabs", mode="before")
     def check_chest_tabs_index(cls, v: str) -> list[int]:

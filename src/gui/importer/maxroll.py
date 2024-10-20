@@ -85,7 +85,7 @@ def import_maxroll(url: str):
         ]
         item_filter.minPower = 100
         # maxroll has some outdated data, so we need to clean it up by using item_type
-        if "implicits" in resolved_item and item_type in [ItemType.Ring, ItemType.Boots]:
+        if "implicits" in resolved_item and item_type in [ItemType.Boots]:
             item_filter.inherentPool = [
                 AffixFilterCountModel(
                     count=[
@@ -238,7 +238,7 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int]:
         raise MaxrollException(msg)
     try:
         planner_id = embed[0].get("data-d4-profile")
-        data_id = int(embed[0].get("data-d4-data").split(",")[0])
+        data_id = int(embed[0].get("data-d4-data").split(",")[0]) - 1
     except Exception as ex:
         LOGGER.exception(msg)
         raise MaxrollException(msg) from ex

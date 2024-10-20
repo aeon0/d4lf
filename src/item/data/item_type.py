@@ -32,7 +32,9 @@ class ItemType(Enum):
     Tome = "tome"
     Wand = "wand"
     # Custom Types
+    Compass = "compass"
     Incense = "incense"
     Material = "material"
-    Sigil = "sigil"
+    Sigil = "nightmare sigil"
+    Tribute = "Tribute"
     TemperManual = "temper manual"

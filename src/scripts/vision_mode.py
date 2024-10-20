@@ -17,6 +17,7 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
 from src.item.filter import Filter
 from src.item.find_descr import find_descr
+from src.tts import last_item_section
 from src.ui.char_inventory import CharInventory
 from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
@@ -206,6 +207,7 @@ def vision_mode():
                     match = True
                     last_top_left_corner = top_left_corner
                     last_center = item_center
+                    print(last_item_section.get(timeout=1))
                     item_descr = read_descr(rarity, cropped_descr, False)
                     if item_descr is None:
                         last_center = None

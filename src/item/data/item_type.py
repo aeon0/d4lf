@@ -32,7 +32,50 @@ class ItemType(Enum):
     Tome = "tome"
     Wand = "wand"
     # Custom Types
+    Compass = "compass"
     Incense = "incense"
     Material = "material"
-    Sigil = "sigil"
+    Sigil = "nightmare sigil"
+    Tribute = "Tribute"
     TemperManual = "temper manual"
+
+
+def is_armor(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Boots,
+        ItemType.ChestArmor,
+        ItemType.Gloves,
+        ItemType.Helm,
+        ItemType.Legs,
+    ]
+
+
+def is_jewelry(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Amulet,
+        ItemType.Ring,
+    ]
+
+
+def is_weapon(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Axe,
+        ItemType.Axe2H,
+        ItemType.Bow,
+        ItemType.Crossbow2H,
+        ItemType.Dagger,
+        ItemType.Focus,
+        ItemType.Glaive,
+        ItemType.Mace,
+        ItemType.Mace2H,
+        ItemType.OffHandTotem,
+        ItemType.Polearm,
+        ItemType.Quarterstaff,
+        ItemType.Scythe,
+        ItemType.Scythe2H,
+        ItemType.Staff,
+        ItemType.Sword,
+        ItemType.Sword2H,
+        ItemType.Tome,
+        ItemType.Wand,
+    ]

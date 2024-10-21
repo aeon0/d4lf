@@ -7,7 +7,9 @@ from tkinter.font import Font
 
 import numpy as np
 
+import src.item.descr.read_descr_tts
 import src.logger
+import src.tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.models import HandleRaresType
@@ -206,7 +208,14 @@ def vision_mode():
                     match = True
                     last_top_left_corner = top_left_corner
                     last_center = item_center
-                    item_descr = read_descr(rarity, cropped_descr, False)
+                    if IniConfigLoader().general.use_tts:
+                        try:
+                            item_descr = src.item.descr.read_descr_tts.read_descr(cropped_descr)
+                        except Exception:
+                            screenshot("tts_error", img=cropped_descr)
+                            LOGGER.exception(f"Error in TTS read_descr. {src.tts.LAST_ITEM_SECTION=}")
+                    else:
+                        item_descr = read_descr(rarity, cropped_descr, False)
                     if item_descr is None:
                         last_center = None
                         last_top_left_corner = None
@@ -281,7 +290,7 @@ def vision_mode():
 
 if __name__ == "__main__":
     try:
-        from src.utils.window import WindowSpec, start_detecting_window
+        from src.utils.window import WindowSpec, screenshot, start_detecting_window
 
         src.logger.setup()
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)

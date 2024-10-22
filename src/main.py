@@ -12,7 +12,7 @@ import src.logger
 from src import __version__, tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import ItemRefreshType
+from src.config.models import ItemRefreshType, UseTTSType
 from src.gui.qt_gui import start_gui
 from src.item.filter import Filter
 from src.logger import LOG_DIR
@@ -71,7 +71,7 @@ def main():
         )
         keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_inv, lambda: overlay.move_items_to_inventory())
         keyboard.add_hotkey(IniConfigLoader().advanced_options.move_to_chest, lambda: overlay.move_items_to_stash())
-    if IniConfigLoader().general.use_tts:
+    if IniConfigLoader().general.use_tts in [UseTTSType.full, UseTTSType.mixed]:
         tts.start_connection()
     overlay = Overlay()
     overlay.run()

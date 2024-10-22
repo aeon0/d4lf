@@ -1,29 +1,44 @@
+import enum
 import logging
 import queue
+import re
 import threading
 
 import win32file
 import win32pipe
 
-LAST_ITEM_SECTION = []
+LAST_ITEM = []
 LOGGER = logging.getLogger(__name__)
 _DATA_QUEUE = queue.Queue(maxsize=100)
-_PIPE_NAME = r"\\.\pipe\d4lf"
+
+
+class ItemIdentifiers(enum.Enum):
+    COMPASS = "Compass"
+    NIGHTMARE_SIGIL = "Nightmare Sigil"
+    TRIBUTE = "TRIBUTE OF"
+    WHISPERING_KEY = "WHISPERING KEY"
 
 
 def create_pipe() -> int:
     return win32pipe.CreateNamedPipe(
-        _PIPE_NAME, win32pipe.PIPE_ACCESS_INBOUND, win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_WAIT, 1, 2048, 10 * 2 ** (10 * 2), 0, None
+        r"\\.\pipe\d4lf",
+        win32pipe.PIPE_ACCESS_INBOUND,
+        win32pipe.PIPE_TYPE_MESSAGE | win32pipe.PIPE_WAIT,
+        1,
+        2048,
+        10 * 2 ** (10 * 2),
+        0,
+        None,
     )
 
 
 def read_pipe() -> None:
     while True:
         handle = create_pipe()
-        LOGGER.debug(f"Named pipe '{_PIPE_NAME}' created. Waiting for client to connect...")
+        LOGGER.debug("Waiting for TTS client to connect")
 
         win32pipe.ConnectNamedPipe(handle, None)
-        LOGGER.debug("Client connected. Waiting for data...")
+        LOGGER.debug("TTS client connected")
 
         while True:
             try:
@@ -35,10 +50,9 @@ def read_pipe() -> None:
                     _DATA_QUEUE.put(s)
             except Exception as e:
                 print(f"Error while reading data: {e}")
-                break
 
         win32file.CloseHandle(handle)
-        print("Client disconnected. Waiting for a new client...")
+        print("TTS client disconnected")
 
 
 def detector() -> None:
@@ -46,48 +60,40 @@ def detector() -> None:
     while True:
         data = fix_data(_DATA_QUEUE.get())
         local_cache.append(data)
-        if any(word in data.lower() for word in ["markasjunk", "markasfavorite", "unmarkitem"]):
-            start = find_item_start(local_cache)
-            global LAST_ITEM_SECTION
-            LAST_ITEM_SECTION = local_cache[start:]
+        if any(word in data.lower() for word in ["mouse button"]) and (start := find_item_start(local_cache)) is not None:
+            global LAST_ITEM
+            LAST_ITEM = local_cache[start:]
+            LOGGER.debug(f"TTS Found: {LAST_ITEM}")
             local_cache = []
 
 
-def has_more_than_consecutive_capitals(s: str, n: int = 5) -> bool:
-    capital_count = 0
-    for char in s:
-        if char.isupper():
-            capital_count += 1
-            if capital_count > n:
-                return True
-        else:
-            capital_count = 0
-    return False
+def find_item_start(data: list[str]) -> int | None:
+    ignored_words = ["COMPASS AFFIXES", "DUNGEON AFFIXES"]
 
+    for index, item in reversed(list(enumerate(data))):
+        if any(ignored in item for ignored in ignored_words):
+            continue
 
-def find_item_start(data: list[str]) -> int:
-    item_starts = ["Compass", "Nightmare Sigil", "Tribute of"]
-    for index in range(len(data) - 1, -1, -1):
-        if any(word in data[index] for word in item_starts):
+        if any(item.startswith(x) for x in [y.value for y in ItemIdentifiers]):
             return index
-    for index in range(len(data) - 1, -1, -1):
-        if has_more_than_consecutive_capitals(data[index]):
+
+        cleaned_str = re.sub(r"[^A-Za-z]", "", item)
+        if len(cleaned_str) >= 3 and item.isupper():
             return index
-    return -1
+
+    return None
 
 
 def fix_data(data: str) -> str:
-    return (
-        data.replace("&apos;", "")
-        .replace("&quot;", "")
-        .replace("[FAVORITED ITEM]. ", "")
-        .replace("ￂﾠ", "")
-        .replace("(Spiritborn Only", "")
-        .strip()
-    )
+    to_remove = ["&apos;", "&quot;", "[FAVORITED ITEM]. ", "ￂﾠ", "(Spiritborn Only)", "[MARKED AS JUNK]. "]
+
+    for item in to_remove:
+        data = data.replace(item, "")
+
+    return data.strip()
 
 
 def start_connection() -> None:
-    LOGGER.info("Starting tts connection...")
+    LOGGER.info("Starting tts listener")
     threading.Thread(target=detector, daemon=True).start()
     threading.Thread(target=read_pipe, daemon=True).start()

@@ -33,11 +33,14 @@ class ItemType(Enum):
     Wand = "wand"
     # Custom Types
     Compass = "compass"
+    Consumable = "consumable"
+    Gem = "gem"
     Incense = "incense"
     Material = "material"
+    Rune = "rune"
     Sigil = "nightmare sigil"
-    Tribute = "Tribute"
     TemperManual = "temper manual"
+    Tribute = "tribute"
 
 
 def is_armor(item_type: ItemType) -> bool:
@@ -50,10 +53,33 @@ def is_armor(item_type: ItemType) -> bool:
     ]
 
 
+def is_consumable(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Consumable,
+        ItemType.Elixir,
+        ItemType.Incense,
+        ItemType.TemperManual,
+    ]
+
+
+def is_mapping(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Compass,
+        ItemType.Sigil,
+    ]
+
+
 def is_jewelry(item_type: ItemType) -> bool:
     return item_type in [
         ItemType.Amulet,
         ItemType.Ring,
+    ]
+
+
+def is_socketable(item_type: ItemType) -> bool:
+    return item_type in [
+        ItemType.Gem,
+        ItemType.Rune,
     ]
 
 

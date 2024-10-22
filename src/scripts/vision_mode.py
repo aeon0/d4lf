@@ -12,9 +12,9 @@ import src.logger
 import src.tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import HandleRaresType
+from src.config.models import HandleRaresType, UseTTSType
 from src.config.ui import ResManager
-from src.item.data.item_type import ItemType
+from src.item.data.item_type import ItemType, is_armor, is_consumable, is_jewelry, is_mapping, is_socketable, is_weapon
 from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
 from src.item.filter import Filter
@@ -24,6 +24,7 @@ from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
 from src.utils.image_operations import compare_histograms, crop
 from src.utils.ocr.read import image_to_text
+from src.utils.window import screenshot
 
 LOGGER = logging.getLogger(__name__)
 
@@ -205,15 +206,16 @@ def vision_mode():
                     root.update()
 
                     # Check if the item is a match based on our filters
-                    match = True
                     last_top_left_corner = top_left_corner
                     last_center = item_center
-                    if IniConfigLoader().general.use_tts:
+                    item_descr = None
+                    if IniConfigLoader().general.use_tts in [UseTTSType.full, UseTTSType.mixed]:
                         try:
-                            item_descr = src.item.descr.read_descr_tts.read_descr(cropped_descr)
+                            item_descr = src.item.descr.read_descr_tts.read_descr_mixed(cropped_descr)
+                            LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
                         except Exception:
                             screenshot("tts_error", img=cropped_descr)
-                            LOGGER.exception(f"Error in TTS read_descr. {src.tts.LAST_ITEM_SECTION=}")
+                            LOGGER.exception(f"Error in TTS read_descr. {src.tts.LAST_ITEM=}")
                     else:
                         item_descr = read_descr(rarity, cropped_descr, False)
                     if item_descr is None:
@@ -223,27 +225,28 @@ def vision_mode():
                         continue
 
                     ignored_item = False
-                    if item_descr.item_type == ItemType.Material:
+                    if is_consumable(item_descr.item_type):
+                        LOGGER.info("Matched: Consumable")
+                        ignored_item = True
+                    if is_mapping(item_descr.item_type):
+                        LOGGER.info("Matched: Mapping")
+                        ignored_item = True
+                    if is_socketable(item_descr.item_type):
+                        LOGGER.info("Matched: Socketable")
+                        ignored_item = True
+                    elif item_descr.item_type == ItemType.Tribute:
+                        LOGGER.info("Matched: Tribute")
+                        ignored_item = True
+                    elif item_descr.item_type == ItemType.Material:
                         LOGGER.info("Matched: Material")
                         ignored_item = True
-                    elif item_descr.item_type == ItemType.Elixir:
-                        LOGGER.info("Matched: Elixir")
-                        ignored_item = True
-                    elif item_descr.item_type == ItemType.Incense:
-                        LOGGER.info("Matched: Incense")
-                        ignored_item = True
-                    elif item_descr.item_type == ItemType.TemperManual:
-                        LOGGER.info("Matched: Temper Manual")
-                        ignored_item = True
-                    elif rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
-                        match = False
-                        item_descr = None
-                    elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
+                    if (
+                        rarity == ItemRarity.Rare
+                        and (is_armor(item_descr.item_type) or is_weapon(item_descr.item_type) or is_jewelry(item_descr.item_type))
+                        and IniConfigLoader().general.handle_rares in [HandleRaresType.ignore, HandleRaresType.junk]
+                    ):
                         LOGGER.info("Matched: Rare, ignore Item")
                         ignored_item = True
-                    elif rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
-                        match = False
-                        item_descr = None
 
                     if ignored_item:
                         create_signal_rect(canvas, w, thick, "#00b3b3")
@@ -251,9 +254,15 @@ def vision_mode():
                         root.update()
                         continue
 
-                    if item_descr is not None:
-                        res = Filter().should_keep(item_descr)
-                        match = res.keep
+                    if item_descr is None:
+                        LOGGER.info("Unknown Item")
+                        create_signal_rect(canvas, w, thick, "#ce7e00")
+                        root.update_idletasks()
+                        root.update()
+                        continue
+
+                    res = Filter().should_keep(item_descr)
+                    match = res.keep
 
                     # Adapt colors based on config
                     if match:
@@ -290,7 +299,7 @@ def vision_mode():
 
 if __name__ == "__main__":
     try:
-        from src.utils.window import WindowSpec, screenshot, start_detecting_window
+        from src.utils.window import WindowSpec, start_detecting_window
 
         src.logger.setup()
         win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)

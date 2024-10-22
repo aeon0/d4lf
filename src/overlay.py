@@ -4,11 +4,12 @@ import threading
 import tkinter as tk
 import typing
 
+import src.scripts.loot_filter
+import src.scripts.loot_filter_tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
-from src.config.models import ItemRefreshType
+from src.config.models import ItemRefreshType, UseTTSType
 from src.config.ui import ResManager
-from src.loot_filter import run_loot_filter
 from src.loot_mover import move_items_to_inventory, move_items_to_stash
 from src.scripts.vision_mode import vision_mode
 from src.utils.process_handler import kill_thread
@@ -146,7 +147,10 @@ class Overlay:
         move_window_to_foreground(win_spec)
 
     def filter_items(self, force_refresh=ItemRefreshType.no_refresh):
-        self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh,))
+        if IniConfigLoader().general.use_tts == UseTTSType.full:
+            self._start_or_stop_loot_interaction_thread(src.scripts.loot_filter_tts.run_loot_filter, (force_refresh,))
+        else:
+            self._start_or_stop_loot_interaction_thread(src.scripts.loot_filter.run_loot_filter, (force_refresh,))
 
     def move_items_to_inventory(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_inventory)

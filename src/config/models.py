@@ -29,17 +29,21 @@ class AspectFilterType(enum.StrEnum):
     upgrade = enum.auto()
 
 
+class ComparisonType(enum.StrEnum):
+    larger = enum.auto()
+    smaller = enum.auto()
+
+
 class HandleRaresType(enum.StrEnum):
     filter = enum.auto()
     ignore = enum.auto()
     junk = enum.auto()
 
 
-class MoveItemsType(enum.StrEnum):
-    everything = enum.auto()
-    favorites = enum.auto()
-    junk = enum.auto()
-    unmarked = enum.auto()
+class ItemRefreshType(enum.StrEnum):
+    force_with_filter = enum.auto()
+    force_without_filter = enum.auto()
+    no_refresh = enum.auto()
 
 
 class LogLevels(enum.StrEnum):
@@ -50,21 +54,23 @@ class LogLevels(enum.StrEnum):
     critical = enum.auto()
 
 
+class MoveItemsType(enum.StrEnum):
+    everything = enum.auto()
+    favorites = enum.auto()
+    junk = enum.auto()
+    unmarked = enum.auto()
+
+
 class UnfilteredUniquesType(enum.StrEnum):
     favorite = enum.auto()
     ignore = enum.auto()
     junk = enum.auto()
 
 
-class ComparisonType(enum.StrEnum):
-    larger = enum.auto()
-    smaller = enum.auto()
-
-
-class ItemRefreshType(enum.StrEnum):
-    force_with_filter = enum.auto()
-    force_without_filter = enum.auto()
-    no_refresh = enum.auto()
+class UseTTSType(enum.StrEnum):
+    full = enum.auto()
+    mixed = enum.auto()
+    off = enum.auto()
 
 
 class _IniBaseModel(BaseModel):
@@ -279,7 +285,7 @@ class GeneralModel(_IniBaseModel):
         "C:/Users/USERNAME/.d4lf/profiles/*.yaml",
     )
     run_vision_mode_on_startup: bool = Field(default=True, description="Whether to run vision mode on startup or not")
-    use_tts: bool = Field(default=False, description="Whether to use tts or not")
+    use_tts: UseTTSType = Field(default=UseTTSType.off, description="Whether to use tts or not")
 
     @field_validator("check_chest_tabs", mode="before")
     def check_chest_tabs_index(cls, v: str) -> list[int]:

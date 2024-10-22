@@ -38,7 +38,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         img = Cam().grab()
         item_descr = None
         try:
-            item_descr = src.item.descr.read_descr_tts.read_description()
+            item_descr = src.item.descr.read_descr_tts.read_descr()
             LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
         except Exception:
             screenshot("tts_error", img=img)
@@ -47,7 +47,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
             LOGGER.info("Retry item detection")
             time.sleep(0.3)
             try:
-                item_descr = src.item.descr.read_descr_tts.read_description()
+                item_descr = src.item.descr.read_descr_tts.read_descr()
                 LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
             except Exception:
                 screenshot("tts_error", img=img)

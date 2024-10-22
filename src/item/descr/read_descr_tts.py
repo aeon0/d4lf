@@ -277,7 +277,7 @@ def read_descr_mixed(img_item_descr: np.ndarray) -> Item | None:
     return _add_affixes_from_tts_mixed(tts_section, item, inherent_affix_bullets, affix_bullets)
 
 
-def read_description() -> Item | None:
+def read_descr() -> Item | None:
     tts_section = copy.copy(src.tts.LAST_ITEM)
     if not tts_section:
         return None

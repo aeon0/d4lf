@@ -7,6 +7,8 @@ import threading
 import win32file
 import win32pipe
 
+from src.config.helper import singleton
+
 LAST_ITEM = []
 LOGGER = logging.getLogger(__name__)
 _DATA_QUEUE = queue.Queue(maxsize=100)
@@ -17,6 +19,34 @@ class ItemIdentifiers(enum.Enum):
     NIGHTMARE_SIGIL = "Nightmare Sigil"
     TRIBUTE = "TRIBUTE OF"
     WHISPERING_KEY = "WHISPERING KEY"
+
+
+@singleton
+class Publisher:
+    def __init__(self):
+        self._subscribers = set()
+
+    def find_item(self) -> None:
+        local_cache = []
+        while True:
+            data = fix_data(_DATA_QUEUE.get())
+            local_cache.append(data)
+            if any(word in data.lower() for word in ["mouse button"]) and (start := find_item_start(local_cache)) is not None:
+                global LAST_ITEM
+                LAST_ITEM = local_cache[start:]
+                LOGGER.debug(f"TTS Found: {LAST_ITEM}")
+                local_cache = []
+                self.publish(LAST_ITEM)
+
+    def publish(self, data):
+        for subscriber in self._subscribers:
+            subscriber(data)
+
+    def subscribe(self, subscriber):
+        self._subscribers.add(subscriber)
+
+    def unsubscribe(self, subscriber):
+        self._subscribers.remove(subscriber)
 
 
 def create_pipe() -> int:
@@ -55,18 +85,6 @@ def read_pipe() -> None:
         print("TTS client disconnected")
 
 
-def detector() -> None:
-    local_cache = []
-    while True:
-        data = fix_data(_DATA_QUEUE.get())
-        local_cache.append(data)
-        if any(word in data.lower() for word in ["mouse button"]) and (start := find_item_start(local_cache)) is not None:
-            global LAST_ITEM
-            LAST_ITEM = local_cache[start:]
-            LOGGER.debug(f"TTS Found: {LAST_ITEM}")
-            local_cache = []
-
-
 def find_item_start(data: list[str]) -> int | None:
     ignored_words = ["COMPASS AFFIXES", "DUNGEON AFFIXES"]
 
@@ -95,5 +113,5 @@ def fix_data(data: str) -> str:
 
 def start_connection() -> None:
     LOGGER.info("Starting tts listener")
-    threading.Thread(target=detector, daemon=True).start()
+    threading.Thread(target=Publisher().find_item, daemon=True).start()
     threading.Thread(target=read_pipe, daemon=True).start()

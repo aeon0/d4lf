@@ -85,7 +85,7 @@ in accuracy. Or a full mode where only TTS is used.
 `loot_filter`.
 - Basic item detection for all? other items, e.g. only type + rarity
 
-**The following is currently supported using use_tts=mixed:**
+**The following is currently supported using use_tts=full:**
 
 - Full item detection for all wearable items, e.g. armor, weapons, and accessories. Only in `loot_filter`.
 - For everything else, mixed mode is used

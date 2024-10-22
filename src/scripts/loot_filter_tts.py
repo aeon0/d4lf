@@ -11,10 +11,7 @@ from src.item.data.item_type import ItemType
 from src.item.data.rarity import ItemRarity
 from src.item.filter import Filter
 from src.scripts.common import mark_as_favorite, mark_as_junk, reset_item_status
-from src.ui.char_inventory import CharInventory
-from src.ui.chest import Chest
 from src.ui.inventory_base import InventoryBase
-from src.utils.custom_mouse import mouse
 from src.utils.window import screenshot
 
 LOGGER = logging.getLogger(__name__)
@@ -41,7 +38,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
         img = Cam().grab()
         item_descr = None
         try:
-            item_descr = src.item.descr.read_descr_tts.read_description()
+            item_descr = src.item.descr.read_descr_tts.read_descr()
             LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
         except Exception:
             screenshot("tts_error", img=img)
@@ -50,7 +47,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
             LOGGER.info("Retry item detection")
             time.sleep(0.3)
             try:
-                item_descr = src.item.descr.read_descr_tts.read_description()
+                item_descr = src.item.descr.read_descr_tts.read_descr()
                 LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
             except Exception:
                 screenshot("tts_error", img=img)
@@ -113,27 +110,3 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
                 and IniConfigLoader().general.mark_as_favorite
             ):
                 mark_as_favorite()
-
-
-def run_loot_filter(force_refresh: ItemRefreshType = ItemRefreshType.no_refresh):
-    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
-    LOGGER.info("Run Loot filter")
-    inv = CharInventory()
-    chest = Chest()
-
-    if chest.is_open():
-        for i in IniConfigLoader().general.check_chest_tabs:
-            chest.switch_to_tab(i)
-            time.sleep(0.4)
-            check_items(chest, force_refresh)
-        mouse.move(*Cam().abs_window_to_monitor((0, 0)))
-        time.sleep(0.4)
-        check_items(inv, force_refresh)
-    else:
-        if not inv.open():
-            screenshot("inventory_not_open", img=Cam().grab())
-            LOGGER.error("Inventory did not open up")
-            return
-        check_items(inv, force_refresh)
-    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
-    LOGGER.info("Loot Filter done")

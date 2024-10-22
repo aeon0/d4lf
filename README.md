@@ -79,18 +79,15 @@ Currently, `use_tts` enables either a mixed mode where image processing is still
 but TTS is used for everything text-related. This results in a small improvement in performance and a major improvement
 in accuracy. Or a full mode where only TTS is used.
 
-**The following is currently supported using use_tts=mixed:**
+**IT IS NOT POSSIBLE TO DETECT GREATER AFFIXES USING TTS!!! YOU NEED TO SPECIFY THEM USING THEIR VALUES!**
+
+**The following is currently supported using any form of tts:**
 
 - Full item detection for all wearable items, e.g. armor, weapons, and accessories. Both in `vision_mode` and
 `loot_filter`.
 - Basic item detection for all? other items, e.g. only type + rarity
 
-**The following is currently supported using use_tts=mixed:**
-
-- Full item detection for all wearable items, e.g. armor, weapons, and accessories. Only in `loot_filter`.
-- For everything else, mixed mode is used
-
-We might also discontinue the pure image processing mode in the future, as TTS is easier to maintain.
+We might also discontinue the pure image processing mode and even mixed mode in the future, as TTS is easier to maintain.
 
 ### Configs
 

@@ -2,7 +2,6 @@ import logging
 import math
 import time
 import tkinter as tk
-import traceback
 from tkinter.font import Font
 
 import numpy as np
@@ -19,11 +18,11 @@ from src.item.data.rarity import ItemRarity
 from src.item.descr.read_descr import read_descr
 from src.item.filter import Filter
 from src.item.find_descr import find_descr
+from src.scripts.common import reset_canvas
 from src.ui.char_inventory import CharInventory
 from src.ui.chest import Chest
 from src.utils.custom_mouse import mouse
-from src.utils.image_operations import compare_histograms, crop
-from src.utils.ocr.read import image_to_text
+from src.utils.image_operations import compare_histograms
 from src.utils.window import screenshot
 
 LOGGER = logging.getLogger(__name__)
@@ -85,20 +84,6 @@ def draw_text(canvas, text, color, previous_text_y, offset, canvas_center_x) -> 
         canvas_center_x, previous_text_y - offset, text=text, anchor=tk.S, font=("Courier New", font_size), fill=color, width=text_width
     )
     return int(previous_text_y - offset - text_height)
-
-
-def reset_canvas(root, canvas):
-    canvas.delete("all")
-    canvas.config(height=0, width=0)
-    root.geometry("0x0+0+0")
-    root.update_idletasks()
-    root.update()
-
-
-def is_vendor_open(img: np.ndarray):
-    cropped = crop(img, ResManager().roi.vendor_text)
-    res = image_to_text(cropped, do_pre_proc=False)
-    return res.text.strip().lower() == "vendor"
 
 
 def create_signal_rect(canvas, w, thick, color):
@@ -209,7 +194,7 @@ def vision_mode():
                     last_top_left_corner = top_left_corner
                     last_center = item_center
                     item_descr = None
-                    if IniConfigLoader().general.use_tts in [UseTTSType.full, UseTTSType.mixed]:
+                    if IniConfigLoader().general.use_tts == UseTTSType.mixed:
                         try:
                             item_descr = src.item.descr.read_descr_tts.read_descr_mixed(cropped_descr)
                             LOGGER.debug(f"Parsed item based on TTS: {item_descr}")
@@ -295,20 +280,3 @@ def vision_mode():
         except Exception:
             LOGGER.exception("Error in vision mode. Please create a bug report")
             time.sleep(1)
-
-
-if __name__ == "__main__":
-    try:
-        from src.utils.window import WindowSpec, start_detecting_window
-
-        src.logger.setup()
-        win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
-        start_detecting_window(win_spec)
-        while not Cam().is_offset_set():
-            time.sleep(0.2)
-        Filter().load_files()
-        vision_mode()
-    except Exception:
-        traceback.print_exc()
-        print("Press Enter to exit ...")
-        input()

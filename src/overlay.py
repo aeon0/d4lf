@@ -1,36 +1,30 @@
 import ctypes
 import logging
 import threading
+import time
 import tkinter as tk
 import typing
 
+import src.item.descr.read_descr_tts
+import src.logger
 import src.scripts.loot_filter
 import src.scripts.loot_filter_tts
+import src.scripts.vision_mode
+import src.scripts.vision_mode_tts
+import src.tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
 from src.config.models import ItemRefreshType, UseTTSType
-from src.config.ui import ResManager
 from src.loot_mover import move_items_to_inventory, move_items_to_stash
-from src.scripts.vision_mode import vision_mode
+from src.ui.char_inventory import CharInventory
+from src.ui.chest import Chest
+from src.utils.custom_mouse import mouse
 from src.utils.process_handler import kill_thread
-from src.utils.window import WindowSpec, move_window_to_foreground
+from src.utils.window import screenshot
 
 LOGGER = logging.getLogger(__name__)
 
 LOCK = threading.Lock()
-
-
-class TextLogHandler(logging.Handler):
-    def __init__(self, text):
-        logging.Handler.__init__(self)
-        self.text = text
-        self.text.tag_configure("wrapindent", lmargin2=60)
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        padded_text = " " * 1 + log_entry + " \n" * 1
-        self.text.insert(tk.END, padded_text, "wrapindent")
-        self.text.yview(tk.END)  # Auto-scroll to the end
 
 
 class Overlay:
@@ -48,7 +42,7 @@ class Overlay:
         self.screen_width = Cam().window_roi["width"]
         self.screen_height = Cam().window_roi["height"]
         self.initial_height = int(Cam().window_roi["height"] * 0.03)
-        self.initial_width = int(self.screen_width * 0.068)
+        self.initial_width = int(self.screen_width * 0.047)
         self.maximized_height = int(self.initial_height * 3.4)
         self.maximized_width = int(self.initial_width * 5)
 
@@ -62,50 +56,20 @@ class Overlay:
         self.root.bind("<Enter>", self.show_canvas)
         self.root.bind("<Leave>", self.hide_canvas)
 
-        self.toggle_button = tk.Button(self.root, text="max", bg="#222222", fg="#555555", borderwidth=0, command=self.toggle_size)
-        self.canvas.create_window(int(self.initial_width * 0.19), self.initial_height // 2, window=self.toggle_button)
-
         self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
 
         if not IniConfigLoader().advanced_options.vision_mode_only:
             self.filter_button = tk.Button(self.root, text="filter", bg="#222222", fg="#555555", borderwidth=0, command=self.filter_items)
-            self.canvas.create_window(int(self.initial_width * 0.48), self.initial_height // 2, window=self.filter_button)
+            self.canvas.create_window(int(self.initial_width * 0.24), self.initial_height // 2, window=self.filter_button)
 
         self.start_scripts_button = tk.Button(self.root, text="vision", bg="#222222", fg="#555555", borderwidth=0, command=self.run_scripts)
-        self.canvas.create_window(int(self.initial_width * 0.81), self.initial_height // 2, window=self.start_scripts_button)
-
-        font_size = 8
-        window_height = ResManager().pos.window_dimensions[1]
-        if window_height == 1440:
-            font_size = 9
-        elif window_height > 1440:
-            font_size = 10
-        self.terminal_text = tk.Text(
-            self.canvas,
-            bg="black",
-            fg="white",
-            highlightcolor="white",
-            highlightthickness=0,
-            selectbackground="#222222",
-            borderwidth=0,
-            font=("Courier New", font_size),
-            wrap="word",
-        )
-        self.terminal_text.place(
-            relx=0, rely=0, relwidth=1, relheight=1 - (self.initial_height / self.maximized_height), y=self.initial_height
-        )
+        self.canvas.create_window(int(self.initial_width * 0.73), self.initial_height // 2, window=self.start_scripts_button)
 
         if IniConfigLoader().general.hidden_transparency == 0:
             self.root.update()
             hwnd = self.root.winfo_id()
             style = ctypes.windll.user32.GetWindowLongW(hwnd, -20)
             ctypes.windll.user32.SetWindowLongW(hwnd, -20, style | 0x80000 | 0x20)
-
-        # Setup the listbox logger handler
-        textlog_handler = TextLogHandler(self.terminal_text)
-        log_level = LOGGER.root.handlers[0].level if LOGGER.root.handlers else 0
-        textlog_handler.setLevel(log_level)
-        LOGGER.root.addHandler(textlog_handler)
 
         if IniConfigLoader().general.run_vision_mode_on_startup:
             self.run_scripts()
@@ -125,32 +89,11 @@ class Overlay:
                 self.root.after_cancel(self.hide_id)
             self.hide_id = self.root.after(3000, lambda: self.root.attributes("-alpha", IniConfigLoader().general.hidden_transparency))
 
-    def toggle_size(self):
-        if not self.is_minimized:
-            self.canvas.config(height=self.initial_height, width=self.initial_width)
-            self.root.geometry(
-                f"{self.initial_width}x{self.initial_height}+{self.screen_width // 2 - self.initial_width // 2 + self.screen_off_x}+{self.screen_height - self.initial_height + self.screen_off_y}"
-            )
-        else:
-            self.canvas.config(height=self.maximized_height, width=self.maximized_width)
-            self.root.geometry(
-                f"{self.maximized_width}x{self.maximized_height}+{self.screen_width // 2 - self.maximized_width // 2 + self.screen_off_x}+{self.screen_height - self.maximized_height + self.screen_off_y}"
-            )
-        self.is_minimized = not self.is_minimized
-        if self.is_minimized:
-            self.hide_canvas(None)
-            self.toggle_button.config(text="max")
-        else:
-            self.show_canvas(None)
-            self.toggle_button.config(text="min")
-        win_spec = WindowSpec(IniConfigLoader().advanced_options.process_name)
-        move_window_to_foreground(win_spec)
-
     def filter_items(self, force_refresh=ItemRefreshType.no_refresh):
-        if IniConfigLoader().general.use_tts == UseTTSType.full:
-            self._start_or_stop_loot_interaction_thread(src.scripts.loot_filter_tts.run_loot_filter, (force_refresh,))
+        if IniConfigLoader().general.use_tts in [UseTTSType.full, UseTTSType.mixed]:
+            self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh, True))
         else:
-            self._start_or_stop_loot_interaction_thread(src.scripts.loot_filter.run_loot_filter, (force_refresh,))
+            self._start_or_stop_loot_interaction_thread(run_loot_filter, (force_refresh, False))
 
     def move_items_to_inventory(self):
         self._start_or_stop_loot_interaction_thread(move_items_to_inventory)
@@ -167,8 +110,6 @@ class Overlay:
                     self.loot_interaction_thread = None
                     self.filter_button.config(fg="#555555")
                 else:
-                    if self.is_minimized:
-                        self.toggle_size()
                     self.loot_interaction_thread = threading.Thread(
                         target=self._wrapper_run_loot_interaction_method, args=(loot_interaction_method, method_args), daemon=True
                     )
@@ -196,8 +137,6 @@ class Overlay:
             if did_stop_scripts:
                 self.run_scripts()
         finally:
-            if not self.is_minimized:
-                self.toggle_size()
             self.loot_interaction_thread = None
             self.filter_button.config(fg="#555555")
 
@@ -216,7 +155,10 @@ class Overlay:
                         return
                     for name in IniConfigLoader().advanced_options.scripts:
                         if name == "vision_mode":
-                            vision_mode_thread = threading.Thread(target=vision_mode, daemon=True)
+                            if IniConfigLoader().general.use_tts == UseTTSType.full:
+                                vision_mode_thread = threading.Thread(target=src.scripts.vision_mode_tts.VisionMode().start, daemon=True)
+                            else:
+                                vision_mode_thread = threading.Thread(target=src.scripts.vision_mode.vision_mode, daemon=True)
                             vision_mode_thread.start()
                             self.script_threads.append(vision_mode_thread)
                     self.start_scripts_button.config(fg="#006600")
@@ -227,3 +169,29 @@ class Overlay:
 
     def run(self):
         self.root.mainloop()
+
+
+def run_loot_filter(force_refresh: ItemRefreshType = ItemRefreshType.no_refresh, tts: bool = False):
+    LOGGER.info("Run Loot filter")
+    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
+    check_items = src.scripts.loot_filter_tts.check_items if tts else src.scripts.loot_filter.check_items
+
+    inv = CharInventory()
+    chest = Chest()
+
+    if chest.is_open():
+        for i in IniConfigLoader().general.check_chest_tabs:
+            chest.switch_to_tab(i)
+            time.sleep(0.3)
+            check_items(chest, force_refresh)
+        mouse.move(*Cam().abs_window_to_monitor((0, 0)))
+        time.sleep(0.3)
+        check_items(inv, force_refresh)
+    else:
+        if not inv.open():
+            screenshot("inventory_not_open", img=Cam().grab())
+            LOGGER.error("Inventory did not open up")
+            return
+        check_items(inv, force_refresh)
+    mouse.move(*Cam().abs_window_to_monitor((0, 0)))
+    LOGGER.info("Loot Filter done")

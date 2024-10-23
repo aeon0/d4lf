@@ -72,12 +72,18 @@ def read_pipe() -> None:
 
         while True:
             try:
-                data = win32file.ReadFile(handle, 512)[1].decode().strip()
-
+                # Block until data is available (assumes PIPE_WAIT)
+                win32file.ReadFile(handle, 0, None)
+                # Query message size
+                _, _, message_size = win32pipe.PeekNamedPipe(handle, 0)
+                # Read message
+                _, data = win32file.ReadFile(handle, message_size, None)
+                data = data.decode().replace("\x00", "")
+                if not data:
+                    continue
                 if "DISCONNECTED" in data:
                     break
-                for s in [s for s in data.split("\x00") if s]:
-                    _DATA_QUEUE.put(s)
+                _DATA_QUEUE.put(data)
             except Exception as e:
                 print(f"Error while reading data: {e}")
 

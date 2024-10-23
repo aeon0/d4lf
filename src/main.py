@@ -57,7 +57,7 @@ def main():
     ScriptHandler()
 
     if IniConfigLoader().general.use_tts in [UseTTSType.full, UseTTSType.mixed]:
-        LOGGER.debug(f"tts: {IniConfigLoader().general.use_tts.value}")
+        LOGGER.debug(f"TTS mode: {IniConfigLoader().general.use_tts.value}")
         tts.start_connection()
 
     overlay = Overlay()

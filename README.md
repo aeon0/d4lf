@@ -77,9 +77,9 @@ To use TTS, you need to:
 
 Currently, `use_tts` enables either a mixed mode where image processing is still used for item and affix position detection,
 but TTS is used for everything text-related. This results in a small improvement in performance and a major improvement
-in accuracy. Or a full mode where only TTS is used.
+in accuracy. Or a full mode where only TTS is used. This will be super fast but loses the overlay.
 
-**IT IS NOT POSSIBLE TO DETECT GREATER AFFIXES USING TTS!!! YOU NEED TO SPECIFY THEM USING THEIR VALUES!**
+**YOU NEED TO ENABLE ADVANCED TOOLTIP INFORMATION**
 
 **The following is currently supported using any form of tts:**
 

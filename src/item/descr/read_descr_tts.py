@@ -1,5 +1,6 @@
 import copy
 import logging
+import re
 
 import numpy as np
 import rapidfuzz
@@ -12,66 +13,30 @@ from src.item.data.affix import Affix, AffixType
 from src.item.data.aspect import Aspect
 from src.item.data.item_type import ItemType, is_armor, is_consumable, is_jewelry, is_mapping, is_socketable, is_weapon
 from src.item.data.rarity import ItemRarity
+from src.item.descr import keep_letters_and_spaces
 from src.item.descr.text import clean_str, closest_match, find_number
 from src.item.descr.texture import find_affix_bullets, find_seperator_short, find_seperators_long
 from src.item.models import Item
 from src.template_finder import TemplateMatch
 from src.utils.window import screenshot
 
+_AFFIX_RE = re.compile(
+    r"(?P<affixvalue1>[0-9]+)[^0-9]+\[(?P<minvalue1>[0-9]+) - (?P<maxvalue1>[0-9]+)\]|"
+    r"(?P<affixvalue2>[0-9]+\.[0-9]+).+?\[(?P<minvalue2>[0-9]+\.[0-9]+) - (?P<maxvalue2>[0-9]+\.[0-9]+)\]|"
+    r"(?P<affixvalue3>[.0-9]+)[^0-9]+\[(?P<onlyvalue>[.0-9]+)\]|"
+    r".?![^\[\]]*[\[\]](?P<affixvalue4>\d+.?:\.\d+?)(?P<greateraffix1>[ ]*)|"
+    r"(?P<greateraffix2>\d+)(?![^\[]*\[).*",
+    re.DOTALL,
+)
+
+_AFFIX_REPLACEMENTS = [
+    "%",
+    "+",
+    ",",
+    "[+]",
+    "[x]",
+]
 LOGGER = logging.getLogger(__name__)
-
-
-def _add_affixes_from_tts_mixed(
-    tts_section: list[str], item: Item, inherent_affix_bullets: list[TemplateMatch], affix_bullets: list[TemplateMatch]
-) -> Item:
-    affixes = _get_affixes_from_tts_section(
-        tts_section,
-        item,
-        len(inherent_affix_bullets)
-        + len([x for x in affix_bullets if any(x.name.startswith(s) for s in ["affix", "greater_affix", "rerolled"])]),
-    )
-    for i, affix in enumerate(affixes):
-        if i < len(inherent_affix_bullets):
-            name = rapidfuzz.process.extractOne(
-                clean_str(affix), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )
-            item.inherent.append(
-                Affix(
-                    name=name[0],
-                    loc=inherent_affix_bullets[i].center,
-                    text=affix,
-                    type=AffixType.inherent,
-                    value=find_number(affix),
-                )
-            )
-        elif i < len(inherent_affix_bullets) + len(affix_bullets):
-            name = rapidfuzz.process.extractOne(
-                clean_str(affix), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )
-            if affix_bullets[i - len(inherent_affix_bullets)].name.startswith("greater_affix"):
-                a_type = AffixType.greater
-            elif affix_bullets[i - len(inherent_affix_bullets)].name.startswith("rerolled"):
-                a_type = AffixType.rerolled
-            else:
-                a_type = AffixType.normal
-            item.affixes.append(
-                Affix(
-                    name=name[0],
-                    loc=affix_bullets[i - len(inherent_affix_bullets)].center,
-                    text=affix,
-                    type=a_type,
-                    value=find_number(affix),
-                )
-            )
-        else:
-            name = closest_match(clean_str(affix)[:AFFIX_COMPARISON_CHARS], Dataloader().aspect_unique_dict)
-            item.aspect = Aspect(
-                name=name,
-                loc=affix_bullets[i - len(inherent_affix_bullets) - len(affix_bullets)].center,
-                text=affix,
-                value=find_number(affix),
-            )
-    return item
 
 
 def _add_affixes_from_tts(tts_section: list[str], item: Item) -> Item:
@@ -84,37 +49,62 @@ def _add_affixes_from_tts(tts_section: list[str], item: Item) -> Item:
     elif item.item_type in [ItemType.Shield]:
         inherent_num = 4
     affixes = _get_affixes_from_tts_section(tts_section, item, inherent_num + affixes_num)
-    for i, affix in enumerate(affixes):
+    for i, affix_text in enumerate(affixes):
         if i < inherent_num:
-            name = rapidfuzz.process.extractOne(
-                clean_str(affix), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )
-            item.inherent.append(
-                Affix(
-                    name=name[0],
-                    text=affix,
-                    type=AffixType.inherent,
-                    value=find_number(affix),
-                )
-            )
+            affix = Affix(text=affix_text)
+            affix.type = AffixType.inherent
+            affix.name = rapidfuzz.process.extractOne(
+                keep_letters_and_spaces(affix_text), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
+            )[0]
+            item.inherent.append(affix)
         elif i < inherent_num + affixes_num:
-            name = rapidfuzz.process.extractOne(
-                clean_str(affix), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )
-            item.affixes.append(
-                Affix(
-                    name=name[0],
-                    text=affix,
-                    type=AffixType.normal,
-                    value=find_number(affix),
-                )
-            )
+            affix = _get_affix_from_text(affix_text)
+            item.affixes.append(affix)
         else:
-            name = closest_match(clean_str(affix)[:AFFIX_COMPARISON_CHARS], Dataloader().aspect_unique_dict)
+            name = closest_match(clean_str(affix_text)[:AFFIX_COMPARISON_CHARS], Dataloader().aspect_unique_dict)
             item.aspect = Aspect(
                 name=name,
-                text=affix,
-                value=find_number(affix),
+                text=affix_text,
+                value=find_number(affix_text),
+            )
+    return item
+
+
+def _add_affixes_from_tts_mixed(
+    tts_section: list[str], item: Item, inherent_affix_bullets: list[TemplateMatch], affix_bullets: list[TemplateMatch]
+) -> Item:
+    affixes = _get_affixes_from_tts_section(
+        tts_section,
+        item,
+        len(inherent_affix_bullets)
+        + len([x for x in affix_bullets if any(x.name.startswith(s) for s in ["affix", "greater_affix", "rerolled"])]),
+    )
+    for i, affix_text in enumerate(affixes):
+        if i < len(inherent_affix_bullets):
+            affix = Affix(text=affix_text)
+            affix.type = AffixType.inherent
+            affix.name = rapidfuzz.process.extractOne(
+                keep_letters_and_spaces(affix_text), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
+            )[0]
+            affix.loc = (inherent_affix_bullets[i].center,)
+            item.inherent.append(affix)
+        elif i < len(inherent_affix_bullets) + len(affix_bullets):
+            affix = _get_affix_from_text(affix_text)
+            affix.loc = (affix_bullets[i - len(inherent_affix_bullets)].center,)
+            if affix_bullets[i - len(inherent_affix_bullets)].name.startswith("greater_affix"):
+                affix.type = AffixType.greater
+            elif affix_bullets[i - len(inherent_affix_bullets)].name.startswith("rerolled"):
+                affix.type = AffixType.rerolled
+            else:
+                affix.type = AffixType.normal
+            item.affixes.append(affix)
+        else:
+            name = closest_match(clean_str(affix_text)[:AFFIX_COMPARISON_CHARS], Dataloader().aspect_unique_dict)
+            item.aspect = Aspect(
+                name=name,
+                loc=affix_bullets[i - len(inherent_affix_bullets) - len(affix_bullets)].center,
+                text=affix_text,
+                value=find_number(affix_text),
             )
     return item
 
@@ -188,6 +178,42 @@ def _get_affixes_from_tts_section(tts_section: list[str], item: Item, length: in
         start = base_value + 3
     start += 1
     return tts_section[start : start + length]
+
+
+def _get_affix_from_text(text: str) -> Affix:
+    result = Affix(text=text)
+    for x in _AFFIX_REPLACEMENTS:
+        text = text.replace(x, "")
+    matched_groups = {}
+    for match in _AFFIX_RE.finditer(text):
+        matched_groups = {name: value for name, value in match.groupdict().items() if value is not None}
+    if not matched_groups:
+        raise Exception(f"Could not match affix text: {text}")
+    for x in ["minvalue1", "minvalue2"]:
+        if matched_groups.get(x) is not None:
+            result.min_value = float(matched_groups[x])
+            break
+    for x in ["maxvalue1", "maxvalue2"]:
+        if matched_groups.get(x) is not None:
+            result.max_value = float(matched_groups[x])
+            break
+    for x in ["affixvalue1", "affixvalue2", "affixvalue3", "affixvalue4"]:
+        if matched_groups.get(x) is not None:
+            result.value = float(matched_groups[x])
+            break
+    for x in ["greateraffix1", "greateraffix2"]:
+        if matched_groups.get(x) is not None:
+            result.type = AffixType.greater
+            if x == "greateraffix2":
+                result.value = float(matched_groups[x])
+            break
+    if matched_groups.get("onlyvalue") is not None:
+        result.min_value = float(matched_groups.get("onlyvalue"))
+        result.max_value = float(matched_groups.get("onlyvalue"))
+    result.name = rapidfuzz.process.extractOne(
+        keep_letters_and_spaces(text), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
+    )[0]
+    return result
 
 
 def _get_item_rarity(data: str) -> ItemRarity | None:
@@ -294,6 +320,8 @@ def read_descr() -> Item | None:
         return item
     if all([not is_armor(item.item_type), not is_jewelry(item.item_type), not is_weapon(item.item_type)]):
         return None
+    if item.rarity not in [ItemRarity.Legendary, ItemRarity.Mythic, ItemRarity.Unique]:
+        return item
 
     item.codex_upgrade = _is_codex_upgrade(tts_section, item)
     return _add_affixes_from_tts(tts_section, item)

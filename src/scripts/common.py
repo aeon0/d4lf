@@ -2,21 +2,11 @@ import logging
 import time
 
 import keyboard
-import numpy as np
 
 from src.cam import Cam
-from src.config.ui import ResManager
 from src.utils.custom_mouse import mouse
-from src.utils.image_operations import crop
-from src.utils.ocr.read import image_to_text
 
 LOGGER = logging.getLogger(__name__)
-
-
-def is_vendor_open(img: np.ndarray):
-    cropped = crop(img, ResManager().roi.vendor_text)
-    res = image_to_text(cropped, do_pre_proc=False)
-    return res.text.strip().lower() == "vendor"
 
 
 def mark_as_junk():

@@ -226,7 +226,7 @@ def vision_mode():
                         LOGGER.info("Matched: Material")
                         ignored_item = True
                     if (
-                        rarity == ItemRarity.Rare
+                        item_descr.rarity == ItemRarity.Rare
                         and (is_armor(item_descr.item_type) or is_weapon(item_descr.item_type) or is_jewelry(item_descr.item_type))
                         and IniConfigLoader().general.handle_rares in [HandleRaresType.ignore, HandleRaresType.junk]
                     ):

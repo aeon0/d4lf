@@ -15,7 +15,7 @@ from src.item.data.item_type import ItemType, is_armor, is_consumable, is_jewelr
 from src.item.data.rarity import ItemRarity
 from src.item.descr import keep_letters_and_spaces
 from src.item.descr.text import clean_str, closest_match, find_number
-from src.item.descr.texture import find_affix_bullets, find_seperator_short, find_seperators_long
+from src.item.descr.texture import find_affix_bullets, find_aspect_bullet, find_seperator_short, find_seperators_long
 from src.item.models import Item
 from src.template_finder import TemplateMatch
 from src.utils.window import screenshot
@@ -51,11 +51,8 @@ def _add_affixes_from_tts(tts_section: list[str], item: Item) -> Item:
     affixes = _get_affixes_from_tts_section(tts_section, item, inherent_num + affixes_num)
     for i, affix_text in enumerate(affixes):
         if i < inherent_num:
-            affix = Affix(text=affix_text)
+            affix = _get_affix_from_text(affix_text)
             affix.type = AffixType.inherent
-            affix.name = rapidfuzz.process.extractOne(
-                keep_letters_and_spaces(affix_text), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )[0]
             item.inherent.append(affix)
         elif i < inherent_num + affixes_num:
             affix = _get_affix_from_text(affix_text)
@@ -71,7 +68,11 @@ def _add_affixes_from_tts(tts_section: list[str], item: Item) -> Item:
 
 
 def _add_affixes_from_tts_mixed(
-    tts_section: list[str], item: Item, inherent_affix_bullets: list[TemplateMatch], affix_bullets: list[TemplateMatch]
+    tts_section: list[str],
+    item: Item,
+    inherent_affix_bullets: list[TemplateMatch],
+    affix_bullets: list[TemplateMatch],
+    aspect_bullet: TemplateMatch | None,
 ) -> Item:
     affixes = _get_affixes_from_tts_section(
         tts_section,
@@ -81,16 +82,13 @@ def _add_affixes_from_tts_mixed(
     )
     for i, affix_text in enumerate(affixes):
         if i < len(inherent_affix_bullets):
-            affix = Affix(text=affix_text)
+            affix = _get_affix_from_text(affix_text)
             affix.type = AffixType.inherent
-            affix.name = rapidfuzz.process.extractOne(
-                keep_letters_and_spaces(affix_text), list(Dataloader().affix_dict), scorer=rapidfuzz.distance.Levenshtein.distance
-            )[0]
-            affix.loc = (inherent_affix_bullets[i].center,)
+            affix.loc = inherent_affix_bullets[i].center
             item.inherent.append(affix)
         elif i < len(inherent_affix_bullets) + len(affix_bullets):
             affix = _get_affix_from_text(affix_text)
-            affix.loc = (affix_bullets[i - len(inherent_affix_bullets)].center,)
+            affix.loc = affix_bullets[i - len(inherent_affix_bullets)].center
             if affix_bullets[i - len(inherent_affix_bullets)].name.startswith("greater_affix"):
                 affix.type = AffixType.greater
             elif affix_bullets[i - len(inherent_affix_bullets)].name.startswith("rerolled"):
@@ -102,7 +100,7 @@ def _add_affixes_from_tts_mixed(
             name = closest_match(clean_str(affix_text)[:AFFIX_COMPARISON_CHARS], Dataloader().aspect_unique_dict)
             item.aspect = Aspect(
                 name=name,
-                loc=affix_bullets[i - len(inherent_affix_bullets) - len(affix_bullets)].center,
+                loc=aspect_bullet.center,
                 text=affix_text,
                 value=find_number(affix_text),
             )
@@ -258,7 +256,14 @@ def read_descr_mixed(img_item_descr: np.ndarray) -> Item | None:
         LOGGER.warning("Could not detect item_seperator_short.")
         screenshot("failed_seperator_short", img=img_item_descr)
         return None
-    futures = {"sep_long": TP.submit(find_seperators_long, img_item_descr, sep_short_match)}
+    futures = {
+        "sep_long": TP.submit(find_seperators_long, img_item_descr, sep_short_match),
+        "aspect_bullet": (
+            TP.submit(find_aspect_bullet, img_item_descr, sep_short_match)
+            if item.rarity in [ItemRarity.Legendary, ItemRarity.Unique, ItemRarity.Mythic]
+            else None
+        ),
+    }
 
     affix_bullets = find_affix_bullets(img_item_descr, sep_short_match)
     sep_long_match = futures["sep_long"].result() if futures["sep_long"] is not None else None
@@ -299,8 +304,8 @@ def read_descr_mixed(img_item_descr: np.ndarray) -> Item | None:
         affix_bullets = affix_bullets[number_inherents:]
 
     item.codex_upgrade = _is_codex_upgrade(tts_section, item)
-
-    return _add_affixes_from_tts_mixed(tts_section, item, inherent_affix_bullets, affix_bullets)
+    aspect_bullet = futures["aspect_bullet"].result() if futures["aspect_bullet"] is not None else None
+    return _add_affixes_from_tts_mixed(tts_section, item, inherent_affix_bullets, affix_bullets, aspect_bullet=aspect_bullet)
 
 
 def read_descr() -> Item | None:

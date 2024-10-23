@@ -48,7 +48,7 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
                     screenshot("failed_descr_detection", img=img)
                 break
             inv.hover_item(item)
-            time.sleep(0.15)
+            time.sleep(0.2)
             img = Cam().grab()
             start_detect = time.time()
             found, rarity, cropped_descr, _ = find_descr(img, item.center)

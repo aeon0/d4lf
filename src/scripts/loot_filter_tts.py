@@ -1,8 +1,6 @@
 import logging
 import time
 
-import keyboard
-
 import src.item.descr.read_descr_tts
 from src.cam import Cam
 from src.config.loader import IniConfigLoader
@@ -72,15 +70,13 @@ def check_items(inv: InventoryBase, force_refresh: ItemRefreshType):
             LOGGER.info("Matched: Temper Manual")
             continue
         if item_descr.rarity in [ItemRarity.Magic, ItemRarity.Common] and item_descr.item_type != ItemType.Sigil:
-            keyboard.send("space")
-            time.sleep(0.13)
+            mark_as_junk()
             continue
         if item_descr.rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.ignore:
             LOGGER.info("Matched: Rare, ignore Item")
             continue
         if item_descr.rarity == ItemRarity.Rare and IniConfigLoader().general.handle_rares == HandleRaresType.junk:
-            keyboard.send("space")
-            time.sleep(0.13)
+            mark_as_junk()
             continue
 
         # Check if we want to keep the item

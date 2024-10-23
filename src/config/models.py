@@ -17,6 +17,7 @@ HIDE_FROM_GUI_KEY = "hide_from_gui"
 IS_HOTKEY_KEY = "is_hotkey"
 
 DEPRECATED_INI_KEYS = [
+    "hidden_transparency",
     "import_build",
     "local_prefs_path",
     "move_item_type",
@@ -253,9 +254,6 @@ class GeneralModel(_IniBaseModel):
         default=UnfilteredUniquesType.favorite,
         description="What should be done with uniques that do not match any profile. Mythics are always favorited. If mark_as_favorite is unchecked then uniques that match a profile will not be favorited.",
     )
-    hidden_transparency: float = Field(
-        default=0.35, description="Transparency of the overlay when not hovering it (has a 3 second delay after hovering)"
-    )
     keep_aspects: AspectFilterType = Field(
         default=AspectFilterType.upgrade, description="Whether to keep aspects that didn't match a filter"
     )
@@ -307,12 +305,6 @@ class GeneralModel(_IniBaseModel):
     def language_must_exist(cls, v: str) -> str:
         if v not in ["enUS"]:
             raise ValueError("language not supported")
-        return v
-
-    @field_validator("hidden_transparency")
-    def transparency_in_range(cls, v: float) -> float:
-        if not 0 <= v <= 1:
-            raise ValueError("must be in [0, 1]")
         return v
 
     @field_validator("minimum_overlay_font_size")

@@ -165,6 +165,7 @@ def _get_affixes_from_tts_section(tts_section: list[str], item: Item, length: in
             item_power = i
         if "damage per second" in line.lower():
             dps = i
+            break  # this will always be the last line of the 3
     base_value = masterwork if masterwork else item_power
     if is_weapon(item.item_type):
         start = dps + 2

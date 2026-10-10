@@ -91,14 +91,13 @@ class FilterSpecialMixin:
                     continue
                 if not self._match_greater_affix_count(filter_spec.min_greater_affix_count, seal_or_charm.affixes):
                     continue
-                affix_matches = []
+                matched_affixes = []
                 if filter_spec.affix_pool:
-                    affix_matches = self._match_affixes_count(
+                    matched_affixes = self._match_affixes_count(
                         filter_spec.affix_pool, seal_or_charm.affixes, filter_spec.min_greater_affix_count
                     )
-                    if not affix_matches:
+                    if not matched_affixes:
                         continue
-                matched_affixes = [affix for _, affix in affix_matches]
                 matched_aspect = False  # charms match either a set or unique aspect
                 matched_set = False
                 if not self._check_unique_aspects_for_item(seal_or_charm, filter_spec.unique_aspect):
@@ -125,7 +124,7 @@ class FilterSpecialMixin:
                         matched_affixes,
                         aspect_match=matched_aspect,
                         set_match=matched_set,
-                        missing_affixes=self._missing_affix_names(filter_spec.affix_pool, affix_matches),
+                        missing_affixes=self._missing_affix_names(filter_spec.affix_pool, seal_or_charm.affixes),
                     )
                 )
         if not res.keep and seal_or_charm.rarity == ItemRarity.Mythic:

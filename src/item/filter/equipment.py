@@ -35,27 +35,27 @@ class FilterEquipmentMixin:
                     continue
                 if not self._check_unique_aspects_for_item(item, filter_spec.unique_aspect):
                     continue
-                affix_matches = []
+                matched_affixes = []
                 if filter_spec.affix_pool:
-                    affix_matches = self._match_affixes_count(
+                    matched_affixes = self._match_affixes_count(
                         filter_spec.affix_pool, non_tempered_affixes, filter_spec.min_greater_affix_count
                     )
-                    if not affix_matches:
+                    if not matched_affixes:
                         continue
-                inherent_matches = []
+                matched_inherents = []
                 if filter_spec.inherent_pool:
-                    inherent_matches = self._match_affixes_count(
+                    matched_inherents = self._match_affixes_count(
                         filter_spec.inherent_pool, item.inherent, filter_spec.min_greater_affix_count
                     )
-                    if not inherent_matches:
+                    if not matched_inherents:
                         continue
-                all_matches = [affix for _, affix in affix_matches + inherent_matches]
-                missing_affixes = self._missing_affix_names(
-                    filter_spec.affix_pool, affix_matches
-                ) + self._missing_affix_names(filter_spec.inherent_pool, inherent_matches)
+                all_matches = matched_affixes + matched_inherents
                 match_details = [
                     f"{affix.name} (GA)" if affix.type == AffixType.greater else affix.name for affix in all_matches
                 ]
+                missing_affixes = self._missing_affix_names(
+                    filter_spec.affix_pool, non_tempered_affixes
+                ) + self._missing_affix_names(filter_spec.inherent_pool, item.inherent)
                 LOGGER.info(f"{item.original_name} -- Matched {profile_name}.Affixes.{filter_name}: {match_details}")
                 if filter_spec.unique_aspect:  # show the matched unique aspect
                     LOGGER.info(f"{item.original_name} -- Matched {profile_name}.Affixes.{filter_name}: Unique aspect")

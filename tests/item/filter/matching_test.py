@@ -3,7 +3,8 @@ import typing
 import pytest
 from natsort import natsorted
 
-from src.item import FilterResult, Item
+from src.item import Affix, FilterResult, Item
+from src.profiles import AffixFilterCountModel, AffixFilterModel
 from src.settings import AspectFilterType, get_settings
 
 from .conftest import _create_mocked_filter, aspects, charms, filters, seals
@@ -47,3 +48,25 @@ def test_charms(_name: str, result: list[str], item: Item, mocker: MockerFixture
             assert match.set_match
         if match.profile == "seal_charm.Charms.wanted_unique_aspect":
             assert match.aspect_match
+
+
+@pytest.mark.parametrize(
+    ("expected_names", "max_count", "item_names", "missing"),
+    [
+        (["dexterity", "armor", "maximum_life"], 3, ["dexterity", "armor"], ["maximum_life"]),
+        (["dexterity", "armor", "maximum_life"], 2, ["dexterity", "armor", "maximum_life"], []),
+        (["armor", "armor"], 2, ["armor", "dexterity"], ["armor"]),
+    ],
+    ids=["absent_affix", "present_affix_beyond_max_count", "duplicate_requirement"],
+)
+def test_missing_affix_names(
+    expected_names: list[str], max_count: int, item_names: list[str], missing: list[str], mocker: MockerFixture
+) -> None:
+    pool = [
+        AffixFilterCountModel(
+            count=[AffixFilterModel(name=name) for name in expected_names], min_count=1, max_count=max_count
+        )
+    ]
+    item_affixes = [Affix(name=name) for name in item_names]
+
+    assert _create_mocked_filter(mocker)._missing_affix_names(pool, item_affixes) == missing

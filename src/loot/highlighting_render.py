@@ -165,22 +165,26 @@ class HighlightingRenderer:
     ) -> None:
         reset_canvas(self.root, self.canvas)
 
+        colors = get_filter_colors()
         x, y, w, h, off = self.get_coords_from_roi(item_roi)
         self.canvas.config(height=h, width=w)
-        self.create_signal_rect(self.canvas, w, self.thick, get_filter_colors().matched)
+        self.create_signal_rect(self.canvas, w, self.thick, colors.matched)
 
-        # show all info strings of the profiles
+        # show all info strings of the profiles, drawn bottom-up
         text_y = h
         for match in reversed(should_keep_res.matched):
+            if match.missing_affixes:
+                missing_text = f"missing: {', '.join(match.missing_affixes)}"
+                text_y = self.draw_text(self.canvas, missing_text, colors.missing, text_y, 5, w // 2)
             text = match.profile
             if match.set_match:
                 text = text + " (incl. Set)"
-            text_y = self.draw_text(self.canvas, text, get_filter_colors().matched, text_y, 5, w // 2)
+            text_y = self.draw_text(self.canvas, text, colors.matched, text_y, 5, w // 2)
         # Show matched bullets
         if locator_result and locator_result.reliable and len(should_keep_res.matched) > 0:
             bullet_width = self.thick * 3
             for marker in locator_result.markers:
-                self.draw_rect(self.canvas, bullet_width, marker.center, off, get_filter_colors().matched)
+                self.draw_rect(self.canvas, bullet_width, marker.center, off, colors.matched)
 
         self.root.geometry(f"{w}x{h}+{x + self.screen_off_x}+{y + self.screen_off_y}")
         self.root.update_idletasks()

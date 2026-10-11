@@ -51,22 +51,61 @@ def test_charms(_name: str, result: list[str], item: Item, mocker: MockerFixture
 
 
 @pytest.mark.parametrize(
-    ("expected_names", "max_count", "item_names", "missing"),
+    ("expected", "max_count", "item_affixes", "missing"),
     [
-        (["dexterity", "armor", "maximum_life"], 3, ["dexterity", "armor"], ["maximum_life"]),
-        (["dexterity", "armor", "maximum_life"], 2, ["dexterity", "armor", "maximum_life"], []),
-        (["armor", "armor"], 2, ["armor", "dexterity"], ["armor"]),
+        (
+            [AffixFilterModel(name="dexterity"), AffixFilterModel(name="armor"), AffixFilterModel(name="maximum_life")],
+            3,
+            [Affix(name="dexterity"), Affix(name="armor")],
+            ["maximum_life"],
+        ),
+        (
+            [AffixFilterModel(name="dexterity"), AffixFilterModel(name="armor"), AffixFilterModel(name="maximum_life")],
+            2,
+            [Affix(name="dexterity"), Affix(name="armor"), Affix(name="maximum_life")],
+            [],
+        ),
+        (
+            [AffixFilterModel(name="armor"), AffixFilterModel(name="armor")],
+            2,
+            [Affix(name="armor"), Affix(name="dexterity")],
+            ["armor"],
+        ),
+        (
+            [AffixFilterModel(name="armor", value=50)],
+            1,
+            [Affix(name="armor", value=40, min_value=30, max_value=60)],
+            ["armor"],
+        ),
+        (
+            [AffixFilterModel(name="armor", min_percent_of_affix=80)],
+            1,
+            [Affix(name="armor", value=40, min_value=30, max_value=60)],
+            ["armor"],
+        ),
+        (
+            [AffixFilterModel(name="armor", value=50)],
+            1,
+            [Affix(name="armor", value=55, min_value=30, max_value=60)],
+            [],
+        ),
     ],
-    ids=["absent_affix", "present_affix_beyond_max_count", "duplicate_requirement"],
+    ids=[
+        "absent_affix",
+        "present_affix_beyond_max_count",
+        "duplicate_requirement",
+        "below_value_threshold",
+        "below_min_percent_of_affix",
+        "meets_value_threshold",
+    ],
 )
 def test_missing_affix_names(
-    expected_names: list[str], max_count: int, item_names: list[str], missing: list[str], mocker: MockerFixture
+    expected: list[AffixFilterModel],
+    max_count: int,
+    item_affixes: list[Affix],
+    missing: list[str],
+    mocker: MockerFixture,
 ) -> None:
-    pool = [
-        AffixFilterCountModel(
-            count=[AffixFilterModel(name=name) for name in expected_names], min_count=1, max_count=max_count
-        )
-    ]
-    item_affixes = [Affix(name=name) for name in item_names]
+    pool = [AffixFilterCountModel(count=expected, min_count=1, max_count=max_count)]
 
     assert _create_mocked_filter(mocker)._missing_affix_names(pool, item_affixes) == missing

@@ -129,3 +129,36 @@ def test_affix_match_reports_filter_affixes_missing_from_item(mocker: MockerFixt
 
     assert [affix.name for affix in result.matched[0].matched_affixes] == ["dexterity", "maximum_resource", "armor"]
     assert result.matched[0].missing_affixes == ["maximum_life"]
+
+
+def test_affix_match_reports_filter_inherents_missing_from_item(mocker: MockerFixture) -> None:
+    profile = ProfileModel(
+        name="build",
+        affixes=[
+            {
+                "Helm": ItemFilterModel(
+                    item_type=[ItemType.Helm],
+                    affix_pool=[AffixFilterCountModel(count=[AffixFilterModel(name="dexterity")], min_count=1)],
+                    inherent_pool=[
+                        AffixFilterCountModel(
+                            count=[AffixFilterModel(name="maximum_life"), AffixFilterModel(name="armor")], min_count=1
+                        )
+                    ],
+                )
+            }
+        ],
+    )
+    test_filter = _create_mocked_filter(mocker)
+    test_filter.affix_filters = {profile.name: profile.affixes}
+    helm = Item(
+        item_type=ItemType.Helm,
+        power=900,
+        rarity=ItemRarity.Legendary,
+        affixes=[Affix(name="dexterity")],
+        inherent=[Affix(name="armor")],
+    )
+
+    result = test_filter.should_keep(helm)
+
+    assert [affix.name for affix in result.matched[0].matched_affixes] == ["dexterity", "armor"]
+    assert result.matched[0].missing_affixes == ["maximum_life"]

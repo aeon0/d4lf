@@ -72,7 +72,7 @@ class AffixWidget(QWidget):
         self.set_combo.addItems(["(No Set Selected)"] + sorted(GameCatalog().set_list))
 
         curr_set, _ = get_set_and_base_for_key(self.affix.name, GameCatalog().set_list)
-        if curr_set:
+        if curr_set is not None:
             self.set_combo.setCurrentText(curr_set)
         else:
             self.set_combo.setCurrentText("(No Set Selected)")
@@ -132,7 +132,7 @@ class AffixWidget(QWidget):
         self.greater_checkbox = QCheckBox("Greater")
         self.greater_checkbox.setChecked(getattr(self.affix, "want_greater", False))
         self.greater_checkbox.setFixedWidth(80)
-        self.greater_checkbox.setProperty("greaterCheckbox", True)  # ruff:ignore[boolean-positional-value-in-call]
+        self.greater_checkbox.setProperty("greaterCheckbox", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(self.greater_checkbox)
         self.greater_checkbox.stateChanged.connect(self.update_greater)
         self.greater_checkbox.stateChanged.connect(self.update_parent_count_label)

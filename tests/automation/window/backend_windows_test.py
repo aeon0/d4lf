@@ -7,7 +7,7 @@ import pytest
 
 @pytest.mark.skipif(sys.platform != "win32", reason="Windows WinAPI backend")
 def test_windows_backend_lists_windows() -> None:
-    from src.automation.window import backend_windows as backend  # ruff:ignore[import-outside-top-level]
+    from src.automation.window import backend_windows as backend  # ruff:ignore[PLC0415]
 
     assert isinstance(backend.list_active_window_ids(), list)
 

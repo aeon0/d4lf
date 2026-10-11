@@ -1,4 +1,4 @@
-import datetime
+from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 
 from src.overlay.widget.widget import BossTimerOverlay
@@ -8,8 +8,8 @@ if TYPE_CHECKING:
 
 
 def test_fetch_schedule_selects_next_world_boss(monkeypatch) -> None:
-    now = datetime.datetime.now(datetime.UTC)
-    start = (now + datetime.timedelta(hours=1)).isoformat()
+    now = datetime.now(UTC)
+    start = (now + timedelta(hours=1)).isoformat()
 
     class Response:
         status_code = 200

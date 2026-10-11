@@ -10,7 +10,7 @@ class _FakeLabel:
     def __init__(self, text: str) -> None:
         self._text = text
 
-    def setObjectName(self, _name: str) -> None:  # ruff:ignore[invalid-function-name]
+    def setObjectName(self, _name: str) -> None:  # ruff:ignore[N802]
         pass
 
     def text(self) -> str:
@@ -21,13 +21,13 @@ class _FakeRowLayout:
     def __init__(self) -> None:
         self.widgets: list[_FakeLabel] = []
 
-    def setContentsMargins(self, *_args: int) -> None:  # ruff:ignore[invalid-function-name]
+    def setContentsMargins(self, *_args: int) -> None:  # ruff:ignore[N802]
         pass
 
-    def addWidget(self, widget: _FakeLabel) -> None:  # ruff:ignore[invalid-function-name]
+    def addWidget(self, widget: _FakeLabel) -> None:  # ruff:ignore[N802]
         self.widgets.append(widget)
 
-    def addStretch(self) -> None:  # ruff:ignore[invalid-function-name]
+    def addStretch(self) -> None:  # ruff:ignore[N802]
         pass
 
 
@@ -38,7 +38,7 @@ class _FakeGridLayout:
     def count(self) -> int:
         return 0
 
-    def addLayout(self, layout: _FakeRowLayout, row: int, column: int) -> None:  # ruff:ignore[invalid-function-name]
+    def addLayout(self, layout: _FakeRowLayout, row: int, column: int) -> None:  # ruff:ignore[N802]
         self.rows.append((layout, row, column))
 
 

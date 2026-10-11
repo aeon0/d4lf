@@ -4,7 +4,7 @@ from pydantic import AliasChoices, BaseModel, ConfigDict, Field, field_validator
 
 from src.game_data import ItemRarity, SigilRules
 from src.profiles.validation.normalization import _normalize_rarities, _normalize_tribute_names
-from src.type_aliases import JsonObject  # ruff:ignore[typing-only-first-party-import]
+from src.type_aliases import JsonObject  # ruff:ignore[TC001]
 
 
 class SigilPriority(enum.StrEnum):

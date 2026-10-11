@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from src.paragon import NODES_LEN
 from src.profiles.validation.normalization import _as_string_keyed_dict
-from src.type_aliases import YamlObject, YamlValue  # ruff:ignore[typing-only-first-party-import]
+from src.type_aliases import YamlObject, YamlValue  # ruff:ignore[TC001]
 
 
 class ParagonBoardModel(BaseModel):

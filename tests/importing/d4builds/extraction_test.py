@@ -84,7 +84,7 @@ def test_create_charm_filter_from_tooltip_html_does_not_guess_set_from_title() -
     if charm_filter is None:
         pytest.fail("Expected charm tooltip to produce a filter")
 
-    assert not set_name
+    assert set_name is None
     assert charm_filter.set == []
     assert [affix.name for affix in charm_filter.affix_pool[0].count] == ["maximum_resource"]
 
@@ -102,7 +102,7 @@ def test_create_charm_filter_from_tooltip_html_reads_unique_aspect() -> None:
     if charm_filter is None:
         pytest.fail("Expected charm tooltip to produce a filter")
 
-    assert not set_name
+    assert set_name is None
     assert charm_filter.affix_pool == []
     assert [unique_aspect.name for unique_aspect in charm_filter.unique_aspect] == ["fractured_winterglass"]
 

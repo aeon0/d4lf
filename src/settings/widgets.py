@@ -196,7 +196,7 @@ class QHotkeyWidget(QWidget):
         self.open_picker_button.clicked.connect(
             lambda: self._launch_hotkey_dialog(model, section_header, config_key, self.open_picker_button.text())
         )
-        self.open_picker_button.setProperty("hotkeyButton", True)  # ruff:ignore[boolean-positional-value-in-call]
+        self.open_picker_button.setProperty("hotkeyButton", True)  # ruff:ignore[FBT003]
         layout.addWidget(self.open_picker_button)
         self.setLayout(layout)
 

@@ -23,12 +23,14 @@ def _parse_talisman_gear(value: JsonValue) -> list[_GearPiece]:
     for index, charm_id in enumerate(charms if isinstance(charms, list) else []):
         if not isinstance(charm_id, str):
             continue
-        gear.append({
-            "kind": "talisman",
-            "slot": f"charm{index + 1}",
-            "itemId": charm_id,
-            "affixes": _parse_charm_affixes(raw, index),
-        })
+        gear.append(
+            {
+                "kind": "talisman",
+                "slot": f"charm{index + 1}",
+                "itemId": charm_id,
+                "affixes": _parse_charm_affixes(raw, index),
+            }
+        )
     return gear
 
 
@@ -53,7 +55,7 @@ def _parse_charm_affixes(raw: JsonObject, charm_index: int) -> list[_RawAffix]:
 def _catalog_items_by_id(items: Sequence[_CatalogItem]) -> dict[str, _CatalogItem]:
     result = {item["id"]: item for item in items if "id" in item}
     for item in items:
-        source_id = item.get("sourceId")
+        source_id = item.get("sourceId", "")
         if source_id:
             result[source_id.removesuffix(".itm")] = item
     return result

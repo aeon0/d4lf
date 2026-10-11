@@ -10,13 +10,15 @@ if TYPE_CHECKING:
 
 
 def test_load_builds_from_path_uses_typed_paragon_payloads(monkeypatch) -> None:
-    payload = ParagonPayloadModel.model_validate({
-        "Name": "Build Name",
-        "ParagonBoardsList": [
-            [{"Name": "Starting Board", "Glyph": "glyph_name", "Rotation": 0, "Nodes": [False] * 441}],
-            [{"Name": "Second Step Board", "Glyph": "glyph_name", "Rotation": 90, "Nodes": [False] * 441}],
-        ],
-    })
+    payload = ParagonPayloadModel.model_validate(
+        {
+            "Name": "Build Name",
+            "ParagonBoardsList": [
+                [{"Name": "Starting Board", "Glyph": "glyph_name", "Rotation": 0, "Nodes": [False] * 441}],
+                [{"Name": "Second Step Board", "Glyph": "glyph_name", "Rotation": 90, "Nodes": [False] * 441}],
+            ],
+        }
+    )
 
     monkeypatch.setattr("src.item.filter.Filter.get_paragon_filters", lambda _self: {"profile_name": payload})
 

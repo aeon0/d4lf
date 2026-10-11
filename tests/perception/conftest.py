@@ -38,7 +38,7 @@ def _item(data: JsonValue) -> Item:
     values = cast("dict[str, JsonValue]", data)
     aspect_data = values["aspect"]
     aspect = None
-    if aspect_data:
+    if aspect_data is not None and aspect_data:
         aspect_values = cast("dict[str, JsonValue]", aspect_data)
         aspect = Aspect(
             name=cast("str", aspect_values["name"]),

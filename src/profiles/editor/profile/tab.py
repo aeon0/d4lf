@@ -272,7 +272,7 @@ class ProfileTab(QWidget):
         QMessageBox.critical(self, "Error", f"Failed to save profile: {save_result.error}")
 
     def check_close_save(self) -> bool:
-        if self.root and self.model_editor and self.session.is_dirty(self.model_editor.get_current_model()):
+        if self.root and self.model_editor is not None and self.session.is_dirty(self.model_editor.get_current_model()):
             return self.confirm_discard_changes()
         return True
 
@@ -287,7 +287,7 @@ class ProfileTab(QWidget):
         LOGGER.info(f"Profile {root.name} refreshed.")
 
     def _set_model_editor(self, loaded_profile: LoadedProfile) -> None:
-        if self.model_editor:
+        if self.model_editor is not None:
             self.scrollable_layout.removeWidget(self.model_editor)
             self.model_editor.deleteLater()
         self.model_editor = ProfileEditor(loaded_profile)

@@ -24,7 +24,7 @@ def _parse_item_type_or_rarities(data: str | ItemType | Sequence[str | ItemType]
 
 
 def _validate_set_name(name: str | None, field_name: str) -> str | None:
-    if not name:
+    if name is None or name == "":
         return None
 
     name = correct_name(name)
@@ -91,9 +91,9 @@ def _legacy_filter_values(value: YamlValue) -> list[YamlValue]:
 def _validate_affix_pool_names(
     affix_pool: list[AffixFilterCountModel], valid_affixes: dict[str, str], field_name: str
 ) -> None:
-    invalid_affix_names = sorted({
-        affix.name for affix_group in affix_pool for affix in affix_group.count if affix.name not in valid_affixes
-    })
+    invalid_affix_names = sorted(
+        {affix.name for affix_group in affix_pool for affix in affix_group.count if affix.name not in valid_affixes}
+    )
     if invalid_affix_names:
         msg = f"{field_name} affix {', '.join(invalid_affix_names)} does not exist"
         raise ValueError(msg)

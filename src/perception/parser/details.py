@@ -91,7 +91,7 @@ def _get_aspect_or_set_from_tts_section(tts_section: list[str], item: Item, star
     if item.rarity == ItemRarity.Set:
         for line in tts_section[start + num_affixes :]:
             set_name = _get_set_from_text(line)
-            if set_name:
+            if set_name is not None:
                 return set_name
 
     return None

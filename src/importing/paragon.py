@@ -1,5 +1,5 @@
-import datetime
 import re
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from src import __version__
@@ -57,7 +57,7 @@ def build_paragon_profile_payload(
     return ParagonPayloadModel(
         Name=build_name,
         Source=source_url,
-        GeneratedAt=datetime.datetime.now(tz=datetime.UTC).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        GeneratedAt=datetime.now(tz=UTC).strftime("%Y-%m-%d %H:%M:%S UTC"),
         Generator=f"d4lf v{__version__}",
         ParagonBoardsList=paragon_boards_list,
     )

@@ -197,7 +197,7 @@ def generate_sigils(d4data_dir: Path, language: str) -> int:
             desc = remove_content_in_braces(desc)
             sigil_name_key = clean_item_name(name)
             sigil_dict[affix_type][sigil_name_key] = f"{sigil_name_key.replace('_', ' ')} {desc}"
-            if rarity:
+            if rarity is not None:
                 sigil_rarity_dict[sigil_name_key] = rarity
 
     merge_custom_data(sigil_dict, "sigils", language)

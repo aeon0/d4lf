@@ -32,7 +32,7 @@ DataT = TypeVar("DataT")
 
 def _power_index(core_toc: dict[str, dict[str, str] | dict[str, list[str]]], d4data_dir: Path) -> dict[int, str]:
     indexed_powers = core_toc.get("29")
-    if indexed_powers:
+    if indexed_powers is not None:
         power_index = {
             int(sno): power_name for sno, power_name in indexed_powers.items() if isinstance(power_name, str)
         }
@@ -144,7 +144,7 @@ def _generate_affix(
     if is_seal_affix or is_charm_affix:
         description = affix_string_description(affix_name, string_list_dir)
     if description is None:
-        if affix_data.get("eMagicType") != 0 or not affix_data.get("ptItemAffixAttributes"):
+        if affix_data.get("eMagicType") != 0 or affix_data.get("ptItemAffixAttributes") in (None, []):
             return None
         description = companion_style_affix_description(affix_data, context, d4data_dir, language)
     normalised = normalise_affix_description(description)

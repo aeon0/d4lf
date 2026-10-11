@@ -3,7 +3,7 @@ import tkinter as tk
 from typing import TYPE_CHECKING, NoReturn
 
 if TYPE_CHECKING:
-    import datetime
+    from datetime import datetime
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class OverlayContract(tk.Toplevel):
     capture_gold_stats: bool
     capture_exp_stats: bool
     locked: bool
-    synced_wb: tuple[datetime.datetime, str] | None
+    synced_wb: tuple[datetime, str] | None
 
     def __getattr__(self, name: str) -> NoReturn:
         raise AttributeError(name)

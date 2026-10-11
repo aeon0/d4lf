@@ -50,14 +50,16 @@ def normalize_paragon(
             if 0 <= transformed < NODES_LEN:
                 nodes[transformed] = True
         glyph_id, glyph_name = _glyph(cast("Mapping[str, JsonValue]", raw_board), glyphs, _class_slug(class_name))
-        result.append({
-            "Name": class_prefixed_slug(str(board.get("name", board_key)), _class_slug(class_name)),
-            "Glyph": glyph_name,
-            "Rotation": rotation_info_quarter_turn(_int(raw_board.get("rotate"))),
-            "Nodes": nodes,
-            "BoardId": str(board_key),
-            "GlyphId": glyph_id,
-        })
+        result.append(
+            {
+                "Name": class_prefixed_slug(str(board.get("name", board_key)), _class_slug(class_name)),
+                "Glyph": glyph_name,
+                "Rotation": rotation_info_quarter_turn(_int(raw_board.get("rotate"))),
+                "Nodes": nodes,
+                "BoardId": str(board_key),
+                "GlyphId": glyph_id,
+            }
+        )
     return [result] if result else []
 
 

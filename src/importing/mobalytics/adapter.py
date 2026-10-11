@@ -79,7 +79,7 @@ def fetch_variants_mobalytics(request: ImportRequest, driver: WebDriver | None =
     url, driver = validated
     url, _, state, _ = _load_build_page(url, driver)
     LOGGER.info("Loading %s for variants", url)
-    if not state:
+    if state is None:
         return []
 
     variant_titles: dict[str, str] = {}
@@ -121,7 +121,7 @@ def _import_mobalytics(request: ImportRequest, driver: WebDriver | None = None) 
         variant_id_from_url = url.split("?variant=")[1].split("&")[0]
     elif "activeVariantId," in url:
         variant_id_from_url = url.split("activeVariantId,")[1].split("&")[0]
-    if not state:
+    if state is None:
         _log_mobalytics_page_diagnostics(driver=driver, page_source=page_source, script_count=script_count)
         msg = "No script containing build data was found. This means Mobalytics has changed how they present data, please submit a bug."
         raise MobalyticsError(msg)
@@ -150,7 +150,7 @@ def _import_mobalytics(request: ImportRequest, driver: WebDriver | None = None) 
     # URLs can retain an id for a variant that was deleted or made private.  In that
     # case import the first available variant rather than failing the whole build.
     if variant_id not in available_variant_ids:
-        variant_id = available_variant_ids[0] if available_variant_ids else None
+        variant_id = available_variant_ids[0] if available_variant_ids else ""
     variants_to_extract = []
     selection = request.variant_selection
     if request.options.multi_build:
@@ -162,13 +162,14 @@ def _import_mobalytics(request: ImportRequest, driver: WebDriver | None = None) 
             variants_to_extract.append(variant_id)
     else:
         if not variant_id:
-            variant_id = _as_text(_first_jsonpath_result("$..buildVariants.values[0].id", build_data)) or None
+            variant_id = _as_text(_first_jsonpath_result("$..buildVariants.values[0].id", build_data))
         variants_to_extract = [variant_id] if variant_id else []
 
     extracted_variants = []
     for vid in variants_to_extract:
-        items = _first_jsonpath_result(f"$..buildVariants.values[?@.id=='{vid}'].genericBuilder.slots", build_data)
-        if not items:
+        slots_path = f"$..buildVariants.values[?@.id=='{vid}'].genericBuilder.slots"
+        items = _first_jsonpath_result(slots_path, build_data) or None
+        if items is None:
             continue
         items = _as_mapping_list(items)
         paragon_value = _first_jsonpath_result(f"$..buildVariants.values[?@.id=='{vid}'].paragon", build_data)
@@ -210,7 +211,7 @@ def _load_preloaded_state(scripts: Iterable[lxml.html.HtmlElement]) -> JsonValue
         if not isinstance(script_text, str) or not script_text.strip().startswith(BUILD_SCRIPT_PREFIX):
             continue
         try:
-            return cast("JsonValue", json.loads(script_text.strip().replace(BUILD_SCRIPT_PREFIX, "")[:-1]))
+            return cast("JsonValue", json.loads(script_text.strip().replace(BUILD_SCRIPT_PREFIX, "")[:-1])) or None
         except json.JSONDecodeError as exc:
             message = "Mobalytics build data was not valid JSON"
             raise MobalyticsError(message) from exc

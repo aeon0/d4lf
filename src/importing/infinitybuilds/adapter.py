@@ -89,7 +89,7 @@ def fetch_variants_infinitybuilds(request: ImportRequest, driver: WebDriver | No
     variants_data = build_data.get("variants") or []
     variants = []
     for variant in variants_data:
-        if variant.get("gear"):
+        if variant.get("gear", []):
             variant_id = str(variant.get("id") or len(variants))
             variants.append(VariantMetadata(id=variant_id, name=variant.get("name") or f"Variant {variant_id}"))
     return variants
@@ -115,7 +115,7 @@ def _import_infinitybuilds(request: ImportRequest, driver: WebDriver | None = No
         LOGGER.error(msg := "No class name found")
         raise InfinityBuildsError(msg)
     variants = build_data.get("variants") or []
-    variants = [v for v in variants if v.get("gear")]
+    variants = [v for v in variants if v.get("gear", [])]
     if not variants:
         LOGGER.error(msg := "No gear found for this build")
         raise InfinityBuildsError(msg)
@@ -184,7 +184,7 @@ def _build_variant_for_gear(gear: Sequence[_GearPiece], resolved: _ResolvedGearD
         if item_type is None:
             LOGGER.warning(f"Couldn't match item_type for slot {catalog_slot!r}. Please edit manually")
         aspect_id = _canonical_catalog_id(gear_piece.get("aspectId"))
-        aspect_name = resolved.aspects.get(aspect_id, {}).get("label") if aspect_id else None
+        aspect_name = resolved.aspects.get(aspect_id, {}).get("label", "") if aspect_id is not None else ""
         if aspect_name and rarity in ASPECT_UPGRADE_RARITIES and request.options.import_aspect_upgrades:
             normalized_aspect_name = _normalize_aspect_name(aspect_name)
             if normalized_aspect_name in GameCatalog().aspect_list:
@@ -200,10 +200,10 @@ def _build_variant_for_gear(gear: Sequence[_GearPiece], resolved: _ResolvedGearD
             item_type=item_type,
         )
         if item_type == ItemType.Charm:
-            unique_name = item_name if is_unique_like else None
+            unique_name = item_name if is_unique_like and item_name else None
             set_name = _charm_set_name(item_name)
             charm_rarity = match_to_enum(ItemRarity, "common" if rarity == "normal" else rarity)
-            if not affixes and not unique_name and not set_name and charm_rarity is None:
+            if not affixes and unique_name is None and set_name is None and charm_rarity is None:
                 LOGGER.warning(
                     f"Skipping {item_name} because it had no supported affixes, unique aspect, set, or rarity."
                 )
@@ -219,9 +219,9 @@ def _build_variant_for_gear(gear: Sequence[_GearPiece], resolved: _ResolvedGearD
             charm_filters.append(charm_filter)
             continue
         if item_type == ItemType.HoradricSeal:
-            unique_name = item_name if is_unique_like else None
+            unique_name = item_name if is_unique_like and item_name else None
             seal_rarity = match_to_enum(ItemRarity, rarity)
-            if not affixes and not unique_name and seal_rarity is None:
+            if not affixes and unique_name is None and seal_rarity is None:
                 LOGGER.warning(f"Skipping {item_name} because it had no supported affixes, unique aspect, or rarity.")
                 continue
             seal_filter = create_seal_charm_filter(

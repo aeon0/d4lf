@@ -91,7 +91,7 @@ def _gear_piece(
         "itemId": item_id,
         "affixes": [{"value": 100, "affixId": affix_id, "swapped": True, "tempered": False} for affix_id in affix_ids],
     }
-    if aspect_id:
+    if aspect_id is not None:
         piece["aspectId"] = aspect_id
     return typing.cast("_GearPiece", piece)
 

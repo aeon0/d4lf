@@ -122,7 +122,7 @@ def _compute_affix_layout(tts_section: list[str], item: Item) -> tuple[int, int,
 
 
 def _assign_aspect_or_set(item: Item, aspect_or_set_text: str | None) -> None:
-    if not aspect_or_set_text or item.name is None:
+    if aspect_or_set_text is None or aspect_or_set_text == "" or item.name is None:
         return
     if item.rarity == ItemRarity.Mythic:
         item.aspect = Aspect(name=item.name, text=aspect_or_set_text, value=find_number(aspect_or_set_text))
@@ -162,7 +162,8 @@ def _add_sigil_affixes_from_tts(tts_section: list[str], item: Item) -> Item:
     item.name = correct_name(name)
 
     start = next((i for i, s in enumerate(tts_section) if "AFFIXES" in s), None)
-    if start:
+    # Index 0 is always the sigil name, so a match there is bogus; fall back to fixed positions instead.
+    if start is not None and start > 0:
         first_affix_index = start + 1
         second_affix_index = start + 3
     else:
@@ -277,7 +278,7 @@ def _create_base_item_from_tts(tts_item: list[str]) -> Item | None:
     return item
 
 
-from src.perception.parser.details import (  # ruff:ignore[module-import-not-at-top-of-file]
+from src.perception.parser.details import (  # ruff:ignore[E402]
     _get_affix_from_text,
     _get_affix_starting_location_from_tts_section,
     _get_affixes_from_tts_section,

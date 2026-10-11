@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator, model_validator
 
 from src.game_data import GameCatalog, ItemRarity, ItemType
-from src.profiles.affixes import AffixFilterCountModel, AspectUniqueFilterModel  # ruff:ignore[typing-only-first-party-import]
+from src.profiles.affixes import AffixFilterCountModel, AspectUniqueFilterModel  # ruff:ignore[TC001]
 from src.profiles.validation.constraints import check_greater_than_zero, validate_greater_affix_count
 from src.profiles.validation.normalization import (
     _normalize_rarities,
@@ -9,7 +9,7 @@ from src.profiles.validation.normalization import (
     _validate_affix_pool_names,
     _validate_set_name,
 )
-from src.type_aliases import JsonObject  # ruff:ignore[typing-only-first-party-import]
+from src.type_aliases import JsonObject  # ruff:ignore[TC001]
 
 
 class ItemFilterModel(BaseModel):
@@ -45,7 +45,7 @@ class ItemFilterModel(BaseModel):
     @field_validator("unique_aspect", mode="before")
     @classmethod
     def parse_unique_aspect(cls, data: JsonObject | list[JsonObject] | None) -> list[JsonObject]:
-        if not data:
+        if data is None or not data:
             return []
         if isinstance(data, dict):
             return [data]

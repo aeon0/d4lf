@@ -1,8 +1,8 @@
-import datetime
 import logging
 import logging.handlers
 import sys
 import threading
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Literal, override
 
 import colorama
@@ -125,7 +125,7 @@ def setup(
         _enable_startup_buffer(logger)
 
     # File handler: Always DEBUG level and always includes technical info
-    log_timestamp = datetime.datetime.now(tz=datetime.UTC).strftime("%Y_%m_%d_%H_%M_%S")
+    log_timestamp = datetime.now(tz=UTC).strftime("%Y_%m_%d_%H_%M_%S")
     rotating_handler = logging.handlers.RotatingFileHandler(
         LOG_DIR / f"log_{log_timestamp}.log", mode="a", maxBytes=10 * 1024**2, backupCount=1000, encoding="utf8"
     )

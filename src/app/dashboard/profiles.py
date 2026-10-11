@@ -1,7 +1,7 @@
 """Profile rows and summaries for the application dashboard."""
 
-import datetime
 import logging
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from PyQt6.QtCore import Qt
@@ -60,9 +60,9 @@ class ActivityProfileRowsMixin:
                 drag_handle.setCursor(Qt.CursorShape.SizeAllCursor)
 
                 cb = CheckmarkCheckBox(name.replace("_", " "))
-                cb.blockSignals(True)  # ruff:ignore[boolean-positional-value-in-call]
+                cb.blockSignals(True)  # ruff:ignore[FBT003]
                 cb.setChecked(name in active_list)
-                cb.blockSignals(False)  # ruff:ignore[boolean-positional-value-in-call]
+                cb.blockSignals(False)  # ruff:ignore[FBT003]
                 cb.stateChanged.connect(self._on_toggle)
 
                 header_hbox.addWidget(toggle_btn)
@@ -148,7 +148,7 @@ class ActivityProfileRowsMixin:
         """Build a summary tooltip from the profile document."""
         try:
             stat = path.stat()
-            mtime = datetime.datetime.fromtimestamp(stat.st_mtime, tz=datetime.UTC).strftime("%Y-%m-%d %H:%M")
+            mtime = datetime.fromtimestamp(stat.st_mtime, tz=UTC).strftime("%Y-%m-%d %H:%M")
             model = ProfileDocumentStore.default().load(path).profile
             summary = [f"Last Modified: {mtime}"]
 

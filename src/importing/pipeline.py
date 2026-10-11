@@ -23,7 +23,7 @@ class Variant:
     charm_filters: list[CharmFilterModel] = dataclasses.field(default_factory=list)
     seal_filters: list[SealFilterModel] = dataclasses.field(default_factory=list)
     aspect_upgrade_filters: list[str] = dataclasses.field(default_factory=list)
-    paragon_steps: list[list[JsonObject]] | None = None
+    paragon_steps: list[list[JsonObject]] = dataclasses.field(default_factory=list)
     paragon_build_name: str = ""
 
 
@@ -84,7 +84,7 @@ class ImportPipeline:
             if options.import_aspect_upgrades and variant.aspect_upgrade_filters:
                 profile.aspect_upgrades = variant.aspect_upgrade_filters
 
-            if options.custom_file_name:
+            if options.custom_file_name is not None:
                 file_name = options.custom_file_name
                 if len(build.variants) > 1:
                     file_name = f"{file_name}_{index + 1}"
@@ -118,8 +118,7 @@ class ImportPipeline:
                     )
 
             corrected_file_name = (
-                ProfileDocumentStore
-                .default()
+                ProfileDocumentStore.default()
                 .save_new(file_name=file_name, profile=profile, source=adapter.url)
                 .file_name
             )

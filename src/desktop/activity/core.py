@@ -75,7 +75,7 @@ class QtLogHandler(logging.Handler, QObject):
 
     # Keep logging.shutdown from resolving this attribute through QObject after
     # Qt has already torn down the C++ wrapper.
-    flushOnClose = True  # ruff:ignore[mixed-case-variable-in-class-scope]
+    flushOnClose = True  # ruff:ignore[N815]
     log_signal = pyqtSignal(str)
 
     def __init__(self, text_widget: QTextEdit | None = None) -> None:

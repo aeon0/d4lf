@@ -45,7 +45,7 @@ def decode_build_envelope(body: str | Mapping[str, JsonValue], build_id: str) ->
         if response_error is not None:
             raise D2CoreImportError(SCHEMA_DRIFT, "The d2core response data was not valid JSON") from response_error
         raise D2CoreImportError(SCHEMA_DRIFT, "The d2core response data was missing")
-    if not build:
+    if build is None:
         raise D2CoreImportError(SCHEMA_DRIFT, "The d2core build payload was missing")
     return validate_build(build, build_id)
 
@@ -134,5 +134,7 @@ def _parse_envelope(value: JsonValue) -> _Envelope:
             return outer, None, None, _terminal_code(outer) or _terminal_code(data), error
     response = _mapping(raw_response) or data
     build = _mapping(response.get("data"))
-    terminal = next((code for level in (outer, data, response, build) if (code := _terminal_code(level))), None)
+    terminal = next(
+        (code for level in (outer, data, response, build) if (code := _terminal_code(level)) is not None), None
+    )
     return outer, response, build, terminal, None

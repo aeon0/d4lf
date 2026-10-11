@@ -8,6 +8,7 @@ from src.importing.conversion import as_string_keyed_mapping_list as _as_mapping
 from src.importing.conversion import as_text as _as_text
 from src.importing.filters import affix_dict_for_item_type
 from src.importing.maxroll.constants import (
+    ATTRIBUTE_NAME_FALLBACK_FORMULA_REGEX,
     SKILL_RANK_AFFIX_KEY_REGEX,
     SKILL_RANK_BONUS_FORMULAS,
     SKILL_RANK_DESC_LABEL_REGEX,
@@ -66,6 +67,7 @@ def _find_item_affixes(
     item_affixes: Sequence[Mapping[str, JsonValue]],
     item_type: ItemType,
     import_greater_affixes: bool = False,
+    class_name: str = "",
 ) -> list[Affix]:
     res = []
     affix_data = _as_mapping(mapping_data.get("affixes"))
@@ -73,6 +75,7 @@ def _find_item_affixes(
     damage_type_labels = _as_text_mapping(ui_strings.get("damageType"))
     resource_type_labels = _as_text_mapping(ui_strings.get("resourceType"))
     attributes = _as_mapping(mapping_data.get("attributes"))
+    class_resource = _find_class_resource(mapping_data, class_name)
     attribute_descriptions = _as_text_mapping(mapping_data.get("attributeDescriptions"))
     skills = _as_mapping(mapping_data.get("skills"))
     for affix_id in item_affixes:
@@ -90,8 +93,13 @@ def _find_item_affixes(
             if not attr_desc:
                 if not attributes_list:
                     continue
-                attribute = attributes_list[0]
-                attribute_name = _as_text(_as_mapping(attributes.get(str(attribute.get("id")))).get("name"))
+                attribute = _select_affix_attribute(attributes_list, attributes, class_resource)
+                if attribute is None:
+                    LOGGER.warning(
+                        f"Unable to pick the resource of a multi-resource affix for class '{class_name}' on item type {item_type.value}, skipping affix and please report a bug."
+                    )
+                    continue
+                attribute_name = _attribute_name(attribute, attributes)
                 if attribute_name == "Set_Item_Count":
                     LOGGER.info("Skipping non-filterable MaxRoll set-count attribute '%s'", attribute_name)
                     break
@@ -145,6 +153,10 @@ def _find_item_affixes(
                         attr_desc = _find_skill_rank_affix_description(
                             mapping_data=mapping_data, affix_key=affix_key, attribute=attribute
                         )
+                        if not attr_desc and _allows_attribute_name_fallback(formula):
+                            attr_desc = _find_affix_description_from_attribute_name(
+                                mapping_data=mapping_data, attribute_name=attribute_name, param=attr_param
+                            )
 
                 # Below is handling for seal affixes tied to a set. We attach the set to the front.
                 # If this ends up not working for some reason, a second option is to take the key
@@ -188,6 +200,30 @@ def _find_item_affixes(
     return res
 
 
+def _attribute_name(attribute: Mapping[str, JsonValue], attributes: Mapping[str, JsonValue]) -> str:
+    return _as_text(_as_mapping(attributes.get(str(attribute.get("id")))).get("name"))
+
+
+def _find_class_resource(mapping_data: Mapping[str, JsonValue], class_name: str) -> JsonValue:
+    for raw_class in _as_mapping(mapping_data.get("classes")).values():
+        class_data = _as_mapping(raw_class)
+        if _as_text(class_data.get("name")).lower() == class_name.lower():
+            return _as_mapping(class_data.get("primaryResource")).get("type")
+    return None
+
+
+def _select_affix_attribute(
+    attributes_list: Sequence[Mapping[str, JsonValue]], attributes: Mapping[str, JsonValue], class_resource: JsonValue
+) -> Mapping[str, JsonValue] | None:
+    """Pick the attribute to map; per-resource regen affixes list every resource, so use the class's own."""
+    first = attributes_list[0]
+    if len(attributes_list) == 1 or _attribute_name(first, attributes) != "Resource_Regen_Per_Second":
+        return first
+    if class_resource is None:
+        return None
+    return next((attr for attr in attributes_list if attr.get("param") == class_resource), None)
+
+
 def _find_skill_rank_affix_description(
     mapping_data: Mapping[str, JsonValue], affix_key: str, attribute: Mapping[str, JsonValue]
 ) -> str:
@@ -227,6 +263,37 @@ def _find_skill_rank_label_from_affix_key(affix_key: str) -> str:
         label = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", label)
         label = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", label)
         return " ".join(label.split())
+    return ""
+
+
+def _allows_attribute_name_fallback(formula: JsonValue) -> bool:
+    return formula is None or (isinstance(formula, str) and bool(ATTRIBUTE_NAME_FALLBACK_FORMULA_REGEX.match(formula)))
+
+
+def _find_affix_description_from_attribute_name(
+    mapping_data: Mapping[str, JsonValue], attribute_name: str, param: JsonValue
+) -> str:
+    ui_strings = _as_mapping(mapping_data.get("uiStrings"))
+    match attribute_name:
+        case "Bucketed_Multiplicative_Damage_Type":
+            label = _as_text_mapping(ui_strings.get("damageType")).get(str(param))
+            return f"{label} Damage Multiplier" if label else ""
+        case "Resource_Regen_Per_Second":
+            label = _as_text_mapping(ui_strings.get("resourceType")).get(str(param))
+            return f"{label} Regeneration" if label else ""
+        case "Skill_Rank_Skill_Tag_Bonus":
+            label = _find_skill_rank_label_from_sibling_affix_keys(mapping_data, param)
+            return f"to {label} skills" if label else ""
+    return ""
+
+
+def _find_skill_rank_label_from_sibling_affix_keys(mapping_data: Mapping[str, JsonValue], param: JsonValue) -> str:
+    for affix_key, raw_affix in _as_mapping(mapping_data.get("affixes")).items():
+        attributes = _as_mapping_list(_as_mapping(raw_affix).get("attributes"))
+        if any(
+            attr.get("formula") in SKILL_RANK_BONUS_FORMULAS and attr.get("param") == param for attr in attributes
+        ) and (label := _find_skill_rank_label_from_affix_key(affix_key)):
+            return label
     return ""
 
 

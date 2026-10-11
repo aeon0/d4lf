@@ -109,11 +109,8 @@ def _extract_profile_variant(
     for item_id in profile_items.values():
         resolved_item = items[str(item_id)]
         resolved_item_id = str(resolved_item["id"])
-        if (
-            item_type := _find_item_type(
-                mapping_data=item_type_mapping, value=str(resolved_item["id"]), class_name=class_name
-            )
-        ) is None:
+        item_type = _find_item_type(mapping_data=item_type_mapping, value=resolved_item_id, class_name=class_name)
+        if item_type is None:
             LOGGER.warning(
                 f"Couldn't find item type for {resolved_item['id']} from mapping data provided by Maxroll. Skipping item."
             )
@@ -142,6 +139,7 @@ def _extract_profile_variant(
                 item_affixes=cast("list[JsonObject]", resolved_item["explicits"]),
                 item_type=item_type,
                 import_greater_affixes=request.options.import_greater_affixes,
+                class_name=class_name,
             )
             charm_or_seal_unique_aspect = None
             charm_set_name = None
@@ -208,6 +206,7 @@ def _extract_profile_variant(
             item_affixes=cast("list[JsonObject]", resolved_item["explicits"]),
             item_type=item_type,
             import_greater_affixes=request.options.import_greater_affixes,
+            class_name=class_name,
         )
         if affixes:
             item_filter.affix_pool = create_item_affix_pool(affixes=affixes, unique_like=is_unique_like)

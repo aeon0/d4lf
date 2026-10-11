@@ -113,3 +113,61 @@ def test_find_item_affixes_skips_attribute_name_fallback_for_unknown_formula(cap
 
     assert affixes == []
     assert any("unable to map an attribute" in record.message for record in caplog.records)
+
+
+def _multi_resource_regen_mapping_data() -> JsonObject:
+    mapping_data = _runeword_mapping_data(166, "Resource_Regen_Per_Second", 5)
+    mapping_data["affixes"] = {
+        "Runeword_ResourceRegen_Flat_20": {
+            "id": 1,
+            "magicType": 0,
+            "attributes": [{"id": 166, "param": param, "value": 10} for param in (5, 0, 1)],
+        }
+    }
+    mapping_data["uiStrings"] = {"resourceType": {"0": "Mana", "1": "Fury", "5": "Spirit"}}
+    mapping_data["classes"] = {
+        "0": {"name": "Sorcerer", "primaryResource": {"type": 0}},
+        "1": {"name": "Druid", "primaryResource": {"type": 5}},
+        "2": {"name": "Barbarian", "primaryResource": {"type": 1}},
+    }
+    return mapping_data
+
+
+@pytest.mark.parametrize(
+    ("class_name", "expected"),
+    [("Barbarian", "fury_regeneration"), ("Sorcerer", "mana_regeneration"), ("Druid", "spirit_regeneration")],
+)
+def test_find_item_affixes_picks_class_resource_for_multi_resource_regen(class_name: str, expected: str) -> None:
+    affixes = _find_item_affixes(
+        mapping_data=_multi_resource_regen_mapping_data(),
+        item_affixes=[{"nid": 1}],
+        item_type=ItemType.Mace2H,
+        class_name=class_name,
+    )
+
+    assert [affix.name for affix in affixes] == [expected]
+
+
+@pytest.mark.parametrize("class_name", ["", "Unknown"])
+def test_find_item_affixes_skips_multi_resource_regen_for_unknown_class(class_name: str, caplog) -> None:
+    with caplog.at_level(logging.WARNING, logger="src.importing.maxroll.items"):
+        affixes = _find_item_affixes(
+            mapping_data=_multi_resource_regen_mapping_data(),
+            item_affixes=[{"nid": 1}],
+            item_type=ItemType.Mace2H,
+            class_name=class_name,
+        )
+
+    assert affixes == []
+    assert any(record.levelno == logging.WARNING for record in caplog.records)
+
+
+def test_find_item_affixes_single_resource_regen_ignores_class() -> None:
+    affixes = _find_item_affixes(
+        mapping_data=_runeword_mapping_data(166, "Resource_Regen_Per_Second", 1),
+        item_affixes=[{"nid": 1}],
+        item_type=ItemType.Mace2H,
+        class_name="Sorcerer",
+    )
+
+    assert [affix.name for affix in affixes] == ["fury_regeneration"]

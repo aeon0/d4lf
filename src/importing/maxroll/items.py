@@ -67,6 +67,7 @@ def _find_item_affixes(
     item_affixes: Sequence[Mapping[str, JsonValue]],
     item_type: ItemType,
     import_greater_affixes: bool = False,
+    class_name: str = "",
 ) -> list[Affix]:
     res = []
     affix_data = _as_mapping(mapping_data.get("affixes"))
@@ -74,6 +75,7 @@ def _find_item_affixes(
     damage_type_labels = _as_text_mapping(ui_strings.get("damageType"))
     resource_type_labels = _as_text_mapping(ui_strings.get("resourceType"))
     attributes = _as_mapping(mapping_data.get("attributes"))
+    class_resource = _find_class_resource(mapping_data, class_name)
     attribute_descriptions = _as_text_mapping(mapping_data.get("attributeDescriptions"))
     skills = _as_mapping(mapping_data.get("skills"))
     for affix_id in item_affixes:
@@ -91,8 +93,13 @@ def _find_item_affixes(
             if not attr_desc:
                 if not attributes_list:
                     continue
-                attribute = attributes_list[0]
-                attribute_name = _as_text(_as_mapping(attributes.get(str(attribute.get("id")))).get("name"))
+                attribute = _select_affix_attribute(attributes_list, attributes, class_resource)
+                if attribute is None:
+                    LOGGER.warning(
+                        f"Unable to pick the resource of a multi-resource affix for class '{class_name}' on item type {item_type.value}, skipping affix and please report a bug."
+                    )
+                    continue
+                attribute_name = _attribute_name(attribute, attributes)
                 if attribute_name == "Set_Item_Count":
                     LOGGER.info("Skipping non-filterable MaxRoll set-count attribute '%s'", attribute_name)
                     break
@@ -191,6 +198,30 @@ def _find_item_affixes(
                 LOGGER.error(f"Couldn't match {affix_id=}")
             break
     return res
+
+
+def _attribute_name(attribute: Mapping[str, JsonValue], attributes: Mapping[str, JsonValue]) -> str:
+    return _as_text(_as_mapping(attributes.get(str(attribute.get("id")))).get("name"))
+
+
+def _find_class_resource(mapping_data: Mapping[str, JsonValue], class_name: str) -> JsonValue:
+    for raw_class in _as_mapping(mapping_data.get("classes")).values():
+        class_data = _as_mapping(raw_class)
+        if _as_text(class_data.get("name")).lower() == class_name.lower():
+            return _as_mapping(class_data.get("primaryResource")).get("type")
+    return None
+
+
+def _select_affix_attribute(
+    attributes_list: Sequence[Mapping[str, JsonValue]], attributes: Mapping[str, JsonValue], class_resource: JsonValue
+) -> Mapping[str, JsonValue] | None:
+    """Pick the attribute to map; per-resource regen affixes list every resource, so use the class's own."""
+    first = attributes_list[0]
+    if len(attributes_list) == 1 or _attribute_name(first, attributes) != "Resource_Regen_Per_Second":
+        return first
+    if class_resource is None:
+        return None
+    return next((attr for attr in attributes_list if attr.get("param") == class_resource), None)
 
 
 def _find_skill_rank_affix_description(

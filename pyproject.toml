@@ -90,7 +90,6 @@ ignore = [
   "TRY002",  # raise-vanilla-class, fix more in the future
   "PLR1704",  # redefined-argument-from-local, fix more in the future
   "S603",  # subprocess-without-shell-equals-true
-  "S311",  # suspicious-non-cryptographic-random-usage, fix more in the future
   "PLR0913",  # too-many-arguments
   "PLR0912",  # too-many-branches, fix more in the future
   "PLR0917",  # too-many-positional-arguments

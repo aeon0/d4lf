@@ -146,7 +146,7 @@ class HighlightingRenderer:
     ) -> None:
         reset_canvas(self.root, self.canvas)
 
-        x, y, w, h, off = self.get_coords_from_roi(item_roi)
+        x, y, w, h, _off = self.get_coords_from_roi(item_roi)
         self.canvas.config(height=h, width=w)
         self.create_signal_rect(self.canvas, w, self.thick, color)
 
@@ -189,7 +189,7 @@ class HighlightingRenderer:
     def draw_no_match_outline(self: _VisionModeWithHighlighting, item_roi: tuple[int, int, int, int]) -> None:
         reset_canvas(self.root, self.canvas)
 
-        x, y, w, h, off = self.get_coords_from_roi(item_roi)
+        x, y, w, h, _off = self.get_coords_from_roi(item_roi)
         self.canvas.config(height=h, width=w)
         self.create_signal_rect(self.canvas, w, self.thick, get_filter_colors().no_match)
         self.root.geometry(f"{w}x{h}+{x + self.screen_off_x}+{y + self.screen_off_y}")
@@ -201,7 +201,7 @@ class HighlightingRenderer:
     ) -> None:
         reset_canvas(self.root, self.canvas)
 
-        x, y, w, h, off = self.get_coords_from_roi(item_roi)
+        x, y, w, h, _off = self.get_coords_from_roi(item_roi)
         self.canvas.config(height=h, width=w)
 
         self.create_signal_rect(self.canvas, w, self.thick, get_filter_colors().codex_upgrade)

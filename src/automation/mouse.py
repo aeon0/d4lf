@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 from src.type_aliases import JsonValue, Numeric, Point
 
 _MOUSE = Controller()
+_RNG = random.SystemRandom()
 
 _BUTTONS: dict[str, Button] = {"left": Button.left, "right": Button.right, "middle": Button.middle}
 
@@ -261,13 +262,13 @@ class Mouse:
         if isinstance(randomize, int):
             randomize = int(randomize)
             if randomize > 0:
-                x = int(x) + random.randrange(-randomize, +randomize)
-                y = int(y) + random.randrange(-randomize, +randomize)
+                x = int(x) + _RNG.randrange(-randomize, +randomize)
+                y = int(y) + _RNG.randrange(-randomize, +randomize)
         else:
             randomize = (int(randomize[0]), int(randomize[1]))
             if randomize[1] > 0 and randomize[0] > 0:
-                x = int(x) + random.randrange(-randomize[0], +randomize[0])
-                y = int(y) + random.randrange(-randomize[1], +randomize[1])
+                x = int(x) + _RNG.randrange(-randomize[0], +randomize[0])
+                y = int(y) + _RNG.randrange(-randomize[1], +randomize[1])
 
         dist = math.dist((x, y), from_point)
         offset_boundary_x = max(10, int(0.08 * dist))
@@ -281,7 +282,7 @@ class Mouse:
             target_points=target_points,
         )
 
-        duration = min(0.3, max(0.05, dist * 0.0004) * random.uniform(delay_factor[0], delay_factor[1]))
+        duration = min(0.3, max(0.05, dist * 0.0004) * _RNG.uniform(delay_factor[0], delay_factor[1]))
         delta = duration / len(human_curve.points)
 
         for point in human_curve.points:

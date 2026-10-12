@@ -1,6 +1,7 @@
 """Startup preparation and Windows runtime diagnostics."""
 
 import logging
+import os
 import pathlib
 import subprocess
 import sys
@@ -56,8 +57,14 @@ def check_for_proper_tts_configuration() -> None:
 
     if tts_dll and tts_dll.exists():
         try:
-            command = ["powershell", "-Command", f"(Get-AuthenticodeSignature '{tts_dll}').Status"]
-            status = subprocess.run(command, capture_output=True, text=True, check=True).stdout.strip()
+            env = {**os.environ, "D4LF_TTS_DLL": str(tts_dll)}
+            status = subprocess.run(
+                ["powershell", "-Command", "(Get-AuthenticodeSignature $env:D4LF_TTS_DLL).Status"],
+                capture_output=True,
+                text=True,
+                check=True,
+                env=env,
+            ).stdout.strip()
             if status == "Valid":
                 LOGGER.debug(f"{tts_dll} is locally signed and valid.")
             else:

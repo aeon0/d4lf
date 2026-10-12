@@ -21,12 +21,12 @@ class TestKeyMustExist:
         assert validate_hotkey("cmd+f11") == "cmd+f11"
 
     def test_modifier_only_hotkey_is_rejected(self) -> None:
-        with pytest.raises(ValueError, match="Hotkey must include at least one non-modifier key."):
+        with pytest.raises(ValueError, match=r"Hotkey must include at least one non-modifier key\."):
             validate_hotkey("ctrl+shift")
 
     def test_non_existing_key(self) -> None:
         # Test for a non-existing key
-        with pytest.raises(ValueError, match="Key 'non_existing_key' is not mapped to any known key."):
+        with pytest.raises(ValueError, match=r"Key 'non_existing_key' is not mapped to any known key\."):
             validate_hotkey("non_existing_key")
 
 

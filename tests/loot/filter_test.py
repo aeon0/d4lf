@@ -33,7 +33,7 @@ def test_skipped_items_trigger_no_actions_but_still_check_advanced_tooltips(
     inventory.menu_name = "inventory"
     item = Item(item_type=ItemType.Helm, power=900, affixes=[Affix(name="armor", type=AffixType.greater)])
     monkeypatch.setattr(_filter.src.perception, "read_latest_item", lambda: item)
-    monkeypatch.setattr(_filter, "capture", lambda: object())
+    monkeypatch.setattr(_filter, "capture", object)
     monkeypatch.setattr(_filter.time, "sleep", lambda _seconds: None)
     monkeypatch.setattr(_filter, "is_ignored_item", lambda _item: False)
     monkeypatch.setattr(
@@ -66,7 +66,7 @@ def test_mythic_items_are_skipped_when_filter_category_is_disabled(monkeypatch, 
     )
     monkeypatch.setattr(_filter, "get_settings", lambda: settings)
     monkeypatch.setattr(_filter.src.perception, "read_latest_item", lambda: item)
-    monkeypatch.setattr(_filter, "capture", lambda: object())
+    monkeypatch.setattr(_filter, "capture", object)
     monkeypatch.setattr(_filter.time, "sleep", lambda _seconds: None)
     monkeypatch.setattr(_filter, "is_ignored_item", lambda _item: False)
     monkeypatch.setattr(

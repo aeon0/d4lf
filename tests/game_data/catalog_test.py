@@ -30,8 +30,9 @@ def test_load_string_map_rejects_non_string_maps(tmp_path, payload) -> None:
 
 
 def test_catalog_has_expected_data_containers() -> None:
-    assert isinstance(GameCatalog.affix_dict, dict)
-    assert isinstance(GameCatalog.aspect_list, list)
+    catalog = GameCatalog()
+    assert isinstance(catalog.affix_dict, dict)
+    assert isinstance(catalog.aspect_list, list)
 
 
 def test_catalog_reload_keeps_item_type_values_canonical() -> None:

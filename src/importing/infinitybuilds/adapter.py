@@ -83,7 +83,7 @@ def fetch_variants_infinitybuilds(request: ImportRequest, driver: WebDriver | No
     url, driver = validated
     LOGGER.info(f"Loading {url} for variants")
     try:
-        raw_html_data, build_data = _load_build_page(url, driver)
+        _raw_html_data, build_data = _load_build_page(url, driver)
     except InfinityBuildsError:
         return []
     variants_data = build_data.get("variants") or []

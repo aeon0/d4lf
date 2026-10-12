@@ -32,20 +32,20 @@ def _load_string_map(path: pathlib.Path) -> dict[str, str]:
 class GameCatalog:
     """Localized Diablo 4 reference data shared by the Item and Profiles capabilities."""
 
-    affix_dict: dict[str, str] = {}
-    charm_affix_dict: dict[str, str] = {}
-    seal_affix_dict: dict[str, str] = {}
-    affix_sigil_dict: dict[str, str] = {}
-    affix_sigil_dict_all: dict[str, dict[str, str]] = {}
-    aspect_list: list[str] = []
-    aspect_unique_dict: JsonObject = {}
-    bad_tts_uniques: dict[str, str] = {}
-    filter_after_keyword: list[str] = []
-    filter_words: list[str] = []
-    item_types_dict: dict[str, str] = {}
-    set_list: list[str] = []
-    tooltips: JsonObject = {}
-    tribute_dict: dict[str, str] = {}
+    affix_dict: dict[str, str]
+    charm_affix_dict: dict[str, str]
+    seal_affix_dict: dict[str, str]
+    affix_sigil_dict: dict[str, str]
+    affix_sigil_dict_all: dict[str, dict[str, str]]
+    aspect_list: list[str]
+    aspect_unique_dict: JsonObject
+    bad_tts_uniques: dict[str, str]
+    filter_after_keyword: list[str]
+    filter_words: list[str]
+    item_types_dict: dict[str, str]
+    set_list: list[str]
+    tooltips: JsonObject
+    tribute_dict: dict[str, str]
 
     _instance: ClassVar[Self | None] = None
     data_loaded = False

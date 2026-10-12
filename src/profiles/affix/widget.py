@@ -13,6 +13,7 @@ AFFIXES_TABNAME = "Affixes"
 AFFIX_VALUE_MODE = "Value"
 AFFIX_PERCENT_MODE = "Min %"
 UNIQUE_ASPECTS_TITLE = "Unique Aspects"
+MAX_PERCENT = 100
 
 
 @runtime_checkable
@@ -69,7 +70,7 @@ class AffixWidget(QWidget):
     def create_set_name_combobox(self) -> None:
         self.set_combo = IgnoreScrollWheelComboBox()
         self.set_combo.setFixedWidth(200)
-        self.set_combo.addItems(["(No Set Selected)"] + sorted(GameCatalog().set_list))
+        self.set_combo.addItems(["(No Set Selected)", *sorted(GameCatalog().set_list)])
 
         curr_set, _ = get_set_and_base_for_key(self.affix.name, GameCatalog().set_list)
         if curr_set is not None:
@@ -205,7 +206,7 @@ class AffixWidget(QWidget):
                 percent = int(value) if value else 0
             except ValueError:
                 return
-            if not 0 <= percent <= 100:
+            if not 0 <= percent <= MAX_PERCENT:
                 QMessageBox.warning(self, "Warning", "Min % must be between 0 and 100.")
                 self.refresh_value_input()
                 return

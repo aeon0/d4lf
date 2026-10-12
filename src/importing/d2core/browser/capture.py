@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from src.type_aliases import JsonValue
 
 CATALOG_HOST = "cloudstorage.d2core.com"
+CATALOG_PATH_SEGMENT_COUNT = 5
 
 
 def is_catalog_url(url: str) -> bool:
@@ -19,7 +20,7 @@ def is_catalog_url(url: str) -> bool:
     return (
         parts.scheme.casefold() == "https"
         and parts.hostname == CATALOG_HOST
-        and len(path) == 5
+        and len(path) == CATALOG_PATH_SEGMENT_COUNT
         and path[1:3] == ["data", "d4"]
         and bool(path[3])
         and path[4].casefold().endswith("_enus.json")

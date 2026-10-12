@@ -121,7 +121,7 @@ def test_create_mask() -> None:
 
 @pytest.fixture
 def filter_img() -> np.ndarray:
-    return np.random.randint(0, 255, (100, 100, 3), dtype=np.uint8)
+    return np.random.default_rng().integers(0, 255, (100, 100, 3), dtype=np.uint8)
 
 
 @pytest.fixture

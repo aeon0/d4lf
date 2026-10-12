@@ -1,5 +1,5 @@
 import os
-from typing import override
+from typing import ClassVar, override
 
 import pytest
 
@@ -40,7 +40,7 @@ class _AcceptedRarityPicker(QDialog):
 
 
 class _FakeLoader:
-    tribute_dict = {"tribute_of_test": "Tribute Of Test"}
+    tribute_dict: ClassVar[dict[str, str]] = {"tribute_of_test": "Tribute Of Test"}
 
 
 @pytest.fixture(scope="module")

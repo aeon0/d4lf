@@ -7,7 +7,7 @@ def test_runtime_directories_are_composed_from_settings(monkeypatch, tmp_path) -
     class Settings:
         user_dir = tmp_path / "user"
 
-    monkeypatch.setattr("src.app.startup.get_settings", lambda: Settings())
+    monkeypatch.setattr("src.app.startup.get_settings", Settings)
     monkeypatch.setattr("src.app.startup.LOG_DIR", tmp_path / "logs")
 
     prepare_runtime_directories()

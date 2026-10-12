@@ -1,13 +1,11 @@
 import time
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-T = TypeVar("T")
 
-
-def run_until_condition(
+def run_until_condition[T](
     func: Callable[[], T], is_success: Callable[[T], bool], timeout: float = 3
 ) -> tuple[T | None, bool]:
     """Poll a query until it succeeds or the timeout expires."""

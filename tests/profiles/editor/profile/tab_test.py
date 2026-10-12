@@ -1,6 +1,6 @@
 import importlib
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -33,8 +33,8 @@ def qapp():
 
 
 class _FakeGameCatalog:
-    item_types_dict = {}
-    affix_dict = {}
+    item_types_dict: ClassVar[dict[str, str]] = {}
+    affix_dict: ClassVar[dict[str, str]] = {}
 
 
 class _FakeEditor(QWidget):

@@ -12,11 +12,11 @@ BASE_PATH = BASE_DIR / "tests/assets/ui"
 def test_character_inventory_uses_character_menu_name(monkeypatch) -> None:
     monkeypatch.setattr(
         "src.automation.character.get_ui_coordinates",
-        lambda: type("C", (), {"roi": type("R", (), {"sort_icon": (1, 2, 3, 4)})()})(),
+        type("C", (), {"roi": type("R", (), {"sort_icon": (1, 2, 3, 4)})()}),
     )
     monkeypatch.setattr("src.automation.character.SearchArgs", lambda **kwargs: kwargs)
     monkeypatch.setattr(
-        "src.automation.character.get_settings", lambda: type("S", (), {"char": type("C", (), {"inventory": "i"})()})()
+        "src.automation.character.get_settings", type("S", (), {"char": type("C", (), {"inventory": "i"})()})
     )
     inventory = CharInventory()
     assert inventory.menu_name == "Char_Inventory"

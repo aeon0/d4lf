@@ -13,6 +13,7 @@ from src.settings.models.ui import ColorsModel, HSVRangeModel, UiOffsetsModel, U
 from src.settings.types import Template
 
 LOGGER = logging.getLogger("d4lf")
+BGRA_CHANNEL_COUNT = 4
 
 COLORS = ColorsModel(
     material_color=HSVRangeModel(h_s_v_min=np.array([86, 110, 190]), h_s_v_max=np.array([114, 220, 255])),
@@ -100,7 +101,7 @@ def load_templates() -> dict[str, Template]:
 
 def _alpha_to_mask(image: np.ndarray) -> np.ndarray | None:
     """Build the template mask without depending on Perception."""
-    if image.shape[2] == 4 and np.min(image[:, :, 3]) == 0:
+    if image.shape[2] == BGRA_CHANNEL_COUNT and np.min(image[:, :, 3]) == 0:
         _, mask = cv2.threshold(image[:, :, 3], 1, 255, cv2.THRESH_BINARY)
         return mask
     return None

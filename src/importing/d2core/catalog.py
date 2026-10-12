@@ -4,6 +4,7 @@ import logging
 import time
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
+from http import HTTPStatus
 from typing import TYPE_CHECKING, cast, override
 from urllib.parse import urlsplit
 
@@ -17,6 +18,7 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 CATALOG_HOST = "cloudstorage.d2core.com"
+CATALOG_PATH_SEGMENT_COUNT = 5
 COLLECTIONS = {
     "affix": ("affix",),
     "uniqueItem": (),
@@ -153,7 +155,7 @@ def observed_catalog_version(catalog_url_value: str) -> str:
     if (
         parts.scheme.casefold() != "https"
         or parts.hostname != CATALOG_HOST
-        or len(segments) != 5
+        or len(segments) != CATALOG_PATH_SEGMENT_COUNT
         or segments[1:3] != ["data", "d4"]
         or not segments[3]
         or not segments[-1].casefold().endswith("_enus.json")
@@ -207,5 +209,5 @@ def _retryable(error: Exception) -> bool:
         return False
     if isinstance(error, httpx.HTTPStatusError):
         status = error.response.status_code
-        return status in {408, 429} or status >= 500
+        return status in {408, 429} or status >= HTTPStatus.INTERNAL_SERVER_ERROR
     return True

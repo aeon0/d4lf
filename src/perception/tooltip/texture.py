@@ -116,9 +116,9 @@ def _dedupe_matches(template_matches: list[TemplateMatch]) -> list[TemplateMatch
     matches_dict = {}
     for match in template_matches:
         match_exists = False
-        for center in matches_dict:
+        for center, existing_match in matches_dict.items():
             if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 10:
-                if match.score > matches_dict[center].score:
+                if match.score > existing_match.score:
                     matches_dict[center] = match
                 match_exists = True
                 break

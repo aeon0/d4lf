@@ -71,7 +71,6 @@ ignore = [
   "FBT001",  # boolean-type-hint-positional-argument
   "ERA001",  # commented-out-code, fix more in the future
   "C901",  # complex-structure, fix more in the future
-  "PLC0206",  # dict-index-missing-items, fix more in the future
   "TRY400",  # error-instead-of-exception, fix more in the future
   "LOG014",  # exc-info-outside-except-handler
   "PLW0603",  # global-statement, fix more in the future

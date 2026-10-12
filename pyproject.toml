@@ -87,7 +87,6 @@ ignore = [
   "COM812",  # missing-trailing-comma
   "T201",  # print, fix more in the future
   "SLF001",  # private-member-access, fix more in the future
-  "RUF043",  # pytest-raises-ambiguous-pattern, fix more in the future
   "TRY003",  # raise-vanilla-args, fix more in the future
   "TRY002",  # raise-vanilla-class, fix more in the future
   "PLR1704",  # redefined-argument-from-local, fix more in the future

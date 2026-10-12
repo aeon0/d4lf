@@ -54,7 +54,7 @@ class TestAffixFilterModel:
 
     def test_invalid_affix_name_fails(self) -> None:
         """Test that invalid affix name fails."""
-        with pytest.raises(ValidationError, match="affix .* does not exist"):
+        with pytest.raises(ValidationError, match=r"affix .* does not exist"):
             AffixFilterModel(name="invalid_affix_name_123")
 
     def test_camelcase_input(self) -> None:
@@ -155,7 +155,7 @@ class TestAspectUniqueFilterModel:
 
     def test_invalid_aspect_name_fails(self) -> None:
         """Test that invalid aspect name fails."""
-        with pytest.raises(ValidationError, match="aspect .* does not exist"):
+        with pytest.raises(ValidationError, match=r"aspect .* does not exist"):
             AspectUniqueFilterModel(name="invalid_aspect_name_123")
 
     def test_value_and_percent_mutually_exclusive(self) -> None:

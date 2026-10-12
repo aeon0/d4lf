@@ -1,4 +1,4 @@
-# ruff:file-ignore[invalid-function-name]
+# ruff:file-ignore[N802]
 from typing import TYPE_CHECKING, cast
 
 from src.app.dashboard.drag import ActivityProfileDragMixin

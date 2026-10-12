@@ -1,4 +1,4 @@
-import datetime
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from src.overlay.widget import core as _widget_core
@@ -16,7 +16,7 @@ def test_save_settings_persists_relative_position_and_flags(monkeypatch) -> None
     overlay.capture_exp_stats = False
     overlay.show_gold = True
     overlay.font_size = 14
-    overlay.wb_reference = datetime.datetime(2024, 1, 1, tzinfo=datetime.UTC)
+    overlay.wb_reference = datetime(2024, 1, 1, tzinfo=UTC)
     overlay.next_boss_name = "Unknown"
     overlay.orientation = "horizontal"
     overlay.font_family = "Consolas"

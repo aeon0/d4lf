@@ -43,15 +43,15 @@ class _AffixGroupPoolsMixin:
         title_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         aspect_label = QLabel("Aspect")
-        aspect_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        aspect_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         refresh_widget_style(aspect_label)
 
         mode_label = QLabel("Mode")
-        mode_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        mode_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         refresh_widget_style(mode_label)
 
         value_label = QLabel("Threshold")
-        value_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        value_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         refresh_widget_style(value_label)
 
         title_layout.addSpacing(25)

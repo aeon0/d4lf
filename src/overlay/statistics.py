@@ -5,7 +5,7 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from src.overlay.settings import load_settings, save_settings
+from src.overlay.settings import load_settings, save_settings, setting_bool
 from src.overlay.singleton import singleton
 from src.perception import Publisher
 
@@ -112,13 +112,15 @@ class _SessionStats:
     def on_info_stat(self, raw_line: str) -> None:
         config = load_settings()
         text = raw_line.lower()
-        if not config.get("capture_gold_stats") and not config.get("capture_exp_stats"):
+        capture_gold = setting_bool(config, "capture_gold_stats", default=False)
+        capture_exp = setting_bool(config, "capture_exp_stats", default=False)
+        if not capture_gold and not capture_exp:
             return
         if "gold" in text and not any(
             word in text for word in ("sell value", "repair", "cost", "price", "buy", "fee", "spent", "purchase")
         ):
             match = re.search(r"([0-9,.]+)\s+Gold", raw_line, re.IGNORECASE)
-            if not match or not config.get("capture_gold_stats"):
+            if not match or not capture_gold:
                 return
             value = int(re.sub(r"\D", "", match.group(1)))
             if self.last_gold is None:
@@ -146,7 +148,7 @@ class _SessionStats:
                 _notify(gph=self._rate(self.total_gold), total_gained=self.total_gold)
             return
         match = re.search(r"Experience:\s+([0-9,.]+)\s+/\s+([0-9,.]+)", raw_line, re.IGNORECASE)
-        if "experience" not in text or not match or not config.get("capture_exp_stats"):
+        if "experience" not in text or not match or not capture_exp:
             return
         value, maximum = (int(re.sub(r"\D", "", part)) for part in match.groups())
         if self.last_exp is None:
@@ -158,7 +160,7 @@ class _SessionStats:
         self.last_exp, self.max_exp = value, maximum or self.max_exp
         eph = self._rate(self.total_exp)
         t2l = "-"
-        if eph and self.max_exp:
+        if eph and self.max_exp is not None and self.max_exp != 0:
             hours = max(0, self.max_exp - value) / eph
             t2l = f"{int(hours * 60)}m" if hours < 1 else f"{int(hours)}h {int(hours % 1 * 60)}m"
         self._persist()

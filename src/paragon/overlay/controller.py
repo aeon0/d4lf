@@ -1,7 +1,7 @@
 import logging
 import sys
 import threading
-import tkinter as tk  # ruff:ignore[typing-only-standard-library-import] - preserve module attribute
+import tkinter as tk  # ruff:ignore[TC003] - preserve module attribute
 from contextlib import suppress
 
 from src.desktop import call_on_ui_thread, get_root, is_alive, post_to_ui_thread

@@ -111,7 +111,7 @@ def _extract_balanced(text: str, start_idx: int, open_ch: str, close_ch: str) ->
 
 def _canonical_catalog_id(raw_id: str | None) -> str | None:
     """Strip the numeric instance value absent from catalog item and aspect IDs."""
-    return CATALOG_ID_INSTANCE_PREFIX.sub(r"\1-", raw_id) if raw_id else raw_id
+    return None if raw_id is None else CATALOG_ID_INSTANCE_PREFIX.sub(r"\1-", raw_id)
 
 
 def _resolve_gear_data(class_name: str, gear: Sequence[_GearPiece]) -> _ResolvedGearData:
@@ -126,9 +126,9 @@ def _resolve_gear_data(class_name: str, gear: Sequence[_GearPiece]) -> _Resolved
         for gear_piece in normalized_gear
         if (aspect_id := _canonical_catalog_id(gear_piece.get("aspectId"))) is not None
     )
-    affix_ids = sorted({
-        affix["affixId"] for g in normalized_gear for affix in (g.get("affixes") or []) if affix.get("affixId")
-    })
+    affix_ids = sorted(
+        {affix["affixId"] for g in normalized_gear for affix in (g.get("affixes") or []) if affix.get("affixId", "")}
+    )
     params = {"classId": class_name, "mode": "view", "shape": "2", "locale": "en"}
     if item_ids:
         params["itemIds"] = ",".join(item_ids)
@@ -160,11 +160,11 @@ def _convert_raw_to_affixes(
     result = []
     affix_dict = affix_dict_for_item_type(item_type=item_type)
     for raw_value in raw_affixes:
-        if raw_value.get("tempered"):
+        if raw_value.get("tempered", False):
             continue
         affix_id = raw_value.get("affixId")
-        resolved_affix = resolved_affixes.get(affix_id) if affix_id else None
-        if not resolved_affix or not resolved_affix.get("label"):
+        resolved_affix = resolved_affixes.get(affix_id) if affix_id is not None else None
+        if resolved_affix is None or not resolved_affix.get("label", ""):
             LOGGER.error(f"Couldn't resolve {affix_id=}")
             continue
         label = resolved_affix.get("label")

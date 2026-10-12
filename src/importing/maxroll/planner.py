@@ -54,10 +54,10 @@ def _find_legendary_aspect(
 
         prefix = affix.get("prefix")
         if isinstance(prefix, str):
-            return correct_name(prefix)
+            return correct_name(prefix) or None
         suffix = affix.get("suffix")
         if isinstance(suffix, str):
-            return correct_name(suffix)
+            return correct_name(suffix) or None
         return None
 
     return None
@@ -186,7 +186,7 @@ def _extract_planner_url_and_id_from_guide(url: str) -> tuple[str, int, bool]:
 def _resolve_visible_profile_index(profiles: Sequence[Mapping[str, JsonValue]], visible_profile_index: int) -> int:
     visible_index = 0
     for profile_index, profile in enumerate(profiles):
-        if profile.get("hidden"):
+        if bool(profile.get("hidden")):
             continue
         if visible_index == visible_profile_index:
             return profile_index

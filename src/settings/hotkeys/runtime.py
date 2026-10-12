@@ -2,7 +2,7 @@
 
 import threading
 from collections import defaultdict
-from collections.abc import Callable, Hashable  # ruff: ignore[typing-only-standard-library-import] - pynput inspects the listener handlers
+from collections.abc import Callable, Hashable  # ruff: ignore[TC003] - pynput inspects the listener handlers
 from typing import cast
 
 from pynput import keyboard

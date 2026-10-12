@@ -80,12 +80,12 @@ class BidiNetworkObserver:
         try:
             if self._handler is not None:
                 network.remove_event_handler(RESPONSE_STARTED, self._handler)
-        except Exception as error:  # ruff: ignore[blind-except] - cleanup must attempt the next release
+        except Exception as error:  # ruff: ignore[BLE001] - cleanup must attempt the next release
             removal_error = error
         try:
             if self._collector is not None:
                 network.remove_data_collector(self._collector)
-        except Exception as error:  # ruff: ignore[blind-except] - cleanup must attempt the next release
+        except Exception as error:  # ruff: ignore[BLE001] - cleanup must attempt the next release
             removal_error = removal_error or error
         finally:
             self._handler = None

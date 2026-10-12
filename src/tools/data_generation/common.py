@@ -128,8 +128,7 @@ def check_ms(input_string: str) -> str:
 
 def clean_item_name(name: str) -> str:
     clean_name = (
-        name
-        .strip()
+        name.strip()
         .replace(" ", "_")
         .replace("\xa0", "_")
         .lower()

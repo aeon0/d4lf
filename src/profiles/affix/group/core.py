@@ -138,7 +138,7 @@ class AffixGroupEditor(_AffixGroupPoolsMixin, _AffixGroupControlsMixin, QWidget)
         self.auto_sync_checkbox.stateChanged.connect(self.toggle_auto_sync)
 
         self.greater_count_label = QLabel()
-        self.greater_count_label.setProperty("greaterCountLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        self.greater_count_label.setProperty("greaterCountLabel", True)  # ruff:ignore[FBT003]
         refresh_widget_style(self.greater_count_label)
         self.update_greater_count_label()
 
@@ -150,7 +150,7 @@ class AffixGroupEditor(_AffixGroupPoolsMixin, _AffixGroupControlsMixin, QWidget)
         self.min_greater.setEnabled(not self.auto_sync_checkbox.isChecked())
 
         if self.auto_sync_checkbox.isChecked():
-            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[boolean-positional-value-in-call]
+            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[FBT003]
             refresh_widget_style(self.min_greater)
 
         general_form.addRow("Min Greater Affixes:", min_greater_layout)

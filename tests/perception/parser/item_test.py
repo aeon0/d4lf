@@ -22,24 +22,26 @@ def test_loot_filter_controls_do_not_raise_tts_parser_error() -> None:
 
 def test_captured_filters_screen_is_not_an_item() -> None:
     assert (
-        parse_item_text([
-            "FILTERS",
-            *("Checkbox Disabled",) * 12,
-            "Search",
-            "&lt;CC&gt; Panoramix | 70 (300)",
-            "Chest 7",
-            "Chest 6",
-            "Chest 5",
-            "Chest 4",
-            "Chest 3",
-            "Consumables",
-            "Chest 1",
-            "Consumables",
-            "Chest 3",
-            "Chest 3",
-            "Stash",
-            "Left mouse button",
-        ])
+        parse_item_text(
+            [
+                "FILTERS",
+                *("Checkbox Disabled",) * 12,
+                "Search",
+                "&lt;CC&gt; Panoramix | 70 (300)",
+                "Chest 7",
+                "Chest 6",
+                "Chest 5",
+                "Chest 4",
+                "Chest 3",
+                "Consumables",
+                "Chest 1",
+                "Consumables",
+                "Chest 3",
+                "Chest 3",
+                "Stash",
+                "Left mouse button",
+            ]
+        )
         is None
     )
 

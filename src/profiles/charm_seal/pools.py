@@ -87,14 +87,14 @@ class _CharmSealPoolsMixin:
         self.min_greater.setEnabled(not is_auto_sync)
 
         if is_auto_sync:
-            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[boolean-positional-value-in-call]
+            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[FBT003]
             refresh_widget_style(self.min_greater)
             self.affix_pool_container.expand()
             count = self.count_want_greater_affixes()
             self.min_greater.setValue(count)
             self.update_greater_count_label()
         else:
-            self.min_greater.setProperty("autoSyncSpin", False)  # ruff:ignore[boolean-positional-value-in-call]
+            self.min_greater.setProperty("autoSyncSpin", False)  # ruff:ignore[FBT003]
             refresh_widget_style(self.min_greater)
 
     def sync_min_greater_from_checkboxes(self: CharmSealEditor) -> None:

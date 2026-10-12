@@ -1,6 +1,6 @@
 [project]
 name = "d4lf"
-requires-python = ">=3.14"
+requires-python = ">=3.15"
 dependencies = [
   "beautifultable",
   "colorama",
@@ -55,7 +55,6 @@ path = "src/__init__.py"
 [tool.ruff]
 indent-width = 4
 line-length = 120
-preview = true
 
 [tool.ruff.format]
 docstring-code-format = true
@@ -67,75 +66,61 @@ skip-magic-trailing-comma = true
 
 [tool.ruff.lint]
 ignore = [
-  "ambiguous-unicode-character-string",  # fix more in the future
-  "assert",  # fix more in the future
-  "boolean-default-value-positional-argument",
-  "boolean-type-hint-positional-argument",
-  "collection-literal-concatenation",  # fix more in the future
-  "commented-out-code",  # fix more in the future
-  "complex-structure",  # fix more in the future
-  "dict-index-missing-items",  # fix more in the future
-  "docstring-extraneous-exception",  # fix more in the future, this is docs
-  "docstring-missing-exception",  # fix more in the future, this is docs
-  "docstring-missing-returns",  # fix more in the future, this is doc
-  "error-instead-of-exception",  # fix more in the future
-  "exc-info-outside-except-handler",
-  "global-statement",  # fix more in the future
-  "global-variable-not-assigned",  # fix more in the future
-  "implicit-class-var-in-dataclass",  # fix more in the future
-  "line-contains-hack",  # fix more in the future
-  "line-contains-todo",  # fix more in the future
-  "line-too-long",
-  "literal-membership",  # fix more in the future
-  "logging-f-string",
-  "magic-value-comparison",  # fix more in the future
-  "missing-copyright-notice",
-  "missing-todo-author",  # fix more in the future
-  "missing-todo-colon",  # fix more in the future
-  "missing-todo-link",  # fix more in the future
-  "missing-trailing-comma",
-  "mutable-class-default",  # fix more in the future
-  "no-self-use",  # fix more in the future, staticmethods
-  "non-augmented-assignment",  # fix more in the future
-  "non-empty-init-module",  # fix more in the future
-  "non-pep695-generic-function",  # fix more in the future
-  "numpy-legacy-random",  # fix more in the future
-  "print",  # fix more in the future
-  "private-member-access",  # fix more in the future
-  "pytest-raises-ambiguous-pattern",  # fix more in the future
-  "raise-vanilla-args",  # fix more in the future
-  "raise-vanilla-class",  # fix more in the future
-  "redefined-argument-from-local",  # fix more in the future
-  "start-process-with-a-shell",  # fix more in the future
-  "start-process-with-no-shell",  # fix more in the future
-  "start-process-with-partial-path",
-  "subprocess-without-shell-equals-true",
-  "suspicious-non-cryptographic-random-usage",  # fix more in the future
-  "suspicious-subprocess-import",
-  "too-many-arguments",
-  "too-many-boolean-expressions",  # fix more in the future
-  "too-many-branches",  # fix more in the future
-  "too-many-locals",  # fix more in the future
-  "too-many-nested-blocks",  # fix more in the future
-  "too-many-positional-arguments",
-  "too-many-public-methods",  # fix more in the future
-  "too-many-return-statements",  # fix more in the future
-  "too-many-statements",  # fix more in the future
-  "too-many-statements-in-try-clause",  # fix more in the future
-  "type-check-without-type-error",  # fix more in the future
-  "undocumented-magic-method",
-  "undocumented-public-class",
-  "undocumented-public-function",
-  "undocumented-public-init",
-  "undocumented-public-method",
-  "undocumented-public-module",
-  "undocumented-public-nested-class",
-  "undocumented-public-package",
-  "unnecessary-lambda",  # fix more in the future
-  "unsafe-yaml-load",  # fix more in the future
-  "unused-function-argument",  # fix more in the future
-  "unused-method-argument",  # fix more in the future
-  "unused-unpacked-variable",  # fix more in the future
+  "RUF001",  # ambiguous-unicode-character-string, fix more in the future
+  "S101",  # assert, fix more in the future
+  "FBT002",  # boolean-default-value-positional-argument
+  "FBT001",  # boolean-type-hint-positional-argument
+  "RUF005",  # collection-literal-concatenation, fix more in the future
+  "ERA001",  # commented-out-code, fix more in the future
+  "C901",  # complex-structure, fix more in the future
+  "PLC0206",  # dict-index-missing-items, fix more in the future
+  "TRY400",  # error-instead-of-exception, fix more in the future
+  "LOG014",  # exc-info-outside-except-handler
+  "PLW0603",  # global-statement, fix more in the future
+  "PLW0602",  # global-variable-not-assigned, fix more in the future
+  "FIX004",  # line-contains-hack, fix more in the future
+  "FIX002",  # line-contains-todo, fix more in the future
+  "E501",  # line-too-long
+  "G004",  # logging-f-string
+  "PLR2004",  # magic-value-comparison, fix more in the future
+  "CPY001",  # missing-copyright-notice
+  "TD002",  # missing-todo-author, fix more in the future
+  "TD004",  # missing-todo-colon, fix more in the future
+  "TD003",  # missing-todo-link, fix more in the future
+  "COM812",  # missing-trailing-comma
+  "RUF012",  # mutable-class-default, fix more in the future
+  "UP047",  # non-pep695-generic-function, fix more in the future
+  "NPY002",  # numpy-legacy-random, fix more in the future
+  "T201",  # print, fix more in the future
+  "SLF001",  # private-member-access, fix more in the future
+  "RUF043",  # pytest-raises-ambiguous-pattern, fix more in the future
+  "TRY003",  # raise-vanilla-args, fix more in the future
+  "TRY002",  # raise-vanilla-class, fix more in the future
+  "PLR1704",  # redefined-argument-from-local, fix more in the future
+  "S605",  # start-process-with-a-shell, fix more in the future
+  "S606",  # start-process-with-no-shell, fix more in the future
+  "S607",  # start-process-with-partial-path
+  "S603",  # subprocess-without-shell-equals-true
+  "S311",  # suspicious-non-cryptographic-random-usage, fix more in the future
+  "PLR0913",  # too-many-arguments
+  "PLR0912",  # too-many-branches, fix more in the future
+  "PLR0917",  # too-many-positional-arguments
+  "PLR0911",  # too-many-return-statements, fix more in the future
+  "PLR0915",  # too-many-statements, fix more in the future
+  "TRY004",  # type-check-without-type-error, fix more in the future
+  "D105",  # undocumented-magic-method
+  "D101",  # undocumented-public-class
+  "D103",  # undocumented-public-function
+  "D107",  # undocumented-public-init
+  "D102",  # undocumented-public-method
+  "D100",  # undocumented-public-module
+  "D106",  # undocumented-public-nested-class
+  "D104",  # undocumented-public-package
+  "PLW0108",  # unnecessary-lambda, fix more in the future
+  "S506",  # unsafe-yaml-load, fix more in the future
+  "ARG001",  # unused-function-argument, fix more in the future
+  "ARG002",  # unused-method-argument, fix more in the future
+  "RUF059",  # unused-unpacked-variable, fix more in the future
 ]
 select = ["ALL"]
 
@@ -144,29 +129,28 @@ split-on-trailing-comma = false
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
-  "assert",
-  "boolean-positional-value-in-call",
-  "import-private-name",
-  "magic-value-comparison",
-  "missing-return-type-private-function",
-  "missing-return-type-special-method",
-  "missing-return-type-static-method",
-  "missing-return-type-undocumented-public-function",
-  "missing-type-args",
-  "missing-type-function-argument",
-  "missing-type-kwargs",
-  "private-member-access",
-  "suspicious-non-cryptographic-random-usage",
+  "S101",  # assert
+  "FBT003",  # boolean-positional-value-in-call
+  "PLR2004",  # magic-value-comparison
+  "ANN202",  # missing-return-type-private-function
+  "ANN204",  # missing-return-type-special-method
+  "ANN205",  # missing-return-type-static-method
+  "ANN201",  # missing-return-type-undocumented-public-function
+  "ANN002",  # missing-type-args
+  "ANN001",  # missing-type-function-argument
+  "ANN003",  # missing-type-kwargs
+  "SLF001",  # private-member-access
+  "S311",  # suspicious-non-cryptographic-random-usage
 ]
 "src/paragon/__init__.py" = [
-  "import-outside-top-level",
-  "undefined-export",
+  "PLC0415",  # import-outside-top-level
+  "F822",  # undefined-export
 ]
 "src/paragon/_*.py" = [
-  "undefined-local-with-import-star",
-  "undefined-local-with-import-star-usage",
+  "F403",  # undefined-local-with-import-star
+  "F405",  # undefined-local-with-import-star-usage
 ]
-"src/paragon/_shared.py" = ["any-type", "unused-import"]
+"src/paragon/_shared.py" = ["ANN401", "F401"]  # any-type, unused-import
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -176,7 +160,7 @@ respect-type-ignore-comments = false
 
 [tool.ty.environment]
 python-platform = "win32"
-python-version = "3.14"
+python-version = "3.15"
 
 [tool.ty.rules]
 all = "error"

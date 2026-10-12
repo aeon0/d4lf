@@ -163,15 +163,15 @@ def _resolve_build_index(
     fallback_idx: int | None = None,
 ) -> int:
     """Resolve the selected build from persisted identifiers with index fallback."""
-    if build_name:
+    if build_name not in (None, ""):
         for idx, build in enumerate(builds):
             if build.get("name") != build_name:
                 continue
-            if profile_name and build.get("profile") != profile_name:
+            if profile_name not in (None, "") and build.get("profile") != profile_name:
                 continue
             return idx
 
-    if profile_name:
+    if profile_name not in (None, ""):
         for idx, build in enumerate(builds):
             if build.get("profile") == profile_name:
                 return idx

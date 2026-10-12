@@ -12,17 +12,17 @@ class ActivityLogControlsMixin:
     def _select_all(self: ActivityLogWidget) -> None:
         active = []
         for name, cb in self._checkboxes.items():
-            cb.blockSignals(True)  # ruff:ignore[boolean-positional-value-in-call]
+            cb.blockSignals(True)  # ruff:ignore[FBT003]
             cb.setChecked(True)
-            cb.blockSignals(False)  # ruff:ignore[boolean-positional-value-in-call]
+            cb.blockSignals(False)  # ruff:ignore[FBT003]
             active.append(name)
         self._save_active_list(active)
 
     def _deselect_all(self: ActivityLogWidget) -> None:
         for cb in self._checkboxes.values():
-            cb.blockSignals(True)  # ruff:ignore[boolean-positional-value-in-call]
+            cb.blockSignals(True)  # ruff:ignore[FBT003]
             cb.setChecked(False)
-            cb.blockSignals(False)  # ruff:ignore[boolean-positional-value-in-call]
+            cb.blockSignals(False)  # ruff:ignore[FBT003]
         self._save_active_list([])
 
     def _on_toggle(self: ActivityLogWidget) -> None:

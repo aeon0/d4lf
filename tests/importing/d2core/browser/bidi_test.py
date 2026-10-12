@@ -30,7 +30,9 @@ def test_live_d2core_acquisition_contract() -> None:
     catalogs = CatalogStore(version=observed_catalog_version(snapshot.catalog_url), transport=HttpCatalogTransport())
 
     assert build["_id"] == "2268"
-    assert build["variants"]
+    variants = build["variants"]
+    assert isinstance(variants, list)
+    assert variants
     assert catalogs.require("affix")
 
 
@@ -83,10 +85,12 @@ def test_firefox_bidi_does_not_finish_success_before_catalog_arrives() -> None:
     driver = cast("BidiDriver", type("Driver", (), {"network": network})())
     observer.attach(driver, "offline")
     handler = cast("Callable[[JsonValue], None]", network.handler)
-    handler({
-        "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
-        "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
-    })
+    handler(
+        {
+            "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
+            "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
+        }
+    )
 
     with pytest.raises(D2CoreBrowserError) as error:
         observer.capture(2)
@@ -139,10 +143,12 @@ def test_firefox_bidi_polls_delayed_response_body_from_passive_event() -> None:
     observer.attach(driver, "offline")
     handler = cast("Callable[[JsonValue], None]", network.handler)
     handler({"request": {"request": "catalog"}, "response": {"url": catalog_url}})
-    handler({
-        "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
-        "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
-    })
+    handler(
+        {
+            "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
+            "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
+        }
+    )
 
     snapshot = observer.capture(5)
 
@@ -187,14 +193,18 @@ def test_firefox_bidi_detach_attempts_both_removals_and_clears_state() -> None:
     driver = cast("BidiDriver", type("Driver", (), {"network": network})())
     observer.attach(driver, "offline")
     handler = cast("Callable[[JsonValue], None]", network.handler)
-    handler({
-        "request": {"request": "catalog"},
-        "response": {"url": "https://cloudstorage.d2core.com/data/d4/v1/affix_enUS.json"},
-    })
-    handler({
-        "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
-        "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
-    })
+    handler(
+        {
+            "request": {"request": "catalog"},
+            "response": {"url": "https://cloudstorage.d2core.com/data/d4/v1/affix_enUS.json"},
+        }
+    )
+    handler(
+        {
+            "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
+            "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
+        }
+    )
     observer.capture(1)
 
     with pytest.raises(RuntimeError):

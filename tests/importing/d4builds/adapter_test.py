@@ -89,29 +89,31 @@ def test_fetch_variant_discovery_is_bounded(mocker: MockerFixture) -> None:
 
 
 def test_fetch_variant_discovery_keeps_distinct_unnamed_pages(mocker: MockerFixture) -> None:
-    pages = iter([
-        d4builds_module._LoadedVariantPage(
-            data=d4builds_module.lxml.html.fromstring("<html><body>one</body></html>"),
-            class_name="barbarian",
-            build_header="Bash",
-            season_number="12",
-            variant_name="",
-        ),
-        d4builds_module._LoadedVariantPage(
-            data=d4builds_module.lxml.html.fromstring("<html><body>two</body></html>"),
-            class_name="barbarian",
-            build_header="Bash",
-            season_number="12",
-            variant_name="",
-        ),
-        d4builds_module._LoadedVariantPage(
-            data=d4builds_module.lxml.html.fromstring("<html><body>two</body></html>"),
-            class_name="barbarian",
-            build_header="Bash",
-            season_number="12",
-            variant_name="",
-        ),
-    ])
+    pages = iter(
+        [
+            d4builds_module._LoadedVariantPage(
+                data=d4builds_module.lxml.html.fromstring("<html><body>one</body></html>"),
+                class_name="barbarian",
+                build_header="Bash",
+                season_number="12",
+                variant_name="",
+            ),
+            d4builds_module._LoadedVariantPage(
+                data=d4builds_module.lxml.html.fromstring("<html><body>two</body></html>"),
+                class_name="barbarian",
+                build_header="Bash",
+                season_number="12",
+                variant_name="",
+            ),
+            d4builds_module._LoadedVariantPage(
+                data=d4builds_module.lxml.html.fromstring("<html><body>two</body></html>"),
+                class_name="barbarian",
+                build_header="Bash",
+                season_number="12",
+                variant_name="",
+            ),
+        ]
+    )
     loader = mocker.patch("src.importing.d4builds.adapter._load_variant_page", side_effect=pages)
 
     variants = d4builds_module.fetch_variants_d4builds(

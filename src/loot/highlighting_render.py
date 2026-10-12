@@ -150,7 +150,7 @@ class HighlightingRenderer:
         self.canvas.config(height=h, width=w)
         self.create_signal_rect(self.canvas, w, self.thick, color)
 
-        if text:
+        if text is not None and text != "":
             self.draw_text(self.canvas, text, color, h, 5, w // 2)
 
         self.root.geometry(f"{w}x{h}+{x + self.screen_off_x}+{y + self.screen_off_y}")

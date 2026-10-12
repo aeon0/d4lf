@@ -32,16 +32,18 @@ def extract_maxroll_paragon_steps(active_profile: JsonObject, mapping_data: Json
                 idx = _transform_flat_index(loc=loc, rotation=rotation)
                 if 0 <= idx < NODES_LEN:
                     nodes[idx] = True
-            boards_out.append({
-                "Name": maxroll_board_slug(board_id, _as_mapping(mapping_data.get("paragonBoards"))),
-                "Glyph": maxroll_glyph_slug(glyph_id, board_id, _as_mapping(mapping_data.get("paragonGlyphs")))
-                if glyph_id
-                else "",
-                "Rotation": _rotation_info_quarter_turn(rotation),
-                "Nodes": nodes,
-                "BoardId": board_id,
-                "GlyphId": glyph_id,
-            })
+            boards_out.append(
+                {
+                    "Name": maxroll_board_slug(board_id, _as_mapping(mapping_data.get("paragonBoards"))),
+                    "Glyph": maxroll_glyph_slug(glyph_id, board_id, _as_mapping(mapping_data.get("paragonGlyphs")))
+                    if glyph_id
+                    else "",
+                    "Rotation": _rotation_info_quarter_turn(rotation),
+                    "Nodes": nodes,
+                    "BoardId": board_id,
+                    "GlyphId": glyph_id,
+                }
+            )
         if boards_out:
             steps_out.append(boards_out)
     return steps_out

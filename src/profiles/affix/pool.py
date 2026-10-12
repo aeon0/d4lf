@@ -29,7 +29,7 @@ class AffixPoolWidget(QWidget):
 
         min_count_label = QLabel("Min Count:")
         min_count_label.setMaximumWidth(100)
-        min_count_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        min_count_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(min_count_label)
         config_layout.addWidget(min_count_label)
 
@@ -42,7 +42,7 @@ class AffixPoolWidget(QWidget):
 
         max_count_label = QLabel("Max Count:")
         max_count_label.setMaximumWidth(100)
-        max_count_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        max_count_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(max_count_label)
         config_layout.addWidget(max_count_label)
 
@@ -58,19 +58,19 @@ class AffixPoolWidget(QWidget):
         title_layout.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
         affix_label = QLabel("Affixes")
-        affix_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        affix_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(affix_label)
 
         greater_label = QLabel("Greater")
-        greater_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        greater_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(greater_label)
 
         mode_label = QLabel("Mode")
-        mode_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        mode_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(mode_label)
 
         value_label = QLabel("Threshold")
-        value_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[boolean-positional-value-in-call]
+        value_label.setProperty("affixHeaderLabel", True)  # ruff:ignore[FBT003]
         self._refresh_widget_style(value_label)
 
         title_layout.addSpacing(250)

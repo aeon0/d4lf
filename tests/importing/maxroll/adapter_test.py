@@ -49,25 +49,17 @@ def test_import_maxroll(url: str, mock_ini_loader: MockerFixture, mocker: Mocker
     import_maxroll(request=request)
 
 
-def test_find_item_type_uses_fix_weapon_type_with_slot_context() -> None:
-    assert (
-        _find_item_type(mapping_data={"item-1": {"type": "2H Sword"}}, value="item-1", class_name="Barbarian")
-        == ItemType.Sword2H
-    )
-
-
-def test_find_item_type_uses_fix_offhand_type_with_slot_and_class_context() -> None:
-    assert (
-        _find_item_type(mapping_data={"item-1": {"type": "FocusBookOffHand"}}, value="item-1", class_name="Sorcerer")
-        == ItemType.Focus
-    )
-
-
-def test_find_item_type_uses_fix_offhand_type_when_item_type_implies_offhand() -> None:
-    assert (
-        _find_item_type(mapping_data={"item-1": {"type": "1HFocus"}}, value="item-1", class_name="Sorcerer")
-        == ItemType.Focus
-    )
+@pytest.mark.parametrize(
+    ("type_name", "class_name", "expected"),
+    [
+        pytest.param("2H Sword", "Barbarian", ItemType.Sword2H, id="weapon-type-with-slot-context"),
+        pytest.param("FocusBookOffHand", "Sorcerer", ItemType.Focus, id="offhand-type-with-slot-and-class-context"),
+        pytest.param("1HFocus", "Sorcerer", ItemType.Focus, id="offhand-type-implied-by-item-type"),
+    ],
+)
+def test_find_item_type_applies_maxroll_type_fixes(type_name: str, class_name: str, expected: ItemType) -> None:
+    mapping_data = {"item-1": {"type": type_name}}
+    assert _find_item_type(mapping_data=mapping_data, value="item-1", class_name=class_name) == expected
 
 
 def test_resolve_visible_profile_index_skips_hidden_profiles() -> None:
@@ -88,10 +80,12 @@ def test_import_maxroll_keeps_mythic_item_without_affixes(mock_ini_loader, mocke
         "season": "14",
         "name": "Test Build",
         "class": "Barbarian",
-        "data": json.dumps({
-            "profiles": [{"name": "Default", "items": {"helm": 1}}],
-            "items": {"1": {"id": "item-mythic-helm", "explicits": []}},
-        }),
+        "data": json.dumps(
+            {
+                "profiles": [{"name": "Default", "items": {"helm": 1}}],
+                "items": {"1": {"id": "item-mythic-helm", "explicits": []}},
+            }
+        ),
     }
     mapping_response = mocker.Mock()
     mapping_response.json.return_value = {
@@ -189,10 +183,12 @@ def test_import_maxroll_extracts_the_selected_profile(mock_ini_loader, mocker: M
         "season": "14",
         "name": "Test Build",
         "class": "Barbarian",
-        "data": json.dumps({
-            "profiles": [{"name": "Default", "items": {"helm": 1}}, {"name": "Pit Push", "items": {"helm": 1}}],
-            "items": {"1": {"id": "item-mythic-helm", "explicits": []}},
-        }),
+        "data": json.dumps(
+            {
+                "profiles": [{"name": "Default", "items": {"helm": 1}}, {"name": "Pit Push", "items": {"helm": 1}}],
+                "items": {"1": {"id": "item-mythic-helm", "explicits": []}},
+            }
+        ),
     }
     mapping_response = mocker.Mock()
     mapping_response.json.return_value = {

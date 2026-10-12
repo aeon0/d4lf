@@ -136,7 +136,7 @@ def _find_item_affixes(
                     attr_id = attribute["id"]
                     attr_obj = _as_mapping(attributes.get(str(attr_id)))
                     attr_name = _as_text(attr_obj.get("name"))
-                    attr_desc = attribute_descriptions.get(_attribute_description_corrections(attr_name))
+                    attr_desc = attribute_descriptions.get(_attribute_description_corrections(attr_name), "")
                     if not attr_desc:
                         LOGGER.warning(
                             f"Unable to map {attr_name} from MaxRoll data to an affix, skipping affix and please report a bug."
@@ -276,10 +276,10 @@ def _find_affix_description_from_attribute_name(
     ui_strings = _as_mapping(mapping_data.get("uiStrings"))
     match attribute_name:
         case "Bucketed_Multiplicative_Damage_Type":
-            label = _as_text_mapping(ui_strings.get("damageType")).get(str(param))
+            label = _as_text_mapping(ui_strings.get("damageType")).get(str(param), "")
             return f"{label} Damage Multiplier" if label else ""
         case "Resource_Regen_Per_Second":
-            label = _as_text_mapping(ui_strings.get("resourceType")).get(str(param))
+            label = _as_text_mapping(ui_strings.get("resourceType")).get(str(param), "")
             return f"{label} Regeneration" if label else ""
         case "Skill_Rank_Skill_Tag_Bonus":
             label = _find_skill_rank_label_from_sibling_affix_keys(mapping_data, param)

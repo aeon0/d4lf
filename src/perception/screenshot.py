@@ -24,7 +24,7 @@ def screenshot(
     name = name if name is not None else "screenshot"
     img = img if img is not None else Cam().grab()
     pathlib.Path(path).mkdir(exist_ok=True, parents=True)
-    suffix = "_" + datetime.now(tz=None).strftime("%Y%m%d_%H%M%S.%f") if timestamp else ""  # ruff:ignore[call-datetime-now-without-tzinfo]
+    suffix = "_" + datetime.now(tz=None).strftime("%Y%m%d_%H%M%S.%f") if timestamp else ""  # ruff:ignore[DTZ005]
     file_path = pathlib.Path(path) / f"{name}{suffix}.png"
 
     if file_path.exists() and not overwrite:

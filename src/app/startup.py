@@ -58,12 +58,10 @@ def check_for_proper_tts_configuration() -> None:
     if tts_dll and tts_dll.exists():
         try:
             env = {**os.environ, "D4LF_TTS_DLL": str(tts_dll)}
-            status = subprocess.run(
-                [
-                    r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
-                    "-Command",
-                    "(Get-AuthenticodeSignature $env:D4LF_TTS_DLL).Status",
-                ],
+            powershell_exe = Path(os.environ["WINDIR"]) / "System32" / "WindowsPowerShell" / "v1.0" / "powershell.exe"
+            # The executable is under WINDIR, and the PowerShell command and arguments are fixed.
+            status = subprocess.run(  # noqa: S603
+                [str(powershell_exe), "-Command", "(Get-AuthenticodeSignature $env:D4LF_TTS_DLL).Status"],
                 capture_output=True,
                 text=True,
                 check=True,
@@ -77,7 +75,7 @@ def check_for_proper_tts_configuration() -> None:
                     f"{SETUP_INSTRUCTIONS_URL} to get the dll signed (specifically, run install_dll.bat). "
                     f"It currently has a status of {status}"
                 )
-        except subprocess.CalledProcessError as error:
+        except (OSError, subprocess.CalledProcessError) as error:
             LOGGER.error(f"Error checking saapi64.dll signature: {error}")
 
     if not d4_process_found:

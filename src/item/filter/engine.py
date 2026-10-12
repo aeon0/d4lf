@@ -11,7 +11,7 @@ from src.item.filter.repository import (
     ProfileRulesRepository,
 )
 from src.item.filter.rules import EvaluationSettings, LoadedRules
-from src.settings import get_settings
+from src.settings import Settings, get_settings
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -33,9 +33,14 @@ class Filter(FilterEvaluator):
     def __init__(self) -> None:
         if getattr(self, "_initialized", False):
             return
-        self._repository = ProfileRulesRepository(get_settings)
+        self._repository = ProfileRulesRepository(self._current_settings)
         super().__init__(rules=self._repository.rules, evaluation_settings=EvaluationSettings())
         self._initialized = True
+
+    @staticmethod
+    def _current_settings() -> Settings:
+        # Resolved per call so the settings lookup is not frozen when the singleton is created.
+        return get_settings()
 
     @property
     @override
@@ -114,7 +119,7 @@ class Filter(FilterEvaluator):
         if not self.files_loaded or self._did_files_change():
             self.load_files()
         self._rules = self._repository.rules
-        self.evaluation_settings = EvaluationSettings.from_settings(get_settings())
+        self.evaluation_settings = EvaluationSettings.from_settings(self._current_settings())
         return super().should_keep(item)
 
 

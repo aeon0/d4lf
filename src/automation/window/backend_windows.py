@@ -63,7 +63,6 @@ def start_detecting_window(window_spec: WindowSpecLike) -> None:
 
 
 def detect_window(window_spec: WindowSpecLike) -> None:
-    global DETECTION_WINDOW_FLAG
     while DETECTION_WINDOW_FLAG:
         find_and_set_window_position(window_spec)
     LOGGER.debug("Detect window thread stopped")

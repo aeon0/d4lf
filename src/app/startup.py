@@ -59,7 +59,11 @@ def check_for_proper_tts_configuration() -> None:
         try:
             env = {**os.environ, "D4LF_TTS_DLL": str(tts_dll)}
             status = subprocess.run(
-                [r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe", "-Command", "(Get-AuthenticodeSignature $env:D4LF_TTS_DLL).Status"],
+                [
+                    r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
+                    "-Command",
+                    "(Get-AuthenticodeSignature $env:D4LF_TTS_DLL).Status",
+                ],
                 capture_output=True,
                 text=True,
                 check=True,

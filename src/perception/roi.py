@@ -10,6 +10,9 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 
+RECTANGLE_VALUE_COUNT = 4
+COORDINATE_VALUE_COUNT = 2
+
 type Rectangle = tuple[int, int, int, int]
 type RoiCoordinate = int | np.integer
 type RoiValues = tuple[RoiCoordinate | Iterable[RoiCoordinate], ...]
@@ -63,7 +66,7 @@ def _as_rectangle(value: RoiInput | RoiValues) -> Rectangle | None:
     values = _as_values(value)
     if values is None:
         return None
-    if len(values) != 4 or not all(isinstance(item, Integral) for item in values):
+    if len(values) != RECTANGLE_VALUE_COUNT or not all(isinstance(item, Integral) for item in values):
         return None
     x, y, width, height = values
     if (
@@ -124,7 +127,8 @@ def bounding_box(*args: RoiInput) -> Rectangle | None:
         if materialized_arg is None:
             return None
         if _as_rectangle(materialized_arg) is not None or (
-            len(materialized_arg) == 2 and all(isinstance(value, Integral) for value in materialized_arg)
+            len(materialized_arg) == COORDINATE_VALUE_COUNT
+            and all(isinstance(value, Integral) for value in materialized_arg)
         ):
             normalized_args = [materialized_arg]
         else:
@@ -143,7 +147,9 @@ def bounding_box(*args: RoiInput) -> Rectangle | None:
         values = _as_values(arg)
         if values is None:
             return None
-        if len(values) == 2 and all(isinstance(value, Integral) for value in values):  # if it's a coordinate
+        if len(values) == COORDINATE_VALUE_COUNT and all(
+            isinstance(value, Integral) for value in values
+        ):  # if it's a coordinate
             x_value, y_value = values
             if not isinstance(x_value, Integral) or not isinstance(y_value, Integral):
                 return None
@@ -152,7 +158,9 @@ def bounding_box(*args: RoiInput) -> Rectangle | None:
             max_x = x if max_x is None else max(max_x, x)
             min_y = y if min_y is None else min(min_y, y)
             max_y = y if max_y is None else max(max_y, y)
-        elif len(values) == 4 and all(isinstance(value, Integral) for value in values):  # if it's a rectangle
+        elif len(values) == RECTANGLE_VALUE_COUNT and all(
+            isinstance(value, Integral) for value in values
+        ):  # if it's a rectangle
             x_value: RoiCoordinate | Iterable[RoiCoordinate] = values[0]
             y_value: RoiCoordinate | Iterable[RoiCoordinate] = values[1]
             w_value: RoiCoordinate | Iterable[RoiCoordinate] = values[2]

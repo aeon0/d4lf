@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 
 ITEM_TOP_LEFT_THRESHOLD = 0.80
 ITEM_BOTTOM_EDGE_THRESHOLD = 0.54
+CROP_ROI_VALUE_COUNT = 4
 
 ITEM_TOP_LEFT_TEMPLATES = (
     "item_top_left_common",
@@ -81,7 +82,11 @@ def find_descr_with_diagnostics(img: np.ndarray, anchor: tuple[int, int]) -> Des
 
 def get_separator_match_in_crop(detection: DescrDetection) -> TemplateMatch | None:
     """Translate a full-image separator match into the returned crop's coordinates."""
-    if detection.separator_match is None or detection.crop_roi is None or len(detection.crop_roi) != 4:
+    if (
+        detection.separator_match is None
+        or detection.crop_roi is None
+        or len(detection.crop_roi) != CROP_ROI_VALUE_COUNT
+    ):
         return None
 
     crop_x, crop_y, crop_width, crop_height = detection.crop_roi

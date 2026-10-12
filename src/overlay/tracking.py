@@ -14,6 +14,8 @@ from src.settings import get_settings
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+EXP_BAR_POS_VALUE_COUNT = 4
+
 
 def _not_busy() -> bool:
     return False
@@ -33,7 +35,7 @@ def set_busy_checker(checker: Callable[[], bool]) -> None:
 
 def _hover_experience_balance(config: dict[str, InfoSettingValue]) -> None:
     position = setting_position(config.get("exp_bar_pos"))
-    if position is not None and len(position) == 4:
+    if position is not None and len(position) == EXP_BAR_POS_VALUE_COUNT:
         move_pointer(*window_to_monitor((position[0], position[1])))
         time.sleep(0.1)
         move_pointer(*window_to_monitor((position[2], position[3])))

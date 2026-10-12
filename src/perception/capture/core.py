@@ -11,6 +11,7 @@ from src.perception.capture.helpers import convert_args_to_numpy
 from src.settings import get_ui_coordinates
 
 LOGGER = logging.getLogger(__name__)
+CACHED_FRAME_MAX_AGE_SECONDS = 0.04
 
 # The mss Windows module consumes this Win32 flag at runtime, but its stubs omit it.
 mss.windows.__dict__["CAPTUREBLT"] = 0
@@ -106,7 +107,7 @@ class Cam:
                     and not force_new
                     and self.cached_img is not None
                     and self.last_grab is not None
-                    and time.perf_counter() - self.last_grab < 0.04
+                    and time.perf_counter() - self.last_grab < CACHED_FRAME_MAX_AGE_SECONDS
                 ):
                     return self.cached_img
                 window_ready = self.window_offset_set

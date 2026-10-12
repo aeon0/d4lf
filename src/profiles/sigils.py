@@ -6,6 +6,8 @@ from src.game_data import ItemRarity, SigilRules
 from src.profiles.validation.normalization import _normalize_rarities, _normalize_tribute_names
 from src.type_aliases import JsonObject  # ruff:ignore[TC001]
 
+SIGIL_LIST_CONDITION_LENGTH = 2
+
 
 class SigilPriority(enum.StrEnum):
     blacklist = enum.auto()
@@ -31,7 +33,7 @@ class SigilConditionModel(BaseModel):
             result = {}
             if len(data) >= 1:
                 result["name"] = data[0]
-            if len(data) >= 2:
+            if len(data) >= SIGIL_LIST_CONDITION_LENGTH:
                 result["condition"] = data[1:]
             return result
         msg = "must be str or list"

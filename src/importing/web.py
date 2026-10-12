@@ -2,6 +2,7 @@ import annotationlib
 import functools
 import inspect
 import logging
+from http import HTTPStatus
 from typing import TYPE_CHECKING, overload
 
 import httpx
@@ -34,7 +35,7 @@ def get_with_retry(url: str, custom_headers: dict[str, str] | None = None) -> ht
         except httpx.RequestError:
             LOGGER.debug(f"Request {url} timed out, retrying...")
             continue
-        if response.status_code != 200:
+        if response.status_code != HTTPStatus.OK:
             LOGGER.debug(f"Request {url} failed with status code {response.status_code}, retrying...")
             continue
         return response

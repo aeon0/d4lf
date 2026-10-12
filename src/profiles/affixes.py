@@ -5,6 +5,9 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from src.game_data import GameCatalog
 from src.profiles.validation.constraints import check_greater_than_zero, validate_greater_affix_count, validate_percent
 
+AFFIX_LIST_MAX_LENGTH = 2
+AFFIX_LIST_VALUE_LENGTH = 2
+
 
 class AffixAspectFilterModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -19,13 +22,13 @@ class AffixAspectFilterModel(BaseModel):
         if isinstance(data, str):
             return {"name": data}
         if isinstance(data, list):
-            if not data or len(data) > 2:
+            if not data or len(data) > AFFIX_LIST_MAX_LENGTH:
                 msg = "list, cannot be empty or larger than 2 items"
                 raise ValueError(msg)
             result = {}
             if len(data) >= 1:
                 result["name"] = data[0]
-            if len(data) >= 2:
+            if len(data) >= AFFIX_LIST_VALUE_LENGTH:
                 result["value"] = data[1]
             return result
         msg = "must be str or list"

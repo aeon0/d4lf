@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from src.type_aliases import JsonValue
 
 LOGGER = logging.getLogger(__name__)
+PLANNER_URL_SPLIT_PART_COUNT = 2
 
 
 class MaxrollError(ImportSourceError):
@@ -129,7 +130,7 @@ def _normalize_item_type_str_for_import_helpers(item_type_str: str) -> str:
 
 def _extract_planner_url_and_id_from_planner(url: str) -> tuple[str, int, bool]:
     planner_suffix = url.split(PLANNER_BASE_URL)
-    if len(planner_suffix) != 2:
+    if len(planner_suffix) != PLANNER_URL_SPLIT_PART_COUNT:
         LOGGER.error(msg := "Invalid planner url")
         raise MaxrollError(msg)
     planner_id, fragment_separator, fragment = planner_suffix[1].partition("#")

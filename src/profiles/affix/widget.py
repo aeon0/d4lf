@@ -13,6 +13,7 @@ AFFIXES_TABNAME = "Affixes"
 AFFIX_VALUE_MODE = "Value"
 AFFIX_PERCENT_MODE = "Min %"
 UNIQUE_ASPECTS_TITLE = "Unique Aspects"
+MAX_PERCENT = 100
 
 
 @runtime_checkable
@@ -205,7 +206,7 @@ class AffixWidget(QWidget):
                 percent = int(value) if value else 0
             except ValueError:
                 return
-            if not 0 <= percent <= 100:
+            if not 0 <= percent <= MAX_PERCENT:
                 QMessageBox.warning(self, "Warning", "Min % must be between 0 and 100.")
                 self.refresh_value_input()
                 return

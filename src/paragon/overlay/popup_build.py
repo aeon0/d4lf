@@ -154,7 +154,7 @@ class OverlayPopupBuildMixin(OverlayContract):
         zr.pack(fill="x", pady=int(3 * s))
         btn_zm = tk_btn(
             zr,
-            text="−",
+            text="-",
             cmd=_run_and_refresh(lambda: self._zoom_grid(-1)),
             font=("Segoe UI", int(FS_ZOOM_BTN * s), "bold"),
             padx=int(8 * s),
@@ -237,7 +237,7 @@ class OverlayPopupBuildMixin(OverlayContract):
         tk.Frame(c, bg=MUTED, height=1).pack(fill="x", pady=int(6 * s))
         tk_lbl(
             c,
-            text="• Drag frame to move grid\n• D-Pad ↑ ↓ ← → moves grid per click\n• Use − + buttons to zoom\n• Use ★ to make all frames golden\n• Use ↺ to reset to default size/position\n• Use 🔓 to unlock/lock grid",
+            text="• Drag frame to move grid\n• D-Pad ↑ ↓ ← → moves grid per click\n• Use - + buttons to zoom\n• Use ★ to make all frames golden\n• Use ↺ to reset to default size/position\n• Use 🔓 to unlock/lock grid",
             fg=MUTED,
             font=("Segoe UI", int(FS_HINT * s)),
             anchor="w",

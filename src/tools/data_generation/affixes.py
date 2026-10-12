@@ -98,7 +98,7 @@ def companion_style_affix_description(
 
 
 def normalise_affix_description(description: str) -> tuple[str, str] | None:
-    desc = description.lower().strip().replace("'", "").replace("’", "").replace("â€™", "").replace(".", "")
+    desc = description.lower().strip().replace("'", "").replace("’", "").replace("â€™", "").replace(".", "")  # ruff:ignore[RUF001]
     # A little hacky but we'll fix this bad data here. If we find more we'll make a better solution
     desc = desc.replace("lighting", "lightning")
     desc = remove_content_in_braces(desc)

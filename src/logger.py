@@ -3,7 +3,7 @@ import logging.handlers
 import sys
 import threading
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Literal, override
+from typing import TYPE_CHECKING, ClassVar, Literal, override
 
 import colorama
 
@@ -49,7 +49,7 @@ class ColoredFormatter(logging.Formatter):
         colorama.just_fix_windows_console()
         super().__init__(fmt=fmt, datefmt=datefmt, style=style, validate=validate, defaults=defaults)
 
-    COLORS = {
+    COLORS: ClassVar[dict[str, str | int]] = {
         "DEBUG": colorama.Fore.LIGHTCYAN_EX,
         "INFO": colorama.Fore.GREEN,
         "WARNING": colorama.Fore.YELLOW,

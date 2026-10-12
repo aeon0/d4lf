@@ -1,4 +1,4 @@
-from typing import Never
+from typing import ClassVar, Never
 
 from src.loot import orchestration as _orchestration
 from src.settings import ItemRefreshType
@@ -9,7 +9,7 @@ def test_loot_filter_processes_stash_tabs_before_inventory(monkeypatch) -> None:
 
     class Settings:
         class General:
-            check_chest_tabs = [2, 4]
+            check_chest_tabs: ClassVar[list[int]] = [2, 4]
 
         general = General()
 

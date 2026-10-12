@@ -28,7 +28,7 @@ class Cam:
     last_grab: float | None = None
     cached_img: np.ndarray | None = None
     window_offset_set: bool = False
-    window_roi: WindowROI = {"top": 0, "left": 0, "width": 0, "height": 0}
+    window_roi: WindowROI
     monitor_x_range: tuple[int, int] | None = None
     monitor_y_range: tuple[int, int] | None = None
     res_key = ""
@@ -40,6 +40,7 @@ class Cam:
     def __new__(cls) -> Self:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
+            cls._instance.window_roi = {"top": 0, "left": 0, "width": 0, "height": 0}
         return cls._instance
 
     def update_window_pos(self, offset_x: int, offset_y: int, width: int, height: int) -> None:

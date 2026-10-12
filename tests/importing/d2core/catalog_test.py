@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, cast, override
+from typing import TYPE_CHECKING, ClassVar, cast, override
 
 import httpx
 import pytest
@@ -46,7 +46,7 @@ def test_catalog_schema_failure_is_not_retried() -> None:
 def test_catalog_requests_are_bounded_to_three_attempts_and_ten_seconds() -> None:
     class Transport(CatalogTransport):
         calls = 0
-        timeouts: list[float] = []
+        timeouts: ClassVar[list[float]] = []
 
         @override
         def get(self, url: str, *, timeout: float) -> JsonValue:

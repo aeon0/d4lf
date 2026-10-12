@@ -1,5 +1,6 @@
 import inspect
 import typing
+from typing import ClassVar
 
 import pytest
 
@@ -12,7 +13,7 @@ from src.settings.hotkeys import runtime as hotkeys
 
 
 class _FakeListener:
-    instances = []
+    instances: ClassVar[list[_FakeListener]] = []
 
     def __init__(self, on_press, on_release) -> None:
         self._on_press = on_press

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import ClassVar
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -72,7 +73,7 @@ def test_config_window_force_maximized_overrides_saved_state(monkeypatch, qapp) 
 
 def test_config_window_persists_maximized_state_on_close(monkeypatch, qapp) -> None:
     class FakeSettings:
-        values = {"maximized": False}
+        values: ClassVar[dict[str, bool]] = {"maximized": False}
 
         def __init__(self, *_args) -> None:
             pass

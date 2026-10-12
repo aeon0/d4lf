@@ -2,6 +2,9 @@ import re
 
 GRID = 21
 NODES_LEN = GRID * GRID
+QUARTER_TURN_DEGREES = 90
+HALF_TURN_DEGREES = 180
+THREE_QUARTER_TURN_DEGREES = 270
 
 
 def slugify(s: str) -> str:
@@ -102,14 +105,14 @@ def transform_xy(x: int, y: int, rotation_deg: int, base: str) -> int:
         if rotation_deg in {0, 360}:
             xt -= 1
             yt -= 1
-        elif rotation_deg == 90:
+        elif rotation_deg == QUARTER_TURN_DEGREES:
             xt = GRID - y
             yt = x
             yt -= 1
-        elif rotation_deg == 180:
+        elif rotation_deg == HALF_TURN_DEGREES:
             xt = GRID - x
             yt = GRID - y
-        elif rotation_deg == 270:
+        elif rotation_deg == THREE_QUARTER_TURN_DEGREES:
             xt = y
             yt = GRID - x
             xt -= 1

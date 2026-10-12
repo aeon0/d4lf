@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 
 Point = tuple[int, int]
 ItemRoi = tuple[int, int, int, int]
+CROP_ROI_VALUE_COUNT = 4
 
 
 @dataclass(frozen=True)
@@ -54,7 +55,7 @@ def select_target_center(
 
 def as_item_roi(crop_roi: list[int] | None) -> ItemRoi | None:
     """Convert a detector ROI to the tuple consumed by overlay requests."""
-    if crop_roi is None or len(crop_roi) != 4:
+    if crop_roi is None or len(crop_roi) != CROP_ROI_VALUE_COUNT:
         return None
     return (crop_roi[0], crop_roi[1], crop_roi[2], crop_roi[3])
 
@@ -94,7 +95,7 @@ def confirm_stable_tooltip(
     """Require a valid detector ROI and matching consecutive tooltip frames."""
     if not detection.found or detection.crop_roi is None or detection.cropped_descr is None:
         return TooltipConfirmation(TooltipConfirmationStatus.ABSENT, None, None)
-    if len(detection.crop_roi) != 4:
+    if len(detection.crop_roi) != CROP_ROI_VALUE_COUNT:
         return TooltipConfirmation(TooltipConfirmationStatus.INVALID, None, None)
     item_roi = as_item_roi(detection.crop_roi)
     if item_roi is None:

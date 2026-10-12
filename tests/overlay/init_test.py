@@ -19,4 +19,4 @@ def test_overlay_facade_exposes_lifecycle_and_tracking_contract() -> None:
 def test_overlay_facade_delegates_busy_check(monkeypatch) -> None:
     overlay.set_busy_checker(lambda: True)
 
-    assert _tracking._busy_checker()
+    assert _tracking._STATE.busy_checker()

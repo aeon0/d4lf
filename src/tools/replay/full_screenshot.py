@@ -30,6 +30,7 @@ ANCHOR_COLOR = (0, 255, 255)
 TEXT_COLOR = (255, 255, 255)
 BACKGROUND_COLOR = (30, 30, 30)
 FAILURE_COLOR = (0, 0, 255)
+ITEM_ANCHOR_VALUE_COUNT = 2
 
 
 @dataclass
@@ -64,7 +65,7 @@ def validate_replay_config(config: ReplayConfig) -> tuple[Path, np.ndarray]:
     anchor = config.item_anchor
     if (
         not isinstance(anchor, (tuple, list))
-        or len(anchor) != 2
+        or len(anchor) != ITEM_ANCHOR_VALUE_COUNT
         or any(isinstance(value, bool) for value in anchor)
         or any(value < 0 for value in anchor)
     ):

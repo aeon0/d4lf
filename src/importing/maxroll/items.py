@@ -25,6 +25,12 @@ if TYPE_CHECKING:
 LOGGER = logging.getLogger(__name__)
 LOGGER.propagate = True
 
+LEGENDARY_RARITY_ID = 1
+UNIQUE_RARITY_ID = 2
+SET_RARITY_ID = 3
+MYTHIC_RARITY_ID = 4
+CHARM_SLOT_AFFIX_ID = 2609197
+
 
 def _attribute_description_corrections(input_str: str) -> str:
     match input_str:
@@ -41,13 +47,13 @@ def _find_item_rarity(resolved_item_id: str, mapping_data: Mapping[str, JsonValu
     item = _as_mapping(items.get(resolved_item_id))
     if item:
         rarity_id = item.get("magicType")
-        if rarity_id == 1:
+        if rarity_id == LEGENDARY_RARITY_ID:
             return ItemRarity.Legendary
-        if rarity_id == 2:
+        if rarity_id == UNIQUE_RARITY_ID:
             return ItemRarity.Unique
-        if rarity_id == 3:
+        if rarity_id == SET_RARITY_ID:
             return ItemRarity.Set
-        if rarity_id == 4:
+        if rarity_id == MYTHIC_RARITY_ID:
             return ItemRarity.Mythic
 
     return ItemRarity.Common
@@ -59,7 +65,7 @@ def _as_text_mapping(value: JsonValue) -> Mapping[str, str]:
 
 
 def _attr_desc_special_handling(affix_id: int | str) -> str:
-    return "charm slot" if affix_id == 2609197 else ""
+    return "charm slot" if affix_id == CHARM_SLOT_AFFIX_ID else ""
 
 
 def _find_item_affixes(

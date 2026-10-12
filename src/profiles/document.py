@@ -95,7 +95,11 @@ class ProfileDocumentStore:
         profile_name = profile_path.stem.replace("_", " ")
         try:
             with profile_path.open(encoding="utf-8") as f:
-                config = yaml.load(stream=f, Loader=UniqueKeyLoader)
+                loader = UniqueKeyLoader(f)
+                try:
+                    config = loader.get_single_data()
+                finally:
+                    loader.dispose()
         except yaml.YAMLError as exc:
             msg = f"Error in the YAML file {profile_path}: {exc}"
             raise ProfileYamlError(msg) from exc

@@ -25,6 +25,7 @@ from src.paragon.overlay.theme import (
 from src.settings import get_settings
 
 LOGGER = logging.getLogger(__name__)
+FOCUS_HYSTERESIS_SECONDS = 0.75
 
 
 class OverlayUIMixin(OverlayContract):
@@ -181,7 +182,7 @@ class OverlayUIMixin(OverlayContract):
             if is_fgrnd:
                 self._last_focus_time = now
 
-            should_be_visible = is_fgrnd or (now - self._last_focus_time < 0.75)
+            should_be_visible = is_fgrnd or (now - self._last_focus_time < FOCUS_HYSTERESIS_SECONDS)
 
             if should_be_visible and not self.winfo_viewable():
                 self.deiconify()

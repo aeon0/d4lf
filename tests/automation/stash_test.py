@@ -12,7 +12,7 @@ BASE_PATH = BASE_DIR / "tests/assets/ui"
 def test_stash_is_configured_as_stash_menu(monkeypatch) -> None:
     monkeypatch.setattr(
         "src.automation.stash.get_ui_coordinates",
-        lambda: type(
+        type(
             "C",
             (),
             {
@@ -20,7 +20,7 @@ def test_stash_is_configured_as_stash_menu(monkeypatch) -> None:
                     "R", (), {"slots_4x10": (0, 0, 100, 100), "rel_fav_flag": (0, 0, 1, 1), "stash_tab": (0, 0, 1, 1)}
                 )()
             },
-        )(),
+        ),
     )
     stash = Stash()
     assert stash.menu_name == "Stash"

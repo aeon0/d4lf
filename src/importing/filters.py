@@ -1,6 +1,6 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, TypeVar, overload
+from typing import TYPE_CHECKING, overload
 
 import rapidfuzz
 
@@ -20,9 +20,9 @@ if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
 
 
-E = TypeVar("E", bound=Enum)
-FilterModelT = TypeVar("FilterModelT", bound=ItemFilterModel | CharmFilterModel | SealFilterModel)
 LOGGER = logging.getLogger(__name__)
+GLOBAL_AFFIX_MAX_EDIT_DISTANCE = 2
+SET_AFFIX_MIN_TOKEN_SET_RATIO = 50
 
 
 def fix_weapon_type(input_str: str) -> ItemType | None:
@@ -97,7 +97,7 @@ def match_set_aware_seal_affix(stat_clean: str, affix_dict: dict[str, str], gues
     best_global_key = closest_match(stat_clean, affix_dict)
     if best_global_key is not None and best_global_key != "damage":
         global_display = affix_dict[best_global_key]
-        if rapidfuzz.distance.Levenshtein.distance(stat_clean, global_display) <= 2:
+        if rapidfuzz.distance.Levenshtein.distance(stat_clean, global_display) <= GLOBAL_AFFIX_MAX_EDIT_DISTANCE:
             is_set_specific = any(best_global_key.startswith(f"{set_name}_") for set_name in GameCatalog().set_list)
             if not is_set_specific:
                 return best_global_key
@@ -110,7 +110,11 @@ def match_set_aware_seal_affix(stat_clean: str, affix_dict: dict[str, str], gues
     if potential_match is None:
         return None
     display_name = GameCatalog().seal_affix_dict[potential_match]
-    return potential_match if rapidfuzz.fuzz.token_set_ratio(stat_clean, display_name) >= 50 else None
+    return (
+        potential_match
+        if rapidfuzz.fuzz.token_set_ratio(stat_clean, display_name) >= SET_AFFIX_MIN_TOKEN_SET_RATIO
+        else None
+    )
 
 
 def is_unique_like_rarity(rarity: ItemRarity | str | None) -> bool:
@@ -203,7 +207,7 @@ def unique_filter_name[FilterT](filter_name_template: str, filters: Sequence[Map
     return filter_name
 
 
-def deduplicate_filters(
+def deduplicate_filters[FilterModelT: ItemFilterModel | CharmFilterModel | SealFilterModel](
     filters: Sequence[FilterModelT], name_hints: Sequence[str | None] | None = None
 ) -> list[dict[str, FilterModelT]]:
     """Merge identical filters, naming duplicates with an (xN) count suffix."""
@@ -238,11 +242,13 @@ def deduplicate_filters(
     return result
 
 
-def sort_profile_filters(filters: Sequence[Mapping[str, FilterModelT]]) -> list[dict[str, FilterModelT]]:
+def sort_profile_filters[FilterModelT: ItemFilterModel | CharmFilterModel | SealFilterModel](
+    filters: Sequence[Mapping[str, FilterModelT]],
+) -> list[dict[str, FilterModelT]]:
     return [dict(entry) for entry in sorted(filters, key=lambda entry: next(iter(entry)).casefold())]
 
 
-def match_to_enum(enum_class: type[E], target_string: str, check_keys: bool = False) -> E | None:
+def match_to_enum[E: Enum](enum_class: type[E], target_string: str, check_keys: bool = False) -> E | None:
     target_string = target_string.casefold().replace(" ", "").replace("-", "")
     for member in enum_class:
         if str(member.value).casefold().replace(" ", "").replace("-", "") == target_string or (

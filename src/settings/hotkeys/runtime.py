@@ -3,20 +3,17 @@
 import threading
 from collections import defaultdict
 from collections.abc import Callable, Hashable  # ruff: ignore[TC003] - pynput inspects the listener handlers
+from functools import cache
 from typing import cast
 
 from pynput import keyboard
 
 from src.settings.binding.core import _canonicalize_token, _split_hotkey_tokens, normalize_hotkey
 
-_CONTROLLER: keyboard.Controller | None = None
 
-
+@cache
 def _controller() -> keyboard.Controller:
-    global _CONTROLLER
-    if _CONTROLLER is None:
-        _CONTROLLER = keyboard.Controller()
-    return _CONTROLLER
+    return keyboard.Controller()
 
 
 def _to_pressable(token: str) -> str | keyboard.Key:

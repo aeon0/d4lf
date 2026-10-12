@@ -15,6 +15,9 @@ if TYPE_CHECKING:
     from src.automation import Inventory
 
 LOGGER = logging.getLogger(__name__)
+ITEM_PARSE_MAX_ATTEMPTS = 2
+MIN_AFFIXED_ITEMS_FOR_SANITY_CHECK = 2
+ALL_GREATER_AFFIX_SUSPICIOUS_RATIO = 0.8
 
 
 def check_items(
@@ -51,7 +54,7 @@ def check_items(
         item_descr = None
         retry_count = 0
 
-        while item_descr is None and retry_count != 2:
+        while item_descr is None and retry_count != ITEM_PARSE_MAX_ATTEMPTS:
             try:
                 item_descr = src.perception.read_latest_item()
                 LOGGER.debug(f"Attempt {retry_count} to parse item based on TTS: {item_descr}")
@@ -114,7 +117,9 @@ def check_items(
     LOGGER.debug(f"Time to filter all items in stash/inventory tab: {time.time() - start_checking_items:.2f}s")
 
     # If more than 80% of the items had all greater affixes that means something is probably wrong
-    if num_of_affixed_items_checked > 2 and (num_of_items_with_all_ga / num_of_affixed_items_checked > 0.8):
+    if num_of_affixed_items_checked > MIN_AFFIXED_ITEMS_FOR_SANITY_CHECK and (
+        num_of_items_with_all_ga / num_of_affixed_items_checked > ALL_GREATER_AFFIX_SUSPICIOUS_RATIO
+    ):
         LOGGER.warning(
             f"{num_of_items_with_all_ga} out of {num_of_affixed_items_checked} non-junk rarity items checked had all greater affixes. You are either exceptionally lucky or have not enabled Advanced Tooltip Information in Options > Gameplay"
         )

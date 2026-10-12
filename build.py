@@ -9,9 +9,13 @@ EXE_NAME = "d4lf.exe"
 
 
 def build(release_dir: Path) -> None:
+    pyinstaller = shutil.which("pyinstaller")
+    if pyinstaller is None:
+        msg = "pyinstaller not found on PATH"
+        raise FileNotFoundError(msg)
     subprocess.run(
         [
-            "pyinstaller",
+            pyinstaller,
             "--clean",
             "--onedir",
             "--noconfirm",

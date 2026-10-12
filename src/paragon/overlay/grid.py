@@ -12,6 +12,8 @@ from src.paragon.transform import GRID, NODES_LEN, nodes_to_grid
 from src.perception import game_window_roi
 
 LOGGER = logging.getLogger(__name__)
+X11_WHEEL_UP_BUTTON = 4
+X11_WHEEL_DOWN_BUTTON = 5
 
 if sys.platform == "win32":
     import win32con
@@ -99,9 +101,9 @@ class OverlayGridMixin(OverlayContract):
         """Scroll the board list on Windows, Linux, and X11 wheel events."""
         delta = (
             -1
-            if getattr(e, "delta", 0) > 0 or getattr(e, "num", 0) == 4
+            if getattr(e, "delta", 0) > 0 or getattr(e, "num", 0) == X11_WHEEL_UP_BUTTON
             else 1
-            if getattr(e, "delta", 0) < 0 or getattr(e, "num", 0) == 5
+            if getattr(e, "delta", 0) < 0 or getattr(e, "num", 0) == X11_WHEEL_DOWN_BUTTON
             else 0
         )
         if delta:

@@ -76,4 +76,4 @@ rev = "v0.17.0"
 [[repos]]
 hooks = [{ id = "tombi-format", exclude = "^uv.lock", priority = 4294967294 }]
 repo = "https://github.com/tombi-toml/tombi-pre-commit"
-rev = "v1.8.1"
+rev = "v1.8.2"

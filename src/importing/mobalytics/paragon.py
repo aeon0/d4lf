@@ -57,10 +57,7 @@ def extract_mobalytics_paragon_steps(paragon_data: Mapping[str, JsonValue]) -> l
             idx = _transform_xy(x=x, y=y, rotation_deg=rotation, base="mobalytics")
             if 0 <= idx < NODES_LEN:
                 nodes[idx] = True
-        boards_out.append({
-            "Name": board_slug,
-            "Glyph": glyph_slug,
-            "Rotation": _rotation_info_degrees(rotation),
-            "Nodes": nodes,
-        })
+        boards_out.append(
+            {"Name": board_slug, "Glyph": glyph_slug, "Rotation": _rotation_info_degrees(rotation), "Nodes": nodes}
+        )
     return [boards_out] if boards_out else []

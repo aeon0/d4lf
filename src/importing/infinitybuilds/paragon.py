@@ -78,15 +78,17 @@ def extract_infinitybuilds_paragon_steps(
             idx = _transform_flat_index(loc=loc, rotation=rotation)
             if 0 <= idx < NODES_LEN:
                 nodes[idx] = True
-        glyph_id = next((gid for node_id, gid in glyphs.items() if node_id.startswith(f"{board_id}::")), None)
-        boards_out.append({
-            "Name": class_prefixed_slug(str(catalog.board_labels.get(board_id) or board_id), class_slug),
-            "Glyph": class_prefixed_slug(catalog.glyph_labels.get(glyph_id) or glyph_id, class_slug)
-            if glyph_id
-            else "",
-            "Rotation": _rotation_info_quarter_turn(rotation),
-            "Nodes": nodes,
-            "BoardId": board_id,
-            "GlyphId": glyph_id,
-        })
+        glyph_id = next((gid for node_id, gid in glyphs.items() if gid and node_id.startswith(f"{board_id}::")), None)
+        boards_out.append(
+            {
+                "Name": class_prefixed_slug(str(catalog.board_labels.get(board_id) or board_id), class_slug),
+                "Glyph": class_prefixed_slug(catalog.glyph_labels.get(glyph_id) or glyph_id, class_slug)
+                if glyph_id is not None
+                else "",
+                "Rotation": _rotation_info_quarter_turn(rotation),
+                "Nodes": nodes,
+                "BoardId": board_id,
+                "GlyphId": glyph_id,
+            }
+        )
     return [boards_out] if boards_out else []

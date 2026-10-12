@@ -14,6 +14,7 @@ _SOURCE_MODULES_WITHOUT_MIRRORED_TESTS = {
     Path("src/settings/constants.py"),
     Path("src/tools/data_generation/constants.py"),
 }
+_UNIT_TESTS_WITHOUT_SOURCE_MODULE = {Path("tests/hooks/check_lines_test.py")}
 
 
 def _relative_python_files(root: Path, directory: str) -> set[Path]:
@@ -38,5 +39,6 @@ def test_source_modules_have_exactly_one_mirrored_unit_test() -> None:
     expected_files = {
         _expected_unit_test_path(path) for path in source_files if path not in _SOURCE_MODULES_WITHOUT_MIRRORED_TESTS
     }
+    expected_files |= _UNIT_TESTS_WITHOUT_SOURCE_MODULE
 
     assert unit_files == expected_files

@@ -127,10 +127,14 @@ def _mobalytics_slot(
 
 
 def test_extract_mobalytics_paragon_steps_normalizes_warlock_starting_board() -> None:
-    steps = extract_mobalytics_paragon_steps({
-        "boards": [{"board": {"slug": "warlock-starter-board"}, "glyph": {"slug": "warlock-hellforge"}, "rotation": 0}],
-        "nodes": [{"slug": "warlock-starting-board-x11-y14"}],
-    })
+    steps = extract_mobalytics_paragon_steps(
+        {
+            "boards": [
+                {"board": {"slug": "warlock-starter-board"}, "glyph": {"slug": "warlock-hellforge"}, "rotation": 0}
+            ],
+            "nodes": [{"slug": "warlock-starting-board-x11-y14"}],
+        }
+    )
 
     board = steps[0][0]
     node_index = (14 - 1) * 21 + (11 - 1)
@@ -152,10 +156,12 @@ def test_first_jsonpath_result_returns_none_for_missing_data() -> None:
 
 @pytest.mark.parametrize(("rotation", "expected_index"), [(0, 283), (90, 217), (180, 157), (270, 223)])
 def test_extract_mobalytics_paragon_steps_keeps_rotation_index_mapping(rotation: int, expected_index: int) -> None:
-    steps = extract_mobalytics_paragon_steps({
-        "boards": [{"board": {"slug": "barbarian-starting-board"}, "glyph": {"slug": ""}, "rotation": rotation}],
-        "nodes": [{"slug": "barbarian-starting-board-x11-y14"}],
-    })
+    steps = extract_mobalytics_paragon_steps(
+        {
+            "boards": [{"board": {"slug": "barbarian-starting-board"}, "glyph": {"slug": ""}, "rotation": rotation}],
+            "nodes": [{"slug": "barbarian-starting-board-x11-y14"}],
+        }
+    )
 
     board = steps[0][0]
     assert board["Rotation"] == f"{rotation}°"

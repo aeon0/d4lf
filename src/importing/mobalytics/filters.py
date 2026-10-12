@@ -141,7 +141,7 @@ def build_variant(
                 correct_name(item_name) if correct_name(item_name) in GameCatalog().aspect_unique_dict else None
             )
             set_name = _extract_mobalytics_charm_set_name(item) if item_type == ItemType.Charm else None
-            if not affixes and not unique_name and not set_name:
+            if not affixes and unique_name is None and set_name is None:
                 LOGGER.warning(f"Skipping {item_name} because it had no supported affixes, unique aspect, or set name.")
                 continue
             if item_type == ItemType.Charm:
@@ -153,7 +153,7 @@ def build_variant(
                     set_name=set_name,
                 )
                 charm_filters.append(filter_model)
-                if not guessed_set_name and filter_model.set:
+                if guessed_set_name is None and filter_model.set:
                     guessed_set_name = filter_model.set[0]
             else:
                 filter_model = create_seal_charm_filter(

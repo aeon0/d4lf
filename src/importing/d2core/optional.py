@@ -110,7 +110,7 @@ def _normalize_talisman(
         unique_name = _canonical_unique(str(record.get("name", record.get("engName", ""))))
     set_name = None
     set_key = raw_entry.get("set") or record.get("set")
-    if category == "charm" and set_key:
+    if category == "charm" and bool(set_key):
         sets = catalog.get("itemSets", {})
         set_record = sets.get(str(set_key)) if isinstance(sets, Mapping) else None
         if isinstance(set_record, Mapping):
@@ -133,7 +133,7 @@ def _normalize_talisman(
             )
             mapping = GameCatalog().seal_affix_dict if category == "seal" else GameCatalog().charm_affix_dict
             name = canonical_affix_name(record, mapping)
-            if not name:
+            if name is None:
                 warn(OPTIONAL_ENTRY_JOIN, variant_name, category, key or "unknown")
                 continue
             affixes.append(
@@ -144,7 +144,7 @@ def _normalize_talisman(
                     else AffixType.normal,
                 )
             )
-    if not affixes and not unique_name and not set_name:
+    if not affixes and unique_name is None and set_name is None:
         return None
     if category == "seal":
         result = create_seal_charm_filter(

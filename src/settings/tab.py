@@ -171,10 +171,6 @@ class ConfigTab(ConfigTabMixin, ConfigResetMixin, QWidget):
         self.model_to_parameter_value_map[f"{section}.{key}"] = control
         grid.addWidget(label_container, row, 0, Qt.AlignmentFlag.AlignTop)
         grid.addWidget(control, row, 2, Qt.AlignmentFlag.AlignTop)
-        self._all_rows.append((
-            human_label,
-            meta.get("description", ""),
-            label_container,
-            control,
-            cast("QGroupBox", grid.parentWidget()),
-        ))
+        self._all_rows.append(
+            (human_label, meta.get("description", ""), label_container, control, cast("QGroupBox", grid.parentWidget()))
+        )

@@ -101,12 +101,14 @@ def _parse_d4builds_paragon_boards(driver: WebDriver, class_slug: str) -> list[l
             idx = _transform_xy(x=c, y=r, rotation_deg=rotate_int, base="d4builds")
             if 0 <= idx < NODES_LEN:
                 nodes[idx] = True
-        boards_out.append({
-            "Name": name_slug or "paragon-board",
-            "Glyph": glyph_slug,
-            "Rotation": _rotation_info_degrees(rotate_int),
-            "Nodes": nodes,
-        })
+        boards_out.append(
+            {
+                "Name": name_slug or "paragon-board",
+                "Glyph": glyph_slug,
+                "Rotation": _rotation_info_degrees(rotate_int),
+                "Nodes": nodes,
+            }
+        )
     return [boards_out]
 
 

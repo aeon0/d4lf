@@ -95,7 +95,7 @@ def affix_dict_for_item_type(item_type: ItemType | None) -> dict[str, str]:
 
 def match_set_aware_seal_affix(stat_clean: str, affix_dict: dict[str, str], guessed_set_name: str) -> str | None:
     best_global_key = closest_match(stat_clean, affix_dict)
-    if best_global_key and best_global_key != "damage":
+    if best_global_key is not None and best_global_key != "damage":
         global_display = affix_dict[best_global_key]
         if rapidfuzz.distance.Levenshtein.distance(stat_clean, global_display) <= 2:
             is_set_specific = any(best_global_key.startswith(f"{set_name}_") for set_name in GameCatalog().set_list)
@@ -178,10 +178,14 @@ def create_seal_charm_filter(
         else []
     )
     result = (
-        CharmFilterModel(set=[set_name] if set_name else []) if model_type is CharmFilterModel else SealFilterModel()
+        CharmFilterModel(set=[set_name] if set_name is not None and set_name != "" else [])
+        if model_type is CharmFilterModel
+        else SealFilterModel()
     )
     result.affix_pool = affix_pool
-    result.unique_aspect = [AspectUniqueFilterModel(name=unique_name)] if unique_name else []
+    result.unique_aspect = (
+        [AspectUniqueFilterModel(name=unique_name)] if unique_name is not None and unique_name != "" else []
+    )
     if require_gas:
         result.min_greater_affix_count = sum(a.type == AffixType.greater for a in affixes)
     return result
@@ -213,10 +217,10 @@ def deduplicate_filters(
                 break
         else:
             if isinstance(filter_spec, ItemFilterModel):
-                hint = name_hints[i] if name_hints else None
+                hint = name_hints[i] if name_hints is not None and len(name_hints) > 0 else None
                 base_name = (
                     hint
-                    if hint and filter_spec.item_type == WEAPON_TYPES
+                    if hint is not None and hint != "" and filter_spec.item_type == WEAPON_TYPES
                     else (filter_spec.item_type[0].name if filter_spec.item_type else "Item")
                 )
             else:

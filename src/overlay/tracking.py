@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from src.automation import move_pointer
 from src.overlay import state as _state
-from src.overlay.settings import InfoSettingValue, load_settings, setting_position
+from src.overlay.settings import InfoSettingValue, load_settings, setting_bool, setting_position
 from src.overlay.singleton import singleton
 from src.overlay.statistics import SessionStats
 from src.perception import abs_window_to_monitor, game_window_roi, window_to_monitor
@@ -28,7 +28,7 @@ def set_busy_checker(checker: Callable[[], bool]) -> None:
 
 def _hover_experience_balance(config: dict[str, InfoSettingValue]) -> None:
     position = setting_position(config.get("exp_bar_pos"))
-    if position and len(position) == 4:
+    if position is not None and len(position) == 4:
         move_pointer(*window_to_monitor((position[0], position[1])))
         time.sleep(0.1)
         move_pointer(*window_to_monitor((position[2], position[3])))
@@ -50,7 +50,9 @@ class InventoryExpTracker:
         if not _state.is_open():
             return
         config = load_settings()
-        if not config.get("capture_exp_stats") or not config.get("check_exp_on_inventory_open", True):
+        capture_exp = setting_bool(config, "capture_exp_stats", default=False)
+        check_on_open = setting_bool(config, "check_exp_on_inventory_open", default=True)
+        if not capture_exp or not check_on_open:
             return
         age = config.get("exp_age_before_refresh", 5)
         if not isinstance(age, int):

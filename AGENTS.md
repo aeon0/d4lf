@@ -10,7 +10,7 @@ The main UI is PyQt6. Game overlays are tkinter windows rendered above the game.
 
 ## Stack
 
-Python 3.14 via uv; C++ for the TTS DLL in `tts/`.
+Python 3.15 via uv; C++ for the TTS DLL in `tts/`.
 
 ## Architecture
 
@@ -27,9 +27,9 @@ Item flow:
 - Runtime target is Windows. Some tests are skipped outside Windows.
 - Don't investigate super edge cases, especially during testing. Bring up the concern during planning stages and let the user decide.
 
-## Tech Stack
+## Tech
 
-### Python 3.14
+### Python
 
 - Don't use from __future__ imports.
 - Remember deferred annotation evaluation for type annotation.
@@ -63,4 +63,4 @@ Using the default triage vocabulary: `needs-triage`, `needs-info`, `ready-for-ag
 
 ### Domain docs
 
-Single-context layout: `CONTEXT.md` at the repository root and `docs/adr/` for ADRs. See `docs/agents/domain.md`.
+Single-context layout: `GLOSSARY.md` at the repository root and `docs/adr/` for ADRs. See `docs/agents/domain.md`.

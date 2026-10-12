@@ -177,7 +177,7 @@ def _convert_raw_to_affixes(
                 continue
             stat_clean = clean_str(_corrections(input_str=stat_id.replace("-", " ")))
             matched_name = None
-            if item_type == ItemType.HoradricSeal and guessed_set_name:
+            if item_type == ItemType.HoradricSeal and guessed_set_name is not None:
                 matched_name = match_set_aware_seal_affix(
                     stat_clean=stat_clean, affix_dict=affix_dict, guessed_set_name=guessed_set_name
                 )
@@ -187,7 +187,7 @@ def _convert_raw_to_affixes(
                 LOGGER.error(f"Couldn't match {stat=}")
                 continue
             affix_obj = Affix(name=matched_name)
-            if import_greater_affixes and stat.get("isGreater", False):
+            if import_greater_affixes and bool(stat.get("isGreater", False)):
                 affix_obj.type = AffixType.greater
             result.append(affix_obj)
     return result

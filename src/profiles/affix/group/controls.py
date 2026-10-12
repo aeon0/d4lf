@@ -56,7 +56,7 @@ class _AffixGroupControlsMixin:
         self.min_greater.setEnabled(not is_auto_sync)
 
         if is_auto_sync:
-            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[boolean-positional-value-in-call]
+            self.min_greater.setProperty("autoSyncSpin", True)  # ruff:ignore[FBT003]
             refresh_widget_style(self.min_greater)
 
             self.affix_pool_container.expand()
@@ -66,7 +66,7 @@ class _AffixGroupControlsMixin:
             self.min_greater.setValue(count)
             self.update_greater_count_label()
         else:
-            self.min_greater.setProperty("autoSyncSpin", False)  # ruff:ignore[boolean-positional-value-in-call]
+            self.min_greater.setProperty("autoSyncSpin", False)  # ruff:ignore[FBT003]
             refresh_widget_style(self.min_greater)
 
     def _update_auto_sync_count(self: AffixGroupEditor) -> None:

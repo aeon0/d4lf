@@ -52,14 +52,14 @@ class ActivityProfileDragMixin:
         row_widget.setGraphicsEffect(None)
         self.drop_indicator.hide()
 
-    def dragEnterEvent(self: ActivityLogWidget, a0: QDragEnterEvent | None) -> None:  # ruff:ignore[invalid-function-name]
+    def dragEnterEvent(self: ActivityLogWidget, a0: QDragEnterEvent | None) -> None:  # ruff:ignore[N802]
         if a0 is None:
             return
         mime_data = a0.mimeData()
         if mime_data is not None and mime_data.hasText():
             a0.acceptProposedAction()
 
-    def dragMoveEvent(self: ActivityLogWidget, a0: QDragMoveEvent | None) -> None:  # ruff:ignore[invalid-function-name]
+    def dragMoveEvent(self: ActivityLogWidget, a0: QDragMoveEvent | None) -> None:  # ruff:ignore[N802]
         if a0 is None:
             return
         mime_data = a0.mimeData()
@@ -112,7 +112,7 @@ class ActivityProfileDragMixin:
                 break
         a0.acceptProposedAction()
 
-    def dropEvent(self: ActivityLogWidget, a0: QDropEvent | None) -> None:  # ruff:ignore[invalid-function-name]
+    def dropEvent(self: ActivityLogWidget, a0: QDropEvent | None) -> None:  # ruff:ignore[N802]
         self._on_toggle()
         self._update_zebra_striping()
         if a0 is not None:

@@ -56,7 +56,7 @@ class AffixFilterModel(AffixAspectFilterModel):
 
     @model_validator(mode="after")
     def value_and_percent_are_mutually_exclusive(self) -> AffixFilterModel:
-        if self.value and self.min_percent_of_affix:
+        if self.value not in (None, 0) and self.min_percent_of_affix:
             msg = "value and minPercentOfAffix cannot both be set"
             raise ValueError(msg)
 
@@ -114,7 +114,7 @@ class AspectUniqueFilterModel(AffixAspectFilterModel):
 
     @model_validator(mode="after")
     def value_and_percent_are_mutually_exclusive(self) -> AspectUniqueFilterModel:
-        if self.value and self.min_percent_of_aspect:
+        if self.value not in (None, 0) and self.min_percent_of_aspect:
             msg = "value and minPercentOfAspect cannot both be set"
             raise ValueError(msg)
         return self

@@ -188,10 +188,12 @@ def test_selenium_observer_uses_bidi_network_contract() -> None:
     assert network.handler is not None
     handler = network.handler
     handler({"request": {"request": "catalog"}, "response": {"url": catalog_url}})
-    handler({
-        "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
-        "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
-    })
+    handler(
+        {
+            "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
+            "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
+        }
+    )
     snapshot = observer.capture(driver, planner, 1)
 
     assert snapshot.response_body == build_body
@@ -262,14 +264,18 @@ def test_firefox_bidi_observer_captures_body_and_releases_listener() -> None:
     observer.attach(driver, "offline")
     assert network.handler is not None
     handler = network.handler
-    handler({
-        "request": {"request": "catalog"},
-        "response": {"url": "https://cloudstorage.d2core.com/data/d4/v1/affix_enUS.json"},
-    })
-    handler({
-        "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
-        "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
-    })
+    handler(
+        {
+            "request": {"request": "catalog"},
+            "response": {"url": "https://cloudstorage.d2core.com/data/d4/v1/affix_enUS.json"},
+        }
+    )
+    handler(
+        {
+            "request": {"request": "request", "url": "https://tcb-api.tencentcloudapi.com/web"},
+            "response": {"url": "https://tcb-api.tencentcloudapi.com/web"},
+        }
+    )
 
     snapshot = observer.capture(1)
     observer.detach(driver)

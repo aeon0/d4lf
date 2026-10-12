@@ -13,8 +13,7 @@ if TYPE_CHECKING:
 def correct_name(name: str) -> str | None:
     if name:
         return (
-            name
-            .strip()
+            name.strip()
             .lower()
             .replace(" (crucible)", "")
             .replace("'", "")

@@ -62,21 +62,25 @@ class _TtsItemParser:
         terminal_item_types = [ItemType.Material, ItemType.Tribute, ItemType.Cache, ItemType.LairBossKey]
         if item.seasonal_attribute == SeasonalAttribute.sanctified:
             return True
-        return any([
-            is_consumable(item.item_type),
-            is_non_sigil_mapping(item.item_type),
-            is_socketable(item.item_type),
-            item.item_type in terminal_item_types,
-        ])
+        return any(
+            [
+                is_consumable(item.item_type),
+                is_non_sigil_mapping(item.item_type),
+                is_socketable(item.item_type),
+                item.item_type in terminal_item_types,
+            ]
+        )
 
     def _is_supported_equipment(self) -> bool:
         item = self._current_item
-        return any([
-            is_armor(item.item_type),
-            is_jewelry(item.item_type),
-            is_weapon(item.item_type),
-            is_seal_or_charm(item.item_type),
-        ])
+        return any(
+            [
+                is_armor(item.item_type),
+                is_jewelry(item.item_type),
+                is_weapon(item.item_type),
+                is_seal_or_charm(item.item_type),
+            ]
+        )
 
     def _validate_unique(self) -> None:
         item = self._current_item

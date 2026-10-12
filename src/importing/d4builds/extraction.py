@@ -112,16 +112,12 @@ def _affixes_from_tooltip_values(
 def _match_d4builds_tooltip_affix(text: str, item_type: ItemType, guessed_set_name: str | None = None) -> str | None:
     stat_clean = clean_str(_corrections(input_str=text))
     affix_dict = affix_dict_for_item_type(item_type=item_type)
-    if (
-        item_type == ItemType.HoradricSeal
-        and guessed_set_name
-        and (
-            matched_name := match_set_aware_seal_affix(
-                stat_clean=stat_clean, affix_dict=affix_dict, guessed_set_name=guessed_set_name
-            )
+    if item_type == ItemType.HoradricSeal and guessed_set_name is not None:
+        matched_name = match_set_aware_seal_affix(
+            stat_clean=stat_clean, affix_dict=affix_dict, guessed_set_name=guessed_set_name
         )
-    ):
-        return matched_name
+        if matched_name is not None:
+            return matched_name
     return closest_match(stat_clean, affix_dict)
 
 
@@ -171,7 +167,7 @@ def _extract_d4builds_seal_charm_filters(
         )
         if charm_filter is not None:
             charm_filters.append(charm_filter)
-        if set_name and set_name not in set_names:
+        if set_name is not None and set_name not in set_names:
             set_names.append(set_name)
 
     if len(set_names) > 1:
@@ -215,13 +211,14 @@ def _create_charm_filter_from_tooltip_html(
     if tooltip is None:
         return None, None
 
-    set_name = correct_name(_first_text(tooltip=tooltip, xpath=CHARM_TOOLTIP_SET_NAME_XPATH))
-    unique_name = correct_name(_first_text(tooltip=tooltip, xpath=CHARM_TOOLTIP_UNIQUE_XPATH))
+    # correct_name returns "" for an absent name; normalize it to None so presence checks are exact.
+    set_name = correct_name(_first_text(tooltip=tooltip, xpath=CHARM_TOOLTIP_SET_NAME_XPATH)) or None
+    unique_name = correct_name(_first_text(tooltip=tooltip, xpath=CHARM_TOOLTIP_UNIQUE_XPATH)) or None
     affixes = _affixes_from_tooltip_values(
         texts=_texts_from_nodes(_xpath_elements(tooltip, CHARM_TOOLTIP_VALUE_XPATH)), item_type=ItemType.Charm
     )
 
-    if not affixes and not unique_name and not set_name:
+    if not affixes and unique_name is None and set_name is None:
         return None, None
 
     return (

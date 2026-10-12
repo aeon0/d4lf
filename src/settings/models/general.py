@@ -15,7 +15,7 @@ from src.settings.models.core import (
     VisionModeType,
     _IniBaseModel,
 )
-from src.settings.types import SettingInput  # ruff:ignore[typing-only-first-party-import]
+from src.settings.types import SettingInput  # ruff:ignore[TC001]
 
 FILTER_OVERRIDE_DESCRIPTION = (
     "When disabled, all {category} are skipped, including Mythic items. When enabled, Mythic items are always kept."

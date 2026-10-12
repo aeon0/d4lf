@@ -1,8 +1,8 @@
-import datetime
 import threading
 import time
 import tkinter as tk
 from contextlib import suppress
+from datetime import UTC, datetime, timedelta
 
 import httpx
 
@@ -27,7 +27,7 @@ class _OverlayTimers(OverlayContract):
                 response = client.get(url)
                 if response.status_code == 200:
                     data = response.json()
-                    now = datetime.datetime.now(datetime.UTC)
+                    now = datetime.now(UTC)
 
                     # Process World Bosses
                     best_wb = None
@@ -35,7 +35,7 @@ class _OverlayTimers(OverlayContract):
                         dt_str = wb.get("startTime")
                         name = wb.get("boss")
                         if dt_str and name:
-                            dt = datetime.datetime.fromisoformat(dt_str)
+                            dt = datetime.fromisoformat(dt_str)
                             if dt > now and (best_wb is None or dt < best_wb[0]):
                                 best_wb = (dt, name)
 
@@ -51,7 +51,7 @@ class _OverlayTimers(OverlayContract):
                     for legion in data.get("legion", []):
                         dt_str = legion.get("startTime")
                         if dt_str:
-                            dt = datetime.datetime.fromisoformat(dt_str)
+                            dt = datetime.fromisoformat(dt_str)
                             if dt > now and (best_legion is None or dt < best_legion):
                                 best_legion = dt
                     if best_legion:
@@ -65,7 +65,7 @@ class _OverlayTimers(OverlayContract):
                     for ht in data.get("helltide", []):
                         dt_str = ht.get("startTime")
                         if dt_str:
-                            dt = datetime.datetime.fromisoformat(dt_str)
+                            dt = datetime.fromisoformat(dt_str)
                             if dt <= now:
                                 if latest_start is None or dt > latest_start:
                                     latest_start = dt
@@ -117,7 +117,7 @@ class _OverlayTimers(OverlayContract):
             self._after_ids.append(aid)
             return
 
-        now = datetime.datetime.now(datetime.UTC)
+        now = datetime.now(UTC)
         self._flash_toggle = not self._flash_toggle
         colors = get_filter_colors()
 
@@ -131,12 +131,12 @@ class _OverlayTimers(OverlayContract):
         # --- World Boss ---
 
         # World Boss
-        synced_wb: tuple[datetime.datetime, str] | None = self.synced_wb
+        synced_wb: tuple[datetime, str] | None = self.synced_wb
         if synced_wb is not None and synced_wb[0] > now:
             next_wb = synced_wb[0]
         else:
             # Fallback to 3.5h interval from reference
-            wb_interval = datetime.timedelta(hours=3.5)
+            wb_interval = timedelta(hours=3.5)
             time_since_wb = now - self.wb_reference
             intervals_passed = time_since_wb // wb_interval
             next_wb = self.wb_reference + (intervals_passed + 1) * wb_interval
@@ -157,8 +157,8 @@ class _OverlayTimers(OverlayContract):
             legion_remaining = self.synced_legion - now
         else:
             # Fallback to 25m interval
-            legion_interval = datetime.timedelta(minutes=25)
-            legion_ref = datetime.datetime(2024, 1, 1, 0, 0, 0, tzinfo=datetime.UTC)
+            legion_interval = timedelta(minutes=25)
+            legion_ref = datetime(2024, 1, 1, 0, 0, 0, tzinfo=UTC)
             time_since_legion = now - legion_ref
             legion_passed = time_since_legion // legion_interval
             next_legion = legion_ref + (legion_passed + 1) * legion_interval
@@ -185,13 +185,13 @@ class _OverlayTimers(OverlayContract):
             cycle_pos = diff % 3600
             if cycle_pos < 3300:
                 # Active (0-55 mins)
-                rem = datetime.timedelta(seconds=int(3300 - cycle_pos))
+                rem = timedelta(seconds=int(3300 - cycle_pos))
                 self.ht_timer.config(
                     text=str(rem).split(".")[0], fg=get_flash_color(rem.total_seconds(), PROGRESS_YELLOW, 300)
                 )
             else:
                 # Break / Warning (55-60 mins)
-                rem = datetime.timedelta(seconds=int(3600 - cycle_pos))
+                rem = timedelta(seconds=int(3600 - cycle_pos))
                 self.ht_timer.config(
                     text=str(rem).split(".")[0], fg=get_flash_color(rem.total_seconds(), colors.matched, 60)
                 )

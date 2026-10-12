@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, NoReturn
 
 from src.game_data import ItemRarity, ItemType
 from src.item.data.affix import Affix, AffixType
-from src.item.data.aspect import Aspect  # ruff:ignore[typing-only-first-party-import]
+from src.item.data.aspect import Aspect  # ruff:ignore[TC001]
 
 if TYPE_CHECKING:
     from collections.abc import Mapping

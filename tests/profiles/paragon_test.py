@@ -89,24 +89,28 @@ class TestParagonModels:
 
     def test_payload_rejects_unknown_fields(self) -> None:
         with pytest.raises(ValidationError):
-            ParagonPayloadModel.model_validate({
-                "Name": "Build Name",
-                "ParagonBoardsList": [[self._board_data(UnknownField=True)]],
-                "UnknownField": True,
-            })
+            ParagonPayloadModel.model_validate(
+                {
+                    "Name": "Build Name",
+                    "ParagonBoardsList": [[self._board_data(UnknownField=True)]],
+                    "UnknownField": True,
+                }
+            )
 
     def test_board_rejects_unknown_fields(self) -> None:
         with pytest.raises(ValidationError):
             ParagonBoardModel.model_validate(self._board_data(UnknownField=True))
 
     def test_payload_accepts_board_and_glyph_ids(self) -> None:
-        payload = ParagonPayloadModel.model_validate({
-            "Name": "Build Name",
-            "Source": "https://example.invalid",
-            "GeneratedAt": "2026-06-15 00:00:00 UTC",
-            "Generator": "d4lf v0.0.0",
-            "ParagonBoardsList": [self._board_data()],
-        })
+        payload = ParagonPayloadModel.model_validate(
+            {
+                "Name": "Build Name",
+                "Source": "https://example.invalid",
+                "GeneratedAt": "2026-06-15 00:00:00 UTC",
+                "Generator": "d4lf v0.0.0",
+                "ParagonBoardsList": [self._board_data()],
+            }
+        )
 
         assert payload.paragon_boards_list[0][0].board_id == "Paragon_Barb_00"
         assert payload.paragon_boards_list[0][0].glyph_id == "glyph_1"
@@ -122,37 +126,40 @@ class TestParagonModels:
         assert profile.paragon is None
 
     def test_legacy_single_payload_list_normalizes_to_one_payload(self) -> None:
-        profile = ProfileModel.model_validate({
-            "name": "test",
-            "Paragon": [{"Name": "Build Name", "ParagonBoardsList": [self._board_data()]}],
-        })
+        profile = ProfileModel.model_validate(
+            {"name": "test", "Paragon": [{"Name": "Build Name", "ParagonBoardsList": [self._board_data()]}]}
+        )
         assert profile.paragon is not None
         assert profile.paragon.name == "Build Name"
         assert len(profile.paragon.paragon_boards_list) == 1
 
     def test_legacy_multi_payload_list_is_rejected(self) -> None:
         with pytest.raises(ValidationError, match="Paragon must contain at most one payload"):
-            ProfileModel.model_validate({
-                "name": "test",
-                "Paragon": [
-                    {"Name": "Build One", "ParagonBoardsList": [self._board_data()]},
-                    {"Name": "Build Two", "ParagonBoardsList": [self._board_data()]},
-                ],
-            })
+            ProfileModel.model_validate(
+                {
+                    "name": "test",
+                    "Paragon": [
+                        {"Name": "Build One", "ParagonBoardsList": [self._board_data()]},
+                        {"Name": "Build Two", "ParagonBoardsList": [self._board_data()]},
+                    ],
+                }
+            )
 
     def test_profile_serialization_preserves_paragon_aliases(self) -> None:
-        profile = ProfileModel.model_validate({
-            "name": "test",
-            "Paragon": [
-                {
-                    "Name": "Build Name",
-                    "Source": "https://example.invalid",
-                    "Generator": "d4lf v0.0.0",
-                    "GeneratedAt": "2026-06-15 00:00:00 UTC",
-                    "ParagonBoardsList": [self._board_data()],
-                }
-            ],
-        })
+        profile = ProfileModel.model_validate(
+            {
+                "name": "test",
+                "Paragon": [
+                    {
+                        "Name": "Build Name",
+                        "Source": "https://example.invalid",
+                        "Generator": "d4lf v0.0.0",
+                        "GeneratedAt": "2026-06-15 00:00:00 UTC",
+                        "ParagonBoardsList": [self._board_data()],
+                    }
+                ],
+            }
+        )
 
         exported = json.loads(profile.model_dump_json(by_alias=True))
         assert exported["Paragon"]["Name"] == "Build Name"

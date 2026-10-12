@@ -1,14 +1,12 @@
-from typing import cast
-
 from pydantic import BaseModel, ConfigDict, Field, field_serializer, model_validator
 
 from src.game_data import GameCatalog
-from src.profiles.affixes import GlobalUniqueModel  # ruff:ignore[typing-only-first-party-import]
-from src.profiles.equipment import DynamicCharmFilterModel, DynamicItemFilterModel, DynamicSealFilterModel  # ruff:ignore[typing-only-first-party-import]
-from src.profiles.paragon import ParagonPayloadModel  # ruff:ignore[typing-only-first-party-import]
+from src.profiles.affixes import GlobalUniqueModel  # ruff:ignore[TC001]
+from src.profiles.equipment import DynamicCharmFilterModel, DynamicItemFilterModel, DynamicSealFilterModel  # ruff:ignore[TC001]
+from src.profiles.paragon import ParagonPayloadModel  # ruff:ignore[TC001]
 from src.profiles.sigils import SigilFilterModel, SigilPriority, TributeFilterModel
 from src.profiles.validation.normalization import _as_string_keyed_dict, _legacy_filter_values
-from src.type_aliases import YamlObject, YamlValue  # ruff:ignore[typing-only-first-party-import]
+from src.type_aliases import YamlObject, YamlValue  # ruff:ignore[TC001]
 
 
 class ProfileModel(BaseModel):
@@ -134,6 +132,8 @@ class ProfileModel(BaseModel):
     def serialize_paragon(self, paragon: ParagonPayloadModel | None) -> YamlObject | None:
         if paragon is None:
             return None
-        return cast(
-            "YamlObject", paragon.model_dump(mode="python", by_alias=True, exclude_none=True, exclude_defaults=True)
-        )
+        dumped = paragon.model_dump(mode="python", by_alias=True, exclude_none=True, exclude_defaults=True)
+        serialized: YamlObject = {}
+        for key, value in dumped.items():
+            serialized[key] = value
+        return serialized

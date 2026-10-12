@@ -1,9 +1,9 @@
-import datetime
 import logging
 import pathlib
 import re
 import shutil
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Protocol, cast, override
 
 import yaml
@@ -137,7 +137,7 @@ class ProfileDocumentStore:
         exclude = exclude or {"name", "Sigils"}
         with save_path.open("w", encoding="utf-8") as file:
             file.write(f"# {source}\n")
-            file.write(f"# {datetime.datetime.now(tz=datetime.UTC).strftime('%Y-%m-%d %H:%M:%S')} (v{__version__})\n")
+            file.write(f"# {datetime.now(tz=UTC).strftime('%Y-%m-%d %H:%M:%S')} (v{__version__})\n")
             file.write(to_yaml_str(profile, exclude_defaults=not self.full_dump, exclude=exclude))
         LOGGER.info(f"Created profile {save_path}")
         return SavedProfile(path=save_path, file_name=save_path.stem)

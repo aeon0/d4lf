@@ -117,7 +117,7 @@ class _OverlayControls(OverlayContract):
 
         def _on_click() -> None:
             on_select_callback(target_value)
-            if config_key:
+            if config_key is not None:
                 save_info_settings({config_key: target_value})
                 self.settings[config_key] = target_value
             self._repack()

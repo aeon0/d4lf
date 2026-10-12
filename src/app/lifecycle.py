@@ -58,7 +58,7 @@ class UnifiedWindowLifecycle(QMainWindow):
             self.showMaximized()
         self.tabs.setCurrentIndex(settings.value("selected_tab", 0, int))
         self.activity_tab.minimize_to_tray_cb.setChecked(
-            settings.value("minimize_to_tray", False, type=bool)  # ruff:ignore[boolean-positional-value-in-call]
+            settings.value("minimize_to_tray", False, type=bool)  # ruff:ignore[FBT003]
         )
 
     def save_geometry(self) -> None:

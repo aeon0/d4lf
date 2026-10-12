@@ -140,7 +140,7 @@ def _index_records(records: JsonValue) -> JsonObject:
         raise ValueError(CATALOG_COLLECTION_MISSING)
     result: JsonObject = {}
     for record in records:
-        if not isinstance(record, Mapping) or not record.get("key"):
+        if not isinstance(record, Mapping) or not bool(record.get("key")):
             raise ValueError(CATALOG_RECORD_MISSING_KEY)
         source = cast("Mapping[str, JsonValue]", record)
         result[str(source["key"])] = {str(key): value for key, value in source.items()}
@@ -177,7 +177,7 @@ def canonical_catalog_name(record: Mapping[str, JsonValue] | JsonValue, mapping:
         if key_match is not None:
             return key_match
         match = next((key for key, label in mapping.items() if correct_name(str(label)) == normalized), None)
-        if match:
+        if match is not None:
             return match
     return None
 
@@ -193,7 +193,7 @@ def canonical_affix_name(record: Mapping[str, JsonValue] | JsonValue, mapping: M
     if normalized in mapping:
         return normalized
     match = next((key for key, label in mapping.items() if correct_name(str(label)) == normalized), None)
-    if match:
+    if match is not None:
         return match
     return None
 

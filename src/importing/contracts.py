@@ -44,7 +44,7 @@ class ImportOptions:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "filename_parts", tuple(FilenamePart(part) for part in self.filename_parts))
-        if self.custom_file_name:
+        if self.custom_file_name is not None:
             object.__setattr__(self, "custom_file_name", self.custom_file_name.split(".", 1)[0].strip() or None)
 
 

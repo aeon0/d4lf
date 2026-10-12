@@ -53,7 +53,7 @@ def normalize_build(
         or (request.options.import_seals and has_talisman_category(item[1], "seal"))
     ]
     paragon_selected = [
-        item for item in selected if isinstance(item[1].get("paragon"), Mapping) and item[1].get("paragon")
+        item for item in selected if isinstance(item[1].get("paragon"), Mapping) and bool(item[1].get("paragon"))
     ]
     aspect_enabled = load_optional_catalog(
         catalogs, "aspect", bool(aspect_selected) and request.options.import_aspect_upgrades, aspect_selected, warn

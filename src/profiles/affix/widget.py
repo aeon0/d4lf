@@ -69,7 +69,7 @@ class AffixWidget(QWidget):
     def create_set_name_combobox(self) -> None:
         self.set_combo = IgnoreScrollWheelComboBox()
         self.set_combo.setFixedWidth(200)
-        self.set_combo.addItems(["(No Set Selected)"] + sorted(GameCatalog().set_list))
+        self.set_combo.addItems(["(No Set Selected)", *sorted(GameCatalog().set_list)])
 
         curr_set, _ = get_set_and_base_for_key(self.affix.name, GameCatalog().set_list)
         if curr_set is not None:

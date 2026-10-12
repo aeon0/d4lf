@@ -259,7 +259,7 @@ class OverlayPopupBuildMixin(OverlayContract):
             btn_gold.configure(fg=GOLD if gd else TEXT)
             lbl_gold.configure(text="Golden frames (on)" if gd else "Golden frames (off)", fg=GOLD if gd else TEXT)
 
-            for w in (btn_zm, btn_zp) + tuple(dc.winfo_children()):
+            for w in (btn_zm, btn_zp, *tuple(dc.winfo_children())):
                 for child in w.winfo_children():
                     if isinstance(child, tk.Button):
                         child.configure({"state": tk.DISABLED if lk else tk.NORMAL, "fg": MUTED if lk else TEXT})

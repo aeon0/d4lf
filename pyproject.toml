@@ -69,7 +69,6 @@ ignore = [
   "S101",  # assert, fix more in the future
   "FBT002",  # boolean-default-value-positional-argument
   "FBT001",  # boolean-type-hint-positional-argument
-  "RUF005",  # collection-literal-concatenation, fix more in the future
   "ERA001",  # commented-out-code, fix more in the future
   "C901",  # complex-structure, fix more in the future
   "PLC0206",  # dict-index-missing-items, fix more in the future

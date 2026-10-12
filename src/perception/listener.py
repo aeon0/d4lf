@@ -3,6 +3,7 @@ import logging
 import queue
 import re
 import threading
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, ClassVar, Self
 
 if TYPE_CHECKING:
@@ -10,8 +11,14 @@ if TYPE_CHECKING:
 
 from src.perception.backend.core import load_backend
 
-CONNECTED = False
-LAST_ITEM: list[str] = []
+
+@dataclass
+class ListenerState:
+    connected: bool = False
+    last_item: list[str] = field(default_factory=list)
+
+
+STATE = ListenerState()
 _DATA_QUEUE = queue.Queue(maxsize=100)
 _backend = load_backend()
 LOGGER = logging.getLogger(__name__)
@@ -75,9 +82,8 @@ class Publisher:
             start = find_item_start(local_cache)
             if start is None:
                 continue
-            global LAST_ITEM
-            LAST_ITEM = local_cache[start:]
-            self.publish_item(LAST_ITEM)
+            STATE.last_item = local_cache[start:]
+            self.publish_item(STATE.last_item)
             local_cache = []
 
     def publish_item(self, data: list[str]) -> None:
@@ -109,8 +115,7 @@ class Publisher:
 
 
 def set_connected(value: bool) -> None:
-    global CONNECTED
-    CONNECTED = value
+    STATE.connected = value
 
 
 def create_pipe() -> int:

@@ -73,7 +73,6 @@ ignore = [
   "C901",  # complex-structure, fix more in the future
   "TRY400",  # error-instead-of-exception, fix more in the future
   "LOG014",  # exc-info-outside-except-handler
-  "PLW0603",  # global-statement, fix more in the future
   "FIX004",  # line-contains-hack, fix more in the future
   "FIX002",  # line-contains-todo, fix more in the future
   "E501",  # line-too-long

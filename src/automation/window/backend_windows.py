@@ -3,6 +3,7 @@ import logging
 import os
 import threading
 import time
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 import psutil
@@ -17,8 +18,14 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 
-DETECTION_WINDOW_FLAG = True
-DETECT_WINDOW_THREAD: threading.Thread | None = None
+
+@dataclass
+class _DetectionState:
+    running: bool = True
+    thread: threading.Thread | None = None
+
+
+_DETECTION = _DetectionState()
 
 
 def list_active_window_ids() -> list[int]:
@@ -54,16 +61,15 @@ def get_window_spec_id(window_spec: WindowSpecLike) -> int | None:
 
 
 def start_detecting_window(window_spec: WindowSpecLike) -> None:
-    global DETECTION_WINDOW_FLAG, DETECT_WINDOW_THREAD
-    if DETECT_WINDOW_THREAD is None:
+    if _DETECTION.thread is None:
         LOGGER.info(f"Using WinAPI to search for window: {window_spec.process_name}")
-        DETECTION_WINDOW_FLAG = True
-        DETECT_WINDOW_THREAD = threading.Thread(target=detect_window, args=(window_spec,), daemon=True)
-        DETECT_WINDOW_THREAD.start()
+        _DETECTION.running = True
+        _DETECTION.thread = threading.Thread(target=detect_window, args=(window_spec,), daemon=True)
+        _DETECTION.thread.start()
 
 
 def detect_window(window_spec: WindowSpecLike) -> None:
-    while DETECTION_WINDOW_FLAG:
+    while _DETECTION.running:
         find_and_set_window_position(window_spec)
     LOGGER.debug("Detect window thread stopped")
 
@@ -84,11 +90,10 @@ def find_and_set_window_position(window_spec: WindowSpecLike) -> None:
 
 
 def stop_detecting_window() -> None:
-    global DETECTION_WINDOW_FLAG, DETECT_WINDOW_THREAD
-    DETECTION_WINDOW_FLAG = False
-    if DETECT_WINDOW_THREAD:
-        DETECT_WINDOW_THREAD.join()
-    DETECT_WINDOW_THREAD = None
+    _DETECTION.running = False
+    if _DETECTION.thread:
+        _DETECTION.thread.join()
+    _DETECTION.thread = None
 
 
 def move_window_to_foreground(window_spec: WindowSpecLike) -> None:

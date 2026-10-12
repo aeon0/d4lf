@@ -1,5 +1,6 @@
 import threading
 import time
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from src.automation import move_pointer
@@ -18,12 +19,16 @@ def _not_busy() -> bool:
     return False
 
 
-_busy_checker: Callable[[], bool] = _not_busy
+@dataclass
+class _TrackingState:
+    busy_checker: Callable[[], bool] = _not_busy
+
+
+_STATE = _TrackingState()
 
 
 def set_busy_checker(checker: Callable[[], bool]) -> None:
-    global _busy_checker
-    _busy_checker = checker
+    _STATE.busy_checker = checker
 
 
 def _hover_experience_balance(config: dict[str, InfoSettingValue]) -> None:
@@ -45,7 +50,7 @@ class InventoryExpTracker:
         self.hover_active = False
 
     def on_inventory_open(self) -> None:
-        if self.hover_active or _busy_checker():
+        if self.hover_active or _STATE.busy_checker():
             return
         if not _state.is_open():
             return

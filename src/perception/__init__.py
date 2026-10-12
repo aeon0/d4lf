@@ -43,15 +43,15 @@ fix_data = _listener.fix_data
 
 
 def read_latest_item() -> Item | None:
-    return parse_item_text(list(_listener.LAST_ITEM))
+    return parse_item_text(list(_listener.STATE.last_item))
 
 
 def latest_item_lines() -> list[str]:
-    return list(_listener.LAST_ITEM)
+    return list(_listener.STATE.last_item)
 
 
 def is_connected() -> bool:
-    return _listener.CONNECTED
+    return _listener.STATE.connected
 
 
 def start_connection() -> None:

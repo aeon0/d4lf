@@ -79,7 +79,6 @@ ignore = [
   "FIX002",  # line-contains-todo, fix more in the future
   "E501",  # line-too-long
   "G004",  # logging-f-string
-  "PLR2004",  # magic-value-comparison, fix more in the future
   "CPY001",  # missing-copyright-notice
   "TD002",  # missing-todo-author, fix more in the future
   "TD004",  # missing-todo-colon, fix more in the future

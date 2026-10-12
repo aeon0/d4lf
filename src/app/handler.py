@@ -42,6 +42,7 @@ from src.settings import (
 LOGGER = logging.getLogger(__name__)
 LOCK = threading.Lock()
 SETUP_INSTRUCTIONS_URL = "https://github.com/d4lfteam/d4lf/blob/main/README.md#how-to-setup"
+INFO_OVERLAY_TOGGLE_DEBOUNCE_SECONDS = 0.3
 
 
 class ScriptHandler:
@@ -177,7 +178,7 @@ class ScriptHandler:
     def toggle_info_overlay(self) -> None:
         """Toggle the Info Panel overlay (debounced; show/hide a widget on the shared UI thread)."""
         now = time.time()
-        if now - self._info_overlay_last_toggle_time < 0.3:
+        if now - self._info_overlay_last_toggle_time < INFO_OVERLAY_TOGGLE_DEBOUNCE_SECONDS:
             return
         self._info_overlay_last_toggle_time = now
 

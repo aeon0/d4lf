@@ -21,6 +21,11 @@ FILTER_OVERRIDE_DESCRIPTION = (
     "When disabled, all {category} are skipped, including Mythic items. When enabled, Mythic items are always kept."
 )
 
+VALID_MAX_STASH_TABS_MIN = 6
+VALID_MAX_STASH_TABS_MAX = 7
+OVERLAY_FONT_SIZE_MIN = 10
+OVERLAY_FONT_SIZE_MAX = 20
+
 
 class GeneralModel(_IniBaseModel):
     @model_validator(mode="before")
@@ -228,7 +233,7 @@ class GeneralModel(_IniBaseModel):
     @field_validator("max_stash_tabs")
     @classmethod
     def check_max_stash_tabs(cls, v: int) -> int:
-        if not 6 <= v <= 7:
+        if not VALID_MAX_STASH_TABS_MIN <= v <= VALID_MAX_STASH_TABS_MAX:
             msg = "must be 6 or 7"
             raise ValueError(msg)
         return v
@@ -260,7 +265,7 @@ class GeneralModel(_IniBaseModel):
     @field_validator("minimum_overlay_font_size")
     @classmethod
     def font_size_in_range(cls, v: int) -> int:
-        if not 10 <= v <= 20:
+        if not OVERLAY_FONT_SIZE_MIN <= v <= OVERLAY_FONT_SIZE_MAX:
             msg = "Font size must be between 10 and 20, inclusive"
             raise ValueError(msg)
         return v

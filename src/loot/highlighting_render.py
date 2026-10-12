@@ -13,6 +13,14 @@ from src.loot.colors import get_filter_colors, reset_canvas
 from src.settings import get_settings, get_ui_coordinates
 
 DARK_GRAY_BG = "#111111"
+WINDOW_HEIGHT_1440 = 1440
+WINDOW_HEIGHT_1600 = 1600
+WINDOW_HEIGHT_2160 = 2160
+
+SIGNAL_GRAY75_AFTER = 75
+SIGNAL_GRAY50_AFTER = 80
+SIGNAL_GRAY25_AFTER = 95
+SIGNAL_GRAY12_AFTER = 90
 
 if TYPE_CHECKING:
     from src.item import FilterResult
@@ -53,11 +61,11 @@ class HighlightingRenderer:
 
         font_size = minimum_font_size
         window_height = get_ui_coordinates().pos.window_dimensions[1]
-        if window_height == 1440:
+        if window_height == WINDOW_HEIGHT_1440:
             font_size = minimum_font_size + 1
-        elif window_height == 1600:
+        elif window_height == WINDOW_HEIGHT_1600:
             font_size = minimum_font_size + 2
-        elif window_height == 2160:
+        elif window_height == WINDOW_HEIGHT_2160:
             font_size = minimum_font_size + 3
 
         font = Font(family=font_name, size=font_size)
@@ -103,13 +111,13 @@ class HighlightingRenderer:
         steps = int((thick * 20) / 40)
         for i in range(100):
             stipple = ""
-            if i > 75:
+            if i > SIGNAL_GRAY75_AFTER:
                 stipple = "gray75"
-            if i > 80:
+            if i > SIGNAL_GRAY50_AFTER:
                 stipple = "gray50"
-            if i > 95:
+            if i > SIGNAL_GRAY25_AFTER:
                 stipple = "gray25"
-            if i > 90:
+            if i > SIGNAL_GRAY12_AFTER:
                 stipple = "gray12"
             start_y = steps * i
             end_y = steps * (i + 1)

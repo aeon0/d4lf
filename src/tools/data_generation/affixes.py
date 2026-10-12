@@ -27,6 +27,8 @@ from src.tools.data_generation.constants import EXPECTED_MISSING_AFFIX_LOCALISAT
 if TYPE_CHECKING:
     from src.type_aliases import JsonValue
 
+SHORT_AFFIX_DESCRIPTION_LENGTH = 2
+
 
 def _power_index(core_toc: dict[str, dict[str, str] | dict[str, list[str]]], d4data_dir: Path) -> dict[int, str]:
     indexed_powers = core_toc.get("29")
@@ -101,7 +103,7 @@ def normalise_affix_description(description: str) -> tuple[str, str] | None:
     desc = desc.replace("lighting", "lightning")
     desc = remove_content_in_braces(desc)
     desc = desc.removeprefix("x ")
-    if len(desc) <= 2:
+    if len(desc) <= SHORT_AFFIX_DESCRIPTION_LENGTH:
         return None
     return desc.replace(",", "").replace(" ", "_"), desc
 

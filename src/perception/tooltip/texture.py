@@ -26,6 +26,7 @@ _SHORT_SEPARATOR_TEMPLATE_REFS = [
 ITEM_SEP_SHORT_THRESHOLD = 0.85
 ITEM_SEP_LONG_THRESHOLD = 0.7
 BULLET_THRESHOLD = 0.75
+DUPLICATE_MATCH_MAX_DISTANCE_PX = 10
 
 
 @dataclass
@@ -117,7 +118,10 @@ def _dedupe_matches(template_matches: list[TemplateMatch]) -> list[TemplateMatch
     for match in template_matches:
         match_exists = False
         for center, existing_match in matches_dict.items():
-            if math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2) <= 10:
+            if (
+                math.sqrt((center[0] - match.center[0]) ** 2 + (center[1] - match.center[1]) ** 2)
+                <= DUPLICATE_MATCH_MAX_DISTANCE_PX
+            ):
                 if match.score > existing_match.score:
                     matches_dict[center] = match
                 match_exists = True

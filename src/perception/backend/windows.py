@@ -12,6 +12,8 @@ if TYPE_CHECKING:
     import queue
     from collections.abc import Callable
 
+ERROR_PIPE_BUSY = 231
+
 
 def _require_message_size(value: int | str | None) -> int:
     if not isinstance(value, int):
@@ -45,7 +47,7 @@ class WindowsTTSBackend:
         try:
             return self._create_named_pipe()
         except pywintypes.error as error:
-            if error.args[0] == 231:
+            if error.args[0] == ERROR_PIPE_BUSY:
                 logger.error("")
                 logger.error("=" * 80)
                 logger.error("D4LF IS ALREADY RUNNING")

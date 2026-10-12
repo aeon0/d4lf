@@ -17,6 +17,8 @@ from src.type_aliases import JsonValue, Numeric, Point
 _MOUSE = Controller()
 
 _BUTTONS: dict[str, Button] = {"left": Button.left, "right": Button.right, "middle": Button.middle}
+_POINT_COORDINATE_COUNT = 2
+_MIN_TWEEN_POINTS = 2
 
 # SendInput-based absolute mouse move so Diablo 4's DirectInput/Raw Input pipeline
 # detects the cursor travel (SetCursorPos alone is not seen by the game).
@@ -69,7 +71,7 @@ def is_numeric(val: PointComponent | str | bool | None) -> bool:
 
 def is_list_of_points(value: PointInput) -> TypeGuard[list[Point]]:
     def is_point(p: PointCandidate) -> bool:
-        return len(p) == 2 and is_numeric(p[0]) and is_numeric(p[1])
+        return len(p) == _POINT_COORDINATE_COUNT and is_numeric(p[0]) and is_numeric(p[1])
 
     if not isinstance(value, list):
         return False
@@ -233,7 +235,7 @@ class HumanCurve:
         if not is_list_of_points(points):
             msg = "points must be valid list of points"
             raise ValueError(msg)
-        if not isinstance(target_points, int) or target_points < 2:
+        if not isinstance(target_points, int) or target_points < _MIN_TWEEN_POINTS:
             msg = "targetPoints must be an integer greater or equal to 2"
             raise ValueError(msg)
 

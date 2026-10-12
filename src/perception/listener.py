@@ -15,6 +15,7 @@ LAST_ITEM: list[str] = []
 _DATA_QUEUE = queue.Queue(maxsize=100)
 _backend = load_backend()
 LOGGER = logging.getLogger(__name__)
+MIN_UPPERCASE_LETTER_COUNT = 3
 
 
 class ItemIdentifiers(enum.Enum):
@@ -32,7 +33,7 @@ def find_item_start(data: list[str]) -> int | None:
             continue
         if any(item.startswith(identifier.value) for identifier in ItemIdentifiers):
             return index
-        if len(re.sub(r"[^A-Za-z]", "", item)) >= 3 and item.isupper():
+        if len(re.sub(r"[^A-Za-z]", "", item)) >= MIN_UPPERCASE_LETTER_COUNT and item.isupper():
             return index
     return None
 

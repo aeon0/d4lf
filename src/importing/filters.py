@@ -21,6 +21,8 @@ if TYPE_CHECKING:
 
 
 LOGGER = logging.getLogger(__name__)
+GLOBAL_AFFIX_MAX_EDIT_DISTANCE = 2
+SET_AFFIX_MIN_TOKEN_SET_RATIO = 50
 
 
 def fix_weapon_type(input_str: str) -> ItemType | None:
@@ -95,7 +97,7 @@ def match_set_aware_seal_affix(stat_clean: str, affix_dict: dict[str, str], gues
     best_global_key = closest_match(stat_clean, affix_dict)
     if best_global_key is not None and best_global_key != "damage":
         global_display = affix_dict[best_global_key]
-        if rapidfuzz.distance.Levenshtein.distance(stat_clean, global_display) <= 2:
+        if rapidfuzz.distance.Levenshtein.distance(stat_clean, global_display) <= GLOBAL_AFFIX_MAX_EDIT_DISTANCE:
             is_set_specific = any(best_global_key.startswith(f"{set_name}_") for set_name in GameCatalog().set_list)
             if not is_set_specific:
                 return best_global_key
@@ -108,7 +110,11 @@ def match_set_aware_seal_affix(stat_clean: str, affix_dict: dict[str, str], gues
     if potential_match is None:
         return None
     display_name = GameCatalog().seal_affix_dict[potential_match]
-    return potential_match if rapidfuzz.fuzz.token_set_ratio(stat_clean, display_name) >= 50 else None
+    return (
+        potential_match
+        if rapidfuzz.fuzz.token_set_ratio(stat_clean, display_name) >= SET_AFFIX_MIN_TOKEN_SET_RATIO
+        else None
+    )
 
 
 def is_unique_like_rarity(rarity: ItemRarity | str | None) -> bool:

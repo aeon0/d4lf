@@ -92,7 +92,6 @@ ignore = [
   "PLR1704",  # redefined-argument-from-local, fix more in the future
   "S605",  # start-process-with-a-shell, fix more in the future
   "S606",  # start-process-with-no-shell, fix more in the future
-  "S607",  # start-process-with-partial-path
   "S603",  # subprocess-without-shell-equals-true
   "S311",  # suspicious-non-cryptographic-random-usage, fix more in the future
   "PLR0913",  # too-many-arguments

@@ -106,7 +106,6 @@ ignore = [
   "D104",  # undocumented-public-package
   "ARG001",  # unused-function-argument, fix more in the future
   "ARG002",  # unused-method-argument, fix more in the future
-  "RUF059",  # unused-unpacked-variable, fix more in the future
 ]
 select = ["ALL"]
 

@@ -209,13 +209,13 @@ class ScriptHandler:
     def setup_key_binds(self) -> None:
         config = self._config
         advanced_options = config.advanced_options
-        self._register_hotkey(advanced_options.run_vision_mode, lambda: self.run_vision_mode())
-        self._register_hotkey(advanced_options.exit_key, lambda: self._graceful_exit(), check_focus=False)
-        self._register_hotkey(advanced_options.toggle_paragon_overlay, lambda: self.toggle_paragon_overlay())
-        self._register_hotkey(advanced_options.info_overlay, lambda: self.toggle_info_overlay())
+        self._register_hotkey(advanced_options.run_vision_mode, self.run_vision_mode)
+        self._register_hotkey(advanced_options.exit_key, self._graceful_exit, check_focus=False)
+        self._register_hotkey(advanced_options.toggle_paragon_overlay, self.toggle_paragon_overlay)
+        self._register_hotkey(advanced_options.info_overlay, self.toggle_info_overlay)
         self._register_hotkey(config.char.inventory, lambda: InventoryExpTracker().on_inventory_open())
         if not advanced_options.vision_mode_only:
-            self._register_hotkey(advanced_options.run_filter, lambda: self.filter_items())
+            self._register_hotkey(advanced_options.run_filter, self.filter_items)
             self._register_hotkey(advanced_options.run_filter_drop, lambda: self.filter_items(no_match_action="drop"))
             self._register_hotkey(
                 advanced_options.run_filter_force_refresh, lambda: self.filter_items(ItemRefreshType.force_with_filter)
@@ -223,8 +223,8 @@ class ScriptHandler:
             self._register_hotkey(
                 advanced_options.force_refresh_only, lambda: self.filter_items(ItemRefreshType.force_without_filter)
             )
-            self._register_hotkey(advanced_options.move_to_inv, lambda: self.move_items_to_inventory())
-            self._register_hotkey(advanced_options.move_to_chest, lambda: self.move_items_to_stash())
+            self._register_hotkey(advanced_options.move_to_inv, self.move_items_to_inventory)
+            self._register_hotkey(advanced_options.move_to_chest, self.move_items_to_stash)
 
         self._current_hotkey_signature = self._hotkey_signature(config)
 

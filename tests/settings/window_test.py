@@ -39,7 +39,11 @@ def test_config_window_restores_maximized_state_from_qsettings(monkeypatch, qapp
     maximized = []
     monkeypatch.setattr(window_module, "QSettings", FakeSettings)
     monkeypatch.setattr(window_module, "ConfigTab", FakeTab)
-    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", lambda window: maximized.append(window))
+
+    def record_maximized(window: QWidget) -> None:
+        maximized.append(window)
+
+    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", record_maximized)
 
     window = ConfigWindow()
 
@@ -63,7 +67,11 @@ def test_config_window_force_maximized_overrides_saved_state(monkeypatch, qapp) 
     maximized = []
     monkeypatch.setattr(window_module, "QSettings", FakeSettings)
     monkeypatch.setattr(window_module, "ConfigTab", FakeTab)
-    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", lambda window: maximized.append(window))
+
+    def record_maximized(window: QWidget) -> None:
+        maximized.append(window)
+
+    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", record_maximized)
 
     window = ConfigWindow(force_maximized=True)
 

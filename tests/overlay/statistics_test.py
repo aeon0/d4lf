@@ -61,7 +61,7 @@ def test_verified_totals_are_saved_and_restored_without_qsettings(monkeypatch) -
         "session_total_exp": 25,
     }
     monkeypatch.setattr(_statistics, "load_settings", lambda: dict(stored))
-    monkeypatch.setattr(_statistics, "save_settings", lambda values: stored.update(values))
+    monkeypatch.setattr(_statistics, "save_settings", stored.update)
     notifications: list[dict[str, JsonValue]] = []
     monkeypatch.setattr(_statistics, "_notify", lambda **values: notifications.append(values))
 

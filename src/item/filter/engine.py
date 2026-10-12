@@ -33,7 +33,7 @@ class Filter(FilterEvaluator):
     def __init__(self) -> None:
         if getattr(self, "_initialized", False):
             return
-        self._repository = ProfileRulesRepository(lambda: get_settings())
+        self._repository = ProfileRulesRepository(get_settings)
         super().__init__(rules=self._repository.rules, evaluation_settings=EvaluationSettings())
         self._initialized = True
 

@@ -109,7 +109,6 @@ ignore = [
   "D100",  # undocumented-public-module
   "D106",  # undocumented-public-nested-class
   "D104",  # undocumented-public-package
-  "S506",  # unsafe-yaml-load, fix more in the future
   "ARG001",  # unused-function-argument, fix more in the future
   "ARG002",  # unused-method-argument, fix more in the future
   "RUF059",  # unused-unpacked-variable, fix more in the future

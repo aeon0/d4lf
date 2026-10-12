@@ -85,7 +85,6 @@ ignore = [
   "TD004",  # missing-todo-colon, fix more in the future
   "TD003",  # missing-todo-link, fix more in the future
   "COM812",  # missing-trailing-comma
-  "UP047",  # non-pep695-generic-function, fix more in the future
   "NPY002",  # numpy-legacy-random, fix more in the future
   "T201",  # print, fix more in the future
   "SLF001",  # private-member-access, fix more in the future

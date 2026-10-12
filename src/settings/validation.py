@@ -1,5 +1,5 @@
 import threading
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 from src.settings.binding import validate_hotkey as validate_hotkey_binding
 
@@ -35,10 +35,7 @@ def validate_hotkey(k: str) -> str:
     return validate_hotkey_binding(k)
 
 
-T = TypeVar("T")
-
-
-def singleton(cls: type[T]) -> Callable[..., T]:
+def singleton[T](cls: type[T]) -> Callable[..., T]:
     instances: dict[type[T], T] = {}
     lock = threading.Lock()
 

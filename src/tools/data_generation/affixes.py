@@ -3,7 +3,7 @@
 import json
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, TypeVar, cast
+from typing import TYPE_CHECKING, cast
 
 from src.tools.data_generation.affix_helpers import (
     replace_numeric_value_placeholders,
@@ -26,8 +26,6 @@ from src.tools.data_generation.constants import EXPECTED_MISSING_AFFIX_LOCALISAT
 
 if TYPE_CHECKING:
     from src.type_aliases import JsonValue
-
-DataT = TypeVar("DataT")
 
 
 def _power_index(core_toc: dict[str, dict[str, str] | dict[str, list[str]]], d4data_dir: Path) -> dict[int, str]:
@@ -221,7 +219,7 @@ def generate_affixes(d4data_dir: Path, language: str, output_file: Path | None =
     return len(affix_files)
 
 
-def merge_custom_data(data: list[DataT] | dict[str, DataT], name: str, language: str) -> None:
+def merge_custom_data[DataT](data: list[DataT] | dict[str, DataT], name: str, language: str) -> None:
     """Merge entries from a custom override file into the generated data.
 
     Reads the *name* section from a single ``src/tools/data/custom_<language>.json``
@@ -253,7 +251,7 @@ def merge_custom_data(data: list[DataT] | dict[str, DataT], name: str, language:
         _merge_flat_dict(data, custom, name)
 
 
-def _merge_list(data: list[DataT], custom: list[DataT], name: str) -> None:
+def _merge_list[DataT](data: list[DataT], custom: list[DataT], name: str) -> None:
     existing = set(data)
     for entry in custom:
         if entry in existing:
@@ -262,7 +260,7 @@ def _merge_list(data: list[DataT], custom: list[DataT], name: str) -> None:
             data.append(entry)
 
 
-def _merge_flat_dict(data: dict[str, DataT], custom: dict[str, DataT], name: str) -> None:
+def _merge_flat_dict[DataT](data: dict[str, DataT], custom: dict[str, DataT], name: str) -> None:
     for key, value in custom.items():
         if key in data:
             if data[key] == value:
@@ -274,7 +272,9 @@ def _merge_flat_dict(data: dict[str, DataT], custom: dict[str, DataT], name: str
             data[key] = value
 
 
-def _merge_nested_dict(data: dict[str, dict[str, DataT]], custom: dict[str, dict[str, DataT]], name: str) -> None:
+def _merge_nested_dict[DataT](
+    data: dict[str, dict[str, DataT]], custom: dict[str, dict[str, DataT]], name: str
+) -> None:
     for section, entries in custom.items():
         if section not in data:
             data[section] = entries

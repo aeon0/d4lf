@@ -1,6 +1,6 @@
 import logging
 from enum import Enum
-from typing import TYPE_CHECKING, TypeVar, overload
+from typing import TYPE_CHECKING, overload
 
 import rapidfuzz
 
@@ -20,8 +20,6 @@ if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
 
 
-E = TypeVar("E", bound=Enum)
-FilterModelT = TypeVar("FilterModelT", bound=ItemFilterModel | CharmFilterModel | SealFilterModel)
 LOGGER = logging.getLogger(__name__)
 
 
@@ -203,7 +201,7 @@ def unique_filter_name[FilterT](filter_name_template: str, filters: Sequence[Map
     return filter_name
 
 
-def deduplicate_filters(
+def deduplicate_filters[FilterModelT: ItemFilterModel | CharmFilterModel | SealFilterModel](
     filters: Sequence[FilterModelT], name_hints: Sequence[str | None] | None = None
 ) -> list[dict[str, FilterModelT]]:
     """Merge identical filters, naming duplicates with an (xN) count suffix."""
@@ -238,11 +236,13 @@ def deduplicate_filters(
     return result
 
 
-def sort_profile_filters(filters: Sequence[Mapping[str, FilterModelT]]) -> list[dict[str, FilterModelT]]:
+def sort_profile_filters[FilterModelT: ItemFilterModel | CharmFilterModel | SealFilterModel](
+    filters: Sequence[Mapping[str, FilterModelT]],
+) -> list[dict[str, FilterModelT]]:
     return [dict(entry) for entry in sorted(filters, key=lambda entry: next(iter(entry)).casefold())]
 
 
-def match_to_enum(enum_class: type[E], target_string: str, check_keys: bool = False) -> E | None:
+def match_to_enum[E: Enum](enum_class: type[E], target_string: str, check_keys: bool = False) -> E | None:
     target_string = target_string.casefold().replace(" ", "").replace("-", "")
     for member in enum_class:
         if str(member.value).casefold().replace(" ", "").replace("-", "") == target_string or (

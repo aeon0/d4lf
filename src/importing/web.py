@@ -2,7 +2,7 @@ import annotationlib
 import functools
 import inspect
 import logging
-from typing import TYPE_CHECKING, TypeVar, overload
+from typing import TYPE_CHECKING, overload
 
 import httpx
 from selenium import webdriver
@@ -24,7 +24,6 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 HEADERS = {"User-Agent": "Diablo 4 Loot Filter - Profile Importer"}
-R = TypeVar("R")
 type ImporterArgument = ImportRequest | WebDriver | str | bool | None
 
 
@@ -63,16 +62,16 @@ def hover_and_get_tooltip_html(
 
 
 @overload
-def retry_importer(func: Callable[..., R], inject_webdriver: bool = False, uc: bool = False) -> Callable[..., R]: ...
+def retry_importer[R](func: Callable[..., R], inject_webdriver: bool = False, uc: bool = False) -> Callable[..., R]: ...
 
 
 @overload
-def retry_importer(
+def retry_importer[R](
     func: None = None, inject_webdriver: bool = False, uc: bool = False
 ) -> Callable[[Callable[..., R]], Callable[..., R]]: ...
 
 
-def retry_importer(
+def retry_importer[R](
     func: Callable[..., R] | None = None, inject_webdriver: bool = False, uc: bool = False
 ) -> Callable[[Callable[..., R]], Callable[..., R]] | Callable[..., R]:
     def decorator(wrap_function: Callable[..., R]) -> Callable[..., R]:

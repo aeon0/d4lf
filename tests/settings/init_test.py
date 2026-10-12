@@ -37,7 +37,7 @@ def test_params_path_contract() -> None:
 
 def test_import_is_free_of_platform_and_gui_backends() -> None:
     code = "import sys; import src.settings; assert 'pynput' not in sys.modules; assert 'PyQt6' not in sys.modules"
-    result = subprocess.run([sys.executable, "-c", code], check=False, capture_output=True, text=True)
+    result = subprocess.run([sys.executable, "-"], input=code, check=False, capture_output=True, text=True)
 
     assert result.returncode == 0, result.stderr
 
@@ -51,6 +51,6 @@ sys.executable = '/tmp/release/D4LF.exe'
 import src.settings
 assert src.settings.BASE_DIR == Path('/tmp/release')
 """
-    result = subprocess.run([sys.executable, "-c", code], check=False, capture_output=True, text=True)
+    result = subprocess.run([sys.executable, "-"], input=code, check=False, capture_output=True, text=True)
 
     assert result.returncode == 0, result.stderr

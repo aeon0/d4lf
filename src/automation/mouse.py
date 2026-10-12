@@ -122,6 +122,7 @@ class HumanCurve:
     def __init__(self, from_point: Point, to_point: Point, **kwargs: CurveOption) -> None:
         self.from_point = from_point
         self.to_point = to_point
+        self.rng = np.random.default_rng()
         self.points = self.generate_curve(**kwargs)
 
     def generate_curve(self, **kwargs: CurveOption) -> list[Point]:
@@ -188,8 +189,8 @@ class HumanCurve:
             msg = "downBoundary must be less than or equal to upBoundary"
             raise ValueError(msg)
 
-        knots_x = np.random.choice(range(left_boundary, right_boundary), size=knots_count)
-        knots_y = np.random.choice(range(down_boundary, up_boundary), size=knots_count)
+        knots_x = self.rng.choice(range(left_boundary, right_boundary), size=knots_count)
+        knots_y = self.rng.choice(range(down_boundary, up_boundary), size=knots_count)
         return [(float(x), float(y)) for x, y in zip(knots_x, knots_y, strict=False)]
 
     def generate_points(self, knots: list[Point]) -> list[Point]:
@@ -221,7 +222,9 @@ class HumanCurve:
         distorted = []
         for i in range(1, len(points) - 1):
             x, y = points[i]
-            delta = np.random.normal(distortion_mean, distortion_stdev) if random.random() < distortion_frequency else 0
+            delta = (
+                self.rng.normal(distortion_mean, distortion_stdev) if self.rng.random() < distortion_frequency else 0
+            )
             distorted += ((x, y + delta),)
         return [points[0], *distorted, points[-1]]
 

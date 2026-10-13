@@ -148,7 +148,7 @@ class AdvancedOptionsModel(_IniBaseModel):
         json_schema_extra={LIVE_RELOAD_GROUP_KEY: "log_level", CATEGORY_KEY: SettingsCategory.ADVANCED},
     )
     max_missing_affixes_shown: int = Field(
-        default=10,
+        default=0,
         description=(
             "How many missing filter affixes the vision mode overlays show per matched profile, in the order they "
             "appear in the profile. 0 hides them."

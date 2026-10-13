@@ -15,6 +15,7 @@ import src.loot.fast as fast_module
 from src.game_data import ItemRarity
 from src.item import Affix, FilterResult, Item, MatchedFilter
 from src.loot.fast import VisionModeFast, create_match_text, fast_feedback
+from src.settings import get_settings
 
 
 class _DestroyableText:
@@ -91,7 +92,8 @@ def test_fast_mode_preserves_match_details_and_feedback() -> None:
     assert fast_feedback(Item(rarity=ItemRarity.Unique), FilterResult(keep=True, matched=[])) == [("Unique", "#23fc5d")]
 
 
-def test_fast_mode_lists_missing_affixes_after_matched_ones_in_missing_color() -> None:
+def test_fast_mode_lists_missing_affixes_after_matched_ones_in_missing_color(mocker: MockerFixture) -> None:
+    mocker.patch.object(get_settings().advanced_options, "max_missing_affixes_shown", 10)
     match = MatchedFilter("Build.Helm", [Affix(name="armor")], missing_affixes=["maximum_life"])
 
     assert create_match_text([match], "green", "red") == [

@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
 from src.item import Affix, FilterResult, MatchedFilter
 from src.loot.highlighting_render import HighlightingRenderer
 from src.perception import LocatedMarker, LocatorResult
+from src.settings import get_settings
 
 
 class _RendererHarness(HighlightingRenderer):
@@ -42,6 +43,7 @@ def test_highlighting_renderer_places_reliable_affix_markers(monkeypatch, mocker
 def test_highlighting_renderer_shows_missing_affixes_in_one_line_under_their_profile(
     monkeypatch, mocker: MockerFixture
 ) -> None:
+    mocker.patch.object(get_settings().advanced_options, "max_missing_affixes_shown", 10)
     renderer = _RendererHarness()
     renderer.root = mocker.Mock()
     renderer.canvas = mocker.Mock()

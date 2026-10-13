@@ -19,7 +19,7 @@ def test_advanced_options_accept_fast_vision_coordinates() -> None:
     assert model.fast_vision_mode_coordinates == (12, 34)
 
 
-@pytest.mark.parametrize(("configured", "expected"), [(None, 10), ("0", 0), ("2", 2), (3, 3)])
+@pytest.mark.parametrize(("configured", "expected"), [(None, 0), ("0", 0), ("2", 2), (3, 3)])
 def test_advanced_options_parse_max_missing_affixes_shown(configured: str | int | None, expected: int) -> None:
     model = AdvancedOptionsModel() if configured is None else AdvancedOptionsModel(max_missing_affixes_shown=configured)
     assert model.max_missing_affixes_shown == expected

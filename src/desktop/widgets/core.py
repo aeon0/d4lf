@@ -1,23 +1,23 @@
 """Small Qt widgets shared by capability-owned desktop interfaces."""
 
-from typing import override
+from typing import ClassVar, override
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QPainter, QPaintEvent, QPen
 from PyQt6.QtWidgets import QCheckBox, QStyle, QStyleOptionButton
 
 _DEFAULT_ACCENT = "#23fc5d"
-_accent_color = _DEFAULT_ACCENT
 
 
 def set_accent_color(color: str) -> None:
     """Set the accent used by subsequently painted shared checkboxes."""
-    global _accent_color
-    _accent_color = color
+    CheckmarkCheckBox.accent_color = color
 
 
 class CheckmarkCheckBox(QCheckBox):
     """A checkbox that draws the configured accent-colored checkmark."""
+
+    accent_color: ClassVar[str] = _DEFAULT_ACCENT
 
     @override
     def paintEvent(self, a0: QPaintEvent | None) -> None:
@@ -37,7 +37,7 @@ class CheckmarkCheckBox(QCheckBox):
             self.initStyleOption(option)
             indicator_rect = style.subElementRect(QStyle.SubElement.SE_CheckBoxIndicator, option, self)
 
-            pen = QPen(QColor(_accent_color))
+            pen = QPen(QColor(self.accent_color))
             pen.setWidth(2)
             pen.setCapStyle(Qt.PenCapStyle.RoundCap)
             pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)

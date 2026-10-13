@@ -1,4 +1,4 @@
-from typing import Never
+from typing import ClassVar, Never
 
 import pytest
 
@@ -44,7 +44,7 @@ def test_open_session_retains_one_explicit_source(monkeypatch) -> None:
 def test_session_uses_same_source_for_discovery_and_import() -> None:
     class FakeSource:
         name = "fixture"
-        calls = []
+        calls: ClassVar[list[tuple[str, int]]] = []
 
         def fetch_variants(self, request):
             self.calls.append(("fetch", id(self)))

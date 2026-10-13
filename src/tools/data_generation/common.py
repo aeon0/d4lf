@@ -132,7 +132,7 @@ def clean_item_name(name: str) -> str:
         .replace(" ", "_")
         .replace("\xa0", "_")
         .lower()
-        .replace("’", "")
+        .replace("’", "")  # ruff:ignore[RUF001]
         .replace("â€™", "")
         .replace("'", "")
         .replace(",", "")

@@ -154,7 +154,7 @@ class OverlayPopupBuildMixin(OverlayContract):
         zr.pack(fill="x", pady=int(3 * s))
         btn_zm = tk_btn(
             zr,
-            text="−",
+            text="-",
             cmd=_run_and_refresh(lambda: self._zoom_grid(-1)),
             font=("Segoe UI", int(FS_ZOOM_BTN * s), "bold"),
             padx=int(8 * s),
@@ -237,7 +237,7 @@ class OverlayPopupBuildMixin(OverlayContract):
         tk.Frame(c, bg=MUTED, height=1).pack(fill="x", pady=int(6 * s))
         tk_lbl(
             c,
-            text="• Drag frame to move grid\n• D-Pad ↑ ↓ ← → moves grid per click\n• Use − + buttons to zoom\n• Use ★ to make all frames golden\n• Use ↺ to reset to default size/position\n• Use 🔓 to unlock/lock grid",
+            text="• Drag frame to move grid\n• D-Pad ↑ ↓ ← → moves grid per click\n• Use - + buttons to zoom\n• Use ★ to make all frames golden\n• Use ↺ to reset to default size/position\n• Use 🔓 to unlock/lock grid",
             fg=MUTED,
             font=("Segoe UI", int(FS_HINT * s)),
             anchor="w",
@@ -259,7 +259,7 @@ class OverlayPopupBuildMixin(OverlayContract):
             btn_gold.configure(fg=GOLD if gd else TEXT)
             lbl_gold.configure(text="Golden frames (on)" if gd else "Golden frames (off)", fg=GOLD if gd else TEXT)
 
-            for w in (btn_zm, btn_zp) + tuple(dc.winfo_children()):
+            for w in (btn_zm, btn_zp, *tuple(dc.winfo_children())):
                 for child in w.winfo_children():
                     if isinstance(child, tk.Button):
                         child.configure({"state": tk.DISABLED if lk else tk.NORMAL, "fg": MUTED if lk else TEXT})

@@ -6,6 +6,9 @@ import cv2
 import numpy as np
 
 LOGGER = logging.getLogger(__name__)
+COLOR_IMAGE_NDIM = 3
+BGRA_CHANNEL_COUNT = 4
+OPENCV_HUE_WRAP_POINT = 180
 
 
 class ThresholdTypes(Enum):
@@ -34,7 +37,7 @@ def threshold(
                               Ignored for other methods. Default is 10.
     :return: The thresholded image
     """
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == COLOR_IMAGE_NDIM else img
 
     thresh_type = cv2.THRESH_BINARY_INV if inverse else cv2.THRESH_BINARY
 
@@ -99,7 +102,7 @@ def alpha_to_mask(img: np.ndarray) -> np.ndarray | None:
     :param img: Source image.
     :return: Mask, or None if the image has no alpha channel or the minimum alpha value is not 0.
     """
-    if img.shape[2] == 4 and np.min(img[:, :, 3]) == 0:
+    if img.shape[2] == BGRA_CHANNEL_COUNT and np.min(img[:, :, 3]) == 0:
         _, mask = cv2.threshold(img[:, :, 3], 1, 255, cv2.THRESH_BINARY)
         return mask
     return None
@@ -128,17 +131,17 @@ def color_filter(
         lower_range[0][0] = 0
         color_ranges.append(lower_range)
         upper_range = deepcopy(color_range)
-        upper_range[0][0] = 180 + color_range[0][0]
-        upper_range[1][0] = 180
+        upper_range[0][0] = OPENCV_HUE_WRAP_POINT + color_range[0][0]
+        upper_range[1][0] = OPENCV_HUE_WRAP_POINT
         color_ranges.append(upper_range)
     # ex: [array([ 170, 201,  25]), array([ 188, 237,  61])]
-    elif color_range[1][0] > 180:
+    elif color_range[1][0] > OPENCV_HUE_WRAP_POINT:
         upper_range = deepcopy(color_range)
-        upper_range[1][0] = 180
+        upper_range[1][0] = OPENCV_HUE_WRAP_POINT
         color_ranges.append(upper_range)
         lower_range = deepcopy(color_range)
         lower_range[0][0] = 0
-        lower_range[1][0] = color_range[1][0] - 180
+        lower_range[1][0] = color_range[1][0] - OPENCV_HUE_WRAP_POINT
         color_ranges.append(lower_range)
     else:
         color_ranges.append(color_range)
@@ -200,7 +203,7 @@ def get_typographic_lines(img: np.ndarray, should_invert: bool = False) -> tuple
     :return: A tuple containing the positions (in y-coordinates) of the topline, baseline, midline, and beardline, respectively.
     """
     # Make img grayscale if it isn't already
-    if len(img.shape) == 3:
+    if len(img.shape) == COLOR_IMAGE_NDIM:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # invert the grayscale image if needed
     if should_invert:

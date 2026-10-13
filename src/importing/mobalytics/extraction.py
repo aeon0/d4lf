@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 LOGGER = logging.getLogger(__name__)
 CHARM_ICON_SET_SLUG_REGEX = re.compile(r"/charms/(?P<slug>[^/?#]+?)(?:\.[^/.?#]+)?(?:[?#]|$)")
 ITEM_TOOLTIP_CSS = "[data-tippy-root]"
+MIN_TYPE_NODE_COUNT = 2
 PAGE_DIAGNOSTIC_MARKERS = (
     "__PRELOADED_STATE__",
     "__NEXT_DATA__",
@@ -121,7 +122,7 @@ def _get_weapon_type_from_slot_tooltip(driver: WebDriver, slot_type: str) -> Ite
         return None
     tooltip = lxml.html.fromstring(tooltip_html, parser=lxml.html.HTMLParser())
     type_nodes = tooltip.findall(".//p")
-    if len(type_nodes) < 2:
+    if len(type_nodes) < MIN_TYPE_NODE_COUNT:
         return None
     type_text = etree.tostring(type_nodes[1], method="text", encoding="unicode")
     return fix_weapon_type(input_str=" ".join(type_text.split()))

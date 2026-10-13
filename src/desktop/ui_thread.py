@@ -5,28 +5,35 @@ import queue
 import threading
 import tkinter as tk
 from collections.abc import Callable
+from dataclasses import dataclass
 
 from src.type_aliases import JsonValue
 
 LOGGER = logging.getLogger(__name__)
 
-_UI_THREAD: threading.Thread | None = None
 type UiResult = JsonValue | tk.Misc | BaseException
 UiCallback = Callable[[], JsonValue | tk.Misc | None]
+
+
+@dataclass
+class _UiThreadState:
+    thread: threading.Thread | None = None
+    root: tk.Tk | None = None
+
+
+_UI_STATE = _UiThreadState()
 _UI_QUEUE: queue.Queue[tuple[UiCallback, threading.Event | None, dict[str, UiResult]]] = queue.Queue()
-_UI_ROOT: tk.Tk | None = None
 _UI_READY = threading.Event()
 _START_LOCK = threading.Lock()
 
 
 def _tk_thread_main() -> None:
     """Own the shared Tk root and execute queued UI work on that thread."""
-    global _UI_ROOT
     # Create a hidden root window. Overlay subsystems attach Toplevels to this
     # root, but Tk still needs one interpreter that owns the event loop.
     root = tk.Tk()
     root.withdraw()
-    _UI_ROOT = root
+    _UI_STATE.root = root
     _UI_READY.set()
 
     def _pump_queue() -> None:
@@ -54,12 +61,11 @@ def _tk_thread_main() -> None:
 
 def ensure_ui_thread() -> None:
     """Start the shared Tk UI thread once and wait until it is ready."""
-    global _UI_THREAD
     with _START_LOCK:
-        if _UI_THREAD is None or not _UI_THREAD.is_alive():
+        if _UI_STATE.thread is None or not _UI_STATE.thread.is_alive():
             _UI_READY.clear()
-            _UI_THREAD = threading.Thread(target=_tk_thread_main, name="d4lf-ui-thread", daemon=True)
-            _UI_THREAD.start()
+            _UI_STATE.thread = threading.Thread(target=_tk_thread_main, name="d4lf-ui-thread", daemon=True)
+            _UI_STATE.thread.start()
     if not _UI_READY.wait(timeout=5.0):
         msg = "Shared Tk UI thread failed to init"
         raise RuntimeError(msg)
@@ -68,19 +74,19 @@ def ensure_ui_thread() -> None:
 def get_root() -> tk.Tk:
     """Return the shared root, starting the UI thread first if needed."""
     ensure_ui_thread()
-    if _UI_ROOT is None:
+    if _UI_STATE.root is None:
         message = "Shared Tk UI root is unavailable"
         raise RuntimeError(message)
-    return _UI_ROOT
+    return _UI_STATE.root
 
 
 def join_ui_thread() -> None:
     """Block the calling thread until the shared UI thread exits."""
     ensure_ui_thread()
-    if _UI_THREAD is None:
+    if _UI_STATE.thread is None:
         message = "Shared Tk UI thread is unavailable"
         raise RuntimeError(message)
-    _UI_THREAD.join()
+    _UI_STATE.thread.join()
 
 
 def call_on_ui_thread(fn: UiCallback) -> JsonValue | tk.Misc | None:

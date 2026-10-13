@@ -3,7 +3,7 @@
 import logging
 import re
 from html import escape
-from typing import override
+from typing import ClassVar, override
 
 from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtGui import QFont, QTextCursor
@@ -14,7 +14,7 @@ class ANSIConsoleWidget(QTextEdit):
     """Read-only text widget that renders the ANSI colors used by D4LF logs."""
 
     ANSI_PATTERN = re.compile(r"\x1b\[(\d+)(;\d+)*m")
-    ANSI_COLORS = {
+    ANSI_COLORS: ClassVar[dict[str, str]] = {
         "30": "#000000",
         "31": "#AA0000",
         "32": "#00AA00",

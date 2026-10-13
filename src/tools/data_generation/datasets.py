@@ -65,7 +65,8 @@ def main(d4data_dir: Path) -> None:
                 data = json.load(file)
                 name_idx, _ = (0, 1) if data["arStrings"][0]["szLabel"] == "Name" else (1, 0)
                 tribute_name: str = cast(
-                    "str", data["arStrings"][name_idx]["szText"].lower().strip().replace("’", "").replace("'", "")
+                    "str",
+                    data["arStrings"][name_idx]["szText"].lower().strip().replace("’", "").replace("'", ""),  # ruff:ignore[RUF001]
                 )
                 tribute_dict[tribute_name.replace(" ", "_").replace("(", "").replace(")", "")] = tribute_name
 
@@ -193,7 +194,7 @@ def generate_sigils(d4data_dir: Path, language: str) -> int:
                     rarity = sigil_rarity
                     break
             name = remove_content_in_braces(raw_name).replace("(", "").replace(")", "")
-            desc = string_list_value(data, "AffixDesc").lower().strip().replace("’", "").replace("'", "")
+            desc = string_list_value(data, "AffixDesc").lower().strip().replace("’", "").replace("'", "")  # ruff:ignore[RUF001]
             desc = remove_content_in_braces(desc)
             sigil_name_key = clean_item_name(name)
             sigil_dict[affix_type][sigil_name_key] = f"{sigil_name_key.replace('_', ' ')} {desc}"

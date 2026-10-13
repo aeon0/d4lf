@@ -20,6 +20,14 @@ def test_checkmark_checkbox_is_a_qt_checkbox(qapp: QApplication) -> None:
     checkbox.close()
 
 
+def test_set_accent_color_updates_the_shared_checkbox_accent(monkeypatch) -> None:
+    monkeypatch.setattr(CheckmarkCheckBox, "accent_color", "#23fc5d")
+
+    set_accent_color("#56B4E9")
+
+    assert CheckmarkCheckBox.accent_color == "#56B4E9"
+
+
 def test_qapp(qapp: QApplication) -> None:
     assert QApplication.instance() is qapp
 

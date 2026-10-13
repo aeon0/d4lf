@@ -119,8 +119,7 @@ def test_timestamp_gui_log_formatter_restores_timestamp() -> None:
 
 
 def test_startup_log_buffer_captures_and_consumes_records(isolated_root_logger) -> None:
-    logger_module._startup_buffer_handler = None
-    logger_module._startup_log_records.clear()
+    logger_module._STATE.startup_buffer = None
     logger_module._enable_startup_buffer(isolated_root_logger)
 
     logging.getLogger("d4lf.test").warning("startup warning")
@@ -128,6 +127,6 @@ def test_startup_log_buffer_captures_and_consumes_records(isolated_root_logger) 
     records = consume_startup_log_records()
 
     assert [record.getMessage() for record in records] == ["startup warning"]
-    assert logger_module._startup_buffer_handler is None
+    assert logger_module._STATE.startup_buffer is None
     assert all(getattr(handler, "name", "") != "D4LF_STARTUP_BUFFER" for handler in isolated_root_logger.handlers)
     assert consume_startup_log_records() == []

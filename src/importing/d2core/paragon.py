@@ -13,6 +13,8 @@ if TYPE_CHECKING:
 
 Warn = Callable[[str, str, str, str], None]
 
+NODE_ENTRY_PART_COUNT = 3
+
 
 def normalize_paragon(
     raw_variant: Mapping[str, JsonValue], *, class_name: str, variant_name: str, catalogs: CatalogStore, warn: Warn
@@ -94,7 +96,7 @@ def _node_entry(entry: JsonValue) -> tuple[int | None, int | None, str | None]:
     if not isinstance(entry, str):
         return None, None, None
     parts = entry.split("_", 2)
-    if len(parts) != 3:
+    if len(parts) != NODE_ENTRY_PART_COUNT:
         return None, None, None
     try:
         return int(parts[0]), int(parts[1]), parts[2]

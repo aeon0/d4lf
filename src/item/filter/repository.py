@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from src.settings import Settings
 
 LOGGER = logging.getLogger(__name__)
+MISSING_PROFILE_CHECK_LIMIT = 2
 
 
 def _contained_profile_path(profiles_dir: Path, profile_name: str) -> Path | None:
@@ -214,7 +215,7 @@ class ProfileRulesRepository:
                 failures.append(ProfileLoadFailure(profile_str, "missing", None))
                 missing_names.append(profile_str)
                 self._missing_profile_checks[profile_str] = self._missing_profile_checks.get(profile_str, 0) + 1
-                self._missing_recheck_pending = self._missing_profile_checks[profile_str] < 2
+                self._missing_recheck_pending = self._missing_profile_checks[profile_str] < MISSING_PROFILE_CHECK_LIMIT
                 continue
             all_file_paths.append(custom_file_path)
             signature = self.profile_signature(custom_file_path)
@@ -257,7 +258,11 @@ class ProfileRulesRepository:
             LOGGER.info((info_str + " ".join(sections)).rstrip())
 
         if missing_names:
-            still_missing = [name for name in missing_names if self._missing_profile_checks.get(name, 0) >= 2]
+            still_missing = [
+                name
+                for name in missing_names
+                if self._missing_profile_checks.get(name, 0) >= MISSING_PROFILE_CHECK_LIMIT
+            ]
             if still_missing:
                 remaining = [name for name in profiles if name not in still_missing]
                 settings.save_value("general", "profiles", ",".join(remaining))

@@ -15,8 +15,11 @@ if TYPE_CHECKING:
 from src.type_aliases import JsonValue, Numeric, Point
 
 _MOUSE = Controller()
+_RNG = random.SystemRandom()
 
 _BUTTONS: dict[str, Button] = {"left": Button.left, "right": Button.right, "middle": Button.middle}
+_POINT_COORDINATE_COUNT = 2
+_MIN_TWEEN_POINTS = 2
 
 # SendInput-based absolute mouse move so Diablo 4's DirectInput/Raw Input pipeline
 # detects the cursor travel (SetCursorPos alone is not seen by the game).
@@ -69,7 +72,7 @@ def is_numeric(val: PointComponent | str | bool | None) -> bool:
 
 def is_list_of_points(value: PointInput) -> TypeGuard[list[Point]]:
     def is_point(p: PointCandidate) -> bool:
-        return len(p) == 2 and is_numeric(p[0]) and is_numeric(p[1])
+        return len(p) == _POINT_COORDINATE_COUNT and is_numeric(p[0]) and is_numeric(p[1])
 
     if not isinstance(value, list):
         return False
@@ -122,6 +125,7 @@ class HumanCurve:
     def __init__(self, from_point: Point, to_point: Point, **kwargs: CurveOption) -> None:
         self.from_point = from_point
         self.to_point = to_point
+        self.rng = np.random.default_rng()
         self.points = self.generate_curve(**kwargs)
 
     def generate_curve(self, **kwargs: CurveOption) -> list[Point]:
@@ -188,8 +192,8 @@ class HumanCurve:
             msg = "downBoundary must be less than or equal to upBoundary"
             raise ValueError(msg)
 
-        knots_x = np.random.choice(range(left_boundary, right_boundary), size=knots_count)
-        knots_y = np.random.choice(range(down_boundary, up_boundary), size=knots_count)
+        knots_x = self.rng.choice(range(left_boundary, right_boundary), size=knots_count)
+        knots_y = self.rng.choice(range(down_boundary, up_boundary), size=knots_count)
         return [(float(x), float(y)) for x, y in zip(knots_x, knots_y, strict=False)]
 
     def generate_points(self, knots: list[Point]) -> list[Point]:
@@ -221,7 +225,9 @@ class HumanCurve:
         distorted = []
         for i in range(1, len(points) - 1):
             x, y = points[i]
-            delta = np.random.normal(distortion_mean, distortion_stdev) if random.random() < distortion_frequency else 0
+            delta = (
+                self.rng.normal(distortion_mean, distortion_stdev) if self.rng.random() < distortion_frequency else 0
+            )
             distorted += ((x, y + delta),)
         return [points[0], *distorted, points[-1]]
 
@@ -230,7 +236,7 @@ class HumanCurve:
         if not is_list_of_points(points):
             msg = "points must be valid list of points"
             raise ValueError(msg)
-        if not isinstance(target_points, int) or target_points < 2:
+        if not isinstance(target_points, int) or target_points < _MIN_TWEEN_POINTS:
             msg = "targetPoints must be an integer greater or equal to 2"
             raise ValueError(msg)
 
@@ -258,13 +264,13 @@ class Mouse:
         if isinstance(randomize, int):
             randomize = int(randomize)
             if randomize > 0:
-                x = int(x) + random.randrange(-randomize, +randomize)
-                y = int(y) + random.randrange(-randomize, +randomize)
+                x = int(x) + _RNG.randrange(-randomize, +randomize)
+                y = int(y) + _RNG.randrange(-randomize, +randomize)
         else:
             randomize = (int(randomize[0]), int(randomize[1]))
             if randomize[1] > 0 and randomize[0] > 0:
-                x = int(x) + random.randrange(-randomize[0], +randomize[0])
-                y = int(y) + random.randrange(-randomize[1], +randomize[1])
+                x = int(x) + _RNG.randrange(-randomize[0], +randomize[0])
+                y = int(y) + _RNG.randrange(-randomize[1], +randomize[1])
 
         dist = math.dist((x, y), from_point)
         offset_boundary_x = max(10, int(0.08 * dist))
@@ -278,7 +284,7 @@ class Mouse:
             target_points=target_points,
         )
 
-        duration = min(0.3, max(0.05, dist * 0.0004) * random.uniform(delay_factor[0], delay_factor[1]))
+        duration = min(0.3, max(0.05, dist * 0.0004) * _RNG.uniform(delay_factor[0], delay_factor[1]))
         delta = duration / len(human_curve.points)
 
         for point in human_curve.points:

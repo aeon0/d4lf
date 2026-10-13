@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from src.settings.store import SettingsStore
     from src.settings.types import SettingValue
 CONFIG_TABNAME = "config"
+MAX_SEGMENTED_CONTROL_OPTIONS = 3
 
 
 class ConfigTabMixin:
@@ -231,7 +232,7 @@ class ConfigTabMixin:
                 if config_key == "theme" and self.theme_changed_callback and not self._initializing:
                     self.theme_changed_callback()
 
-            if len(options) <= 3:
+            if len(options) <= MAX_SEGMENTED_CONTROL_OPTIONS:
                 parameter_value_widget = SegmentedControl(options, config_value, on_changed)
             else:
                 parameter_value_widget = IgnoreScrollWheelComboBox()

@@ -66,42 +66,27 @@ skip-magic-trailing-comma = true
 
 [tool.ruff.lint]
 ignore = [
-  "RUF001",  # ambiguous-unicode-character-string, fix more in the future
   "S101",  # assert, fix more in the future
   "FBT002",  # boolean-default-value-positional-argument
   "FBT001",  # boolean-type-hint-positional-argument
-  "RUF005",  # collection-literal-concatenation, fix more in the future
   "ERA001",  # commented-out-code, fix more in the future
   "C901",  # complex-structure, fix more in the future
-  "PLC0206",  # dict-index-missing-items, fix more in the future
   "TRY400",  # error-instead-of-exception, fix more in the future
   "LOG014",  # exc-info-outside-except-handler
-  "PLW0603",  # global-statement, fix more in the future
-  "PLW0602",  # global-variable-not-assigned, fix more in the future
   "FIX004",  # line-contains-hack, fix more in the future
   "FIX002",  # line-contains-todo, fix more in the future
   "E501",  # line-too-long
   "G004",  # logging-f-string
-  "PLR2004",  # magic-value-comparison, fix more in the future
   "CPY001",  # missing-copyright-notice
   "TD002",  # missing-todo-author, fix more in the future
   "TD004",  # missing-todo-colon, fix more in the future
   "TD003",  # missing-todo-link, fix more in the future
   "COM812",  # missing-trailing-comma
-  "RUF012",  # mutable-class-default, fix more in the future
-  "UP047",  # non-pep695-generic-function, fix more in the future
-  "NPY002",  # numpy-legacy-random, fix more in the future
   "T201",  # print, fix more in the future
   "SLF001",  # private-member-access, fix more in the future
-  "RUF043",  # pytest-raises-ambiguous-pattern, fix more in the future
   "TRY003",  # raise-vanilla-args, fix more in the future
   "TRY002",  # raise-vanilla-class, fix more in the future
   "PLR1704",  # redefined-argument-from-local, fix more in the future
-  "S605",  # start-process-with-a-shell, fix more in the future
-  "S606",  # start-process-with-no-shell, fix more in the future
-  "S607",  # start-process-with-partial-path
-  "S603",  # subprocess-without-shell-equals-true
-  "S311",  # suspicious-non-cryptographic-random-usage, fix more in the future
   "PLR0913",  # too-many-arguments
   "PLR0912",  # too-many-branches, fix more in the future
   "PLR0917",  # too-many-positional-arguments
@@ -116,11 +101,8 @@ ignore = [
   "D100",  # undocumented-public-module
   "D106",  # undocumented-public-nested-class
   "D104",  # undocumented-public-package
-  "PLW0108",  # unnecessary-lambda, fix more in the future
-  "S506",  # unsafe-yaml-load, fix more in the future
   "ARG001",  # unused-function-argument, fix more in the future
   "ARG002",  # unused-method-argument, fix more in the future
-  "RUF059",  # unused-unpacked-variable, fix more in the future
 ]
 select = ["ALL"]
 
@@ -141,6 +123,12 @@ split-on-trailing-comma = false
   "ANN003",  # missing-type-kwargs
   "SLF001",  # private-member-access
   "S311",  # suspicious-non-cryptographic-random-usage
+]
+"build.py" = [
+  "S603",  # subprocess-without-shell-equals-true
+]
+"src/settings/tab_mixin.py" = [
+  "S603",  # subprocess-without-shell-equals-true
 ]
 "src/paragon/__init__.py" = [
   "PLC0415",  # import-outside-top-level

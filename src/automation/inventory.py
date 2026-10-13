@@ -8,6 +8,10 @@ from src.automation.mouse import Mouse
 from src.perception import capture, crop, get_center, search, to_grid, window_to_monitor
 from src.settings import get_ui_coordinates
 
+FAVORITE_FLAG_MIN_MEAN_VALUE = 212
+JUNK_MAX_MEAN_VALUE = 75
+OCCUPIED_MIN_MEAN_VALUE = 37
+
 
 @dataclass
 class ItemSlot:
@@ -69,13 +73,13 @@ class InventoryBase(Menu):
 
             res_junk = search(self.junk_template, slot_img, threshold=0.65, use_grayscale=True)
 
-            if mean_value_fav > 212:
+            if mean_value_fav > FAVORITE_FLAG_MIN_MEAN_VALUE:
                 item_slot.is_fav = True
                 occupied_slots.append(item_slot)
-            elif res_junk.success and mean_value_overall < 75:
+            elif res_junk.success and mean_value_overall < JUNK_MAX_MEAN_VALUE:
                 item_slot.is_junk = True
                 occupied_slots.append(item_slot)
-            elif mean_value_overall > 37:
+            elif mean_value_overall > OCCUPIED_MIN_MEAN_VALUE:
                 occupied_slots.append(item_slot)
             else:
                 empty_slots.append(item_slot)

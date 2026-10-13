@@ -124,7 +124,7 @@ class FilterMatchingMixin:
                 search(
                     expected_index + 1,
                     used_item_indices | {item_index},
-                    matches + [(expected, item_affixes[item_index])],
+                    [*matches, (expected, item_affixes[item_index])],
                 )
             search(expected_index + 1, used_item_indices, matches)
 

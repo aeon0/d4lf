@@ -12,6 +12,10 @@ type Np1DArray = Annotated[
     NpArrayPydanticAnnotation.factory(data_type=None, dimensions=1, strict_data_typing=False),
 ]
 
+HSV_COMPONENT_COUNT = 3
+HUE_RANGE_LIMIT = 179
+SATURATION_VALUE_MAX = 255
+
 
 class HSVRangeModel(_IniBaseModel):
     h_s_v_min: Np1DArray
@@ -42,13 +46,13 @@ class HSVRangeModel(_IniBaseModel):
     @field_validator("h_s_v_min", "h_s_v_max")
     @classmethod
     def values_in_range(cls, v: np.ndarray) -> np.ndarray:
-        if len(v) != 3:
+        if len(v) != HSV_COMPONENT_COUNT:
             msg = "must be h,s,v"
             raise ValueError(msg)
-        if not -179 <= v[0] <= 179:
+        if not -HUE_RANGE_LIMIT <= v[0] <= HUE_RANGE_LIMIT:
             msg = "must be in [-179, 179]"
             raise ValueError(msg)
-        if not all(0 <= x <= 255 for x in v[1:3]):
+        if not all(0 <= x <= SATURATION_VALUE_MAX for x in v[1:3]):
             msg = "must be in [0, 255]"
             raise ValueError(msg)
         return v

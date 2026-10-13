@@ -83,9 +83,9 @@ class HighlightingWorker:
         self.evaluate_item_thread.start()
 
     def evaluate_item_and_queue_draw(self: _VisionModeWithHighlighting, item_descr: Item, cancel_event: Event) -> None:
-        # Always queue a clear: a draw from a previous thread may still be pending in the queue
-        # and would otherwise flip is_cleared to False after we skipped the clear.
-        self.request_clear()
+        # Always queue a clear: the queue is FIFO, so once it is processed any draw left pending
+        # by a previous thread has been drawn and removed again.
+        clear_done = self.request_clear()
         if self.clear_when_item_not_selected_thread:
             self.stop_thread_and_wait(
                 self.clear_when_item_not_selected_thread, self.clear_when_item_not_selected_thread_cancel_event
@@ -111,13 +111,12 @@ class HighlightingWorker:
 
                 self.check_for_thread_cancellation(cancel_event)
                 # Before we get the cropped_descr we need to ensure there is no previous overlay on screen
-                while not self.is_cleared:
+                while not clear_done.wait(0.10):
                     self.check_for_thread_cancellation(cancel_event)
-                    time.sleep(0.10)
                 detection = find_descr_with_diagnostics(capture(), item_center)
                 confirmation = confirm_stable_tooltip(detection, already_confirmed=is_confirmed)
                 if confirmation.status is TooltipConfirmationStatus.ABSENT:
-                    self.request_clear()
+                    clear_done = self.request_clear()
                     self.check_for_thread_cancellation(cancel_event)
                     last_center = None
                     last_top_left_corner = None

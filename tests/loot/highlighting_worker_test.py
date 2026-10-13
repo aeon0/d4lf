@@ -1,8 +1,9 @@
 import queue
+import time
 import typing
 from threading import Event, Thread
 from types import SimpleNamespace
-from typing import cast, override
+from typing import cast
 
 import numpy as np
 import pytest
@@ -24,7 +25,6 @@ from src.loot.highlighting_worker import CancellationRequestedError, Highlightin
 
 class _WorkerHarness(HighlightingWorker):
     current_item: Item | None
-    is_cleared: bool
     clear_when_item_not_selected_thread: Thread | None
     clear_when_item_not_selected_thread_cancel_event: Event | None
     possible_centers: np.ndarray
@@ -35,8 +35,11 @@ class _WorkerHarness(HighlightingWorker):
     request_empty_outline_mock: Mock
     request_codex_upgrade_box_mock: Mock
 
-    def request_clear(self) -> None:
+    def request_clear(self) -> Event:
         self.request_clear_mock()
+        done = Event()
+        done.set()
+        return done
 
     def request_match_box(
         self, *args: Item | FilterResult | tuple[int, int, int, int] | LocatorResult | str | None
@@ -87,7 +90,6 @@ def test_filter_result_queues_only_normal_highlighting_results(
     worker = _WorkerHarness()
     item = Item(name="helm", item_type=ItemType.Sigil, rarity=ItemRarity.Mythic if should_queue_match else None)
     worker.current_item = item
-    worker.is_cleared = True
     worker.clear_when_item_not_selected_thread = None
     worker.clear_when_item_not_selected_thread_cancel_event = None
     worker.request_clear_mock = mocker.Mock()
@@ -135,53 +137,39 @@ def test_filter_result_queues_only_normal_highlighting_results(
     worker.request_codex_upgrade_box_mock.assert_not_called()
 
 
-class _DrainingThread(Thread):
-    """Stand-in clear watcher whose join lets Tk consume pending draws, as it does while the worker waits."""
-
-    def __init__(self, harness: _QueueHarness) -> None:
-        super().__init__()
-        self._harness = harness
-
-    @override
-    def join(self, timeout: float | None = None) -> None:
-        self._harness.drain()
-
-
 class _QueueHarness(HighlightingWorker):
     """Worker with a real task queue and a drain that mimics Tk's draw_from_queue."""
 
-    def __init__(self, item: Item, *, with_clear_watcher: bool) -> None:
+    def __init__(self, item: Item) -> None:
         self.current_item = item
-        self.is_cleared = True
         self.queue: queue.Queue[HighlightTask] = queue.Queue()
         self.processed: list[str] = []
+        self.processed_at_detection: list[str] | None = None
         self.evaluate_item_thread = None
-        self.clear_when_item_not_selected_thread = _DrainingThread(self) if with_clear_watcher else None
-        self.clear_when_item_not_selected_thread_cancel_event = Event()
+        self.clear_when_item_not_selected_thread = None
+        self.clear_when_item_not_selected_thread_cancel_event = None
         self.possible_centers = np.array([[0, 0]])
         self.possible_vendor_centers = self.possible_centers
-        self.reached_detection = Event()
 
-    def request_clear(self) -> None:
-        self.queue.put(("clear",))
+    def request_clear(self) -> Event:
+        done = Event()
+        self.queue.put(("clear", done))
+        return done
 
-    def request_match_box(
-        self,
-        item: Item,
-        item_roi: tuple[int, int, int, int],
-        filter_result: FilterResult,
-        locator_result: LocatorResult | None,
-    ) -> None:
-        self.queue.put(("match", item, item_roi, filter_result, locator_result))
+    def drain_later(self, delay_seconds: float) -> Thread:
+        """Start a stand-in for Tk that processes the queue after a delay."""
 
-    def drain(self) -> None:
-        while not self.queue.empty():
-            task = self.queue.get_nowait()
-            self.processed.append(task[0])
-            if task[0] == "clear":
-                self.is_cleared = True
-            elif task[1] == self.current_item:
-                self.is_cleared = False
+        def drain() -> None:
+            time.sleep(delay_seconds)
+            while not self.queue.empty():
+                task = self.queue.get_nowait()
+                self.processed.append(task[0])
+                if task[0] == "clear":
+                    task[1].set()
+
+        thread = Thread(target=drain, daemon=True)
+        thread.start()
+        return thread
 
 
 def _patch_perception(monkeypatch, harness: _QueueHarness) -> None:
@@ -189,19 +177,19 @@ def _patch_perception(monkeypatch, harness: _QueueHarness) -> None:
     monkeypatch.setattr(worker_module, "monitor_to_window", lambda position: position)
 
     def find_descr_stub(*_args):
-        harness.reached_detection.set()
+        harness.processed_at_detection = list(harness.processed)
         raise CancellationRequestedError
 
     monkeypatch.setattr(worker_module, "capture", lambda *_args, **_kwargs: object())
     monkeypatch.setattr(worker_module, "find_descr_with_diagnostics", find_descr_stub)
 
 
-def test_duplicate_tts_event_does_not_deadlock_on_pending_match_draw(monkeypatch) -> None:
+def test_detection_waits_for_own_clear_behind_pending_match_draw(monkeypatch) -> None:
     item = Item(name="helm")
-    harness = _QueueHarness(item, with_clear_watcher=True)
-    harness.queue.put(
-        ("match", item, (0, 0, 10, 10), FilterResult(True, []), None)
-    )  # draw queued by the previous thread, not yet consumed by Tk
+    harness = _QueueHarness(item)
+    # Draw queued by the previous thread that Tk has not consumed yet.
+    harness.queue.put(("match", item, (0, 0, 10, 10), FilterResult(True, []), None))
+    harness.processed_at_detection = None
     _patch_perception(monkeypatch, harness)
 
     thread = Thread(
@@ -210,17 +198,16 @@ def test_duplicate_tts_event_does_not_deadlock_on_pending_match_draw(monkeypatch
         daemon=True,
     )
     thread.start()
-    thread.join(timeout=1)
+    harness.drain_later(0.2)
+    thread.join(timeout=2)
 
     assert not thread.is_alive()
-    assert harness.reached_detection.is_set()
-    assert harness.processed == ["match", "clear"]
+    assert harness.processed_at_detection == ["match", "clear"]
 
 
 def test_cancellation_ends_thread_waiting_for_clear(monkeypatch) -> None:
     item = Item(name="helm")
-    harness = _QueueHarness(item, with_clear_watcher=False)
-    harness.is_cleared = False  # nothing ever consumes the queued clear
+    harness = _QueueHarness(item)  # nothing ever consumes the queued clear
     _patch_perception(monkeypatch, harness)
     cancel_event = Event()
 
@@ -239,4 +226,4 @@ def test_cancellation_ends_thread_waiting_for_clear(monkeypatch) -> None:
 
     assert not stopper.is_alive()
     assert not thread.is_alive()
-    assert not harness.reached_detection.is_set()
+    assert harness.processed_at_detection is None

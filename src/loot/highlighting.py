@@ -2,6 +2,7 @@
 
 import logging
 import queue
+from threading import Event
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
@@ -17,7 +18,7 @@ from src.settings import get_ui_coordinates
 
 if TYPE_CHECKING:
     import tkinter as tk
-    from threading import Event, Thread
+    from threading import Thread
 
     from src.item import Item
     from src.perception import LocatorResult
@@ -25,7 +26,7 @@ if TYPE_CHECKING:
 LOGGER = logging.getLogger(__name__)
 
 type HighlightTask = (
-    tuple[Literal["clear"]]
+    tuple[Literal["clear"], Event]
     | tuple[Literal["empty"], Item, tuple[int, int, int, int], str, str | None]
     | tuple[Literal["match"], Item, tuple[int, int, int, int], FilterResult, LocatorResult | None]
     | tuple[Literal["no_match"], Item, tuple[int, int, int, int]]
@@ -43,7 +44,6 @@ class _VisionModeWithHighlighting(HighlightingRenderer, HighlightingWorker):
         self.evaluate_item_thread: Thread | None = None
         self.evaluate_item_thread_cancel_event: Event | None = None
         self.current_item: Item | None = None
-        self.is_cleared: bool = True
         self.queue: queue.Queue[HighlightTask] = queue.Queue()
         self.is_running: bool = False
 
@@ -88,8 +88,11 @@ class _VisionModeWithHighlighting(HighlightingRenderer, HighlightingWorker):
         self.screen_off_x = window_roi["left"]
         self.screen_off_y = window_roi["top"]
 
-    def request_clear(self) -> None:
-        self.queue.put(("clear",))
+    def request_clear(self) -> Event:
+        """Queue a clear and return an event that is set once the canvas has been cleared."""
+        done = Event()
+        self.queue.put(("clear", done))
+        return done
 
     def request_empty_outline(
         self, item_descr: Item, item_roi: tuple[int, int, int, int], color: str, text: str | None = None

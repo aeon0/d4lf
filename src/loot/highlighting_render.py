@@ -134,11 +134,10 @@ class HighlightingRenderer:
             # LOGGER.debug(f"Queue size: {self.queue.qsize()}, task: {task}")
             if task[0] == "clear":
                 reset_canvas(self.root, self.canvas)
-                self.is_cleared = True
+                task[1].set()
             else:
                 item_desc = task[1]
                 if item_desc == self.current_item:
-                    self.is_cleared = False
                     if task[0] == "empty":
                         self.draw_empty_outline(task[2], task[3], task[4])
                     if task[0] == "match":

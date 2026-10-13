@@ -1,6 +1,7 @@
 import logging
 import queue
 import typing
+from threading import Event
 from typing import cast
 from unittest.mock import Mock
 
@@ -23,7 +24,6 @@ class _RendererHarness(HighlightingRenderer):
     screen_off_y: int
     queue: queue.Queue[HighlightTask]
     current_item: Item | None
-    is_cleared: bool
 
 
 def test_highlighting_renderer_places_reliable_affix_markers(monkeypatch, mocker: MockerFixture) -> None:
@@ -53,7 +53,6 @@ def test_draw_from_queue_reschedules_and_logs_when_drawing_fails(
     renderer.canvas = mocker.Mock()
     renderer.queue = queue.Queue()
     renderer.current_item = item
-    renderer.is_cleared = True
     renderer.queue.put(("match", item, (0, 0, 10, 10), FilterResult(keep=True, matched=[]), None))
     monkeypatch.setattr(renderer, "draw_match_outline", mocker.Mock(side_effect=RuntimeError("boom")))
 
@@ -73,3 +72,19 @@ def test_draw_from_queue_reschedules_when_queue_is_empty(mocker: MockerFixture) 
     cast("_VisionModeWithHighlighting", renderer).draw_from_queue()
 
     renderer.canvas.after.assert_called_once_with(10, renderer.draw_from_queue)
+
+
+def test_draw_from_queue_sets_done_event_after_clearing_canvas(monkeypatch, mocker: MockerFixture) -> None:
+    renderer = _RendererHarness()
+    renderer.root = mocker.Mock()
+    renderer.canvas = mocker.Mock()
+    renderer.queue = queue.Queue()
+    reset_canvas = mocker.Mock()
+    monkeypatch.setattr("src.loot.highlighting_render.reset_canvas", reset_canvas)
+    clear_done = Event()
+    renderer.queue.put(("clear", clear_done))
+
+    cast("_VisionModeWithHighlighting", renderer).draw_from_queue()
+
+    reset_canvas.assert_called_once_with(renderer.root, renderer.canvas)
+    assert clear_done.is_set()

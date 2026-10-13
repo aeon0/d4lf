@@ -45,7 +45,7 @@ def get_filter_colors() -> FilterColors:
 
 def visible_missing_affixes(missing_affixes: list[str]) -> list[str]:
     limit = get_settings().advanced_options.max_missing_affixes_shown
-    return missing_affixes[:limit] if limit else missing_affixes
+    return missing_affixes[:limit]
 
 
 def is_ignored_item(item_descr: Item) -> bool:

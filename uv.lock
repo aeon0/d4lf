@@ -1414,7 +1414,7 @@ wheels = [
 
 [[package]]
 name = "seleniumbase"
-version = "4.56.0"
+version = "4.56.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
@@ -1477,9 +1477,9 @@ dependencies = [
     { name = "wheel" },
     { name = "wsproto" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/57/6c/0749c76d09d862d2de67e19cdcdbed18bf527c64de5ac8d5826a09982935/seleniumbase-4.56.0.tar.gz", hash = "sha256:076e61150e86273534a6b94f80948ac230a748bd7d552faf42634563d964f17d", size = 704910, upload-time = "2026-10-11T15:55:44.158Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/30/6d/073ded183dcf90634d1ac36d0cec1bb329ed416db6faa818496cfc2056b3/seleniumbase-4.56.1.tar.gz", hash = "sha256:33f334094439b78415b4af93d255bb59cda9fd368b85b6cf93af22ada7d6ea43", size = 704940, upload-time = "2026-10-12T18:41:05.61Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/f4/8a166a01d8beeadbccf54a7461f718769b88584013e27ec111824ceeee05/seleniumbase-4.56.0-py3-none-any.whl", hash = "sha256:ff479bbe95029b4039a910d667013194d291ee4d6b9cca603dfd91eaf8c8ff4d", size = 700579, upload-time = "2026-10-11T15:55:41.11Z" },
+    { url = "https://files.pythonhosted.org/packages/7e/fd/6a804af2cc4a1c39d53abb85ff25755601d8c6e4f647222c671f8c429a8e/seleniumbase-4.56.1-py3-none-any.whl", hash = "sha256:0ed947410af8e77a3dff1b724de4cac6e66224911850ba8e17b3d0ed3ead63f0", size = 700605, upload-time = "2026-10-12T18:41:02.561Z" },
 ]
 
 [[package]]

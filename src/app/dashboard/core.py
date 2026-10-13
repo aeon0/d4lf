@@ -171,7 +171,7 @@ class ActivityLogWidget(ActivityProfileRowsMixin, ActivityProfileDragMixin, Acti
                 continue
             if widget := item.widget():
                 widget.deleteLater()
-            elif layout := item.layout():
+            elif (layout := item.layout()) is not None:
                 while layout.count():
                     child = layout.takeAt(0)
                     if child is not None and (w := child.widget()):
@@ -184,8 +184,8 @@ class ActivityLogWidget(ActivityProfileRowsMixin, ActivityProfileDragMixin, Acti
         hotkey_items = []
         # Filter for keys that control the app (Advanced section) and are tagged as hotkeys
         for key, field in opts.model_fields.items():
-            meta = field.json_schema_extra or {}
-            if meta.get(IS_HOTKEY_KEY) == "True":
+            meta = field.json_schema_extra
+            if isinstance(meta, dict) and meta.get(IS_HOTKEY_KEY) == "True":
                 val = getattr(opts, key)
                 prop_meta = properties.get(key, {})
                 label = prop_meta.get("title") or key.replace("_", " ").title()

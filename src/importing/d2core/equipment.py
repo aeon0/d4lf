@@ -101,9 +101,9 @@ def normalize_variant(
                 aspect_key = raw_item.get("key")
                 aspect = _catalog_record(aspect_catalog, aspect_key)
                 aspect_name = _canonical_aspect_name(aspect)
-                if aspect_name and aspect_name not in aspect_upgrades:
+                if aspect_name is not None and aspect_name not in aspect_upgrades:
                     aspect_upgrades.append(aspect_name)
-                elif aspect_key:
+                elif bool(aspect_key):
                     warn(OPTIONAL_ENTRY_JOIN, variant_name, "aspect", str(aspect_key))
     return Variant(
         name=variant_name,
@@ -136,7 +136,7 @@ def _normalize_item(
             warn(EQUIPMENT_JOIN, variant_name, "equipment", str(item.get("key", "unknown")))
             return None, None
         unique_name = canonical_catalog_name(unique_record, GameCatalog().aspect_unique_dict)
-        if not unique_name:
+        if unique_name is None:
             warn(EQUIPMENT_JOIN, variant_name, "equipment", str(item.get("key", "unknown")))
             return None, None
     # Unique/Mythic types come from the joined catalog; non-Unique itemType is the stable base discriminator.
@@ -155,7 +155,7 @@ def _normalize_item(
             key = str(mod.get("name", ""))
             record = _catalog_record(affixes, mod.get("name"))
             name = canonical_affix_name(record, GameCatalog().affix_dict)
-            if not name:
+            if name is None:
                 warn(EQUIPMENT_JOIN, variant_name, "equipment", key or "unknown")
                 continue
             normalized_affixes.append(
@@ -168,7 +168,7 @@ def _normalize_item(
             )
     item_types = item_type if isinstance(item_type, list) else [item_type]
     item_filter = ItemFilterModel(item_type=item_types, min_power=100)
-    if unique_name:
+    if unique_name is not None:
         item_filter.unique_aspect = [AspectUniqueFilterModel(name=unique_name)]
     if normalized_affixes:
         item_filter.affix_pool = create_item_affix_pool(normalized_affixes, unique_like=unique_like)

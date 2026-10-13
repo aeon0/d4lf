@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-import numpy as np  # ruff:ignore[typing-only-third-party-import] - runtime type-hint introspection resolves np.ndarray
+import numpy as np  # ruff:ignore[TC002] - runtime type-hint introspection resolves np.ndarray
 
 from src.type_aliases import JsonObject
 

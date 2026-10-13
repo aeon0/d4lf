@@ -81,7 +81,7 @@ def test_config_window_persists_maximized_state_on_close(monkeypatch, qapp) -> N
             default = kwargs.get("defaultValue", default)
             return self.values.get(key, default)
 
-        def setValue(self, key, value) -> None:  # ruff:ignore[invalid-function-name] - mirrors QSettings API
+        def setValue(self, key, value) -> None:  # ruff:ignore[N802] - mirrors QSettings API
             self.values[key] = value
 
     class FakeTab(QWidget):

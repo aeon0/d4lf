@@ -75,7 +75,7 @@ def fetch_variants_maxroll(request: ImportRequest) -> list[VariantMetadata]:
     variants: list[VariantMetadata] = []
     profiles = cast("list[PlannerObject]", build_data["profiles"])
     for profile_id, profile_data in enumerate(profiles):
-        if profile_data.get("hidden"):
+        if bool(profile_data.get("hidden")):
             continue
         variants.append(
             VariantMetadata(id=str(profile_id), name=str(profile_data.get("name") or f"Profile {profile_id + 1}"))
@@ -109,11 +109,8 @@ def _extract_profile_variant(
     for item_id in profile_items.values():
         resolved_item = items[str(item_id)]
         resolved_item_id = str(resolved_item["id"])
-        if (
-            item_type := _find_item_type(
-                mapping_data=item_type_mapping, value=str(resolved_item["id"]), class_name=class_name
-            )
-        ) is None:
+        item_type = _find_item_type(mapping_data=item_type_mapping, value=resolved_item_id, class_name=class_name)
+        if item_type is None:
             LOGGER.warning(
                 f"Couldn't find item type for {resolved_item['id']} from mapping data provided by Maxroll. Skipping item."
             )
@@ -142,15 +139,16 @@ def _extract_profile_variant(
                 item_affixes=cast("list[JsonObject]", resolved_item["explicits"]),
                 item_type=item_type,
                 import_greater_affixes=request.options.import_greater_affixes,
+                class_name=class_name,
             )
             charm_or_seal_unique_aspect = None
             charm_set_name = None
             if is_unique_like:
-                charm_or_seal_unique_aspect = correct_name(_unique_name_special_handling(item_name))
+                charm_or_seal_unique_aspect = correct_name(_unique_name_special_handling(item_name)) or None
             elif rarity == ItemRarity.Set:
                 set_key = str(item_mapping[resolved_item_id]["set"])
-                charm_set_name = correct_name(str(item_sets[set_key]["name"]))
-            if not seal_charm_affixes and not charm_or_seal_unique_aspect and not charm_set_name:
+                charm_set_name = correct_name(str(item_sets[set_key]["name"])) or None
+            if not seal_charm_affixes and charm_or_seal_unique_aspect is None and charm_set_name is None:
                 LOGGER.warning(
                     f"Skipping {resolved_item.get('name', '(could not determine item name)')} because it had no supported affixes, unique aspect, or set name."
                 )
@@ -186,7 +184,7 @@ def _extract_profile_variant(
                     resolved_item.get("legendaryPower", resolved_item.get("aspects", {})),
                 ),
             )
-            if legendary_aspect:
+            if legendary_aspect is not None:
                 if legendary_aspect not in GameCatalog().aspect_list:
                     LOGGER.warning(
                         f"Found legendary aspect '{legendary_aspect}' that is not in our aspect data, unable to add "
@@ -208,6 +206,7 @@ def _extract_profile_variant(
             item_affixes=cast("list[JsonObject]", resolved_item["explicits"]),
             item_type=item_type,
             import_greater_affixes=request.options.import_greater_affixes,
+            class_name=class_name,
         )
         if affixes:
             item_filter.affix_pool = create_item_affix_pool(affixes=affixes, unique_like=is_unique_like)
@@ -264,7 +263,7 @@ def import_maxroll(request: ImportRequest) -> ImportResult | None:
     profiles_to_extract = []
     if request.options.multi_build:
         for profile_id, profile_data in enumerate(profiles):
-            if profile_data.get("hidden"):
+            if bool(profile_data.get("hidden")):
                 continue
             if selection is None or str(profile_id) in selection:
                 profiles_to_extract.append((profile_id, profile_data))

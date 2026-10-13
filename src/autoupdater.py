@@ -14,8 +14,8 @@ from src import __version__
 LOGGER = logging.getLogger(__name__)
 
 
-ReleaseAsset = TypedDict("ReleaseAsset", {"name": str, "browser_download_url": str})  # ruff: ignore[convert-typed-dict-functional-to-class]
-ReleaseData = TypedDict("ReleaseData", {"tag_name": str, "assets": list[ReleaseAsset]}, total=False)  # ruff: ignore[convert-typed-dict-functional-to-class]
+ReleaseAsset = TypedDict("ReleaseAsset", {"name": str, "browser_download_url": str})  # ruff: ignore[UP013]
+ReleaseData = TypedDict("ReleaseData", {"tag_name": str, "assets": list[ReleaseAsset]}, total=False)  # ruff: ignore[UP013]
 
 
 # This autoupdater was almost entirely provided by iAmPilcrow
@@ -33,7 +33,7 @@ class D4LFUpdater:
     @staticmethod
     def normalize_version(version: str | None) -> str | None:
         """Ensure version has 'v' prefix."""
-        if version and not version.startswith("v"):
+        if version is not None and version != "" and not version.startswith("v"):
             return f"v{version.strip()}"
         return version
 
@@ -138,7 +138,7 @@ class D4LFUpdater:
 
         # Get latest release info
         release_data = self.get_latest_release()
-        if not release_data:
+        if release_data is None or not release_data:
             LOGGER.warning("Unable to find latest release on github, can't automatically update.")
             return False
 
@@ -260,7 +260,7 @@ def notify_if_update() -> None:
     current_version = updater.normalize_version(__version__) or ""
 
     release = updater.get_latest_release(silent=True)
-    if not release:
+    if release is None or not release:
         LOGGER.warning("Unable to find latest release of d4lf on github, skipping check for updates.")
         return
 

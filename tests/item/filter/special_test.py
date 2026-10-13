@@ -5,8 +5,8 @@ import pytest
 from natsort import natsorted
 
 from src.game_data import ItemRarity, ItemType
-from src.item import Item
-from src.profiles import SigilPriority, TributeFilterModel
+from src.item import Affix, Item
+from src.profiles import DynamicCharmFilterModel, DynamicSealFilterModel, SigilPriority, TributeFilterModel
 
 from .conftest import (
     _create_mocked_filter,
@@ -187,17 +187,11 @@ def test_tribute_empty_filter_keeps_nothing(mocker: MockerFixture) -> None:
     ).keep
 
 
-def test_sigil_rarity_gate_keeps_matching_rarity(mocker: MockerFixture) -> None:
-    """A sigil whose derived rarity matches the gate passes through."""
+def test_sigil_rarity_gate_keeps_matching_and_drops_non_matching_rarity(mocker: MockerFixture) -> None:
+    """A sigil whose derived rarity matches the gate passes through; a non-matching one is dropped."""
     test_filter = _create_mocked_filter(mocker)
     test_filter.sigil_filters = {filters.sigil_rarity_rare_only.name: filters.sigil_rarity_rare_only.sigils}
     assert test_filter.should_keep(sigil_derived_rare).matched[0].profile == filters.sigil_rarity_rare_only.name
-
-
-def test_sigil_rarity_gate_drops_non_matching_rarity(mocker: MockerFixture) -> None:
-    """A sigil whose derived rarity does NOT match the gate is dropped."""
-    test_filter = _create_mocked_filter(mocker)
-    test_filter.sigil_filters = {filters.sigil_rarity_rare_only.name: filters.sigil_rarity_rare_only.sigils}
     assert test_filter.should_keep(sigil_derived_legendary).matched == []
 
 
@@ -280,3 +274,27 @@ def test_sigil_rarity_gate_drops_legendary_regardless_of_blacklist_state(mocker:
     }
     # sigil_derived_legendary is Legendary — fails rarity gate, dropped regardless of blacklist
     assert test_filter.should_keep(sigil_derived_legendary).matched == []
+
+
+@pytest.mark.parametrize(
+    ("attribute", "model", "item_type", "present", "absent"),
+    [
+        ("seal_filters", DynamicSealFilterModel, ItemType.HoradricSeal, "damage", "strength"),
+        ("charm_filters", DynamicCharmFilterModel, ItemType.Charm, "movement_speed", "to_basic_skills"),
+    ],
+)
+def test_seal_and_charm_match_reports_absent_affix_as_missing(
+    attribute: str,
+    model: type[DynamicSealFilterModel | DynamicCharmFilterModel],
+    item_type: ItemType,
+    present: str,
+    absent: str,
+    mocker: MockerFixture,
+) -> None:
+    test_filter = _create_mocked_filter(mocker)
+    wanted = {"wanted": {"affixPool": [{"count": [present, absent], "min_count": 1}]}}
+    setattr(test_filter, attribute, {"profile": [model.model_validate(wanted)]})
+    item = Item(item_type=item_type, rarity=ItemRarity.Rare, affixes=[Affix(name=present)])
+    matched = test_filter.should_keep(item).matched[0]
+    assert [affix.name for affix in matched.matched_affixes] == [present]
+    assert matched.missing_affixes == [absent]

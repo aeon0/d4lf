@@ -54,7 +54,8 @@ class SettingsStore:
         if field.default is not PydanticUndefined:
             return cast("SettingValue", field.default)
         if field.default_factory is not None:
-            return cast("SettingValue", field.default_factory())
+            validated_data = model.model_dump(mode="python")
+            return cast("SettingValue", field.get_default(call_default_factory=True, validated_data=validated_data))
         return None
 
     def reset_category(self, settings: list[CategorySetting]) -> list[ResetChange]:

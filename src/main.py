@@ -61,14 +61,16 @@ def main() -> None:
         (adv.toggle_paragon_overlay, "Toggle Paragon Overlay"),
     ]
     if not adv.vision_mode_only:
-        rows.extend([
-            (adv.run_filter, "Run/Stop Auto Filter (no match = junk)"),
-            (adv.run_filter_drop, "Run/Stop Auto Filter (no match = drop)"),
-            (adv.run_filter_force_refresh, "Force Run/Stop Filter, Resetting Item Status"),
-            (adv.force_refresh_only, "Reset Item Statuses Without A Filter After"),
-            (adv.move_to_inv, "Move Items From Chest To Inventory"),
-            (adv.move_to_chest, "Move Items From Inventory To Chest"),
-        ])
+        rows.extend(
+            [
+                (adv.run_filter, "Run/Stop Auto Filter (no match = junk)"),
+                (adv.run_filter_drop, "Run/Stop Auto Filter (no match = drop)"),
+                (adv.run_filter_force_refresh, "Force Run/Stop Filter, Resetting Item Status"),
+                (adv.force_refresh_only, "Reset Item Statuses Without A Filter After"),
+                (adv.move_to_inv, "Move Items From Chest To Inventory"),
+                (adv.move_to_chest, "Move Items From Inventory To Chest"),
+            ]
+        )
     rows.append((adv.exit_key, "Exit"))
     for row in rows:
         table.rows.append(row)

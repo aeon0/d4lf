@@ -26,7 +26,7 @@ def get_affixes_for_set(affix_dict: dict[str, str], set_list: list[str], target_
     for key, value in affix_dict.items():
         set_name, _ = get_set_and_base_for_key(key, set_list)
         if set_name == target_set:
-            if set_name:
+            if set_name is not None:
                 prefix = set_name.replace("_", " ") + " "
                 result[key] = value.removeprefix(prefix)
             else:

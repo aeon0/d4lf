@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-import cv2  # ruff:ignore[unused-import]
+import cv2  # ruff:ignore[F401]
 
 from src.game_data import ItemType
 from src.item import Affix, Item

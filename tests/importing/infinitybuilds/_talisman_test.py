@@ -7,13 +7,15 @@ if TYPE_CHECKING:
 
 
 def test_talisman_payload_becomes_catalog_gear() -> None:
-    gear = _parse_talisman_gear({
-        "seal": "item-1128-seal",
-        "charms": [None, "Talisman_Charm_Set_Barb_01_03"],
-        "charmAffixes": [["unused"], ["affix-all-stats", None]],
-        "charmAffixValues": [[None], [100, None]],
-        "charmAffixGreater": [[None], [True, None]],
-    })
+    gear = _parse_talisman_gear(
+        {
+            "seal": "item-1128-seal",
+            "charms": [None, "Talisman_Charm_Set_Barb_01_03"],
+            "charmAffixes": [["unused"], ["affix-all-stats", None]],
+            "charmAffixValues": [[None], [100, None]],
+            "charmAffixGreater": [[None], [True, None]],
+        }
+    )
 
     assert gear == [
         {"kind": "talisman", "slot": "seal", "itemId": "item-1128-seal"},

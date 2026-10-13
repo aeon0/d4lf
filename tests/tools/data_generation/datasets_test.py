@@ -68,11 +68,13 @@ def test_affix_generation_uses_core_toc_power_index_without_parsing_power_files(
     (d4data / "json/base/meta/Power/invalid.json").write_text("not json", encoding="utf-8")
     for index in range(3):
         (d4data / f"json/base/meta/Affix/Affix_{index}.json").write_text(
-            json.dumps({
-                "__fileName__": f"Affix_{index}.json",
-                "eMagicType": 0,
-                "ptItemAffixAttributes": [{"tAttribute": {"__eAttribute_name__": "Missing"}}],
-            }),
+            json.dumps(
+                {
+                    "__fileName__": f"Affix_{index}.json",
+                    "eMagicType": 0,
+                    "ptItemAffixAttributes": [{"tAttribute": {"__eAttribute_name__": "Missing"}}],
+                }
+            ),
             encoding="utf-8",
         )
     output_dir = tmp_path / "assets/lang/enUS"
@@ -92,11 +94,9 @@ def test_generate_uniques_skips_placeholder_before_reading_incomplete_inherent_a
     unique_dir.mkdir(parents=True)
     string_dir.mkdir(parents=True)
     (unique_dir / "Placeholder_Unique.itm.json").write_text(
-        json.dumps({
-            "snoItemType": {"name": "Sword"},
-            "arForcedAffixes": [{"name": "forced_affix"}],
-            "arInherentAffixes": [{}],
-        }),
+        json.dumps(
+            {"snoItemType": {"name": "Sword"}, "arForcedAffixes": [{"name": "forced_affix"}], "arInherentAffixes": [{}]}
+        ),
         encoding="utf-8",
     )
     (string_dir / "Item_Placeholder_Unique.stl.json").write_text(
@@ -122,13 +122,15 @@ def test_generate_uniques_counts_grandfather_inherent_affix(tmp_path, monkeypatc
     affix_dir.mkdir(parents=True)
     string_dir.mkdir(parents=True)
     (item_dir / "2HSword_Unique_Generic_001.itm.json").write_text(
-        json.dumps({
-            "snoItemType": {"name": "Sword"},
-            "arForcedAffixes": [{"name": "2HSword_Unique_Generic_001"}],
-            "arInherentAffixes": [
-                {"name": "Indestructible", "__targetFileName__": "base/meta/Affix/Indestructible.aff"}
-            ],
-        }),
+        json.dumps(
+            {
+                "snoItemType": {"name": "Sword"},
+                "arForcedAffixes": [{"name": "2HSword_Unique_Generic_001"}],
+                "arInherentAffixes": [
+                    {"name": "Indestructible", "__targetFileName__": "base/meta/Affix/Indestructible.aff"}
+                ],
+            }
+        ),
         encoding="utf-8",
     )
     (affix_dir / "Indestructible.aff.json").write_text(json.dumps({"ptItemAffixAttributes": [{}]}), encoding="utf-8")
@@ -158,11 +160,13 @@ def test_generate_uniques_includes_runeword_items(tmp_path, monkeypatch) -> None
     item_dir.mkdir(parents=True)
     string_dir.mkdir(parents=True)
     (item_dir / "Runeword_Enigma.itm.json").write_text(
-        json.dumps({
-            "snoItemType": {"name": "ChestArmor"},
-            "arForcedAffixes": [{"name": "Runeword_Enigma"}],
-            "arInherentAffixes": [],
-        }),
+        json.dumps(
+            {
+                "snoItemType": {"name": "ChestArmor"},
+                "arForcedAffixes": [{"name": "Runeword_Enigma"}],
+                "arInherentAffixes": [],
+            }
+        ),
         encoding="utf-8",
     )
     (string_dir / "Item_Runeword_Enigma.stl.json").write_text(
@@ -188,13 +192,15 @@ def test_generate_uniques_includes_runeword_with_specialized_gear_type(tmp_path,
     affix_dir.mkdir(parents=True)
     string_dir.mkdir(parents=True)
     (item_dir / "Runeword_Grief.itm.json").write_text(
-        json.dumps({
-            "snoItemType": {"name": "Sword_Phase_Blade"},
-            "arForcedAffixes": [{"name": "Runeword_Grief"}],
-            "arInherentAffixes": [
-                {"name": "Indestructible", "__targetFileName__": "base/meta/Affix/Indestructible.aff"}
-            ],
-        }),
+        json.dumps(
+            {
+                "snoItemType": {"name": "Sword_Phase_Blade"},
+                "arForcedAffixes": [{"name": "Runeword_Grief"}],
+                "arInherentAffixes": [
+                    {"name": "Indestructible", "__targetFileName__": "base/meta/Affix/Indestructible.aff"}
+                ],
+            }
+        ),
         encoding="utf-8",
     )
     (affix_dir / "Indestructible.aff.json").write_text(json.dumps({"ptItemAffixAttributes": [{}]}), encoding="utf-8")

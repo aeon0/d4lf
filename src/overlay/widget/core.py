@@ -1,7 +1,7 @@
-import datetime
 import time
 import tkinter as tk
 from contextlib import suppress
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Protocol, cast, override
 
 from src.automation import WindowSpec
@@ -61,10 +61,10 @@ class _OverlayCore(OverlayContract):
         self.show_total_exp: bool
         self.show_t2l: bool
         self.show_next_scan: bool
-        self.wb_reference: datetime.datetime
-        self.synced_wb: tuple[datetime.datetime, str] | None
-        self.synced_legion: datetime.datetime | None
-        self.synced_helltide: datetime.datetime | None
+        self.wb_reference: datetime
+        self.synced_wb: tuple[datetime, str] | None
+        self.synced_legion: datetime | None
+        self.synced_helltide: datetime | None
         self.labels_to_resize: list[tk.Label] = []
 
         self.title("D4LF Boss Timer")
@@ -140,9 +140,7 @@ class _OverlayCore(OverlayContract):
         self.show_total_exp = _setting_bool(self.settings, "show_total_exp", default=True)
         self.show_t2l = _setting_bool(self.settings, "show_t2l", default=True)
         self.show_next_scan = _setting_bool(self.settings, "show_next_scan", default=True)
-        self.wb_reference = _setting_datetime(
-            self.settings, "wb_reference", datetime.datetime(2024, 1, 1, 0, 0, 0, tzinfo=datetime.UTC)
-        )
+        self.wb_reference = _setting_datetime(self.settings, "wb_reference", datetime(2024, 1, 1, 0, 0, 0, tzinfo=UTC))
 
         # In-memory synced data
         self.synced_wb = None

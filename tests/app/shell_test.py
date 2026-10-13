@@ -18,7 +18,7 @@ def test_shell_uses_application_window_lifecycle() -> None:
 def test_profile_report_is_delivered_through_qt_signal() -> None:
     app = QApplication.instance() or QApplication([])
     window = UnifiedMainWindow.__new__(UnifiedMainWindow)
-    QMainWindow.__init__(window)  # ruff:ignore[unnecessary-dunder-call] - initialize a shell instance without its full UI
+    QMainWindow.__init__(window)
     received = []
     window.profile_load_report_signal.connect(received.append)
 
@@ -32,7 +32,7 @@ def test_profile_report_is_delivered_through_qt_signal() -> None:
 def test_settings_error_from_worker_is_delivered_on_gui_thread(monkeypatch) -> None:
     app = QApplication.instance() or QApplication([])
     window = UnifiedMainWindow.__new__(UnifiedMainWindow)
-    QMainWindow.__init__(window)  # ruff:ignore[unnecessary-dunder-call] - initialize without full UI
+    QMainWindow.__init__(window)
     gui_thread = threading.get_ident()
     notification_threads = []
     monkeypatch.setattr(

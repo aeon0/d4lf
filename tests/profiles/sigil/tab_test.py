@@ -140,7 +140,7 @@ def test_create_sigil_remembers_size(qapp, monkeypatch) -> None:
         def value(self, key, default=None):
             return store.get(key, default)
 
-        def setValue(self, key, value) -> None:  # ruff:ignore[invalid-function-name]
+        def setValue(self, key, value) -> None:  # ruff:ignore[N802]
             store[key] = value
 
     monkeypatch.setattr(dialog_module, "QSettings", FakeSettings)

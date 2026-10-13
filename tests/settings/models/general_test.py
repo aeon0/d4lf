@@ -26,7 +26,9 @@ class TestGeneralModel:
         for key, title in expected.items():
             field = GeneralModel.model_fields[key]
             assert field.title == title
+            assert isinstance(field.json_schema_extra, dict)
             assert field.json_schema_extra[CATEGORY_KEY] == SettingsCategory.LOOT
+            assert field.description is not None
             assert "all" in field.description
             assert "skipped" in field.description
             assert "including Mythic" in field.description

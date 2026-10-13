@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, NoReturn, TypedDict
 from src.paragon.overlay.theme import PANEL_W
 
 if TYPE_CHECKING:
+    from src.automation import WindowSpec
     from src.profiles import ParagonBoardModel
 
 type TkOption = str | int | float | bool | tk.PhotoImage | tuple[str, int] | tuple[str, int, str]
@@ -20,6 +21,9 @@ class OverlayContract(tk.Toplevel):
     _last_roi: tuple[int, int, int, int] | None
     _last_res: tuple[int, int] | None
     _border_rect: tuple[int, int, int, int] | None
+    _win_spec: WindowSpec
+    _last_focus_time: float
+    _dragging_grid: bool
     grid_x: int
     grid_y: int
     grid_x_collapsed: int

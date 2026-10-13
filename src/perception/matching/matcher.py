@@ -38,7 +38,7 @@ def get_cv_result(
     img = inp_img[ry : ry + rh, rx : rx + rw]
     if img.shape[0] == 0 or img.shape[1] == 0:
         return None, template_bgr, resolved_roi
-    if color_match:
+    if color_match is not None and len(color_match) > 0:
         template_img = apply_color_filter(template_bgr, color_match)
         img = apply_color_filter(img, color_match)
     elif use_grayscale:

@@ -9,21 +9,27 @@ EXE_NAME = "d4lf.exe"
 
 
 def build(release_dir: Path) -> None:
+    pyinstaller = shutil.which("pyinstaller")
+    if pyinstaller is None:
+        msg = "pyinstaller not found on PATH"
+        raise FileNotFoundError(msg)
     subprocess.run(
         [
-            "pyinstaller",
+            pyinstaller,
             "--clean",
-            "--onefile",
+            "--onedir",
+            "--noconfirm",
+            "--name",
+            release_dir.name,
             "--icon=assets/logo.ico",
             "--distpath",
-            str(release_dir),
+            str(release_dir.parent),
             "--paths",
             "src",
             r"src\main.py",
         ],
         check=True,
     )
-    (release_dir / "main.exe").rename(release_dir / EXE_NAME)
 
 
 def clean_up() -> None:
@@ -79,7 +85,6 @@ if __name__ == "__main__":
     release_dir = Path("d4lf")
     if release_dir.exists():
         shutil.rmtree(release_dir.absolute())
-    release_dir.mkdir(exist_ok=True, parents=True)
     clean_up()
     build(release_dir=release_dir)
     copy_additional_resources(release_dir)

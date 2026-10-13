@@ -13,6 +13,8 @@ if TYPE_CHECKING:
 
 SearchMode = Literal["first", "all"]
 
+ROI_VALUE_COUNT = 4
+
 
 @dataclass(frozen=True, slots=True)
 class SearchConfig:
@@ -48,7 +50,7 @@ class SearchConfig:
             except TypeError as error:
                 message = "roi must contain four values"
                 raise ValueError(message) from error
-            if len(values) != 4:
+            if len(values) != ROI_VALUE_COUNT:
                 message = "roi must contain four values"
                 raise ValueError(message)
             if any(not isinstance(value, (int, float, np.number)) for value in values):

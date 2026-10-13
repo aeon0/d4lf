@@ -1,12 +1,19 @@
 """Thread-safe runtime state for the active Paragon overlay."""
 
 import threading
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.paragon.overlay.controller import ParagonOverlay
 
-_CURRENT_OVERLAY: ParagonOverlay | None = None
+
+@dataclass
+class _CurrentOverlay:
+    overlay: ParagonOverlay | None = None
+
+
+_CURRENT = _CurrentOverlay()
 _CLOSE_REQUESTED = threading.Event()
 _OVERLAY_LOCK = threading.Lock()
 
@@ -14,23 +21,21 @@ _OVERLAY_LOCK = threading.Lock()
 def get_overlay() -> ParagonOverlay | None:
     """Return the currently composed overlay, if one exists."""
     with _OVERLAY_LOCK:
-        return _CURRENT_OVERLAY
+        return _CURRENT.overlay
 
 
 def set_overlay(overlay: ParagonOverlay) -> None:
     """Publish an overlay after its UI object has been constructed."""
-    global _CURRENT_OVERLAY
     with _OVERLAY_LOCK:
-        _CURRENT_OVERLAY = overlay
+        _CURRENT.overlay = overlay
         _CLOSE_REQUESTED.clear()
 
 
 def clear_overlay(overlay: ParagonOverlay | None = None) -> None:
     """Clear the current overlay, preserving a newer replacement if present."""
-    global _CURRENT_OVERLAY
     with _OVERLAY_LOCK:
-        if overlay is None or _CURRENT_OVERLAY is overlay:
-            _CURRENT_OVERLAY = None
+        if overlay is None or _CURRENT.overlay is overlay:
+            _CURRENT.overlay = None
 
 
 def close_requested() -> threading.Event:

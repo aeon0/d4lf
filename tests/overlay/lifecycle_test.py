@@ -29,7 +29,7 @@ class _FakeOverlay:
 def test_close_clears_shared_instance_and_allows_reopen(monkeypatch) -> None:
     _FakeOverlay.instances_created = 0
     monkeypatch.setattr(_lifecycle, "BossTimerOverlay", _FakeOverlay)
-    monkeypatch.setattr(_lifecycle, "get_root", lambda: object())
+    monkeypatch.setattr(_lifecycle, "get_root", object)
     monkeypatch.setattr(_lifecycle, "call_on_ui_thread", lambda callback: callback())
     _state.clear_overlay()
     _lifecycle.open_overlay()

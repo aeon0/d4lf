@@ -68,7 +68,7 @@ def fetch_variants_maxroll(request: ImportRequest) -> list[VariantMetadata]:
         return []
     LOGGER.info(f"Loading {url} for variants")
     try:
-        all_data, build_data = _load_planner_data(url)
+        _all_data, build_data = _load_planner_data(url)
     except ConnectionError:
         LOGGER.error("Couldn't get planner")
         return []

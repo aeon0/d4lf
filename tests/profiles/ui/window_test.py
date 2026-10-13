@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -23,8 +23,8 @@ def qapp():
 
 
 class FakeGameCatalog:
-    item_types_dict = {}
-    affix_dict = {}
+    item_types_dict: ClassVar[dict[str, str]] = {}
+    affix_dict: ClassVar[dict[str, str]] = {}
 
 
 class FakeEditor(QWidget):
@@ -150,7 +150,11 @@ def test_window_can_be_forced_maximized_by_parent(monkeypatch, qapp) -> None:
 
     monkeypatch.setattr(window_module, "QSettings", FakeSettings)
     maximized = []
-    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", lambda window: maximized.append(window))
+
+    def record_maximized(window: QWidget) -> None:
+        maximized.append(window)
+
+    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", record_maximized)
     monkeypatch.setattr(window_module.QTimer, "singleShot", lambda *_args: None)
 
     window = window_module.ProfileEditorWindow(force_maximized=True)

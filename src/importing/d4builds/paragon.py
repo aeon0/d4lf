@@ -20,6 +20,7 @@ if TYPE_CHECKING:
 
 
 LOGGER = logging.getLogger(__name__)
+PARAGON_NAV_LINK_MIN_COUNT = 3
 
 
 def _parse_d4builds_paragon_boards(driver: WebDriver, class_slug: str) -> list[list[JsonObject]]:
@@ -129,7 +130,7 @@ def extract_d4builds_paragon_steps(
         LOGGER.debug("Timed out waiting for D4Builds navigation links (continuing).", exc_info=True)
     try:
         nav_links = driver.find_elements(By.CLASS_NAME, "builder__navigation__link")
-        if len(nav_links) >= 3:
+        if len(nav_links) >= PARAGON_NAV_LINK_MIN_COUNT:
             driver.execute_script("arguments[0].click();", nav_links[2])
         else:
             element = driver.find_element(By.XPATH, "//*[contains(normalize-space(.), 'Paragon')]")

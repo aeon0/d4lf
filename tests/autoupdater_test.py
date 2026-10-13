@@ -1,4 +1,5 @@
 import zipfile
+from typing import ClassVar
 
 from src.autoupdater import D4LFUpdater
 
@@ -77,7 +78,7 @@ def test_extract_release_writes_version_and_files(tmp_path) -> None:
 
 def test_download_file_writes_streamed_content_without_network(monkeypatch, tmp_path) -> None:
     class Response:
-        headers = {"content-length": "5"}
+        headers: ClassVar[dict[str, str]] = {"content-length": "5"}
 
         def raise_for_status(self) -> None:
             return None

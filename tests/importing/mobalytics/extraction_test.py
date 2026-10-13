@@ -244,7 +244,7 @@ def test_get_weapon_slot_trigger_looks_up_span_by_humanized_slot_title(mocker: M
 
     _get_weapon_slot_trigger(driver=driver, slot_type="dual-wield-weapon-1")
 
-    (by, xpath), _kwargs = driver.find_element.call_args
+    (_by, xpath), _kwargs = driver.find_element.call_args
     assert "Dual wield weapon 1" in xpath
 
 

@@ -12,6 +12,9 @@ from src.perception import Publisher
 LOGGER = logging.getLogger(__name__)
 StatsListener = Callable[["StatsSnapshot"], None]
 
+GOLD_VERIFICATIONS_REQUIRED = 3
+LARGE_GOLD_THRESHOLD = 10_000_000
+
 
 @dataclass(frozen=True, slots=True)
 class StatsSnapshot:
@@ -136,9 +139,9 @@ class _SessionStats:
                 self.gold_verify_count + 1 if self.pending_gold is not None and value >= self.pending_gold else 1
             )
             self.pending_gold = value
-            if self.gold_verify_count >= 3:
-                if not (self.last_gold > 0 and value > self.last_gold * 10 and value > 10_000_000) and not (
-                    value < self.last_gold * 0.01 and self.last_gold > 10_000_000
+            if self.gold_verify_count >= GOLD_VERIFICATIONS_REQUIRED:
+                if not (self.last_gold > 0 and value > self.last_gold * 10 and value > LARGE_GOLD_THRESHOLD) and not (
+                    value < self.last_gold * 0.01 and self.last_gold > LARGE_GOLD_THRESHOLD
                 ):
                     self.total_gold += max(0, value - self.last_gold)
                 self.last_gold = value

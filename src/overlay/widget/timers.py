@@ -3,6 +3,7 @@ import time
 import tkinter as tk
 from contextlib import suppress
 from datetime import UTC, datetime, timedelta
+from http import HTTPStatus
 
 import httpx
 
@@ -13,6 +14,9 @@ from src.overlay.settings import setting_int as _setting_int
 from src.overlay.statistics import SessionStats
 from src.overlay.tracking import InventoryExpTracker
 from src.overlay.widget.shared import LOGGER, PROGRESS_YELLOW, TEXT, WARNING_ORANGE, OverlayContract
+
+FOCUS_HYSTERESIS_SECONDS = 0.75
+ACTIVE_PHASE_SECONDS = 3300
 
 
 class _OverlayTimers(OverlayContract):
@@ -25,7 +29,7 @@ class _OverlayTimers(OverlayContract):
             url = "https://helltides.com/api/schedule"
             with httpx.Client(timeout=10) as client:
                 response = client.get(url)
-                if response.status_code == 200:
+                if response.status_code == HTTPStatus.OK:
                     data = response.json()
                     now = datetime.now(UTC)
 
@@ -105,7 +109,7 @@ class _OverlayTimers(OverlayContract):
             self._last_focus_time = now
 
         # Hysteresis: Stay visible for 750ms after focus is lost to prevent flashing on release
-        should_be_visible = is_fgrnd or (now - self._last_focus_time < 0.75)
+        should_be_visible = is_fgrnd or (now - self._last_focus_time < FOCUS_HYSTERESIS_SECONDS)
 
         if should_be_visible and self.state() == "withdrawn":
             self.deiconify()
@@ -183,7 +187,7 @@ class _OverlayTimers(OverlayContract):
         else:
             # Normalized position in the infinite 1-hour cycle
             cycle_pos = diff % 3600
-            if cycle_pos < 3300:
+            if cycle_pos < ACTIVE_PHASE_SECONDS:
                 # Active (0-55 mins)
                 rem = timedelta(seconds=int(3300 - cycle_pos))
                 self.ht_timer.config(

@@ -120,11 +120,11 @@ def test_fast_mode_clears_unmatched_items_without_drawing(monkeypatch, mocker: M
     mode.request_draw = mocker.Mock()
 
     monkeypatch.setattr(fast_module, "is_ignored_item", lambda _item: False)
-    monkeypatch.setattr(fast_module.src.perception, "read_latest_item", lambda: Item())
+    monkeypatch.setattr(fast_module.src.perception, "read_latest_item", Item)
     monkeypatch.setattr(
         fast_module,
         "Filter",
-        lambda: type("_Filter", (), {"should_keep": lambda _self, _item: FilterResult(keep=False, matched=[])})(),
+        type("_Filter", (), {"should_keep": lambda _self, _item: FilterResult(keep=False, matched=[])}),
     )
 
     mode.on_tts([])

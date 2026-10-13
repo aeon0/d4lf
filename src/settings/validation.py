@@ -1,5 +1,5 @@
 import threading
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING
 
 from src.settings.binding import validate_hotkey as validate_hotkey_binding
 
@@ -7,6 +7,9 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
     from src.type_aliases import JsonValue
+
+MAX_PERCENT = 100
+MAX_GREATER_AFFIX_COUNT = 4
 
 
 def check_greater_than_zero(v: int) -> int:
@@ -18,14 +21,14 @@ def check_greater_than_zero(v: int) -> int:
 
 def validate_percent(v: int) -> int:
     check_greater_than_zero(v)
-    if v > 100:
+    if v > MAX_PERCENT:
         msg = "must be less than or equal to 100"
         raise ValueError(msg)
     return v
 
 
 def validate_greater_affix_count(v: int) -> int:
-    if not 0 <= v <= 4:
+    if not 0 <= v <= MAX_GREATER_AFFIX_COUNT:
         msg = "must be in [0, 4]"
         raise ValueError(msg)
     return v
@@ -35,10 +38,7 @@ def validate_hotkey(k: str) -> str:
     return validate_hotkey_binding(k)
 
 
-T = TypeVar("T")
-
-
-def singleton(cls: type[T]) -> Callable[..., T]:
+def singleton[T](cls: type[T]) -> Callable[..., T]:
     instances: dict[type[T], T] = {}
     lock = threading.Lock()
 

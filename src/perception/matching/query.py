@@ -81,7 +81,7 @@ class SearchArgs:
         return self.detect(img).success
 
     def wait_until_visible(self, timeout: float = 30, suppress_debug: bool = False) -> SearchResult:
-        raw_result, _ = run_until_condition(lambda: self.detect(), lambda match: match.success, timeout)
+        raw_result, _ = run_until_condition(self.detect, lambda match: match.success, timeout)
         result = raw_result if isinstance(raw_result, SearchResult) else SearchResult()
         if not result.success and not suppress_debug:
             LOGGER.debug(f"{self.ref} not found after {timeout} seconds")

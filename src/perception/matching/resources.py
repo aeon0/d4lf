@@ -15,6 +15,10 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 
+HUE_RANGE_LIMIT = 179
+SATURATION_VALUE_MAX = 255
+COLOR_RANGE_BOUND_COUNT = 2
+
 
 def process_template_refs(ref: TemplateReferences) -> list[Template]:
     """Turn named or inline template references into loaded templates."""
@@ -90,9 +94,9 @@ def _validate_hsv_range(lower: object, upper: object, *, label: str) -> list[np.
     lower_values = [float(item) for item in lower_array]
     upper_values = [float(item) for item in upper_array]
     if not (
-        -179 <= lower_values[0] <= 179
-        and -179 <= upper_values[0] <= 179
-        and all(0 <= item <= 255 for item in (*lower_values[1:], *upper_values[1:]))
+        -HUE_RANGE_LIMIT <= lower_values[0] <= HUE_RANGE_LIMIT
+        and -HUE_RANGE_LIMIT <= upper_values[0] <= HUE_RANGE_LIMIT
+        and all(0 <= item <= SATURATION_VALUE_MAX for item in (*lower_values[1:], *upper_values[1:]))
         and all(lower <= upper for lower, upper in zip(lower_values, upper_values, strict=True))
     ):
         message = f"Invalid color range for {label}"
@@ -119,7 +123,7 @@ def resolve_color_match(color_match: ColorMatch) -> list[np.ndarray] | None:
         except ValueError as error:
             message = f"Invalid color range for key: {color_match}"
             raise ValueError(message) from error
-    if not isinstance(color_match, Sequence) or len(color_match) != 2:
+    if not isinstance(color_match, Sequence) or len(color_match) != COLOR_RANGE_BOUND_COUNT:
         message = "Invalid color range"
         raise ValueError(message)
     return _validate_hsv_range(color_match[0], color_match[1], label="value")

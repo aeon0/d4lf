@@ -1,6 +1,6 @@
 import dataclasses
 import logging
-from typing import TYPE_CHECKING, Protocol, TypeVar
+from typing import TYPE_CHECKING, Protocol
 
 from src.importing import ImportRequest, ImportResult, assemble_profile_file_name
 from src.importing.filters import deduplicate_filters, sort_profile_filters
@@ -12,7 +12,6 @@ if TYPE_CHECKING:
     from src.type_aliases import JsonObject
 
 LOGGER = logging.getLogger(__name__)
-FilterModelT = TypeVar("FilterModelT", CharmFilterModel, SealFilterModel)
 
 
 @dataclasses.dataclass(slots=True)
@@ -51,7 +50,9 @@ class StaticBuildGuideAdapter:
         return self.build
 
 
-def _enabled_category_filters(filters: list[FilterModelT], enabled: bool) -> list[dict[str, FilterModelT]]:
+def _enabled_category_filters[FilterModelT: (CharmFilterModel, SealFilterModel)](
+    filters: list[FilterModelT], enabled: bool
+) -> list[dict[str, FilterModelT]]:
     return sort_profile_filters(deduplicate_filters(filters)) if enabled else []
 
 

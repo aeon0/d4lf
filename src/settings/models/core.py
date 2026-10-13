@@ -17,6 +17,7 @@ MODULE_LOGGER = logging.getLogger(__name__)
 HIDE_FROM_GUI_KEY = "hide_from_gui"
 IS_HOTKEY_KEY = "is_hotkey"
 CATEGORY_KEY = "category"
+COORDINATE_VALUE_COUNT = 2
 
 
 class SettingsCategory(enum.StrEnum):
@@ -250,13 +251,13 @@ class AdvancedOptionsModel(_IniBaseModel):
                 return None
             v = v.strip("()")
             parts = [int(part.strip()) for part in v.replace(",", " ").split()]
-            if len(parts) != 2:
+            if len(parts) != COORDINATE_VALUE_COUNT:
                 msg = "Expected two integers for coordinates."
                 raise ValueError(msg)
             for x in parts:
                 check_greater_than_zero(x)
             return parts[0], parts[1]
-        if isinstance(v, tuple) and len(v) == 2 and all(isinstance(x, int) for x in v):
+        if isinstance(v, tuple) and len(v) == COORDINATE_VALUE_COUNT and all(isinstance(x, int) for x in v):
             for x in v:
                 check_greater_than_zero(x)
             return v[0], v[1]

@@ -145,7 +145,7 @@ def test_search_rejects_missing_named_roi(monkeypatch) -> None:
     class EmptyResources:
         roi = EmptyRoi()
 
-    monkeypatch.setattr("src.perception.matching.resources.get_ui_coordinates", lambda: EmptyResources())
+    monkeypatch.setattr("src.perception.matching.resources.get_ui_coordinates", EmptyResources)
 
     with pytest.raises(ValueError, match="Invalid roi key: missing"):
         matching.search(template, image, threshold=0.6, roi="missing")

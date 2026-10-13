@@ -2,8 +2,9 @@ import logging
 import logging.handlers
 import sys
 import threading
+from dataclasses import dataclass
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Literal, override
+from typing import TYPE_CHECKING, ClassVar, Literal, override
 
 import colorama
 
@@ -25,15 +26,24 @@ LOGGER = logging.getLogger(__name__)
 LOG_DIR = BASE_DIR / "logs"
 PERSISTENT_GUI_HANDLER_NAMES = frozenset({"D4LF_FILE", "D4LF_CONSOLE"})
 
-_setup_called = False
-_startup_buffer_handler: logging.Handler | None = None
-_startup_log_records: list[logging.LogRecord] = []
-
 
 class _StartupBufferHandler(logging.Handler):
+    def __init__(self) -> None:
+        super().__init__()
+        self.records: list[logging.LogRecord] = []
+
     @override
     def emit(self, record: logging.LogRecord) -> None:
-        _startup_log_records.append(record)
+        self.records.append(record)
+
+
+@dataclass
+class _LoggerState:
+    setup_called: bool = False
+    startup_buffer: _StartupBufferHandler | None = None
+
+
+_STATE = _LoggerState()
 
 
 class ColoredFormatter(logging.Formatter):
@@ -49,7 +59,7 @@ class ColoredFormatter(logging.Formatter):
         colorama.just_fix_windows_console()
         super().__init__(fmt=fmt, datefmt=datefmt, style=style, validate=validate, defaults=defaults)
 
-    COLORS = {
+    COLORS: ClassVar[dict[str, str | int]] = {
         "DEBUG": colorama.Fore.LIGHTCYAN_EX,
         "INFO": colorama.Fore.GREEN,
         "WARNING": colorama.Fore.YELLOW,
@@ -145,34 +155,31 @@ def setup(
     # Set default log level for root logger
     logger.setLevel("DEBUG")
 
-    global _setup_called
-    if not _setup_called:
+    if not _STATE.setup_called:
         LOGGER.info(f"Running version v{__version__}")
-        _setup_called = True
+        _STATE.setup_called = True
 
     # Clean up old log files
     clean_up_old_log_files()
 
 
 def _enable_startup_buffer(logger: logging.Logger) -> None:
-    global _startup_buffer_handler
-    if _startup_buffer_handler is not None:
+    if _STATE.startup_buffer is not None:
         return
-    _startup_buffer_handler = _StartupBufferHandler()
-    _startup_buffer_handler.set_name("D4LF_STARTUP_BUFFER")
-    _startup_buffer_handler.setLevel(logging.DEBUG)
-    logger.addHandler(_startup_buffer_handler)
+    handler = _StartupBufferHandler()
+    handler.set_name("D4LF_STARTUP_BUFFER")
+    handler.setLevel(logging.DEBUG)
+    _STATE.startup_buffer = handler
+    logger.addHandler(handler)
 
 
 def consume_startup_log_records() -> list[logging.LogRecord]:
-    global _startup_buffer_handler
-    logger = logging.getLogger()
-    if _startup_buffer_handler is not None:
-        logger.removeHandler(_startup_buffer_handler)
-        _startup_buffer_handler = None
-    records = _startup_log_records.copy()
-    _startup_log_records.clear()
-    return records
+    handler = _STATE.startup_buffer
+    if handler is None:
+        return []
+    logging.getLogger().removeHandler(handler)
+    _STATE.startup_buffer = None
+    return handler.records.copy()
 
 
 def clean_up_old_log_files() -> None:

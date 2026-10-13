@@ -44,6 +44,7 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger(__name__)
 _FRAME_RETRY_DELAY_SECONDS = 0.01
+_MAX_CONFIRMATION_ATTEMPTS = 5
 
 
 class CancellationRequestedError(Exception):
@@ -97,7 +98,7 @@ class HighlightingWorker:
         is_confirmed = False
         retry_count = 0
         try:
-            while retry_count < 5 and not is_confirmed:
+            while retry_count < _MAX_CONFIRMATION_ATTEMPTS and not is_confirmed:
                 self.check_for_thread_cancellation(cancel_event)
                 retry_count += 1
                 item_center = select_target_center(

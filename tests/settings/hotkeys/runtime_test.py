@@ -1,5 +1,6 @@
 import inspect
 import typing
+from typing import ClassVar
 
 import pytest
 
@@ -12,7 +13,7 @@ from src.settings.hotkeys import runtime as hotkeys
 
 
 class _FakeListener:
-    instances = []
+    instances: ClassVar[list[_FakeListener]] = []
 
     def __init__(self, on_press, on_release) -> None:
         self._on_press = on_press
@@ -189,10 +190,16 @@ class TestGlobalHotkeyRegistry:
         assert self.registry._active_hotkeys == set()
 
 
-def test_controller_is_constructed_on_first_key_action(mocker: MockerFixture) -> None:
+@pytest.fixture
+def uncached_controller():
+    hotkeys._controller.cache_clear()
+    yield
+    hotkeys._controller.cache_clear()
+
+
+def test_controller_is_constructed_on_first_key_action(mocker: MockerFixture, uncached_controller) -> None:
     controller = mocker.Mock()
     constructor = mocker.patch.object(hotkeys.keyboard, "Controller", return_value=controller)
-    mocker.patch.object(hotkeys, "_CONTROLLER", None)
 
     hotkeys.press("a")
 

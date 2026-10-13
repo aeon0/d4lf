@@ -50,10 +50,10 @@ class SigilsTab(QWidget):
         add_sigil_btn.clicked.connect(self.create_sigil)
 
         remove_whitelist_sigil_btn = QPushButton("Remove Whitelist Sigil")
-        remove_whitelist_sigil_btn.clicked.connect(lambda: self.remove_sigil())
+        remove_whitelist_sigil_btn.clicked.connect(lambda _checked: self.remove_sigil())
 
         remove_blacklist_sigil_btn = QPushButton("Remove Blacklist Sigil")
-        remove_blacklist_sigil_btn.clicked.connect(lambda: self.remove_sigil(blacklist=True))
+        remove_blacklist_sigil_btn.clicked.connect(lambda _checked: self.remove_sigil(blacklist=True))
 
         btn_layout.addWidget(add_sigil_btn)
         btn_layout.addWidget(remove_whitelist_sigil_btn)

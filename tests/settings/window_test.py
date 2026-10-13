@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import ClassVar
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -38,7 +39,11 @@ def test_config_window_restores_maximized_state_from_qsettings(monkeypatch, qapp
     maximized = []
     monkeypatch.setattr(window_module, "QSettings", FakeSettings)
     monkeypatch.setattr(window_module, "ConfigTab", FakeTab)
-    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", lambda window: maximized.append(window))
+
+    def record_maximized(window: QWidget) -> None:
+        maximized.append(window)
+
+    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", record_maximized)
 
     window = ConfigWindow()
 
@@ -62,7 +67,11 @@ def test_config_window_force_maximized_overrides_saved_state(monkeypatch, qapp) 
     maximized = []
     monkeypatch.setattr(window_module, "QSettings", FakeSettings)
     monkeypatch.setattr(window_module, "ConfigTab", FakeTab)
-    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", lambda window: maximized.append(window))
+
+    def record_maximized(window: QWidget) -> None:
+        maximized.append(window)
+
+    monkeypatch.setattr(window_module.QMainWindow, "showMaximized", record_maximized)
 
     window = ConfigWindow(force_maximized=True)
 
@@ -72,7 +81,7 @@ def test_config_window_force_maximized_overrides_saved_state(monkeypatch, qapp) 
 
 def test_config_window_persists_maximized_state_on_close(monkeypatch, qapp) -> None:
     class FakeSettings:
-        values = {"maximized": False}
+        values: ClassVar[dict[str, bool]] = {"maximized": False}
 
         def __init__(self, *_args) -> None:
             pass

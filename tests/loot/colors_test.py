@@ -19,12 +19,7 @@ def test_default_filter_colors_have_all_rendering_roles(monkeypatch) -> None:
 
 
 @pytest.mark.parametrize(
-    ("limit", "expected"),
-    [
-        (0, ["maximum_life", "armor", "dexterity"]),
-        (2, ["maximum_life", "armor"]),
-        (5, ["maximum_life", "armor", "dexterity"]),
-    ],
+    ("limit", "expected"), [(0, []), (2, ["maximum_life", "armor"]), (5, ["maximum_life", "armor", "dexterity"])]
 )
 def test_visible_missing_affixes_keeps_profile_order_up_to_the_limit(
     limit: int, expected: list[str], mocker: MockerFixture

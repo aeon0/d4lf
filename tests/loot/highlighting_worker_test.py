@@ -157,15 +157,16 @@ class _QueueHarness(HighlightingWorker):
         return done
 
     def drain_later(self, delay_seconds: float) -> Thread:
-        """Start a stand-in for Tk that processes the queue after a delay."""
+        """Start a stand-in for Tk that processes the queue after a delay until a clear was handled."""
 
         def drain() -> None:
             time.sleep(delay_seconds)
-            while not self.queue.empty():
-                task = self.queue.get_nowait()
+            while True:
+                task = self.queue.get(timeout=2)
                 self.processed.append(task[0])
                 if task[0] == "clear":
                     task[1].set()
+                    return
 
         thread = Thread(target=drain, daemon=True)
         thread.start()

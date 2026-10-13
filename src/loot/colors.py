@@ -43,6 +43,11 @@ def get_filter_colors() -> FilterColors:
         return FILTER_COLORS_DEFAULT
 
 
+def visible_missing_affixes(missing_affixes: list[str]) -> list[str]:
+    limit = get_settings().advanced_options.max_missing_affixes_shown
+    return missing_affixes[:limit] if limit else missing_affixes
+
+
 def is_ignored_item(item_descr: Item) -> bool:
     if is_consumable(item_descr.item_type) or is_non_sigil_mapping(item_descr.item_type):
         return True

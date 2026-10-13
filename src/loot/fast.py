@@ -11,7 +11,7 @@ from src.desktop import call_on_ui_thread, create_overlay_toplevel, get_root
 from src.game_data import ItemRarity
 from src.item import ASPECT_UPGRADES_LABEL, MYTHICS_ALWAYS_KEPT_LABEL, FilterResult, Item, MatchedFilter
 from src.item.filter import Filter
-from src.loot.colors import get_filter_colors, is_ignored_item
+from src.loot.colors import get_filter_colors, is_ignored_item, visible_missing_affixes
 from src.loot.singleton import singleton
 from src.perception import Publisher, capture, screenshot
 from src.settings import get_settings, get_ui_coordinates
@@ -180,7 +180,7 @@ def create_match_text(matches: Iterable[MatchedFilter], color: str, missing_colo
             result.append(("  - Aspect", color))
         if match.set_match:
             result.append(("  - Set", color))
-        result.extend((f"  - {name}", missing_color) for name in match.missing_affixes)
+        result.extend((f"  - {name}", missing_color) for name in visible_missing_affixes(match.missing_affixes))
     return result
 
 

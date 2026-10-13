@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 import numpy as np
 
 from src.item import ASPECT_UPGRADES_LABEL
-from src.loot.colors import get_filter_colors, reset_canvas
+from src.loot.colors import get_filter_colors, reset_canvas, visible_missing_affixes
 from src.settings import get_settings, get_ui_coordinates
 
 DARK_GRAY_BG = "#111111"
@@ -173,8 +173,8 @@ class HighlightingRenderer:
         # show all info strings of the profiles, drawn bottom-up
         text_y = h
         for match in reversed(should_keep_res.matched):
-            if match.missing_affixes:
-                missing_text = f"missing: {', '.join(match.missing_affixes)}"
+            if missing_affixes := visible_missing_affixes(match.missing_affixes):
+                missing_text = f"missing: {', '.join(missing_affixes)}"
                 text_y = self.draw_text(self.canvas, missing_text, colors.missing, text_y, 5, w // 2)
             text = match.profile
             if match.set_match:

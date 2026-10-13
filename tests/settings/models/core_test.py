@@ -17,3 +17,14 @@ def test_advanced_options_reject_duplicate_hotkeys() -> None:
 def test_advanced_options_accept_fast_vision_coordinates() -> None:
     model = AdvancedOptionsModel(fast_vision_mode_coordinates="12,34")
     assert model.fast_vision_mode_coordinates == (12, 34)
+
+
+@pytest.mark.parametrize(("configured", "expected"), [(None, 0), ("0", 0), ("2", 2), (3, 3)])
+def test_advanced_options_parse_max_missing_affixes_shown(configured: str | int | None, expected: int) -> None:
+    model = AdvancedOptionsModel() if configured is None else AdvancedOptionsModel(max_missing_affixes_shown=configured)
+    assert model.max_missing_affixes_shown == expected
+
+
+def test_advanced_options_reject_negative_max_missing_affixes_shown() -> None:
+    with pytest.raises(ValidationError, match="greater than zero"):
+        AdvancedOptionsModel(max_missing_affixes_shown="-1")

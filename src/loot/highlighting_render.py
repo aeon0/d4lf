@@ -1,5 +1,6 @@
 """Tk rendering for the highlighting vision mode."""
 
+import logging
 import math
 import queue
 import tkinter as tk
@@ -11,6 +12,8 @@ import numpy as np
 from src.item import ASPECT_UPGRADES_LABEL
 from src.loot.colors import get_filter_colors, reset_canvas
 from src.settings import get_settings, get_ui_coordinates
+
+LOGGER = logging.getLogger(__name__)
 
 DARK_GRAY_BG = "#111111"
 WINDOW_HEIGHT_1440 = 1440
@@ -146,8 +149,11 @@ class HighlightingRenderer:
                         self.draw_no_match_outline(task[2])
         except queue.Empty:
             pass
-
-        self.canvas.after(10, self.draw_from_queue)
+        except Exception:
+            LOGGER.exception("Error while drawing highlighting overlay")
+        finally:
+            # Always reschedule, otherwise a single drawing error would stop the redraw loop for good.
+            self.canvas.after(10, self.draw_from_queue)
 
     def draw_empty_outline(
         self: _VisionModeWithHighlighting, item_roi: tuple[int, int, int, int], color: str, text: str | None

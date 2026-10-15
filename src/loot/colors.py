@@ -28,10 +28,11 @@ class FilterColors:
     codex_upgrade: str
     processing: str
     unhandled: str
+    missing: str
 
 
-FILTER_COLORS_DEFAULT = FilterColors("#23fc5d", "#fc2323", "#fca503", "#888888", "#00b3b3")
-FILTER_COLORS_COLORBLIND = FilterColors(ACCENT_BLUE, "#D55E00", "#E69F00", "#888888", "#CC79A7")
+FILTER_COLORS_DEFAULT = FilterColors("#23fc5d", "#fc2323", "#fca503", "#888888", "#00b3b3", "#8b2e2e")
+FILTER_COLORS_COLORBLIND = FilterColors(ACCENT_BLUE, "#D55E00", "#E69F00", "#888888", "#CC79A7", "#8a4b1e")
 
 
 def get_filter_colors() -> FilterColors:
@@ -40,6 +41,11 @@ def get_filter_colors() -> FilterColors:
     except Exception:
         LOGGER.debug("Config unavailable; using default loot colors", exc_info=True)
         return FILTER_COLORS_DEFAULT
+
+
+def visible_missing_affixes(missing_affixes: list[str]) -> list[str]:
+    limit = get_settings().advanced_options.max_missing_affixes_shown
+    return missing_affixes[:limit]
 
 
 def is_ignored_item(item_descr: Item) -> bool:

@@ -53,12 +53,20 @@ class FilterEquipmentMixin:
                 match_details = [
                     f"{affix.name} (GA)" if affix.type == AffixType.greater else affix.name for affix in all_matches
                 ]
+                missing_affixes = self._missing_affix_names(
+                    filter_spec.affix_pool, non_tempered_affixes
+                ) + self._missing_affix_names(filter_spec.inherent_pool, item.inherent)
                 LOGGER.info(f"{item.original_name} -- Matched {profile_name}.Affixes.{filter_name}: {match_details}")
                 if filter_spec.unique_aspect:  # show the matched unique aspect
                     LOGGER.info(f"{item.original_name} -- Matched {profile_name}.Affixes.{filter_name}: Unique aspect")
                 res.keep = True
                 res.matched.append(
-                    MatchedFilter(f"{profile_name}.{filter_name}", all_matches, bool(filter_spec.unique_aspect))
+                    MatchedFilter(
+                        f"{profile_name}.{filter_name}",
+                        all_matches,
+                        bool(filter_spec.unique_aspect),
+                        missing_affixes=missing_affixes,
+                    )
                 )
         return res
 

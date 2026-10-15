@@ -124,6 +124,7 @@ class FilterSpecialMixin:
                         matched_affixes,
                         aspect_match=matched_aspect,
                         set_match=matched_set,
+                        missing_affixes=self._missing_affix_names(filter_spec.affix_pool, seal_or_charm.affixes),
                     )
                 )
         if not res.keep and seal_or_charm.rarity == ItemRarity.Mythic:

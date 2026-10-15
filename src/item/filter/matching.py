@@ -158,6 +158,16 @@ class FilterMatchingMixin:
             result.extend(matched for _, matched in best_matches)
         return result
 
+    def _missing_affix_names(
+        self, expected_affixes: list[AffixFilterCountModel], item_affixes: list[Affix]
+    ) -> list[str]:
+        missing: list[str] = []
+        for count_group in expected_affixes:
+            uncapped_group = count_group.model_copy(update={"max_count": sys.maxsize})
+            matched_ids = {id(expected) for expected, _ in self._match_count_group(uncapped_group, item_affixes)}
+            missing.extend(expected.name for expected in count_group.count if id(expected) not in matched_ids)
+        return missing
+
     @staticmethod
     def _match_greater_affix_count(expected_min_count: int, item_affixes: list[Affix]) -> bool:
         return expected_min_count <= len([x for x in item_affixes if x.type == AffixType.greater])

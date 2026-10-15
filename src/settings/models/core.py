@@ -148,6 +148,15 @@ class AdvancedOptionsModel(_IniBaseModel):
         title="Show Technical Information In Logs",
         json_schema_extra={LIVE_RELOAD_GROUP_KEY: "log_level", CATEGORY_KEY: SettingsCategory.ADVANCED},
     )
+    max_missing_affixes_shown: int = Field(
+        default=0,
+        description=(
+            "How many missing filter affixes the vision mode overlays show per matched profile, in the order they "
+            "appear in the profile. 0 hides them."
+        ),
+        title="Max Missing Affixes Shown",
+        json_schema_extra={CATEGORY_KEY: SettingsCategory.ADVANCED},
+    )
     move_to_chest: str = Field(
         default="f8",
         description="Hotkey to move configured items from inventory to stash",
@@ -226,6 +235,11 @@ class AdvancedOptionsModel(_IniBaseModel):
     @classmethod
     def key_must_exist(cls, k: str) -> str:
         return validate_hotkey(k)
+
+    @field_validator("max_missing_affixes_shown")
+    @classmethod
+    def max_missing_affixes_shown_not_negative(cls, v: int) -> int:
+        return check_greater_than_zero(v)
 
     @field_validator("fast_vision_mode_coordinates", mode="before")
     @classmethod
